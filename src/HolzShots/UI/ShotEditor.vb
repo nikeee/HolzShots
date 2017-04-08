@@ -273,6 +273,9 @@ Namespace UI.Specialized
             Using sfd As New CommonSaveFileDialog()
                 sfd.Filters.Add(New CommonFileDialogFilter(Localization.PngImage, "*.png"))
                 sfd.Filters.Add(New CommonFileDialogFilter(Localization.JpgImage, "*.jpg"))
+                sfd.DefaultExtension = DefaultFileExtension
+                sfd.AlwaysAppendDefaultExtension = True
+                sfd.EnsurePathExists = True
 
                 sfd.Title = Localization.ChooseDestinationFileName
                 If sfd.ShowDialog() = CommonFileDialogResult.Ok Then
