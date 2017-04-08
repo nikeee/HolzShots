@@ -6,7 +6,7 @@ using Xunit.Sdk;
 
 namespace HolzShots.Core.Tests
 {
-    [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = false)]
+    [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = false)]
     public sealed class FileStringContentDataAttribute : DataAttribute
     {
         public string FileName { get; }

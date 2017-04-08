@@ -74,8 +74,9 @@ namespace HolzShots.Net.Custom
         public UploaderHeaders Headers { get; } = null;
         public ReadOnlyDictionary<string, string> PostParams { get; } = null;
         public long? MaxFileSize { get; } = null;
+        public string FileName { get; } = null;
 
-        public UploaderConfig(string fileFormName, string requestUrl, Parser parser, string method, UploaderHeaders headers, ReadOnlyDictionary<string, string> postParams, long? maxFileSize)
+        public UploaderConfig(string fileFormName, string requestUrl, Parser parser, string method, UploaderHeaders headers, ReadOnlyDictionary<string, string> postParams, long? maxFileSize, string fileName)
         {
             FileFormName = fileFormName;
             RequestUrl = requestUrl;
@@ -84,6 +85,7 @@ namespace HolzShots.Net.Custom
             Headers = headers;
             PostParams = postParams;
             MaxFileSize = maxFileSize;
+            FileName = fileName;
         }
 
         public bool Validate(string schema)
@@ -100,6 +102,7 @@ namespace HolzShots.Net.Custom
                 return false;
 
             // PostParams can be anything
+            // FileName can be anything
 
             if (MaxFileSize != null && MaxFileSize < 0)
                 return false;

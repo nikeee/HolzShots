@@ -89,6 +89,9 @@
     <None Include="Files\DirectUpload.net.hsjson">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Files\FotosHochladen.hsjson">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />

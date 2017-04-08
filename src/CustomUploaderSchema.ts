@@ -26,12 +26,13 @@ interface Info {
 
 interface UploaderConfig {
     fileFormName: string;
+    parser: Parser;
     requestUrl: Url;
     method?: HttpMethod;
     headers?: UploaderHeaders;
     postParams?: ParamsMap;
     maxFileSize?: number;
-    parser: Parser;
+    fileName?: string;
 }
 
 interface UploaderHeaders {
