@@ -14,6 +14,9 @@ namespace HolzShots.Core.Tests.Net.Custom
             var parseResult = CustomUploaderLoader.TryLoad(content, out var result);
             Assert.True(parseResult);
             Assert.NotNull(result);
+            Assert.NotNull(result.Info);
+            Assert.NotNull(result.Uploader);
+            Assert.NotNull(result.SchemaVersion);
         }
     }
 }
