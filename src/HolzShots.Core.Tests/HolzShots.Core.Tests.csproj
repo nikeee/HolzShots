@@ -69,6 +69,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="FileStringContentDataAttribute.cs" />
     <Compile Include="IO\Naming\FileNamePatternTest.cs" />
     <Compile Include="Net\Custom\CustomUploaderLoaderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
