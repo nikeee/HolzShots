@@ -70,6 +70,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="IO\Naming\FileNamePatternTest.cs" />
+    <Compile Include="Net\Custom\CustomUploaderLoaderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -83,8 +84,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Files\DirectUpload.net.hsjson">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

@@ -40,6 +40,9 @@
     <DefineConstants>$(DefineConstants);CI_BUILD</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
@@ -95,6 +98,8 @@
     <Compile Include="Input\WindowsKeyboardHook.cs" />
     <Compile Include="MathEx.cs" />
     <Compile Include="NativeMethods.cs" />
+    <Compile Include="Net\Custom\CustomUploader.cs" />
+    <Compile Include="Net\Custom\CustomUploaderLoader.cs" />
     <Compile Include="Net\FotosHochladenUploader.cs" />
     <Compile Include="Net\DirectUploadUploader.cs" />
     <Compile Include="Net\Speed.cs" />
@@ -116,6 +121,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
