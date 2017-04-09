@@ -1,199 +1,239 @@
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
-using System.Net.Http.Headers;
+using System.Net.Http;
+using System.Net.Http.Handlers;
+using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace HolzShots.Net.Custom
 {
-    interface IValidatable
+    public class CustomUploader : Uploader
     {
-        bool Validate(string schema);
-    }
+        private const string SupportedSchema = "0.1.0";
+        public CustomUploaderInfo CustomData { get; }
 
-    [Serializable]
-    class CustomUploader : IValidatable
-    {
-        public string SchemaVersion { get; }
-        public UploaderInfo Info { get; }
-        public UploaderConfig Uploader { get; }
-
-        public CustomUploader(string schemaVersion, UploaderInfo info, UploaderConfig uploader)
+        private CustomUploader(CustomUploaderInfo customData)
         {
-            SchemaVersion = schemaVersion;
-            Info = info;
-            Uploader = uploader;
+            if (customData == null)
+                throw new ArgumentNullException(nameof(customData));
+
+            Debug.Assert(customData.Validate(SupportedSchema));
+            CustomData = customData;
         }
 
-        public bool Validate(string schema)
+        public async override Task<UploadResult> InvokeAsync(Stream data, string suggestedFileName, string mimeType, CancellationToken cancellationToken, IProgress<UploadProgress> progress)
         {
-            if (SchemaVersion != schema)
-                return false;
-            return Uploader?.Validate(schema) == true && Info?.Validate(schema) == true;
-        }
-    }
+            Debug.Assert(CustomData != null);
+            Debug.Assert(CustomData.Validate(SupportedSchema));
+            Debug.Assert(CustomData.Uploader != null);
+            Debug.Assert(data != null);
+            Debug.Assert(!string.IsNullOrWhiteSpace(suggestedFileName));
+            Debug.Assert(!string.IsNullOrWhiteSpace(mimeType));
+            Debug.Assert(cancellationToken != null);
 
-    [Serializable]
-    class UploaderInfo : IValidatable
-    {
-        public string Version { get; }
-        public string Name { get; }
-
-        public string Author { get; } = null;
-        public string Contact { get; } = null;
-        public string UpdateUrl { get; } = null;
-        public string Description { get; } = null;
-
-        public UploaderInfo(string version, string name, string author, string contact, string updateUrl, string description)
-        {
-            Version = version;
-            Name = name;
-            Author = author;
-            Contact = contact;
-            UpdateUrl = updateUrl;
-            Description = description;
-        }
-
-        public bool Validate(string schema)
-        {
-            // TODO: Check if Version is valid semver
-            return Version != null && !string.IsNullOrWhiteSpace(Name);
-        }
-    }
-
-    [Serializable]
-    class UploaderConfig
-    {
-        private static readonly string[] ValidMethods = { "POST", "PUT" };
-        public string FileFormName { get; }
-        public string RequestUrl { get; }
-        public Parser Parser { get; }
-
-        public string Method { get; } = "POST";
-        public UploaderHeaders Headers { get; } = null;
-        public ReadOnlyDictionary<string, string> PostParams { get; } = null;
-        public long? MaxFileSize { get; } = null;
-        public string FileName { get; } = null;
-
-        public UploaderConfig(string fileFormName, string requestUrl, Parser parser, string method, UploaderHeaders headers, ReadOnlyDictionary<string, string> postParams, long? maxFileSize, string fileName)
-        {
-            FileFormName = fileFormName;
-            RequestUrl = requestUrl;
-            Parser = parser;
-            Method = method;
-            Headers = headers;
-            PostParams = postParams;
-            MaxFileSize = maxFileSize;
-            FileName = fileName;
-        }
-
-        public bool Validate(string schema)
-        {
-            if (string.IsNullOrWhiteSpace(FileFormName))
-                return false;
-            if (string.IsNullOrWhiteSpace(RequestUrl))
-                return false;
-            if (Parser?.Validate(schema) != true)
-                return false;
-            if (Headers != null && !Headers.Validate(schema))
-                return false;
-            if (Method != null && !ValidMethods.Contains(Method.ToUpperInvariant()))
-                return false;
-
-            // PostParams can be anything
-            // FileName can be anything
-
-            if (MaxFileSize != null && MaxFileSize < 0)
-                return false;
-            return true;
-        }
-    }
-
-    [Serializable]
-    class UploaderHeaders
-    {
-        public string UserAgent { get; } = null;
-        public string Referer { get; } = null;
-
-        public UploaderHeaders(string userAgent, string referer)
-        {
-            UserAgent = userAgent;
-            Referer = referer;
-        }
-
-        public bool Validate(string schema)
-        {
-            // Referer can be anything
-            return ProductInfoHeaderValue.TryParse(UserAgent, out var _);
-        }
-    }
-
-    [Serializable]
-    class Parser
-    {
-        private static readonly string[] SupportedKinds = { "REGEX", "JSON" /*, "xml" */ };
-        public string Kind { get; }
-        public string Url { get; }
-        public string Success { get; }
-
-        public string Failure { get; } = null;
-
-        public Parser(string kind, string url, string success, string failure)
-        {
-            Kind = kind;
-            Url = url;
-            Success = success;
-            Failure = failure;
-        }
-
-        public bool Validate(string schema)
-        {
-            if (string.IsNullOrWhiteSpace(Kind))
-                return false;
-            if (string.IsNullOrWhiteSpace(Url))
-                return false;
-
-            var upperKind = Kind.ToUpperInvariant();
-
-            Debug.Assert(SupportedKinds.Contains(upperKind));
-
-            switch (upperKind)
+            // If the stream has a specific length, check if it exceeds the set maximum file size
+            var mfs = CustomData.Uploader.MaxFileSize;
+            if (mfs.HasValue && data.CanSeek)
             {
-                case "REGEX": return ValidateRegEx(schema);
-                case "JSON": return ValidateJson(schema);
-                case "XML": return ValidateXml(schema);
-                default: return false;
-            }
-        }
-
-        private bool ValidateRegEx(string schema)
-        {
-            if (string.IsNullOrEmpty(Success))
-                return false;
-            try
-            {
-                new Regex(schema); // TODO: RegEx options
-            }
-            catch (Exception) { return false; }
-            if (Failure != null)
-            {
-                try
+                var size = data.Length;
+                if (size > mfs.Value)
                 {
-                    new Regex(Failure); // TODO: RegEx options
+                    var memSize = new MemSize(mfs.Value);
+                    throw new UploadException($"File is largner than the speified {nameof(CustomData.Uploader.MaxFileSize)} which is {memSize}");
                 }
-                catch (Exception) { return false; }
             }
-            return true;
-        }
-        private bool ValidateJson(string schema)
-        {
-            if (string.IsNullOrWhiteSpace(Success))
-                return false;
-            // Failure can be everything
-            return true;
 
+            var uplInfo = CustomData.Uploader;
+
+            using (var progressHandler = new ProgressMessageHandler(new HttpClientHandler()))
+            using (var cl = new HttpClient(progressHandler))
+            {
+                progressHandler.HttpSendProgress += (s, e) => progress.Report(new UploadProgress(e));
+
+                var userAgent = uplInfo.Headers?.GetUserAgent(SuggestedUserAgent) ?? SuggestedUserAgent;
+                cl.DefaultRequestHeaders.UserAgent.ParseAdd(userAgent);
+
+                using (var content = new MultipartFormDataContent())
+                {
+                    foreach (var (name, value) in uplInfo.PostParams)
+                        content.Add(new StringContent(value), name);
+
+                    var fname = uplInfo.GetFileName(suggestedFileName);
+
+                    Debug.Assert(!string.IsNullOrWhiteSpace(uplInfo.FileFormName));
+                    Debug.Assert(!string.IsNullOrWhiteSpace(fname));
+
+                    content.Add(new StreamContent(data), uplInfo.FileFormName, fname);
+
+                    Debug.Assert(!string.IsNullOrWhiteSpace(uplInfo.RequestUrl));
+
+                    var res = await cl.PostAsync(uplInfo.RequestUrl, content, cancellationToken).ConfigureAwait(false);
+
+                    if (!res.IsSuccessStatusCode)
+                        throw new UploadException($"The servers of {CustomData.Info.Name} responded with the error {res.StatusCode}: \"{res.ReasonPhrase}\".");
+
+                    var resStr = await res.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+                    var imageUrl = ParseUrlFromResponse(resStr, CustomData.Uploader.Parser);
+                    Debug.Assert(!string.IsNullOrWhiteSpace(imageUrl));
+
+                    return new UploadResult(this, imageUrl, DateTime.Now);
+                }
+            }
         }
-        private bool ValidateXml(string schema) => false; // TODO: Implement
+
+        private string ParseUrlFromResponse(string response, Parser parser)
+        {
+            Debug.Assert(response != null);
+            Debug.Assert(parser != null);
+
+            switch (CustomData.Uploader.Parser.Kind.ToUpperInvariant())
+            {
+                case "REGEX":
+                    {
+                        var successPattern = new Regex(parser.Success); // TODO: Regex options?
+                        var matches = successPattern.Matches(response);
+                        if (matches.Count == 0)
+                        {
+                            if (parser.Failure == null)
+                                throw new UploadException("Response did not contain valid data.");
+
+                            // No m atch found, look for error message
+                            var failurePattern = new Regex(parser.Failure); // TODO: Regex options?
+                            var failureMatch = failurePattern.Match(response);
+                            if (!failureMatch.Success)
+                                throw new UploadException("Response did not contain valid data.");
+                            throw new UploadException($"Server returned error:\n{failureMatch.Value}");
+                        }
+                        var url = FillUrlTemplate(parser.Url, matches.Cast<Match>().ToArray());
+
+                        Debug.Assert(!string.IsNullOrEmpty(url));
+                        return url;
+                    }
+                case "JSON":
+                    {
+                        JObject obj = null;
+                        try
+                        {
+                            obj = JObject.Parse(response);
+                        }
+                        catch (JsonReaderException ex)
+                        {
+                            throw new UploadException("Invalid JSON response", ex);
+                        }
+
+                        Debug.Assert(obj != null);
+                        // Get Success Link-Value
+                        var suc = obj.SelectToken(parser.Success);
+                        if (suc == null)
+                        {
+                            if (parser.Failure == null)
+                                throw new UploadException("Response did not contain valid data.");
+
+                            // There was none, fetch error message
+                            var fail = obj.SelectToken(parser.Failure);
+                            if (fail == null) // Check if there is an error message
+                                throw new UploadException("Response did not contain valid data.");
+                            throw new UploadException($"Server returned error: {fail.ToString()}");
+                        }
+                        var imageUrl = parser.Url.Replace("$match$", suc.ToString());
+                        return imageUrl;
+                    }
+                default: throw new InvalidDataException();
+            }
+        }
+
+        private string FillUrlTemplate(string template, IReadOnlyList<Match> matches)
+        {
+            Debug.Assert(!string.IsNullOrEmpty(template));
+            Debug.Assert(matches != null);
+
+            const char PatternToken = '$';
+
+            if (!template.Contains(PatternToken.ToString()))
+                return template;
+
+            var sb = new StringBuilder();
+            string currentToken = null;
+            for (int i = 0; i < template.Length; ++i)
+            {
+                var c = template[i];
+
+                // Token starts or ends
+                if (c == PatternToken)
+                {
+                    if (currentToken == null)
+                    {
+                        // Token is started, since currentToken is null
+                        currentToken = string.Empty;
+                    }
+                    else
+                    {
+                        // Token was now closed. Append evaluated token and reset.
+
+                        var split = currentToken.Split(',');
+                        Debug.Assert(split != null);
+
+                        int matchIndex = int.Parse(split[0]);
+
+                        Debug.Assert(matchIndex < matches.Count);
+
+                        var match = matches[matchIndex];
+                        Debug.Assert(match != null);
+                        if (split.Length == 2)
+                        {
+                            // use a specific match group if provided
+                            var matchGroup = split[1];
+                            var group = match.Groups[matchGroup];
+
+                            Debug.Assert(group != null);
+                            Debug.Assert(group.Success);
+                            sb.Append(group.Value);
+                        }
+                        else
+                        {
+                            Debug.Assert(split.Length < 2);
+                            // Insert the entire match
+                            sb.Append(match.Value);
+                        }
+                        currentToken = null;
+                    }
+                }
+                else
+                {
+                    // No token char (no $)
+                    // Just append it to the current token or text
+                    if (currentToken != null)
+                        currentToken += c;
+                    else
+                        sb.Append(c);
+                }
+            }
+
+            // Assert that all tokens have been closed
+            Debug.Assert(currentToken == null);
+            return sb.ToString();
+        }
+
+        public static bool TryParse(string value, out CustomUploader result)
+        {
+            result = null;
+            if (string.IsNullOrWhiteSpace(value))
+                return false;
+            var info = JsonConvert.DeserializeObject<CustomUploaderInfo>(value, JsonConfig.JsonSettings);
+            if (info?.Validate(SupportedSchema) == true)
+            {
+                result = new CustomUploader(info);
+                return true;
+            }
+            return false;
+        }
     }
 }
