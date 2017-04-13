@@ -38,11 +38,14 @@ after_build:
         7z a HolzShots.zip "$env:APPVEYOR_BUILD_FOLDER\src\HolzShots\bin\$env:configuration\*.dll"
         7z a HolzShots.zip "$env:APPVEYOR_BUILD_FOLDER\src\HolzShots\bin\$env:configuration\*.config"
         7z a HolzShots.zip "$env:APPVEYOR_BUILD_FOLDER\src\HolzShots\bin\$env:configuration\*.manifest"
+  - sha256sum HolzShots.zip > sha256sums.txt
 
 artifacts:
   - path: HolzShots.zip
     name: HolzShots
     type: zip
+  - path: sha256sums.txt
+    name: sha256sums
 
 on_success:
   - ps: |
