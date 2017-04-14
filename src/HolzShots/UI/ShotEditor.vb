@@ -21,6 +21,7 @@ Namespace UI.Specialized
 
 #Region "Properties"
 
+        ' TODO: Remove?
         Friend ReadOnly Property CurrentTool As PaintPanel.Tools
             Get
                 'Return ThePanel.CurrentTool
@@ -171,12 +172,9 @@ Namespace UI.Specialized
             If HolzShots.My.Application.CurrentUploaderPluginManager.Loaded Then
                 UploadToHoster.DropDown.Renderer = GlobalContextMenuRenderer
                 Dim pls = HolzShots.My.Application.CurrentUploaderPluginManager.GetUploaderNames()
-                For Each p In pls
-                    Dim item As ToolStripItem = UploadToHoster.DropDown.Items.Add($"Auf {p} hochladen.")
-                    ' TODO: Icons?
-                    ' If p.PluginInfo.Icon IsNot Nothing Then
-                    '     item.Image = p.PluginInfo.Icon
-                    ' End If
+                For Each uploaderName In pls
+                    Dim item As ToolStripItem = UploadToHoster.DropDown.Items.Add($"Auf {uploaderName} hochladen.")
+                    item.Tag = uploaderName
                     item.ImageScaling = ToolStripItemImageScaling.None
                 Next
             End If
@@ -789,17 +787,18 @@ Namespace UI.Specialized
         End Sub
 
         Private Async Sub UploadToHosterDropDownItemClicked(ByVal sender As Object, ByVal e As ToolStripItemClickedEventArgs) Handles UploadToHoster.DropDownItemClicked
-            If e.ClickedItem.Tag IsNot Nothing Then
-                Dim uploaderName = e.ClickedItem.Text ' Dirty :>
-                Dim info = HolzShots.My.Application.CurrentUploaderPluginManager.GetUploaderByName(uploaderName)
+            Dim tag = DirectCast(e.ClickedItem.Tag, String)
+            If Not String.IsNullOrWhiteSpace(tag) Then
+                ' Dirty :>
+                Dim info = HolzShots.My.Application.CurrentUploaderPluginManager.GetUploaderByName(tag)
 
                 Debug.Assert(info.HasValue)
 
                 Dim v = info.Value
                 Debug.Assert(v.metadata IsNot Nothing)
                 Debug.Assert(v.uploader IsNot Nothing)
-                Debug.Assert(v.metadata.Name = e.ClickedItem.Text)
-                Debug.Assert(Not String.IsNullOrEmpty(e.ClickedItem.Text))
+                Debug.Assert(v.metadata.Name = tag)
+                Debug.Assert(Not String.IsNullOrEmpty(tag))
 
                 Dim image = ThePanel.CombinedImage
                 Dim format = UploadHelper.GetImageFormat(image)

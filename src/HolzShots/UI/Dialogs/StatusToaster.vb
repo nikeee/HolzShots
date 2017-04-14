@@ -9,34 +9,23 @@ Namespace UI.Dialogs
 
         Sub New()
             InitializeComponent()
+            uploadedBytesLabel.Text = String.Empty
             _animator = New FlyoutAnimator(Me)
         End Sub
 
         Private Sub SetSpeed(value As String)
             Debug.Assert(Not speedLabel.InvokeRequired)
-            'If speedLabel.InvokeRequired Then
-            '    speedLabel.Invoke(Sub() speedLabel.Text = value)
-            'Else
             speedLabel.Text = value
-            'End If
         End Sub
 
         Private Sub SetUploadedBytesLabel(value As String)
             Debug.Assert(Not uploadedBytesLabel.InvokeRequired)
-            'If uploadedBytesLabel.InvokeRequired Then
-            '    uploadedBytesLabel.Invoke(Sub() uploadedBytesLabel.Text = value)
-            'Else
             uploadedBytesLabel.Text = value
-            'End If
         End Sub
 
         Private Sub SetProgressBarStyleLabel(value As ProgressBarStyle)
             Debug.Assert(Not stuffUploadedBar.InvokeRequired)
-            'If stuffUploadedBar.InvokeRequired Then
-            '    stuffUploadedBar.Invoke(Sub() stuffUploadedBar.Style = value)
-            'Else
             stuffUploadedBar.Style = value
-            'End If
         End Sub
 
         Private Sub SetProgressBarValueLabel(value As Integer)
