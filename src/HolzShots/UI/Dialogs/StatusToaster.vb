@@ -9,6 +9,7 @@ Namespace UI.Dialogs
 
         Sub New()
             InitializeComponent()
+            uploadedBytesLabel.Text = String.Empty
             _animator = New FlyoutAnimator(Me)
         End Sub
 
