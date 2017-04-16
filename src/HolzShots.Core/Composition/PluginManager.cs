@@ -117,16 +117,4 @@ namespace HolzShots.Composition
 
         #endregion
     }
-
-
-    [Serializable]
-    public class PluginLoadingFailedException : Exception
-    {
-        public PluginLoadingFailedException(Exception innerException)
-            : base("Failed to load plugins", innerException)
-        { }
-        protected PluginLoadingFailedException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context)
-            : base(info, context)
-        { }
-    }
 }
