@@ -21,6 +21,7 @@ interface Info {
     name: string;
     author?: string;
     contact?: string;
+    bugsUrl?: Url;
     updateUrl?: Url;
     description?: string;
 }

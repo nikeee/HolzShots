@@ -17,9 +17,9 @@ namespace HolzShots.Net.Custom
     public class CustomUploader : Uploader
     {
         private const string SupportedSchema = "0.1.0";
-        public CustomUploaderInfo CustomData { get; }
+        public CustomUploaderRoot CustomData { get; }
 
-        private CustomUploader(CustomUploaderInfo customData)
+        private CustomUploader(CustomUploaderRoot customData)
         {
             if (customData == null)
                 throw new ArgumentNullException(nameof(customData));
@@ -227,7 +227,7 @@ namespace HolzShots.Net.Custom
             result = null;
             if (string.IsNullOrWhiteSpace(value))
                 return false;
-            var info = JsonConvert.DeserializeObject<CustomUploaderInfo>(value, JsonConfig.JsonSettings);
+            var info = JsonConvert.DeserializeObject<CustomUploaderRoot>(value, JsonConfig.JsonSettings);
             if (info?.Validate(SupportedSchema) == true)
             {
                 result = new CustomUploader(info);

@@ -99,7 +99,7 @@
     <Compile Include="MathEx.cs" />
     <Compile Include="NativeMethods.cs" />
     <Compile Include="Net\Custom\CustomUploader.cs" />
-    <Compile Include="Net\Custom\CustomUploaderInfo.cs" />
+    <Compile Include="Net\Custom\CustomUploaderRoot.cs" />
     <Compile Include="Net\Custom\CustomUploaderLoader.cs" />
     <Compile Include="Net\Custom\JsonConfig.cs" />
     <Compile Include="KeyValuePairExtensions.cs" />

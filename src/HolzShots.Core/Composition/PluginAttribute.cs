@@ -5,7 +5,7 @@ namespace HolzShots.Composition
 {
     [MetadataAttribute]
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
-    public class PluginAttribute : ExportAttribute, IPluginMetadata
+    public class PluginAttribute : Attribute, IPluginMetadata
     {
         public string Name { get; }
         public string Author { get; }
@@ -16,11 +16,10 @@ namespace HolzShots.Composition
         public string Contact { get; }
         public string Description { get; }
 
-        public PluginAttribute(Type contractType, string name, string author, string version)
-            : this(contractType, name, author, version, null, null, null, null)
+        public PluginAttribute(string name, string author, string version)
+            : this(name, author, version, null, null, null, null)
         { }
-        public PluginAttribute(Type contractType, string name, string author, string version, string description, string contact, string url, string bugsUrl)
-            : base(contractType)
+        public PluginAttribute(string name, string author, string version, string description, string contact, string url, string bugsUrl)
         {
             Name = name;
             Author = author;

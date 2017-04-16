@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Text.RegularExpressions;
+using HolzShots.Composition;
 
 namespace HolzShots.Net.Custom
 {
@@ -13,13 +14,13 @@ namespace HolzShots.Net.Custom
     }
 
     [Serializable]
-    public class CustomUploaderInfo : IValidatable
+    public class CustomUploaderRoot : IValidatable
     {
         public string SchemaVersion { get; }
         public UploaderInfo Info { get; }
         public UploaderConfig Uploader { get; }
 
-        public CustomUploaderInfo(string schemaVersion, UploaderInfo info, UploaderConfig uploader)
+        public CustomUploaderRoot(string schemaVersion, UploaderInfo info, UploaderConfig uploader)
         {
             SchemaVersion = schemaVersion;
             Info = info;
@@ -42,15 +43,17 @@ namespace HolzShots.Net.Custom
 
         public string Author { get; } = null;
         public string Contact { get; } = null;
+        public string BugsUrl { get; }
         public string UpdateUrl { get; } = null;
         public string Description { get; } = null;
 
-        public UploaderInfo(string version, string name, string author, string contact, string updateUrl, string description)
+        public UploaderInfo(string version, string name, string author, string contact, string bugsUrl, string updateUrl, string description)
         {
             Version = version;
             Name = name;
             Author = author;
             Contact = contact;
+            bugsUrl = BugsUrl;
             UpdateUrl = updateUrl;
             Description = description;
         }
@@ -59,6 +62,11 @@ namespace HolzShots.Net.Custom
         {
             // TODO: Check if Version is valid semver
             return Version != null && !string.IsNullOrWhiteSpace(Name);
+        }
+
+        public PluginAttribute ToPluginAttribute()
+        {
+            return new PluginAttribute(Name, Author, Version, Description, Contact, UpdateUrl, BugsUrl);
         }
     }
 

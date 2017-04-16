@@ -12,7 +12,7 @@ namespace HolzShots.Composition
             : this(name, author, version, null, null, null, null)
         { }
         public UploadPluginAttribute(string name, string author, string version, string description, string contact, string url, string bugsUrl)
-            : base(typeof(Uploader), name, author, version, description, contact, url, bugsUrl)
+            : base(name, author, version, description, contact, url, bugsUrl)
         { }
     }
 }
