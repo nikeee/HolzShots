@@ -23,7 +23,7 @@ before_build:
             cinst docfx -y
             docfx -version
         }
-  - scriptcs patch-version.csx
+  - scriptcs src\patch-version.csx
 
 test:
   assemblies:
