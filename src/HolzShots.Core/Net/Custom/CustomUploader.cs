@@ -228,9 +228,15 @@ namespace HolzShots.Net.Custom
             if (string.IsNullOrWhiteSpace(value))
                 return false;
             var info = JsonConvert.DeserializeObject<CustomUploaderRoot>(value, JsonConfig.JsonSettings);
-            if (info?.Validate(SupportedSchema) == true)
+            return TryLoad(info, out result);
+        }
+
+        public static bool TryLoad(CustomUploaderRoot value, out CustomUploader result)
+        {
+            result = null;
+            if (value?.Validate(SupportedSchema) == true)
             {
-                result = new CustomUploader(info);
+                result = new CustomUploader(value);
                 return true;
             }
             return false;

@@ -3,15 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using HolzShots.Net.Custom;
 
 namespace HolzShots.Composition
 {
-    public class UploaderPluginManager : PluginManager<Uploader>
+    public class PluginUploaderSource : PluginManager<Uploader>, IUploaderSource
     {
-        private readonly IReadOnlyDictionary<UploaderInfo, CustomUploader> _customUpoaders;
 
-        public UploaderPluginManager(string pluginDirectory)
+        public PluginUploaderSource(string pluginDirectory)
             : base(pluginDirectory)
         {
         }
@@ -22,11 +20,9 @@ namespace HolzShots.Composition
             Debug.Assert(Loaded);
 
             var pls = Plugins;
-            var cupls = _customUpoaders;
             Debug.Assert(pls != null);
-            Debug.Assert(cupls != null);
 
-            // Look for the uploader in instaled plugins (dlls)
+            // Look for the uploader in installed plugins (dlls)
             foreach (var p in pls)
             {
                 Debug.Assert(p.Metadata != null);
@@ -45,32 +41,14 @@ namespace HolzShots.Composition
                     Debugger.Break();
                 }
             }
-
-            // If not found, look in custom uploaders (json files)
-            foreach (var (info, uploader) in _customUpoaders)
-            {
-                if (info == null)
-                    continue;
-                Debug.Assert(info != null);
-                Debug.Assert(!string.IsNullOrEmpty(info.Name));
-                Debug.Assert(uploader != null);
-                if (info.Name == name)
-                    return (metadata: info, uploader: uploader);
-            }
-
             return null;
         }
 
         public IReadOnlyList<string> GetUploaderNames()
         {
-            var meta = GetPluginMetadata();
+            var meta = GetMetadata();
             Debug.Assert(meta != null);
-            var customMeta = GetCustomUploaderMetadata();
-            Debug.Assert(customMeta != null);
-            var concat = meta.Concat(customMeta);
-            return new List<string>(concat.Select(i => i.Name));
+            return meta.Select(i => i.Name).ToList();
         }
-
-        private IEnumerable<IPluginMetadata> GetCustomUploaderMetadata() => _customUpoaders.Select(kv => kv.Key);
     }
 }

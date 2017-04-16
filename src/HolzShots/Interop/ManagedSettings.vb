@@ -11,6 +11,7 @@ Namespace Interop
         Private Const ApplicationName As String = LibraryInformation.Name
 
         Private Const PluginPathDir As String = "Plugin"
+        Private Const CustomUploadersFileName = "custom-uploaders.json"
         Private ReadOnly DefaultPluginPath As String = Path.Combine(Path.Combine(HolzShotsEnvironment.ApplicationDataRoaming, ApplicationName), PluginPathDir)
 
         Sub New()
@@ -198,6 +199,7 @@ Namespace Interop
         End Property
 
         Public ReadOnly Property PluginPath As String = DefaultPluginPath
+        Public ReadOnly Property CustomUploadersPath As String = Path.Combine(DefaultPluginPath, CustomUploadersFileName)
         Public ReadOnly Property IsAnyPolicyDefined As Boolean = False ' Manager.DefinedPolicyCounter > 0
 
     End Module

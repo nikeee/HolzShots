@@ -38,14 +38,14 @@ Namespace UI.Specialized
 
         Private Sub DisplayPlugins()
 
-            If Global.HolzShots.My.Application.CurrentUploaderPluginManager.Loaded Then
-                Dim uploaders = Global.HolzShots.My.Application.CurrentUploaderPluginManager.GetUploaderNames()
+            If Global.HolzShots.My.Application.Uploaders.Loaded Then
+                Dim uploaders = Global.HolzShots.My.Application.Uploaders.GetUploaderNames()
                 defaultHosterBox.Items.Clear()
                 defaultHosterBox.Items.AddRange(uploaders.ToArray())
 
                 pluginListPanel.Controls.Clear()
                 _pluginInfoItemList.Clear()
-                Dim metadata = Global.HolzShots.My.Application.CurrentUploaderPluginManager.GetPluginMetadata()
+                Dim metadata = Global.HolzShots.My.Application.Uploaders.GetMetadata()
                 Dim metaArr = metadata.Select(Function(i) New PluginInfoItem(i)).ToArray()
                 pluginListPanel.Controls.AddRange(metaArr)
                 _pluginInfoItemList.AddRange(metaArr)
@@ -365,7 +365,7 @@ Namespace UI.Specialized
         End Sub
 
         Private Shared Sub OpenPluginFolderLinkLabelLinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles openPluginFolderLinkLabel.LinkClicked
-            Global.HolzShots.My.Application.CurrentUploaderPluginManager.PluginDirectory.OpenFolderInExplorer()
+            Global.HolzShots.My.Application.Uploaders.Plugins.PluginDirectory.OpenFolderInExplorer()
         End Sub
 
         Private _selectorKeyStroke As Hotkey

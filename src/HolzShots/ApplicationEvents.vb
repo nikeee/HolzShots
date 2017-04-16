@@ -21,21 +21,23 @@ Namespace My
         Public Shared ShellSizeStockIcons As New StockIcons(StockIconSize.ShellSize, False, False)
         Public Shared LargeStockIcons As New StockIcons(StockIconSize.Large, False, False)
 
-        Private _uploaderPlugins As UploaderPluginManager
-        ReadOnly Property CurrentUploaderPluginManager As UploaderPluginManager
+        Private _uploaders As UploaderManager
+        ReadOnly Property Uploaders As UploaderManager
             Get
-                Debug.Assert(_uploaderPlugins IsNot Nothing)
-                Debug.Assert(_uploaderPlugins.Loaded)
-                Return _uploaderPlugins
+                Debug.Assert(_uploaders IsNot Nothing)
+                Debug.Assert(_uploaders.Loaded)
+                Return _uploaders
             End Get
         End Property
 
         Private Async Function LoadPlugins() As Task
-            Debug.Assert(_uploaderPlugins Is Nothing)
-            _uploaderPlugins = New UploaderPluginManager(ManagedSettings.PluginPath)
+            Debug.Assert(_uploaders Is Nothing)
+            Dim plugins = New PluginUploaderSource(ManagedSettings.PluginPath)
+            Dim customs = New CustomUploaderSource(CustomUploadersPath)
+            _uploaders = New UploaderManager(plugins, customs)
 
             Try
-                Await _uploaderPlugins.Load().ConfigureAwait(False)
+                Await _uploaders.Load().ConfigureAwait(False)
             Catch ex As PluginLoadingFailedException
                 HumanInterop.PluginLoadingFailed(ex)
                 Debugger.Break()

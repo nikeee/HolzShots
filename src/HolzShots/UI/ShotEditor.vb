@@ -169,9 +169,9 @@ Namespace UI.Specialized
 
             UploadToHoster.DropDown.ImageScalingSize = New Size(16, 16)
             UploadToHoster.DropDown.AutoSize = True
-            If HolzShots.My.Application.CurrentUploaderPluginManager.Loaded Then
+            If HolzShots.My.Application.Uploaders.Loaded Then
                 UploadToHoster.DropDown.Renderer = GlobalContextMenuRenderer
-                Dim pls = HolzShots.My.Application.CurrentUploaderPluginManager.GetUploaderNames()
+                Dim pls = HolzShots.My.Application.Uploaders.GetUploaderNames()
                 For Each uploaderName In pls
                     Dim item As ToolStripItem = UploadToHoster.DropDown.Items.Add($"Auf {uploaderName} hochladen.")
                     item.Tag = uploaderName
@@ -790,7 +790,7 @@ Namespace UI.Specialized
             Dim tag = DirectCast(e.ClickedItem.Tag, String)
             If Not String.IsNullOrWhiteSpace(tag) Then
                 ' Dirty :>
-                Dim info = HolzShots.My.Application.CurrentUploaderPluginManager.GetUploaderByName(tag)
+                Dim info = HolzShots.My.Application.Uploaders.GetUploaderByName(tag)
 
                 Debug.Assert(info.HasValue)
 

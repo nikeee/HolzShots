@@ -14,7 +14,7 @@ Namespace Net
 
         Friend Shared Function UploadToDefaultUploader(image As Image, Optional format As ImageFormat = Nothing, Optional parentWindow As IWin32Window = Nothing) As Task(Of UploadResult)
             Dim uploaderName = My.Settings.DefaultImageHoster
-            Dim info = My.Application.CurrentUploaderPluginManager.GetUploaderByName(uploaderName)
+            Dim info = My.Application.Uploaders.GetUploaderByName(uploaderName)
             Debug.Assert(info.HasValue)
             If Not info.HasValue Then Throw New Exception()
             Dim v = info.Value

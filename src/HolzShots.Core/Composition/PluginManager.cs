@@ -73,7 +73,7 @@ namespace HolzShots.Composition
             Loaded = true;
         }
 
-        public IReadOnlyList<IPluginMetadata> GetPluginMetadata()
+        public IReadOnlyList<IPluginMetadata> GetMetadata()
         {
             Debug.Assert(Loaded);
             var pls = Plugins;

@@ -68,6 +68,11 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Composition\CustomUploadersFile.cs" />
+    <Compile Include="Composition\CustomUploaderSource.cs" />
+    <Compile Include="Composition\IUploaderSource.cs" />
+    <Compile Include="Composition\PluginUploaderSource.cs" />
+    <Compile Include="Composition\UploaderManager.cs" />
     <Compile Include="Drawing\ImageExtensions.cs" />
     <Compile Include="Drawing\WindowScreenshotSet.cs" />
     <Compile Include="Input\IAreaSelector.cs" />
@@ -84,7 +89,6 @@
     <Compile Include="Composition\IPluginMetadata.cs" />
     <Compile Include="Composition\PluginAttribute.cs" />
     <Compile Include="Composition\PluginManager.cs" />
-    <Compile Include="Composition\UploaderPluginManager.cs" />
     <Compile Include="Composition\UploadPluginAttribute.cs" />
     <Compile Include="Input\Hotkey.cs" />
     <Compile Include="Input\HotkeyPressedEventArgs.cs" />
