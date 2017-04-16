@@ -37,7 +37,7 @@ namespace HolzShots.Common.Drawing
                     NativeMethods.LineTo(mDc, p2.X, p2.Y);
                 }
                 NativeMethods.SetROP2(mDc, RasterOperation2.CopyPen);
-                NativeMethods.BitBlt(hdc, 0, 0, bmp.Width, bmp.Height, mDc, 0, 0, RasterOperation.SrcCopy);
+                NativeMethods.BitBlt(hdc, 0, 0, bmp.Width, bmp.Height, mDc, 0, 0, CopyPixelOperation.SourceCopy);
             }
             finally
             {
