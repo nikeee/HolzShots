@@ -67,7 +67,6 @@
   <ItemGroup>
     <Compile Include="Composition\PluginLoadingFailedException.cs" />
     <Compile Include="Drawing\ImageExtensions.cs" />
-    <Compile Include="Drawing\WindowScreenshotSet.cs" />
     <Compile Include="Input\IAreaSelector.cs" />
     <Compile Include="IO\Naming\DatePatternItem.cs" />
     <Compile Include="IO\Naming\FileMetadata.cs" />
