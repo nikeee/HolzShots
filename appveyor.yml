@@ -10,7 +10,7 @@ environment:
   CI: true
 
 install:
-  - ps: cinst scriptcs -y
+  - ps: cinst scriptcs -y --no-progress
   - scriptcs -version
   - scriptcs -install
 
