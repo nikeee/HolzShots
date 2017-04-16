@@ -18,7 +18,7 @@ namespace HolzShots.Net
     {
         private const string ServiceName = "DirectUpload.net";
 
-        public override async Task<UploadResult> InvokeAsync(Stream data, string suggestedFileName, string mimeType, CancellationToken cancellationToken, IProgress<UploadProgress> progress)
+        public override async Task<UploadResult> InvokeAsync(Stream data, string suggestedFileName, string mimeType, IProgress<UploadProgress> progress, CancellationToken cancellationToken)
         {
             Debug.Assert(data != null);
             Debug.Assert(!string.IsNullOrEmpty(suggestedFileName));

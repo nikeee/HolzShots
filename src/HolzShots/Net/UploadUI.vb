@@ -54,7 +54,7 @@ Namespace Net
 
             speed.Start()
             Try
-                Dim res = Await _uploader.InvokeAsync(stream, fileName, metadata.MimeType, cts.Token, speed).ConfigureAwait(False)
+                Dim res = Await _uploader.InvokeAsync(stream, fileName, metadata.MimeType, speed, cts.Token).ConfigureAwait(False)
                 Return res
             Finally
                 speed.Stop()

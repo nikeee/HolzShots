@@ -28,7 +28,7 @@ namespace HolzShots.Net.Custom
             CustomData = customData;
         }
 
-        public async override Task<UploadResult> InvokeAsync(Stream data, string suggestedFileName, string mimeType, CancellationToken cancellationToken, IProgress<UploadProgress> progress)
+        public async override Task<UploadResult> InvokeAsync(Stream data, string suggestedFileName, string mimeType, IProgress<UploadProgress> progress, CancellationToken cancellationToken)
         {
             Debug.Assert(CustomData != null);
             Debug.Assert(CustomData.Validate(SupportedSchema));
@@ -46,7 +46,7 @@ namespace HolzShots.Net.Custom
                 if (size > mfs.Value)
                 {
                     var memSize = new MemSize(mfs.Value);
-                    throw new UploadException($"File is largner than the speified {nameof(CustomData.Uploader.MaxFileSize)} which is {memSize}");
+                    throw new UploadException($"File is {memSize} in size, which is larger than the specified limit of {nameof(CustomData.Uploader.MaxFileSize)}.");
                 }
             }
 
