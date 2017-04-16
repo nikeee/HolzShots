@@ -10,7 +10,7 @@ environment:
   CI: true
 
 install:
-  - ps: cinst scriptcs -y
+  - ps: cinst scriptcs -y --no-progress
   - scriptcs -version
   - scriptcs -install
 
@@ -23,7 +23,7 @@ before_build:
             cinst docfx -y
             docfx -version
         }
-  - scriptcs patch-version.csx
+  - scriptcs src\patch-version.csx
 
 test:
   assemblies:
