@@ -65,6 +65,7 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Composition\PluginLoadingFailedException.cs" />
     <Compile Include="Drawing\ImageExtensions.cs" />
     <Compile Include="Drawing\WindowScreenshotSet.cs" />
     <Compile Include="Input\IAreaSelector.cs" />
