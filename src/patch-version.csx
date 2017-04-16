@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 const string git = "git";
 const string gitArgs = "describe --tags --long";
 
-var libInfoFile = @"src\HolzShots.Common\LibraryInformation.cs";
+var libInfoFile = @"HolzShots.Common\LibraryInformation.cs";
 Console.WriteLine($"Using Info File: {libInfoFile}");
 
 var proc = new Process
