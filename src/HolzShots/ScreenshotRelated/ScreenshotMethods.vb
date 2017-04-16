@@ -35,7 +35,7 @@ Namespace ScreenshotRelated
             If ManagedSettings.EnableIngameMode AndAlso HolzShotsEnvironment.IsFullScreen AndAlso Not HolzShotsEnvironment.IsInMetroApplication() Then Return Nothing
 
             Using prio As New ProcessPriorityRequest()
-                Using screen As Bitmap = ScreenshotCreator.CaptureScreenshot(SystemInformation.VirtualScreen)
+                Using screen = ScreenshotCreator.CaptureScreenshot(SystemInformation.VirtualScreen)
                     Using selector As New AreaSelector()
                         Dim selectedArea = Await selector.PromptSelectionAsync(screen)
 
