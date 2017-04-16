@@ -43,7 +43,7 @@ namespace HolzShots.Net.Custom
 
         public string Author { get; } = null;
         public string Contact { get; } = null;
-        public string BugsUrl { get; }
+        public string BugsUrl { get; } = null;
         public string UpdateUrl { get; } = null;
         public string Url { get; } = null;
         public string Description { get; } = null;
