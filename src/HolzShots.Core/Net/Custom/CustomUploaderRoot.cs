@@ -36,7 +36,7 @@ namespace HolzShots.Net.Custom
     }
 
     [Serializable]
-    public class UploaderInfo : IValidatable
+    public class UploaderInfo : IValidatable, IPluginMetadata
     {
         public string Version { get; }
         public string Name { get; }
@@ -45,9 +45,10 @@ namespace HolzShots.Net.Custom
         public string Contact { get; } = null;
         public string BugsUrl { get; }
         public string UpdateUrl { get; } = null;
+        public string Url { get; } = null;
         public string Description { get; } = null;
 
-        public UploaderInfo(string version, string name, string author, string contact, string bugsUrl, string updateUrl, string description)
+        public UploaderInfo(string version, string name, string author, string contact, string bugsUrl, string updateUrl, string url, string description)
         {
             Version = version;
             Name = name;
@@ -55,6 +56,7 @@ namespace HolzShots.Net.Custom
             Contact = contact;
             bugsUrl = BugsUrl;
             UpdateUrl = updateUrl;
+            Url = url;
             Description = description;
         }
 
@@ -62,11 +64,6 @@ namespace HolzShots.Net.Custom
         {
             // TODO: Check if Version is valid semver
             return Version != null && !string.IsNullOrWhiteSpace(Name);
-        }
-
-        public PluginAttribute ToPluginAttribute()
-        {
-            return new PluginAttribute(Name, Author, Version, Description, Contact, UpdateUrl, BugsUrl);
         }
     }
 

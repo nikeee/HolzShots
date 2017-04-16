@@ -23,6 +23,7 @@ interface Info {
     contact?: string;
     bugsUrl?: Url;
     updateUrl?: Url;
+    url?: Url;
     description?: string;
 }
 
