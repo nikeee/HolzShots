@@ -167,7 +167,7 @@ Namespace UI.Controls
             TextInput.Name = "TextInput"
             TextInput.Size = New System.Drawing.Size(177, 73)
             TextInput.TabIndex = 0
-            TextInput.Text = "Ihr Text.."
+            TextInput.Text = "Sample Text"
             TextInput.WordWrap = False
             '
             'tools_bg

@@ -173,7 +173,7 @@ Namespace UI.Specialized
                 UploadToHoster.DropDown.Renderer = GlobalContextMenuRenderer
                 Dim pls = HolzShots.My.Application.CurrentUploaderPluginManager.GetUploaderNames()
                 For Each uploaderName In pls
-                    Dim item As ToolStripItem = UploadToHoster.DropDown.Items.Add($"Auf {uploaderName} hochladen.")
+                    Dim item As ToolStripItem = UploadToHoster.DropDown.Items.Add(String.Format(Localization.UploadTo, uploaderName))
                     item.Tag = uploaderName
                     item.ImageScaling = ToolStripItemImageScaling.None
                 Next
@@ -742,7 +742,7 @@ Namespace UI.Specialized
 
         Private Sub ThePanelInitialized() Handles ThePanel.Initialized
             ImageInfoLabel.Text = ThePanel.SizeInfo
-            ImageInfoLabel.ToolTipText = ThePanel.SizeInfoTtText
+            ImageInfoLabel.ToolTipText = ThePanel.SizeInfoText
             MouseInfoLabel.Text = "0, 0px"
         End Sub
 

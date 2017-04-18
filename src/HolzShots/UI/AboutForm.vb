@@ -35,15 +35,15 @@ Namespace UI
         End Sub
 
         Private Shared Sub ShowGfx(parent As IWin32Window)
-            Const title = "Über die Grafiken..."
+            Const title = "About Grafics"
 
             Dim sb As New StringBuilder()
-            sb.AppendLine("Filzstift-Icons von:")
+            sb.AppendLine("Marker Icons by:")
             sb.AppendLine("Everaldo Coelho - www.everaldo.com").AppendLine()
-            sb.AppendLine("Info- und Kalender-Icon von:")
+            sb.AppendLine("Info icon by:")
             sb.AppendLine("Visual Pharm - www.visualpharm.com").AppendLine()
-            sb.AppendLine("Lizenzfreie/Restliche Icons:")
-            sb.AppendLine("www.iconfinder.com und VS2015ImageLibrary")
+            sb.AppendLine("Free/remaining icons:")
+            sb.AppendLine("www.iconfinder.com and VS2017ImageLibrary")
 
             If Not TaskDialog.IsPlatformSupported Then
                 MessageBox.Show(parent, sb.ToString(), title)
@@ -54,7 +54,7 @@ Namespace UI
                 td.OwnerWindowHandle = If(parent?.Handle, IntPtr.Zero)
                 td.Icon = TaskDialogStandardIcon.Information
                 td.Caption = title
-                td.InstructionText = "Grafik-Ressourcen von HolzShots"
+                td.InstructionText = "Graphic Resources"
                 td.Text = sb.ToString()
                 td.StandardButtons = TaskDialogStandardButtons.Close
                 td.Show()

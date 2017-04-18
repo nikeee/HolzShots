@@ -5,7 +5,7 @@ Imports HolzShots.Common
 
 <Assembly: AssemblyTitle(LibraryInformation.Name)>
 <Assembly: AssemblyProduct(LibraryInformation.Name)>
-<Assembly: AssemblyDescription("Ein Screenshotprogramm mit vielen nützlichen Funktionen")>
+<Assembly: AssemblyDescription("A screenshot utility")>
 
 <Assembly: AssemblyCulture("")>
 <Assembly: AssemblyTrademark("")>

@@ -36,7 +36,7 @@ Namespace UI
             Me.acceptHotkeyButton.Name = "acceptHotkeyButton"
             Me.acceptHotkeyButton.Size = New System.Drawing.Size(90, 21)
             Me.acceptHotkeyButton.TabIndex = 0
-            Me.acceptHotkeyButton.Text = "Übernehmen"
+            Me.acceptHotkeyButton.Text = "Apply"
             Me.acceptHotkeyButton.UseVisualStyleBackColor = True
             '
             'hotkeyBox
@@ -49,7 +49,7 @@ Namespace UI
             Me.hotkeyBox.ShortcutsEnabled = False
             Me.hotkeyBox.Size = New System.Drawing.Size(369, 29)
             Me.hotkeyBox.TabIndex = 1
-            Me.hotkeyBox.Text = "Strg + Alt + Entf"
+            Me.hotkeyBox.Text = "Ctrl + Alt + Del"
             Me.hotkeyBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
             '
             'cancelHotkeyButton
@@ -60,7 +60,7 @@ Namespace UI
             Me.cancelHotkeyButton.Name = "cancelHotkeyButton"
             Me.cancelHotkeyButton.Size = New System.Drawing.Size(90, 21)
             Me.cancelHotkeyButton.TabIndex = 2
-            Me.cancelHotkeyButton.Text = "Abbrechen"
+            Me.cancelHotkeyButton.Text = "Cancel"
             Me.cancelHotkeyButton.UseVisualStyleBackColor = True
             '
             'HotkeySelector
@@ -79,7 +79,7 @@ Namespace UI
             Me.KeyPreview = True
             Me.Name = "HotkeySelector"
             Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
-            Me.Text = "Hotkey festlegen"
+            Me.Text = "Set Hotkey"
             Me.ResumeLayout(False)
             Me.PerformLayout()
 

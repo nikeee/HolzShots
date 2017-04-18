@@ -4,19 +4,18 @@ Imports Microsoft.WindowsAPICodePack.Taskbar
 
 Namespace Interop
     Friend Module InteropHelper
-        ' TODO: Translate
-
         Friend Sub DisplayNope(ex As Exception)
+            Debug.Assert(False)
             If ex IsNot Nothing Then
-                MessageBox.Show("Nope :(", "Fehler!" & Environment.NewLine & ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("Nope :(", $"Oh snap!{Environment.NewLine}{ex.Message}", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Else
-                MessageBox.Show("Nope :(", "Fehler!", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                MessageBox.Show("Nope :(", "Oh snap!", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End If
         End Sub
 
         <Extension()>
         Public Function OpenAndSelectFileInExplorer(filePath As String) As Boolean
-            If String.IsNullOrWhiteSpace(filePath) Then Return False ' Might throw exception?
+            If String.IsNullOrWhiteSpace(filePath) Then Return False ' TODO: Might throw exception?
 
             Dim args = $"/e, /select, ""{filePath}"""
             Try
@@ -30,7 +29,7 @@ Namespace Interop
 
         <Extension()>
         Public Function OpenFolderInExplorer(folderPath As String) As Boolean
-            If String.IsNullOrWhiteSpace(folderPath) Then Return False ' Might throw exception?
+            If String.IsNullOrWhiteSpace(folderPath) Then Return False ' TODO: Might throw exception?
 
             Dim psi = New ProcessStartInfo("explorer", folderPath) With {
                 .Verb = "open",

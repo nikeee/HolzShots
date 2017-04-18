@@ -139,7 +139,7 @@ Namespace UI.Specialized
             Me.ShareStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
             Me.ShareStrip.Size = New System.Drawing.Size(111, 44)
             Me.ShareStrip.TabIndex = 1
-            Me.ShareStrip.Text = "Aktionen"
+            Me.ShareStrip.Text = "Actions"
             '
             'UploadToHoster
             '
@@ -152,7 +152,7 @@ Namespace UI.Specialized
             Me.UploadToHoster.Margin = New System.Windows.Forms.Padding(5)
             Me.UploadToHoster.Name = "UploadToHoster"
             Me.UploadToHoster.Size = New System.Drawing.Size(52, 36)
-            Me.UploadToHoster.Text = "Auf {0} hochladen (Strg+Q)"
+            Me.UploadToHoster.Text = "Upload to {0} (Strg+Q)"
             '
             'save_btn
             '
@@ -164,11 +164,11 @@ Namespace UI.Specialized
             Me.save_btn.Margin = New System.Windows.Forms.Padding(5)
             Me.save_btn.Name = "save_btn"
             Me.save_btn.Size = New System.Drawing.Size(36, 36)
-            Me.save_btn.Text = "Speichern (Strg+Umschalt+S)"
+            Me.save_btn.Text = "Save (Ctrl+Shift+S)"
             '
             'DruckTeil
             '
-            Me.DruckTeil.DocumentName = "HolzShots - ScreenShot."
+            Me.DruckTeil.DocumentName = "Screenshot"
             '
             'DruckDialog
             '
@@ -190,7 +190,7 @@ Namespace UI.Specialized
             Me.EditStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
             Me.EditStrip.Size = New System.Drawing.Size(475, 39)
             Me.EditStrip.TabIndex = 11
-            Me.EditStrip.Text = "Bearbeiten"
+            Me.EditStrip.Text = "Edit"
             '
             'CensorTool
             '
@@ -202,7 +202,7 @@ Namespace UI.Specialized
             Me.CensorTool.Margin = New System.Windows.Forms.Padding(2, 0, 2, 2)
             Me.CensorTool.Name = "CensorTool"
             Me.CensorTool.Size = New System.Drawing.Size(36, 37)
-            Me.CensorTool.Text = "Zensieren (Strg+A)"
+            Me.CensorTool.Text = "Redact (Ctrl+A)"
             '
             'MarkerTool
             '
@@ -214,7 +214,7 @@ Namespace UI.Specialized
             Me.MarkerTool.Margin = New System.Windows.Forms.Padding(2, 0, 2, 2)
             Me.MarkerTool.Name = "MarkerTool"
             Me.MarkerTool.Size = New System.Drawing.Size(36, 37)
-            Me.MarkerTool.Text = "Markieren (Strg+S)"
+            Me.MarkerTool.Text = "Mark (Ctrl+S)"
             '
             'TextToolButton
             '
@@ -225,7 +225,7 @@ Namespace UI.Specialized
             Me.TextToolButton.Margin = New System.Windows.Forms.Padding(2, 0, 2, 2)
             Me.TextToolButton.Name = "TextToolButton"
             Me.TextToolButton.Size = New System.Drawing.Size(36, 37)
-            Me.TextToolButton.Text = "Text einfügen (Strg+T)"
+            Me.TextToolButton.Text = "Insert Text (Ctrl+T)"
             '
             'CroppingTool
             '
@@ -236,7 +236,7 @@ Namespace UI.Specialized
             Me.CroppingTool.Margin = New System.Windows.Forms.Padding(2, 0, 2, 2)
             Me.CroppingTool.Name = "CroppingTool"
             Me.CroppingTool.Size = New System.Drawing.Size(36, 37)
-            Me.CroppingTool.Text = "Bild zuschneiden (Strg+D)"
+            Me.CroppingTool.Text = "Crop Image (Ctrl+D)"
             '
             'EraserTool
             '
@@ -247,7 +247,7 @@ Namespace UI.Specialized
             Me.EraserTool.Margin = New System.Windows.Forms.Padding(2, 0, 2, 2)
             Me.EraserTool.Name = "EraserTool"
             Me.EraserTool.Size = New System.Drawing.Size(36, 37)
-            Me.EraserTool.Text = "Radiergummi (Strg+E)"
+            Me.EraserTool.Text = "Eraser (Ctrl+E)"
             '
             'BlurTool
             '
@@ -258,7 +258,7 @@ Namespace UI.Specialized
             Me.BlurTool.Margin = New System.Windows.Forms.Padding(2, 0, 2, 2)
             Me.BlurTool.Name = "BlurTool"
             Me.BlurTool.Size = New System.Drawing.Size(36, 37)
-            Me.BlurTool.Text = "Bereich verpixeln (Strg+F)"
+            Me.BlurTool.Text = "Blur Area (Ctrl+F)"
             '
             'EllipseTool
             '
@@ -268,7 +268,7 @@ Namespace UI.Specialized
             Me.EllipseTool.Margin = New System.Windows.Forms.Padding(2, 0, 2, 2)
             Me.EllipseTool.Name = "EllipseTool"
             Me.EllipseTool.Size = New System.Drawing.Size(36, 37)
-            Me.EllipseTool.Text = "Ellipse (Strg+H)"
+            Me.EllipseTool.Text = "Ellipse (Ctrl+H)"
             '
             'PipettenTool
             '
@@ -278,7 +278,7 @@ Namespace UI.Specialized
             Me.PipettenTool.Margin = New System.Windows.Forms.Padding(2, 0, 2, 2)
             Me.PipettenTool.Name = "PipettenTool"
             Me.PipettenTool.Size = New System.Drawing.Size(36, 37)
-            Me.PipettenTool.Text = "Pipette"
+            Me.PipettenTool.Text = "Eye Dropper"
             '
             'BrightenTool
             '
@@ -288,7 +288,7 @@ Namespace UI.Specialized
             Me.BrightenTool.Margin = New System.Windows.Forms.Padding(2, 0, 2, 2)
             Me.BrightenTool.Name = "BrightenTool"
             Me.BrightenTool.Size = New System.Drawing.Size(36, 37)
-            Me.BrightenTool.Text = "Bild aufhellen oder abdunkeln"
+            Me.BrightenTool.Text = "Brighten or Darken Image"
             '
             'ArrowTool
             '
@@ -299,7 +299,7 @@ Namespace UI.Specialized
             Me.ArrowTool.Margin = New System.Windows.Forms.Padding(2, 0, 2, 2)
             Me.ArrowTool.Name = "ArrowTool"
             Me.ArrowTool.Size = New System.Drawing.Size(36, 37)
-            Me.ArrowTool.Text = "Pfeil (Strg+G)"
+            Me.ArrowTool.Text = "Arrow (Ctrl+G)"
             '
             'UndoStuff
             '
@@ -310,7 +310,7 @@ Namespace UI.Specialized
             Me.UndoStuff.Margin = New System.Windows.Forms.Padding(20, 0, 0, 2)
             Me.UndoStuff.Name = "UndoStuff"
             Me.UndoStuff.Size = New System.Drawing.Size(36, 37)
-            Me.UndoStuff.Text = "Rückgängig (Strg+Z)"
+            Me.UndoStuff.Text = "Undo (Ctrl+Z)"
             '
             'ToolStripDropDownButton1
             '
@@ -376,7 +376,7 @@ Namespace UI.Specialized
             Me.KreisToolStripMenuItem.Name = "KreisToolStripMenuItem"
             Me.KreisToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.H), System.Windows.Forms.Keys)
             Me.KreisToolStripMenuItem.Size = New System.Drawing.Size(226, 22)
-            Me.KreisToolStripMenuItem.Text = "Kreis"
+            Me.KreisToolStripMenuItem.Text = "Circle"
             Me.KreisToolStripMenuItem.Visible = False
             '
             'ArrowToolStripMenuItem
@@ -458,7 +458,7 @@ Namespace UI.Specialized
             Me.GlassLabel2.Name = "GlassLabel2"
             Me.GlassLabel2.Size = New System.Drawing.Size(39, 13)
             Me.GlassLabel2.TabIndex = 26
-            Me.GlassLabel2.Text = "Farbe:"
+            Me.GlassLabel2.Text = "Color:"
             '
             'GlassLabel3
             '
@@ -467,7 +467,7 @@ Namespace UI.Specialized
             Me.GlassLabel3.Name = "GlassLabel3"
             Me.GlassLabel3.Size = New System.Drawing.Size(70, 13)
             Me.GlassLabel3.TabIndex = 22
-            Me.GlassLabel3.Text = "Pinselbreite:"
+            Me.GlassLabel3.Text = "Width:"
             '
             'Pinsel_Width_Zensursula
             '
@@ -519,7 +519,7 @@ Namespace UI.Specialized
             Me.GlassLabel4.Name = "GlassLabel4"
             Me.GlassLabel4.Size = New System.Drawing.Size(39, 13)
             Me.GlassLabel4.TabIndex = 26
-            Me.GlassLabel4.Text = "Farbe:"
+            Me.GlassLabel4.Text = "Color:"
             '
             'GlassLabel1
             '
@@ -528,7 +528,7 @@ Namespace UI.Specialized
             Me.GlassLabel1.Name = "GlassLabel1"
             Me.GlassLabel1.Size = New System.Drawing.Size(70, 13)
             Me.GlassLabel1.TabIndex = 23
-            Me.GlassLabel1.Text = "Pinselbreite:"
+            Me.GlassLabel1.Text = "Width:"
             '
             'Pinsel_Width_Marker
             '
@@ -578,7 +578,7 @@ Namespace UI.Specialized
             Me.GlassLabel5.Name = "GlassLabel5"
             Me.GlassLabel5.Size = New System.Drawing.Size(105, 13)
             Me.GlassLabel5.TabIndex = 24
-            Me.GlassLabel5.Text = "Pinseldurchmesser:"
+            Me.GlassLabel5.Text = "Diameter:"
             '
             'Eraser_Diameter
             '
@@ -632,7 +632,7 @@ Namespace UI.Specialized
             Me.GlassLabel12.Name = "GlassLabel12"
             Me.GlassLabel12.Size = New System.Drawing.Size(46, 13)
             Me.GlassLabel12.TabIndex = 27
-            Me.GlassLabel12.Text = "Modus:"
+            Me.GlassLabel12.Text = "Mode:"
             '
             'EllipseOrRectangle
             '
@@ -650,7 +650,7 @@ Namespace UI.Specialized
             Me.GlassLabel8.Name = "GlassLabel8"
             Me.GlassLabel8.Size = New System.Drawing.Size(39, 13)
             Me.GlassLabel8.TabIndex = 25
-            Me.GlassLabel8.Text = "Farbe:"
+            Me.GlassLabel8.Text = "Color:"
             '
             'GlassLabel7
             '
@@ -659,7 +659,7 @@ Namespace UI.Specialized
             Me.GlassLabel7.Name = "GlassLabel7"
             Me.GlassLabel7.Size = New System.Drawing.Size(69, 13)
             Me.GlassLabel7.TabIndex = 24
-            Me.GlassLabel7.Text = "Strichbreite:"
+            Me.GlassLabel7.Text = "Width:"
             '
             'Ellipse_Width
             '
@@ -729,7 +729,7 @@ Namespace UI.Specialized
             Me.GlassLabel9.Name = "GlassLabel9"
             Me.GlassLabel9.Size = New System.Drawing.Size(57, 13)
             Me.GlassLabel9.TabIndex = 26
-            Me.GlassLabel9.Text = "Aufhellen"
+            Me.GlassLabel9.Text = "Brighten"
             '
             'GlassLabel6
             '
@@ -738,7 +738,7 @@ Namespace UI.Specialized
             Me.GlassLabel6.Name = "GlassLabel6"
             Me.GlassLabel6.Size = New System.Drawing.Size(64, 13)
             Me.GlassLabel6.TabIndex = 25
-            Me.GlassLabel6.Text = "Abdunkeln"
+            Me.GlassLabel6.Text = "Darken"
             '
             'ArrowSettingsPanel
             '
@@ -771,7 +771,7 @@ Namespace UI.Specialized
             Me.GlassLabel11.Name = "GlassLabel11"
             Me.GlassLabel11.Size = New System.Drawing.Size(70, 13)
             Me.GlassLabel11.TabIndex = 28
-            Me.GlassLabel11.Text = "Pinselbreite:"
+            Me.GlassLabel11.Text = "Width:"
             '
             'ArrowWidthLabel
             '
@@ -789,7 +789,7 @@ Namespace UI.Specialized
             Me.GlassLabel10.Name = "GlassLabel10"
             Me.GlassLabel10.Size = New System.Drawing.Size(39, 13)
             Me.GlassLabel10.TabIndex = 25
-            Me.GlassLabel10.Text = "Farbe:"
+            Me.GlassLabel10.Text = "Color:"
             '
             'ArrowColorviewer
             '
@@ -818,7 +818,7 @@ Namespace UI.Specialized
             Me.GlassLabel14.Name = "GlassLabel14"
             Me.GlassLabel14.Size = New System.Drawing.Size(42, 13)
             Me.GlassLabel14.TabIndex = 22
-            Me.GlassLabel14.Text = "Stärke:"
+            Me.GlassLabel14.Text = "Diameter:"
             '
             'BlurnessBar
             '
@@ -846,7 +846,7 @@ Namespace UI.Specialized
             Me.ToolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
             Me.ToolStrip1.Size = New System.Drawing.Size(115, 30)
             Me.ToolStrip1.TabIndex = 27
-            Me.ToolStrip1.Text = "Bearbeiten"
+            Me.ToolStrip1.Text = "Edit"
             '
             'ScaleTool
             '
@@ -856,7 +856,7 @@ Namespace UI.Specialized
             Me.ScaleTool.Margin = New System.Windows.Forms.Padding(2, 5, 2, 5)
             Me.ScaleTool.Name = "ScaleTool"
             Me.ScaleTool.Size = New System.Drawing.Size(23, 20)
-            Me.ScaleTool.Text = "Bild skalieren"
+            Me.ScaleTool.Text = "Scale Image"
             '
             'DrawCursor
             '
@@ -867,7 +867,7 @@ Namespace UI.Specialized
             Me.DrawCursor.Margin = New System.Windows.Forms.Padding(2, 5, 2, 5)
             Me.DrawCursor.Name = "DrawCursor"
             Me.DrawCursor.Size = New System.Drawing.Size(23, 20)
-            Me.DrawCursor.Text = "Cursor zeichnen an/aus"
+            Me.DrawCursor.Text = "Draw Cursor"
             '
             'BottomToolStrip
             '
@@ -927,7 +927,7 @@ Namespace UI.Specialized
             Me.CopyToClipboard.Margin = New System.Windows.Forms.Padding(0)
             Me.CopyToClipboard.Name = "CopyToClipboard"
             Me.CopyToClipboard.Size = New System.Drawing.Size(22, 20)
-            Me.CopyToClipboard.Text = "In die Zwischenablage (Strg+C)"
+            Me.CopyToClipboard.Text = "Copy to Clipboard (Ctrl+C)"
             '
             'Print
             '
@@ -939,7 +939,7 @@ Namespace UI.Specialized
             Me.Print.Margin = New System.Windows.Forms.Padding(0)
             Me.Print.Name = "Print"
             Me.Print.Size = New System.Drawing.Size(22, 20)
-            Me.Print.Text = "Drucken (Strg+P)"
+            Me.Print.Text = "Print (Ctrl+P)"
             '
             'ThePanel
             '
@@ -976,7 +976,7 @@ Namespace UI.Specialized
             Me.autoCloseShotEditor.Name = "autoCloseShotEditor"
             Me.autoCloseShotEditor.Size = New System.Drawing.Size(208, 18)
             Me.autoCloseShotEditor.TabIndex = 32
-            Me.autoCloseShotEditor.Text = "Nach Upload ShotEditor schließen"
+            Me.autoCloseShotEditor.Text = "Close ShotEditor when uploading"
             Me.autoCloseShotEditor.UseVisualStyleBackColor = True
             '
             'ShotEditor

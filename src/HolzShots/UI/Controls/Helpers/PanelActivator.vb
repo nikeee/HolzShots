@@ -22,7 +22,7 @@ Namespace UI.Controls.Helpers
         End Sub
 
         Public Sub ActivateSettingsPanel(tool As PaintPanel.Tools)
-            If Not _toolPanelDict.ContainsKey(tool) Then Throw New ArgumentException("No mathign settings panel")
+            If Not _toolPanelDict.ContainsKey(tool) Then Throw New ArgumentException("No matching settings panel")
 
             Dim targetPanel = _toolPanelDict(tool)
             targetPanel.Location = OpenPoint

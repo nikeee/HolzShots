@@ -75,7 +75,7 @@ Namespace Drawing.Tools.UI
             Me.Percent.Size = New System.Drawing.Size(71, 20)
             Me.Percent.TabIndex = 1
             Me.Percent.TabStop = True
-            Me.Percent.Text = "Prozent"
+            Me.Percent.Text = "Percent"
             Me.Percent.UseVisualStyleBackColor = True
             '
             'Pixel
@@ -100,7 +100,7 @@ Namespace Drawing.Tools.UI
             Me.KeepAspectRatio.Name = "KeepAspectRatio"
             Me.KeepAspectRatio.Size = New System.Drawing.Size(180, 20)
             Me.KeepAspectRatio.TabIndex = 5
-            Me.KeepAspectRatio.Text = "Seitenverhältnis beibehalten"
+            Me.KeepAspectRatio.Text = "Keep aspect ration"
             Me.KeepAspectRatio.UseVisualStyleBackColor = True
             '
             'Label2
@@ -119,7 +119,7 @@ Namespace Drawing.Tools.UI
             Me.Label3.Name = "Label3"
             Me.Label3.Size = New System.Drawing.Size(48, 15)
             Me.Label3.TabIndex = 16
-            Me.Label3.Text = "Vertikal:"
+            Me.Label3.Text = "Vertical:"
             '
             'UnitLabel2
             '
@@ -159,7 +159,7 @@ Namespace Drawing.Tools.UI
             Me.cnclButton.Name = "cnclButton"
             Me.cnclButton.Size = New System.Drawing.Size(87, 27)
             Me.cnclButton.TabIndex = 22
-            Me.cnclButton.Text = "Abbrechen"
+            Me.cnclButton.Text = "Cancel"
             Me.cnclButton.UseVisualStyleBackColor = True
             '
             'HeightBox
@@ -220,7 +220,7 @@ Namespace Drawing.Tools.UI
             Me.Padding = New System.Windows.Forms.Padding(0, 58, 0, 0)
             Me.ShowIcon = False
             Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
-            Me.Text = "Bild skalieren"
+            Me.Text = "Scale Image"
             CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
             CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).EndInit()
             Me.ExplorerInfoPanel1.ResumeLayout(False)

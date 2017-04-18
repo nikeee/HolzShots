@@ -43,7 +43,7 @@ Namespace UI.Dialogs
             Me.Label1.Name = "Label1"
             Me.Label1.Size = New System.Drawing.Size(74, 15)
             Me.Label1.TabIndex = 7
-            Me.Label1.Text = "Kopieren als:"
+            Me.Label1.Text = "Copy as:"
             '
             'CopyLinkLabel5
             '
@@ -155,7 +155,7 @@ Namespace UI.Dialogs
             Me.Padding = New System.Windows.Forms.Padding(0, 0, 0, 6)
             Me.ShowIcon = False
             Me.ShowInTaskbar = False
-            Me.Text = "Farbe kopieren"
+            Me.Text = "Copy Color"
             Me.ResumeLayout(False)
             Me.PerformLayout()
 

@@ -1,4 +1,5 @@
 Imports System.Linq
+Imports HolzShots.Common
 Imports HolzShots.Input
 Imports HolzShots.Interop
 Imports HolzShots.My
@@ -134,7 +135,7 @@ Namespace UI.Specialized
 #Region "UI Events"
 
         Private Async Sub TrayIconMouseDoubleClick(ByVal sender As Object, ByVal e As MouseEventArgs) Handles TrayIcon.MouseDoubleClick
-            Select Case TrayIconDoubleClickAction
+            Select Case TrayIconDoubleClickAction ' TODO: Entry in settings dialog
                 Case TrayIconAction.InvokeAreaSelection
                     Await DoSelector() ' Can swallow exceptions
                 Case TrayIconAction.OpenScreenshotFolder
@@ -178,7 +179,7 @@ Namespace UI.Specialized
         End Sub
 
         Private Sub feedbackMenuItem_Click(sender As Object, e As EventArgs) Handles feedbackMenuItem.Click
-            GlobalVariables.HelpLink.SafeProcessStart()
+            LibraryInformation.IssuesUrl.SafeProcessStart()
         End Sub
 
 #End Region
