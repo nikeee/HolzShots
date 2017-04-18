@@ -40,7 +40,7 @@ Namespace UI.Dialogs
             Me.copyDirect.Name = "copyDirect"
             Me.copyDirect.Size = New System.Drawing.Size(211, 62)
             Me.copyDirect.TabIndex = 0
-            Me.copyDirect.Text = "Direktlink kopieren"
+            Me.copyDirect.Text = "Copy direct link"
             Me.copyDirect.UseVisualStyleBackColor = True
             '
             'copyHTML
@@ -52,7 +52,7 @@ Namespace UI.Dialogs
             Me.copyHTML.Name = "copyHTML"
             Me.copyHTML.Size = New System.Drawing.Size(211, 25)
             Me.copyHTML.TabIndex = 3
-            Me.copyHTML.Text = "HTML-Code kopieren"
+            Me.copyHTML.Text = "Copy HTML code"
             Me.copyHTML.UseVisualStyleBackColor = True
             '
             'copyBB
@@ -64,7 +64,7 @@ Namespace UI.Dialogs
             Me.copyBB.Name = "copyBB"
             Me.copyBB.Size = New System.Drawing.Size(211, 25)
             Me.copyBB.TabIndex = 2
-            Me.copyBB.Text = "BBCode kopieren"
+            Me.copyBB.Text = "Copy BBCode"
             Me.copyBB.UseVisualStyleBackColor = True
             '
             'ExplorerInfoPanel1
@@ -91,7 +91,7 @@ Namespace UI.Dialogs
             Me.closeWindowLabel.Size = New System.Drawing.Size(80, 15)
             Me.closeWindowLabel.TabIndex = 1
             Me.closeWindowLabel.TabStop = True
-            Me.closeWindowLabel.Text = "Schließen"
+            Me.closeWindowLabel.Text = "Close"
             Me.closeWindowLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
             '
             'UploadResultWindow

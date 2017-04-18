@@ -13,6 +13,15 @@ Namespace UI.Specialized
     Friend Class SettingsWindow
         Inherits Form
 
+        Private Class Localization
+            Public Const AdminBannerText = "Some settings are configured by your system administrator."
+            Public Const NotSet = "<not set>"
+            Public Const InvalidFilePattern = "Invalid Pattern"
+            Public Const SetHotkeyCurrentWindow = "Set Window Screenshot Hotkey"
+            Public Const SetHotkeyAreaSelector = "Set Area Selector Hotkey"
+            Public Const SetHotkeyFullscreen = "Set Fullscreen Hotkey"
+        End Class
+
         Public Shared Instance As SettingsWindow = New SettingsWindow()
 
         Private Shared ReadOnly Target As MainWindow = MainWindow.Instance
@@ -199,7 +208,7 @@ Namespace UI.Specialized
                     _hasShrinked = False
                 End If
                 gpoInfoBanner.Visible = True
-                gpoInfoBanner.Text = "Einige Einstellungen werden vom Systemadministrator verwaltet."
+                gpoInfoBanner.Text = Localization.AdminBannerText
             Else
                 If Not _hasShrinked Then
                     gpoInfoBanner.Visible = False
@@ -222,11 +231,9 @@ Namespace UI.Specialized
         End Sub
 
         Private Sub UpdateHotkeyLabels()
-            Const notSet As String = "<nicht festgelegt>"
-
-            _selectorStrokeLabel.Text = If(_selectorKeyStroke?.ToString(), notSet)
-            _fullStrokeLabel.Text = If(_fullKeyStroke?.ToString(), notSet)
-            _windowStrokeLabel.Text = If(_windowKeyStroke?.ToString(), notSet)
+            _selectorStrokeLabel.Text = If(_selectorKeyStroke?.ToString(), Localization.NotSet)
+            _fullStrokeLabel.Text = If(_fullKeyStroke?.ToString(), Localization.NotSet)
+            _windowStrokeLabel.Text = If(_windowKeyStroke?.ToString(), Localization.NotSet)
         End Sub
 
         ' TODO: Needed?
@@ -317,19 +324,16 @@ Namespace UI.Specialized
             End Using
         End Sub
 
-        Private Const InvalidFilePatternText As String = "Ungültiges Muster"
         Private Shared ReadOnly InvalidFilePatternColor As Color = Color.FromArgb(255, 136, 0, 21)
-
-        Private Const ValidFilePatternExtension As String = ".png"
         Private Shared ReadOnly ValidFilePatternColor As Color = SystemColors.ControlText
 
         Private Sub PatternIsInvalid()
-            fileNamingPatternPreview.Text = InvalidFilePatternText
+            fileNamingPatternPreview.Text = Localization.InvalidFilePattern
             fileNamingPatternPreview.ForeColor = InvalidFilePatternColor
             savebtn.Enabled = Not enableLocalSaveCheckBox.Checked
         End Sub
         Private Sub PatternIsValid(updateText As String)
-            fileNamingPatternPreview.Text = updateText & ValidFilePatternExtension
+            fileNamingPatternPreview.Text = updateText & DefaultFileExtension
             fileNamingPatternPreview.ForeColor = ValidFilePatternColor
             savebtn.Enabled = enableLocalSaveCheckBox.Checked
         End Sub
@@ -370,7 +374,7 @@ Namespace UI.Specialized
 
         Private _selectorKeyStroke As Hotkey
         Private Sub SetSelectorHotkeyClick(sender As Object, e As EventArgs) Handles setSelector.Click
-            Using s As IHotkeySelector = New SimpleHotkeySelector(Me, _selectorKeyStroke, "Auswahlwerkzeug festlegen")
+            Using s As IHotkeySelector = New SimpleHotkeySelector(Me, _selectorKeyStroke, Localization.SetHotkeyAreaSelector)
                 If s.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
                     _selectorKeyStroke = s.SelectedKeyStroke
                     UpdateHotkeyLabels()
@@ -380,7 +384,7 @@ Namespace UI.Specialized
 
         Private _fullKeyStroke As Hotkey
         Private Sub SetFullscreenClick(sender As Object, e As EventArgs) Handles setFullscreen.Click
-            Using s As IHotkeySelector = New SimpleHotkeySelector(Me, _fullKeyStroke, "Vollbildschirm festlegen")
+            Using s As IHotkeySelector = New SimpleHotkeySelector(Me, _fullKeyStroke, Localization.SetHotkeyFullscreen)
                 If s.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
                     _fullKeyStroke = s.SelectedKeyStroke
                     UpdateHotkeyLabels()
@@ -390,7 +394,7 @@ Namespace UI.Specialized
 
         Private _windowKeyStroke As Hotkey
         Private Sub SetWindowClick(sender As Object, e As EventArgs) Handles setWindow.Click
-            Using s As IHotkeySelector = New SimpleHotkeySelector(Me, _windowKeyStroke, "Aktuelles Fenster festlegen")
+            Using s As IHotkeySelector = New SimpleHotkeySelector(Me, _windowKeyStroke, Localization.SetHotkeyCurrentWindow)
                 If s.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
                     _windowKeyStroke = s.SelectedKeyStroke
                     UpdateHotkeyLabels()

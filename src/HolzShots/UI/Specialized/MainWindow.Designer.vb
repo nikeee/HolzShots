@@ -41,8 +41,8 @@ Namespace UI.Specialized
             'TrayIcon
             '
             Me.TrayIcon.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info
-            Me.TrayIcon.BalloonTipText = "Sie können HolzShots nun verwenden."
-            Me.TrayIcon.BalloonTipTitle = "HolzShots ist einsatzbereit"
+            Me.TrayIcon.BalloonTipText = "You can now use HolzShots."
+            Me.TrayIcon.BalloonTipTitle = "HolzShots is ready"
             Me.TrayIcon.Icon = CType(resources.GetObject("TrayIcon.Icon"), System.Drawing.Icon)
             Me.TrayIcon.Text = "HolzShots"
             Me.TrayIcon.Visible = True
@@ -70,22 +70,22 @@ Namespace UI.Specialized
             'uploadImageMenuItem
             '
             Me.uploadImageMenuItem.Index = 1
-            Me.uploadImageMenuItem.Text = "Bild hochladen"
+            Me.uploadImageMenuItem.Text = "Upload image"
             '
             'openImageMenuItem
             '
             Me.openImageMenuItem.Index = 2
-            Me.openImageMenuItem.Text = "Bild öffnen"
+            Me.openImageMenuItem.Text = "Open image"
             '
             'selectAreaMenuItem
             '
             Me.selectAreaMenuItem.Index = 3
-            Me.selectAreaMenuItem.Text = "Bereich auswählen"
+            Me.selectAreaMenuItem.Text = "Select Area"
             '
             'settingsMenuItem
             '
             Me.settingsMenuItem.Index = 4
-            Me.settingsMenuItem.Text = "Einstellungen"
+            Me.settingsMenuItem.Text = "Settings"
             '
             'MenuItem4
             '
@@ -95,7 +95,7 @@ Namespace UI.Specialized
             'exitMenuItem
             '
             Me.exitMenuItem.Index = 6
-            Me.exitMenuItem.Text = "Beenden"
+            Me.exitMenuItem.Text = "Exit"
             '
             'MainWindow
             '

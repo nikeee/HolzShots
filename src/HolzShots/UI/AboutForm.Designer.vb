@@ -64,7 +64,7 @@ Namespace UI
             Me.Label2.Name = "Label2"
             Me.Label2.Size = New System.Drawing.Size(114, 21)
             Me.Label2.TabIndex = 35
-            Me.Label2.Text = "Vielen Dank an"
+            Me.Label2.Text = "Thanks to"
             '
             'Panel1
             '
@@ -110,7 +110,7 @@ Namespace UI
             Me.showGfxResourcesLinklabel.Size = New System.Drawing.Size(51, 15)
             Me.showGfxResourcesLinklabel.TabIndex = 55
             Me.showGfxResourcesLinklabel.TabStop = True
-            Me.showGfxResourcesLinklabel.Text = "Grafiken"
+            Me.showGfxResourcesLinklabel.Text = "Graphics"
             '
             'Label4
             '
@@ -147,7 +147,7 @@ Namespace UI
             Me.Label3.Name = "Label3"
             Me.Label3.Size = New System.Drawing.Size(173, 19)
             Me.Label3.TabIndex = 54
-            Me.Label3.Text = "Diverse YouTube-Uploader"
+            Me.Label3.Text = "Some YouTube uploaders"
             '
             'Label15
             '
@@ -157,7 +157,7 @@ Namespace UI
             Me.Label15.Name = "Label15"
             Me.Label15.Size = New System.Drawing.Size(129, 13)
             Me.Label15.TabIndex = 53
-            Me.Label15.Text = "für meine Tunnel-Musik"
+            Me.Label15.Text = "for uploading music."
             '
             'youtubePlaylistLinkLabel
             '
@@ -208,7 +208,7 @@ Namespace UI
             Me.ShowIcon = False
             Me.ShowInTaskbar = False
             Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-            Me.Text = "Über HolzShots"
+            Me.Text = "About HolzShots"
             CType(Me.headerImage, System.ComponentModel.ISupportInitialize).EndInit()
             Me.Panel1.ResumeLayout(False)
             Me.Panel1.PerformLayout()

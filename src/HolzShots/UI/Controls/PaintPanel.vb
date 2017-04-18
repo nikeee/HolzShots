@@ -1,7 +1,6 @@
 Imports System.ComponentModel
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Text
-Imports System.Text
 Imports HolzShots.Drawing.Tools
 
 Namespace UI.Controls
@@ -270,29 +269,22 @@ Namespace UI.Controls
             RawBox.Invalidate()
         End Sub
 
+        Private Class Localization
+            Private Sub New()
+            End Sub
+            Public Const SizeInfo = "{0}x{1}px, creation date: {2}"
+            Public Const SizeInfoText = "The image is {0}-by-{1}px. Left click to copy the image size. Right click to copy creation date. Middle click to copy both."
+        End Class
+
         Public ReadOnly Property SizeInfo As String
             Get
-                Dim sb As New StringBuilder
-                sb.Append(_screenshot.Size.Width).Append(" × ").Append(_screenshot.Size.Height)
-                sb.Append("px")
-                sb.Append("     Aufnahmezeit: ")
-                sb.Append(_screenshot.Timestamp)
-                Return sb.ToString()
+                Return String.Format(Localization.SizeInfo, _screenshot.Size.Width, _screenshot.Size.Height, _screenshot.Timestamp)
             End Get
         End Property
 
-        Public ReadOnly Property SizeInfoTtText As String
+        Public ReadOnly Property SizeInfoText As String
             Get
-                Dim sb As New StringBuilder
-                sb.Append("Das Bild ist ")
-                sb.Append(_screenshot.Size.Width)
-                sb.Append(" Pixel breit und ")
-                sb.Append(_screenshot.Size.Height)
-                sb.AppendLine(" Pixel hoch.")
-                sb.AppendLine("Linksklicken Sie auf den Text, um die Bildgröße in Ihre Zwischenablage zu kopieren.")
-                sb.AppendLine("Rechtsklicken Sie auf den Text, um die Aufnahmezeit in Ihre Zwischenablage zu kopieren.")
-                sb.AppendLine("Benutzen Sie die mittlere Maustaste, um Beides in die Zwischenablage zu kopieren.")
-                Return sb.ToString()
+                Return String.Format(Localization.SizeInfoText, _screenshot.Size.Width, _screenshot.Size.Height)
             End Get
         End Property
 
@@ -484,7 +476,7 @@ Namespace UI.Controls
 
 #End Region
 
-#Region "Lineal"
+#Region "Ruler"
 
         Private Sub SaveLinealStuff(ByVal e As MouseEventArgs)
 

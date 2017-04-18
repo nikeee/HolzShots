@@ -78,12 +78,12 @@ Namespace UI.Controls
             Me.pluginSettings.Cursor = System.Windows.Forms.Cursors.Hand
             Me.pluginSettings.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline
             Me.pluginSettings.LinkColor = System.Drawing.SystemColors.HotTrack
-            Me.pluginSettings.Location = New System.Drawing.Point(147, 34)
+            Me.pluginSettings.Location = New System.Drawing.Point(176, 34)
             Me.pluginSettings.Name = "pluginSettings"
-            Me.pluginSettings.Size = New System.Drawing.Size(78, 15)
+            Me.pluginSettings.Size = New System.Drawing.Size(49, 15)
             Me.pluginSettings.TabIndex = 3
             Me.pluginSettings.TabStop = True
-            Me.pluginSettings.Text = "Einstellungen"
+            Me.pluginSettings.Text = "Settings"
             '
             'reportBug
             '

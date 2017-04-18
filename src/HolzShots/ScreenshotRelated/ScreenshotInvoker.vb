@@ -95,12 +95,19 @@ Namespace ScreenshotRelated
 
 #Region "CustomImage"
 
+        Private Class Localization
+            Private Sub New()
+            End Sub
+            Public Const OpenInShotEditor = "Open Image in ShotEditor"
+            Public Const UploadImage = "Select Image to Upload"
+        End Class
+
         Friend Sub OpenSelectedImage()
-            ShowFileSelector("Bild für den ShotEditor öffnen", AddressOf OpenSpecificImage)
+            ShowFileSelector(Localization.OpenInShotEditor, AddressOf OpenSpecificImage)
         End Sub
 
         Friend Sub UploadSelectedImage()
-            ShowFileSelector("Bild zum Hochladen öffnen", AddressOf UploadSpecificImage)
+            ShowFileSelector(Localization.UploadImage, AddressOf UploadSpecificImage)
         End Sub
 
         Private Sub ShowFileSelector(title As String, callback As Action(Of String))

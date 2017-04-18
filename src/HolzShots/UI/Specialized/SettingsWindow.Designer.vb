@@ -73,11 +73,11 @@ Namespace UI.Specialized
             Me.uploadImageInExplorerMenu = New System.Windows.Forms.CheckBox()
             Me.start_with_windows = New System.Windows.Forms.CheckBox()
             Me.PluginsTab = New System.Windows.Forms.TabPage()
+            Me.pluginListPanel = New HolzShots.UI.Controls.StackPanel()
+            Me.openPluginFolderLinkLabel = New HolzShots.UI.Windows.Forms.ExplorerLinkLabel()
             Me.Label10 = New System.Windows.Forms.Label()
             Me.Abort = New System.Windows.Forms.Button()
             Me.gpoInfoBanner = New HolzShots.UI.Windows.Forms.Banner()
-            Me.pluginListPanel = New HolzShots.UI.Controls.StackPanel()
-            Me.openPluginFolderLinkLabel = New HolzShots.UI.Windows.Forms.ExplorerLinkLabel()
             Me.Tabs.SuspendLayout()
             Me.SelectorsTab.SuspendLayout()
             Me.Panel3.SuspendLayout()
@@ -99,9 +99,9 @@ Namespace UI.Specialized
             Me.Activate_Area.Font = New System.Drawing.Font("Segoe UI", 9.0!)
             Me.Activate_Area.Location = New System.Drawing.Point(3, 8)
             Me.Activate_Area.Name = "Activate_Area"
-            Me.Activate_Area.Size = New System.Drawing.Size(121, 19)
+            Me.Activate_Area.Size = New System.Drawing.Size(95, 19)
             Me.Activate_Area.TabIndex = 1
-            Me.Activate_Area.Text = "Auswahlwerkzeug"
+            Me.Activate_Area.Text = "Area Selector"
             Me.Activate_Area.UseVisualStyleBackColor = True
             '
             'EnableIngameMode
@@ -110,11 +110,11 @@ Namespace UI.Specialized
             Me.EnableIngameMode.AutoSize = True
             Me.EnableIngameMode.FlatStyle = System.Windows.Forms.FlatStyle.System
             Me.EnableIngameMode.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-            Me.EnableIngameMode.Location = New System.Drawing.Point(287, 33)
+            Me.EnableIngameMode.Location = New System.Drawing.Point(199, 33)
             Me.EnableIngameMode.Name = "EnableIngameMode"
-            Me.EnableIngameMode.Size = New System.Drawing.Size(144, 20)
+            Me.EnableIngameMode.Size = New System.Drawing.Size(232, 20)
             Me.EnableIngameMode.TabIndex = 4
-            Me.EnableIngameMode.Text = "bei Vollbild aktivieren"
+            Me.EnableIngameMode.Text = "Enable when fullscreen app is running"
             Me.EnableIngameMode.UseVisualStyleBackColor = True
             '
             'Activate_Fullscreen
@@ -122,9 +122,9 @@ Namespace UI.Specialized
             Me.Activate_Fullscreen.AutoSize = True
             Me.Activate_Fullscreen.Location = New System.Drawing.Point(3, 8)
             Me.Activate_Fullscreen.Name = "Activate_Fullscreen"
-            Me.Activate_Fullscreen.Size = New System.Drawing.Size(121, 19)
+            Me.Activate_Fullscreen.Size = New System.Drawing.Size(79, 19)
             Me.Activate_Fullscreen.TabIndex = 5
-            Me.Activate_Fullscreen.Text = "Ganzer Bildschirm"
+            Me.Activate_Fullscreen.Text = "Fullscreen"
             Me.Activate_Fullscreen.UseVisualStyleBackColor = True
             '
             'savebtn
@@ -137,7 +137,7 @@ Namespace UI.Specialized
             Me.savebtn.Name = "savebtn"
             Me.savebtn.Size = New System.Drawing.Size(122, 30)
             Me.savebtn.TabIndex = 6
-            Me.savebtn.Text = "Speichern"
+            Me.savebtn.Text = "Save"
             Me.savebtn.UseVisualStyleBackColor = True
             '
             'Tabs
@@ -199,7 +199,7 @@ Namespace UI.Specialized
             Me.setWindow.Name = "setWindow"
             Me.setWindow.Size = New System.Drawing.Size(90, 30)
             Me.setWindow.TabIndex = 10
-            Me.setWindow.Text = "Festlegen"
+            Me.setWindow.Text = "Set Hotkey"
             Me.setWindow.UseVisualStyleBackColor = True
             '
             'Activate_Window
@@ -207,9 +207,9 @@ Namespace UI.Specialized
             Me.Activate_Window.AutoSize = True
             Me.Activate_Window.Location = New System.Drawing.Point(3, 7)
             Me.Activate_Window.Name = "Activate_Window"
-            Me.Activate_Window.Size = New System.Drawing.Size(115, 19)
+            Me.Activate_Window.Size = New System.Drawing.Size(113, 19)
             Me.Activate_Window.TabIndex = 8
-            Me.Activate_Window.Text = "Aktuelles Fenster"
+            Me.Activate_Window.Text = "Current Window"
             Me.Activate_Window.UseVisualStyleBackColor = True
             '
             'Panel2
@@ -238,7 +238,7 @@ Namespace UI.Specialized
             Me.setFullscreen.Name = "setFullscreen"
             Me.setFullscreen.Size = New System.Drawing.Size(90, 30)
             Me.setFullscreen.TabIndex = 9
-            Me.setFullscreen.Text = "Festlegen"
+            Me.setFullscreen.Text = "Set Hotkey"
             Me.setFullscreen.UseVisualStyleBackColor = True
             '
             'Panel1
@@ -269,10 +269,10 @@ Namespace UI.Specialized
             Me.decoration3.AutoSize = True
             Me.decoration3.Location = New System.Drawing.Point(134, 3)
             Me.decoration3.Name = "decoration3"
-            Me.decoration3.Size = New System.Drawing.Size(50, 19)
+            Me.decoration3.Size = New System.Drawing.Size(59, 19)
             Me.decoration3.TabIndex = 2
             Me.decoration3.TabStop = True
-            Me.decoration3.Text = "Stil 3"
+            Me.decoration3.Text = "Style 3"
             Me.decoration3.UseVisualStyleBackColor = True
             '
             'decoration2
@@ -280,10 +280,10 @@ Namespace UI.Specialized
             Me.decoration2.AutoSize = True
             Me.decoration2.Location = New System.Drawing.Point(69, 3)
             Me.decoration2.Name = "decoration2"
-            Me.decoration2.Size = New System.Drawing.Size(50, 19)
+            Me.decoration2.Size = New System.Drawing.Size(59, 19)
             Me.decoration2.TabIndex = 1
             Me.decoration2.TabStop = True
-            Me.decoration2.Text = "Stil 2"
+            Me.decoration2.Text = "Style 2"
             Me.decoration2.UseVisualStyleBackColor = True
             '
             'decoration1
@@ -291,10 +291,10 @@ Namespace UI.Specialized
             Me.decoration1.AutoSize = True
             Me.decoration1.Location = New System.Drawing.Point(3, 3)
             Me.decoration1.Name = "decoration1"
-            Me.decoration1.Size = New System.Drawing.Size(50, 19)
+            Me.decoration1.Size = New System.Drawing.Size(59, 19)
             Me.decoration1.TabIndex = 0
             Me.decoration1.TabStop = True
-            Me.decoration1.Text = "Stil 1"
+            Me.decoration1.Text = "Style 1"
             Me.decoration1.UseVisualStyleBackColor = True
             '
             'selectorStrokeLabel
@@ -313,7 +313,7 @@ Namespace UI.Specialized
             Me.setSelector.Name = "setSelector"
             Me.setSelector.Size = New System.Drawing.Size(90, 30)
             Me.setSelector.TabIndex = 8
-            Me.setSelector.Text = "Festlegen"
+            Me.setSelector.Text = "Set Hotkey"
             Me.setSelector.UseVisualStyleBackColor = True
             '
             'UploadTab
@@ -338,11 +338,11 @@ Namespace UI.Specialized
             Me.showCopyConfirmation.AutoSize = True
             Me.showCopyConfirmation.FlatStyle = System.Windows.Forms.FlatStyle.System
             Me.showCopyConfirmation.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-            Me.showCopyConfirmation.Location = New System.Drawing.Point(43, 103)
+            Me.showCopyConfirmation.Location = New System.Drawing.Point(23, 103)
             Me.showCopyConfirmation.Name = "showCopyConfirmation"
-            Me.showCopyConfirmation.Size = New System.Drawing.Size(189, 20)
+            Me.showCopyConfirmation.Size = New System.Drawing.Size(210, 20)
             Me.showCopyConfirmation.TabIndex = 16
-            Me.showCopyConfirmation.Text = "„Text wurde kopiert"" anzeigen"
+            Me.showCopyConfirmation.Text = "Show „Link copied!"" confirmation"
             Me.showCopyConfirmation.UseVisualStyleBackColor = True
             '
             'enableSmartFormatForUpload
@@ -350,11 +350,11 @@ Namespace UI.Specialized
             Me.enableSmartFormatForUpload.AutoSize = True
             Me.enableSmartFormatForUpload.FlatStyle = System.Windows.Forms.FlatStyle.System
             Me.enableSmartFormatForUpload.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-            Me.enableSmartFormatForUpload.Location = New System.Drawing.Point(43, 153)
+            Me.enableSmartFormatForUpload.Location = New System.Drawing.Point(23, 153)
             Me.enableSmartFormatForUpload.Name = "enableSmartFormatForUpload"
-            Me.enableSmartFormatForUpload.Size = New System.Drawing.Size(155, 20)
+            Me.enableSmartFormatForUpload.Size = New System.Drawing.Size(202, 20)
             Me.enableSmartFormatForUpload.TabIndex = 15
-            Me.enableSmartFormatForUpload.Text = "SmartFormat aktivieren"
+            Me.enableSmartFormatForUpload.Text = "Enable SmartFormat for uploads"
             Me.enableSmartFormatForUpload.UseVisualStyleBackColor = True
             '
             'disableShotEditorCheckBox
@@ -362,11 +362,11 @@ Namespace UI.Specialized
             Me.disableShotEditorCheckBox.AutoSize = True
             Me.disableShotEditorCheckBox.FlatStyle = System.Windows.Forms.FlatStyle.System
             Me.disableShotEditorCheckBox.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-            Me.disableShotEditorCheckBox.Location = New System.Drawing.Point(43, 53)
+            Me.disableShotEditorCheckBox.Location = New System.Drawing.Point(23, 53)
             Me.disableShotEditorCheckBox.Name = "disableShotEditorCheckBox"
-            Me.disableShotEditorCheckBox.Size = New System.Drawing.Size(342, 20)
+            Me.disableShotEditorCheckBox.Size = New System.Drawing.Size(374, 20)
             Me.disableShotEditorCheckBox.TabIndex = 14
-            Me.disableShotEditorCheckBox.Text = "ShotEditor deaktivieren; Bild auf Standardhoster hochladen"
+            Me.disableShotEditorCheckBox.Text = "Upload image straight to default hoster (disable screenshot editor)"
             Me.disableShotEditorCheckBox.UseVisualStyleBackColor = True
             '
             'deactivateLinkViewerCheckBox
@@ -374,11 +374,11 @@ Namespace UI.Specialized
             Me.deactivateLinkViewerCheckBox.AutoSize = True
             Me.deactivateLinkViewerCheckBox.FlatStyle = System.Windows.Forms.FlatStyle.System
             Me.deactivateLinkViewerCheckBox.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-            Me.deactivateLinkViewerCheckBox.Location = New System.Drawing.Point(43, 78)
+            Me.deactivateLinkViewerCheckBox.Location = New System.Drawing.Point(23, 78)
             Me.deactivateLinkViewerCheckBox.Name = "deactivateLinkViewerCheckBox"
-            Me.deactivateLinkViewerCheckBox.Size = New System.Drawing.Size(334, 20)
+            Me.deactivateLinkViewerCheckBox.Size = New System.Drawing.Size(327, 20)
             Me.deactivateLinkViewerCheckBox.TabIndex = 13
-            Me.deactivateLinkViewerCheckBox.Text = "Linkdialog deaktivieren; Link in die Zwischenablage legen"
+            Me.deactivateLinkViewerCheckBox.Text = "Copy link straight to clipboard (do not show link dialog)"
             Me.deactivateLinkViewerCheckBox.UseVisualStyleBackColor = True
             '
             'AutoCloseLinkViewer
@@ -386,11 +386,11 @@ Namespace UI.Specialized
             Me.AutoCloseLinkViewer.AutoSize = True
             Me.AutoCloseLinkViewer.FlatStyle = System.Windows.Forms.FlatStyle.System
             Me.AutoCloseLinkViewer.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-            Me.AutoCloseLinkViewer.Location = New System.Drawing.Point(43, 128)
+            Me.AutoCloseLinkViewer.Location = New System.Drawing.Point(23, 128)
             Me.AutoCloseLinkViewer.Name = "AutoCloseLinkViewer"
-            Me.AutoCloseLinkViewer.Size = New System.Drawing.Size(246, 20)
+            Me.AutoCloseLinkViewer.Size = New System.Drawing.Size(239, 20)
             Me.AutoCloseLinkViewer.TabIndex = 11
-            Me.AutoCloseLinkViewer.Text = "Linkdialog nach dem Kopieren schließen"
+            Me.AutoCloseLinkViewer.Text = "Close link dialog after a link was copied"
             Me.AutoCloseLinkViewer.UseVisualStyleBackColor = True
             '
             'enableStatusToaster
@@ -398,22 +398,22 @@ Namespace UI.Specialized
             Me.enableStatusToaster.AutoSize = True
             Me.enableStatusToaster.FlatStyle = System.Windows.Forms.FlatStyle.System
             Me.enableStatusToaster.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-            Me.enableStatusToaster.Location = New System.Drawing.Point(43, 28)
+            Me.enableStatusToaster.Location = New System.Drawing.Point(23, 28)
             Me.enableStatusToaster.Name = "enableStatusToaster"
-            Me.enableStatusToaster.Size = New System.Drawing.Size(201, 20)
+            Me.enableStatusToaster.Size = New System.Drawing.Size(180, 20)
             Me.enableStatusToaster.TabIndex = 1
-            Me.enableStatusToaster.Text = "Upload-Statusanzeige aktivieren"
+            Me.enableStatusToaster.Text = "Enable upload status toaster"
             Me.enableStatusToaster.UseVisualStyleBackColor = True
             '
             'Label7
             '
             Me.Label7.AutoSize = True
             Me.Label7.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-            Me.Label7.Location = New System.Drawing.Point(51, 183)
+            Me.Label7.Location = New System.Drawing.Point(20, 187)
             Me.Label7.Name = "Label7"
             Me.Label7.Size = New System.Drawing.Size(122, 15)
             Me.Label7.TabIndex = 10
-            Me.Label7.Text = "Standard-Bild-Hoster:"
+            Me.Label7.Text = "Default Image Hoster:"
             '
             'defaultHosterBox
             '
@@ -421,7 +421,7 @@ Namespace UI.Specialized
             Me.defaultHosterBox.FlatStyle = System.Windows.Forms.FlatStyle.System
             Me.defaultHosterBox.Font = New System.Drawing.Font("Segoe UI", 9.0!)
             Me.defaultHosterBox.FormattingEnabled = True
-            Me.defaultHosterBox.Location = New System.Drawing.Point(197, 179)
+            Me.defaultHosterBox.Location = New System.Drawing.Point(148, 184)
             Me.defaultHosterBox.Name = "defaultHosterBox"
             Me.defaultHosterBox.Size = New System.Drawing.Size(180, 23)
             Me.defaultHosterBox.TabIndex = 4
@@ -435,18 +435,18 @@ Namespace UI.Specialized
             Me.SaveLocalTab.Padding = New System.Windows.Forms.Padding(3)
             Me.SaveLocalTab.Size = New System.Drawing.Size(448, 263)
             Me.SaveLocalTab.TabIndex = 9
-            Me.SaveLocalTab.Text = "Speichern"
+            Me.SaveLocalTab.Text = "Saving"
             Me.SaveLocalTab.UseVisualStyleBackColor = True
             '
             'enableLocalSaveCheckBox
             '
             Me.enableLocalSaveCheckBox.AutoSize = True
             Me.enableLocalSaveCheckBox.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-            Me.enableLocalSaveCheckBox.Location = New System.Drawing.Point(23, 25)
+            Me.enableLocalSaveCheckBox.Location = New System.Drawing.Point(23, 29)
             Me.enableLocalSaveCheckBox.Name = "enableLocalSaveCheckBox"
-            Me.enableLocalSaveCheckBox.Size = New System.Drawing.Size(259, 19)
+            Me.enableLocalSaveCheckBox.Size = New System.Drawing.Size(125, 19)
             Me.enableLocalSaveCheckBox.TabIndex = 3
-            Me.enableLocalSaveCheckBox.Text = "Screenshots nach dem Erstellen abspeichern"
+            Me.enableLocalSaveCheckBox.Text = "Save all screenhots"
             Me.enableLocalSaveCheckBox.UseVisualStyleBackColor = True
             '
             'localSaveSettingsPanel
@@ -470,9 +470,9 @@ Namespace UI.Specialized
             Me.enableSmartFormatForSaving.AutoSize = True
             Me.enableSmartFormatForSaving.Location = New System.Drawing.Point(16, 70)
             Me.enableSmartFormatForSaving.Name = "enableSmartFormatForSaving"
-            Me.enableSmartFormatForSaving.Size = New System.Drawing.Size(234, 19)
+            Me.enableSmartFormatForSaving.Size = New System.Drawing.Size(220, 19)
             Me.enableSmartFormatForSaving.TabIndex = 7
-            Me.enableSmartFormatForSaving.Text = "SmartFormat für lokale Bilder aktivieren"
+            Me.enableSmartFormatForSaving.Text = "Enable SmartFormat for local images"
             Me.enableSmartFormatForSaving.UseVisualStyleBackColor = True
             '
             'fileNamingPatternPreview
@@ -489,18 +489,18 @@ Namespace UI.Specialized
             Me.fileNamingPatternPreviewLabel.AutoSize = True
             Me.fileNamingPatternPreviewLabel.Location = New System.Drawing.Point(13, 165)
             Me.fileNamingPatternPreviewLabel.Name = "fileNamingPatternPreviewLabel"
-            Me.fileNamingPatternPreviewLabel.Size = New System.Drawing.Size(58, 15)
+            Me.fileNamingPatternPreviewLabel.Size = New System.Drawing.Size(51, 15)
             Me.fileNamingPatternPreviewLabel.TabIndex = 5
-            Me.fileNamingPatternPreviewLabel.Text = "Vorschau:"
+            Me.fileNamingPatternPreviewLabel.Text = "Preview:"
             '
             'fileNamingPatternLabel
             '
             Me.fileNamingPatternLabel.AutoSize = True
             Me.fileNamingPatternLabel.Location = New System.Drawing.Point(13, 112)
             Me.fileNamingPatternLabel.Name = "fileNamingPatternLabel"
-            Me.fileNamingPatternLabel.Size = New System.Drawing.Size(145, 15)
+            Me.fileNamingPatternLabel.Size = New System.Drawing.Size(112, 15)
             Me.fileNamingPatternLabel.TabIndex = 4
-            Me.fileNamingPatternLabel.Text = "Datei-Benennungsmuster:"
+            Me.fileNamingPatternLabel.Text = "File Naming Pattern"
             '
             'fileNamingPattern
             '
@@ -530,9 +530,9 @@ Namespace UI.Specialized
             Me.localSavePathLabel.AutoSize = True
             Me.localSavePathLabel.Location = New System.Drawing.Point(13, 20)
             Me.localSavePathLabel.Name = "localSavePathLabel"
-            Me.localSavePathLabel.Size = New System.Drawing.Size(34, 15)
+            Me.localSavePathLabel.Size = New System.Drawing.Size(58, 15)
             Me.localSavePathLabel.TabIndex = 0
-            Me.localSavePathLabel.Text = "Pfad:"
+            Me.localSavePathLabel.Text = "Directory:"
             '
             'OthersTab
             '
@@ -545,7 +545,7 @@ Namespace UI.Specialized
             Me.OthersTab.Name = "OthersTab"
             Me.OthersTab.Size = New System.Drawing.Size(448, 263)
             Me.OthersTab.TabIndex = 4
-            Me.OthersTab.Text = "Anderes"
+            Me.OthersTab.Text = "Misc"
             Me.OthersTab.UseVisualStyleBackColor = True
             '
             'elevatedRequiredPictureBox2
@@ -573,9 +573,9 @@ Namespace UI.Specialized
             Me.openImageInExplorerMenu.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
             Me.openImageInExplorerMenu.Location = New System.Drawing.Point(43, 80)
             Me.openImageInExplorerMenu.Name = "openImageInExplorerMenu"
-            Me.openImageInExplorerMenu.Size = New System.Drawing.Size(281, 20)
+            Me.openImageInExplorerMenu.Size = New System.Drawing.Size(265, 20)
             Me.openImageInExplorerMenu.TabIndex = 12
-            Me.openImageInExplorerMenu.Text = "ShotEditor in Explorer-Kontextmenü integrieren"
+            Me.openImageInExplorerMenu.Text = "Add „ShotEditor"" to explorer's context menu"
             Me.openImageInExplorerMenu.UseVisualStyleBackColor = True
             '
             'uploadImageInExplorerMenu
@@ -585,9 +585,9 @@ Namespace UI.Specialized
             Me.uploadImageInExplorerMenu.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
             Me.uploadImageInExplorerMenu.Location = New System.Drawing.Point(43, 54)
             Me.uploadImageInExplorerMenu.Name = "uploadImageInExplorerMenu"
-            Me.uploadImageInExplorerMenu.Size = New System.Drawing.Size(264, 20)
+            Me.uploadImageInExplorerMenu.Size = New System.Drawing.Size(248, 20)
             Me.uploadImageInExplorerMenu.TabIndex = 11
-            Me.uploadImageInExplorerMenu.Text = "Upload in Explorer-Kontextmenü integrieren"
+            Me.uploadImageInExplorerMenu.Text = "Add „Upload"" to explorer's context menu"
             Me.uploadImageInExplorerMenu.UseVisualStyleBackColor = True
             '
             'start_with_windows
@@ -597,9 +597,9 @@ Namespace UI.Specialized
             Me.start_with_windows.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
             Me.start_with_windows.Location = New System.Drawing.Point(43, 28)
             Me.start_with_windows.Name = "start_with_windows"
-            Me.start_with_windows.Size = New System.Drawing.Size(197, 20)
+            Me.start_with_windows.Size = New System.Drawing.Size(190, 20)
             Me.start_with_windows.TabIndex = 0
-            Me.start_with_windows.Text = "HolzShots mit Windows starten"
+            Me.start_with_windows.Text = "Start HolzShots with Windows"
             Me.start_with_windows.UseVisualStyleBackColor = True
             '
             'PluginsTab
@@ -615,43 +615,6 @@ Namespace UI.Specialized
             Me.PluginsTab.TabIndex = 8
             Me.PluginsTab.Text = "Plugins"
             Me.PluginsTab.UseVisualStyleBackColor = True
-            '
-            'Label10
-            '
-            Me.Label10.AutoSize = True
-            Me.Label10.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-            Me.Label10.Location = New System.Drawing.Point(2, 11)
-            Me.Label10.Name = "Label10"
-            Me.Label10.Size = New System.Drawing.Size(101, 15)
-            Me.Label10.TabIndex = 6
-            Me.Label10.Text = "Geladene Plugins:"
-            '
-            'Abort
-            '
-            Me.Abort.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-            Me.Abort.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
-            Me.Abort.DialogResult = System.Windows.Forms.DialogResult.Cancel
-            Me.Abort.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-            Me.Abort.Location = New System.Drawing.Point(210, 334)
-            Me.Abort.Name = "Abort"
-            Me.Abort.Size = New System.Drawing.Size(122, 30)
-            Me.Abort.TabIndex = 7
-            Me.Abort.Text = "Abbrechen"
-            Me.Abort.UseVisualStyleBackColor = True
-            '
-            'gpoInfoBanner
-            '
-            Me.gpoInfoBanner.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-            Me.gpoInfoBanner.BackColor = System.Drawing.SystemColors.Info
-            Me.gpoInfoBanner.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-            Me.gpoInfoBanner.Image = Nothing
-            Me.gpoInfoBanner.Location = New System.Drawing.Point(6, 302)
-            Me.gpoInfoBanner.LockHeight = False
-            Me.gpoInfoBanner.Name = "gpoInfoBanner"
-            Me.gpoInfoBanner.Size = New System.Drawing.Size(454, 24)
-            Me.gpoInfoBanner.TabIndex = 9
             '
             'pluginListPanel
             '
@@ -674,10 +637,47 @@ Namespace UI.Specialized
             Me.openPluginFolderLinkLabel.LinkColor = System.Drawing.SystemColors.HotTrack
             Me.openPluginFolderLinkLabel.Location = New System.Drawing.Point(330, 11)
             Me.openPluginFolderLinkLabel.Name = "openPluginFolderLinkLabel"
-            Me.openPluginFolderLinkLabel.Size = New System.Drawing.Size(114, 15)
+            Me.openPluginFolderLinkLabel.Size = New System.Drawing.Size(107, 15)
             Me.openPluginFolderLinkLabel.TabIndex = 17
             Me.openPluginFolderLinkLabel.TabStop = True
-            Me.openPluginFolderLinkLabel.Text = "Pluginordner öffnen"
+            Me.openPluginFolderLinkLabel.Text = "Open plugin folder"
+            '
+            'Label10
+            '
+            Me.Label10.AutoSize = True
+            Me.Label10.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+            Me.Label10.Location = New System.Drawing.Point(2, 11)
+            Me.Label10.Name = "Label10"
+            Me.Label10.Size = New System.Drawing.Size(91, 15)
+            Me.Label10.TabIndex = 6
+            Me.Label10.Text = "Loaded Plugins:"
+            '
+            'Abort
+            '
+            Me.Abort.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Me.Abort.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
+            Me.Abort.DialogResult = System.Windows.Forms.DialogResult.Cancel
+            Me.Abort.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+            Me.Abort.Location = New System.Drawing.Point(210, 334)
+            Me.Abort.Name = "Abort"
+            Me.Abort.Size = New System.Drawing.Size(122, 30)
+            Me.Abort.TabIndex = 7
+            Me.Abort.Text = "Cancel"
+            Me.Abort.UseVisualStyleBackColor = True
+            '
+            'gpoInfoBanner
+            '
+            Me.gpoInfoBanner.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Me.gpoInfoBanner.BackColor = System.Drawing.SystemColors.Info
+            Me.gpoInfoBanner.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+            Me.gpoInfoBanner.Image = Nothing
+            Me.gpoInfoBanner.Location = New System.Drawing.Point(6, 302)
+            Me.gpoInfoBanner.LockHeight = False
+            Me.gpoInfoBanner.Name = "gpoInfoBanner"
+            Me.gpoInfoBanner.Size = New System.Drawing.Size(454, 24)
+            Me.gpoInfoBanner.TabIndex = 9
             '
             'SettingsWindow
             '
@@ -698,7 +698,7 @@ Namespace UI.Specialized
             Me.Name = "SettingsWindow"
             Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide
             Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-            Me.Text = "Einstellungen - HolzShots"
+            Me.Text = "Settings - HolzShots"
             Me.Tabs.ResumeLayout(False)
             Me.SelectorsTab.ResumeLayout(False)
             Me.Panel3.ResumeLayout(False)

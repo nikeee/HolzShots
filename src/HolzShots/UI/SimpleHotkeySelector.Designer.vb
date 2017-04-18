@@ -41,7 +41,7 @@ Namespace UI
             Me.acceptHotkeyButton.Name = "acceptHotkeyButton"
             Me.acceptHotkeyButton.Size = New System.Drawing.Size(90, 23)
             Me.acceptHotkeyButton.TabIndex = 0
-            Me.acceptHotkeyButton.Text = "Übernehmen"
+            Me.acceptHotkeyButton.Text = "Apply"
             Me.acceptHotkeyButton.UseVisualStyleBackColor = True
             '
             'cancelHotkeyButton
@@ -52,7 +52,7 @@ Namespace UI
             Me.cancelHotkeyButton.Name = "cancelHotkeyButton"
             Me.cancelHotkeyButton.Size = New System.Drawing.Size(90, 23)
             Me.cancelHotkeyButton.TabIndex = 2
-            Me.cancelHotkeyButton.Text = "Abbrechen"
+            Me.cancelHotkeyButton.Text = "Cancel"
             Me.cancelHotkeyButton.UseVisualStyleBackColor = True
             '
             'Label2
@@ -96,7 +96,7 @@ Namespace UI
             Me.modCtrl.Name = "modCtrl"
             Me.modCtrl.Size = New System.Drawing.Size(47, 19)
             Me.modCtrl.TabIndex = 9
-            Me.modCtrl.Text = "Strg"
+            Me.modCtrl.Text = "Ctrl"
             Me.modCtrl.UseVisualStyleBackColor = True
             '
             'modShift
@@ -106,7 +106,7 @@ Namespace UI
             Me.modShift.Name = "modShift"
             Me.modShift.Size = New System.Drawing.Size(76, 19)
             Me.modShift.TabIndex = 10
-            Me.modShift.Text = "Umschalt"
+            Me.modShift.Text = "Shift"
             Me.modShift.UseVisualStyleBackColor = True
             '
             'modWin
@@ -140,7 +140,7 @@ Namespace UI
             Me.KeyPreview = True
             Me.Name = "SimpleHotkeySelector"
             Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
-            Me.Text = "Hotkey festlegen"
+            Me.Text = "Set Hotkey"
             Me.ResumeLayout(False)
             Me.PerformLayout()
 

@@ -14,7 +14,7 @@ Imports Microsoft.WindowsAPICodePack.Taskbar
 Namespace My
     Partial Friend Class MyApplication
 
-        Private Const CultureString As String = "de-DE"
+        Private Const CultureString As String = "en-US"
         Friend ReadOnly TheCulture As New CultureInfo(CultureString, False)
 
         Public Shared SmallStockIcons As New StockIcons(StockIconSize.Small, False, False)

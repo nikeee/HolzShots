@@ -7,9 +7,9 @@ Namespace ScreenshotRelated.Selection
         Protected Shared ReadOnly QuickInfoBrush As Brush = New SolidBrush(Color.FromArgb(70, 255, 255, 255))
 
         Private Shared ReadOnly InfoText As String() = {
-            "Linke Maustaste: Bereich auswählen.",
-            "Rechte Maustaste: Ausgewählten Bereich verschieben.",
-            "Leertaste: Lupe ein-/ausschalten."}
+            "Left Mouse: Select area.",
+            "Right Mouse: Move selected area",
+            "Space Bar: Toggle magnifier"}
 
         Private Shared ReadOnly RichInfoTextFont As New Font("Segoe UI", 24, FontStyle.Regular, GraphicsUnit.Point)
 

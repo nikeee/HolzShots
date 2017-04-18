@@ -12,16 +12,13 @@ Friend Module GlobalVariables
     Public Const DefaultFileExtension = ".png"
     Friend Const DefaultFileName = "HolzShots"
 
-    Friend Const AreaSelectorParameter As String = "-selector"
-    Friend Const TaskbarScreenshotParameter As String = "-taskbar"
-    Friend Const FullscreenScreenshotParameter As String = "-fullscreen"
+    Friend Const AreaSelectorParameter As String = "-selector" ' TODO: refacotr command line
+    Friend Const TaskbarScreenshotParameter As String = "-taskbar" ' TODO: refacotr command line
+    Friend Const FullscreenScreenshotParameter As String = "-fullscreen" ' TODO: refacotr command line
 
-    Friend Const OpenParameter As String = "-open"
-    Friend Const UploadParameter As String = "-upload"
+    Friend Const OpenParameter As String = "-open" ' TODO: refacotr command line
+    Friend Const UploadParameter As String = "-upload" ' TODO: refacotr command line
 
-    Friend Const OpenFromShellParameter As String = "-open_shell"
-    Friend Const UploadFromShellParameter As String = "-upload_shell"
-
-    Friend Const HelpLink As String = "http://forum.vb-paradise.de/HS/39990-2/" '"http://holzshots.net"
-    Friend Const AboutLink As String = HelpLink
+    Friend Const OpenFromShellParameter As String = "-open_shell" ' TODO: refacotr command line
+    Friend Const UploadFromShellParameter As String = "-upload_shell" ' TODO: refacotr command line
 End Module

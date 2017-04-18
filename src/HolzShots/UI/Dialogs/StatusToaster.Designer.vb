@@ -43,7 +43,7 @@ Namespace UI.Dialogs
             Me.speedLabel.Name = "speedLabel"
             Me.speedLabel.Size = New System.Drawing.Size(49, 15)
             Me.speedLabel.TabIndex = 1
-            Me.speedLabel.Text = "0.0 KB/s"
+            Me.speedLabel.Text = "0.0 KiB/s"
             '
             'statusTextLabel
             '
@@ -52,7 +52,7 @@ Namespace UI.Dialogs
             Me.statusTextLabel.Name = "statusTextLabel"
             Me.statusTextLabel.Size = New System.Drawing.Size(137, 15)
             Me.statusTextLabel.TabIndex = 2
-            Me.statusTextLabel.Text = "Bild wird hochgeladen...."
+            Me.statusTextLabel.Text = "Image is being uploaded...."
             '
             'uploadedBytesLabel
             '
@@ -61,7 +61,7 @@ Namespace UI.Dialogs
             Me.uploadedBytesLabel.Name = "uploadedBytesLabel"
             Me.uploadedBytesLabel.Size = New System.Drawing.Size(98, 15)
             Me.uploadedBytesLabel.TabIndex = 3
-            Me.uploadedBytesLabel.Text = "0.0 KB von 12 MB"
+            Me.uploadedBytesLabel.Text = "0.0 KB of 12 MiB"
             '
             'StatusToaster
             '
