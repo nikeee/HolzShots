@@ -14,14 +14,14 @@ namespace HolzShots.Drawing
             if (image == null)
                 throw new ArgumentNullException(nameof(image));
 
-            return Reflection.GetInstanceField<Image, byte[]>(image, _rawDataFieldName);
+            return ReflectionUtil.GetInstanceField<Image, byte[]>(image, _rawDataFieldName);
         }
         internal static void SetRawData(this Image image, byte[] rawData)
         {
             if (image == null)
                 throw new ArgumentNullException(nameof(image));
 
-            Reflection.SetInstanceField(image, _rawDataFieldName, rawData);
+            ReflectionUtil.SetInstanceField(image, _rawDataFieldName, rawData);
         }
 
         public static Image CloneDeep(this Image image)

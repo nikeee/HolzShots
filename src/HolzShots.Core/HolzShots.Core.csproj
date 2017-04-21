@@ -75,6 +75,7 @@
     <Compile Include="Composition\UploaderManager.cs" />
     <Compile Include="Composition\PluginLoadingFailedException.cs" />
     <Compile Include="Drawing\ImageExtensions.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Input\IAreaSelector.cs" />
     <Compile Include="IO\Naming\DatePatternItem.cs" />
     <Compile Include="IO\Naming\FileMetadata.cs" />
@@ -115,7 +116,7 @@
     <Compile Include="Net\UploadResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Net\SpeedCalculator.cs" />
-    <Compile Include="Reflection.cs" />
+    <Compile Include="ReflectionUtil.cs" />
     <Compile Include="Threading\ProcessPriorityRequest.cs" />
     <Compile Include="Screenshot.cs" />
     <Compile Include="StringExtensions.cs" />

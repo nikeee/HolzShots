@@ -9,7 +9,7 @@ namespace HolzShots.Input
         public Hotkey Hotkey { get; }
         public KeyboardHook Hook { get; }
 
-        internal HotkeyPressedEventArgs(KeyboardHook hook, Hotkey hotkey)
+        public HotkeyPressedEventArgs(KeyboardHook hook, Hotkey hotkey)
         {
             Debug.Assert(hook != null);
             Debug.Assert(hotkey != null);

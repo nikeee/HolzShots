@@ -9,7 +9,7 @@ namespace HolzShots.Input
         public ModifierKeys Modifier { get; }
         public Keys Key { get; }
 
-        internal KeyPressedEventArgs(ModifierKeys modifier, Keys key)
+        public KeyPressedEventArgs(ModifierKeys modifier, Keys key)
         {
             Modifier = modifier;
             Key = key;

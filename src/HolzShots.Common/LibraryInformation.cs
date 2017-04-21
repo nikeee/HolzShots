@@ -27,6 +27,7 @@ namespace HolzShots.Common
         public const string SourceUrl = "https://github.com/nikeee/HolzShots";
 
         public const string IssuesUrl = SourceUrl + "/issues";
+        public const string LicenseUrl = SourceUrl + "/blob/master/LICENSE";
         public const string FullVersionString = SemanticVersion;
 
         public const string Copyright = PublisherName + " - " + License;
