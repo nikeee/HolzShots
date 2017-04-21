@@ -99,7 +99,9 @@ namespace HolzShots
         #endregion
         #region casts
 
+#pragma warning disable CA1707
         public static explicit operator long(MemSize value) => value.ByteCount;
+#pragma warning restore CA1707
         public long ToInt64() => ByteCount;
 
         #endregion
