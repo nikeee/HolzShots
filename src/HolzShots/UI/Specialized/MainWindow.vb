@@ -1,6 +1,7 @@
 Imports System.Linq
 Imports HolzShots.Common
 Imports HolzShots.Input
+Imports HolzShots.Input.Actions
 Imports HolzShots.Interop
 Imports HolzShots.My
 Imports HolzShots.ScreenshotRelated
@@ -16,7 +17,14 @@ Namespace UI.Specialized
 
         Private _forceclose As Boolean = False
 
-        Private Shared _keyboardHook As KeyboardHook
+        Private _keyboardHook As KeyboardHook
+        Private Property _actionContainer As HotkeyActionCollection
+        Public ReadOnly Property ActionContainer As HotkeyActionCollection
+            Get
+                Return _actionContainer
+            End Get
+        End Property
+
 
         Private Sub HideForm()
             Opacity = 0
@@ -48,8 +56,12 @@ Namespace UI.Specialized
             Common.Drawing.DpiKrebs.SetDpiAwareness()
 
             _keyboardHook = KeyboardHookSelector.CreateHookForCurrentPlatform(Me)
+            _actionContainer = New HolzShotsActionCollection(_keyboardHook,
+                                                            New SelectAreaHotkeyAction(),
+                                                            New FullscreenHotkeyAction(),
+                                                            New WindowHotkeyAction())
+            ActionContainer.Refresh()
 
-            RegisterHotkeys()
 
             Dim args = Environment.GetCommandLineArgs()
             Await MyApplication.ProcessCommandLineArguments(args)
@@ -75,30 +87,32 @@ Namespace UI.Specialized
 #End Region
 #Region "Hotkey Stuff"
 
+
         ' TODO: Refactor to separate class?
-        Friend Sub RegisterHotkeys()
-            Debug.Assert(_keyboardHook IsNot Nothing)
-            _keyboardHook.UnregisterAllHotkeys()
+        'Friend Sub RegisterHotkeys()
 
-            SettingsWindow.EnsureHotkeySettingsIntegrity()
+        '    Debug.Assert(_keyboardHook IsNot Nothing)
+        '    _keyboardHook.UnregisterAllHotkeys()
 
-            If HolzShots.My.Settings.SelectorHotkey IsNot Nothing Then RegisterHotkey(HolzShots.My.Settings.SelectorHotkey, Async Sub() Await ScreenshotInvoker.DoSelector()) ' can swallow exceptions
-            If HolzShots.My.Settings.FullHotkey IsNot Nothing Then RegisterHotkey(HolzShots.My.Settings.FullHotkey, Async Sub() Await ScreenshotInvoker.DoFullscreen()) ' can swallow exceptions
-            If HolzShots.My.Settings.WindowHotkey IsNot Nothing Then RegisterHotkey(HolzShots.My.Settings.WindowHotkey, Async Sub() Await ScreenshotInvoker.DoWindow()) ' can swallow exceptions
-        End Sub
+        '    SettingsWindow.EnsureHotkeySettingsIntegrity()
 
-        Private Shared Sub RegisterHotkey(key As Hotkey, action As Action)
-            Debug.Assert(key IsNot Nothing)
-            Debug.Assert(action IsNot Nothing)
+        '    If HolzShots.My.Settings.SelectorHotkey IsNot Nothing Then RegisterHotkey(HolzShots.My.Settings.SelectorHotkey, Async Sub() Await ScreenshotInvoker.DoSelector()) ' can swallow exceptions
+        '    If HolzShots.My.Settings.FullHotkey IsNot Nothing Then RegisterHotkey(HolzShots.My.Settings.FullHotkey, Async Sub() Await ScreenshotInvoker.DoFullscreen()) ' can swallow exceptions
+        '    If HolzShots.My.Settings.WindowHotkey IsNot Nothing Then RegisterHotkey(HolzShots.My.Settings.WindowHotkey, Async Sub() Await ScreenshotInvoker.DoWindow()) ' can swallow exceptions
+        'End Sub
 
-            Try
-                _keyboardHook.RegisterHotkey(key)
-            Catch ex As HotkeyRegistrationException
-                MessageBox.Show($"Failed to register hotkey {key}; {ex.InnerException.Message}")
-                Return
-            End Try
-            AddHandler key.KeyPressed, Sub() action()
-        End Sub
+        'Private Sub RegisterHotkey(key As Hotkey, action As Action)
+        '    Debug.Assert(key IsNot Nothing)
+        '    Debug.Assert(action IsNot Nothing)
+
+        '    Try
+        '        _keyboardHook.RegisterHotkey(key)
+        '    Catch ex As HotkeyRegistrationException
+        '        MessageBox.Show($"Failed to register hotkey {key}; {ex.InnerException.Message}")
+        '        Return
+        '    End Try
+        '    AddHandler key.KeyPressed, Sub() action()
+        'End Sub
 
 #End Region
 
