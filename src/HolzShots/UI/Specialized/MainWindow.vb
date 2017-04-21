@@ -85,36 +85,6 @@ Namespace UI.Specialized
         End Sub
 
 #End Region
-#Region "Hotkey Stuff"
-
-
-        ' TODO: Refactor to separate class?
-        'Friend Sub RegisterHotkeys()
-
-        '    Debug.Assert(_keyboardHook IsNot Nothing)
-        '    _keyboardHook.UnregisterAllHotkeys()
-
-        '    SettingsWindow.EnsureHotkeySettingsIntegrity()
-
-        '    If HolzShots.My.Settings.SelectorHotkey IsNot Nothing Then RegisterHotkey(HolzShots.My.Settings.SelectorHotkey, Async Sub() Await ScreenshotInvoker.DoSelector()) ' can swallow exceptions
-        '    If HolzShots.My.Settings.FullHotkey IsNot Nothing Then RegisterHotkey(HolzShots.My.Settings.FullHotkey, Async Sub() Await ScreenshotInvoker.DoFullscreen()) ' can swallow exceptions
-        '    If HolzShots.My.Settings.WindowHotkey IsNot Nothing Then RegisterHotkey(HolzShots.My.Settings.WindowHotkey, Async Sub() Await ScreenshotInvoker.DoWindow()) ' can swallow exceptions
-        'End Sub
-
-        'Private Sub RegisterHotkey(key As Hotkey, action As Action)
-        '    Debug.Assert(key IsNot Nothing)
-        '    Debug.Assert(action IsNot Nothing)
-
-        '    Try
-        '        _keyboardHook.RegisterHotkey(key)
-        '    Catch ex As HotkeyRegistrationException
-        '        MessageBox.Show($"Failed to register hotkey {key}; {ex.InnerException.Message}")
-        '        Return
-        '    End Try
-        '    AddHandler key.KeyPressed, Sub() action()
-        'End Sub
-
-#End Region
 
         Private Sub ExitApplication()
             _forceclose = True
