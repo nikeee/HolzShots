@@ -100,8 +100,7 @@ namespace HolzShots
         #region casts
 
         public static explicit operator long(MemSize value) => value.ByteCount;
-        public static explicit operator MemSize(long value) => new MemSize(value);
-        public static explicit operator MemSize(int value) => new MemSize(value);
+        public long ToInt64() => ByteCount;
 
         #endregion
         #region Equals
