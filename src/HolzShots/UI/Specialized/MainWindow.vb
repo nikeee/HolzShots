@@ -125,7 +125,7 @@ Namespace UI.Specialized
             End If
         End Sub
         Private Sub OpenAbout()
-            If Not AboutForm.AsIsAboutInstanciated Then
+            If Not AboutForm.IsAboutInstanciated Then
                 Dim newAboutForm As New AboutForm()
                 newAboutForm.Show()
             End If

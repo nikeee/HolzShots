@@ -5,19 +5,20 @@ Imports Microsoft.WindowsAPICodePack.Dialogs
 
 Namespace UI
     Friend Class AboutForm
-        Public Shared Property AsIsAboutInstanciated As Boolean
+        Public Shared Property IsAboutInstanciated As Boolean
         Private Const YoutubePlaylistPage As String = "https://holz.nu/tunnel"
 
         Public Sub New()
             InitializeComponent()
-            AsIsAboutInstanciated = True
+            IsAboutInstanciated = True
         End Sub
 
         Private Sub AboutFormFormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
-            AsIsAboutInstanciated = False
+            IsAboutInstanciated = False
         End Sub
 
         Private Sub AboutFormNewLoad(ByVal sender As Object, ByVal e As EventArgs) Handles MyBase.Load
+            applicationTitleLabel.Text = LibraryInformation.Name
             versionLabel.Text = $"{Application.ProductVersion} ({LibraryInformation.VersionDate.ToShortDateString()})"
             timestampLabel.Text = $"2010-{DateTime.Now.Year} {LibraryInformation.PublisherName}"
         End Sub
@@ -26,8 +27,8 @@ Namespace UI
             LibraryInformation.SiteUrl.SafeProcessStart()
         End Sub
 
-        Private Shared Sub YoutubePLaylistLinkLabelLinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles youtubePlaylistLinkLabel.LinkClicked
-            YoutubePlaylistPage.SafeProcessStart()
+        Private Sub LicenseLabel_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LicenseLabel.LinkClicked
+            LibraryInformation.LicenseUrl.SafeProcessStart()
         End Sub
 
         Private Sub ShowGfxResourcesLinklabelLinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles showGfxResourcesLinklabel.LinkClicked
