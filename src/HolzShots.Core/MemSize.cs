@@ -38,9 +38,9 @@ namespace HolzShots
                 ByteCount = prefixedBytes;
                 return;
             }
-            int kind = (int)type >> 8;
-            int factorIdentifier = (int)type & 0xff;
-            int baseInt = (PrefixType)kind == PrefixType.Binary ? 1024 : 1000;
+            var kind = (int)type >> 8;
+            var factorIdentifier = (int)type & 0xff;
+            var baseInt = (PrefixType)kind == PrefixType.Binary ? 1024 : 1000;
 
             ByteCount = prefixedBytes * MathEx.Pow(baseInt, factorIdentifier);
         }
@@ -94,7 +94,7 @@ namespace HolzShots
         public static bool operator >(MemSize b1, MemSize b2) => b1.ByteCount > b2.ByteCount;
         public static bool operator >=(MemSize b1, MemSize b2) => b1.ByteCount >= b2.ByteCount;
 
-        public int CompareTo(MemSize other) => this.ByteCount.CompareTo(other.ByteCount);
+        public int CompareTo(MemSize other) => ByteCount.CompareTo(other.ByteCount);
 
         #endregion
         #region casts
@@ -122,8 +122,8 @@ namespace HolzShots
 
         private static string Format(long size, PrefixType prefixType)
         {
-            int unit = prefixType == PrefixType.Decimal ? 1000 : 1024;
-            string i = prefixType == PrefixType.Decimal ? string.Empty : "i";
+            var unit = prefixType == PrefixType.Decimal ? 1000 : 1024;
+            var i = prefixType == PrefixType.Decimal ? string.Empty : "i";
 
             if (size < unit)
                 return $"{size:F0} bytes";

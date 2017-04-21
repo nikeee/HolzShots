@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace HolzShots
 {
-    static class Reflection
+    static class ReflectionUtil
     {
         /// <summary>
         /// Uses reflection to get the field value from an object.
