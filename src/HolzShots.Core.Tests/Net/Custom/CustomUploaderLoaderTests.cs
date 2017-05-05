@@ -17,6 +17,8 @@ namespace HolzShots.Core.Tests.Net.Custom
             Assert.NotNull(result.CustomData.Info);
             Assert.NotNull(result.CustomData.Uploader);
             Assert.NotNull(result.CustomData.SchemaVersion);
+
+            Assert.True(result.CustomData.Info.Version == new Semver.SemVersion(1, 0, 0));
         }
     }
 }
