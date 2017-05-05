@@ -41,6 +41,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Collections.Immutable, Version=1.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Collections.Immutable.1.3.1\lib\portable-net45+win8+wp8+wpa81\System.Collections.Immutable.dll</HintPath>
+    </Reference>
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -68,7 +71,9 @@
     <Compile Include="Composition\PluginLoadingFailedException.cs" />
     <Compile Include="Drawing\ImageExtensions.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Input\HotkeyActionCollection.cs" />
     <Compile Include="Input\IAreaSelector.cs" />
+    <Compile Include="Input\IHotkeyAction.cs" />
     <Compile Include="IO\Naming\DatePatternItem.cs" />
     <Compile Include="IO\Naming\FileMetadata.cs" />
     <Compile Include="IO\Naming\FileNamePattern.cs" />
