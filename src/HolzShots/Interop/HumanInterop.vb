@@ -114,5 +114,12 @@ Namespace Interop
                 Return diag.Show()
             End Using
         End Function
+
+        Friend Shared Sub ErrorRegisteringHotkeys()
+            Show(GenericErrorTitle,
+                 "Error registering hotkeys.",
+                 "We could not register the hotkeys you specified. Check if some other application has one or more of these hotkeys already registered or choose different hotkeys.",
+                 TaskDialogStandardButtons.Ok, TaskDialogStandardIcon.Error)
+        End Sub
     End Class
 End Namespace

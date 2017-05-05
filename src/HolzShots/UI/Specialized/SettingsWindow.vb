@@ -191,11 +191,31 @@ Namespace UI.Specialized
 
             HolzShotsEnvironment.AutoStart = start_with_windows.Checked
 
+            SaveHotkeys()
+
+            Global.HolzShots.My.Settings.Save()
+        End Sub
+
+        Private Sub SaveHotkeys()
+            Dim preSelectorHotkey = Global.HolzShots.My.Settings.SelectorHotkey
+            Dim preFullHotkey = Global.HolzShots.My.Settings.FullHotkey
+            Dim preWindowHotkey = Global.HolzShots.My.Settings.WindowHotkey
+
             Global.HolzShots.My.Settings.SelectorHotkey = _selectorKeyStroke
             Global.HolzShots.My.Settings.FullHotkey = _fullKeyStroke
             Global.HolzShots.My.Settings.WindowHotkey = _windowKeyStroke
 
-            Global.HolzShots.My.Settings.Save()
+            Try
+                Target.ActionContainer.Refresh()
+            Catch ex As AggregateException
+                Global.HolzShots.My.Settings.SelectorHotkey = preSelectorHotkey
+                Global.HolzShots.My.Settings.FullHotkey = preFullHotkey
+                Global.HolzShots.My.Settings.WindowHotkey = preWindowHotkey
+                Target.ActionContainer.Refresh()
+                HumanInterop.ErrorRegisteringHotkeys()
+            Finally
+            End Try
+            EnsureHotkeySettingsIntegrity()
         End Sub
 
         Private _hasShrinked As Boolean = False
@@ -236,16 +256,6 @@ Namespace UI.Specialized
             _windowStrokeLabel.Text = If(_windowKeyStroke?.ToString(), Localization.NotSet)
         End Sub
 
-        ' TODO: Needed?
-        'Friend Shared Function ResetHotkeys(ByVal mainWindow As MainWindow) As Boolean
-        '    HolzShots.My.Settings.SelectorHotkey = New Hotkey(Input.ModifierKeys.None, Keys.F8)
-        '    HolzShots.My.Settings.FullHotkey = New Hotkey(Input.ModifierKeys.None, Keys.F9)
-        '    HolzShots.My.Settings.WindowHotkey = New Hotkey(Input.ModifierKeys.None, Keys.F10)
-
-        '    mainWindow.RegisterHotkeys()
-        '    Return True
-        'End Function
-
         Friend Shared Sub EnsureHotkeySettingsIntegrity()
             If HolzShots.My.Settings.EnableAreaScreenshot Then
                 HolzShots.My.Settings.SelectorHotkey = IdentityOrDefaultHotkey(HolzShots.My.Settings.SelectorHotkey, New Hotkey(Input.ModifierKeys.None, Keys.F8))
@@ -271,7 +281,6 @@ Namespace UI.Specialized
 
         Private Sub SavebtnClick(ByVal sender As Object, ByVal e As EventArgs) Handles savebtn.Click
             SavePolicies()
-            Target.RegisterHotkeys()
             Close()
         End Sub
 
