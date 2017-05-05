@@ -1,11 +1,13 @@
 
+using Semver;
+
 namespace HolzShots.Composition
 {
     public interface IPluginMetadata
     {
         string Name { get; }
         string Author { get; }
-        string Version { get; }
+        SemVersion Version { get; }
 
         string Url { get; }
         string BugsUrl { get; }

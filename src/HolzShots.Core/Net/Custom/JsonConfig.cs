@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
@@ -7,7 +8,10 @@ namespace HolzShots.Net.Custom
     {
         internal static JsonSerializerSettings JsonSettings { get; } = new JsonSerializerSettings
         {
-            ContractResolver = new CamelCasePropertyNamesContractResolver()
+            ContractResolver = new CamelCasePropertyNamesContractResolver(),
+            Converters = new List<JsonConverter>() {
+                new SemVersionConverter()
+            }
         };
     }
 }

@@ -5,40 +5,41 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Text.RegularExpressions;
 using HolzShots.Composition;
+using Semver;
 
 namespace HolzShots.Net.Custom
 {
     interface IValidatable
     {
-        bool Validate(string schema);
+        bool Validate(SemVersion schemaVersion);
     }
 
     [Serializable]
     public class CustomUploaderRoot : IValidatable
     {
-        public string SchemaVersion { get; }
+        public SemVersion SchemaVersion { get; }
         public UploaderInfo Info { get; }
         public UploaderConfig Uploader { get; }
 
-        public CustomUploaderRoot(string schemaVersion, UploaderInfo info, UploaderConfig uploader)
+        public CustomUploaderRoot(SemVersion schemaVersion, UploaderInfo info, UploaderConfig uploader)
         {
             SchemaVersion = schemaVersion;
             Info = info;
             Uploader = uploader;
         }
 
-        public bool Validate(string schema)
+        public bool Validate(SemVersion schemaVersion)
         {
-            if (SchemaVersion != schema)
+            if (SchemaVersion != schemaVersion)
                 return false;
-            return Uploader?.Validate(schema) == true && Info?.Validate(schema) == true;
+            return Uploader?.Validate(schemaVersion) == true && Info?.Validate(schemaVersion) == true;
         }
     }
 
     [Serializable]
     public class UploaderInfo : IValidatable, IPluginMetadata
     {
-        public string Version { get; }
+        public SemVersion Version { get; }
         public string Name { get; }
 
         public string Author { get; } = null;
@@ -48,7 +49,7 @@ namespace HolzShots.Net.Custom
         public string Url { get; } = null;
         public string Description { get; } = null;
 
-        public UploaderInfo(string version, string name, string author, string contact, string bugsUrl, string updateUrl, string url, string description)
+        public UploaderInfo(SemVersion version, string name, string author, string contact, string bugsUrl, string updateUrl, string url, string description)
         {
             Version = version;
             Name = name;
@@ -60,7 +61,7 @@ namespace HolzShots.Net.Custom
             Description = description;
         }
 
-        public bool Validate(string schema)
+        public bool Validate(SemVersion schemaVersion)
         {
             // TODO: Check if Version is valid semver
             return Version != null && !string.IsNullOrWhiteSpace(Name);
@@ -95,15 +96,15 @@ namespace HolzShots.Net.Custom
 
         public string GetFileName(string fallback) => FileName ?? fallback;
 
-        public bool Validate(string schema)
+        public bool Validate(SemVersion schemaVersion)
         {
             if (string.IsNullOrWhiteSpace(FileFormName))
                 return false;
             if (string.IsNullOrWhiteSpace(RequestUrl))
                 return false;
-            if (Parser?.Validate(schema) != true)
+            if (Parser?.Validate(schemaVersion) != true)
                 return false;
-            if (Headers != null && !Headers.Validate(schema))
+            if (Headers != null && !Headers.Validate(schemaVersion))
                 return false;
             if (Method != null && !ValidMethods.Contains(Method.ToUpperInvariant()))
                 return false;
@@ -131,7 +132,7 @@ namespace HolzShots.Net.Custom
 
         public string GetUserAgent(string fallback) => UserAgent ?? fallback;
 
-        public bool Validate(string schema)
+        public bool Validate(SemVersion schemaVersion)
         {
             // Referer can be anything
             return ProductInfoHeaderValue.TryParse(UserAgent, out var _);
@@ -156,7 +157,7 @@ namespace HolzShots.Net.Custom
             Failure = failure;
         }
 
-        public bool Validate(string schema)
+        public bool Validate(SemVersion schemaVersion)
         {
             if (string.IsNullOrWhiteSpace(Kind))
                 return false;
@@ -169,20 +170,20 @@ namespace HolzShots.Net.Custom
 
             switch (upperKind)
             {
-                case "REGEX": return ValidateRegEx(schema);
-                case "JSON": return ValidateJson(schema);
-                case "XML": return ValidateXml(schema);
+                case "REGEX": return ValidateRegEx(schemaVersion);
+                case "JSON": return ValidateJson(schemaVersion);
+                case "XML": return ValidateXml(schemaVersion);
                 default: return false;
             }
         }
 
-        private bool ValidateRegEx(string schema)
+        private bool ValidateRegEx(SemVersion schemaVersion)
         {
             if (string.IsNullOrEmpty(Success))
                 return false;
             try
             {
-                new Regex(schema); // TODO: RegEx options
+                new Regex(Success); // TODO: RegEx options
             }
             catch (Exception) { return false; }
             if (Failure != null)
@@ -195,7 +196,7 @@ namespace HolzShots.Net.Custom
             }
             return true;
         }
-        private bool ValidateJson(string schema)
+        private bool ValidateJson(SemVersion schemaVersion)
         {
             if (string.IsNullOrWhiteSpace(Success))
                 return false;
@@ -203,6 +204,6 @@ namespace HolzShots.Net.Custom
             return true;
 
         }
-        private bool ValidateXml(string schema) => false; // TODO: Implement
+        private bool ValidateXml(SemVersion schemaVersion) => false; // TODO: Implement
     }
 }

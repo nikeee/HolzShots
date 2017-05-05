@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.Composition;
+using Semver;
 
 namespace HolzShots.Composition
 {
@@ -9,7 +10,7 @@ namespace HolzShots.Composition
     {
         public string Name { get; }
         public string Author { get; }
-        public string Version { get; }
+        public SemVersion Version { get; }
 
         public string Url { get; }
         public string BugsUrl { get; }

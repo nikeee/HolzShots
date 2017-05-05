@@ -1,7 +1,4 @@
-using HolzShots.Net;
 using HolzShots.Net.Custom;
-using System.IO;
-using System.Threading;
 using Xunit;
 
 namespace HolzShots.Core.Tests.Net.Custom
