@@ -9,6 +9,7 @@ type UserAgent = string;
 type ParamsMap = { [index: string]: string | null };
 
 // TODO: Consider Basic Auth?
+// TODO: Allow every header to be set
 
 interface CustomUploader {
     schemaVersion: "0.1.0";
