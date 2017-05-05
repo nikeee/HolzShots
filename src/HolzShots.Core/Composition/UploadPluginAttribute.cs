@@ -1,4 +1,3 @@
-using HolzShots.Net;
 using System;
 using System.ComponentModel.Composition;
 

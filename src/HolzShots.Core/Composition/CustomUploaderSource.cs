@@ -25,6 +25,8 @@ namespace HolzShots.Composition
 
         public async Task Load()
         {
+            Debug.Assert(!Loaded);
+
             try
             {
                 using (var reader = System.IO.File.OpenText(_customUploadersFileName))
@@ -52,6 +54,10 @@ namespace HolzShots.Composition
             catch (System.IO.FileNotFoundException)
             {
                 _customUploaders = new Dictionary<UploaderInfo, CustomUploader>();
+            }
+            finally
+            {
+                Loaded = true;
             }
         }
 

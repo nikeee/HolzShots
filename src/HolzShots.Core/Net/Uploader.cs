@@ -18,7 +18,6 @@ namespace HolzShots.Net
         public virtual SettingsInvocationContexts GetSupportedSettingsContexts() => SettingsInvocationContexts.None;
 
         // TODO Return null if no action needed?
-        // TODO: Make CT last parameter
         public abstract Task<UploadResult> InvokeAsync(Stream data, string suggestedFileName, string mimeType, IProgress<UploadProgress> progress, CancellationToken cancellationToken);
     }
 

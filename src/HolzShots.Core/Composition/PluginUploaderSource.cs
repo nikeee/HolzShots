@@ -26,10 +26,10 @@ namespace HolzShots.Composition
             foreach (var p in pls)
             {
                 Debug.Assert(p.Metadata != null);
-                Debug.Assert(p.Metadata is IPluginMetadata);
-                Debug.Assert(typeof(IPluginMetadata).IsAssignableFrom(p.Metadata.GetType()));
+                Debug.Assert(p.Metadata is PluginAttribute);
+                Debug.Assert(typeof(PluginAttribute).IsAssignableFrom(p.Metadata.GetType()));
 
-                var m = p.Metadata as IPluginMetadata;
+                var m = new PluginMetadata(p.Metadata as PluginAttribute);
                 try
                 {
                     if (m.Name == name)

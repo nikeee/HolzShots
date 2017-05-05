@@ -15,7 +15,7 @@ namespace HolzShots.Composition
         private const string AssemblyFilter = "*.dll";
 
         [ImportMany]
-        public IList<Lazy<T, IPluginMetadata>> Plugins { get; private set; } = new List<Lazy<T, IPluginMetadata>>();
+        public IList<Lazy<T, PluginAttribute>> Plugins { get; private set; } = new List<Lazy<T, PluginAttribute>>();
 
         private readonly AggregateCatalog _aggregate = new AggregateCatalog();
         private readonly CompositionContainer _container;
@@ -83,10 +83,11 @@ namespace HolzShots.Composition
             foreach (var p in pls)
             {
                 Debug.Assert(p.Metadata != null);
-                Debug.Assert(p.Metadata is IPluginMetadata);
-                Debug.Assert(typeof(IPluginMetadata).IsAssignableFrom(p.Metadata.GetType()));
+                Debug.Assert(p.Metadata is PluginAttribute);
+                Debug.Assert(typeof(PluginAttribute).IsAssignableFrom(p.Metadata.GetType()));
 
-                res.Add(p.Metadata as IPluginMetadata);
+                var runtime = new PluginMetadata(p.Metadata as PluginAttribute);
+                res.Add(runtime);
             }
             return res;
         }

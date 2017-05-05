@@ -12,7 +12,7 @@ using System.ComponentModel.Composition;
 
 namespace HolzShots.Net
 {
-    [Export]
+    [Export(typeof(Uploader))]
     [UploadPlugin("Fotos-Hochladen.net", "Niklas Mollenhauer", "1.0.0", "Uploader plugin for Fotos-Hochladen.net", "nikeee@outlook.com", "https://holz.nu", "https://github.com/nikeee/HolzShots")]
     public class FotosHochladenUploader : Uploader
     {
