@@ -211,9 +211,11 @@ Namespace UI.Specialized
                 Global.HolzShots.My.Settings.SelectorHotkey = preSelectorHotkey
                 Global.HolzShots.My.Settings.FullHotkey = preFullHotkey
                 Global.HolzShots.My.Settings.WindowHotkey = preWindowHotkey
-
+                Target.ActionContainer.Refresh()
                 HumanInterop.ErrorRegisteringHotkeys()
+            Finally
             End Try
+            EnsureHotkeySettingsIntegrity()
         End Sub
 
         Private _hasShrinked As Boolean = False
