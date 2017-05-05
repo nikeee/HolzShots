@@ -17,7 +17,7 @@ namespace HolzShots.Net.Custom
     public class CustomUploader : Uploader
     {
         private const string SupportedSchema = "0.1.0";
-        public CustomUploaderRoot CustomData { get; }
+        public CustomUploaderRoot UploaderInfo { get; }
 
         private CustomUploader(CustomUploaderRoot customData)
         {
@@ -25,32 +25,32 @@ namespace HolzShots.Net.Custom
                 throw new ArgumentNullException(nameof(customData));
 
             Debug.Assert(customData.Validate(SupportedSchema));
-            CustomData = customData;
+            UploaderInfo = customData;
         }
 
         public async override Task<UploadResult> InvokeAsync(Stream data, string suggestedFileName, string mimeType, IProgress<UploadProgress> progress, CancellationToken cancellationToken)
         {
-            Debug.Assert(CustomData != null);
-            Debug.Assert(CustomData.Validate(SupportedSchema));
-            Debug.Assert(CustomData.Uploader != null);
+            Debug.Assert(UploaderInfo != null);
+            Debug.Assert(UploaderInfo.Validate(SupportedSchema));
+            Debug.Assert(UploaderInfo.Uploader != null);
             Debug.Assert(data != null);
             Debug.Assert(!string.IsNullOrWhiteSpace(suggestedFileName));
             Debug.Assert(!string.IsNullOrWhiteSpace(mimeType));
             Debug.Assert(cancellationToken != null);
 
             // If the stream has a specific length, check if it exceeds the set maximum file size
-            var mfs = CustomData.Uploader.MaxFileSize;
+            var mfs = UploaderInfo.Uploader.MaxFileSize;
             if (mfs.HasValue && data.CanSeek)
             {
                 var size = data.Length;
                 if (size > mfs.Value)
                 {
                     var memSize = new MemSize(mfs.Value);
-                    throw new UploadException($"File is {memSize} in size, which is larger than the specified limit of {nameof(CustomData.Uploader.MaxFileSize)}.");
+                    throw new UploadException($"File is {memSize} in size, which is larger than the specified limit of {nameof(UploaderInfo.Uploader.MaxFileSize)}.");
                 }
             }
 
-            var uplInfo = CustomData.Uploader;
+            var uplInfo = UploaderInfo.Uploader;
 
             using (var progressHandler = new ProgressMessageHandler(new HttpClientHandler()))
             using (var cl = new HttpClient(progressHandler))
@@ -77,11 +77,11 @@ namespace HolzShots.Net.Custom
                     var res = await cl.PostAsync(uplInfo.RequestUrl, content, cancellationToken).ConfigureAwait(false);
 
                     if (!res.IsSuccessStatusCode)
-                        throw new UploadException($"The servers of {CustomData.Info.Name} responded with the error {res.StatusCode}: \"{res.ReasonPhrase}\".");
+                        throw new UploadException($"The servers of {UploaderInfo.Meta.Name} responded with the error {res.StatusCode}: \"{res.ReasonPhrase}\".");
 
                     var resStr = await res.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-                    var imageUrl = ParseUrlFromResponse(resStr, CustomData.Uploader.Parser);
+                    var imageUrl = ParseUrlFromResponse(resStr, UploaderInfo.Uploader.Parser);
                     Debug.Assert(!string.IsNullOrWhiteSpace(imageUrl));
 
                     return new UploadResult(this, imageUrl, DateTime.Now);
@@ -94,7 +94,7 @@ namespace HolzShots.Net.Custom
             Debug.Assert(response != null);
             Debug.Assert(parser != null);
 
-            switch (CustomData.Uploader.Parser.Kind.ToUpperInvariant())
+            switch (UploaderInfo.Uploader.Parser.Kind.ToUpperInvariant())
             {
                 case "REGEX":
                     {
@@ -162,7 +162,7 @@ namespace HolzShots.Net.Custom
 
             var sb = new StringBuilder();
             string currentToken = null;
-            for (int i = 0; i < template.Length; ++i)
+            for (var i = 0; i < template.Length; ++i)
             {
                 var c = template[i];
 

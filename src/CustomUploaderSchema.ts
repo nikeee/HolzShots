@@ -13,11 +13,11 @@ type ParamsMap = { [index: string]: string | null };
 
 interface CustomUploader {
     schemaVersion: "0.1.0";
-    info: Info;
+    meta: Meta;
     uploader: UploaderConfig;
 }
 
-interface Info {
+interface Meta {
     version: SemanticVersion;
     name: string;
     author?: string;

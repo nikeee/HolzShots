@@ -13,12 +13,12 @@ namespace HolzShots.Core.Tests.Net.Custom
             var parseResult = CustomUploader.TryParse(content, out var result);
             Assert.True(parseResult);
             Assert.NotNull(result);
-            Assert.NotNull(result.CustomData);
-            Assert.NotNull(result.CustomData.Info);
-            Assert.NotNull(result.CustomData.Uploader);
-            Assert.NotNull(result.CustomData.SchemaVersion);
+            Assert.NotNull(result.UploaderInfo);
+            Assert.NotNull(result.UploaderInfo.Meta);
+            Assert.NotNull(result.UploaderInfo.Uploader);
+            Assert.NotNull(result.UploaderInfo.SchemaVersion);
 
-            Assert.True(result.CustomData.Info.Version == new Semver.SemVersion(1, 0, 0));
+            Assert.True(result.UploaderInfo.Meta.Version == new Semver.SemVersion(1, 0, 0));
         }
     }
 }

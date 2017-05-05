@@ -12,7 +12,7 @@ namespace HolzShots.Composition
     public class CustomUploaderSource : IUploaderSource
     {
         private readonly string _customUploadersFileName;
-        private IReadOnlyDictionary<UploaderInfo, CustomUploader> _customUploaders = null;
+        private IReadOnlyDictionary<UploaderMeta, CustomUploader> _customUploaders = null;
 
         public bool Loaded { get; private set; }
 
@@ -38,13 +38,13 @@ namespace HolzShots.Composition
                     var uploaders = loaded.Uploaders;
                     Debug.Assert(uploaders != null);
 
-                    var res = new Dictionary<UploaderInfo, CustomUploader>();
+                    var res = new Dictionary<UploaderMeta, CustomUploader>();
                     foreach (var u in uploaders)
                     {
                         if (CustomUploader.TryLoad(u, out var customUploader))
                         {
                             Debug.Assert(customUploader != null);
-                            res.Add(u.Info, customUploader);
+                            res.Add(u.Meta, customUploader);
                         }
                     }
 
@@ -53,7 +53,7 @@ namespace HolzShots.Composition
             }
             catch (System.IO.FileNotFoundException)
             {
-                _customUploaders = new Dictionary<UploaderInfo, CustomUploader>();
+                _customUploaders = new Dictionary<UploaderMeta, CustomUploader>();
             }
             finally
             {

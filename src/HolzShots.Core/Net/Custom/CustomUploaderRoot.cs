@@ -18,13 +18,13 @@ namespace HolzShots.Net.Custom
     public class CustomUploaderRoot : IValidatable
     {
         public SemVersion SchemaVersion { get; }
-        public UploaderInfo Info { get; }
+        public UploaderMeta Meta { get; }
         public UploaderConfig Uploader { get; }
 
-        public CustomUploaderRoot(SemVersion schemaVersion, UploaderInfo info, UploaderConfig uploader)
+        public CustomUploaderRoot(SemVersion schemaVersion, UploaderMeta meta, UploaderConfig uploader)
         {
             SchemaVersion = schemaVersion;
-            Info = info;
+            Meta = meta;
             Uploader = uploader;
         }
 
@@ -32,12 +32,12 @@ namespace HolzShots.Net.Custom
         {
             if (SchemaVersion != schemaVersion)
                 return false;
-            return Uploader?.Validate(schemaVersion) == true && Info?.Validate(schemaVersion) == true;
+            return Uploader?.Validate(schemaVersion) == true && Meta?.Validate(schemaVersion) == true;
         }
     }
 
     [Serializable]
-    public class UploaderInfo : IValidatable, IPluginMetadata
+    public class UploaderMeta : IValidatable, IPluginMetadata
     {
         public SemVersion Version { get; }
         public string Name { get; }
@@ -49,7 +49,7 @@ namespace HolzShots.Net.Custom
         public string Url { get; } = null;
         public string Description { get; } = null;
 
-        public UploaderInfo(SemVersion version, string name, string author, string contact, string bugsUrl, string updateUrl, string url, string description)
+        public UploaderMeta(SemVersion version, string name, string author, string contact, string bugsUrl, string updateUrl, string url, string description)
         {
             Version = version;
             Name = name;

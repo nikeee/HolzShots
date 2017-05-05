@@ -1,4 +1,3 @@
-
 using Semver;
 
 namespace HolzShots.Composition
