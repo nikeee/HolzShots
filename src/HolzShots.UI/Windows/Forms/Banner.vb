@@ -22,7 +22,6 @@ Namespace Windows.Forms
         <Browsable(True)>
         Public Property LockHeight As Boolean
 
-
         <Browsable(True)>
         Public Overloads Property Height As Integer
             Get
@@ -58,6 +57,5 @@ Namespace Windows.Forms
                 End If
             End With
         End Sub
-
     End Class
 End Namespace

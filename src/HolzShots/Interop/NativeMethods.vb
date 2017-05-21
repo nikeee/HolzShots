@@ -13,18 +13,18 @@ Namespace Interop
 #Region "shell32"
 
         <DllImport(Shell32, BestFitMapping:=False, ThrowOnUnmappableChar:=True)>
-        Public Shared Sub SHAddToRecentDocs(flag As NativeTypes.ShellAddToRecentDocsFlags, <MarshalAs(UnmanagedType.LPStr)> path As String)
+        Friend Shared Sub SHAddToRecentDocs(flag As NativeTypes.ShellAddToRecentDocsFlags, <MarshalAs(UnmanagedType.LPStr)> path As String)
         End Sub
 
         <DllImport(Shell32)>
-        Public Shared Function SHAppBarMessage(msg As NativeTypes.Abm, ByRef data As NativeTypes.AppBarData) As IntPtr
+        Friend Shared Function SHAppBarMessage(msg As NativeTypes.Abm, ByRef data As NativeTypes.AppBarData) As IntPtr
         End Function
 
 #End Region
 #Region "dwmapi"
 
         <DllImport(DwmApi, PreserveSig:=False)>
-        Public Shared Function DwmIsCompositionEnabled() As <MarshalAs(UnmanagedType.U1)> Boolean
+        Friend Shared Function DwmIsCompositionEnabled() As <MarshalAs(UnmanagedType.U1)> Boolean
         End Function
 
 #End Region
@@ -33,45 +33,45 @@ Namespace Interop
 #Region "FindWindow"
 
         <DllImport(User32, SetLastError:=True, CharSet:=CharSet.Unicode)>
-        Public Shared Function FindWindow(ByVal lpClassName As String, ByVal lpWindowName As String) As IntPtr
+        Friend Shared Function FindWindow(ByVal lpClassName As String, ByVal lpWindowName As String) As IntPtr
         End Function
 
         <DllImport(User32, EntryPoint:="FindWindow", SetLastError:=True, CharSet:=CharSet.Unicode)>
-        Public Shared Function FindWindowByClass(ByVal lpClassName As String, ByVal zero As IntPtr) As IntPtr
+        Friend Shared Function FindWindowByClass(ByVal lpClassName As String, ByVal zero As IntPtr) As IntPtr
         End Function
 
         <DllImport(User32, EntryPoint:="FindWindow", SetLastError:=True, CharSet:=CharSet.Unicode)>
-        Public Shared Function FindWindowByCaption(ByVal zero As IntPtr, ByVal lpWindowName As String) As IntPtr
+        Friend Shared Function FindWindowByCaption(ByVal zero As IntPtr, ByVal lpWindowName As String) As IntPtr
         End Function
 
         <DllImport(User32, SetLastError:=True, CharSet:=CharSet.Unicode)>
-        Public Shared Function FindWindowEx(ByVal parentHandle As IntPtr, ByVal childAfter As IntPtr, ByVal lclassName As String, ByVal windowTitle As String) As IntPtr
+        Friend Shared Function FindWindowEx(ByVal parentHandle As IntPtr, ByVal childAfter As IntPtr, ByVal lclassName As String, ByVal windowTitle As String) As IntPtr
         End Function
 
 #End Region
 #Region "SendMessage"
 
         <DllImport(User32)>
-        Public Shared Function SendMessage(ByVal hWnd As IntPtr, ByVal msg As UInt32, ByVal wParam As IntPtr, ByVal lParam As IntPtr) As IntPtr
+        Friend Shared Function SendMessage(ByVal hWnd As IntPtr, ByVal msg As UInt32, ByVal wParam As IntPtr, ByVal lParam As IntPtr) As IntPtr
         End Function
 
         <DllImport(User32, CharSet:=CharSet.Unicode)>
-        Public Shared Function SendMessage(ByVal hWnd As IntPtr, ByVal msg As UInt32, ByVal wParam As IntPtr, ByVal lParam As StringBuilder) As IntPtr
+        Friend Shared Function SendMessage(ByVal hWnd As IntPtr, ByVal msg As UInt32, ByVal wParam As IntPtr, ByVal lParam As StringBuilder) As IntPtr
         End Function
 
         <DllImport(User32)>
-        Public Shared Function SendMessage(ByVal hWnd As IntPtr, ByVal msg As UInt32, ByVal wParam As IntPtr, <MarshalAs(UnmanagedType.LPWStr)> ByVal lParam As String) As IntPtr
+        Friend Shared Function SendMessage(ByVal hWnd As IntPtr, ByVal msg As UInt32, ByVal wParam As IntPtr, <MarshalAs(UnmanagedType.LPWStr)> ByVal lParam As String) As IntPtr
         End Function
 
 #End Region
 #Region "Get/SetParent"
 
         <DllImport(User32, SetLastError:=True, CharSet:=CharSet.Auto)>
-        Public Shared Function SetParent(ByVal hWndChild As IntPtr, ByVal hWndNewParent As IntPtr) As IntPtr
+        Friend Shared Function SetParent(ByVal hWndChild As IntPtr, ByVal hWndNewParent As IntPtr) As IntPtr
         End Function
 
         <DllImport(User32, ExactSpelling:=True, CharSet:=CharSet.Auto)>
-        Public Shared Function GetParent(ByVal hWnd As IntPtr) As IntPtr
+        Friend Shared Function GetParent(ByVal hWnd As IntPtr) As IntPtr
         End Function
 
 #End Region
@@ -82,29 +82,29 @@ Namespace Interop
         End Function
 
         <DllImport(User32)>
-        Public Shared Function GetForegroundWindow() As IntPtr
+        Friend Shared Function GetForegroundWindow() As IntPtr
         End Function
 
 #End Region
 #Region "GetWindowText"
 
         <DllImport(User32, SetLastError:=True, CharSet:=CharSet.Unicode)>
-        Public Shared Function GetWindowText(ByVal hwnd As IntPtr, ByVal lpString As StringBuilder, ByVal cch As Integer) As Integer
+        Friend Shared Function GetWindowText(ByVal hwnd As IntPtr, ByVal lpString As StringBuilder, ByVal cch As Integer) As Integer
         End Function
 
         <DllImport(User32, SetLastError:=True, CharSet:=CharSet.Auto)>
-        Public Shared Function GetWindowTextLength(ByVal hwnd As IntPtr) As Integer
+        Friend Shared Function GetWindowTextLength(ByVal hwnd As IntPtr) As Integer
         End Function
 
 #End Region
 #Region "Window Position"
 
         <DllImport(User32)>
-        Public Shared Function GetWindowRect(ByVal hWnd As IntPtr, ByRef lpRect As NativeTypes.Rect) As Boolean
+        Friend Shared Function GetWindowRect(ByVal hWnd As IntPtr, ByRef lpRect As NativeTypes.Rect) As Boolean
         End Function
 
         <DllImport(User32)>
-        Public Shared Function GetWindowPlacement(ByVal hWnd As IntPtr, ByRef lpwndpl As NativeTypes.WindowPlacement) As <MarshalAs(UnmanagedType.U1)> Boolean
+        Friend Shared Function GetWindowPlacement(ByVal hWnd As IntPtr, ByRef lpwndpl As NativeTypes.WindowPlacement) As <MarshalAs(UnmanagedType.U1)> Boolean
         End Function
 
         <DllImport(User32, CharSet:=CharSet.Auto)>
@@ -123,14 +123,14 @@ Namespace Interop
         ''' <returns>If the function succeeds, the return value is nonzero.
         ''' <para>If the function fails, the return value is zero. To get extended error information, call GetLastError.</para></returns>
         <DllImport(User32)>
-        Public Shared Function MoveWindow(ByVal hWnd As IntPtr, ByVal x As Integer, ByVal y As Integer, ByVal nWidth As Integer, ByVal nHeight As Integer, ByVal bRepaint As Boolean) As Boolean
+        Friend Shared Function MoveWindow(ByVal hWnd As IntPtr, ByVal x As Integer, ByVal y As Integer, ByVal nWidth As Integer, ByVal nHeight As Integer, ByVal bRepaint As Boolean) As Boolean
         End Function
 
 #End Region
 #Region "Window State/Information"
 
         <DllImport(User32)>
-        Public Shared Function IsIconic(ByVal hWnd As IntPtr) As <MarshalAs(UnmanagedType.Bool)> Boolean
+        Friend Shared Function IsIconic(ByVal hWnd As IntPtr) As <MarshalAs(UnmanagedType.Bool)> Boolean
         End Function
 
         <DllImport(User32, CharSet:=CharSet.Unicode)>
@@ -141,11 +141,11 @@ Namespace Interop
 #Region "Drawing-Related"
 
         <DllImport(User32)>
-        Public Shared Function DestroyIcon(ByVal hIcon As IntPtr) As <MarshalAs(UnmanagedType.Bool)> Boolean
+        Friend Shared Function DestroyIcon(ByVal hIcon As IntPtr) As <MarshalAs(UnmanagedType.Bool)> Boolean
         End Function
 
         <DllImport(User32)>
-        Public Shared Function LockWindowUpdate(ByVal hWndLock As IntPtr) As <MarshalAs(UnmanagedType.Bool)> Boolean
+        Friend Shared Function LockWindowUpdate(ByVal hWndLock As IntPtr) As <MarshalAs(UnmanagedType.Bool)> Boolean
         End Function
 
         <DllImport(User32, CharSet:=CharSet.Auto)>
