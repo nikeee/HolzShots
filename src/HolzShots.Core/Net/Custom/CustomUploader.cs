@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -57,8 +57,11 @@ namespace HolzShots.Net.Custom
             {
                 progressHandler.HttpSendProgress += (s, e) => progress.Report(new UploadProgress(e));
 
-                var userAgent = uplInfo.Headers?.GetUserAgent(SuggestedUserAgent) ?? SuggestedUserAgent;
+                var userAgent = uplInfo.Headers?["User-Agent"] ?? SuggestedUserAgent;
+                // uplInfo.Headers?.GetUserAgent(SuggestedUserAgent) ?? SuggestedUserAgent;
                 cl.DefaultRequestHeaders.UserAgent.ParseAdd(userAgent);
+
+                // TODO: Set headers defined in request headers
 
                 using (var content = new MultipartFormDataContent())
                 {

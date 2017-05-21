@@ -14,41 +14,41 @@ namespace HolzShots.Common
         #region shcore
 
         [DllImport(shcore)]
-        public static extern int SetProcessDpiAwareness(NativeTypes.ProcessDPIAwareness value);
+        internal static extern int SetProcessDpiAwareness(NativeTypes.ProcessDPIAwareness value);
 
         #endregion
         #region gdi32
 
         [DllImport(gdi32)]
-        public static extern int SetROP2(IntPtr hdc, RasterOperation2 drawMode);
+        internal static extern int SetROP2(IntPtr hdc, RasterOperation2 drawMode);
         [DllImport(gdi32)]
-        public static extern IntPtr CreatePen(PenStyle penStyle, int width, uint color);
+        internal static extern IntPtr CreatePen(PenStyle penStyle, int width, uint color);
         [DllImport(gdi32)]
-        public static extern IntPtr SelectObject(IntPtr hdc, IntPtr gdiObject);
+        internal static extern IntPtr SelectObject(IntPtr hdc, IntPtr gdiObject);
         [DllImport(gdi32)]
-        public static extern bool DeleteObject(IntPtr obj);
+        internal static extern bool DeleteObject(IntPtr obj);
         [DllImport(gdi32)]
-        public static extern bool MoveToEx(IntPtr hdc, int x, int y, IntPtr point);
+        internal static extern bool MoveToEx(IntPtr hdc, int x, int y, IntPtr point);
         [DllImport(gdi32)]
-        public static extern bool LineTo(IntPtr hdc, int xEnd, int yEnd);
+        internal static extern bool LineTo(IntPtr hdc, int xEnd, int yEnd);
         [DllImport(gdi32)]
-        public static extern bool BitBlt(IntPtr hdcDst, int x1, int y1, int cx, int cy, IntPtr hdcSrc, int x2, int y2, CopyPixelOperation op);
+        internal static extern bool BitBlt(IntPtr hdcDst, int x1, int y1, int cx, int cy, IntPtr hdcSrc, int x2, int y2, CopyPixelOperation op);
         [DllImport(gdi32)]
-        public static extern IntPtr CreateCompatibleDC(IntPtr hdc);
+        internal static extern IntPtr CreateCompatibleDC(IntPtr hdc);
         [DllImport(gdi32)]
-        public static extern bool DeleteDC(IntPtr hdc);
+        internal static extern bool DeleteDC(IntPtr hdc);
         [DllImport(gdi32)]
-        public static extern IntPtr CreateCompatibleBitmap(IntPtr hdc, int width, int height);
+        internal static extern IntPtr CreateCompatibleBitmap(IntPtr hdc, int width, int height);
 
         #endregion
-        #region "user32"
+        #region user32
 
         [DllImport(user32)]
-        public static extern bool ReleaseDC(IntPtr window, IntPtr hdc);
+        internal static extern bool ReleaseDC(IntPtr window, IntPtr hdc);
         [DllImport(user32)]
-        public static extern IntPtr GetWindowDC(IntPtr window);
+        internal static extern IntPtr GetWindowDC(IntPtr window);
         [DllImport(user32)]
-        public static extern IntPtr GetDesktopWindow();
+        internal static extern IntPtr GetDesktopWindow();
 
         #endregion
     }

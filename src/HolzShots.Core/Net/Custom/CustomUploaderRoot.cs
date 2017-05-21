@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
@@ -77,12 +77,12 @@ namespace HolzShots.Net.Custom
         public Parser Parser { get; }
 
         public string Method { get; } = "POST";
-        public UploaderHeaders Headers { get; } = null;
+        public ReadOnlyDictionary<string, string> Headers { get; } = null;
         public ReadOnlyDictionary<string, string> PostParams { get; } = null;
         public long? MaxFileSize { get; } = null;
         public string FileName { get; } = null;
 
-        public UploaderConfig(string fileFormName, string requestUrl, Parser parser, string method, UploaderHeaders headers, ReadOnlyDictionary<string, string> postParams, long? maxFileSize, string fileName)
+        public UploaderConfig(string fileFormName, string requestUrl, Parser parser, string method, ReadOnlyDictionary<string, string> headers, ReadOnlyDictionary<string, string> postParams, long? maxFileSize, string fileName)
         {
             FileFormName = fileFormName;
             RequestUrl = requestUrl;
@@ -104,7 +104,7 @@ namespace HolzShots.Net.Custom
                 return false;
             if (Parser?.Validate(schemaVersion) != true)
                 return false;
-            if (Headers != null && !Headers.Validate(schemaVersion))
+            if (Headers != null && !ValidateHeaders(schemaVersion, Headers))
                 return false;
             if (Method != null && !ValidMethods.Contains(Method.ToUpperInvariant()))
                 return false;
@@ -116,10 +116,19 @@ namespace HolzShots.Net.Custom
                 return false;
             return true;
         }
+
+        private static bool ValidateHeaders(SemVersion schemaVersion, ReadOnlyDictionary<string, string> headers)
+        {
+            if (headers == null)
+                return false;
+            // TODO: Validate if all headers have valid values/names
+            return true;
+        }
     }
 
+    /*
     [Serializable]
-    public class UploaderHeaders
+    public class UploaderHeaders : ReadOnlyDictionary<string, string>
     {
         public string UserAgent { get; } = null;
         public string Referer { get; } = null;
@@ -138,6 +147,7 @@ namespace HolzShots.Net.Custom
             return ProductInfoHeaderValue.TryParse(UserAgent, out var _);
         }
     }
+    */
 
     [Serializable]
     public class Parser
