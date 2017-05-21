@@ -7,9 +7,7 @@ type XPath = string;
 type HttpMethod = "POST" | "PUT";
 type UserAgent = string;
 type ParamsMap = { [index: string]: string | null };
-
-// TODO: Consider Basic Auth?
-// TODO: Allow every header to be set
+type HTTPHeaders = { [k: string]: string; }
 
 interface CustomUploader {
     schemaVersion: "0.1.0";
@@ -33,15 +31,10 @@ interface UploaderConfig {
     parser: Parser;
     requestUrl: Url;
     method?: HttpMethod;
-    headers?: UploaderHeaders;
+    headers?: HTTPHeaders;
     postParams?: ParamsMap;
     maxFileSize?: number;
     fileName?: string;
-}
-
-interface UploaderHeaders {
-    userAgent?: UserAgent;
-    referer: string;
 }
 
 type Parser = RegExParser | JsonParser | XmlParser;
