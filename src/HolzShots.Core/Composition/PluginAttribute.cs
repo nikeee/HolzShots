@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.ComponentModel.Composition;
 using Semver;
 
@@ -6,7 +6,7 @@ namespace HolzShots.Composition
 {
     [MetadataAttribute]
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
-    public class PluginAttribute : Attribute /* , ICompileTimePluginMetadata */
+    public class PluginAttribute : Attribute, ICompileTimePluginMetadata
     {
         public string Name { get; }
         public string Author { get; }
@@ -32,8 +32,6 @@ namespace HolzShots.Composition
         }
     }
 
-    // TODO: Do we really need a new interface for that?
-    /*
     public interface ICompileTimePluginMetadata
     {
         string Name { get; }
@@ -45,7 +43,6 @@ namespace HolzShots.Composition
         string Contact { get; }
         string Description { get; }
     }
-    */
 
     public class PluginMetadata : IPluginMetadata
     {
@@ -56,7 +53,7 @@ namespace HolzShots.Composition
         public string BugsUrl { get; }
         public string Contact { get; }
         public string Description { get; }
-        public PluginMetadata(PluginAttribute sourceAttribute)
+        public PluginMetadata(ICompileTimePluginMetadata sourceAttribute)
         {
             if (sourceAttribute == null)
                 throw new ArgumentNullException(nameof(sourceAttribute));

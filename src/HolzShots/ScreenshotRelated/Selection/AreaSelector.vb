@@ -6,7 +6,7 @@ Imports HolzShots.Interop
 
 Namespace ScreenshotRelated.Selection
     Friend Class AreaSelector
-        Inherits Windows.Forms.Form ' TODO: Enhance?
+        Inherits System.Windows.Forms.Form ' TODO: Enhance?
         Implements IDisposable
         Implements IAreaSelector
 

@@ -74,10 +74,10 @@ Namespace Interop
                 cyBottomheight = bottomHeight
             End Sub
 
-            Public Shared Widening Operator CType(ByVal mrg As Margin) As Windows.Forms.Padding
+            Public Shared Widening Operator CType(ByVal mrg As Margin) As System.Windows.Forms.Padding
                 Return New Padding(mrg.cxLeftWidth, mrg.cyTopHeight, mrg.cxRightWidth, mrg.cyBottomheight)
             End Operator
-            Public Shared Widening Operator CType(ByVal fwPadding As Windows.Forms.Padding) As Margin
+            Public Shared Widening Operator CType(ByVal fwPadding As System.Windows.Forms.Padding) As Margin
                 Return New Margin(fwPadding.Left, fwPadding.Top, fwPadding.Right, fwPadding.Bottom)
             End Operator
         End Structure

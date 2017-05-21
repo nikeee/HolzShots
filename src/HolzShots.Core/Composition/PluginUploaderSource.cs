@@ -1,4 +1,4 @@
-using HolzShots.Net;
+﻿using HolzShots.Net;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,10 +26,10 @@ namespace HolzShots.Composition
             foreach (var p in pls)
             {
                 Debug.Assert(p.Metadata != null);
-                Debug.Assert(p.Metadata is PluginAttribute);
-                Debug.Assert(typeof(PluginAttribute).IsAssignableFrom(p.Metadata.GetType()));
+                Debug.Assert(p.Metadata is ICompileTimePluginMetadata);
+                Debug.Assert(typeof(ICompileTimePluginMetadata).IsAssignableFrom(p.Metadata.GetType()));
 
-                var m = new PluginMetadata(p.Metadata as PluginAttribute);
+                var m = new PluginMetadata(p.Metadata as ICompileTimePluginMetadata);
                 try
                 {
                     if (m.Name == name)
