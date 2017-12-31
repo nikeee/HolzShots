@@ -3,6 +3,7 @@ Imports HolzShots.Common.UI.Transitions
 Imports HolzShots.Common.UI.Transitions.TransitionTypes
 Imports HolzShots.Interop
 Imports HolzShots.Interop.NativeTypes
+Imports HolzShots.Threading
 
 Namespace UI.Dialogs
 
@@ -47,16 +48,10 @@ Namespace UI.Dialogs
             Dim t = New Transition(New Deceleration(duration))
             t.Add(Me, "TargetY", destY)
             t.Add(Me, "TargetOpacity", 1.0)
+            completedHandler()
 
             If completedHandler IsNot Nothing Then
-                AddHandler t.TransitionCompletedEvent, Sub()
-                                                           If completedHandler Is Nothing Then Exit Sub
-                                                           If _target.InvokeRequired Then
-                                                               _target.Invoke(Sub() completedHandler())
-                                                           Else
-                                                               completedHandler()
-                                                           End If
-                                                       End Sub
+                AddHandler t.TransitionCompletedEvent, Sub() _target.InvokeOnUIThread(completedHandler)
             End If
             t.Run()
         End Sub
@@ -79,16 +74,7 @@ Namespace UI.Dialogs
             t.Add(Me, "TargetOpacity", 0.0)
 
             If completedHandler IsNot Nothing Then
-                AddHandler t.TransitionCompletedEvent, Sub()
-                                                           If completedHandler Is Nothing Then Exit Sub
-                                                           If _target.InvokeRequired Then
-                                                               _target.Invoke(Sub() completedHandler())
-                                                           Else
-                                                               completedHandler()
-                                                           End If
-                                                       End Sub
-
-
+                AddHandler t.TransitionCompletedEvent, Sub() _target?.InvokeOnUIThread(completedHandler)
             End If
             t.Run()
         End Sub
@@ -99,11 +85,7 @@ Namespace UI.Dialogs
             End Get
             Set(value As Integer)
                 If Not _target.IsDisposed AndAlso _target.Location.X <> value Then
-                    If _target.InvokeRequired Then
-                        _target.Invoke(Sub() _target.Location = New Point(value, _target.Location.Y))
-                    Else
-                        _target.Location = New Point(value, _target.Location.Y)
-                    End If
+                    _target.InvokeOnUIThread(Sub() _target.Location = New Point(value, _target.Location.Y))
                 End If
             End Set
         End Property
@@ -114,11 +96,7 @@ Namespace UI.Dialogs
             End Get
             Set(value As Double)
                 If Not _target.IsDisposed AndAlso _target.Opacity <> value Then
-                    If _target.InvokeRequired Then
-                        _target.Invoke(Sub() _target.Opacity = value)
-                    Else
-                        _target.Opacity = value
-                    End If
+                    _target.InvokeOnUIThread(Sub() _target.Opacity = value)
                 End If
             End Set
         End Property
@@ -129,11 +107,7 @@ Namespace UI.Dialogs
             End Get
             Set(value As Integer)
                 If Not _target.IsDisposed AndAlso _target.Location.Y <> value Then
-                    If _target.InvokeRequired Then
-                        _target.Invoke(Sub() _target.Location = New Point(_target.Location.X, value))
-                    Else
-                        _target.Location = New Point(_target.Location.X, value)
-                    End If
+                    _target.InvokeOnUIThread(Sub() _target.Location = New Point(_target.Location.X, value))
                 End If
             End Set
         End Property

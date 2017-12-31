@@ -66,6 +66,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Threading\TreadingExtensions.cs" />
     <Compile Include="UI\Localization.cs" />
     <Compile Include="UI\Transitions\InterpolationMethod.cs" />
     <Compile Include="UI\Transitions\ManagedTypes\Color.cs" />
