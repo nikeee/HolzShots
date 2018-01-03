@@ -1,9 +1,9 @@
 Imports System.Linq
+Imports HolzShots.Common.Threading
 Imports HolzShots.Common.UI.Transitions
 Imports HolzShots.Common.UI.Transitions.TransitionTypes
 Imports HolzShots.Interop
 Imports HolzShots.Interop.NativeTypes
-Imports HolzShots.Threading
 
 Namespace UI.Dialogs
 
