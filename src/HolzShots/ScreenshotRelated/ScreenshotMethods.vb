@@ -69,7 +69,7 @@ Namespace ScreenshotRelated
         Private Shared Function GetShotSet(windowHandle As IntPtr, includeMargin As Boolean, isInMetro As Boolean) As WindowScreenshotSet
             ' TODO: Refactor methods to WindowScreenshotSet?
             If HolzShotsEnvironment.IsAeroEnabled AndAlso Not isInMetro Then
-                Return DoAeroOn(windowHandle, includeMargin, HolzShotsEnvironment.IsEightOrHigher)
+                Return DoAeroOn(windowHandle, includeMargin, False)
             ElseIf isInMetro OrElse HolzShotsEnvironment.IsVistaOrHigher Then
                 Return DoAeroOff(windowHandle)
             Else
