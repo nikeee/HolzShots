@@ -8,20 +8,19 @@ namespace HolzShots.Common
         public const string PublisherName = "Niklas Mollenhauer";
 
         public const string License = "GPL-3.0";
-        private const string ReleaseSuffix = "-beta"; // -beta
 
-        // 1.0.0-beta+exp.sha.5114f85
-        // 1.0.0-beta+2.deadbeef
+        // 1.0.0-beta.2+deadbeef
         // These info is filled by build script
         public const string VersionFormal = "%VERSION%"; // 1.0.0
-        public const string CommitId = "%COMMIT-ID%"; // deadbeef
-        public const string CommitsSinceTag = "%COMMITS-SINCE-TAG%"; // 2
+        private const string ReleaseSuffix = "%RELEASE-SUFFIX%"; // -beta
+        public const string CommitsSinceTag = "%COMMITS-SINCE-TAG%"; // .2
+        public const string CommitId = "%COMMIT-ID%"; // +deadbeef
 #if RELEASE && CI_BUILD
         public static DateTime VersionDate = DateTime.ParseExact("%BUILD-DATE%", "MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture);
 #else
         public static DateTime VersionDate = DateTime.Now;
 #endif
-        public const string SemanticVersion = VersionFormal + ReleaseSuffix + "+" + CommitsSinceTag + "." + CommitId;
+        public const string SemanticVersion = VersionFormal + ReleaseSuffix + CommitsSinceTag + CommitId;
 
         public const string SiteUrl = "https://holzshots.net";
         public const string SourceUrl = "https://github.com/nikeee/HolzShots";
