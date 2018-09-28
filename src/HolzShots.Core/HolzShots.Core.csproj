@@ -148,14 +148,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Analyzer Include="..\..\packages\AsyncFixer.1.1.5\analyzers\dotnet\cs\AsyncFixer.dll" />
+    <Analyzer Include="..\..\packages\AsyncFixer.1.1.6\analyzers\dotnet\cs\AsyncFixer.dll" />
     <Analyzer Include="..\..\packages\Microsoft.ApiDesignGuidelines.Analyzers.1.2.0-beta2\analyzers\dotnet\cs\Analyzer.Utilities.dll" />
     <Analyzer Include="..\..\packages\Microsoft.ApiDesignGuidelines.Analyzers.1.2.0-beta2\analyzers\dotnet\cs\Microsoft.ApiDesignGuidelines.Analyzers.dll" />
     <Analyzer Include="..\..\packages\Microsoft.ApiDesignGuidelines.Analyzers.1.2.0-beta2\analyzers\dotnet\cs\Microsoft.ApiDesignGuidelines.CSharp.Analyzers.dll" />
-    <Analyzer Include="..\..\packages\System.Runtime.Analyzers.1.1.0\analyzers\dotnet\cs\System.Runtime.Analyzers.dll" />
-    <Analyzer Include="..\..\packages\System.Runtime.Analyzers.1.1.0\analyzers\dotnet\cs\System.Runtime.CSharp.Analyzers.dll" />
-    <Analyzer Include="..\..\packages\System.Runtime.InteropServices.Analyzers.1.1.0\analyzers\dotnet\cs\System.Runtime.InteropServices.Analyzers.dll" />
-    <Analyzer Include="..\..\packages\System.Runtime.InteropServices.Analyzers.1.1.0\analyzers\dotnet\cs\System.Runtime.InteropServices.CSharp.Analyzers.dll" />
+    <Analyzer Include="..\..\packages\System.Runtime.Analyzers.1.2.0-beta2\analyzers\dotnet\cs\System.Runtime.Analyzers.dll" />
+    <Analyzer Include="..\..\packages\System.Runtime.Analyzers.1.2.0-beta2\analyzers\dotnet\cs\System.Runtime.CSharp.Analyzers.dll" />
+    <Analyzer Include="..\..\packages\System.Runtime.InteropServices.Analyzers.1.2.0-beta2\analyzers\dotnet\cs\System.Runtime.InteropServices.Analyzers.dll" />
+    <Analyzer Include="..\..\packages\System.Runtime.InteropServices.Analyzers.1.2.0-beta2\analyzers\dotnet\cs\System.Runtime.InteropServices.CSharp.Analyzers.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
