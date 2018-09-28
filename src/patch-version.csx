@@ -13,7 +13,7 @@ const string gitArgs = "describe --tags --long";
 var libInfoFile = @"HolzShots.Common\LibraryInformation.cs";
 var nextVerionFile = @"NextVersion.txt";
 Console.WriteLine($"Using Info File: {libInfoFile}");
-Console.WriteLine($"Using Next Version File: {NextVersion}");
+Console.WriteLine($"Using Next Version File: {nextVerionFile}");
 
 var proc = new Process
 {
