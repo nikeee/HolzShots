@@ -204,6 +204,7 @@
     <Import Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GlobalSuppressions.vb" />
     <Compile Include="ImageExtensions.vb" />
     <Compile Include="Input\Actions\SelectAreaHotkeyAction.vb" />
     <Compile Include="Input\HolzShotsActionCollection.vb" />
