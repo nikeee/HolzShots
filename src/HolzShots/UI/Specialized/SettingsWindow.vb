@@ -242,6 +242,11 @@ Namespace UI.Specialized
 
         Private Sub SettingsLoad(ByVal sender As Object, ByVal e As EventArgs) Handles MyBase.Load
             LoadPolicies()
+            LoadHotkeys()
+        End Sub
+
+        Private Sub LoadHotkeys()
+            EnsureHotkeySettingsIntegrity()
 
             _selectorKeyStroke = HolzShots.My.Settings.SelectorHotkey
             _windowKeyStroke = HolzShots.My.Settings.WindowHotkey
@@ -256,27 +261,63 @@ Namespace UI.Specialized
             _windowStrokeLabel.Text = If(_windowKeyStroke?.ToString(), Localization.NotSet)
         End Sub
 
+        Private Shared ReadOnly Property SelectorDefaultHotkey As Hotkey
+            Get
+                Return New Hotkey(Input.ModifierKeys.None, Keys.F8)
+            End Get
+        End Property
+
+        Private Shared ReadOnly Property FullDefaultHotkey As Hotkey
+            Get
+                Return New Hotkey(Input.ModifierKeys.None, Keys.F9)
+            End Get
+        End Property
+
+        Private Shared ReadOnly Property WindowDefaultHotkey As Hotkey
+            Get
+                Return New Hotkey(Input.ModifierKeys.None, Keys.F10)
+            End Get
+        End Property
+
         Friend Shared Sub EnsureHotkeySettingsIntegrity()
+            Dim changed = False
+
             If HolzShots.My.Settings.EnableAreaScreenshot Then
-                HolzShots.My.Settings.SelectorHotkey = IdentityOrDefaultHotkey(HolzShots.My.Settings.SelectorHotkey, New Hotkey(Input.ModifierKeys.None, Keys.F8))
+                Dim r = IdentityOrDefaultHotkey(HolzShots.My.Settings.SelectorHotkey, SelectorDefaultHotkey)
+                HolzShots.My.Settings.SelectorHotkey = r.Item1
+                If r.Item2 Then
+                    changed = True
+                End If
             Else
                 HolzShots.My.Settings.SelectorHotkey = Nothing
             End If
             If HolzShots.My.Settings.EnableFullscreenScreenshot Then
-                HolzShots.My.Settings.FullHotkey = IdentityOrDefaultHotkey(HolzShots.My.Settings.FullHotkey, New Hotkey(Input.ModifierKeys.None, Keys.F9))
+                Dim r = IdentityOrDefaultHotkey(HolzShots.My.Settings.FullHotkey, FullDefaultHotkey)
+                HolzShots.My.Settings.FullHotkey = r.Item1
+                If r.Item2 Then
+                    changed = True
+                End If
             Else
                 HolzShots.My.Settings.FullHotkey = Nothing
             End If
             If HolzShots.My.Settings.EnableWindowScreenshot Then
-                HolzShots.My.Settings.WindowHotkey = IdentityOrDefaultHotkey(HolzShots.My.Settings.WindowHotkey, New Hotkey(Input.ModifierKeys.None, Keys.F10))
+                Dim r = IdentityOrDefaultHotkey(HolzShots.My.Settings.WindowHotkey, WindowDefaultHotkey)
+                HolzShots.My.Settings.WindowHotkey = r.Item1
+                If r.Item2 Then
+                    changed = True
+                End If
             Else
                 HolzShots.My.Settings.WindowHotkey = Nothing
             End If
+
+            If changed Then
+                HolzShots.My.Settings.Save()
+            End If
         End Sub
 
-        Private Shared Function IdentityOrDefaultHotkey(h As Hotkey, [default] As Hotkey) As Hotkey
-            If h Is Nothing OrElse h.IsNone() Then Return [default]
-            Return h
+        Private Shared Function IdentityOrDefaultHotkey(h As Hotkey, [default] As Hotkey) As (Hotkey, Boolean)
+            If h Is Nothing OrElse h.IsNone() Then Return ([default], True)
+            Return (h, False)
         End Function
 
         Private Sub SavebtnClick(ByVal sender As Object, ByVal e As EventArgs) Handles savebtn.Click
