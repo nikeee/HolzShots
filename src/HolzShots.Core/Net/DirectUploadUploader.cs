@@ -45,7 +45,7 @@ namespace HolzShots.Net
 
                     var resStr = await res.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-                    const string urlPattern = @"http://[a-zA-Z0-9]*.directupload.net/images/\d{1,}/\w{1,}.[a-zA-Z]{1,3}";
+                    const string urlPattern = @"https?://[a-zA-Z0-9]*.directupload.net/images/\d{1,}/\w{1,}.[a-zA-Z]{1,3}";
                     var matches = Regex.Matches(resStr, urlPattern);
 
                     Debug.Assert(matches.Count > 0);
