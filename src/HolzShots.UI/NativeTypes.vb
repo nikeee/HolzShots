@@ -139,35 +139,6 @@ Namespace NativeTypes
     End Structure
 
     <StructLayout(LayoutKind.Sequential)>
-    Public Structure Margin
-        Public Shared ReadOnly DefaultMargin As Margin = New Margin(-1)
-
-        Public cxLeftWidth As Integer
-        Public cxRightWidth As Integer
-        Public cyTopHeight As Integer
-        Public cyBottomheight As Integer
-        Sub New(all As Integer)
-            cxLeftWidth = all
-            cxRightWidth = all
-            cyTopHeight = all
-            cyBottomheight = all
-        End Sub
-        Sub New(leftWidth As Integer, topHeight As Integer, rightWidth As Integer, bottomHeight As Integer)
-            cxLeftWidth = leftWidth
-            cxRightWidth = rightWidth
-            cyTopHeight = topHeight
-            cyBottomheight = bottomHeight
-        End Sub
-
-        Public Shared Widening Operator CType(ByVal mrg As Margin) As Padding
-            Return New Padding(mrg.cxLeftWidth, mrg.cyTopHeight, mrg.cxRightWidth, mrg.cyBottomheight)
-        End Operator
-        Public Shared Widening Operator CType(ByVal fwPadding As Padding) As Margin
-            Return New Margin(fwPadding.Left, fwPadding.Top, fwPadding.Right, fwPadding.Bottom)
-        End Operator
-    End Structure
-
-    <StructLayout(LayoutKind.Sequential)>
     Public Structure WtaOptions
         Public Flags As WTNCA
         Public Mask As WTNCA

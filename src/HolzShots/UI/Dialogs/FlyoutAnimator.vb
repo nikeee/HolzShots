@@ -48,7 +48,6 @@ Namespace UI.Dialogs
             Dim t = New Transition(New Deceleration(duration))
             t.Add(Me, "TargetY", destY)
             t.Add(Me, "TargetOpacity", 1.0)
-            completedHandler()
 
             If completedHandler IsNot Nothing Then
                 AddHandler t.TransitionCompletedEvent, Sub() _target.InvokeOnUIThread(completedHandler)

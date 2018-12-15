@@ -59,13 +59,16 @@ Namespace UI.Specialized
             _actionContainer = New HolzShotsActionCollection(_keyboardHook,
                                                             New SelectAreaHotkeyAction(),
                                                             New FullscreenHotkeyAction(),
-                                                            New WindowHotkeyAction())
+                                                            New WindowHotkeyAction()
+                                                            )
             ActionContainer.Refresh()
+
+            Global.HolzShots.My.Settings.Upgrade()
 
 
             Dim args = Environment.GetCommandLineArgs()
             Await MyApplication.ProcessCommandLineArguments(args)
-            Dim isAutorun As Boolean = args.Contains("-autorun")
+            Dim isAutorun = args.Contains("-autorun")
 
             Dim saveSettings As Boolean = False
             Dim openSettingsOnFinish As Boolean = False

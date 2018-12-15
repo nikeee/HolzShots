@@ -31,6 +31,7 @@ Namespace UI
             If Not String.IsNullOrEmpty(title) Then
                 Text = title
             End If
+
             _selectedKeyStroke = initialKeyStroke
 
             UpdateDisplay()

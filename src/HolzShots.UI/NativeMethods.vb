@@ -32,7 +32,7 @@ Friend NotInheritable Class NativeMethods
     Public Shared Function SetWindowThemeAttribute(ByVal hWnd As IntPtr, ByVal wtype As Integer, ByRef attributes As NativeTypes.WtaOptions, ByVal size As UInteger) As Integer
     End Function
     <DllImport(UxTheme)>
-    Public Shared Function GetThemeMargins(hTheme As IntPtr, hdc As IntPtr, iPartId As Integer, iStateId As Integer, iPropId As Integer, rect As IntPtr, ByRef pMargins As NativeTypes.Margin) As Integer
+    Public Shared Function GetThemeMargins(hTheme As IntPtr, hdc As IntPtr, iPartId As Integer, iStateId As Integer, iPropId As Integer, rect As IntPtr, ByRef pMargins As Common.NativeTypes.Margin) As Integer
     End Function
     <DllImport(UxTheme, ExactSpelling:=True, CharSet:=CharSet.Unicode)>
     Public Shared Function SetWindowTheme(ByVal hWnd As IntPtr, ByVal pszSubAppName As String, ByVal pszSubIdList As Integer) As Integer
@@ -40,7 +40,7 @@ Friend NotInheritable Class NativeMethods
 #Region "DWM"
 
     <DllImport(DwmApi, PreserveSig:=True)>
-    Public Shared Function DwmExtendFrameIntoClientArea(ByVal hwnd As IntPtr, ByRef margins As NativeTypes.Margin) As Integer
+    Public Shared Function DwmExtendFrameIntoClientArea(ByVal hwnd As IntPtr, ByRef margins As Common.NativeTypes.Margin) As Integer
     End Function
 
     <DllImport(DwmApi, EntryPoint:="#104")>

@@ -95,11 +95,11 @@ Namespace Windows.Forms
         Private Const RebarBackground As Integer = 6
 
         Private Function GetThemeMargins(dc As IDeviceContext, marginType As MarginTypes) As Padding
-            Dim margins As NativeTypes.Margin
+            Dim margins As Common.NativeTypes.Margin
             Try
                 Dim hDc As IntPtr = dc.GetHdc()
                 If 0 = NativeMethods.GetThemeMargins(_renderer.Handle, hDc, _renderer.Part, _renderer.State, CInt(marginType), IntPtr.Zero, margins) Then
-                    Return New Padding(margins.cxLeftWidth, margins.cyTopHeight, margins.cxRightWidth, margins.cyBottomheight)
+                    Return margins.ToPadding() ' New Padding(margins.LeftWidth, margins.TopHeight, margins.RightWidth, margins.Bottomheight)
                 End If
                 Return New Padding(0)
             Finally

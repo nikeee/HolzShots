@@ -17,16 +17,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 [assembly: CLSCompliant(false)]
 
-[assembly: AssemblyCompany(LibraryInformation.PublisherName)]
-[assembly: AssemblyCopyright(LibraryInformation.Copyright)]
-#if RELEASE && CI_BUILD
-[assembly: AssemblyVersion(LibraryInformation.VersionFormal)]
-[assembly: AssemblyFileVersion(LibraryInformation.VersionFormal)]
-#else
 [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyFileVersion("1.0.0")]
-#endif
-[assembly: AssemblyInformationalVersion(LibraryInformation.FullVersionString)]
 
 [assembly: InternalsVisibleTo("HolzShots.Core.Tests")]
-
