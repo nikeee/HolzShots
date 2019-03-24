@@ -74,7 +74,7 @@ Namespace ScreenshotRelated
                 Return DoAeroOff(windowHandle)
             Else
                 Debugger.Break() ' wait, you prick!
-                Return DoXp(windowHandle)
+                Throw New InvalidOperationException("Unsupported operating system.")
             End If
         End Function
 
@@ -180,24 +180,6 @@ Namespace ScreenshotRelated
                 MainWindow.Instance.Cursor.Draw(ge, New Rectangle(0, 0, c.Width, c.Height))
             End Using
             Return c
-        End Function
-
-        Private Shared Function DoXp(wndHandle As IntPtr) As WindowScreenshotSet
-            Dim rct As NativeTypes.Rect
-            NativeMethods.GetWindowRect(wndHandle, rct)
-
-            Dim nrct As Rectangle = Rectangle.FromLTRB(rct.Left, rct.Top, rct.Right, rct.Bottom)
-            Dim curp As New Point(Cursor.Position.X - nrct.Location.X, Cursor.Position.Y - nrct.Location.Y)
-            Dim bmp As New Bitmap(nrct.Width, nrct.Height)
-
-            Using g As Graphics = Graphics.FromImage(bmp)
-                g.Clear(Color.FromArgb(255, 13, 11, 12))
-                g.CopyFromScreen(nrct.Location.X, nrct.Location.Y, 0, 0, nrct.Size)
-            End Using
-
-            Dim wndTitle = String.Empty, procName As String = String.Empty
-            ScreenshotMethodsHelper.GetWindowInformation(wndHandle, wndTitle, procName)
-            Return New WindowScreenshotSet(bmp, curp, wndTitle, procName)
         End Function
 
         Public Shared Function CaptureTaskbar() As Screenshot
