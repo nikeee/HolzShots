@@ -182,12 +182,5 @@ Namespace ScreenshotRelated
             Return c
         End Function
 
-        Public Shared Function CaptureTaskbar() As Screenshot
-            Dim taskbarHandle = NativeMethods.FindWindow("Shell_TrayWnd", String.Empty)
-            Dim shot = CaptureWindow(taskbarHandle, False)
-            ' shot.WindowName = "Taskleiste"
-            Return shot
-        End Function
-
     End Class
 End Namespace
