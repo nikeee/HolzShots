@@ -23,7 +23,6 @@ namespace HolzShots.Net
             Debug.Assert(data != null);
             Debug.Assert(!string.IsNullOrEmpty(suggestedFileName));
             // Debug.Assert(!string.IsNullOrEmpty(mimeType));
-            // Debug.Assert(cancellationToken != null);
             Debug.Assert(progress != null);
 
             const string destUrl = "http://www.directupload.net/index.php?mode=upload";

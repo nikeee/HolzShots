@@ -36,7 +36,6 @@ namespace HolzShots.Net.Custom
             Debug.Assert(data != null);
             Debug.Assert(!string.IsNullOrWhiteSpace(suggestedFileName));
             Debug.Assert(!string.IsNullOrWhiteSpace(mimeType));
-            Debug.Assert(cancellationToken != null);
 
             // If the stream has a specific length, check if it exceeds the set maximum file size
             var mfs = UploaderInfo.Uploader.MaxFileSize;
