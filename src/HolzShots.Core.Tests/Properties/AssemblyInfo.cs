@@ -8,10 +8,6 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyProduct("HolzShots.Core.Tests")]
 [assembly: AssemblyDescription("HolzShots Core Component Tests")]
 
-[assembly: AssemblyCulture("")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyConfiguration("")]
-
 [assembly: Guid("56abb0f5-9c8b-4bc9-9d16-bc9598657b5d")]
 
 [assembly: ComVisible(false)]
