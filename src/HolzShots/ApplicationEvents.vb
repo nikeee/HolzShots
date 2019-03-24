@@ -46,7 +46,7 @@ Namespace My
 
         Private Async Sub MyApplicationStartup(sender As Object, e As StartupEventArgs) Handles Me.Startup
             UpgradeSettings()
-            Await LoadPlugins()
+            Await LoadPlugins().ConfigureAwait(True)
             If TaskbarManager.IsPlatformSupported Then AddTasks()
         End Sub
 
@@ -75,15 +75,13 @@ Namespace My
             For i As Integer = 0 To args.Length - 1
                 Select Case args(i)
                     Case FullscreenScreenshotParameter
-                        Await ScreenshotInvoker.DoFullscreen()
+                        Await ScreenshotInvoker.DoFullscreen().ConfigureAwait(True)
                     Case AreaSelectorParameter
-                        Await ScreenshotInvoker.DoSelector()
+                        Await ScreenshotInvoker.DoSelector().ConfigureAwait(True)
                     Case UploadParameter
                         ScreenshotInvoker.UploadSelectedImage()
                     Case OpenParameter
                         ScreenshotInvoker.OpenSelectedImage()
-                    Case TaskbarScreenshotParameter
-                        Await ScreenshotInvoker.DoTaskbar()
                     Case OpenFromShellParameter
                         If i < args.Length - 1 Then
                             ScreenshotInvoker.TryOpenSpecificImage(args(i + 1))

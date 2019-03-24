@@ -46,14 +46,14 @@ Namespace Net
             ' Invoke settings if the uploader wants it
             Dim sc = uploader.GetSupportedSettingsContexts()
             If (sc And SettingsInvocationContexts.OnUse) = SettingsInvocationContexts.OnUse Then
-                Await uploader.InvokeSettingsAsync(SettingsInvocationContexts.OnUse)
+                Await uploader.InvokeSettingsAsync(SettingsInvocationContexts.OnUse).ConfigureAwait(True)
             End If
 
             Using ui As New UploadUi(uploader, image, format, parentWindow)
                 ui.ShowUi()
                 Dim res As UploadResult = Nothing
                 Try
-                    res = Await ui.InvokeUploadAsync()
+                    res = Await ui.InvokeUploadAsync().ConfigureAwait(True)
                     Return res
                 Catch ex As OperationCanceledException
                     Throw New UploadCanceledException(ex)

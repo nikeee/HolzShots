@@ -804,7 +804,7 @@ Namespace UI.Specialized
                 Dim format = UploadHelper.GetImageFormat(image)
                 Dim result As UploadResult
                 Try
-                    result = Await UploadHelper.Upload(v.uploader, image, format, Me)
+                    result = Await UploadHelper.Upload(v.uploader, image, format, Me).ConfigureAwait(True)
                     Debug.Assert(result IsNot Nothing)
                     UploadHelper.InvokeUploadFinishedUi(result)
                 Catch ex As UploadCanceledException
@@ -855,7 +855,7 @@ Namespace UI.Specialized
             Dim image = ThePanel.CombinedImage
             Dim format = UploadHelper.GetImageFormat(image)
             Try
-                Dim result = Await UploadHelper.UploadToDefaultUploader(ThePanel.CombinedImage, format, Me)
+                Dim result = Await UploadHelper.UploadToDefaultUploader(ThePanel.CombinedImage, format, Me).ConfigureAwait(True)
                 Debug.Assert(result IsNot Nothing)
                 UploadHelper.InvokeUploadFinishedUi(result)
             Catch ex As UploadCanceledException

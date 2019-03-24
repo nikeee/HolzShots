@@ -67,7 +67,7 @@ Namespace UI.Specialized
 
 
             Dim args = Environment.GetCommandLineArgs()
-            Await MyApplication.ProcessCommandLineArguments(args)
+            Await MyApplication.ProcessCommandLineArguments(args).ConfigureAwait(True)
             Dim isAutorun = args.Contains("-autorun")
 
             Dim saveSettings As Boolean = False
@@ -124,7 +124,7 @@ Namespace UI.Specialized
         Private Async Sub TrayIconMouseDoubleClick(ByVal sender As Object, ByVal e As MouseEventArgs) Handles TrayIcon.MouseDoubleClick
             Select Case TrayIconDoubleClickAction ' TODO: Entry in settings dialog
                 Case TrayIconAction.InvokeAreaSelection
-                    Await DoSelector() ' Can swallow exceptions
+                    Await DoSelector().ConfigureAwait(True) ' Can swallow exceptions
                 Case TrayIconAction.OpenScreenshotFolder
                     LocalDisk.ScreenshotDumper.OpenPictureDumpFolderIfEnabled()
                 Case TrayIconAction.OpenSettings
@@ -150,7 +150,7 @@ Namespace UI.Specialized
         End Sub
 
         Private Async Sub selectAreaMenuItem_Click(sender As Object, e As EventArgs) Handles selectAreaMenuItem.Click
-            Await ScreenshotInvoker.DoSelector() ' can swallow exceptions
+            Await ScreenshotInvoker.DoSelector().ConfigureAwait(True) ' can swallow exceptions
         End Sub
 
         Private Sub openImageMenuItem_Click(sender As Object, e As EventArgs) Handles openImageMenuItem.Click

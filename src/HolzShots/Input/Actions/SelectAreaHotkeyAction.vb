@@ -18,7 +18,7 @@ Namespace Input.Actions
 
         Public Async Function Invoke(sender As Object, e As HotkeyPressedEventArgs) As Task Implements IHotkeyAction.Invoke
             ' TODO: Consider removing Async/Await and just return the Task
-            Await ScreenshotInvoker.DoSelector()
+            Await ScreenshotInvoker.DoSelector().ConfigureAwait(True)
         End Function
     End Class
 
@@ -38,7 +38,7 @@ Namespace Input.Actions
 
         Public Async Function Invoke(sender As Object, e As HotkeyPressedEventArgs) As Task Implements IHotkeyAction.Invoke
             ' TODO: Consider removing Async/Await and just return the Task
-            Await ScreenshotInvoker.DoFullscreen()
+            Await ScreenshotInvoker.DoFullscreen().ConfigureAwait(True)
         End Function
     End Class
 
@@ -58,7 +58,7 @@ Namespace Input.Actions
 
         Public Async Function Invoke(sender As Object, e As HotkeyPressedEventArgs) As Task Implements IHotkeyAction.Invoke
             ' TODO: Consider removing Async/Await and just return the Task
-            Await ScreenshotInvoker.DoWindow()
+            Await ScreenshotInvoker.DoWindow().ConfigureAwait(True)
         End Function
     End Class
 End Namespace
