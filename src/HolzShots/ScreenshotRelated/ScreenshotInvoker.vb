@@ -21,7 +21,7 @@ Namespace ScreenshotRelated
             If ManagedSettings.EnableFullscreenScreenshot Then
                 Dim shot = ScreenshotMethods.CaptureFullscreen()
                 Debug.Assert(shot IsNot Nothing)
-                Await ProceedScreenshot(shot)
+                Await ProceedScreenshot(shot).ConfigureAwait(True)
             End If
         End Function
 
@@ -36,7 +36,7 @@ Namespace ScreenshotRelated
             If ManagedSettings.EnableAreaScreenshot AndAlso Not AreaSelector.IsInAreaSelector Then
                 Dim shot As Screenshot = Nothing
                 Try
-                    shot = Await ScreenshotMethods.CaptureSelection()
+                    shot = Await ScreenshotMethods.CaptureSelection().ConfigureAwait(True)
                     Debug.Assert(shot IsNot Nothing)
                     If shot Is Nothing Then Throw New TaskCanceledException()
                 Catch cancelled As TaskCanceledException
@@ -44,7 +44,7 @@ Namespace ScreenshotRelated
                     Return
                 End Try
                 Debug.Assert(shot IsNot Nothing)
-                Await ProceedScreenshot(shot)
+                Await ProceedScreenshot(shot).ConfigureAwait(True)
             End If
         End Function
 
@@ -53,7 +53,7 @@ Namespace ScreenshotRelated
 
         Public Async Function DoTaskbar() As Task
             Dim shot = ScreenshotMethods.CaptureTaskbar()
-            Await ProceedScreenshot(shot)
+            Await ProceedScreenshot(shot).ConfigureAwait(True)
         End Function
 
 #End Region
@@ -69,7 +69,7 @@ Namespace ScreenshotRelated
                 NativeMethods.GetWindowPlacement(h, info)
 
                 Dim shot = ScreenshotMethods.CaptureWindow(h)
-                Await ProceedScreenshot(shot)
+                Await ProceedScreenshot(shot).ConfigureAwait(True)
             End If
         End Function
 
@@ -83,7 +83,7 @@ Namespace ScreenshotRelated
                 shower.Show()
             Else
                 Try
-                    Dim result = Await UploadHelper.UploadToDefaultUploader(shot.Image)
+                    Dim result = Await UploadHelper.UploadToDefaultUploader(shot.Image).ConfigureAwait(True)
                     UploadHelper.InvokeUploadFinishedUi(result)
                 Catch ex As UploadCanceledException
                     HumanInterop.ShowOperationCanceled()
@@ -137,7 +137,7 @@ Namespace ScreenshotRelated
             Using bmp As New Bitmap(fileName)
                 Dim format As ImageFormat = fileName.GetImageFormatFromFileExtension()
                 Try
-                    Dim result = Await UploadHelper.UploadToDefaultUploader(bmp, format)
+                    Dim result = Await UploadHelper.UploadToDefaultUploader(bmp, format).ConfigureAwait(True)
                     UploadHelper.InvokeUploadFinishedUi(result)
                 Catch ex As UploadCanceledException
                     HumanInterop.ShowOperationCanceled()

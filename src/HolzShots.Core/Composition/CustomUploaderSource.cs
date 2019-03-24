@@ -31,7 +31,7 @@ namespace HolzShots.Composition
             {
                 using (var reader = System.IO.File.OpenText(_customUploadersFileName))
                 {
-                    var jsonStr = await reader.ReadToEndAsync();
+                    var jsonStr = await reader.ReadToEndAsync().ConfigureAwait(false);
                     var loaded = JsonConvert.DeserializeObject<CustomUploadersFile>(jsonStr, JsonConfig.JsonSettings);
                     Debug.Assert(loaded != null);
 
