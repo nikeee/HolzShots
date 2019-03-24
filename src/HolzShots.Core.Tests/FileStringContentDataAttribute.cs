@@ -4,7 +4,7 @@ using System.IO;
 using System.Reflection;
 using Xunit.Sdk;
 
-namespace HolzShots
+namespace HolzShots.Core.Tests
 {
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = false)]
     public sealed class FileStringContentDataAttribute : DataAttribute

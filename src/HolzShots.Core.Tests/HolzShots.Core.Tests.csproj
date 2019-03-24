@@ -11,7 +11,7 @@
     <ProjectGuid>{56ABB0F5-9C8B-4BC9-9D16-BC9598657B5D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>HolzShots</RootNamespace>
+    <RootNamespace>HolzShots.Core.Tests</RootNamespace>
     <AssemblyName>HolzShots.Core.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
