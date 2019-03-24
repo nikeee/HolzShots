@@ -82,8 +82,6 @@ Namespace My
                         ScreenshotInvoker.UploadSelectedImage()
                     Case OpenParameter
                         ScreenshotInvoker.OpenSelectedImage()
-                    Case TaskbarScreenshotParameter
-                        Await ScreenshotInvoker.DoTaskbar().ConfigureAwait(True)
                     Case OpenFromShellParameter
                         If i < args.Length - 1 Then
                             ScreenshotInvoker.TryOpenSpecificImage(args(i + 1))

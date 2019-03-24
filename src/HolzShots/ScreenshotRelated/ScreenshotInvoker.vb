@@ -34,7 +34,7 @@ Namespace ScreenshotRelated
             If ManagedSettings.EnableIngameMode AndAlso HolzShotsEnvironment.IsFullScreen AndAlso Not HolzShotsEnvironment.IsInMetroApplication() Then Return
 
             If ManagedSettings.EnableAreaScreenshot AndAlso Not AreaSelector.IsInAreaSelector Then
-                Dim shot As Screenshot = Nothing
+                Dim shot As Screenshot
                 Try
                     shot = Await ScreenshotMethods.CaptureSelection().ConfigureAwait(True)
                     Debug.Assert(shot IsNot Nothing)
@@ -46,14 +46,6 @@ Namespace ScreenshotRelated
                 Debug.Assert(shot IsNot Nothing)
                 Await ProceedScreenshot(shot).ConfigureAwait(True)
             End If
-        End Function
-
-#End Region
-#Region "Taskbar"
-
-        Public Async Function DoTaskbar() As Task
-            Dim shot = ScreenshotMethods.CaptureTaskbar()
-            Await ProceedScreenshot(shot).ConfigureAwait(True)
         End Function
 
 #End Region
