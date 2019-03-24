@@ -1,7 +1,7 @@
 using HolzShots.Net.Custom;
 using Xunit;
 
-namespace HolzShots.Core.Tests.Net.Custom
+namespace HolzShots.Net.Custom
 {
     public class CustomUploaderLoaderTests
     {

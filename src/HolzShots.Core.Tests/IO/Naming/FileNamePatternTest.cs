@@ -1,7 +1,6 @@
-using HolzShots.IO.Naming;
 using Xunit;
 
-namespace HolzShots.Core.Tests.IO.Naming
+namespace HolzShots.IO.Naming
 {
     public class FileNamePatternTest
     {

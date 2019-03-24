@@ -1,20 +1,20 @@
 using System;
 using System.Collections.Generic;
-using System.Composition;
 using System.Composition.Hosting;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using HolzShots.IO;
 
 namespace HolzShots.Composition
 {
-    public abstract class PluginManager<T> : IDisposable
+    public abstract class PluginManager<T>
     {
         private const string AssemblyFilter = "*.dll";
 
-        public IReadOnlyDictionary<ICompileTimePluginMetadata, T> Plugins { get; private set; } = new Dictionary<ICompileTimePluginMetadata, T>(0);
+        public IReadOnlyCollection<(ICompileTimePluginMetadata metadata, T instance)> Plugins { get; private set; } = Array.Empty<(ICompileTimePluginMetadata, T)>();
 
         public string PluginDirectory { get; }
         public bool Loaded { get; private set; } = false;
@@ -42,22 +42,26 @@ namespace HolzShots.Composition
             var pluginDlls = Directory.EnumerateFiles(PluginDirectory, AssemblyFilter, SearchOption.AllDirectories);
             foreach (var pluginDll in pluginDlls)
             {
-                var assembly = await LoadAssemblyPlugin(pluginDll);
+                var assembly = await LoadAssemblyPlugin(pluginDll).ConfigureAwait(false);
                 if (assembly == null)
                     continue;
 
                 config.WithAssembly(assembly);
             }
 
-            var container = config.CreateContainer();
-
-            var pluginInstances = container.GetExports<T>();
-
-            var res = new Dictionary<ICompileTimePluginMetadata, T>(pluginInstances.Count);
-            foreach (var instance in pluginInstances)
+            using (var container = config.CreateContainer())
             {
-                var instanceType = instance.GetType();
-                res[]
+                var pluginInstances = container.GetExports<T>();
+
+                var res = new List<(ICompileTimePluginMetadata, T)>();
+                foreach (var instance in pluginInstances)
+                {
+                    var instanceType = instance.GetType();
+                    var metadata = (PluginAttribute)instanceType.GetCustomAttribute(typeof(PluginAttribute));
+                    res.Add((metadata, instance));
+                }
+
+                Plugins = res;
             }
 
             Loaded = true;
@@ -81,46 +85,9 @@ namespace HolzShots.Composition
         public IReadOnlyList<IPluginMetadata> GetMetadata()
         {
             Debug.Assert(Loaded);
-            var pls = Plugins;
-            Debug.Assert(pls != null);
-
-            var res = new List<IPluginMetadata>(pls.Count);
-            foreach (var p in pls)
-            {
-                Debug.Assert(p.Metadata != null);
-                Debug.Assert(p.Metadata is ICompileTimePluginMetadata);
-                Debug.Assert(.IsAssignableFrom(p.Metadata.GetType()));
-
-                var runtime = new PluginMetadata(p.Metadata as ICompileTimePluginMetadata);
-                res.Add(runtime);
-            }
-            return res;
+            return Plugins
+                .Select(v => new PluginMetadata(v.metadata))
+                .ToList();
         }
-
-        #region IDisposable Support
-
-        private bool disposedValue = false;
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposedValue)
-            {
-                if (disposing)
-                {
-                    _container.Dispose();
-                }
-                // free unmanaged resources (unmanaged objects) and override a finalizer below.
-                // set large fields to null.
-                disposedValue = true;
-            }
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        #endregion
     }
 }
