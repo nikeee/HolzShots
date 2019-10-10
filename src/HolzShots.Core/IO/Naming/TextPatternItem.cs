@@ -1,3 +1,5 @@
+using HolzShots.Common;
+
 namespace HolzShots.IO.Naming
 {
     class TextPatternItem : PatternItem
