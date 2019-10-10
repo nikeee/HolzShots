@@ -3,9 +3,8 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 
-namespace HolzShots.Drawing
+namespace HolzShots.Common.Drawing
 {
-    // TODO: Move to HolzShots.Common?
     public static class ImageExtensions
     {
         private const string _rawDataFieldName = "rawData";

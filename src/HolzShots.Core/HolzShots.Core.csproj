@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\..\packages\Microsoft.NetFramework.Analyzers.2.6.2\build\Microsoft.NetFramework.Analyzers.props" Condition="Exists('..\..\packages\Microsoft.NetFramework.Analyzers.2.6.2\build\Microsoft.NetFramework.Analyzers.props')" />
   <Import Project="..\..\packages\Microsoft.CodeQuality.Analyzers.2.6.2\build\Microsoft.CodeQuality.Analyzers.props" Condition="Exists('..\..\packages\Microsoft.CodeQuality.Analyzers.2.6.2\build\Microsoft.CodeQuality.Analyzers.props')" />
@@ -94,7 +94,6 @@
     <Compile Include="Composition\PluginUploaderSource.cs" />
     <Compile Include="Composition\UploaderManager.cs" />
     <Compile Include="Composition\PluginLoadingFailedException.cs" />
-    <Compile Include="Drawing\ImageExtensions.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Input\HotkeyActionCollection.cs" />
     <Compile Include="Input\IAreaSelector.cs" />
@@ -108,7 +107,6 @@
     <Compile Include="IO\Naming\PatternItem.cs" />
     <Compile Include="IO\Naming\PatternSyntaxException.cs" />
     <Compile Include="IO\Naming\TextPatternItem.cs" />
-    <Compile Include="MemSize.cs" />
     <Compile Include="Composition\IPluginMetadata.cs" />
     <Compile Include="Composition\PluginAttribute.cs" />
     <Compile Include="Composition\PluginManager.cs" />
@@ -123,7 +121,6 @@
     <Compile Include="Input\KeyPressedEventArgs.cs" />
     <Compile Include="Input\ModifierKeys.cs" />
     <Compile Include="Input\WindowsKeyboardHook.cs" />
-    <Compile Include="MathEx.cs" />
     <Compile Include="NativeMethods.cs" />
     <Compile Include="Net\Custom\CustomUploader.cs" />
     <Compile Include="Net\Custom\CustomUploaderRoot.cs" />
@@ -139,7 +136,6 @@
     <Compile Include="Net\UploadResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Net\SpeedCalculator.cs" />
-    <Compile Include="ReflectionUtil.cs" />
     <Compile Include="Threading\ProcessPriorityRequest.cs" />
     <Compile Include="Screenshot.cs" />
     <Compile Include="StringExtensions.cs" />
