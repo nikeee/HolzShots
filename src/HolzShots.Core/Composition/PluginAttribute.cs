@@ -1,5 +1,6 @@
 using System;
 using System.Composition;
+using System.ComponentModel.Composition;
 using Semver;
 
 namespace HolzShots.Composition

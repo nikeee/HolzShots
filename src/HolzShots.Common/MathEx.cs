@@ -1,6 +1,6 @@
 using System;
 
-namespace HolzShots
+namespace HolzShots.Common
 {
     internal static class MathEx
     {

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\..\packages\Microsoft.NetFramework.Analyzers.2.6.2\build\Microsoft.NetFramework.Analyzers.props" Condition="Exists('..\..\packages\Microsoft.NetFramework.Analyzers.2.6.2\build\Microsoft.NetFramework.Analyzers.props')" />
-  <Import Project="..\..\packages\Microsoft.CodeQuality.Analyzers.2.6.2\build\Microsoft.CodeQuality.Analyzers.props" Condition="Exists('..\..\packages\Microsoft.CodeQuality.Analyzers.2.6.2\build\Microsoft.CodeQuality.Analyzers.props')" />
+  <Import Project="..\..\packages\Microsoft.CodeQuality.Analyzers.2.9.6\build\Microsoft.CodeQuality.Analyzers.props" Condition="Exists('..\..\packages\Microsoft.CodeQuality.Analyzers.2.9.6\build\Microsoft.CodeQuality.Analyzers.props')" />
   <Import Project="..\..\packages\System.Runtime.Analyzers.1.2.0-beta2\build\System.Runtime.Analyzers.props" Condition="Exists('..\..\packages\System.Runtime.Analyzers.1.2.0-beta2\build\System.Runtime.Analyzers.props')" />
   <Import Project="..\..\packages\System.Runtime.InteropServices.Analyzers.1.2.0-beta2\build\System.Runtime.InteropServices.Analyzers.props" Condition="Exists('..\..\packages\System.Runtime.InteropServices.Analyzers.1.2.0-beta2\build\System.Runtime.InteropServices.Analyzers.props')" />
   <Import Project="..\..\packages\Microsoft.ApiDesignGuidelines.Analyzers.1.2.0-beta2\build\Microsoft.ApiDesignGuidelines.Analyzers.props" Condition="Exists('..\..\packages\Microsoft.ApiDesignGuidelines.Analyzers.1.2.0-beta2\build\Microsoft.ApiDesignGuidelines.Analyzers.props')" />
@@ -44,29 +43,39 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Semver, Version=2.0.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Semver.2.0.4\lib\net452\Semver.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Collections.Immutable, Version=1.2.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.Collections.Immutable.1.5.0\lib\portable-net45+win8+wp8+wpa81\System.Collections.Immutable.dll</HintPath>
+    <Reference Include="System.Buffers, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Buffers.4.4.0\lib\netstandard1.1\System.Buffers.dll</HintPath>
     </Reference>
+    <Reference Include="System.Collections.Immutable, Version=1.2.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Collections.Immutable.1.6.0\lib\netstandard1.3\System.Collections.Immutable.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Composition.AttributedModel, Version=1.0.33.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.Composition.AttributedModel.1.2.0\lib\portable-net45+win8+wp8+wpa81\System.Composition.AttributedModel.dll</HintPath>
+      <HintPath>..\..\packages\System.Composition.AttributedModel.1.3.0\lib\portable-net45+win8+wp8+wpa81\System.Composition.AttributedModel.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Composition.Convention, Version=1.0.33.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Composition.Convention.1.3.0\lib\portable-net45+win8+wp8+wpa81\System.Composition.Convention.dll</HintPath>
     </Reference>
     <Reference Include="System.Composition.Hosting, Version=1.0.33.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.Composition.Hosting.1.2.0\lib\portable-net45+win8+wp8+wpa81\System.Composition.Hosting.dll</HintPath>
+      <HintPath>..\..\packages\System.Composition.Hosting.1.3.0\lib\portable-net45+win8+wp8+wpa81\System.Composition.Hosting.dll</HintPath>
     </Reference>
     <Reference Include="System.Composition.Runtime, Version=1.0.33.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.Composition.Runtime.1.2.0\lib\portable-net45+win8+wp8+wpa81\System.Composition.Runtime.dll</HintPath>
+      <HintPath>..\..\packages\System.Composition.Runtime.1.3.0\lib\portable-net45+win8+wp8+wpa81\System.Composition.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="System.Composition.TypedParts, Version=1.0.33.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.Composition.TypedParts.1.2.0\lib\portable-net45+win8+wp8+wpa81\System.Composition.TypedParts.dll</HintPath>
+      <HintPath>..\..\packages\System.Composition.TypedParts.1.3.0\lib\portable-net45+win8+wp8+wpa81\System.Composition.TypedParts.dll</HintPath>
     </Reference>
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Memory.4.5.3\lib\netstandard1.1\System.Memory.dll</HintPath>
+    </Reference>
     <Reference Include="System.Net" />
     <Reference Include="System.Net.Http, Version=4.1.1.3, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Net.Http.4.3.4\lib\net46\System.Net.Http.dll</HintPath>
@@ -79,6 +88,9 @@
     </Reference>
     <Reference Include="System.Net.Http.Primitives, Version=4.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Net.Http.Formatting.Extension.5.2.3.0\lib\System.Net.Http.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard1.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Security.Cryptography.Algorithms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Security.Cryptography.Algorithms.4.3.1\lib\net46\System.Security.Cryptography.Algorithms.dll</HintPath>
@@ -105,7 +117,6 @@
     <Compile Include="Composition\PluginUploaderSource.cs" />
     <Compile Include="Composition\UploaderManager.cs" />
     <Compile Include="Composition\PluginLoadingFailedException.cs" />
-    <Compile Include="Drawing\ImageExtensions.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Input\HotkeyActionCollection.cs" />
     <Compile Include="Input\IAreaSelector.cs" />
@@ -120,7 +131,6 @@
     <Compile Include="IO\Naming\PatternItem.cs" />
     <Compile Include="IO\Naming\PatternSyntaxException.cs" />
     <Compile Include="IO\Naming\TextPatternItem.cs" />
-    <Compile Include="MemSize.cs" />
     <Compile Include="Composition\IPluginMetadata.cs" />
     <Compile Include="Composition\PluginAttribute.cs" />
     <Compile Include="Composition\PluginManager.cs" />
@@ -135,7 +145,6 @@
     <Compile Include="Input\KeyPressedEventArgs.cs" />
     <Compile Include="Input\ModifierKeys.cs" />
     <Compile Include="Input\WindowsKeyboardHook.cs" />
-    <Compile Include="MathEx.cs" />
     <Compile Include="NativeMethods.cs" />
     <Compile Include="Net\Custom\CustomUploader.cs" />
     <Compile Include="Net\Custom\CustomUploaderRoot.cs" />
@@ -150,11 +159,7 @@
     <Compile Include="Net\UploadProgress.cs" />
     <Compile Include="Net\UploadResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Net\SpeedCalculator.cs" />
-    <Compile Include="ReflectionUtil.cs" />
-    <Compile Include="Threading\ProcessPriorityRequest.cs" />
     <Compile Include="Screenshot.cs" />
-    <Compile Include="StringExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HolzShots.Common\HolzShots.Common.csproj">
@@ -170,10 +175,9 @@
     <Analyzer Include="..\..\packages\AsyncFixer.1.1.6\analyzers\dotnet\cs\AsyncFixer.dll" />
     <Analyzer Include="..\..\packages\Microsoft.ApiDesignGuidelines.Analyzers.1.2.0-beta2\analyzers\dotnet\cs\Microsoft.ApiDesignGuidelines.Analyzers.dll" />
     <Analyzer Include="..\..\packages\Microsoft.ApiDesignGuidelines.Analyzers.1.2.0-beta2\analyzers\dotnet\cs\Microsoft.ApiDesignGuidelines.CSharp.Analyzers.dll" />
-    <Analyzer Include="..\..\packages\Microsoft.CodeQuality.Analyzers.2.6.2\analyzers\dotnet\cs\Microsoft.CodeQuality.Analyzers.dll" />
-    <Analyzer Include="..\..\packages\Microsoft.CodeQuality.Analyzers.2.6.2\analyzers\dotnet\cs\Microsoft.CodeQuality.CSharp.Analyzers.dll" />
-    <Analyzer Include="..\..\packages\Microsoft.NetFramework.Analyzers.2.6.2\analyzers\dotnet\cs\Microsoft.NetFramework.Analyzers.dll" />
-    <Analyzer Include="..\..\packages\Microsoft.NetFramework.Analyzers.2.6.2\analyzers\dotnet\cs\Microsoft.NetFramework.CSharp.Analyzers.dll" />
+    <Analyzer Include="..\..\packages\Microsoft.CodeQuality.Analyzers.2.9.6\analyzers\dotnet\cs\Humanizer.dll" />
+    <Analyzer Include="..\..\packages\Microsoft.CodeQuality.Analyzers.2.9.6\analyzers\dotnet\cs\Microsoft.CodeQuality.Analyzers.dll" />
+    <Analyzer Include="..\..\packages\Microsoft.CodeQuality.Analyzers.2.9.6\analyzers\dotnet\cs\Microsoft.CodeQuality.CSharp.Analyzers.dll" />
     <Analyzer Include="..\..\packages\System.Runtime.Analyzers.1.2.0-beta2\analyzers\dotnet\cs\System.Runtime.Analyzers.dll" />
     <Analyzer Include="..\..\packages\System.Runtime.Analyzers.1.2.0-beta2\analyzers\dotnet\cs\System.Runtime.CSharp.Analyzers.dll" />
     <Analyzer Include="..\..\packages\System.Runtime.InteropServices.Analyzers.1.2.0-beta2\analyzers\dotnet\cs\Analyzer.Utilities.dll" />
@@ -188,7 +192,6 @@
     <Error Condition="!Exists('..\..\packages\Microsoft.ApiDesignGuidelines.Analyzers.1.2.0-beta2\build\Microsoft.ApiDesignGuidelines.Analyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.ApiDesignGuidelines.Analyzers.1.2.0-beta2\build\Microsoft.ApiDesignGuidelines.Analyzers.props'))" />
     <Error Condition="!Exists('..\..\packages\System.Runtime.InteropServices.Analyzers.1.2.0-beta2\build\System.Runtime.InteropServices.Analyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\System.Runtime.InteropServices.Analyzers.1.2.0-beta2\build\System.Runtime.InteropServices.Analyzers.props'))" />
     <Error Condition="!Exists('..\..\packages\System.Runtime.Analyzers.1.2.0-beta2\build\System.Runtime.Analyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\System.Runtime.Analyzers.1.2.0-beta2\build\System.Runtime.Analyzers.props'))" />
-    <Error Condition="!Exists('..\..\packages\Microsoft.CodeQuality.Analyzers.2.6.2\build\Microsoft.CodeQuality.Analyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.CodeQuality.Analyzers.2.6.2\build\Microsoft.CodeQuality.Analyzers.props'))" />
-    <Error Condition="!Exists('..\..\packages\Microsoft.NetFramework.Analyzers.2.6.2\build\Microsoft.NetFramework.Analyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.NetFramework.Analyzers.2.6.2\build\Microsoft.NetFramework.Analyzers.props'))" />
+    <Error Condition="!Exists('..\..\packages\Microsoft.CodeQuality.Analyzers.2.9.6\build\Microsoft.CodeQuality.Analyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.CodeQuality.Analyzers.2.9.6\build\Microsoft.CodeQuality.Analyzers.props'))" />
   </Target>
 </Project>
