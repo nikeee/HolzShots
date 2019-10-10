@@ -18,10 +18,10 @@ namespace HolzShots.Common
                 throw new ArgumentNullException(nameof(instance));
 
             const BindingFlags bindFlags = BindingFlags.Instance | BindingFlags.NonPublic;
-            FieldInfo field = typeof(TU).GetField(fieldName, bindFlags);
-            if (field != null)
-                return (TField)field.GetValue(instance);
-            return default(TField);
+            var field = typeof(TU).GetField(fieldName, bindFlags);
+            return field == null
+                ? default
+                : (TField)field.GetValue(instance);
         }
 
         internal static void SetInstanceField<TU, TField>(TU instance, string fieldName, TField value)
@@ -31,11 +31,11 @@ namespace HolzShots.Common
                 throw new ArgumentNullException(nameof(instance));
 
             const BindingFlags bindFlags = BindingFlags.Instance | BindingFlags.NonPublic;
-            FieldInfo field = typeof(TU).GetField(fieldName, bindFlags);
-            if(field != null)
-                field.SetValue(instance, value);
-            else
-                throw new ArgumentException();
+            var field = typeof(TU).GetField(fieldName, bindFlags);
+
+            return field == null
+                ? throw new ArgumentException()
+                : field.SetValue(instance, value);
         }
     }
 }
