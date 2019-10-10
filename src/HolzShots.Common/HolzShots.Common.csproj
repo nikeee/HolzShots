@@ -58,6 +58,7 @@
     <Compile Include="Drawing\Computation.cs" />
     <Compile Include="Drawing\DpiKrebs.cs" />
     <Compile Include="Drawing\GraphicsExtension.cs" />
+    <Compile Include="Drawing\ImageExtensions.cs" />
     <Compile Include="Drawing\ImageFormatAnalyser.cs" />
     <Compile Include="Drawing\NativePen.cs" />
     <Compile Include="Drawing\ScreenshotCreator.cs" />
