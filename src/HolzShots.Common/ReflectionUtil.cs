@@ -20,7 +20,7 @@ namespace HolzShots.Common
             const BindingFlags bindFlags = BindingFlags.Instance | BindingFlags.NonPublic;
             var field = typeof(TU).GetField(fieldName, bindFlags);
             return field == null
-                ? default
+                ? default(TField)
                 : (TField)field.GetValue(instance);
         }
 
