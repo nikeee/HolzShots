@@ -33,9 +33,10 @@ namespace HolzShots.Common
             const BindingFlags bindFlags = BindingFlags.Instance | BindingFlags.NonPublic;
             var field = typeof(TU).GetField(fieldName, bindFlags);
 
-            return field == null
-                ? throw new ArgumentException()
-                : field.SetValue(instance, value);
+            if (field == null)
+                throw new ArgumentException();
+
+            return field.SetValue(instance, value);
         }
     }
 }
