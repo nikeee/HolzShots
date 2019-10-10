@@ -3,7 +3,7 @@ using System.IO;
 
 namespace HolzShots.Common
 {
-    internal static class StringExtensions
+    public static class StringExtensions
     {
         private static readonly char[] _illegalFileNameChars = Path.GetInvalidFileNameChars();
         public static string SanitizeFileName(this string fileName) => SanitizeFileName(fileName, null);
