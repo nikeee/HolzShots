@@ -1,5 +1,5 @@
 
-Namespace Windows
+Namespace UI.Windows
     Public Class Environment
 
         Friend Shared ReadOnly Property IsVistaOrHigher As Boolean = System.Environment.OSVersion.Version.Major >= 6

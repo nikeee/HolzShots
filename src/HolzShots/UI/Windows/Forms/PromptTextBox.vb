@@ -1,13 +1,13 @@
 Imports System.ComponentModel
 Imports System.Windows.Forms
 
-Namespace Windows.Forms
+Namespace UI.Windows.Forms
     Public Class PromptTextBox
         Inherits TextBox
 
         Private _description As String
 
-        <Browsable(True), Description("Der Text, der gräulich angezeigt wird, wenn kein Text eingegeben wurde. Könnte für eine Kurzbeschreibung verwendet werden."), Category("Appearance")>
+        <Browsable(True), Description("Der Text, der grÃ¤ulich angezeigt wird, wenn kein Text eingegeben wurde. KÃ¶nnte fÃ¼r eine Kurzbeschreibung verwendet werden."), Category("Appearance")>
         Public Property Prompt As String
             Get
                 Return _description

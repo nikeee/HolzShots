@@ -2,7 +2,7 @@ Imports System.Drawing
 Imports System.Windows.Forms
 Imports System.Windows.Forms.VisualStyles
 
-Namespace Windows.Forms
+Namespace UI.Windows.Forms
     Public Enum ToolBarTheme
         Toolbar
         MediaToolbar

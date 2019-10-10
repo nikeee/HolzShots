@@ -1,6 +1,6 @@
 Imports System.Windows.Forms
 
-Namespace Windows.Forms
+Namespace UI.Windows.Forms
     Public Class NumericTextBox
         Inherits PromptTextBox
         Public Property AllowSpace() As Boolean

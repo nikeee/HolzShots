@@ -1,7 +1,7 @@
 Imports System.ComponentModel
 Imports System.Drawing
 
-Namespace Windows.Forms
+Namespace UI.Windows.Forms
 
     Public Class Banner
 

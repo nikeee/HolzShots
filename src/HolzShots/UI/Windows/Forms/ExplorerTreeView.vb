@@ -1,7 +1,8 @@
 Imports System.Security.Permissions
 Imports System.Windows.Forms
+Imports HolzShots.Interop
 
-Namespace Windows.Forms
+Namespace UI.Windows.Forms
     Public Class ExplorerTreeView
         Inherits TreeView
 

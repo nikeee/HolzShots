@@ -2,7 +2,7 @@ Imports System.ComponentModel
 Imports System.Drawing
 Imports System.Windows.Forms
 
-Namespace Windows.Forms
+Namespace UI.Windows.Forms
     Public Class InfoPanelLabel
         Inherits Label
         Private _viewMode As InfoMode

@@ -2,7 +2,7 @@ Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Windows.Forms
 
-Namespace Windows.Forms
+Namespace UI.Windows.Forms
     Public Class VSRenderer
         Inherits ToolStripSystemRenderer
 

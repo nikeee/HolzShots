@@ -3,7 +3,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Windows.Forms
 Imports Microsoft.WindowsAPICodePack.Taskbar
 
-Namespace Windows.Forms
+Namespace UI.Windows.Forms
     Public Module WindowExtensions
 
         <Extension()>
