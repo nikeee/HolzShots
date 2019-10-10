@@ -36,7 +36,7 @@ namespace HolzShots.Common
             if (field == null)
                 throw new ArgumentException();
 
-            return field.SetValue(instance, value);
+            field.SetValue(instance, value);
         }
     }
 }
