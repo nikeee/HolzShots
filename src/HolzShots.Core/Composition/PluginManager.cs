@@ -21,7 +21,7 @@ namespace HolzShots.Composition
 
         public PluginManager(string pluginDirectory) => PluginDirectory = pluginDirectory;
 
-        public async Task Load()
+        public Task Load()
         {
             Debug.Assert(!Loaded);
 
@@ -42,11 +42,9 @@ namespace HolzShots.Composition
             var pluginDlls = Directory.EnumerateFiles(PluginDirectory, AssemblyFilter, SearchOption.AllDirectories);
             foreach (var pluginDll in pluginDlls)
             {
-                var assembly = await LoadAssemblyPlugin(pluginDll).ConfigureAwait(false);
-                if (assembly == null)
-                    continue;
-
-                config.WithAssembly(assembly);
+                var assembly = Assembly.LoadFrom(pluginDll);
+                if (assembly != null)
+                    config.WithAssembly(assembly);
             }
 
             using (var container = config.CreateContainer())
@@ -65,21 +63,8 @@ namespace HolzShots.Composition
             }
 
             Loaded = true;
-        }
 
-        private static Task<Assembly> LoadAssemblyPlugin(string path)
-        {
-            try
-            {
-                // Wrapping this (although this is not recommended practice) as loading assemblies from disk can take some time
-                return Task.Run(() => Assembly.LoadFrom(path));
-            }
-            catch (Exception e)
-            {
-                Debugger.Break();
-                // TODO: Log?
-                return null;
-            }
+            return Task.CompletedTask;
         }
 
         public IReadOnlyList<IPluginMetadata> GetMetadata()
