@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 
-namespace HolzShots.Common.Drawing
+namespace HolzShots.Drawing
 {
     public static class ImageExtensions
     {

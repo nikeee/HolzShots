@@ -1,6 +1,6 @@
 using System;
 
-namespace HolzShots.Common.UI.Transitions.TransitionTypes
+namespace HolzShots.UI.Transitions.TransitionTypes
 {
     /// <summary>
     /// This class manages a linear transition. The percentage complete for the transition

@@ -1,9 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
-VisualStudioVersion = 16.0.29326.143
+VisualStudioVersion = 16.0.28714.193
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "HolzShots", "src\HolzShots\HolzShots.vbproj", "{42A62086-E16E-4CBD-95DE-E7866CF015AB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{56ABB0F5-9C8B-4BC9-9D16-BC9598657B5D} = {56ABB0F5-9C8B-4BC9-9D16-BC9598657B5D}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HolzShots.Common", "src\HolzShots.Common\HolzShots.Common.csproj", "{3AADC160-9020-4F59-A2F0-7941752C047E}"
 EndProject
@@ -47,6 +50,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {39184BD4-5FD4-4B5C-9ED5-451D932BC6F9}
+		SolutionGuid = {B680BD23-2D6F-43CB-A525-D803A0406AA9}84BD4-5FD4-4B5C-9ED5-451D932BC6F9}
 	EndGlobalSection
 EndGlobal

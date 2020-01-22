@@ -10,9 +10,9 @@
     <ProjectGuid>{3AADC160-9020-4F59-A2F0-7941752C047E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>HolzShots.Common</RootNamespace>
+    <RootNamespace>HolzShots</RootNamespace>
     <AssemblyName>HolzShots.Common</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -56,7 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Drawing\Computation.cs" />
-    <Compile Include="Drawing\DpiKrebs.cs" />
+    <Compile Include="Drawing\DpiAwarenessFix.cs" />
     <Compile Include="Drawing\GraphicsExtension.cs" />
     <Compile Include="Drawing\ImageExtensions.cs" />
     <Compile Include="Drawing\ImageFormatAnalyser.cs" />

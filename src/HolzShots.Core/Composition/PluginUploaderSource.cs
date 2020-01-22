@@ -11,8 +11,7 @@ namespace HolzShots.Composition
 
         public PluginUploaderSource(string pluginDirectory)
             : base(pluginDirectory)
-        {
-        }
+        { }
 
         public (IPluginMetadata metadata, Uploader uploader)? GetUploaderByName(string name)
         {
@@ -22,26 +21,10 @@ namespace HolzShots.Composition
             var pls = Plugins;
             Debug.Assert(pls != null);
 
-            // Look for the uploader in installed plugins (dlls)
-            foreach (var p in pls)
-            {
-                Debug.Assert(p.Metadata != null);
-                Debug.Assert(p.Metadata is ICompileTimePluginMetadata);
-                Debug.Assert(typeof(ICompileTimePluginMetadata).IsAssignableFrom(p.Metadata.GetType()));
-
-                var m = new PluginMetadata(p.Metadata as ICompileTimePluginMetadata);
-                try
-                {
-                    if (m.Name == name)
-                        return (metadata: m, uploader: p.Value);
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine($"Plugin failed to load: {ex.Message}");
-                    Debugger.Break();
-                }
-            }
-            return null;
+            return pls
+                .Where(p => p.metadata.Name == name)
+                .Select(p => (new PluginMetadata(p.metadata), p.instance))
+                .FirstOrDefault();
         }
 
         public IReadOnlyList<string> GetUploaderNames()

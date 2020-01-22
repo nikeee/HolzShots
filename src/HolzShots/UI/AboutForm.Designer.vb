@@ -2,12 +2,12 @@
 
 Namespace UI
 
-    <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+    <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
     Partial Class AboutForm
         Inherits System.Windows.Forms.Form
 
         'Form overrides dispose to clean up the component list.
-        <System.Diagnostics.DebuggerNonUserCode()> _
+        <System.Diagnostics.DebuggerNonUserCode()>
         Protected Overrides Sub Dispose(ByVal disposing As Boolean)
             Try
                 If disposing AndAlso components IsNot Nothing Then
@@ -24,15 +24,15 @@ Namespace UI
         'NOTE: The following procedure is required by the Windows Form Designer
         'It can be modified using the Windows Form Designer.  
         'Do not modify it using the code editor.
-        <System.Diagnostics.DebuggerStepThrough()> _
+        <System.Diagnostics.DebuggerStepThrough()>
         Private Sub InitializeComponent()
             Me.Label4 = New System.Windows.Forms.Label()
-            Me.holzShotsLinkLabel = New HolzShots.UI.Windows.Forms.ExplorerLinkLabel()
-            Me.showGfxResourcesLinklabel = New HolzShots.UI.Windows.Forms.ExplorerLinkLabel()
+            Me.holzShotsLinkLabel = New HolzShots.UI.Forms.ExplorerLinkLabel()
+            Me.showGfxResourcesLinklabel = New HolzShots.UI.Forms.ExplorerLinkLabel()
             Me.versionLabel = New System.Windows.Forms.Label()
             Me.timestampLabel = New System.Windows.Forms.Label()
             Me.applicationTitleLabel = New System.Windows.Forms.Label()
-            Me.LicenseLabel = New HolzShots.UI.Windows.Forms.ExplorerLinkLabel()
+            Me.LicenseLabel = New HolzShots.UI.Forms.ExplorerLinkLabel()
             Me.SuspendLayout()
             '
             'Label4
@@ -158,12 +158,12 @@ Namespace UI
             Me.PerformLayout()
 
         End Sub
-        Friend WithEvents holzShotsLinkLabel As HolzShots.UI.Windows.Forms.ExplorerLinkLabel
+        Friend WithEvents holzShotsLinkLabel As HolzShots.UI.Forms.ExplorerLinkLabel
         Friend WithEvents versionLabel As System.Windows.Forms.Label
         Friend WithEvents Label4 As System.Windows.Forms.Label
-        Friend WithEvents showGfxResourcesLinklabel As HolzShots.UI.Windows.Forms.ExplorerLinkLabel
+        Friend WithEvents showGfxResourcesLinklabel As HolzShots.UI.Forms.ExplorerLinkLabel
         Friend WithEvents timestampLabel As System.Windows.Forms.Label
-        Friend WithEvents LicenseLabel As Windows.Forms.ExplorerLinkLabel
+        Friend WithEvents LicenseLabel As HolzShots.UI.Forms.ExplorerLinkLabel
         Friend WithEvents applicationTitleLabel As Label
     End Class
 End Namespace

@@ -1,122 +1,78 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
-using System.ComponentModel.Composition.Hosting;
+using System.Composition.Hosting;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using HolzShots.IO;
 
 namespace HolzShots.Composition
 {
-    public abstract class PluginManager<T> : IDisposable
+    public abstract class PluginManager<T>
     {
         private const string AssemblyFilter = "*.dll";
 
-        [ImportMany]
-        public IList<Lazy<T, ICompileTimePluginMetadata>> Plugins { get; private set; } = new List<Lazy<T, ICompileTimePluginMetadata>>();
-
-        private readonly AggregateCatalog _aggregate = new AggregateCatalog();
-        private readonly CompositionContainer _container;
+        public IReadOnlyCollection<(ICompileTimePluginMetadata metadata, T instance)> Plugins { get; private set; } = Array.Empty<(ICompileTimePluginMetadata, T)>();
 
         public string PluginDirectory { get; }
         public bool Loaded { get; private set; } = false;
 
-        public PluginManager(string pluginDirectory)
-        {
-            PluginDirectory = pluginDirectory;
-            _container = new CompositionContainer(_aggregate, CompositionOptions.DisableSilentRejection);
-        }
+        public PluginManager(string pluginDirectory) => PluginDirectory = pluginDirectory;
 
-        public async Task Load()
+        public Task Load()
         {
             Debug.Assert(!Loaded);
 
-            var ags = _aggregate.Catalogs;
-            ags.Clear();
-
-            Debug.Assert(ags != null);
-            Debug.Assert(ags.Count == 0);
-
-            // TODO: Do not load ALL Assemblies involved?
-            var asms = new[] {
-                Assembly.GetCallingAssembly(),
-                Assembly.GetExecutingAssembly(),
-                Assembly.GetEntryAssembly()
-            }.Distinct();
-
-            foreach (var asm in asms)
-                ags.Add(new AssemblyCatalog(asm));
+            var config = new ContainerConfiguration();
+            // HolzShots' own executables are also a source for plugin instances
+            config.WithAssembly(Assembly.GetEntryAssembly());
+            config.WithAssembly(typeof(PluginManager<T>).Assembly);
 
             try
             {
-                // TODO: This can be made better.
-                if (!(await Task.Run(() => Directory.Exists(PluginDirectory)).ConfigureAwait(false)))
-                    await Task.Run(() => Directory.CreateDirectory(PluginDirectory)).ConfigureAwait(false);
+                DirectoryEx.EnsureDirectory(PluginDirectory);
             }
             catch (Exception e)
             {
                 throw new PluginLoadingFailedException(e);
             }
 
-            _aggregate.Catalogs.Add(new DirectoryCatalog(PluginDirectory, AssemblyFilter));
-            try
+            var pluginDlls = Directory.EnumerateFiles(PluginDirectory, AssemblyFilter, SearchOption.AllDirectories);
+            foreach (var pluginDll in pluginDlls)
             {
-                _container.ComposeParts(this);
+                var assembly = Assembly.LoadFrom(pluginDll);
+                if (assembly != null)
+                    config.WithAssembly(assembly);
             }
-            catch (Exception e)
+
+            using (var container = config.CreateContainer())
             {
-                throw new PluginLoadingFailedException(e);
+                var pluginInstances = container.GetExports<T>();
+
+                var res = new List<(ICompileTimePluginMetadata, T)>();
+                foreach (var instance in pluginInstances)
+                {
+                    var instanceType = instance.GetType();
+                    var metadata = (PluginAttribute)instanceType.GetCustomAttribute(typeof(PluginAttribute));
+                    res.Add((metadata, instance));
+                }
+
+                Plugins = res;
             }
 
             Loaded = true;
+
+            return Task.CompletedTask;
         }
 
         public IReadOnlyList<IPluginMetadata> GetMetadata()
         {
             Debug.Assert(Loaded);
-            var pls = Plugins;
-            Debug.Assert(pls != null);
-
-            var res = new List<IPluginMetadata>(pls.Count);
-            foreach (var p in pls)
-            {
-                Debug.Assert(p.Metadata != null);
-                Debug.Assert(p.Metadata is ICompileTimePluginMetadata);
-                Debug.Assert(typeof(ICompileTimePluginMetadata).IsAssignableFrom(p.Metadata.GetType()));
-
-                var runtime = new PluginMetadata(p.Metadata as ICompileTimePluginMetadata);
-                res.Add(runtime);
-            }
-            return res;
+            return Plugins
+                .Select(v => new PluginMetadata(v.metadata))
+                .ToList();
         }
-
-        #region IDisposable Support
-
-        private bool disposedValue = false;
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposedValue)
-            {
-                if (disposing)
-                {
-                    _container.Dispose();
-                    _aggregate.Dispose();
-                }
-                // free unmanaged resources (unmanaged objects) and override a finalizer below.
-                // set large fields to null.
-                disposedValue = true;
-            }
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        #endregion
     }
 }

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Timers;
 
-namespace HolzShots.Common.UI.Transitions
+namespace HolzShots.UI.Transitions
 {
     /// <summary>
     /// This class is responsible for running transitions. It holds the timer that

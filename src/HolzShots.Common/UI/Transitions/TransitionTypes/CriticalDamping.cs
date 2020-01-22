@@ -1,6 +1,6 @@
 using System;
 
-namespace HolzShots.Common.UI.Transitions.TransitionTypes
+namespace HolzShots.UI.Transitions.TransitionTypes
 {
     /// <summary>
     /// This transition animates with an exponential decay. This has a damping effect

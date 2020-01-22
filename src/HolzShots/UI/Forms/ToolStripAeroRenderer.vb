@@ -1,8 +1,10 @@
 Imports System.Drawing
 Imports System.Windows.Forms
 Imports System.Windows.Forms.VisualStyles
+Imports HolzShots.Interop
 
-Namespace UI.Windows.Forms
+Namespace UI.Forms
+
     Public Enum ToolBarTheme
         Toolbar
         MediaToolbar
@@ -95,11 +97,11 @@ Namespace UI.Windows.Forms
         Private Const RebarBackground As Integer = 6
 
         Private Function GetThemeMargins(dc As IDeviceContext, marginType As MarginTypes) As Padding
-            Dim margins As Common.NativeTypes.Margin
+            Dim margins As Interop.NativeTypes.Margin
             Try
                 Dim hDc As IntPtr = dc.GetHdc()
                 If 0 = NativeMethods.GetThemeMargins(_renderer.Handle, hDc, _renderer.Part, _renderer.State, CInt(marginType), IntPtr.Zero, margins) Then
-                    Return margins.ToPadding() ' New Padding(margins.LeftWidth, margins.TopHeight, margins.RightWidth, margins.Bottomheight)
+                    Return margins ' New Padding(margins.LeftWidth, margins.TopHeight, margins.RightWidth, margins.Bottomheight)
                 End If
                 Return New Padding(0)
             Finally
@@ -189,8 +191,8 @@ Namespace UI.Windows.Forms
         End Sub
 
         ' Using just ToolStripManager.Renderer without setting the Renderer individually per ToolStrip means
-        ' that the ToolStrip is not passed to the Initialize method. ToolStripPanels, however, are. So we can 
-        ' simply initialize it here too, and this should guarantee that the ToolStrip is initialized at least 
+        ' that the ToolStrip is not passed to the Initialize method. ToolStripPanels, however, are. So we can
+        ' simply initialize it here too, and this should guarantee that the ToolStrip is initialized at least
         ' once. Hopefully it isn't any more complicated than this.
         Protected Overrides Sub InitializePanel(toolStripPanel As ToolStripPanel)
             For Each control As Control In toolStripPanel.Controls
@@ -233,7 +235,7 @@ Namespace UI.Windows.Forms
             ' This ensures that's the case.
             Dim rect As Rectangle = item.Bounds
 
-            ' The background rectangle should be inset two pixels horizontally (on both sides), but we have 
+            ' The background rectangle should be inset two pixels horizontally (on both sides), but we have
             ' to take into account the border.
             rect.X = item.ContentRectangle.X + 1
             rect.Width = item.ContentRectangle.Width - 1

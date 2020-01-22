@@ -1,5 +1,5 @@
 Imports System.Linq
-Imports HolzShots.Common
+Imports HolzShots
 Imports HolzShots.Input
 Imports HolzShots.Input.Actions
 Imports HolzShots.Interop
@@ -53,7 +53,7 @@ Namespace UI.Specialized
         Private Async Sub MainWindowLoad(ByVal sender As Object, ByVal e As EventArgs) Handles MyBase.Load
             HideForm()
 
-            Common.Drawing.DpiKrebs.SetDpiAwareness()
+            Drawing.DpiAwarenessFix.SetDpiAwareness()
 
             _keyboardHook = KeyboardHookSelector.CreateHookForCurrentPlatform(Me)
             _actionContainer = New HolzShotsActionCollection(_keyboardHook,

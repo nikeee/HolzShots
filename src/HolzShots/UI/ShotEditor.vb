@@ -3,12 +3,12 @@ Imports System.Drawing.Imaging
 Imports System.Drawing.Printing
 Imports System.IO
 Imports System.Runtime.InteropServices
-Imports HolzShots.Common.UI
+Imports HolzShots.UI
 Imports HolzShots.Interop
 Imports HolzShots.Net
 Imports HolzShots.UI.Controls
 Imports HolzShots.UI.Controls.Helpers
-Imports HolzShots.UI.Windows.Forms
+Imports HolzShots.UI.Forms
 Imports Microsoft.WindowsAPICodePack.Dialogs
 Imports Microsoft.WindowsAPICodePack.Taskbar
 

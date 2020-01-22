@@ -1,6 +1,6 @@
 using System;
 
-namespace HolzShots.Common
+namespace HolzShots
 {
     /// <summary>
     /// Represents a size of memory, e.g. 1GiB. Can be used to display some file size on the screen, using the ToString method.

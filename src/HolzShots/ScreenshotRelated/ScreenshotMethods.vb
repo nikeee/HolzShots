@@ -1,7 +1,6 @@
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Imaging
 Imports System.Threading.Tasks
-Imports HolzShots.Common.Drawing
 Imports HolzShots.Drawing
 Imports HolzShots.Interop
 Imports HolzShots.ScreenshotRelated.Selection
@@ -80,8 +79,8 @@ Namespace ScreenshotRelated
 
         Private Shared Function DoAeroOn(wndHandle As IntPtr, includeMargin As Boolean, smallMargin As Boolean) As WindowScreenshotSet
 
-            Dim rct As NativeTypes.Rect
-            Dim plc As NativeTypes.WindowPlacement
+            Dim rct As Interop.NativeTypes.Rect
+            Dim plc As Interop.NativeTypes.WindowPlacement
             NativeMethods.GetWindowRect(wndHandle, rct)
             NativeMethods.GetWindowPlacement(wndHandle, plc)
 
@@ -139,7 +138,7 @@ Namespace ScreenshotRelated
 
                         Dim result As New Bitmap(bmpWhite.Width, bmpWhite.Height)
 
-                        Common.Drawing.Computation.ComputeAlphaChannel(bmpWhite, bmpBlack, result)
+                        Drawing.Computation.ComputeAlphaChannel(bmpWhite, bmpBlack, result)
 
                         ' Old method:
                         ' ScreenshotMethodsHelper.ComputeAlphaChannel(bmpWhite, bmpBlack)
@@ -155,7 +154,7 @@ Namespace ScreenshotRelated
         End Function
 
         Private Shared Function DoAeroOff(wndHandle As IntPtr) As WindowScreenshotSet
-            Dim rct As NativeTypes.Rect
+            Dim rct As Interop.NativeTypes.Rect
             NativeMethods.GetWindowRect(wndHandle, rct)
             Dim nrct As Rectangle = Rectangle.FromLTRB(rct.Left, rct.Top, rct.Right, rct.Bottom)
             Dim curp As New Point(Cursor.Position.X - nrct.Location.X, Cursor.Position.Y - nrct.Location.Y)

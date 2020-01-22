@@ -1,16 +1,16 @@
-using HolzShots.Common.UI.Transitions.ManagedTypes;
-using HolzShots.Common.UI.Transitions.TransitionTypes;
+using HolzShots.UI.Transitions.ManagedTypes;
+using HolzShots.UI.Transitions.TransitionTypes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Reflection;
 using System.Windows.Forms;
-using Double = HolzShots.Common.UI.Transitions.ManagedTypes.Double;
-using Int32 = HolzShots.Common.UI.Transitions.ManagedTypes.Int32;
-using String = HolzShots.Common.UI.Transitions.ManagedTypes.String;
+using Double = HolzShots.UI.Transitions.ManagedTypes.Double;
+using Int32 = HolzShots.UI.Transitions.ManagedTypes.Int32;
+using String = HolzShots.UI.Transitions.ManagedTypes.String;
 
-namespace HolzShots.Common.UI.Transitions
+namespace HolzShots.UI.Transitions
 {
     /// <summary>
     /// Lets you perform animated transitions of properties on arbitrary objects. These 

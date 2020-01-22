@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace HolzShots.Common.UI.Transitions.TransitionTypes
+namespace HolzShots.UI.Transitions.TransitionTypes
 {
     /// <summary>
     /// This transition bounces the property to a destination value and back to the

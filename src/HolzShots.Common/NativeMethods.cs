@@ -1,9 +1,9 @@
-using HolzShots.Common.NativeTypes;
+using HolzShots.NativeTypes;
 using System;
 using System.Runtime.InteropServices;
 using System.Drawing;
 
-namespace HolzShots.Common
+namespace HolzShots
 {
     internal static class NativeMethods
     {

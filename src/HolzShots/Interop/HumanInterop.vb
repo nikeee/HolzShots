@@ -1,4 +1,4 @@
-Imports HolzShots.Common
+Imports HolzShots
 Imports HolzShots.Composition
 Imports HolzShots.Net
 Imports HolzShots.UI.Dialogs

@@ -1,10 +1,10 @@
 Namespace UI.Dialogs
-    <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+    <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
     Partial Class UploadResultWindow
         Inherits FlyoutWindow
 
         'Form overrides dispose to clean up the component list.
-        <System.Diagnostics.DebuggerNonUserCode()> _
+        <System.Diagnostics.DebuggerNonUserCode()>
         Protected Overrides Sub Dispose(ByVal disposing As Boolean)
             Try
                 If disposing AndAlso components IsNot Nothing Then
@@ -21,13 +21,13 @@ Namespace UI.Dialogs
         'NOTE: The following procedure is required by the Windows Form Designer
         'It can be modified using the Windows Form Designer.  
         'Do not modify it using the code editor.
-        <System.Diagnostics.DebuggerStepThrough()> _
+        <System.Diagnostics.DebuggerStepThrough()>
         Private Sub InitializeComponent()
             Me.copyDirect = New System.Windows.Forms.Button()
             Me.copyHTML = New System.Windows.Forms.Button()
             Me.copyBB = New System.Windows.Forms.Button()
-            Me.ExplorerInfoPanel1 = New HolzShots.UI.Windows.Forms.ExplorerInfoPanel()
-            Me.closeWindowLabel = New HolzShots.UI.Windows.Forms.ExplorerLinkLabel()
+            Me.ExplorerInfoPanel1 = New HolzShots.UI.Forms.ExplorerInfoPanel()
+            Me.closeWindowLabel = New HolzShots.UI.Forms.ExplorerLinkLabel()
             Me.ExplorerInfoPanel1.SuspendLayout()
             Me.SuspendLayout()
             '
@@ -116,7 +116,7 @@ Namespace UI.Dialogs
         Friend WithEvents copyDirect As System.Windows.Forms.Button
         Friend WithEvents copyHTML As System.Windows.Forms.Button
         Friend WithEvents copyBB As System.Windows.Forms.Button
-        Friend WithEvents ExplorerInfoPanel1 As HolzShots.UI.Windows.Forms.ExplorerInfoPanel
-        Friend WithEvents closeWindowLabel As HolzShots.UI.Windows.Forms.ExplorerLinkLabel
+        Friend WithEvents ExplorerInfoPanel1 As HolzShots.UI.Forms.ExplorerInfoPanel
+        Friend WithEvents closeWindowLabel As HolzShots.UI.Forms.ExplorerLinkLabel
     End Class
 End Namespace

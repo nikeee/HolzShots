@@ -57,7 +57,7 @@ Namespace ScreenshotRelated
             If ManagedSettings.EnableWindowScreenshot Then
                 Dim h As IntPtr = NativeMethods.GetForegroundWindow()
 
-                Dim info As NativeTypes.WindowPlacement
+                Dim info As Interop.NativeTypes.WindowPlacement
                 NativeMethods.GetWindowPlacement(h, info)
 
                 Dim shot = ScreenshotMethods.CaptureWindow(h)
@@ -105,7 +105,7 @@ Namespace ScreenshotRelated
         Private Sub ShowFileSelector(title As String, callback As Action(Of String))
             Using ofd As New CommonOpenFileDialog()
                 ofd.Title = title
-                ofd.Filters.Add(New CommonFileDialogFilter(Common.UI.Localization.DialogFilterImages, SupportedFilesFilter))
+                ofd.Filters.Add(New CommonFileDialogFilter(UI.Localization.DialogFilterImages, SupportedFilesFilter))
                 ofd.Multiselect = False
                 If ofd.ShowDialog() = CommonFileDialogResult.Ok AndAlso File.Exists(ofd.FileName) Then
                     callback(ofd.FileName)

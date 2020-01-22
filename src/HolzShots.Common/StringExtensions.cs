@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 
-namespace HolzShots.Common
+namespace HolzShots
 {
     public static class StringExtensions
     {

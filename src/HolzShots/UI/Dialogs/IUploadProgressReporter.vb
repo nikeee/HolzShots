@@ -1,5 +1,5 @@
 Imports HolzShots.Net
-Imports HolzShots.Common
+Imports HolzShots
 
 Namespace UI.Dialogs
     Interface IUploadProgressReporter

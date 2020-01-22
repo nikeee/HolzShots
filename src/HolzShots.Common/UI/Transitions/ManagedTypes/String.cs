@@ -1,6 +1,6 @@
 using System;
 
-namespace HolzShots.Common.UI.Transitions.ManagedTypes
+namespace HolzShots.UI.Transitions.ManagedTypes
 {
     /// <summary>
     /// Manages transitions for strings. This doesn't make as much sense as transitions

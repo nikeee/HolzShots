@@ -1,5 +1,5 @@
 Imports System.IO
-Imports HolzShots.Common
+Imports HolzShots
 Imports HolzShots.ScreenshotRelated
 Imports HolzShots.ScreenshotRelated.Selection
 

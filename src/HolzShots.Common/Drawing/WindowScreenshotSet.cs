@@ -1,7 +1,7 @@
 using System;
 using System.Drawing;
 
-namespace HolzShots.Common.Drawing
+namespace HolzShots.Drawing
 {
     public struct WindowScreenshotSet : IDisposable, IEquatable<WindowScreenshotSet>
     {

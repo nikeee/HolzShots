@@ -15,7 +15,7 @@
     <AssemblyName>HolzShots</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <OptionExplicit>On</OptionExplicit>
     <OptionCompare>Binary</OptionCompare>
     <OptionStrict>On</OptionStrict>
@@ -197,9 +197,6 @@
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard1.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
-    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
-    </Reference>
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
@@ -233,7 +230,7 @@
     <Compile Include="UI\Controls\ColorViewer.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="UI\Controls\CopyLinkLabel.vb">
+    <Compile Include="UI\Forms\CopyLinkLabel.vb">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\Controls\ImageButton.vb">
@@ -391,37 +388,37 @@
     </Compile>
     <Compile Include="Drawing\Tools\Censor.vb" />
     <Compile Include="Net\UploadHelper.vb" />
-    <Compile Include="UI\Windows\Environment.vb" />
-    <Compile Include="UI\Windows\Forms\Banner.Designer.vb">
+    <Compile Include="UI\Forms\EnvironmentEx.vb" />
+    <Compile Include="UI\Forms\Banner.Designer.vb">
       <DependentUpon>Banner.vb</DependentUpon>
     </Compile>
-    <Compile Include="UI\Windows\Forms\Banner.vb">
+    <Compile Include="UI\Forms\Banner.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UI\Windows\Forms\ExplorerInfoPanel.vb">
+    <Compile Include="UI\Forms\ExplorerInfoPanel.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="UI\Windows\Forms\ExplorerLinkLabel.vb">
+    <Compile Include="UI\Forms\ExplorerLinkLabel.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="UI\Windows\Forms\ExplorerListView.vb">
+    <Compile Include="UI\Forms\ExplorerListView.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="UI\Windows\Forms\ExplorerTreeView.vb">
+    <Compile Include="UI\Forms\ExplorerTreeView.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="UI\Windows\Forms\InfoPanelLabel.vb">
+    <Compile Include="UI\Forms\InfoPanelLabel.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="UI\Windows\Forms\NativeToolStripRenderer.vb" />
-    <Compile Include="UI\Windows\Forms\NumericTextbox.vb">
+    <Compile Include="UI\Forms\ToolStripAeroRenderer.vb" />
+    <Compile Include="UI\Forms\NumericTextbox.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="UI\Windows\Forms\PromptTextBox.vb">
+    <Compile Include="UI\Forms\PromptTextBox.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="UI\Windows\Forms\VSRenderer.vb" />
-    <Compile Include="UI\Windows\Forms\WindowExtensions.vb" />
+    <Compile Include="UI\Forms\VSRenderer.vb" />
+    <Compile Include="UI\Forms\WindowExtensions.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="UI\Controls\ColorViewer.resx">
@@ -481,7 +478,7 @@
       <DependentUpon>ShotEditor.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Windows\Forms\Banner.resx">
+    <EmbeddedResource Include="UI\Forms\Banner.resx">
       <DependentUpon>Banner.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
@@ -588,6 +585,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
     <PostBuildEvent>

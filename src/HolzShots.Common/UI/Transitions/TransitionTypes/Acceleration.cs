@@ -1,6 +1,6 @@
 using System;
 
-namespace HolzShots.Common.UI.Transitions.TransitionTypes
+namespace HolzShots.UI.Transitions.TransitionTypes
 {
     /// <summary>
     /// Manages transitions under constant acceleration from a standing start.

@@ -8,7 +8,7 @@ using System.Net.Http.Handlers;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using System.ComponentModel.Composition;
+using System.Composition;
 
 namespace HolzShots.Net
 {

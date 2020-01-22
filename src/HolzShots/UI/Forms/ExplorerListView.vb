@@ -3,7 +3,8 @@ Imports System.Security.Permissions
 Imports System.Windows.Forms
 Imports HolzShots.Interop
 
-Namespace UI.Windows.Forms
+Namespace UI.Forms
+
     Public Class ExplorerListView
         Inherits ListView
 
@@ -11,8 +12,8 @@ Namespace UI.Windows.Forms
             <SecurityPermission(SecurityAction.LinkDemand, Flags:=SecurityPermissionFlag.UnmanagedCode)>
             Get
                 Dim cp As CreateParams = MyBase.CreateParams
-                If Environment.IsVistaOrHigher AndAlso Not Scrollable Then
-                    cp.Style = CInt(cp.Style Or NativeTypes.Tv.NoHScroll)
+                If EnvironmentEx.IsVistaOrHigher AndAlso Not Scrollable Then
+                    cp.Style = CInt(cp.Style Or Interop.NativeTypes.Tv.NoHScroll)
                 End If
                 Return cp
             End Get
@@ -20,11 +21,11 @@ Namespace UI.Windows.Forms
 
         Protected Overrides Sub OnHandleCreated(ByVal e As System.EventArgs)
             MyBase.OnHandleCreated(e)
-            If Environment.IsVistaOrHigher Then
-                Dim hndl = NativeMethods.SendMessage(Me.Handle, DirectCast(NativeTypes.Tv.GetExtendedStyle, Integer), IntPtr.Zero, IntPtr.Zero)
-                hndl = New IntPtr(hndl.ToInt32 Or NativeTypes.Tv.ExAutoSHcroll) ' Or NativeMethods.TVS_EX_FADEINOUTEXPANDOS)
-                NativeMethods.SendMessage(Me.Handle, DirectCast(NativeTypes.Tv.SetExtendedStyle, Integer), IntPtr.Zero, hndl)
-                NativeMethods.SetWindowTheme(Me.Handle, "explorer", 0)
+            If EnvironmentEx.IsVistaOrHigher Then
+                Dim hndl = Interop.NativeMethods.SendMessage(Me.Handle, DirectCast(Interop.NativeTypes.Tv.GetExtendedStyle, Integer), IntPtr.Zero, IntPtr.Zero)
+                hndl = New IntPtr(hndl.ToInt32 Or Interop.NativeTypes.Tv.ExAutoSHcroll) ' Or NativeMethods.TVS_EX_FADEINOUTEXPANDOS)
+                Interop.NativeMethods.SendMessage(Me.Handle, DirectCast(Interop.NativeTypes.Tv.SetExtendedStyle, Integer), IntPtr.Zero, hndl)
+                Interop.NativeMethods.SetWindowTheme(Me.Handle, "explorer", 0)
             End If
         End Sub
 
@@ -55,7 +56,7 @@ Namespace UI.Windows.Forms
         Protected Overrides Sub WndProc(ByRef m As Message)
             If View = View.Details Then
                 Select Case m.Msg
-                    Case NativeTypes.WindowMessages.Paint
+                    Case Interop.NativeTypes.WindowMessages.Paint
                         For Each ec As EmbeddedControl In _ecs
 
                             Dim rc As Rectangle = ec.Item.Bounds

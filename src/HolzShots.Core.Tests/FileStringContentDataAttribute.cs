@@ -16,7 +16,7 @@ namespace HolzShots.Core.Tests
         {
             if (testMethod == null)
                 throw new ArgumentNullException(nameof(testMethod));
-            yield return new Object[] { File.ReadAllText(GetFullFilename(FileName)) };
+            yield return new [] { File.ReadAllText(GetFullFilename(FileName)) };
         }
 
         private static string GetFullFilename(string filename)

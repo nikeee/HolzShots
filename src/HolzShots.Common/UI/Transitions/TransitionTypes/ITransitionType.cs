@@ -1,5 +1,5 @@
 
-namespace HolzShots.Common.UI.Transitions.TransitionTypes
+namespace HolzShots.UI.Transitions.TransitionTypes
 {
     public interface ITransitionType
     {

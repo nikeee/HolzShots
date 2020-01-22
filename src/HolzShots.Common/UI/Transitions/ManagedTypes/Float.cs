@@ -1,6 +1,6 @@
 using System;
 
-namespace HolzShots.Common.UI.Transitions.ManagedTypes
+namespace HolzShots.UI.Transitions.ManagedTypes
 {
     internal class Float : IManagedType
     {

@@ -1,6 +1,6 @@
 using System;
 
-namespace HolzShots.Common.UI.Transitions.ManagedTypes
+namespace HolzShots.UI.Transitions.ManagedTypes
 {
     /// <summary>
     /// Class that manages transitions for Rectangle properties.

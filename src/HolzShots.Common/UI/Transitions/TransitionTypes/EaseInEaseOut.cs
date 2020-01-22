@@ -1,6 +1,6 @@
 using System;
 
-namespace HolzShots.Common.UI.Transitions.TransitionTypes
+namespace HolzShots.UI.Transitions.TransitionTypes
 {
     /// <summary>
     /// Manages an ease-in-ease-out transition. This accelerates during the first 
