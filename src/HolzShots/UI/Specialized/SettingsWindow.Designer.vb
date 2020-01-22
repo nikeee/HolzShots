@@ -74,10 +74,10 @@ Namespace UI.Specialized
             Me.start_with_windows = New System.Windows.Forms.CheckBox()
             Me.PluginsTab = New System.Windows.Forms.TabPage()
             Me.pluginListPanel = New HolzShots.UI.Controls.StackPanel()
-            Me.openPluginFolderLinkLabel = New HolzShots.UI.Windows.Forms.ExplorerLinkLabel()
+            Me.openPluginFolderLinkLabel = New HolzShots.UI.Forms.ExplorerLinkLabel()
             Me.Label10 = New System.Windows.Forms.Label()
             Me.Abort = New System.Windows.Forms.Button()
-            Me.gpoInfoBanner = New HolzShots.UI.Windows.Forms.Banner()
+            Me.gpoInfoBanner = New HolzShots.UI.Forms.Banner()
             Me.Tabs.SuspendLayout()
             Me.SelectorsTab.SuspendLayout()
             Me.Panel3.SuspendLayout()
@@ -759,8 +759,8 @@ Namespace UI.Specialized
         Friend WithEvents fileNamingPatternPreviewLabel As System.Windows.Forms.Label
         Friend WithEvents enableSmartFormatForSaving As System.Windows.Forms.CheckBox
         Friend WithEvents enableSmartFormatForUpload As System.Windows.Forms.CheckBox
-        Friend WithEvents openPluginFolderLinkLabel As HolzShots.UI.Windows.Forms.ExplorerLinkLabel
-        Friend WithEvents gpoInfoBanner As Banner
+        Friend WithEvents openPluginFolderLinkLabel As HolzShots.UI.Forms.ExplorerLinkLabel
+        Friend WithEvents gpoInfoBanner As HolzShots.UI.Forms.Banner
         Friend WithEvents Panel1 As System.Windows.Forms.Panel
         Friend WithEvents Panel2 As System.Windows.Forms.Panel
         Friend WithEvents Panel3 As System.Windows.Forms.Panel

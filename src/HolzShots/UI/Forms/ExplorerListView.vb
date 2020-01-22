@@ -2,7 +2,7 @@ Imports System.Drawing
 Imports System.Security.Permissions
 Imports System.Windows.Forms
 
-Namespace Windows.Forms
+Namespace UI.Forms
     Public Class ExplorerListView
         Inherits ListView
 

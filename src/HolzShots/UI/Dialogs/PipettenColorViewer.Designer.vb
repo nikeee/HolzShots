@@ -1,13 +1,13 @@
 Imports HolzShots.UI.Controls
 
 Namespace UI.Dialogs
-    <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+    <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
     Partial Class PipettenColorViewer
         'Inherits HolzShots.UI.Windows.Forms.Aero.glassForm
         Inherits System.Windows.Forms.Form
 
         'Form overrides dispose to clean up the component list.
-        <System.Diagnostics.DebuggerNonUserCode()> _
+        <System.Diagnostics.DebuggerNonUserCode()>
         Protected Overrides Sub Dispose(ByVal disposing As Boolean)
             Try
                 If disposing AndAlso components IsNot Nothing Then
@@ -27,11 +27,11 @@ Namespace UI.Dialogs
         '<System.Diagnostics.DebuggerStepThrough()> _
         Private Sub InitializeComponent()
             Me.Label1 = New System.Windows.Forms.Label()
-            Me.CopyLinkLabel5 = New HolzShots.UI.Controls.CopyLinkLabel()
-            Me.CopyLinkLabel4 = New HolzShots.UI.Controls.CopyLinkLabel()
-            Me.CopyLinkLabel3 = New HolzShots.UI.Controls.CopyLinkLabel()
-            Me.CopyLinkLabel2 = New HolzShots.UI.Controls.CopyLinkLabel()
-            Me.CopyLinkLabel1 = New HolzShots.UI.Controls.CopyLinkLabel()
+            Me.CopyLinkLabel5 = New HolzShots.UI.Forms.CopyLinkLabel()
+            Me.CopyLinkLabel4 = New HolzShots.UI.Forms.CopyLinkLabel()
+            Me.CopyLinkLabel3 = New HolzShots.UI.Forms.CopyLinkLabel()
+            Me.CopyLinkLabel2 = New HolzShots.UI.Forms.CopyLinkLabel()
+            Me.CopyLinkLabel1 = New HolzShots.UI.Forms.CopyLinkLabel()
             Me.ColorBox = New HolzShots.UI.Controls.BigColorViewer()
             Me.SuspendLayout()
             '
@@ -161,11 +161,11 @@ Namespace UI.Dialogs
 
         End Sub
         Friend WithEvents ColorBox As UI.Controls.BigColorViewer
-        Friend WithEvents CopyLinkLabel1 As CopyLinkLabel
-        Friend WithEvents CopyLinkLabel2 As CopyLinkLabel
-        Friend WithEvents CopyLinkLabel3 As CopyLinkLabel
-        Friend WithEvents CopyLinkLabel4 As CopyLinkLabel
+        Friend WithEvents CopyLinkLabel1 As HolzShots.UI.Forms.CopyLinkLabel
+        Friend WithEvents CopyLinkLabel2 As HolzShots.UI.Forms.CopyLinkLabel
+        Friend WithEvents CopyLinkLabel3 As HolzShots.UI.Forms.CopyLinkLabel
+        Friend WithEvents CopyLinkLabel4 As HolzShots.UI.Forms.CopyLinkLabel
         Friend WithEvents Label1 As System.Windows.Forms.Label
-        Friend WithEvents CopyLinkLabel5 As CopyLinkLabel
+        Friend WithEvents CopyLinkLabel5 As HolzShots.UI.Forms.CopyLinkLabel
     End Class
 End Namespace

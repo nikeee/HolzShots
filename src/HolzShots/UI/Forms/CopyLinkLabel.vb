@@ -1,7 +1,6 @@
 Imports System.ComponentModel
-Imports HolzShots.UI.Windows.Forms
 
-Namespace UI.Controls
+Namespace UI.Forms
     Friend Class CopyLinkLabel
         Inherits ExplorerLinkLabel
 

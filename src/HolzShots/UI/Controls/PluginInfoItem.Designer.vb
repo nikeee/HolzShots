@@ -1,10 +1,10 @@
 Namespace UI.Controls
-    <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+    <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
     Partial Class PluginInfoItem
         Inherits System.Windows.Forms.UserControl
 
         'UserControl überschreibt den Löschvorgang, um die Komponentenliste zu bereinigen.
-        <System.Diagnostics.DebuggerNonUserCode()> _
+        <System.Diagnostics.DebuggerNonUserCode()>
         Protected Overrides Sub Dispose(ByVal disposing As Boolean)
             Try
                 If disposing AndAlso components IsNot Nothing Then
@@ -21,7 +21,7 @@ Namespace UI.Controls
         'Hinweis: Die folgende Prozedur ist für den Windows Form-Designer erforderlich.
         'Das Bearbeiten ist mit dem Windows Form-Designer möglich.  
         'Das Bearbeiten mit dem Code-Editor ist nicht möglich.
-        <System.Diagnostics.DebuggerStepThrough()> _
+        <System.Diagnostics.DebuggerStepThrough()>
         Private Sub InitializeComponent()
             Me.pluginNameLabel = New System.Windows.Forms.Label()
             Me.pluginVersion = New System.Windows.Forms.Label()
@@ -137,9 +137,9 @@ Namespace UI.Controls
 
         End Sub
         Friend WithEvents pluginNameLabel As System.Windows.Forms.Label
-        Friend WithEvents authorWebSite As HolzShots.UI.Windows.Forms.ExplorerLinkLabel
-        Friend WithEvents reportBug As HolzShots.UI.Windows.Forms.ExplorerLinkLabel
-        Friend WithEvents pluginSettings As HolzShots.UI.Windows.Forms.ExplorerLinkLabel
+        Friend WithEvents authorWebSite As HolzShots.UI.Forms.ExplorerLinkLabel
+        Friend WithEvents reportBug As HolzShots.UI.Forms.ExplorerLinkLabel
+        Friend WithEvents pluginSettings As HolzShots.UI.Forms.ExplorerLinkLabel
         Friend WithEvents pluginVersion As System.Windows.Forms.Label
         Friend WithEvents pluginAuthor As System.Windows.Forms.Label
 

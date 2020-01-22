@@ -1,10 +1,10 @@
-Namespace Windows.Forms
-    <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+Namespace UI.Forms
+    <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
     Partial Class Banner
         Inherits System.Windows.Forms.UserControl
 
         'UserControl überschreibt den Löschvorgang, um die Komponentenliste zu bereinigen.
-        <System.Diagnostics.DebuggerNonUserCode()> _
+        <System.Diagnostics.DebuggerNonUserCode()>
         Protected Overrides Sub Dispose(ByVal disposing As Boolean)
             Try
                 If disposing AndAlso components IsNot Nothing Then
@@ -21,7 +21,7 @@ Namespace Windows.Forms
         'Hinweis: Die folgende Prozedur ist für den Windows Form-Designer erforderlich.
         'Das Bearbeiten ist mit dem Windows Form-Designer möglich.  
         'Das Bearbeiten mit dem Code-Editor ist nicht möglich.
-        <System.Diagnostics.DebuggerStepThrough()> _
+        <System.Diagnostics.DebuggerStepThrough()>
         Private Sub InitializeComponent()
             Me.textLabel = New System.Windows.Forms.Label()
             Me.SuspendLayout()

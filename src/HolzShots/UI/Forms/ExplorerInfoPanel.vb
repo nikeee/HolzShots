@@ -1,7 +1,7 @@
 Imports System.Drawing
 Imports System.Windows.Forms
 
-Namespace Windows.Forms
+Namespace UI.Forms
 
     Public Class ExplorerInfoPanel
         Inherits Panel
