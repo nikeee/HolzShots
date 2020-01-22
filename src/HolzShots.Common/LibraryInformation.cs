@@ -16,9 +16,9 @@ namespace HolzShots
         public const string CommitsSinceTag = "%COMMITS-SINCE-TAG%"; // .2
         public const string CommitId = "%COMMIT-ID%"; // +deadbeef
 #if RELEASE && CI_BUILD
-        public static DateTime VersionDate = DateTime.ParseExact("%BUILD-DATE%", "MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture);
+        public static readonly DateTime VersionDate = DateTime.ParseExact("%BUILD-DATE%", "MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture);
 #else
-        public static DateTime VersionDate = DateTime.Now;
+        public static readonly DateTime VersionDate = DateTime.Now;
 #endif
         public const string SemanticVersion = VersionFormal + ReleaseSuffix + CommitsSinceTag + CommitId;
 

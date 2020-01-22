@@ -31,7 +31,7 @@ Namespace Interop
                     Dim cmd As String = $"""{Application.ExecutablePath}"" {UploadFromShellParameter} ""%1"""
                     For Each type As String In LinkedFileTypes
                         Try
-                            ExplorerContextMenu.Register(type, RegkeyEntryUpload, "Bild hochladen", cmd)
+                            ExplorerContextMenu.Register(type, RegkeyEntryUpload, "Upload image", cmd)
                         Catch
                         End Try
                     Next
@@ -63,7 +63,7 @@ Namespace Interop
                     Dim cmd As String = $"""{Application.ExecutablePath}"" {OpenFromShellParameter} ""%1"""
                     For Each type As String In LinkedFileTypes
                         Try
-                            ExplorerContextMenu.Register(type, RegkeyEntryOpen, "Mit HolzShots öffnen", cmd)
+                            ExplorerContextMenu.Register(type, RegkeyEntryOpen, "Open with HolzShots", cmd)
                         Catch
                         End Try
                     Next
