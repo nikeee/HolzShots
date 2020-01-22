@@ -27,12 +27,12 @@ Namespace UI
         <System.Diagnostics.DebuggerStepThrough()>
         Private Sub InitializeComponent()
             Me.Label4 = New System.Windows.Forms.Label()
-            Me.holzShotsLinkLabel = New HolzShots.UI.Windows.Forms.ExplorerLinkLabel()
-            Me.showGfxResourcesLinklabel = New HolzShots.UI.Windows.Forms.ExplorerLinkLabel()
+            Me.holzShotsLinkLabel = New HolzShots.UI.Forms.ExplorerLinkLabel()
+            Me.showGfxResourcesLinklabel = New HolzShots.UI.Forms.ExplorerLinkLabel()
             Me.versionLabel = New System.Windows.Forms.Label()
             Me.timestampLabel = New System.Windows.Forms.Label()
             Me.applicationTitleLabel = New System.Windows.Forms.Label()
-            Me.LicenseLabel = New HolzShots.UI.Windows.Forms.ExplorerLinkLabel()
+            Me.LicenseLabel = New HolzShots.UI.Forms.ExplorerLinkLabel()
             Me.SuspendLayout()
             '
             'Label4

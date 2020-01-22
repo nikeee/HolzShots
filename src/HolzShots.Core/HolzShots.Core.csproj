@@ -154,6 +154,7 @@
     <Compile Include="Net\FotosHochladenUploader.cs" />
     <Compile Include="Net\DirectUploadUploader.cs" />
     <Compile Include="Net\Speed.cs" />
+    <Compile Include="Net\SpeedCalculatorProgress.cs" />
     <Compile Include="Net\Uploader.cs" />
     <Compile Include="Net\UploadException.cs" />
     <Compile Include="Net\UploadProgress.cs" />

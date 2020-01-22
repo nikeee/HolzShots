@@ -1,4 +1,3 @@
-using HolzShots.Common;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -20,7 +19,7 @@ namespace HolzShots.Net.Custom
         private const string SupportedSchema = "0.1.0";
         public CustomUploaderRoot UploaderInfo { get; }
 
-        private CustomUploader(CustomUploaderRoot customData)
+        private CustomUploader(CustomUploaderRoot customData) // TODO: Resolve warning
         {
             if (customData == null)
                 throw new ArgumentNullException(nameof(customData));

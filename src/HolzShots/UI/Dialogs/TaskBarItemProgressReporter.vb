@@ -1,5 +1,5 @@
 Imports HolzShots.Net
-Imports HolzShots.Common
+Imports HolzShots
 Imports Microsoft.WindowsAPICodePack.Taskbar
 
 Namespace UI.Dialogs

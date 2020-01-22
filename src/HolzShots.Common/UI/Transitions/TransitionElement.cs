@@ -1,5 +1,5 @@
 
-namespace HolzShots.Common.UI.Transitions
+namespace HolzShots.UI.Transitions
 {
     public class TransitionElement
     {

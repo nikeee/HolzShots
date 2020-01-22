@@ -7,7 +7,7 @@ Namespace Windows.Forms
 
         Private _description As String
 
-        <Browsable(True), Description("Der Text, der gräulich angezeigt wird, wenn kein Text eingegeben wurde. Könnte für eine Kurzbeschreibung verwendet werden."), Category("Appearance")>
+        <Browsable(True), Description("Der Text, der grÃ¤ulich angezeigt wird, wenn kein Text eingegeben wurde. KÃ¶nnte fÃ¼r eine Kurzbeschreibung verwendet werden."), Category("Appearance")>
         Public Property Prompt As String
             Get
                 Return _description
@@ -24,7 +24,7 @@ Namespace Windows.Forms
         End Sub
 
         Private Sub UpdateMessage()
-            NativeMethods.SendMessage(Me.Handle, &H1500 + 1, IntPtr.Zero, _description)
+            Interop.NativeMethods.SendMessage(Me.Handle, &H1500 + 1, IntPtr.Zero, _description)
         End Sub
     End Class
 End Namespace

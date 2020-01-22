@@ -1,5 +1,5 @@
 Imports System.Text
-Imports HolzShots.Common
+Imports HolzShots
 Imports HolzShots.Interop
 Imports Microsoft.WindowsAPICodePack.Dialogs
 

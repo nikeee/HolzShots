@@ -1,8 +1,9 @@
 Imports System.Drawing
 Imports System.Windows.Forms
 Imports System.Windows.Forms.VisualStyles
+Imports HolzShots.Interop
 
-Namespace Windows.Forms
+Namespace UI.Forms
     Public Enum ToolBarTheme
         Toolbar
         MediaToolbar
@@ -95,11 +96,11 @@ Namespace Windows.Forms
         Private Const RebarBackground As Integer = 6
 
         Private Function GetThemeMargins(dc As IDeviceContext, marginType As MarginTypes) As Padding
-            Dim margins As Common.NativeTypes.Margin
+            Dim margins As Interop.NativeTypes.Margin
             Try
                 Dim hDc As IntPtr = dc.GetHdc()
                 If 0 = NativeMethods.GetThemeMargins(_renderer.Handle, hDc, _renderer.Part, _renderer.State, CInt(marginType), IntPtr.Zero, margins) Then
-                    Return margins.ToPadding() ' New Padding(margins.LeftWidth, margins.TopHeight, margins.RightWidth, margins.Bottomheight)
+                    Return margins ' New Padding(margins.LeftWidth, margins.TopHeight, margins.RightWidth, margins.Bottomheight)
                 End If
                 Return New Padding(0)
             Finally

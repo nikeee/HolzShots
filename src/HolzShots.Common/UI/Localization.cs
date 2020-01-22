@@ -1,4 +1,4 @@
-namespace HolzShots.Common.UI
+namespace HolzShots.UI
 {
     public static class Localization
     {

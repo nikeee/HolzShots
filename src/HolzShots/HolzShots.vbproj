@@ -391,7 +391,7 @@
     </Compile>
     <Compile Include="Drawing\Tools\Censor.vb" />
     <Compile Include="Net\UploadHelper.vb" />
-    <Compile Include="UI\Forms\Environment.vb" />
+    <Compile Include="UI\Forms\EnvironmentEx.vb" />
     <Compile Include="UI\Forms\Banner.Designer.vb">
       <DependentUpon>Banner.vb</DependentUpon>
     </Compile>
@@ -413,7 +413,7 @@
     <Compile Include="UI\Forms\InfoPanelLabel.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="UI\Forms\NativeToolStripRenderer.vb" />
+    <Compile Include="UI\Forms\ToolStripAeroRenderer.vb" />
     <Compile Include="UI\Forms\NumericTextbox.vb">
       <SubType>Component</SubType>
     </Compile>
@@ -588,9 +588,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="UI\Windows\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
     <PostBuildEvent>

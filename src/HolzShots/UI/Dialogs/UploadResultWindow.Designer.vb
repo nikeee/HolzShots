@@ -26,8 +26,8 @@ Namespace UI.Dialogs
             Me.copyDirect = New System.Windows.Forms.Button()
             Me.copyHTML = New System.Windows.Forms.Button()
             Me.copyBB = New System.Windows.Forms.Button()
-            Me.ExplorerInfoPanel1 = New HolzShots.UI.Windows.Forms.ExplorerInfoPanel()
-            Me.closeWindowLabel = New HolzShots.UI.Windows.Forms.ExplorerLinkLabel()
+            Me.ExplorerInfoPanel1 = New HolzShots.UI.Forms.ExplorerInfoPanel()
+            Me.closeWindowLabel = New HolzShots.UI.Forms.ExplorerLinkLabel()
             Me.ExplorerInfoPanel1.SuspendLayout()
             Me.SuspendLayout()
             '

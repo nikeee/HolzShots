@@ -1,7 +1,6 @@
 using System;
 using System.Diagnostics;
 using System.Net.Http.Handlers;
-using HolzShots.Common;
 
 namespace HolzShots.Net
 {

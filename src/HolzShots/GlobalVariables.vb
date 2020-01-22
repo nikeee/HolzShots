@@ -1,5 +1,6 @@
 Imports System.Drawing.Imaging
-Imports HolzShots.UI.Windows.Forms
+Imports HolzShots.UI.Forms
+Imports HolzShots.Windows.Forms
 
 Friend Module GlobalVariables
 

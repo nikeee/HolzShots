@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace HolzShots.Common.UI.Transitions.TransitionTypes
+namespace HolzShots.UI.Transitions.TransitionTypes
 {
     /// <summary>
     /// This class allows you to create user-defined transition types. You specify these

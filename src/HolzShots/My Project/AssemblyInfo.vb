@@ -1,7 +1,7 @@
 Imports System.Reflection
 Imports System.Resources
 Imports System.Runtime.InteropServices
-Imports HolzShots.Common
+Imports HolzShots
 
 <Assembly: AssemblyTitle(LibraryInformation.Name)>
 <Assembly: AssemblyProduct(LibraryInformation.Name)>

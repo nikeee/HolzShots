@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace HolzShots.Common.UI.Transitions
+namespace HolzShots.UI.Transitions
 {
     internal class TransitionChain
     {

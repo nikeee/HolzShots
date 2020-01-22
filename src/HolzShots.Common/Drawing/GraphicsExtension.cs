@@ -1,9 +1,9 @@
-using HolzShots.Common.NativeTypes;
+using HolzShots.NativeTypes;
 using System;
 using System.Diagnostics;
 using System.Drawing;
 
-namespace HolzShots.Common.Drawing
+namespace HolzShots.Drawing
 {
     public static class GraphicsExtension
     {

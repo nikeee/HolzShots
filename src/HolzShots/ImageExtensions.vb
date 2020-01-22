@@ -2,7 +2,7 @@ Imports System.Drawing.Imaging
 Imports System.IO
 Imports System.Linq
 Imports System.Runtime.CompilerServices
-Imports HolzShots.Common.Drawing
+Imports HolzShots.Drawing
 
 Module ImageExtensions
 

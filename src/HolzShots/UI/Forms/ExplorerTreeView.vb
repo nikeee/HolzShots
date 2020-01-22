@@ -1,5 +1,6 @@
 Imports System.Security.Permissions
 Imports System.Windows.Forms
+Imports HolzShots.UI.Forms
 
 Namespace Windows.Forms
     Public Class ExplorerTreeView
@@ -9,8 +10,8 @@ Namespace Windows.Forms
             <SecurityPermission(SecurityAction.LinkDemand, Flags:=SecurityPermissionFlag.UnmanagedCode)>
             Get
                 Dim cp As CreateParams = MyBase.CreateParams
-                If Environment.IsVistaOrHigher AndAlso Not Me.Scrollable Then
-                    cp.Style = CInt(cp.Style Or NativeTypes.Tv.NoHScroll)
+                If EnvironmentEx.IsVistaOrHigher AndAlso Not Me.Scrollable Then
+                    cp.Style = CInt(cp.Style Or Interop.NativeTypes.Tv.NoHScroll)
                 End If
                 Return cp
             End Get
@@ -18,11 +19,11 @@ Namespace Windows.Forms
 
         Protected Overrides Sub OnHandleCreated(ByVal e As EventArgs)
             MyBase.OnHandleCreated(e)
-            If Environment.IsVistaOrHigher Then
-                Dim hndl As IntPtr = NativeMethods.SendMessage(Handle, DirectCast(NativeTypes.Tv.GetExtendedStyle, Integer), IntPtr.Zero, IntPtr.Zero)
-                hndl = New IntPtr(hndl.ToInt32 Or NativeTypes.Tv.ExAutoSHcroll Or NativeTypes.Tv.ExFaceInOutExpandOs)
-                NativeMethods.SendMessage(Handle, DirectCast(NativeTypes.Tv.SetExtendedStyle, Integer), IntPtr.Zero, hndl)
-                NativeMethods.SetWindowTheme(Handle, "explorer", 0)
+            If EnvironmentEx.IsVistaOrHigher Then
+                Dim hndl As IntPtr = Interop.NativeMethods.SendMessage(Handle, DirectCast(Interop.NativeTypes.Tv.GetExtendedStyle, Integer), IntPtr.Zero, IntPtr.Zero)
+                hndl = New IntPtr(hndl.ToInt32 Or Interop.NativeTypes.Tv.ExAutoSHcroll Or Interop.NativeTypes.Tv.ExFaceInOutExpandOs)
+                Interop.NativeMethods.SendMessage(Handle, DirectCast(Interop.NativeTypes.Tv.SetExtendedStyle, Integer), IntPtr.Zero, hndl)
+                Interop.NativeMethods.SetWindowTheme(Handle, "explorer", 0)
             End If
         End Sub
 

@@ -1,4 +1,4 @@
-Imports HolzShots.Common.UI
+Imports HolzShots.UI
 
 Namespace Drawing.Tools.UI
 

@@ -1,10 +1,10 @@
-namespace HolzShots.Common.UI.Transitions
+namespace HolzShots.UI.Transitions
 {
     public enum InterpolationMethod
     {
         Linear,
         Accleration,
         Deceleration,
-        EaseInEaseOut
+        EaseInEaseOut,
     }
 }

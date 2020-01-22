@@ -1,8 +1,8 @@
 using System.Drawing;
 using System.Windows.Forms;
-using HolzShots.Common.NativeTypes.Custom;
+using HolzShots.NativeTypes.Custom;
 
-namespace HolzShots.Common.Drawing
+namespace HolzShots.Drawing
 {
     public static class ScreenshotCreator
     {

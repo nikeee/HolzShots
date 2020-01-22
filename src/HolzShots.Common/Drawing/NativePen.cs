@@ -1,8 +1,8 @@
-using HolzShots.Common.NativeTypes;
+using HolzShots.NativeTypes;
 using System;
 using System.Drawing;
 
-namespace HolzShots.Common.Drawing
+namespace HolzShots.Drawing
 {
     public class NativePen : IDisposable
     {

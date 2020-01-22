@@ -1,4 +1,4 @@
-Imports HolzShots.UI.Windows.Forms
+Imports HolzShots.UI.Forms
 
 Namespace UI.Specialized
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>

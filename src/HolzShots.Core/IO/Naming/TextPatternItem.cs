@@ -1,4 +1,3 @@
-using HolzShots.Common;
 
 namespace HolzShots.IO.Naming
 {

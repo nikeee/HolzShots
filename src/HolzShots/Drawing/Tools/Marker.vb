@@ -1,5 +1,5 @@
 Imports System.Drawing.Drawing2D
-Imports HolzShots.Common.Drawing
+Imports HolzShots.Drawing
 Imports HolzShots.UI.Controls
 
 Namespace Drawing.Tools

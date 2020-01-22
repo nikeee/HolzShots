@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace HolzShots.Common.UI.Transitions.TransitionTypes
+namespace HolzShots.UI.Transitions.TransitionTypes
 {
     /// <summary>
     /// This transition type 'flashes' the properties a specified number of times, ending

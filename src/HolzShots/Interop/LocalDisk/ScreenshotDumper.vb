@@ -1,7 +1,7 @@
 Imports System.Drawing.Imaging
 Imports System.IO
 Imports System.Threading
-Imports HolzShots.Common
+Imports HolzShots
 Imports HolzShots.IO.Naming
 
 Namespace Interop.LocalDisk
@@ -70,8 +70,8 @@ Namespace Interop.LocalDisk
             Debug.Assert(TypeOf shot.Image Is Bitmap)
             Dim screenshotImage = If(TypeOf shot.Image Is Bitmap, DirectCast(shot.Image, Bitmap), New Bitmap(shot.Image))
 
-            If ManagedSettings.EnableSmartFormatForSaving AndAlso Common.Drawing.ImageFormatAnalyser.IsOptimizable(screenshotImage) Then
-                format = Common.Drawing.ImageFormatAnalyser.GetBestFittingFormat(screenshotImage)
+            If ManagedSettings.EnableSmartFormatForSaving AndAlso Drawing.ImageFormatAnalyser.IsOptimizable(screenshotImage) Then
+                format = Drawing.ImageFormatAnalyser.GetBestFittingFormat(screenshotImage)
                 fileExtension = (format.GetFormatMetadata()?.Extension)
                 Debug.Assert(Not String.IsNullOrWhiteSpace(fileExtension))
             End If

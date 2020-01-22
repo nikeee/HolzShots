@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Reflection;
 
-namespace HolzShots.Common.UI.Transitions
+namespace HolzShots.UI.Transitions
 {
     /// <summary>
     /// A class holding static utility functions.

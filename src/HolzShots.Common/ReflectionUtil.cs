@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
 
-namespace HolzShots.Common
+namespace HolzShots
 {
     static class ReflectionUtil
     {

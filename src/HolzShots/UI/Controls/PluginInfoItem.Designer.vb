@@ -26,9 +26,9 @@ Namespace UI.Controls
             Me.pluginNameLabel = New System.Windows.Forms.Label()
             Me.pluginVersion = New System.Windows.Forms.Label()
             Me.pluginAuthor = New System.Windows.Forms.Label()
-            Me.pluginSettings = New HolzShots.UI.Windows.Forms.ExplorerLinkLabel()
-            Me.reportBug = New HolzShots.UI.Windows.Forms.ExplorerLinkLabel()
-            Me.authorWebSite = New HolzShots.UI.Windows.Forms.ExplorerLinkLabel()
+            Me.pluginSettings = New HolzShots.UI.Forms.ExplorerLinkLabel()
+            Me.reportBug = New HolzShots.UI.Forms.ExplorerLinkLabel()
+            Me.authorWebSite = New HolzShots.UI.Forms.ExplorerLinkLabel()
             Me.SuspendLayout()
             '
             'pluginNameLabel

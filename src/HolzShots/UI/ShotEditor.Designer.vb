@@ -5,7 +5,7 @@ Namespace UI.Specialized
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
     Partial Friend Class ShotEditor
         Inherits System.Windows.Forms.Form
-        'Inherits HolzShots.UI.Windows.Forms.Aero.GlassForm
+        'Inherits HolzShots.UI.Forms.Aero.GlassForm
 
         'Wird vom Windows Form-Designer benötigt.
         Private components As System.ComponentModel.IContainer
