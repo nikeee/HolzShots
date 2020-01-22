@@ -5,7 +5,7 @@ using Semver;
 
 namespace HolzShots.Composition
 {
-    [MetadataAttribute]
+    [System.ComponentModel.Composition.MetadataAttribute]
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
     public class PluginAttribute : Attribute, ICompileTimePluginMetadata
     {
