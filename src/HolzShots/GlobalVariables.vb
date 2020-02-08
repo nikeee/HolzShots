@@ -13,13 +13,12 @@ Friend Module GlobalVariables
     Public Const DefaultFileExtension = ".png"
     Friend Const DefaultFileName = "HolzShots"
 
-    Friend Const AreaSelectorParameter As String = "-selector" ' TODO: refacotr command line
-    Friend Const TaskbarScreenshotParameter As String = "-taskbar" ' TODO: refacotr command line
-    Friend Const FullscreenScreenshotParameter As String = "-fullscreen" ' TODO: refacotr command line
+    Friend Const AreaSelectorParameter As String = "-selector" ' TODO: Refactor command line
+    Friend Const FullscreenScreenshotParameter As String = "-fullscreen" ' TODO: Refactor command line
 
-    Friend Const OpenParameter As String = "-open" ' TODO: refacotr command line
-    Friend Const UploadParameter As String = "-upload" ' TODO: refacotr command line
+    Friend Const OpenParameter As String = "-open" ' TODO: Refactor command line
+    Friend Const UploadParameter As String = "-upload" ' TODO: Refactor command line
 
-    Friend Const OpenFromShellParameter As String = "-open_shell" ' TODO: refacotr command line
-    Friend Const UploadFromShellParameter As String = "-upload_shell" ' TODO: refacotr command line
+    Friend Const OpenFromShellParameter As String = "-open_shell" ' TODO: Refactor command line
+    Friend Const UploadFromShellParameter As String = "-upload_shell" ' TODO: Refactor command line
 End Module

@@ -106,21 +106,14 @@ Namespace My
             Static imgres As String = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.System), "imageres.dll")
 
             If File.Exists(imgres) Then
-                Dim fullscreen As New JumpListLink(System.Windows.Forms.Application.ExecutablePath, "Vollbildschirm-Screenshot") With {
+                Dim fullscreen As New JumpListLink(System.Windows.Forms.Application.ExecutablePath, "Shoot entire screen") With {
                     .Arguments = FullscreenScreenshotParameter,
                     .IconReference = New IconReference(imgres, 105)
                 }
-
                 jlist.AddUserTasks(fullscreen)
-
-                Dim taskbar As New JumpListLink(System.Windows.Forms.Application.ExecutablePath, "Taskleiste fotografieren") With {
-                    .Arguments = TaskbarScreenshotParameter,
-                    .IconReference = New IconReference(imgres, 75)
-                }
-                jlist.AddUserTasks(taskbar)
             End If
 
-            Dim selector As New JumpListLink(System.Windows.Forms.Application.ExecutablePath, "Einen Bereich auswählen") With {
+            Dim selector As New JumpListLink(System.Windows.Forms.Application.ExecutablePath, "Select a region") With {
                 .Arguments = AreaSelectorParameter,
                 .IconReference = New IconReference(System.Windows.Forms.Application.ExecutablePath, 0)
             }
