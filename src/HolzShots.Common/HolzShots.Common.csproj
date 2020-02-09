@@ -110,22 +110,16 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="AsyncFixer">
-      <Version>1.1.6</Version>
+    <PackageReference Include="AsyncFixer" Version="1.1.6">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.CodeQuality.Analyzers">
-      <Version>2.9.8</Version>
+    <PackageReference Include="Microsoft.CodeQuality.Analyzers" Version="2.9.8">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="System.Runtime.Analyzers">
-      <Version>1.2.0-beta2</Version>
-    </PackageReference>
-    <PackageReference Include="System.Runtime.InteropServices.Analyzers">
-      <Version>1.2.0-beta2</Version>
-    </PackageReference>
+    <PackageReference Include="System.Runtime.Analyzers" Version="1.2.0-beta2" />
+    <PackageReference Include="System.Runtime.InteropServices.Analyzers" Version="1.2.0-beta2" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
