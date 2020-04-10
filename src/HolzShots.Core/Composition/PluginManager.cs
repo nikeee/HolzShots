@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using HolzShots.IO;
 
 namespace HolzShots.Composition
@@ -47,8 +48,11 @@ namespace HolzShots.Composition
                     config.WithAssembly(assembly);
             }
 
-            using (var container = config.CreateContainer())
+
+            try
             {
+                using var container = config.CreateContainer();
+
                 var pluginInstances = container.GetExports<T>();
 
                 var res = new List<(ICompileTimePluginMetadata, T)>();
@@ -61,6 +65,11 @@ namespace HolzShots.Composition
 
                 Plugins = res;
             }
+            catch (Exception)
+            {
+                MessageBox.Show("Error loading plugins. Try updating them, they seem to be incompatible.");
+            }
+
 
             Loaded = true;
 
