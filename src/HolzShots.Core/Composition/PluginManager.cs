@@ -48,7 +48,6 @@ namespace HolzShots.Composition
                     config.WithAssembly(assembly);
             }
 
-
             try
             {
                 using var container = config.CreateContainer();
@@ -69,7 +68,6 @@ namespace HolzShots.Composition
             {
                 MessageBox.Show("Error loading plugins. Try updating them, they seem to be incompatible.");
             }
-
 
             Loaded = true;
 

@@ -56,12 +56,6 @@ Namespace Interop.LocalDisk
             SaveScreenshot(shot)
         End Sub
 
-        Friend Shared Sub SaveScreenshotAsync(shot As Screenshot)
-            Dim callback = Sub() SaveScreenshot(shot)
-            Dim t = New Thread(callback)
-            t.Start()
-        End Sub
-
         Friend Shared Sub SaveScreenshot(shot As Screenshot)
 
             Dim format As ImageFormat = GlobalVariables.DefaultImageFormat
