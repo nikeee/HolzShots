@@ -7,18 +7,6 @@ Imports HolzShots.IO.Naming
 Namespace Interop.LocalDisk
     Friend Class ScreenshotDumper
 
-        Public Shared Function RequestSequencenNumber() As UInteger
-            Return My.Settings.FileSequenceNumber
-        End Function
-        Public Shared Sub SetNextSequenceNumber(number As UInteger)
-            Debug.Assert(number > My.Settings.FileSequenceNumber)
-            If number > My.Settings.FileSequenceNumber Then
-                My.Settings.FileSequenceNumber = number
-                My.Settings.Save()
-            End If
-        End Sub
-
-
         Public Const MyPicturesFolderName As String = LibraryInformation.Name
 
         Private Shared _lastFileName As String = String.Empty
@@ -70,22 +58,20 @@ Namespace Interop.LocalDisk
                 Debug.Assert(Not String.IsNullOrWhiteSpace(fileExtension))
             End If
 
-            Dim sequenceNumber = RequestSequencenNumber()
 
             Dim pattern As String = ManagedSettings.SaveImagesPattern
-            Dim res As (name As String, nextSqNr As UInteger)
+            Dim name As String
             Try
-                res = FileNamePatternFormatter.GetFileNameFromPattern(shot, format, pattern, sequenceNumber)
+                name = FileNamePatternFormatter.GetFileNameFromPattern(shot, format, pattern)
             Catch ex As PatternSyntaxException
                 HumanInterop.InvalidFilePattern(pattern)
                 Return
             End Try
 
-            Dim fileName = System.IO.Path.ChangeExtension(res.name, fileExtension)
+            Dim fileName = System.IO.Path.ChangeExtension(name, fileExtension)
             Dim path As String = GetAbsolutePath(fileName)
             screenshotImage.Save(path, format)
 
-            If res.nextSqNr > sequenceNumber Then SetNextSequenceNumber(sequenceNumber)
             _lastFileName = path
         End Sub
 

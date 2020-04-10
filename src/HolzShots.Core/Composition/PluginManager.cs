@@ -20,7 +20,7 @@ namespace HolzShots.Composition
         public string PluginDirectory { get; }
         public bool Loaded { get; private set; } = false;
 
-        public PluginManager(string pluginDirectory) => PluginDirectory = pluginDirectory;
+        protected PluginManager(string pluginDirectory) => PluginDirectory = pluginDirectory;
 
         public Task Load()
         {

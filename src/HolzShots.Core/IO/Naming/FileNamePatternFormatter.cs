@@ -6,7 +6,7 @@ namespace HolzShots.IO.Naming
 {
     public static class FileNamePatternFormatter
     {
-        public static (string name, uint nextSeqNr) GetFileNameFromPattern(Screenshot screenshot, ImageFormat format, string pattern, uint sequenceNumber)
+        public static string GetFileNameFromPattern(Screenshot screenshot, ImageFormat format, string pattern)
         {
             if (screenshot == null)
                 throw new ArgumentNullException(nameof(screenshot));
@@ -18,12 +18,11 @@ namespace HolzShots.IO.Naming
             var parsedPattern = FileNamePattern.Parse(pattern);
             if (parsedPattern.IsEmpty)
                 throw new PatternSyntaxException();
-            
+
             var fileSize = screenshot.Image.EstimateFileSize(format);
 
-            var info = new FileMetadata(screenshot.Timestamp, fileSize, sequenceNumber, screenshot.Size);
-            var nextNr = parsedPattern.UsesSequenceNumber ? sequenceNumber + 1 : sequenceNumber;
-            return (name: parsedPattern.FormatMetadata(info), nextSeqNr: nextNr);
+            var info = new FileMetadata(screenshot.Timestamp, fileSize, screenshot.Size);
+            return parsedPattern.FormatMetadata(info);
         }
     }
 }

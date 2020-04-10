@@ -1,7 +1,7 @@
 Namespace Input
     Public Class HolzShotsActionCollection
         Inherits HotkeyActionCollection
-        Private _lockObj As New Object
+        Private ReadOnly _lockObj As New Object
 
         Public Sub New(hook As KeyboardHook, ParamArray actions() As IHotkeyAction)
             MyBase.New(hook, actions)

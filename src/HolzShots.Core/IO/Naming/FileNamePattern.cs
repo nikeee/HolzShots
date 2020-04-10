@@ -9,12 +9,10 @@ namespace HolzShots.IO.Naming
     public class FileNamePattern
     {
         public IReadOnlyList<PatternItem> Tokens { get; }
-        public bool UsesSequenceNumber { get; }
 
         private static readonly Dictionary<string, Func<string, PatternItem>> _availablePatterns = new Dictionary<string, Func<string, PatternItem>>
         {
             ["text"] = str => new TextPatternItem(str),
-            ["file"] = str => new FilePatternItem(str),
             ["image"] = str => new ImagePatternItem(str),
             ["date"] = str => new DatePatternItem(str),
         };
@@ -22,8 +20,7 @@ namespace HolzShots.IO.Naming
         public FileNamePattern() : this(null) { }
         public FileNamePattern(IReadOnlyList<PatternItem> tokens)
         {
-            Tokens = tokens ?? new PatternItem[0];
-            UsesSequenceNumber = tokens?.Any(t => t is FilePatternItem fpi && fpi.InfoType == FilePatternItem.FileInfoType.SequenceNumber) == true;
+            Tokens = tokens ?? Array.Empty<PatternItem>();
         }
 
         public bool IsEmpty => Tokens.Count == 0;

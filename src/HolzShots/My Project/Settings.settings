@@ -1,4 +1,4 @@
-﻿<?xml version='1.0' encoding='utf-8'?>
+<?xml version='1.0' encoding='utf-8'?>
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="My" GeneratedClassName="MySettings" UseMySettingsClassName="true">
   <Profiles />
   <Settings>
@@ -98,12 +98,6 @@
     <Setting Name="SaveImagesToLocalDisk" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="SaveImagesPattern" Type="System.String" Scope="User">
-      <Value Profile="(Default)">&lt;File:SequenceNumber&gt;</Value>
-    </Setting>
-    <Setting Name="FileSequenceNumber" Type="System.UInt32" Scope="User">
-      <Value Profile="(Default)">0</Value>
-    </Setting>
     <Setting Name="TrayIconDoubleClickAction" Type="HolzShots.ScreenshotRelated.TrayIconAction" Scope="User">
       <Value Profile="(Default)">OpenSettings</Value>
     </Setting>
@@ -136,6 +130,9 @@
     </Setting>
     <Setting Name="ShowCopyConfimation" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="SaveImagesPattern" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Screenshot-&lt;Date&gt;</Value>
     </Setting>
   </Settings>
 </SettingsFile>

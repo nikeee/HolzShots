@@ -440,30 +440,6 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("<File:SequenceNumber>")>  _
-        Public Property SaveImagesPattern() As String
-            Get
-                Return CType(Me("SaveImagesPattern"),String)
-            End Get
-            Set
-                Me("SaveImagesPattern") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
-        Public Property FileSequenceNumber() As UInteger
-            Get
-                Return CType(Me("FileSequenceNumber"),UInteger)
-            End Get
-            Set
-                Me("FileSequenceNumber") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("OpenSettings")>  _
         Public Property TrayIconDoubleClickAction() As Global.HolzShots.ScreenshotRelated.TrayIconAction
             Get
@@ -588,6 +564,18 @@ Namespace My
             End Get
             Set
                 Me("ShowCopyConfimation") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Screenshot-<Date>")>  _
+        Public Property SaveImagesPattern() As String
+            Get
+                Return CType(Me("SaveImagesPattern"),String)
+            End Get
+            Set
+                Me("SaveImagesPattern") = value
             End Set
         End Property
     End Class
