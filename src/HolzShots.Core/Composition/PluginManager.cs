@@ -50,19 +50,20 @@ namespace HolzShots.Composition
 
             try
             {
-                using var container = config.CreateContainer();
-
-                var pluginInstances = container.GetExports<T>();
-
-                var res = new List<(ICompileTimePluginMetadata, T)>();
-                foreach (var instance in pluginInstances)
+                using (var container = config.CreateContainer())
                 {
-                    var instanceType = instance.GetType();
-                    var metadata = (PluginAttribute)instanceType.GetCustomAttribute(typeof(PluginAttribute));
-                    res.Add((metadata, instance));
-                }
+                    var pluginInstances = container.GetExports<T>();
 
-                Plugins = res;
+                    var res = new List<(ICompileTimePluginMetadata, T)>();
+                    foreach (var instance in pluginInstances)
+                    {
+                        var instanceType = instance.GetType();
+                        var metadata = (PluginAttribute)instanceType.GetCustomAttribute(typeof(PluginAttribute));
+                        res.Add((metadata, instance));
+                    }
+
+                    Plugins = res;
+                }
             }
             catch (Exception)
             {
