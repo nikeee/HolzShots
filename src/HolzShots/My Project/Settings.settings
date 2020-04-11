@@ -29,9 +29,6 @@
     <Setting Name="MarkerColor" Type="System.Drawing.Color" Scope="User">
       <Value Profile="(Default)">Yellow</Value>
     </Setting>
-    <Setting Name="StartWithWindows" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
     <Setting Name="EraserDiameter" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">20</Value>
     </Setting>

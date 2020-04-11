@@ -84,7 +84,7 @@ Namespace UI.Specialized
             EnableIngameMode.Checked = Not ManagedSettings.EnableIngameMode
             'EnableIngameMode.Enabled = Not ManagedSettings.EnableIngameModePolicy.IsSet
 
-            start_with_windows.Checked = Global.HolzShots.My.Settings.StartWithWindows
+            start_with_windows.Checked = HolzShotsEnvironment.AutoStart
 
             enableStatusToaster.Checked = ManagedSettings.EnableStatusToaster
             'enableStatusToaster.Enabled = Not ManagedSettings.EnableStatusToasterPolicy.IsSet
@@ -153,7 +153,6 @@ Namespace UI.Specialized
             End If
 
             With Global.HolzShots.My.Settings
-                .StartWithWindows = start_with_windows.Checked
                 .DefaultImageHoster = defaultHosterBox.Text
             End With
 

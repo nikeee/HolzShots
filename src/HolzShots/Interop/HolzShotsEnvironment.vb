@@ -52,7 +52,10 @@ Namespace Interop
             Return Screen.PrimaryScreen.Bounds.Height = rct.Bottom AndAlso Screen.PrimaryScreen.Bounds.Width = rct.Right
         End Function
 
-        Public Shared WriteOnly Property AutoStart As Boolean
+        Public Shared Property AutoStart As Boolean
+            Get
+                Return CurrentStartupManager.IsRegistered
+            End Get
             Set(ByVal value As Boolean)
                 If value Then
                     CurrentStartupManager.Register()

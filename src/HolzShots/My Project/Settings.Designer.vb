@@ -164,18 +164,6 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
-        Public Property StartWithWindows() As Boolean
-            Get
-                Return CType(Me("StartWithWindows"),Boolean)
-            End Get
-            Set
-                Me("StartWithWindows") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("20")>  _
         Public Property EraserDiameter() As Integer
             Get
