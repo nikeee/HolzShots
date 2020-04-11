@@ -565,6 +565,9 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Semver" Version="2.0.6" />
+    <PackageReference Include="StartupHelper">
+      <Version>1.0.2</Version>
+    </PackageReference>
     <PackageReference Include="System.Buffers" Version="4.5.1" />
     <PackageReference Include="System.Collections.Immutable" Version="1.7.0" />
     <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />

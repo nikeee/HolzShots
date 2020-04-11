@@ -53,22 +53,23 @@ Namespace UI.Specialized
         Private Async Sub MainWindowLoad(ByVal sender As Object, ByVal e As EventArgs) Handles MyBase.Load
             HideForm()
 
+            HolzShotsEnvironment.CurrentStartupManager.FixWorkingDirectory()
+
             Drawing.DpiAwarenessFix.SetDpiAwareness()
 
             _keyboardHook = KeyboardHookSelector.CreateHookForCurrentPlatform(Me)
-            _actionContainer = New HolzShotsActionCollection(_keyboardHook,
+            _ActionContainer = New HolzShotsActionCollection(_keyboardHook,
                                                             New SelectAreaHotkeyAction(),
                                                             New FullscreenHotkeyAction(),
-                                                            New WindowHotkeyAction()
-                                                            )
+                                                            New WindowHotkeyAction())
             ActionContainer.Refresh()
 
             Global.HolzShots.My.Settings.Upgrade()
 
+            Dim isAutorun = HolzShotsEnvironment.CurrentStartupManager.IsStartedUp
+            Dim args = HolzShotsEnvironment.CurrentStartupManager.CommandLineArguments
 
-            Dim args = Environment.GetCommandLineArgs()
             Await MyApplication.ProcessCommandLineArguments(args).ConfigureAwait(True)
-            Dim isAutorun = args.Contains("-autorun")
 
             Dim saveSettings As Boolean = False
             Dim openSettingsOnFinish As Boolean = False

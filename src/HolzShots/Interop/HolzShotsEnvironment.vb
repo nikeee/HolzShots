@@ -3,9 +3,18 @@ Imports System.Security
 Imports System.Text
 Imports System.Threading
 Imports Microsoft.Win32
+Imports StartupHelper
 
 Namespace Interop
     Friend Class HolzShotsEnvironment
+
+        Public Shared ReadOnly Property CurrentStartupManager As New StartupManager(Reflection.Assembly.GetEntryAssembly().Location,
+                                                                      LibraryInformation.Name,
+                                                                      RegistrationScope.Local,
+                                                                      False,
+                                                                      StartupProviders.Registry,
+                                                                      "-autorun")
+
         Private Sub New()
         End Sub
 
@@ -46,29 +55,9 @@ Namespace Interop
         Public Shared WriteOnly Property AutoStart As Boolean
             Set(ByVal value As Boolean)
                 If value Then
-                    Dim contains As Boolean = Registry.CurrentUser.GetValueNames().Contains(My.Application.Info.ProductName)
-                    If Not contains Then
-                        Dim keyValue = $"""{Application.ExecutablePath}"" -autorun"
-                        Using reg As RegistryKey = Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Run", True)
-                            Try
-                                reg.SetValue(My.Application.Info.ProductName, keyValue)
-                            Catch ex As UnauthorizedAccessException
-                                HumanInterop.UnauthorizedAccessExceptionRegistry()
-                            Catch ex As SecurityException
-                                HumanInterop.SecurityExceptionRegistry()
-                            End Try
-                        End Using
-                    End If
+                    CurrentStartupManager.Register()
                 Else
-                    Using reg As RegistryKey = Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Run", True)
-                        Try
-                            reg.DeleteValue(My.Application.Info.ProductName, False)
-                        Catch ex As UnauthorizedAccessException
-                            HumanInterop.UnauthorizedAccessExceptionRegistry()
-                        Catch ex As SecurityException
-                            HumanInterop.SecurityExceptionRegistry()
-                        End Try
-                    End Using
+                    CurrentStartupManager.Unregister()
                 End If
             End Set
         End Property
