@@ -80,7 +80,10 @@ namespace HolzShots.Input.Selection
         private SelectionState _state = new InitialState();
 
         abstract class SelectionState { }
-        class InitialState : SelectionState { }
+        class InitialState : SelectionState
+        {
+            public IInitialStateDecoration[] Decorations => new[] { new HelpTextDecoration() };
+        }
         abstract class RectangleState : SelectionState
         {
             public Point UserSelectionStart { get; protected set; }
@@ -268,7 +271,11 @@ namespace HolzShots.Input.Selection
 
             switch (_state)
             {
-                case InitialState _: break; // Nothing to be updated
+                case InitialState initial:
+                    foreach (var d in initial.Decorations)
+                        d.Render(g, initial, _imageBounds);
+
+                    break; // Nothing to be updated
                 case RectangleState availableSelection:
 
                     var outline = availableSelection.GetSelectedOutline(_imageBounds);
@@ -329,6 +336,38 @@ namespace HolzShots.Input.Selection
             _image?.Dispose();
             _dimmedImage?.Dispose();
             _blackOverlayBrush?.Dispose();
+        }
+
+
+        interface IInitialStateDecoration
+        {
+            void Render(D2DGraphics g, InitialState state, Rectangle bounds);
+        }
+
+        class HelpTextDecoration : IInitialStateDecoration
+        {
+            // TODO
+
+            private static readonly string[] HelpText = new[] {
+                "Left Mouse: Select area",
+                "Right Mouse: Move selected area",
+                // "Space Bar: Toggle magnifier",
+                "Escape: Cancel",
+            };
+
+            private readonly Rectangle _infoBounds;
+
+            public HelpTextDecoration()
+            {
+                //var x = (Screen.PrimaryScreen.Bounds.X - SystemInformation.VirtualScreen.X + Screen.PrimaryScreen.Bounds.Width / 2); // - (_richInfoTextSize.Width / 2);
+                //var y = (Screen.PrimaryScreen.Bounds.Y - SystemInformation.VirtualScreen.Y + Screen.PrimaryScreen.Bounds.Height / 2); // - (_richInfoTextSize.Width / 2);
+                _infoBounds = Screen.PrimaryScreen.Bounds;
+            }
+
+            public void Render(D2DGraphics g, InitialState state, Rectangle bounds)
+            {
+                g.DrawTextCenter(string.Join(Environment.NewLine, HelpText), D2DColor.White, "Consolas", 32, _infoBounds);
+            }
         }
     }
 }
