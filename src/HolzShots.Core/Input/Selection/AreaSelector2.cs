@@ -262,6 +262,7 @@ namespace HolzShots.Input.Selection
 
             Debug.Assert(_blackOverlayBrush != null);
 
+            g.Antialias = false;
             g.DrawBitmap(_dimmedImage, _imageBounds);
 
             switch (_state)
