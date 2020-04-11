@@ -35,7 +35,8 @@ Namespace ScreenshotRelated
 
             Using prio As New ProcessPriorityRequest()
                 Using screen = ScreenshotCreator.CaptureScreenshot(SystemInformation.VirtualScreen)
-                    Using selector As New Global.HolzShots.Input.Selection.AreaSelector2() ' AreaSelector()
+                    ' Using selector As New AreaSelector()
+                    Using selector As New Global.HolzShots.Input.Selection.AreaSelector2()
                         Dim selectedArea = Await selector.PromptSelectionAsync(screen).ConfigureAwait(True)
 
                         Debug.Assert(selectedArea.Width > 0)
