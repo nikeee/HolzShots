@@ -9,22 +9,12 @@ Imports HolzShots.ScreenshotRelated
 Namespace UI.Specialized
     Friend Class MainWindow
 
-        Public Shared Instance As MainWindow = New MainWindow()
-
-        Public UseWindowColorChange As Boolean
-        Public UseFullscreenColorChange As Boolean
-        Public UseSelectorColorChange As Boolean
+        Public Shared ReadOnly Property Instance As MainWindow = New MainWindow()
 
         Private _forceclose As Boolean = False
 
         Private _keyboardHook As KeyboardHook
-        Private Property _actionContainer As HotkeyActionCollection
         Public ReadOnly Property ActionContainer As HotkeyActionCollection
-            Get
-                Return _actionContainer
-            End Get
-        End Property
-
 
         Private Sub HideForm()
             Opacity = 0
