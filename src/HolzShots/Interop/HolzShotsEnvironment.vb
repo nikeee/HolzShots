@@ -73,25 +73,25 @@ Namespace Interop
         Friend Shared Function SetForegroundWindowEx(ByVal hWndWindow As IntPtr) As Boolean
             ' Dient dem Setzen des Vordergrundfensters mit der Funktion
             ' SetForegroundWindow, die sich unter neueren Windows-Versionen
-            ' anders verhält als unter Windows 95 und Windows NT 4.0.
-            ' Der Rückgabewert ist True, wenn das Fenster erfolgreich in den
+            ' anders verhÃ¤lt als unter Windows 95 und Windows NT 4.0.
+            ' Der RÃ¼ckgabewert ist True, wenn das Fenster erfolgreich in den
             ' Vordergrund gebracht werden konnte.
             Dim lThreadForeWin As Integer
-            ' Thread-ID für das aktuelle Vordergrundfenster
+            ' Thread-ID fÃ¼r das aktuelle Vordergrundfenster
             Dim lThreadWindow As Integer
-            ' Thread-ID für das in hWndWindow spezifizierte
+            ' Thread-ID fÃ¼r das in hWndWindow spezifizierte
             ' Fenster, das in den Vordergrund des Desktops
             ' gebracht werden soll.
             ' Falls das Fenster dem gleichen Thread wie das aktuelle
-            ' Vordergrundfenster angehört, ist kein Workaround erforderlich:
+            ' Vordergrundfenster angehÃ¶rt, ist kein Workaround erforderlich:
             lThreadWindow = NativeMethods.GetWindowThreadProcessId(hWndWindow, 0)
             lThreadForeWin = NativeMethods.GetWindowThreadProcessId(NativeMethods.GetForegroundWindow(), 0)
             If lThreadWindow = lThreadForeWin Then
-                ' Vordergrundfenster und zu aktivierendes Fenster gehören zum
+                ' Vordergrundfenster und zu aktivierendes Fenster gehÃ¶ren zum
                 ' gleichen Thread. SetForegroundWindow allein reicht aus:
                 Return NativeMethods.SetForegroundWindow(hWndWindow)
             Else
-                ' Das Vordergrundfenster gehört zu einem anderen Thread als das
+                ' Das Vordergrundfenster gehÃ¶rt zu einem anderen Thread als das
                 ' Fenster, das neues Vordergrundfenster werden soll. Mittels
                 ' AttachThreadInput erhaten wir kurzzeitig Zugriff auf die
                 ' Eingabeverarbeitung des Threads des Vordergrundfensters,
