@@ -13,7 +13,7 @@ namespace HolzShots.Input.Selection
         private static TaskCompletionSource<Rectangle> _tcs;
         private D2DBitmap _image;
         private D2DBitmapGraphics _dimmedImage;
-        private D2DRect _imageBounds;
+        private Rectangle _imageBounds;
         private readonly D2DBrush _blackOverlayBrush;
 
         private static readonly D2DColor _overlayColor = new D2DColor(0.8f, D2DColor.Black);
@@ -53,7 +53,7 @@ namespace HolzShots.Input.Selection
             if (_tcs != null)
                 return _tcs.Task;
 
-            _imageBounds = new D2DRect(0, 0, image.Width, image.Height);
+            _imageBounds = new Rectangle(0, 0, image.Width, image.Height);
             _image = Device.CreateBitmapFromGDIBitmap(image);
             _dimmedImage = CreateDimemdImage(image.Width, image.Height);
 
@@ -90,17 +90,18 @@ namespace HolzShots.Input.Selection
                 CursorPosition = cursorPosition;
             }
 
-            public Rectangle GetSelectedOutline()
+            public Rectangle GetSelectedOutline(Rectangle canvasBounds)
             {
-                // TODO: Clamp this to screen/image dimensions
-
                 var start = UserSelectionStart;
                 var cursor = CursorPosition;
                 var x = Math.Min(start.X, cursor.X);
                 var y = Math.Min(start.Y, cursor.Y);
                 var width = Math.Abs(start.X - cursor.X);
                 var height = Math.Abs(start.Y - cursor.Y);
-                return new Rectangle(x, y, width, height);
+
+                var unconstrainedSelection = new Rectangle(x, y, width, height);
+
+                return Rectangle.Intersect(unconstrainedSelection, canvasBounds);
             }
         }
         class ResizingRectangleState : RectangleState
@@ -188,7 +189,7 @@ namespace HolzShots.Input.Selection
                     {
                         case InitialState _: break; // Releasing the left mouse button without being in some state should not be possible
                         case RectangleState availableSelection:
-                            var res = availableSelection.GetSelectedOutline();
+                            var res = availableSelection.GetSelectedOutline(_imageBounds);
                             var finalState = new FinalState(new Rectangle(res.X, res.Y, res.Width, res.Height));
                             _state = finalState;
                             FinishSelection(finalState);
@@ -268,7 +269,7 @@ namespace HolzShots.Input.Selection
                 case InitialState _: break; // Nothing to be updated
                 case RectangleState availableSelection:
 
-                    var outline = availableSelection.GetSelectedOutline();
+                    var outline = availableSelection.GetSelectedOutline(_imageBounds);
                     D2DRect rect = outline; // Caution: implicit conversion which we don't want to do twice
 
                     g.DrawBitmap(_image, rect, rect);
