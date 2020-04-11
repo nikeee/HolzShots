@@ -72,7 +72,7 @@ Namespace ScreenshotRelated
             ElseIf isInMetro OrElse HolzShotsEnvironment.IsVistaOrHigher Then
                 Return DoAeroOff(windowHandle)
             Else
-                Debugger.Break() ' wait, you prick!
+                Debug.Fail("Unsupported operating system?")
                 Throw New InvalidOperationException("Unsupported operating system.")
             End If
         End Function

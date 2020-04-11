@@ -15,7 +15,7 @@ namespace HolzShots.Input
             if (value is string s)
                 return Hotkey.Parse(s);
 
-            Debugger.Break(); // Something is wrong here.
+            Debug.Fail("Could not convert hotkeys properly. You should debug this."); // Something is wrong here.
             return base.ConvertFrom(context, culture, value);
         }
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType) => destinationType == typeof(int) || destinationType == typeof(string);
@@ -27,7 +27,7 @@ namespace HolzShots.Input
             if (destinationType == typeof(string))
                 return (value as Hotkey).ToString();
 
-            Debugger.Break(); // Something is wrong here.
+            Debug.Fail("Could not convert hotkeys properly. You should debug this."); // Something is wrong here.
             return base.ConvertTo(context, culture, value, destinationType);
         }
     }

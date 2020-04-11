@@ -40,7 +40,7 @@ Namespace My
                 Await _uploaders.Load().ConfigureAwait(False)
             Catch ex As PluginLoadingFailedException
                 HumanInterop.PluginLoadingFailed(ex)
-                Debugger.Break()
+                Debug.Fail("Failed to load plugins")
             End Try
         End Function
 

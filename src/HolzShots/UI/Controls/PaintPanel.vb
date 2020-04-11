@@ -373,8 +373,7 @@ Namespace UI.Controls
                 Try
                     i.Dispose()
                 Catch Ex As Exception
-                    Debugger.Break()
-                    Debug.Assert(False)
+                    Debug.Fail("Disposing failed")
                 End Try
             Next
         End Sub
