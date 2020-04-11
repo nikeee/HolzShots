@@ -10,16 +10,17 @@ namespace HolzShots.Input.Selection
 {
     public partial class AreaSelector2 : D2DForm, IAreaSelector
     {
+        private static readonly D2DColor _overlayColor = new D2DColor(0.8f, D2DColor.Black);
+        private static readonly D2DColor _selectionBorder = new D2DColor(0.6f, D2DColor.White);
+        private static readonly Cursor _cursor = new Cursor(Properties.Resources.CrossCursor.Handle);
+
         private static TaskCompletionSource<Rectangle> _tcs;
+
+        private readonly D2DBrush _blackOverlayBrush;
+
         private D2DBitmap _image;
         private D2DBitmapGraphics _dimmedImage;
         private Rectangle _imageBounds;
-        private readonly D2DBrush _blackOverlayBrush;
-
-        private static readonly D2DColor _overlayColor = new D2DColor(0.8f, D2DColor.Black);
-        private static readonly D2DColor _selectionBorder = new D2DColor(0.6f, D2DColor.White);
-
-        private static Cursor _cursor = new Cursor(Properties.Resources.CrossCursor.Handle);
 
         public AreaSelector2()
         {
