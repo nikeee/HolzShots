@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using unvell.D2DLib;
@@ -26,6 +27,10 @@ namespace HolzShots.Input.Selection
             InitializeComponent();
 
             BackColor = Color.Black;
+
+            EscapeKeyToClose = false;
+            ShowFPS = false;
+            AnimationDraw = false;
 
             StartPosition = FormStartPosition.Manual;
             WindowState = FormWindowState.Normal;
@@ -244,6 +249,21 @@ namespace HolzShots.Input.Selection
             }
             Invalidate();
         }
+
+        protected override void OnKeyUp(KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Escape:
+                    CancelSelection();
+                    break;
+                case Keys.Space:
+                    // TODO: toggle magnifier
+                    break;
+                default: break;
+            }
+            base.OnKeyUp(e);
+        }
         #endregion
 
         protected override void OnRender(D2DGraphics g)
@@ -304,17 +324,12 @@ namespace HolzShots.Input.Selection
 
         void CloseInternal()
         {
-            Visible = false;
             Close();
+            Visible = false;
+            CleanUp();
         }
 
-        protected override void OnClosed(EventArgs e)
-        {
-            OnFinishSelection();
-            base.OnClosed(e);
-        }
-
-        private void OnFinishSelection()
+        private void CleanUp()
         {
             _tcs = null;
             _state = null;
