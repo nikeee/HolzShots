@@ -106,6 +106,8 @@ namespace HolzShots.Input.Selection
                             break;
                         case ResizingRectangleState resizing: break; // Pressing the left mouse button without leaving first is not possible
                         case MovingRectangleState moving: break; // This should do nothing
+                        case FinalState _: Debugger.Break(); break; // Not possible
+                        default: Debugger.Break(); break;
                     }
                     break;
                 case MouseButtons.Right:
@@ -116,6 +118,8 @@ namespace HolzShots.Input.Selection
                             _state = new MovingRectangleState(e.Location, resizing.CursorPosition);
                             break;
                         case MovingRectangleState moving: break;  // Pressing the right mouse button without leaving first is not possible
+                        case FinalState _: Debugger.Break(); break; // Not possible
+                        default: Debugger.Break(); break;
                     }
                     break;
                 default:
@@ -141,6 +145,8 @@ namespace HolzShots.Input.Selection
                             _state = new FinalState();
                             // TODO: User finished selecting
                             break;
+                        case FinalState _: Debugger.Break(); break; // Not possible
+                        default: Debugger.Break(); break;
                     }
                     break;
                 case MouseButtons.Right:
@@ -151,6 +157,8 @@ namespace HolzShots.Input.Selection
                         case MovingRectangleState moving:
                             _state = new ResizingRectangleState(moving.UserSelectionStart) { CursorPosition = moving.CursorPosition };
                             break;
+                        case FinalState _: Debugger.Break(); break; // Not possible
+                        default: Debugger.Break(); break;
                     }
                     break;
                 default:
