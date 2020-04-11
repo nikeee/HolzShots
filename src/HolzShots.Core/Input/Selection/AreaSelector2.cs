@@ -1,7 +1,6 @@
 using System;
 using System.Diagnostics;
 using System.Drawing;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using unvell.D2DLib;
@@ -76,18 +75,8 @@ namespace HolzShots.Input.Selection
             return res;
         }
 
-        protected override void OnKeyDown(KeyEventArgs e)
-        {
-            base.OnKeyDown(e);
-
-            switch (e.KeyCode)
-            {
-                case Keys.E:
-                    _tcs.TrySetResult(new Rectangle(0, 0, 100, 200));
-                    Close();
-                    break;
-            }
-        }
+        #region Window State
+        private SelectionState _state = new InitialState();
 
         abstract class SelectionState { }
         class InitialState : SelectionState { }
@@ -143,10 +132,9 @@ namespace HolzShots.Input.Selection
             public Rectangle Result { get; }
             public FinalState(Rectangle result) => Result = result;
         }
+        #endregion
 
-        private SelectionState _state = new InitialState();
-
-        #region Mouse Stuff
+        #region Mouse and Keyboard Stuff
         protected override void OnMouseDown(MouseEventArgs e)
         {
             if (_state is FinalState)
@@ -299,8 +287,9 @@ namespace HolzShots.Input.Selection
                 case FinalState _: break; // Nothing to be updated
                 default: Debug.Fail("Unhandled State"); break;
             }
-
+#if DEBUG
             g.DrawTextCenter(_state.GetType().Name, D2DColor.White, SystemFonts.DefaultFont.Name, 36, ClientRectangle);
+#endif
         }
 
         private void CancelSelection()
