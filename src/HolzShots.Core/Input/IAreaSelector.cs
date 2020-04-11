@@ -6,6 +6,6 @@ namespace HolzShots.Input
 {
     public interface IAreaSelector : IDisposable
     {
-        Task<Rectangle> PromptSelectionAsync(Image image);
+        Task<Rectangle> PromptSelectionAsync(Bitmap image);
     }
 }

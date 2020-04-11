@@ -79,7 +79,7 @@ namespace HolzShots
                 internal IntPtr DC { get; }
                 public BitmapHandle(IntPtr dc) => DC = dc;
 
-                public Image ToImage() => Image.FromHbitmap(DC);
+                public Bitmap ToImage() => Image.FromHbitmap(DC);
                 public void Dispose() => NativeMethods.DeleteObject(DC);
             }
         }

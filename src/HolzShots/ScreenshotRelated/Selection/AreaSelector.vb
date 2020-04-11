@@ -214,7 +214,7 @@ Namespace ScreenshotRelated.Selection
             End If
         End Sub
 
-        Public Function PromptSelectionAsync(image As Image) As Task(Of Rectangle) Implements IAreaSelector.PromptSelectionAsync
+        Public Function PromptSelectionAsync(image As Bitmap) As Task(Of Rectangle) Implements IAreaSelector.PromptSelectionAsync
             Debug.Assert(_areaTcs Is Nothing)
             Debug.Assert(_wholeScreen Is Nothing)
             Debug.Assert(image IsNot Nothing)

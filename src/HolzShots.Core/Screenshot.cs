@@ -12,11 +12,11 @@ namespace HolzShots
         public string WindowTitle { get; }
         public Point CursorPosition { get; }
         public ScreenshotSource Source { get; }
-        public Image Image { get; }
+        public Bitmap Image { get; }
         public Size Size { get; }
 
 
-        internal Screenshot(Image image, DateTime timestamp, Point cursorPosition, ScreenshotSource source, string processName, string windowTitle)
+        internal Screenshot(Bitmap image, DateTime timestamp, Point cursorPosition, ScreenshotSource source, string processName, string windowTitle)
         {
             Image = image ?? throw new ArgumentNullException(nameof(image));
             Size = image.Size;
@@ -35,9 +35,9 @@ namespace HolzShots
             // TODO: Clone this?
             return new Screenshot((Bitmap)set.Result.Clone(), DateTime.Now, set.CursorPosition, ScreenshotSource.Window, set.ProcessName, set.WindowTitle);
         }
-        public static Screenshot FromSelection(Image image, Point cursorPosition) => new Screenshot(image, DateTime.Now, cursorPosition, ScreenshotSource.Selected, null, null);
-        public static Screenshot FromFullscreen(Image image, Point cursorPosition) => new Screenshot(image, DateTime.Now, cursorPosition, ScreenshotSource.Fullscreen, null, null);
-        public static Screenshot FromImported(Image image) => new Screenshot(image, DateTime.Now, Point.Empty, ScreenshotSource.Unknown, null, null);
+        public static Screenshot FromSelection(Bitmap image, Point cursorPosition) => new Screenshot(image, DateTime.Now, cursorPosition, ScreenshotSource.Selected, null, null);
+        public static Screenshot FromFullscreen(Bitmap image, Point cursorPosition) => new Screenshot(image, DateTime.Now, cursorPosition, ScreenshotSource.Fullscreen, null, null);
+        public static Screenshot FromImported(Bitmap image) => new Screenshot(image, DateTime.Now, Point.Empty, ScreenshotSource.Unknown, null, null);
 
         // public Image GetBitmapCopy() => _image.CloneDeep();
 

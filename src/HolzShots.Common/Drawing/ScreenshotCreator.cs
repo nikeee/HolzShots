@@ -6,14 +6,14 @@ namespace HolzShots.Drawing
 {
     public static class ScreenshotCreator
     {
-        public static Image CaptureScreenshot() => CaptureScreenshot(SystemInformation.VirtualScreen);
-        public static Image CaptureScreenshot(Rectangle area)
+        public static Bitmap CaptureScreenshot() => CaptureScreenshot(SystemInformation.VirtualScreen);
+        public static Bitmap CaptureScreenshot(Rectangle area)
         {
-            Image screenshot;
             var desktopWindowHandle = NativeMethods.GetDesktopWindow();
             var source = DeviceContext.FromWindow(desktopWindowHandle);
             try
             {
+                Bitmap screenshot;
                 using (var destination = DeviceContext.CreateCompatible(source))
                 using (var bitmap = source.CreateCompatibleBitmap(area.Size))
                 {
