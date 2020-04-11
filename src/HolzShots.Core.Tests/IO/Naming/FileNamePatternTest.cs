@@ -7,10 +7,9 @@ namespace HolzShots.Core.Tests.IO.Naming
     {
         [Theory]
         [InlineData("lol")]
-        [InlineData("lol<File:SequenceNumber>")]
-        [InlineData("<File:SequenceNumber>")]
         [InlineData("<Image:Width><Image:Height>")]
         [InlineData("<Image:Width>lol")]
+        [InlineData("<Date:ISO>lol")]
         public void ParseTest(string pattern)
         {
             // var data = FileMetadata.DemoMetadata;
