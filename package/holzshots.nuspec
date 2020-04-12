@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- Test your packages in a test environment: https://github.com/chocolatey/chocolatey-test-environment -->
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>holzshots</id>
+    <!-- Is the version a prerelease of a version? https://docs.nuget.org/create/versioning#creating-prerelease-packages -->
+    <!-- Note that unstable versions like 0.0.1 can be considered a released version, but it's possible that one can release a 0.0.1-beta before you release a 0.0.1 version. If the version number is final, that is considered a released version and not a prerelease. -->
+    <version>__REPLACE_VERSION__</version>
+    <packageSourceUrl>https://github.com/nikeee/HolzShots</packageSourceUrl>
+    <owners>Niklas Mollenhauer</owners>
+
+    <title>HolzShots</title>
+    <authors>Niklas Mollenhauer</authors>
+    <projectUrl>https://holzshots.net</projectUrl>
+    <!-- <iconUrl>TODO</iconUrl> -->
+    <copyright>__REPLACE_YEAR__</copyright>
+    <licenseUrl>https://raw.githubusercontent.com/nikeee/HolzShots/master/LICENSE</licenseUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <projectSourceUrl>https://github.com/nikeee/HolzShots</projectSourceUrl>
+    <docsUrl>https://holzshots.net</docsUrl>
+    <bugTrackerUrl>https://github.com/nikeee/HolzShots/issues</bugTrackerUrl>
+    <tags>holzshots screenshot screen shot tool screenshot-utility</tags>
+    <summary>A screenshot utility.</summary>
+    <description>A screenshot utility for Windows.</description>
+  </metadata>
+  <files>
+    <file src="tools\**" target="tools" />
+    <!-- Building from Linux? You may need this instead: <file src="tools/**" target="tools" /> -->
+  </files>
+</package>

@@ -39,6 +39,38 @@ after_build:
         7z a HolzShots.zip "$env:APPVEYOR_BUILD_FOLDER\src\HolzShots\bin\$env:configuration\*.config"
         7z a HolzShots.zip "$env:APPVEYOR_BUILD_FOLDER\src\HolzShots\bin\$env:configuration\*.manifest"
   - sha256sum HolzShots.zip > sha256sums.txt
+  - ps: |
+      $psi = New-Object System.Diagnostics.ProcessStartInfo
+      $psi.FileName = "git"
+      $psi.RedirectStandardError = $true
+      $psi.RedirectStandardOutput = $true
+      $psi.UseShellExecute = $false
+      $psi.WorkingDirectory = $pwd
+      $psi.Arguments = "describe --exact-match --tags HEAD"
+
+      $gitProcess = New-Object System.Diagnostics.Process
+      $gitProcess.StartInfo = $psi
+      $gitProcess.Start() | Out-Null
+
+      $stdout = $gitProcess.StandardOutput.ReadToEnd()
+      $stderr = $gitProcess.StandardError.ReadToEnd()
+      $gitProcess.WaitForExit()
+
+      if ($gitProcess.ExitCode -eq 0) {
+          Write-Host "Detected tagged commit, building package..."
+
+          $version = $stdout.Substring(1)
+          $year = (Get-Date).year.ToString()
+          $checksumFile = Get-Content .\sha256sums.txt#
+          $checksum = $checksumFile.Split(" ")[0]
+
+          (Get-Content .\package\holzshots.nuspec) -replace '__REPLACE_YEAR__', $year | Set-Content .\package\holzshots.nuspec
+          (Get-Content .\package\holzshots.nuspec) -replace '__REPLACE_VERSION__', $version | Set-Content .\package\holzshots.nuspec
+          (Get-Content .\package\tools\chocolateyinstall.ps1) -replace '__REPLACE_VERSION__', $version | Set-Content .\package\tools\chocolateyinstall.ps1
+          (Get-Content .\package\tools\chocolateyinstall.ps1) -replace '__REPLACE_CHECKSUM__', $checksum | Set-Content .\package\tools\chocolateyinstall.ps1
+
+          choco pack --out . .\package\holzshots.nuspec
+      }
 
 artifacts:
   - path: HolzShots.zip
@@ -46,6 +78,8 @@ artifacts:
     type: zip
   - path: sha256sums.txt
     name: sha256sums
+  - path: holzshots*.nupkg
+    name: chocolatey-package
 
 on_success:
   - ps: |
