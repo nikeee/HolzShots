@@ -14,11 +14,11 @@ jobs:
     - name: Setup Nuget.exe
       uses: warrenbuckley/Setup-Nuget@v1
 
-    - name: Nuget Restore
-      run: nuget retore HolzShots.sln
-
     - name: Add msbuild to PATH
       uses: microsoft/setup-msbuild@v1.0.0
 
-    - name: Run a multi-line script
+    - name: Nuget Restore
+      run: nuget restore HolzShots.sln
+
+    - name: Compile Solution
       run: msbuild HolzShots.sln -p:Configuration=Release
