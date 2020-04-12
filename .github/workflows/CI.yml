@@ -24,4 +24,4 @@ jobs:
       run: msbuild HolzShots.sln -p:Configuration=Release
 
     - name: Run Tests
-      run: packages\xunit.runner.console.2.4.1\tools\xunit.console src\HolzShots.Core.Tests\bin\Release\HolzShots.Core.Tests.dll
+      run: dotnet test --no-build src\HolzShots.Core.Tests\HolzShots.Core.Tests.csproj
