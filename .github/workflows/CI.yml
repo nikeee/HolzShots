@@ -1,0 +1,24 @@
+name: CI
+
+on: push
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    # TODO: Replace all this with dotnet commands
+    # See issue #23
+    - name: Setup Nuget.exe
+      uses: warrenbuckley/Setup-Nuget@v1
+
+    - name: Nuget Restore
+      run: nuget retore HolzShots.sln
+
+    - name: Add msbuild to PATH
+      uses: microsoft/setup-msbuild@v1.0.0
+
+    - name: Run a multi-line script
+      run: msbuild HolzShots.sln -p:Configuration=Release
