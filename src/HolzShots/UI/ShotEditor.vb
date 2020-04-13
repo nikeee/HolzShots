@@ -276,7 +276,8 @@ Namespace UI.Specialized
             Dim bmp = ThePanel.CombinedImage
             Try
                 Clipboard.SetImage(bmp)
-            Catch
+            Catch ex As Exception
+                HumanInterop.CopyImageFailed(ex)
             End Try
         End Sub
 
