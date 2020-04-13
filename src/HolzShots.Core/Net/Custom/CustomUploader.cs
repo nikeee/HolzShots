@@ -69,7 +69,7 @@ namespace HolzShots.Net.Custom
                     foreach (var (name, value) in uplInfo.PostParams)
                         content.Add(new StringContent(value), name);
 
-                    var fname = uplInfo.GetFileName(suggestedFileName);
+                    var fname = uplInfo.GetEffectiveFileName(suggestedFileName);
 
                     Debug.Assert(!string.IsNullOrWhiteSpace(uplInfo.FileFormName));
                     Debug.Assert(!string.IsNullOrWhiteSpace(fname));
