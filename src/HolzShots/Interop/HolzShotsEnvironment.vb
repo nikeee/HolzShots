@@ -46,9 +46,11 @@ Namespace Interop
             Dim hndl As IntPtr = NativeMethods.GetForegroundWindow()
             Dim sb As New StringBuilder()
             NativeMethods.GetClassName(hndl, sb, sb.Capacity)
+
             If sb.ToString = "WorkerW" Then Return False
-            Dim rct As NativeTypes.Rect
+            Dim rct As Native.Rect
             NativeMethods.GetWindowRect(hndl, rct)
+
             Return Screen.PrimaryScreen.Bounds.Height = rct.Bottom AndAlso Screen.PrimaryScreen.Bounds.Width = rct.Right
         End Function
 

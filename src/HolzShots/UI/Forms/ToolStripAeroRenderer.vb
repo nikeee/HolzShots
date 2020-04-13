@@ -96,14 +96,14 @@ Namespace UI.Forms
 
         Private Const RebarBackground As Integer = 6
 
-        Private Function GetThemeMargins(dc As IDeviceContext, marginType As MarginTypes) As Padding
-            Dim margins As Interop.NativeTypes.Margin
+        Private Function GetThemeMargins(dc As IDeviceContext, marginType As MarginType) As Padding
+            Dim margins As Native.Margin
             Try
                 Dim hDc As IntPtr = dc.GetHdc()
-                If 0 = NativeMethods.GetThemeMargins(_renderer.Handle, hDc, _renderer.Part, _renderer.State, CInt(marginType), IntPtr.Zero, margins) Then
-                    Return margins ' New Padding(margins.LeftWidth, margins.TopHeight, margins.RightWidth, margins.Bottomheight)
+                If 0 = NativeMethods.GetThemeMargins(_renderer.Handle, hDc, _renderer.Part, _renderer.State, marginType, IntPtr.Zero, margins) Then
+                    Return New Padding(margins.cxLeftWidth, margins.cyTopHeight, margins.cxRightWidth, margins.cyBottomheight)
                 End If
-                Return New Padding(0)
+                Return Padding.Empty
             Finally
                 dc.ReleaseHdc()
             End Try

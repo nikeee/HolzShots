@@ -79,22 +79,24 @@ Namespace ScreenshotRelated
 
         Private Shared Function DoAeroOn(wndHandle As IntPtr, includeMargin As Boolean, smallMargin As Boolean) As WindowScreenshotSet
 
-            Dim rct As Interop.NativeTypes.Rect
+            Dim rct As HolzShots.Native.Rect
             Dim plc As Interop.NativeTypes.WindowPlacement
             NativeMethods.GetWindowRect(wndHandle, rct)
             NativeMethods.GetWindowPlacement(wndHandle, plc)
 
             If includeMargin Then
                 If plc.showCmd <> 3 Then
-                    rct.Left -= If(smallMargin, 4, 17)
-                    rct.Right += If(smallMargin, 4, 21)
-                    rct.Top -= If(smallMargin, 4, 17)
-                    rct.Bottom += If(smallMargin, 4, 21)
+                    Dim left = rct.Left - If(smallMargin, 4, 17)
+                    Dim top = rct.Top - If(smallMargin, 4, 17)
+                    Dim right = rct.Right + If(smallMargin, 4, 21)
+                    Dim bottom = rct.Bottom + If(smallMargin, 4, 21)
 
-                    rct.Bottom = If(rct.Bottom > SystemInformation.VirtualScreen.Bottom, SystemInformation.VirtualScreen.Bottom, rct.Bottom)
-                    rct.Top = If(rct.Top < SystemInformation.VirtualScreen.Top, SystemInformation.VirtualScreen.Top, rct.Top)
-                    rct.Left = If(rct.Left < SystemInformation.VirtualScreen.Left, SystemInformation.VirtualScreen.Left, rct.Left)
-                    rct.Right = If(rct.Right > SystemInformation.VirtualScreen.Right, SystemInformation.VirtualScreen.Right, rct.Right)
+                    rct = New Native.Rect(
+                        Math.Max(left, SystemInformation.VirtualScreen.Left),
+                        Math.Max(top, SystemInformation.VirtualScreen.Top),
+                        Math.Min(right, SystemInformation.VirtualScreen.Right),
+                        Math.Min(bottom, SystemInformation.VirtualScreen.Bottom)
+                    )
                 Else
                     Dim tmprect As Rectangle = rct 'rct.ToRectangle()
                     Dim center As New Point(tmprect.X + CInt(tmprect.Width / 2), tmprect.Y + CInt(tmprect.Height / 2))
@@ -154,9 +156,11 @@ Namespace ScreenshotRelated
         End Function
 
         Private Shared Function DoAeroOff(wndHandle As IntPtr) As WindowScreenshotSet
-            Dim rct As Interop.NativeTypes.Rect
+            Dim rct As Native.Rect
             NativeMethods.GetWindowRect(wndHandle, rct)
+
             Dim nrct As Rectangle = Rectangle.FromLTRB(rct.Left, rct.Top, rct.Right, rct.Bottom)
+
             Dim curp As New Point(Cursor.Position.X - nrct.Location.X, Cursor.Position.Y - nrct.Location.Y)
             Dim bmp As New Bitmap(nrct.Width, nrct.Height)
 
