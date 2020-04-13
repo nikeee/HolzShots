@@ -79,9 +79,9 @@ Namespace ScreenshotRelated
         Private Shared Function DoAeroOn(wndHandle As IntPtr, includeMargin As Boolean, smallMargin As Boolean) As WindowScreenshotSet
 
             Dim rct As HolzShots.Native.Rect
-            Dim plc As Interop.NativeTypes.WindowPlacement
-            NativeMethods.GetWindowRect(wndHandle, rct)
-            NativeMethods.GetWindowPlacement(wndHandle, plc)
+            Dim plc As Native.User32.WindowPlacement
+            Native.User32.GetWindowRect(wndHandle, rct)
+            Native.User32.GetWindowPlacement(wndHandle, plc)
 
             If includeMargin Then
                 If plc.showCmd <> 3 Then
@@ -155,7 +155,7 @@ Namespace ScreenshotRelated
 
         Private Shared Function DoAeroOff(wndHandle As IntPtr) As WindowScreenshotSet
             Dim rct As Native.Rect
-            NativeMethods.GetWindowRect(wndHandle, rct)
+            Native.User32.GetWindowRect(wndHandle, rct)
 
             Dim nrct As Rectangle = Rectangle.FromLTRB(rct.Left, rct.Top, rct.Right, rct.Bottom)
 

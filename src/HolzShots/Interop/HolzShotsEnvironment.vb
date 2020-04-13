@@ -20,14 +20,14 @@ Namespace Interop
 
 
         Public Shared Function IsFullScreen() As Boolean
-            Dim hndl As IntPtr = NativeMethods.GetForegroundWindow()
+            Dim hndl As IntPtr = Native.User32.GetForegroundWindow()
             Dim sb As New StringBuilder()
 
             Dim unused = Native.User32.GetClassName(hndl, sb, sb.Capacity)
 
             If sb.ToString = "WorkerW" Then Return False
             Dim rct As Native.Rect
-            NativeMethods.GetWindowRect(hndl, rct)
+            Native.User32.GetWindowRect(hndl, rct)
 
             Return Screen.PrimaryScreen.Bounds.Height = rct.Bottom AndAlso Screen.PrimaryScreen.Bounds.Width = rct.Right
         End Function
@@ -68,11 +68,11 @@ Namespace Interop
             ' Falls das Fenster dem gleichen Thread wie das aktuelle
             ' Vordergrundfenster angehört, ist kein Workaround erforderlich:
             lThreadWindow = Native.User32.GetWindowThreadProcessId(hWndWindow, 0)
-            lThreadForeWin = Native.User32.GetWindowThreadProcessId(NativeMethods.GetForegroundWindow(), 0)
+            lThreadForeWin = Native.User32.GetWindowThreadProcessId(Native.User32.GetForegroundWindow(), 0)
             If lThreadWindow = lThreadForeWin Then
                 ' Vordergrundfenster und zu aktivierendes Fenster gehören zum
                 ' gleichen Thread. SetForegroundWindow allein reicht aus:
-                Return NativeMethods.SetForegroundWindow(hWndWindow)
+                Return Native.User32.SetForegroundWindow(hWndWindow)
             Else
                 ' Das Vordergrundfenster gehört zu einem anderen Thread als das
                 ' Fenster, das neues Vordergrundfenster werden soll. Mittels
@@ -81,7 +81,7 @@ Namespace Interop
                 ' so dass SetForegroundWindow wie erwartet arbeitet:
                 Dim result As Boolean
                 Native.User32.AttachThreadInput(lThreadForeWin, lThreadWindow, True)
-                result = NativeMethods.SetForegroundWindow(hWndWindow)
+                result = Native.User32.SetForegroundWindow(hWndWindow)
                 Native.User32.AttachThreadInput(lThreadForeWin, lThreadWindow, False)
                 Return result
             End If

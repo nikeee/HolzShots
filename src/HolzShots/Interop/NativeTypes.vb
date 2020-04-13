@@ -13,17 +13,6 @@ Namespace Interop
             Public AlphaFormat As Byte
         End Structure
 
-
-        <StructLayout(LayoutKind.Sequential)>
-        Public Structure WindowPlacement
-            Public length As Integer
-            Public flags As Integer
-            Public showCmd As Integer
-            Public minPosition As Point
-            Public maxPosition As Point
-            Public normalPosition As Rectangle
-        End Structure
-
         Public Enum Tv As Integer
             First = &H1100
             SetExtendedStyle = First + 44

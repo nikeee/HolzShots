@@ -3,6 +3,10 @@ using System.Runtime.InteropServices;
 
 namespace HolzShots.Native
 {
+    /// <summary>
+    /// The System.Drawing.Rectangle has an incompatible struct layout. It uses X, Y, Width and Height.
+    /// The Windows API uses Left (X), Top (Y), Right and Bottom. So we need to wrap that.
+    /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     public readonly struct Rect
     {

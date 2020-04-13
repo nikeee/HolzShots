@@ -38,6 +38,39 @@ namespace HolzShots.Native
         [DllImport(DllName)]
         public static extern bool FlashWindowEx(in FlashWindowInfo pwfi);
 
+        #region Window Position
+
+        [DllImport(DllName)]
+        public static extern bool GetWindowRect(IntPtr hWnd, ref Native.Rect lpRect);
+
+        [DllImport(DllName)]
+        public static extern bool GetWindowPlacement(IntPtr hWnd, ref WindowPlacement lpwndpl);
+
+        [DllImport(DllName, CharSet = CharSet.Auto)]
+        public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndAfter, int x, int y, int width, int height, int flags);
+
+        /// <summary>
+        /// The MoveWindow function changes the position and dimensions of the specified window. For a top-level window, the position and dimensions are relative to the upper-left corner of the screen. For a child window, they are relative to the upper-left corner of the parent window's client area.
+        /// </summary>
+        /// <param name="hWnd">Handle to the window.</param>
+        /// <param name="x">Specifies the new position of the left side of the window.</param>
+        /// <param name="y">Specifies the new position of the top of the window.</param>
+        /// <param name="nWidth">Specifies the new width of the window.</param>
+        /// <param name="nHeight">Specifies the new height of the window.</param>
+        /// <param name="bRepaint">Specifies whether the window is to be repainted. If this parameter is TRUE, the window receives a message. If the parameter is FALSE, no repainting of any kind occurs. This applies to the client area, the nonclient area (including the title bar and scroll bars), and any part of the parent window uncovered as a result of moving a child window.</param>
+        /// <returns>If the function succeeds, the return value is nonzero.
+        /// <para>If the function fails, the return value is zero. To get extended error information, call GetLastError.</para></returns>
+        [DllImport(DllName)]
+        public static extern bool MoveWindow(IntPtr hWnd, int x, int y, int nWidth, int nHeight, bool bRepaint);
+
+        [DllImport(DllName)]
+        public static extern bool SetForegroundWindow(IntPtr hWnd);
+
+        [DllImport(DllName)]
+        public static extern IntPtr GetForegroundWindow();
+
+        #endregion
+
         #endregion
         #region Threading
 
@@ -110,6 +143,18 @@ namespace HolzShots.Native
             Timer = 4,
             /// <summary>Flash continuously until the window comes to the foreground.</summary>
             TimerNoFg = 12
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct WindowPlacement
+        {
+            public int length;
+            public int flags;
+            public int showCmd;
+            public System.Drawing.Point minPosition;
+            public System.Drawing.Point maxPosition;
+            public Rect normalPosition;
+            public Rect device;
         }
 
         #endregion
