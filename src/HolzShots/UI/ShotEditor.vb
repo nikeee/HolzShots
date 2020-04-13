@@ -45,8 +45,8 @@ Namespace UI.Specialized
                 uploadTooltip = String.Format(Global.HolzShots.My.Application.TheCulture, uploadTooltip, HolzShots.My.Settings.DefaultImageHoster)
 
                 _uploadThumbnailButton = New ThumbnailToolBarButton(Icon.FromHandle(HolzShots.My.Resources.uploadMedium.GetHicon()), uploadTooltip)
-                _saveThumbnailButton = New ThumbnailToolBarButton(Icon.FromHandle(HolzShots.My.Resources.saveMedium.GetHicon()), "Bild speichern")
-                _copyThumbnailButton = New ThumbnailToolBarButton(Icon.FromHandle(HolzShots.My.Resources.clipboardMedium.GetHicon()), "Bild kopieren")
+                _saveThumbnailButton = New ThumbnailToolBarButton(Icon.FromHandle(HolzShots.My.Resources.saveMedium.GetHicon()), "Save image")
+                _copyThumbnailButton = New ThumbnailToolBarButton(Icon.FromHandle(HolzShots.My.Resources.clipboardMedium.GetHicon()), "Copy image")
 
                 AddHandler _uploadThumbnailButton.Click, Sub() UploadCurrentImageToDefaultProvider()
                 AddHandler _saveThumbnailButton.Click, Sub() SaveImage()
