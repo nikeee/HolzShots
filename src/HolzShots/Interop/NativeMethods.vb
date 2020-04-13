@@ -7,21 +7,9 @@ Namespace Interop
         End Sub
 
         Private Const User32 As String = "user32.dll"
-        Private Const Shell32 As String = "shell32.dll"
         Private Const DwmApi As String = "dwmapi.dll"
         Private Const UxTheme As String = "Uxtheme.dll"
 
-#Region "shell32"
-
-        <DllImport(Shell32, BestFitMapping:=False, ThrowOnUnmappableChar:=True)>
-        Friend Shared Sub SHAddToRecentDocs(flag As NativeTypes.ShellAddToRecentDocsFlags, <MarshalAs(UnmanagedType.LPStr)> path As String)
-        End Sub
-
-        <DllImport(Shell32)>
-        Friend Shared Function SHAppBarMessage(msg As NativeTypes.Abm, ByRef data As NativeTypes.AppBarData) As IntPtr
-        End Function
-
-#End Region
 #Region "dwmapi"
 
         <DllImport(DwmApi, PreserveSig:=False)>

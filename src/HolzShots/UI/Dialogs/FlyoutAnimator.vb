@@ -25,7 +25,7 @@ Namespace UI.Dialogs
 
         Public Sub AnimateIn(duration As Integer, Optional completedHandler As Action = Nothing)
 
-            _taskBarTopOrBottom = TaskBar.Position = TaskbarPosition.Bottom OrElse TaskBar.Position = TaskbarPosition.Top
+            _taskBarTopOrBottom = TaskBar.Position = Native.Shell32.TaskbarPosition.Bottom OrElse TaskBar.Position = Native.Shell32.TaskbarPosition.Top
             _screenRectangle = Screen.PrimaryScreen.WorkingArea
 
             Dim startX As Integer = _screenRectangle.X + _screenRectangle.Width - _target.Width - 10

@@ -68,7 +68,7 @@ Namespace Interop
         Public Sub AddToRecentDocs(path As String)
             ' TODO: Use this again?
             If TaskbarManager.IsPlatformSupported Then
-                NativeMethods.SHAddToRecentDocs(NativeTypes.ShellAddToRecentDocsFlags.Path, path)
+                Native.Shell32.SHAddToRecentDocs(Native.Shell32.ShellAddToRecentDocsFlags.Path, path)
             End If
         End Sub
 

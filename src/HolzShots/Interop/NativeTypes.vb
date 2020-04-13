@@ -13,15 +13,6 @@ Namespace Interop
             Public AlphaFormat As Byte
         End Structure
 
-        <StructLayout(LayoutKind.Sequential)>
-        Public Structure AppBarData
-            Public cbSize As Integer
-            Public hWnd As IntPtr
-            Public uCallbackMessage As Integer
-            Public uEdge As TaskbarPosition
-            Public rc As Native.Rect
-            Public lParam As IntPtr
-        End Structure
 
         <StructLayout(LayoutKind.Sequential)>
         Public Structure WindowPlacement
@@ -61,24 +52,6 @@ Namespace Interop
             NoValidate = &H100
             NoTestFileCreate = &H10000
             DontAddToRecent = &H2000000
-        End Enum
-
-
-        Public Enum Abm
-            GetTaskBarPos = 5
-        End Enum
-
-        Public Enum TaskbarPosition
-            Unknown = -1
-            Left
-            Top
-            Right
-            Bottom
-        End Enum
-
-        Public Enum ShellAddToRecentDocsFlags
-            Pidl = &H1
-            Path = &H2
         End Enum
 
         <Flags()>
