@@ -36,7 +36,7 @@ Namespace UI
         End Sub
 
         Private Shared Sub ShowGfx(parent As IWin32Window)
-            Const title = "About Grafics"
+            Const title = "About Graphics"
 
             Dim sb As New StringBuilder()
             sb.AppendLine("Marker Icons by:")

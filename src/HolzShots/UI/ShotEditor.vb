@@ -45,8 +45,8 @@ Namespace UI.Specialized
                 uploadTooltip = String.Format(Global.HolzShots.My.Application.TheCulture, uploadTooltip, HolzShots.My.Settings.DefaultImageHoster)
 
                 _uploadThumbnailButton = New ThumbnailToolBarButton(Icon.FromHandle(HolzShots.My.Resources.uploadMedium.GetHicon()), uploadTooltip)
-                _saveThumbnailButton = New ThumbnailToolBarButton(Icon.FromHandle(HolzShots.My.Resources.saveMedium.GetHicon()), "Bild speichern")
-                _copyThumbnailButton = New ThumbnailToolBarButton(Icon.FromHandle(HolzShots.My.Resources.clipboardMedium.GetHicon()), "Bild kopieren")
+                _saveThumbnailButton = New ThumbnailToolBarButton(Icon.FromHandle(HolzShots.My.Resources.saveMedium.GetHicon()), "Save image")
+                _copyThumbnailButton = New ThumbnailToolBarButton(Icon.FromHandle(HolzShots.My.Resources.clipboardMedium.GetHicon()), "Copy image")
 
                 AddHandler _uploadThumbnailButton.Click, Sub() UploadCurrentImageToDefaultProvider()
                 AddHandler _saveThumbnailButton.Click, Sub() SaveImage()
@@ -276,7 +276,8 @@ Namespace UI.Specialized
             Dim bmp = ThePanel.CombinedImage
             Try
                 Clipboard.SetImage(bmp)
-            Catch
+            Catch ex As Exception
+                HumanInterop.CopyImageFailed(ex)
             End Try
         End Sub
 
@@ -864,10 +865,10 @@ Namespace UI.Specialized
         Protected Overrides Sub Dispose(ByVal disposing As Boolean)
             Try
                 If disposing AndAlso components IsNot Nothing Then
-                    components.Dispose()
-                    _uploadThumbnailButton.Dispose()
-                    _saveThumbnailButton.Dispose()
-                    _copyThumbnailButton.Dispose()
+                    components?.Dispose()
+                    _uploadThumbnailButton?.Dispose()
+                    _saveThumbnailButton?.Dispose()
+                    _copyThumbnailButton?.Dispose()
                 End If
             Finally
                 MyBase.Dispose(disposing)

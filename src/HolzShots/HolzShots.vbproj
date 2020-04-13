@@ -289,7 +289,6 @@
     <Compile Include="Interop\InteropHelper.vb" />
     <Compile Include="Interop\ManagedSettings.vb" />
     <Compile Include="Interop\NativeTypes.vb" />
-    <Compile Include="Interop\NativeMethods.vb" />
     <Compile Include="Interop\LocalDisk\ScreenshotDumper.vb" />
     <Compile Include="Interop\ShellExtensions.vb" />
     <Compile Include="Drawing\Tools\Crop.vb" />

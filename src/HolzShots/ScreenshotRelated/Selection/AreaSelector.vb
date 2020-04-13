@@ -225,7 +225,7 @@ Namespace ScreenshotRelated.Selection
 
             Visible = True
 
-            NativeMethods.SetForegroundWindow(Handle)
+            Native.User32.SetForegroundWindow(Handle)
 
             Cursor = New Cursor(My.Resources.crossCursor.Handle)
 

@@ -55,10 +55,10 @@ Namespace ScreenshotRelated
             Debug.Assert(ManagedSettings.EnableWindowScreenshot)
 
             If ManagedSettings.EnableWindowScreenshot Then
-                Dim h As IntPtr = NativeMethods.GetForegroundWindow()
+                Dim h As IntPtr = Native.User32.GetForegroundWindow()
 
-                Dim info As Interop.NativeTypes.WindowPlacement
-                NativeMethods.GetWindowPlacement(h, info)
+                Dim info As Native.User32.WindowPlacement
+                Native.User32.GetWindowPlacement(h, info)
 
                 Dim shot = ScreenshotMethods.CaptureWindow(h)
                 Await ProceedScreenshot(shot).ConfigureAwait(True)

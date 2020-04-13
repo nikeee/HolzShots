@@ -8,25 +8,34 @@ Namespace ScreenshotRelated
         End Sub
 
         Public Shared Sub StartRedraw(ByVal whandle As IntPtr)
-            NativeMethods.LockWindowUpdate(IntPtr.Zero)
-            NativeMethods.SendMessage(whandle, 11, New IntPtr(1), IntPtr.Zero)
+            Native.User32.LockWindowUpdate(IntPtr.Zero)
+            Native.User32.SendMessage(whandle, 11, New IntPtr(1), IntPtr.Zero)
         End Sub
 
         Public Shared Sub StopRedraw(ByVal whandle As IntPtr)
-            NativeMethods.SendMessage(whandle, 11, IntPtr.Zero, IntPtr.Zero)
-            NativeMethods.LockWindowUpdate(whandle)
+            Native.User32.SendMessage(whandle, 11, IntPtr.Zero, IntPtr.Zero)
+            Native.User32.LockWindowUpdate(whandle)
         End Sub
 
-        Friend Shared Sub GetWindowInformation(ByVal whandle As IntPtr, ByRef wndTitle As String, ByRef procName As String)
+        Friend Shared Function GetWindowTitle(windowHandle As IntPtr) As String
+
+            Dim windowTitleLength As Integer = Native.User32.GetWindowTextLength(windowHandle)
+            Dim windowTitleBuffer As New StringBuilder(windowTitleLength + 1)
+
+            Dim unused = Native.User32.GetWindowText(windowHandle, windowTitleBuffer, windowTitleBuffer.Capacity)
+
+            Return windowTitleBuffer.ToString()
+        End Function
+
+        Friend Shared Function GetProcessNameOfWindow(windowHandle As IntPtr) As String
+
             Dim pid As Integer
-            NativeMethods.GetWindowThreadProcessId(whandle, pid)
-            Dim p As Process = Process.GetProcessById(pid)
-            Dim windTitlelen As Integer = NativeMethods.GetWindowTextLength(whandle)
-            Dim wndTitlesb As New StringBuilder(windTitlelen + 1)
-            NativeMethods.GetWindowText(whandle, wndTitlesb, wndTitlesb.Capacity)
-            wndTitle = wndTitlesb.ToString
-            procName = p.ProcessName
-        End Sub
+            Dim unused = Native.User32.GetWindowThreadProcessId(windowHandle, pid)
+
+            Dim process = Diagnostics.Process.GetProcessById(pid)
+
+            Return process.ProcessName
+        End Function
 
     End Class
 End Namespace

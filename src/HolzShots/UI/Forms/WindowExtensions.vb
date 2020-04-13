@@ -9,7 +9,7 @@ Namespace UI.Windows.Forms
         <Extension()>
         Public Sub Flash(window As IWin32Window)
             If window Is Nothing Then Throw New ArgumentNullException(NameOf(window))
-            Dim info As New Interop.NativeTypes.FlashWindowInfo(window.Handle)
+            Dim info As New Native.User32.FlashWindowInfo(window.Handle)
             info.Flash()
         End Sub
 
@@ -59,7 +59,7 @@ Namespace UI.Windows.Forms
             Catch
                 Debug.Assert(False)
             Finally
-                Interop.NativeMethods.DestroyIcon(iconHandle)
+                Native.User32.DestroyIcon(iconHandle)
             End Try
         End Sub
 

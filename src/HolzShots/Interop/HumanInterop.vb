@@ -18,6 +18,12 @@ Namespace Interop
                  TaskDialogStandardButtons.Ok, TaskDialogStandardIcon.Error)
         End Sub
 
+        Public Shared Sub CopyImageFailed(ex As Exception)
+            Show(GenericErrorTitle,
+                 "Copying failed",
+                 "Error copying image to clipboard: " & Environment.NewLine & ex.Message,
+                 TaskDialogStandardButtons.Ok, TaskDialogStandardIcon.Error)
+        End Sub
         Friend Shared Sub NoAdmin()
             Show(GenericErrorTitle,
                  "Missing permissions",

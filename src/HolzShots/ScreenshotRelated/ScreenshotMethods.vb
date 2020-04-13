@@ -56,7 +56,7 @@ Namespace ScreenshotRelated
 
 
         Public Shared Function CaptureWindow(windowHandle As IntPtr, Optional includeMargin As Boolean = True) As Screenshot
-            If NativeMethods.IsIconic(windowHandle) Then Return Nothing
+            If Native.User32.IsIconic(windowHandle) Then Return Nothing
 
             Using prio As New ProcessPriorityRequest()
                 Using shotSet = GetShotSet(windowHandle, includeMargin)
@@ -80,9 +80,9 @@ Namespace ScreenshotRelated
         Private Shared Function DoAeroOn(wndHandle As IntPtr, includeMargin As Boolean, smallMargin As Boolean) As WindowScreenshotSet
 
             Dim rct As HolzShots.Native.Rect
-            Dim plc As Interop.NativeTypes.WindowPlacement
-            NativeMethods.GetWindowRect(wndHandle, rct)
-            NativeMethods.GetWindowPlacement(wndHandle, plc)
+            Dim plc As Native.User32.WindowPlacement
+            Native.User32.GetWindowRect(wndHandle, rct)
+            Native.User32.GetWindowPlacement(wndHandle, plc)
 
             If includeMargin Then
                 If plc.showCmd <> 3 Then
@@ -145,11 +145,10 @@ Namespace ScreenshotRelated
                         ' Old method:
                         ' ScreenshotMethodsHelper.ComputeAlphaChannel(bmpWhite, bmpBlack)
 
-                        Dim wndTitle = String.Empty
-                        Dim procName As String = String.Empty
-                        ScreenshotMethodsHelper.GetWindowInformation(wndHandle, wndTitle, procName)
+                        Dim windowTitle = ScreenshotMethodsHelper.GetWindowTitle(wndHandle)
+                        Dim processName = ScreenshotMethodsHelper.GetProcessNameOfWindow(wndHandle)
 
-                        Return New WindowScreenshotSet(result, curp, wndTitle, procName)
+                        Return New WindowScreenshotSet(result, curp, windowTitle, processName)
                     End Using
                 End Using
             End Using
@@ -157,7 +156,7 @@ Namespace ScreenshotRelated
 
         Private Shared Function DoAeroOff(wndHandle As IntPtr) As WindowScreenshotSet
             Dim rct As Native.Rect
-            NativeMethods.GetWindowRect(wndHandle, rct)
+            Native.User32.GetWindowRect(wndHandle, rct)
 
             Dim nrct As Rectangle = Rectangle.FromLTRB(rct.Left, rct.Top, rct.Right, rct.Bottom)
 
@@ -170,10 +169,10 @@ Namespace ScreenshotRelated
                 g.Flush()
             End Using
 
-            Dim wndTitle = String.Empty, procName As String = String.Empty
-            ScreenshotMethodsHelper.GetWindowInformation(wndHandle, wndTitle, procName)
+            Dim windowTitle = ScreenshotMethodsHelper.GetWindowTitle(wndHandle)
+            Dim processName = ScreenshotMethodsHelper.GetProcessNameOfWindow(wndHandle)
 
-            Return New WindowScreenshotSet(bmp, curp, wndTitle, procName)
+            Return New WindowScreenshotSet(bmp, curp, windowTitle, processName)
         End Function
 
         Protected Shared Function CaptureCursor() As Bitmap
