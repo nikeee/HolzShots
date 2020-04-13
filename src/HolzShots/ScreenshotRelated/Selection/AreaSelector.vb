@@ -18,7 +18,6 @@ Namespace ScreenshotRelated.Selection
         Private _drawMangifier As Boolean = False
         Private ReadOnly _magnifier As New MagnifierDecoration
 
-        Private _oldHandle As IntPtr
         Private ReadOnly _decoration As ISelectionDecoration
         Private ReadOnly _noSelectionDecoration As INoSelectionDecoration
 
@@ -223,10 +222,6 @@ Namespace ScreenshotRelated.Selection
             _areaTcs = New TaskCompletionSource(Of Rectangle)
 
             IsInAreaSelector = True
-
-            If HolzShotsEnvironment.IsInMetroApplication() Then
-                _oldHandle = NativeMethods.GetForegroundWindow()
-            End If
 
             Visible = True
 

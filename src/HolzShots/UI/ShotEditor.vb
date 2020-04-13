@@ -73,28 +73,16 @@ Namespace UI.Specialized
 
             InitializeThumbnailToolbar()
 
-            If HolzShotsEnvironment.IsInMetroApplication() Then
-                If screenshot.Size = SystemInformation.PrimaryMonitorSize Then
-                    WindowState = FormWindowState.Maximized
-                ElseIf screenshot.Image.IsLargeImage() Then
-                    WindowState = FormWindowState.Maximized
-                Else
-                    Width = screenshot.Image.Width
-                    Height = screenshot.Image.Height + ThePanel.Location.Y + 140
-                    WindowState = FormWindowState.Normal
-                End If
+            If ManagedSettings.EnableIngameMode AndAlso HolzShotsEnvironment.IsFullScreen() Then
+                WindowState = FormWindowState.Minimized
+            ElseIf screenshot.Size = SystemInformation.VirtualScreen.Size Then
+                WindowState = FormWindowState.Maximized
+            ElseIf screenshot.Image.IsLargeImage() Then
+                WindowState = FormWindowState.Maximized
             Else
-                If ManagedSettings.EnableIngameMode AndAlso HolzShotsEnvironment.IsFullScreen() Then
-                    WindowState = FormWindowState.Minimized
-                ElseIf screenshot.Size = SystemInformation.VirtualScreen.Size Then
-                    WindowState = FormWindowState.Maximized
-                ElseIf screenshot.Image.IsLargeImage() Then
-                    WindowState = FormWindowState.Maximized
-                Else
-                    Width = screenshot.Image.Width
-                    Height = screenshot.Image.Height + ThePanel.Location.Y + 140
-                    WindowState = FormWindowState.Normal
-                End If
+                Width = screenshot.Image.Width
+                Height = screenshot.Image.Height + ThePanel.Location.Y + 140
+                WindowState = FormWindowState.Normal
             End If
 
             AddSettingsPanels()

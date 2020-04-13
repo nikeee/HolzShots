@@ -31,7 +31,7 @@ Namespace ScreenshotRelated
         Public Async Function DoSelector() As Task
             Debug.Assert(ManagedSettings.EnableAreaScreenshot)
             Debug.Assert(Not AreaSelector.IsInAreaSelector)
-            If ManagedSettings.EnableIngameMode AndAlso HolzShotsEnvironment.IsFullScreen AndAlso Not HolzShotsEnvironment.IsInMetroApplication() Then Return
+            If ManagedSettings.EnableIngameMode AndAlso HolzShotsEnvironment.IsFullScreen Then Return
 
             If ManagedSettings.EnableAreaScreenshot AndAlso Not AreaSelector.IsInAreaSelector Then
                 Dim shot As Screenshot

@@ -31,7 +31,7 @@ Namespace ScreenshotRelated
         Public Shared Async Function CaptureSelection() As Task(Of Screenshot)
             Debug.Assert(Not AreaSelector.IsInAreaSelector)
             If AreaSelector.IsInAreaSelector Then Return Nothing
-            If ManagedSettings.EnableIngameMode AndAlso HolzShotsEnvironment.IsFullScreen AndAlso Not HolzShotsEnvironment.IsInMetroApplication() Then Return Nothing
+            If ManagedSettings.EnableIngameMode AndAlso HolzShotsEnvironment.IsFullScreen Then Return Nothing
 
             Using prio As New ProcessPriorityRequest()
                 Using screen = ScreenshotCreator.CaptureScreenshot(SystemInformation.VirtualScreen)
@@ -58,18 +58,17 @@ Namespace ScreenshotRelated
             If NativeMethods.IsIconic(windowHandle) Then Return Nothing
 
             Using prio As New ProcessPriorityRequest()
-                Dim isInMetro = HolzShotsEnvironment.IsInMetroApplication()
-                Using shotSet = GetShotSet(windowHandle, includeMargin, isInMetro)
+                Using shotSet = GetShotSet(windowHandle, includeMargin)
                     Return Screenshot.FromWindow(shotSet)
                 End Using
             End Using
         End Function
 
-        Private Shared Function GetShotSet(windowHandle As IntPtr, includeMargin As Boolean, isInMetro As Boolean) As WindowScreenshotSet
+        Private Shared Function GetShotSet(windowHandle As IntPtr, includeMargin As Boolean) As WindowScreenshotSet
             ' TODO: Refactor methods to WindowScreenshotSet?
-            If HolzShotsEnvironment.IsAeroEnabled AndAlso Not isInMetro Then
+            If HolzShotsEnvironment.IsAeroEnabled Then
                 Return DoAeroOn(windowHandle, includeMargin, False)
-            ElseIf isInMetro OrElse HolzShotsEnvironment.IsVistaOrHigher Then
+            ElseIf HolzShotsEnvironment.IsVistaOrHigher Then
                 Return DoAeroOff(windowHandle)
             Else
                 Debugger.Break() ' wait, you prick!
