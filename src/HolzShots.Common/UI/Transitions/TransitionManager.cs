@@ -147,7 +147,7 @@ namespace HolzShots.UI.Transitions
         /// <summary>
         /// Called when a transition has completed.
         /// </summary>
-        private void OnTransitionCompleted(object sender, Transition.Args e)
+        private void OnTransitionCompleted(object sender, TransitionCompletedEventArgs e)
         {
             // We stop observing the transition...
             var transition = sender as Transition;
