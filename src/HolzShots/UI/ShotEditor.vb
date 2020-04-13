@@ -865,10 +865,10 @@ Namespace UI.Specialized
         Protected Overrides Sub Dispose(ByVal disposing As Boolean)
             Try
                 If disposing AndAlso components IsNot Nothing Then
-                    components.Dispose()
-                    _uploadThumbnailButton.Dispose()
-                    _saveThumbnailButton.Dispose()
-                    _copyThumbnailButton.Dispose()
+                    components?.Dispose()
+                    _uploadThumbnailButton?.Dispose()
+                    _saveThumbnailButton?.Dispose()
+                    _copyThumbnailButton?.Dispose()
                 End If
             Finally
                 MyBase.Dispose(disposing)
