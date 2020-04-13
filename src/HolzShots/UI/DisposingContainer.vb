@@ -25,10 +25,7 @@ Public Class DisposingContainer
 
     Public Sub Dispose() Implements IDisposable.Dispose
         Dispose(True)
+        GC.SuppressFinalize(Me)
     End Sub
 #End Region
-
-
-
-
 End Class

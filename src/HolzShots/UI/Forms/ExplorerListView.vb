@@ -24,8 +24,10 @@ Namespace UI.Forms
             If EnvironmentEx.IsVistaOrHigher Then
                 Dim hndl = Interop.NativeMethods.SendMessage(Me.Handle, DirectCast(Interop.NativeTypes.Tv.GetExtendedStyle, Integer), IntPtr.Zero, IntPtr.Zero)
                 hndl = New IntPtr(hndl.ToInt32 Or Interop.NativeTypes.Tv.ExAutoSHcroll) ' Or NativeMethods.TVS_EX_FADEINOUTEXPANDOS)
+
                 Interop.NativeMethods.SendMessage(Me.Handle, DirectCast(Interop.NativeTypes.Tv.SetExtendedStyle, Integer), IntPtr.Zero, hndl)
-                Interop.NativeMethods.SetWindowTheme(Me.Handle, "explorer", 0)
+
+                Dim unused = Native.UxTheme.SetWindowTheme(Me.Handle, "explorer", 0)
             End If
         End Sub
 
@@ -56,7 +58,7 @@ Namespace UI.Forms
         Protected Overrides Sub WndProc(ByRef m As Message)
             If View = View.Details Then
                 Select Case m.Msg
-                    Case Interop.NativeTypes.WindowMessages.Paint
+                    Case Interop.NativeTypes.WindowMessage.Paint
                         For Each ec As EmbeddedControl In _ecs
 
                             Dim rc As Rectangle = ec.Item.Bounds

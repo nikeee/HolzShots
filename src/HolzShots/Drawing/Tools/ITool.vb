@@ -2,7 +2,7 @@ Imports HolzShots.UI.Controls
 
 Namespace Drawing.Tools
     Friend MustInherit Class Tool
-        MustOverride ReadOnly Property ToolType As PaintPanel.Tools
+        MustOverride ReadOnly Property ToolType As PaintPanel.ShotEditorTool
 
         Overridable ReadOnly Property Cursor As Cursor = Cursors.Default
 

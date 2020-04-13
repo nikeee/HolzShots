@@ -30,10 +30,12 @@ namespace HolzShots.Net.Custom
 
         public async override Task<UploadResult> InvokeAsync(Stream data, string suggestedFileName, string mimeType, IProgress<UploadProgress> progress, CancellationToken cancellationToken)
         {
+            if (data == null)
+                throw new ArgumentNullException(nameof(data));
+
             Debug.Assert(UploaderInfo != null);
             Debug.Assert(UploaderInfo.Validate(SupportedSchema));
             Debug.Assert(UploaderInfo.Uploader != null);
-            Debug.Assert(data != null);
             Debug.Assert(!string.IsNullOrWhiteSpace(suggestedFileName));
             Debug.Assert(!string.IsNullOrWhiteSpace(mimeType));
 
@@ -67,7 +69,7 @@ namespace HolzShots.Net.Custom
                     foreach (var (name, value) in uplInfo.PostParams)
                         content.Add(new StringContent(value), name);
 
-                    var fname = uplInfo.GetFileName(suggestedFileName);
+                    var fname = uplInfo.GetEffectiveFileName(suggestedFileName);
 
                     Debug.Assert(!string.IsNullOrWhiteSpace(uplInfo.FileFormName));
                     Debug.Assert(!string.IsNullOrWhiteSpace(fname));

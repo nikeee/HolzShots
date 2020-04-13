@@ -11,8 +11,8 @@ Namespace Interop
         End Property
 
 
-        Private Shared _position As NativeTypes.TaskbarPosition
-        Public Shared ReadOnly Property Position As NativeTypes.TaskbarPosition
+        Private Shared _position As Native.Shell32.TaskbarPosition
+        Public Shared ReadOnly Property Position As Native.Shell32.TaskbarPosition
             Get
                 If Not _initialized Then Initialize()
                 Return _position
@@ -22,13 +22,13 @@ Namespace Interop
         Private Shared _initialized As Boolean
         Private Shared Sub Initialize()
 
-            Dim data = New NativeTypes.AppBarData()
+            Dim data = New Native.Shell32.AppBarData()
             data.cbSize = System.Runtime.InteropServices.Marshal.SizeOf(data)
-            Dim retval = NativeMethods.SHAppBarMessage(NativeTypes.Abm.GetTaskBarPos, data)
+            Dim retval = Native.Shell32.SHAppBarMessage(Native.Shell32.Abm.GetTaskBarPos, data)
 
             If retval = IntPtr.Zero Then
                 _rectangle = New Rectangle(0, 0, -1, -1)
-                _position = NativeTypes.TaskbarPosition.Unknown
+                _position = Native.Shell32.TaskbarPosition.Unknown
             Else
                 _rectangle = data.rc
                 _position = data.uEdge

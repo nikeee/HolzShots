@@ -6,7 +6,7 @@ Imports HolzShots.Drawing.Tools
 Namespace UI.Controls
     Friend Class PaintPanel
 
-        Private _currenttool As Tools
+        Private _currenttool As ShotEditorTool
         Private _screenshot As Screenshot
 
         Private _markercolor As Color
@@ -41,9 +41,9 @@ Namespace UI.Controls
             End Get
             Set(ByVal value As Integer)
                 _erasediameter = value
-                If CurrentTool = Tools.Eraser Then
-                    CurrentTool = Tools.None
-                    CurrentTool = Tools.Eraser
+                If CurrentTool = ShotEditorTool.Eraser Then
+                    CurrentTool = ShotEditorTool.None
+                    CurrentTool = ShotEditorTool.Eraser
                 End If
             End Set
         End Property
@@ -54,9 +54,9 @@ Namespace UI.Controls
             End Get
             Set(ByVal value As Color)
                 _markercolor = value
-                If CurrentTool = Tools.Marker Then
-                    CurrentTool = Tools.None
-                    CurrentTool = Tools.Marker
+                If CurrentTool = ShotEditorTool.Marker Then
+                    CurrentTool = ShotEditorTool.None
+                    CurrentTool = ShotEditorTool.Marker
                 End If
             End Set
         End Property
@@ -67,9 +67,9 @@ Namespace UI.Controls
             End Get
             Set(ByVal value As Integer)
                 _markerwidth = value
-                If CurrentTool = Tools.Marker Then
-                    CurrentTool = Tools.None
-                    CurrentTool = Tools.Marker
+                If CurrentTool = ShotEditorTool.Marker Then
+                    CurrentTool = ShotEditorTool.None
+                    CurrentTool = ShotEditorTool.Marker
                 End If
             End Set
         End Property
@@ -80,9 +80,9 @@ Namespace UI.Controls
             End Get
             Set(ByVal value As Color)
                 _zensursulacolor = value
-                If CurrentTool = Tools.Censor Then
-                    CurrentTool = Tools.None
-                    CurrentTool = Tools.Censor
+                If CurrentTool = ShotEditorTool.Censor Then
+                    CurrentTool = ShotEditorTool.None
+                    CurrentTool = ShotEditorTool.Censor
                 End If
             End Set
         End Property
@@ -93,9 +93,9 @@ Namespace UI.Controls
             End Get
             Set(ByVal value As Integer)
                 _zensursulawidth = value
-                If CurrentTool = Tools.Censor Then
-                    CurrentTool = Tools.None
-                    CurrentTool = Tools.Censor
+                If CurrentTool = ShotEditorTool.Censor Then
+                    CurrentTool = ShotEditorTool.None
+                    CurrentTool = ShotEditorTool.Censor
                 End If
             End Set
         End Property
@@ -106,9 +106,9 @@ Namespace UI.Controls
             End Get
             Set(ByVal value As Integer)
                 _arrowWidth = value
-                If CurrentTool = Tools.Arrow Then
-                    CurrentTool = Tools.None
-                    CurrentTool = Tools.Arrow
+                If CurrentTool = ShotEditorTool.Arrow Then
+                    CurrentTool = ShotEditorTool.None
+                    CurrentTool = ShotEditorTool.Arrow
                 End If
             End Set
         End Property
@@ -121,9 +121,9 @@ Namespace UI.Controls
             Set(ByVal value As Integer)
                 If value <= 0 Then value = 7
                 _blurFactor = value
-                If CurrentTool = Tools.Blur Then
-                    CurrentTool = Tools.None
-                    CurrentTool = Tools.Blur
+                If CurrentTool = ShotEditorTool.Blur Then
+                    CurrentTool = ShotEditorTool.None
+                    CurrentTool = ShotEditorTool.Blur
                 End If
             End Set
         End Property
@@ -166,37 +166,37 @@ Namespace UI.Controls
             End Get
         End Property
 
-        Public Property CurrentTool As Tools
+        Public Property CurrentTool As ShotEditorTool
             Get
                 Return _currenttool
             End Get
-            Set(ByVal value As Tools)
+            Set(ByVal value As ShotEditorTool)
                 _currenttool = value
                 Select Case value
-                    Case Tools.None
+                    Case ShotEditorTool.None
                         Cursor = Cursors.Default
-                    Case Tools.Text
+                    Case ShotEditorTool.Text
                         CurrentToolObject = Nothing
                         Cursor = New Cursor(HolzShots.My.Resources.textCursor.Handle)
-                    Case Tools.Crop
+                    Case ShotEditorTool.Crop
                         CurrentToolObject = New Crop
-                    Case Tools.Marker
+                    Case ShotEditorTool.Marker
                         CurrentToolObject = New Marker(MarkerWidth, MarkerColor)
-                    Case Tools.Censor
+                    Case ShotEditorTool.Censor
                         CurrentToolObject = New Censor(ZensursulaWidth, ZensursulaColor)
-                    Case Tools.Eraser
+                    Case ShotEditorTool.Eraser
                         CurrentToolObject = New Eraser(Me)
-                    Case Tools.Blur
+                    Case ShotEditorTool.Blur
                         CurrentToolObject = New Pixelate
-                    Case Tools.Ellipse
+                    Case ShotEditorTool.Ellipse
                         CurrentToolObject = New Circle
-                    Case Tools.Pipette
+                    Case ShotEditorTool.Pipette
                         CurrentToolObject = New Pipette
-                    Case Tools.Brighten
+                    Case ShotEditorTool.Brighten
                         CurrentToolObject = New Brighten
-                    Case Tools.Arrow
+                    Case ShotEditorTool.Arrow
                         CurrentToolObject = New Arrow
-                    Case Tools.Scale
+                    Case ShotEditorTool.Scale
                         CurrentToolObject = New Scale
                         InvokeFinalRender(CurrentToolObject)
                         CurrentToolObject = Nothing
@@ -226,7 +226,7 @@ Namespace UI.Controls
             End If
         End Sub
 
-        Public Enum Tools
+        Public Enum ShotEditorTool
             None = 0
             Censor = 1
             Marker = 2
@@ -299,7 +299,7 @@ Namespace UI.Controls
 
         Private Sub MouseLayerMouseDown(ByVal sender As Object, ByVal e As MouseEventArgs) Handles RawBox.MouseDown
             _mousedown = True
-            If _currenttool = Tools.None OrElse _currenttool = Tools.Text Then Exit Sub
+            If _currenttool = ShotEditorTool.None OrElse _currenttool = ShotEditorTool.Text Then Exit Sub
 
             CurrentToolObject.BeginCoords = e.Location
         End Sub
@@ -325,7 +325,7 @@ Namespace UI.Controls
 
         Private Sub MouseLayerMouseUp(ByVal sender As Object, ByVal e As MouseEventArgs) Handles RawBox.MouseUp
             If e.Button = MouseButtons.Left Then
-                If CurrentTool = Tools.Text Then
+                If CurrentTool = ShotEditorTool.Text Then
                     TextPanel.BringToFront()
                     TextPanel.Location = New Point(e.Location.X + RawBox.Location.X, e.Location.Y + RawBox.Location.Y)
                     TextPanel.Visible = True
@@ -489,7 +489,7 @@ Namespace UI.Controls
 
             RaiseEvent UpdateMousePosition(e.Location)
 
-            If CurrentTool = Tools.Pipette Then
+            If CurrentTool = ShotEditorTool.Pipette Then
                 CurrentToolObject.MouseOnlyMoved(CurrentImage, Cursor, e)
             End If
         End Sub

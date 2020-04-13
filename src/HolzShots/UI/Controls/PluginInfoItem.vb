@@ -54,6 +54,8 @@ Namespace UI.Controls
 #Region "Painting"
 
         Protected Overrides Sub OnPaint(e As PaintEventArgs)
+            If e Is Nothing Then Throw New ArgumentNullException(NameOf(e))
+
             MyBase.OnPaint(e)
             If _isHot Then
                 HotRenderer.DrawBackground(e.Graphics, New Rectangle(ClientRectangle.X + HotMargin, ClientRectangle.Y, ClientRectangle.Width - HotMargin * 2, ClientRectangle.Height - 1))

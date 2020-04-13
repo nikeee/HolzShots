@@ -7,7 +7,7 @@ Namespace UI.Forms
         Friend Shared ReadOnly Property IsEightOrHigher As Boolean = (System.Environment.OSVersion.Version.Major = 6 AndAlso System.Environment.OSVersion.Version.Minor >= 2) OrElse System.Environment.OSVersion.Version.Major > 6
         Friend Shared ReadOnly Property IsAeroEnabled As Boolean
             Get
-                Return IsVistaOrHigher AndAlso Interop.NativeMethods.DwmIsCompositionEnabled()
+                Return IsVistaOrHigher AndAlso Native.DwmApi.DwmIsCompositionEnabled()
             End Get
         End Property
     End Class

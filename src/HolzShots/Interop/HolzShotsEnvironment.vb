@@ -1,8 +1,4 @@
-Imports System.Linq
-Imports System.Security
 Imports System.Text
-Imports System.Threading
-Imports Microsoft.Win32
 Imports StartupHelper
 
 Namespace Interop
@@ -18,37 +14,21 @@ Namespace Interop
         Private Sub New()
         End Sub
 
-        Private Const MetroStartMenu As String = "ImmersiveLauncher"
         Private Const GtkWindow As String = "gdkWindowToplevel"
-        Private Shared ReadOnly MetroWindowClasses As String() = {"Windows.UI.Core.CoreWindow", "ImmersiveSplashScreenWindowClass", MetroStartMenu}
-
-        Private Shared ReadOnly CanBeInMetroApp As Boolean = IsEightOrHigher
 
         Public Shared ReadOnly ApplicationDataRoaming As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
 
-        Public Shared Function IsInMetroApplication() As Boolean
-            If Not CanBeInMetroApp Then Return False
-
-            Dim hwnd As IntPtr = NativeMethods.GetForegroundWindow()
-            Dim sb = New StringBuilder(255)
-            NativeMethods.GetClassName(hwnd, sb, sb.Capacity)
-            Return MetroWindowClasses.Contains(sb.ToString())
-        End Function
-
-        Public Shared Function SwitchToDesktopApplication() As Boolean
-            Dim hwnd As IntPtr = NativeMethods.GetForegroundWindow()
-            Dim sb = New StringBuilder(255)
-            NativeMethods.GetClassName(hwnd, sb, sb.Capacity)
-            Return MetroWindowClasses.Contains(sb.ToString())
-        End Function
 
         Public Shared Function IsFullScreen() As Boolean
             Dim hndl As IntPtr = NativeMethods.GetForegroundWindow()
             Dim sb As New StringBuilder()
-            NativeMethods.GetClassName(hndl, sb, sb.Capacity)
+
+            Dim unused = NativeMethods.GetClassName(hndl, sb, sb.Capacity)
+
             If sb.ToString = "WorkerW" Then Return False
-            Dim rct As NativeTypes.Rect
+            Dim rct As Native.Rect
             NativeMethods.GetWindowRect(hndl, rct)
+
             Return Screen.PrimaryScreen.Bounds.Height = rct.Bottom AndAlso Screen.PrimaryScreen.Bounds.Width = rct.Right
         End Function
 
@@ -69,7 +49,7 @@ Namespace Interop
         Public Shared ReadOnly Property IsVistaOrHigher As Boolean = Environment.OSVersion.Version.Major >= 6
         Public Shared ReadOnly Property IsAeroEnabled As Boolean
             Get
-                Return IsVistaOrHigher AndAlso NativeMethods.DwmIsCompositionEnabled()
+                Return IsVistaOrHigher AndAlso Native.DwmApi.DwmIsCompositionEnabled()
             End Get
         End Property
 

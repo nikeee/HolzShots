@@ -94,7 +94,7 @@ namespace HolzShots.Net.Custom
             FileName = fileName;
         }
 
-        public string GetFileName(string fallback) => FileName ?? fallback;
+        public string GetEffectiveFileName(string fallback) => FileName ?? fallback;
 
         public bool Validate(SemVersion schemaVersion)
         {

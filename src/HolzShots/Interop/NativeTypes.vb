@@ -5,82 +5,6 @@ Namespace Interop
         Private Sub New()
         End Sub
 
-
-        <StructLayout(LayoutKind.Sequential)>
-        Public Structure Rect
-            Public Left As Integer
-            Public Top As Integer
-            Public Right As Integer
-            Public Bottom As Integer
-
-            Public Shared Function ToRectangle(ByVal rct As Rect) As Rectangle
-                Return Rectangle.FromLTRB(rct.Left, rct.Top, rct.Right, rct.Bottom)
-            End Function
-
-            Public Sub New(ByVal left As Integer, ByVal top As Integer, ByVal right As Integer, ByVal bottom As Integer)
-                Me.Left = left
-                Me.Top = top
-                Me.Right = right
-                Me.Bottom = bottom
-            End Sub
-
-            ' Implicit operators ftw
-            Public Shared Widening Operator CType(ByVal rct As Rect) As Rectangle
-                Return Rectangle.FromLTRB(rct.Left, rct.Top, rct.Right, rct.Bottom)
-            End Operator
-            Public Shared Widening Operator CType(ByVal rectangle As Rectangle) As Rect
-                Return New Rect(rectangle.Left, rectangle.Top, rectangle.Right, rectangle.Bottom)
-            End Operator
-        End Structure
-
-        <StructLayout(LayoutKind.Sequential)>
-        Public Structure Size
-            Public Width As Integer
-            Public Height As Integer
-
-            Public Sub New(width As Integer, height As Integer)
-                Me.Width = width
-                Me.Height = height
-            End Sub
-
-            ' Implicit operators ftw
-            Public Shared Widening Operator CType(ByVal sz As Size) As System.Drawing.Size
-                Return New System.Drawing.Size(sz.Width, sz.Height)
-            End Operator
-            Public Shared Widening Operator CType(ByVal size As System.Drawing.Size) As Size
-                Return New Size(size.Width, size.Height)
-            End Operator
-        End Structure
-
-        <StructLayout(LayoutKind.Sequential)>
-        Public Structure Margin
-            Public Shared ReadOnly DefaultMargin As Margin = New Margin(-1)
-
-            Public cxLeftWidth As Integer
-            Public cxRightWidth As Integer
-            Public cyTopHeight As Integer
-            Public cyBottomheight As Integer
-            Sub New(all As Integer)
-                cxLeftWidth = all
-                cxRightWidth = all
-                cyTopHeight = all
-                cyBottomheight = all
-            End Sub
-            Sub New(leftWidth As Integer, topHeight As Integer, rightWidth As Integer, bottomHeight As Integer)
-                cxLeftWidth = leftWidth
-                cxRightWidth = rightWidth
-                cyTopHeight = topHeight
-                cyBottomheight = bottomHeight
-            End Sub
-
-            Public Shared Widening Operator CType(ByVal mrg As Margin) As System.Windows.Forms.Padding
-                Return New Padding(mrg.cxLeftWidth, mrg.cyTopHeight, mrg.cxRightWidth, mrg.cyBottomheight)
-            End Operator
-            Public Shared Widening Operator CType(ByVal fwPadding As System.Windows.Forms.Padding) As Margin
-                Return New Margin(fwPadding.Left, fwPadding.Top, fwPadding.Right, fwPadding.Bottom)
-            End Operator
-        End Structure
-
         <StructLayout(LayoutKind.Sequential, Pack:=1)>
         Public Structure Blendfunction
             Public BlendOp As Byte
@@ -89,15 +13,6 @@ Namespace Interop
             Public AlphaFormat As Byte
         End Structure
 
-        <StructLayout(LayoutKind.Sequential)>
-        Public Structure AppBarData
-            Public cbSize As Integer
-            Public hWnd As IntPtr
-            Public uCallbackMessage As Integer
-            Public uEdge As TaskbarPosition
-            Public rc As Rect
-            Public lParam As IntPtr
-        End Structure
 
         <StructLayout(LayoutKind.Sequential)>
         Public Structure WindowPlacement
@@ -108,13 +23,6 @@ Namespace Interop
             Public maxPosition As Point
             Public normalPosition As Rectangle
         End Structure
-
-        <StructLayout(LayoutKind.Sequential)>
-        Public Structure WtaOptions
-            Public Flags As Wtnca
-            Public Mask As Wtnca
-        End Structure
-
 
         Public Enum Tv As Integer
             First = &H1100
@@ -137,32 +45,6 @@ Namespace Interop
             NoValidate = &H100
             NoTestFileCreate = &H10000
             DontAddToRecent = &H2000000
-        End Enum
-
-
-        Public Enum Abm
-            GetTaskBarPos = 5
-        End Enum
-
-        Public Enum TaskbarPosition
-            Unknown = -1
-            Left
-            Top
-            Right
-            Bottom
-        End Enum
-
-        Public Enum ShellAddToRecentDocsFlags
-            Pidl = &H1
-            Path = &H2
-        End Enum
-
-        <Flags()>
-        Public Enum Wtnca As UInteger
-            NoDrawCaption = &H1
-            NoDrawIcon = &H2
-            NoSysMenu = &H4
-            NoMirrorHelp = &H8
         End Enum
 
         ''' <summary>
@@ -208,14 +90,14 @@ Namespace Interop
             CaptureBlt = &H40000000
         End Enum
 
-        Public Enum WindowMessages
+        Public Enum WindowMessage
             NcCalcSize = &H83
             NcHitTest = &H84
             DwmCompositionChanged = &H31E
             Paint = &HF
             User = &H400
         End Enum
-        Public Enum ProgressBarMessages
+        Public Enum ProgressBarMessage
             SetState = 16
         End Enum
 

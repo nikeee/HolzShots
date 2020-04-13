@@ -17,7 +17,10 @@ namespace HolzShots.Drawing
                 throw new ArgumentException(nameof(points));
             if (bmp == null)
                 throw new ArgumentNullException(nameof(bmp));
+            if (pen == null)
+                throw new ArgumentNullException(nameof(pen));
 
+            Debug.Assert(pen != null);
             Debug.Assert(pen.Handle != IntPtr.Zero);
 
             var hdc = g.GetHdc();
@@ -28,7 +31,7 @@ namespace HolzShots.Drawing
 
             try
             {
-                NativeMethods.SetROP2(mDc, RasterOperation2.MaskPen);
+                _ = NativeMethods.SetROP2(mDc, RasterOperation2.MaskPen);
                 for (int i = 1; i <= points.Length - 1; i++)
                 {
                     var p1 = points[i - 1];
@@ -36,7 +39,7 @@ namespace HolzShots.Drawing
                     NativeMethods.MoveToEx(mDc, p1.X, p1.Y, IntPtr.Zero);
                     NativeMethods.LineTo(mDc, p2.X, p2.Y);
                 }
-                NativeMethods.SetROP2(mDc, RasterOperation2.CopyPen);
+                _ = NativeMethods.SetROP2(mDc, RasterOperation2.CopyPen);
                 NativeMethods.BitBlt(hdc, 0, 0, bmp.Width, bmp.Height, mDc, 0, 0, CopyPixelOperation.SourceCopy);
             }
             finally

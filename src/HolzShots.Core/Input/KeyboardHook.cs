@@ -20,7 +20,8 @@ namespace HolzShots.Input
 
         protected void KeyPressed(object sender, KeyPressedEventArgs args)
         {
-            Debug.Assert(args != null);
+            if (args == null)
+                throw new ArgumentNullException(nameof(args));
 
             var key = args.GetIdentifier();
 

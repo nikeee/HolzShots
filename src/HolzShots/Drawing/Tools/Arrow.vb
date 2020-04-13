@@ -38,7 +38,7 @@ Namespace Drawing.Tools
         End Property
 
         Private Shared ReadOnly TheCursor As Cursor = New Cursor(My.Resources.crossMedium.GetHicon())
-        Public Overrides ReadOnly Property ToolType As PaintPanel.Tools = PaintPanel.Tools.Arrow
+        Public Overrides ReadOnly Property ToolType As PaintPanel.ShotEditorTool = PaintPanel.ShotEditorTool.Arrow
         Public Overrides ReadOnly Property Cursor As Cursor = TheCursor
 
         Public Overrides Sub RenderFinalImage(ByRef rawImage As Image, ByVal sender As PaintPanel)

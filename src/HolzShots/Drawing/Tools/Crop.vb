@@ -90,7 +90,7 @@ Namespace Drawing.Tools
             g.DrawRectangle(_redCornerPen, _rct)
         End Sub
 
-        Public Overrides ReadOnly Property ToolType As PaintPanel.Tools = PaintPanel.Tools.Crop
+        Public Overrides ReadOnly Property ToolType As PaintPanel.ShotEditorTool = PaintPanel.ShotEditorTool.Crop
 
         Public Sub Dispose() Implements IDisposable.Dispose
             _alphaBrush.Dispose()

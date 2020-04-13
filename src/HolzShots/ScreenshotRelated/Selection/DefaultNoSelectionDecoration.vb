@@ -22,6 +22,8 @@ Namespace ScreenshotRelated.Selection
                                                CInt(Screen.PrimaryScreen.WorkingArea.Y - SystemInformation.VirtualScreen.Y + Screen.PrimaryScreen.WorkingArea.Height / 2) - CInt(_richInfoTextSize.Height / 2))
         End Sub
         Public Sub DrawNoSelection(ByRef g As Graphics, ByRef wholeScreen As Rectangle) Implements INoSelectionDecoration.DrawNoSelection
+            If g Is Nothing Then Throw New ArgumentNullException(NameOf(g))
+
             g.TextRenderingHint = TextRenderingHint.AntiAliasGridFit
             Dim sz As SizeF
             Dim height As Single = 0

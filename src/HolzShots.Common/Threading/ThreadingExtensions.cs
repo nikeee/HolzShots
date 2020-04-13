@@ -10,8 +10,8 @@ namespace HolzShots.Threading
         {
             if (target == null)
                 throw new ArgumentNullException(nameof(target));
-
-            Debug.Assert(action != null);
+            if (action == null)
+                throw new ArgumentNullException(nameof(action));
 
             if (target.InvokeRequired)
                 target.BeginInvoke(action, null);

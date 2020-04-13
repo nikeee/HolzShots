@@ -1,5 +1,3 @@
-Imports System.Drawing
-Imports System.Windows.Forms
 Imports System.Windows.Forms.VisualStyles
 Imports HolzShots.Interop
 
@@ -26,7 +24,7 @@ Namespace UI.Forms
 
         ' See http://msdn2.microsoft.com/en-us/library/bb773210.aspx - "Parts and States"
         ' Only menu-related parts/states are needed here, VisualStyleRenderer handles most of the rest.
-        Private Enum MenuParts As Integer
+        Private Enum MenuPart As Integer
             ItemTMSchema = 1
             DropDownTMSchema = 2
             BarItemTMSchema = 3
@@ -49,12 +47,12 @@ Namespace UI.Forms
             SystemRestore = 20
         End Enum
 
-        Private Enum MenuBarStates As Integer
+        Private Enum MenuBarState As Integer
             Active = 1
             Inactive = 2
         End Enum
 
-        Private Enum MenuBarItemStates As Integer
+        Private Enum MenuBarItemState As Integer
             Normal = 1
             Hover = 2
             Pushed = 3
@@ -63,32 +61,32 @@ Namespace UI.Forms
             DisabledPushed = 6
         End Enum
 
-        Private Enum MenuPopupItemStates As Integer
+        Private Enum MenuPopupItemState As Integer
             Normal = 1
             Hover = 2
             Disabled = 3
             DisabledHover = 4
         End Enum
 
-        Private Enum MenuPopupCheckStates As Integer
+        Private Enum MenuPopupCheckState As Integer
             CheckmarkNormal = 1
             CheckmarkDisabled = 2
             BulletNormal = 3
             BulletDisabled = 4
         End Enum
 
-        Private Enum MenuPopupCheckBackgroundStates As Integer
+        Private Enum MenuPopupCheckBackgroundState As Integer
             Disabled = 1
             Normal = 2
             Bitmap = 3
         End Enum
 
-        Private Enum MenuPopupSubMenuStates As Integer
+        Private Enum MenuPopupSubMenuState As Integer
             Normal = 1
             Disabled = 2
         End Enum
 
-        Private Enum MarginTypes As Integer
+        Private Enum MarginType As Integer
             Sizing = 3601
             Content = 3602
             Caption = 3603
@@ -96,14 +94,14 @@ Namespace UI.Forms
 
         Private Const RebarBackground As Integer = 6
 
-        Private Function GetThemeMargins(dc As IDeviceContext, marginType As MarginTypes) As Padding
-            Dim margins As Interop.NativeTypes.Margin
+        Private Function GetThemeMargins(dc As IDeviceContext, marginType As MarginType) As Padding
+            Dim margins As Native.Margin
             Try
                 Dim hDc As IntPtr = dc.GetHdc()
-                If 0 = NativeMethods.GetThemeMargins(_renderer.Handle, hDc, _renderer.Part, _renderer.State, CInt(marginType), IntPtr.Zero, margins) Then
-                    Return margins ' New Padding(margins.LeftWidth, margins.TopHeight, margins.RightWidth, margins.Bottomheight)
+                If 0 = Native.UxTheme.GetThemeMargins(_renderer.Handle, hDc, _renderer.Part, _renderer.State, marginType, IntPtr.Zero, margins) Then
+                    Return New Padding(margins.cxLeftWidth, margins.cyTopHeight, margins.cxRightWidth, margins.cyBottomheight)
                 End If
-                Return New Padding(0)
+                Return Padding.Empty
             Finally
                 dc.ReleaseHdc()
             End Try
@@ -114,17 +112,17 @@ Namespace UI.Forms
 
             If item.IsOnDropDown Then
                 If item.Enabled Then
-                    Return If(hot, CInt(MenuPopupItemStates.Hover), CInt(MenuPopupItemStates.Normal))
+                    Return If(hot, CInt(MenuPopupItemState.Hover), CInt(MenuPopupItemState.Normal))
                 End If
-                Return If(hot, CInt(MenuPopupItemStates.DisabledHover), CInt(MenuPopupItemStates.Disabled))
+                Return If(hot, CInt(MenuPopupItemState.DisabledHover), CInt(MenuPopupItemState.Disabled))
             Else
                 If item.Pressed Then
-                    Return If(item.Enabled, CInt(MenuBarItemStates.Pushed), CInt(MenuBarItemStates.DisabledPushed))
+                    Return If(item.Enabled, CInt(MenuBarItemState.Pushed), CInt(MenuBarItemState.DisabledPushed))
                 End If
                 If item.Enabled Then
-                    Return If(hot, CInt(MenuBarItemStates.Hover), CInt(MenuBarItemStates.Normal))
+                    Return If(hot, CInt(MenuBarItemState.Hover), CInt(MenuBarItemState.Normal))
                 End If
-                Return If(hot, CInt(MenuBarItemStates.DisabledHover), CInt(MenuBarItemStates.Disabled))
+                Return If(hot, CInt(MenuBarItemState.DisabledHover), CInt(MenuBarItemState.Disabled))
             End If
         End Function
 
@@ -183,6 +181,8 @@ Namespace UI.Forms
 
         ' Gives parented ToolStrips a transparent background.
         Protected Overrides Sub Initialize(toolStrip As ToolStrip)
+            If toolStrip Is Nothing Then Throw New ArgumentNullException(NameOf(toolStrip))
+
             If TypeOf toolStrip.Parent Is ToolStripPanel Then
                 toolStrip.BackColor = Color.Transparent
             End If
@@ -195,6 +195,8 @@ Namespace UI.Forms
         ' simply initialize it here too, and this should guarantee that the ToolStrip is initialized at least
         ' once. Hopefully it isn't any more complicated than this.
         Protected Overrides Sub InitializePanel(toolStripPanel As ToolStripPanel)
+            If toolStripPanel Is Nothing Then Throw New ArgumentNullException(NameOf(toolStripPanel))
+
             For Each control As Control In toolStripPanel.Controls
                 If TypeOf control Is ToolStrip Then
                     Initialize(DirectCast(control, ToolStrip))
@@ -205,8 +207,10 @@ Namespace UI.Forms
         End Sub
 
         Protected Overrides Sub OnRenderToolStripBorder(e As ToolStripRenderEventArgs)
+            If e Is Nothing Then Throw New ArgumentNullException(NameOf(e))
+
             If EnsureRenderer() Then
-                _renderer.SetParameters(MenuClass, CInt(MenuParts.PopupBorders), 0)
+                _renderer.SetParameters(MenuClass, CInt(MenuPart.PopupBorders), 0)
                 If e.ToolStrip.IsDropDown Then
                     Dim oldClip As Region = e.Graphics.Clip
 
@@ -246,8 +250,10 @@ Namespace UI.Forms
         End Function
 
         Protected Overrides Sub OnRenderMenuItemBackground(e As ToolStripItemRenderEventArgs)
+            If e Is Nothing Then Throw New ArgumentNullException(NameOf(e))
+
             If EnsureRenderer() Then
-                Dim partID As Integer = If(e.Item.IsOnDropDown, CInt(MenuParts.PopupItem), CInt(MenuParts.BarItem))
+                Dim partID As Integer = If(e.Item.IsOnDropDown, CInt(MenuPart.PopupItem), CInt(MenuPart.BarItem))
                 _renderer.SetParameters(MenuClass, partID, GetItemState(e.Item))
 
                 Dim bgRect As Rectangle = GetBackgroundRectangle(e.Item)
@@ -258,6 +264,8 @@ Namespace UI.Forms
         End Sub
 
         Protected Overrides Sub OnRenderToolStripPanelBackground(e As ToolStripPanelRenderEventArgs)
+            If e Is Nothing Then Throw New ArgumentNullException(NameOf(e))
+
             If EnsureRenderer() Then
                 ' Draw the background using Rebar & RP_BACKGROUND (or, if that is not available, fall back to
                 ' Rebar.Band.Normal)
@@ -281,9 +289,11 @@ Namespace UI.Forms
 
         ' Render the background of an actual menu bar, dropdown menu or toolbar.
         Protected Overrides Sub OnRenderToolStripBackground(e As System.Windows.Forms.ToolStripRenderEventArgs)
+            If e Is Nothing Then Throw New ArgumentNullException(NameOf(e))
+
             If EnsureRenderer() Then
                 If e.ToolStrip.IsDropDown Then
-                    _renderer.SetParameters(MenuClass, CInt(MenuParts.PopupBackground), 0)
+                    _renderer.SetParameters(MenuClass, CInt(MenuPart.PopupBackground), 0)
                 Else
                     ' It's a MenuStrip or a ToolStrip. If it's contained inside a larger panel, it should have a
                     ' transparent background, showing the panel's background.
@@ -318,6 +328,8 @@ Namespace UI.Forms
         ' The only purpose of this override is to change the arrow colour.
         ' It's OK to just draw over the default arrow since we also pass down arrow drawing to the system renderer.
         Protected Overrides Sub OnRenderSplitButtonBackground(e As ToolStripItemRenderEventArgs)
+            If e Is Nothing Then Throw New ArgumentNullException(NameOf(e))
+
             If EnsureRenderer() Then
                 Dim sb As ToolStripSplitButton = DirectCast(e.Item, ToolStripSplitButton)
                 MyBase.OnRenderSplitButtonBackground(e)
@@ -330,12 +342,14 @@ Namespace UI.Forms
         End Sub
 
         Private Function GetItemTextColor(item As ToolStripItem) As Color
-            Dim partId As Integer = If(item.IsOnDropDown, CInt(MenuParts.PopupItem), CInt(MenuParts.BarItem))
+            Dim partId As Integer = If(item.IsOnDropDown, CInt(MenuPart.PopupItem), CInt(MenuPart.BarItem))
             _renderer.SetParameters(MenuClass, partId, GetItemState(item))
             Return _renderer.GetColor(ColorProperty.TextColor)
         End Function
 
         Protected Overrides Sub OnRenderItemText(e As ToolStripItemTextRenderEventArgs)
+            If e Is Nothing Then Throw New ArgumentNullException(NameOf(e))
+
             If EnsureRenderer() Then
                 e.TextColor = GetItemTextColor(e.Item)
             End If
@@ -344,15 +358,17 @@ Namespace UI.Forms
         End Sub
 
         Protected Overrides Sub OnRenderImageMargin(e As ToolStripRenderEventArgs)
+            If e Is Nothing Then Throw New ArgumentNullException(NameOf(e))
+
             If EnsureRenderer() Then
                 If e.ToolStrip.IsDropDown Then
-                    _renderer.SetParameters(MenuClass, CInt(MenuParts.PopupGutter), 0)
+                    _renderer.SetParameters(MenuClass, CInt(MenuPart.PopupGutter), 0)
                     ' The AffectedBounds is usually too small, way too small to look right. Instead of using that,
                     ' use the AffectedBounds but with the right width. Then narrow the rectangle to the correct edge
                     ' based on whether or not it's RTL. (It doesn't need to be narrowed to an edge in LTR mode, but let's
                     ' do that anyway.)
                     ' Using the DisplayRectangle gets roughly the right size so that the separator is closer to the text.
-                    Dim margins As Padding = GetThemeMargins(e.Graphics, MarginTypes.Sizing)
+                    Dim margins As Padding = GetThemeMargins(e.Graphics, MarginType.Sizing)
                     Dim extraWidth As Integer = (e.ToolStrip.Width - e.ToolStrip.DisplayRectangle.Width - margins.Left - margins.Right - 1) - e.AffectedBounds.Width
                     Dim rect As Rectangle = e.AffectedBounds
                     rect.Y += 2
@@ -372,8 +388,10 @@ Namespace UI.Forms
         End Sub
 
         Protected Overrides Sub OnRenderSeparator(e As ToolStripSeparatorRenderEventArgs)
+            If e Is Nothing Then Throw New ArgumentNullException(NameOf(e))
+
             If e.ToolStrip.IsDropDown AndAlso EnsureRenderer() Then
-                _renderer.SetParameters(MenuClass, CInt(MenuParts.PopupSeparator), 0)
+                _renderer.SetParameters(MenuClass, CInt(MenuPart.PopupSeparator), 0)
                 Dim rect As New Rectangle(e.ToolStrip.DisplayRectangle.Left, 0, e.ToolStrip.DisplayRectangle.Width, e.Item.Height)
                 _renderer.DrawBackground(e.Graphics, rect, rect)
             Else
@@ -382,6 +400,8 @@ Namespace UI.Forms
         End Sub
 
         Protected Overrides Sub OnRenderItemCheck(e As ToolStripItemImageRenderEventArgs)
+            If e Is Nothing Then Throw New ArgumentNullException(NameOf(e))
+
             If EnsureRenderer() Then
                 Dim bgRect As Rectangle = GetBackgroundRectangle(e.Item)
                 bgRect.Width = bgRect.Height
@@ -391,7 +411,7 @@ Namespace UI.Forms
                     bgRect = New Rectangle(e.ToolStrip.ClientSize.Width - bgRect.X - bgRect.Width, bgRect.Y, bgRect.Width, bgRect.Height)
                 End If
 
-                _renderer.SetParameters(MenuClass, CInt(MenuParts.PopupCheckBackground), If(e.Item.Enabled, CInt(MenuPopupCheckBackgroundStates.Normal), CInt(MenuPopupCheckBackgroundStates.Disabled)))
+                _renderer.SetParameters(MenuClass, CInt(MenuPart.PopupCheckBackground), If(e.Item.Enabled, CInt(MenuPopupCheckBackgroundState.Normal), CInt(MenuPopupCheckBackgroundState.Disabled)))
                 _renderer.DrawBackground(e.Graphics, bgRect)
 
                 Dim checkRect As Rectangle = e.ImageRectangle
@@ -399,7 +419,7 @@ Namespace UI.Forms
                 checkRect.Y = bgRect.Y + bgRect.Height \ 2 - checkRect.Height \ 2
 
                 ' I don't think ToolStrip even supports radio box items, so no need to render them.
-                _renderer.SetParameters(MenuClass, CInt(MenuParts.PopupCheck), If(e.Item.Enabled, CInt(MenuPopupCheckStates.CheckmarkNormal), CInt(MenuPopupCheckStates.CheckmarkDisabled)))
+                _renderer.SetParameters(MenuClass, CInt(MenuPart.PopupCheck), If(e.Item.Enabled, CInt(MenuPopupCheckState.CheckmarkNormal), CInt(MenuPopupCheckState.CheckmarkDisabled)))
 
                 _renderer.DrawBackground(e.Graphics, checkRect)
             Else
@@ -408,6 +428,8 @@ Namespace UI.Forms
         End Sub
 
         Protected Overrides Sub OnRenderArrow(e As ToolStripArrowRenderEventArgs)
+            If e Is Nothing Then Throw New ArgumentNullException(NameOf(e))
+
             ' The default renderer will draw an arrow for us (the UXTheme API seems not to have one for all directions),
             ' but it will get the colour wrong in many cases. The text colour is probably the best colour to use.
             If EnsureRenderer() Then
@@ -417,6 +439,8 @@ Namespace UI.Forms
         End Sub
 
         Protected Overrides Sub OnRenderOverflowButtonBackground(e As ToolStripItemRenderEventArgs)
+            If e Is Nothing Then Throw New ArgumentNullException(NameOf(e))
+
             If EnsureRenderer() Then
                 ' BrowserTabBar::Rebar draws the chevron using the default background. Odd.
                 Dim rebarClass1 As String = RebarClass
@@ -445,7 +469,7 @@ Namespace UI.Forms
                 End If
 
                 ' Needs a more robust check. It seems mono supports very different style sets.
-                Return VisualStyleRenderer.IsElementDefined(VisualStyleElement.CreateElement("Menu", CInt(MenuParts.BarBackground), CInt(MenuBarStates.Active)))
+                Return VisualStyleRenderer.IsElementDefined(VisualStyleElement.CreateElement("Menu", CInt(MenuPart.BarBackground), CInt(MenuBarState.Active)))
             End Get
         End Property
     End Class

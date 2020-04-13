@@ -6,7 +6,7 @@ Namespace Drawing.Tools
         Inherits Tool
         Private Shared ReadOnly CursorInstance As Cursor = New Cursor(My.Resources.crossMedium.GetHicon())
         Public Overrides ReadOnly Property Cursor As Cursor = CursorInstance
-        Public Overrides ReadOnly Property ToolType As PaintPanel.Tools = PaintPanel.Tools.Ellipse
+        Public Overrides ReadOnly Property ToolType As PaintPanel.ShotEditorTool = PaintPanel.ShotEditorTool.Ellipse
 
         Private ReadOnly _pen As New Pen(Color.Black, 1) With {.DashStyle = DashStyle.Solid}
         Private _rct As New Rectangle()

@@ -44,6 +44,8 @@ Namespace UI.Windows.Forms
         <Extension()>
         Public Sub SetOverlayIcon(window As IWin32Window, ByVal bmp As Bitmap, ByVal accessibilityText As String)
             If window Is Nothing Then Throw New NullReferenceException()
+            If bmp Is Nothing Then Throw New ArgumentNullException(NameOf(bmp))
+
             Debug.Assert(window.Handle <> IntPtr.Zero)
             Debug.Assert(bmp IsNot Nothing)
 
