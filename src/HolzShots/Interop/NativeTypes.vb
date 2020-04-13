@@ -5,25 +5,6 @@ Namespace Interop
         Private Sub New()
         End Sub
 
-        <StructLayout(LayoutKind.Sequential)>
-        Public Structure Size
-            Public Width As Integer
-            Public Height As Integer
-
-            Public Sub New(width As Integer, height As Integer)
-                Me.Width = width
-                Me.Height = height
-            End Sub
-
-            ' Implicit operators ftw
-            Public Shared Widening Operator CType(ByVal sz As Size) As System.Drawing.Size
-                Return New System.Drawing.Size(sz.Width, sz.Height)
-            End Operator
-            Public Shared Widening Operator CType(ByVal size As System.Drawing.Size) As Size
-                Return New Size(size.Width, size.Height)
-            End Operator
-        End Structure
-
         <StructLayout(LayoutKind.Sequential, Pack:=1)>
         Public Structure Blendfunction
             Public BlendOp As Byte
