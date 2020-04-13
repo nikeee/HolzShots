@@ -7,7 +7,6 @@ Namespace Interop
         End Sub
 
         Private Const User32 As String = "user32.dll"
-        Private Const UxTheme As String = "Uxtheme.dll"
 
 #Region "user32"
 
@@ -121,20 +120,6 @@ Namespace Interop
 #End Region
 
 #End Region
-#Region "ustheme"
-
-        <DllImport(UxTheme)>
-        Public Shared Function SetWindowThemeAttribute(ByVal hWnd As IntPtr, ByVal wtype As Integer, ByRef attributes As NativeTypes.WtaOptions, ByVal size As UInteger) As Integer
-        End Function
-        <DllImport(UxTheme)>
-        Public Shared Function GetThemeMargins(hTheme As IntPtr, hdc As IntPtr, iPartId As Integer, iStateId As Integer, iPropId As Integer, rect As IntPtr, ByRef pMargins As Native.Margin) As Integer
-        End Function
-        <DllImport(UxTheme, ExactSpelling:=True, CharSet:=CharSet.Unicode)>
-        Public Shared Function SetWindowTheme(ByVal hWnd As IntPtr, ByVal pszSubAppName As String, ByVal pszSubIdList As Integer) As Integer
-        End Function
-
-#End Region
-
 
     End Class
 End Namespace

@@ -98,7 +98,7 @@ Namespace UI.Forms
             Dim margins As Native.Margin
             Try
                 Dim hDc As IntPtr = dc.GetHdc()
-                If 0 = NativeMethods.GetThemeMargins(_renderer.Handle, hDc, _renderer.Part, _renderer.State, marginType, IntPtr.Zero, margins) Then
+                If 0 = Native.UxTheme.GetThemeMargins(_renderer.Handle, hDc, _renderer.Part, _renderer.State, marginType, IntPtr.Zero, margins) Then
                     Return New Padding(margins.cxLeftWidth, margins.cyTopHeight, margins.cxRightWidth, margins.cyBottomheight)
                 End If
                 Return Padding.Empty
