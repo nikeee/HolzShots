@@ -22,10 +22,10 @@ Namespace UI.Forms
         Protected Overrides Sub OnHandleCreated(ByVal e As System.EventArgs)
             MyBase.OnHandleCreated(e)
             If EnvironmentEx.IsVistaOrHigher Then
-                Dim hndl = Interop.NativeMethods.SendMessage(Me.Handle, DirectCast(Interop.NativeTypes.Tv.GetExtendedStyle, Integer), IntPtr.Zero, IntPtr.Zero)
+                Dim hndl = Native.User32.SendMessage(Me.Handle, DirectCast(Interop.NativeTypes.Tv.GetExtendedStyle, Integer), IntPtr.Zero, IntPtr.Zero)
                 hndl = New IntPtr(hndl.ToInt32 Or Interop.NativeTypes.Tv.ExAutoSHcroll) ' Or NativeMethods.TVS_EX_FADEINOUTEXPANDOS)
 
-                Interop.NativeMethods.SendMessage(Me.Handle, DirectCast(Interop.NativeTypes.Tv.SetExtendedStyle, Integer), IntPtr.Zero, hndl)
+                Native.User32.SendMessage(Me.Handle, DirectCast(Interop.NativeTypes.Tv.SetExtendedStyle, Integer), IntPtr.Zero, hndl)
 
                 Dim unused = Native.UxTheme.SetWindowTheme(Me.Handle, "explorer", 0)
             End If

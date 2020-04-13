@@ -10,21 +10,6 @@ Namespace Interop
 
 #Region "user32"
 
-#Region "SendMessage"
-
-        <DllImport(User32)>
-        Friend Shared Function SendMessage(ByVal hWnd As IntPtr, ByVal msg As UInt32, ByVal wParam As IntPtr, ByVal lParam As IntPtr) As IntPtr
-        End Function
-
-        <DllImport(User32, CharSet:=CharSet.Unicode)>
-        Friend Shared Function SendMessage(ByVal hWnd As IntPtr, ByVal msg As UInt32, ByVal wParam As IntPtr, ByVal lParam As StringBuilder) As IntPtr
-        End Function
-
-        <DllImport(User32)>
-        Friend Shared Function SendMessage(ByVal hWnd As IntPtr, ByVal msg As UInt32, ByVal wParam As IntPtr, <MarshalAs(UnmanagedType.LPWStr)> ByVal lParam As String) As IntPtr
-        End Function
-
-#End Region
 #Region "Get/SetForegroundwindow"
 
         <DllImport(User32)>
