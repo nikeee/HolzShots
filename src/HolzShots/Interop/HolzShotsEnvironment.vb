@@ -49,7 +49,7 @@ Namespace Interop
         Public Shared ReadOnly Property IsVistaOrHigher As Boolean = Environment.OSVersion.Version.Major >= 6
         Public Shared ReadOnly Property IsAeroEnabled As Boolean
             Get
-                Return IsVistaOrHigher AndAlso NativeMethods.DwmIsCompositionEnabled()
+                Return IsVistaOrHigher AndAlso Native.DwmApi.DwmIsCompositionEnabled()
             End Get
         End Property
 
