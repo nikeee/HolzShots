@@ -22,10 +22,13 @@ namespace HolzShots.Input
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
             Debug.Assert(value is Hotkey);
-            if (destinationType == typeof(int))
-                return (value as Hotkey).GetHashCode();
-            if (destinationType == typeof(string))
-                return (value as Hotkey).ToString();
+            if (value is Hotkey h)
+            {
+                if (destinationType == typeof(int))
+                    return h.GetHashCode();
+                if (destinationType == typeof(string))
+                    return h.ToString();
+            }
 
             Debugger.Break(); // Something is wrong here.
             return base.ConvertTo(context, culture, value, destinationType);

@@ -13,6 +13,9 @@ namespace HolzShots.Net.Custom
     {
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
+            if (writer == null)
+                throw new ArgumentNullException(nameof(writer));
+
             if (value == null)
             {
                 writer.WriteNull();
@@ -27,6 +30,9 @@ namespace HolzShots.Net.Custom
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
+            if (reader == null)
+                throw new ArgumentNullException(nameof(reader));
+
             if (reader.TokenType == JsonToken.Null)
                 return null;
             if (reader.TokenType != JsonToken.String)

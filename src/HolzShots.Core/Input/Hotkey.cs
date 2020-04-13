@@ -74,6 +74,9 @@ namespace HolzShots.Input
         }
         public static Hotkey FromKeyboardEvent(KeyEventArgs e)
         {
+            if (e == null)
+                throw new ArgumentNullException(nameof(e));
+
             ModifierKeys modKeys = ModifierKeys.None;
             Keys k = e.KeyCode;
 

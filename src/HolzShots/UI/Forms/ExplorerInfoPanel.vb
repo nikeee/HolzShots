@@ -23,6 +23,8 @@ Namespace UI.Forms
         End Sub
 
         Protected Overrides Sub OnPaint(ByVal e As PaintEventArgs)
+            If e Is Nothing Then Throw New ArgumentNullException(NameOf(e))
+
             If Enabled Then
                 If Width > 0 AndAlso Height > 4 Then
                     Select Case Dock

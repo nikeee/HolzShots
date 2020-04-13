@@ -48,6 +48,8 @@ Namespace UI.Forms
         End Property
 
         Protected Overrides Sub OnPaint(e As System.Windows.Forms.PaintEventArgs)
+            If e Is Nothing Then Throw New ArgumentNullException(NameOf(e))
+
             With e.Graphics
                 .FillRectangle(BackgroundBrush, New Rectangle(0, 0, ClientSize.Width, ClientSize.Height))
                 .DrawRectangle(BorderPen, New Rectangle(0, 0, ClientSize.Width - 1, ClientSize.Height - 1))

@@ -17,9 +17,9 @@ Namespace My
         Private Const CultureString As String = "en-US"
         Friend ReadOnly TheCulture As New CultureInfo(CultureString, False)
 
-        Public Shared SmallStockIcons As New StockIcons(StockIconSize.Small, False, False)
-        Public Shared ShellSizeStockIcons As New StockIcons(StockIconSize.ShellSize, False, False)
-        Public Shared LargeStockIcons As New StockIcons(StockIconSize.Large, False, False)
+        Public Shared ReadOnly Property SmallStockIcons As New StockIcons(StockIconSize.Small, False, False)
+        Public Shared ReadOnly Property ShellSizeStockIcons As New StockIcons(StockIconSize.ShellSize, False, False)
+        Public Shared ReadOnly Property LargeStockIcons As New StockIcons(StockIconSize.Large, False, False)
 
         Private _uploaders As UploaderManager
         ReadOnly Property Uploaders As UploaderManager

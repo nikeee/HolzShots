@@ -8,14 +8,18 @@ namespace HolzShots.Drawing
 {
     public static class ImageFormatAnalyser
     {
-
         private const int RowScanCount = 5;
         private const int ColScanCount = 5;
         private const int LineCount = 10;
 
-        public static AlgorithmKind DefaultAlgorithm = AlgorithmKind.Hybrid;
+        public const AlgorithmKind DefaultAlgorithm = AlgorithmKind.Hybrid;
 
-        public static bool IsOptimizable(Image image) => !image.RawFormat.Equals(ImageFormat.Gif);
+        public static bool IsOptimizable(Image image)
+        {
+            if (image == null)
+                throw new ArgumentNullException(nameof(image));
+            return !image.RawFormat.Equals(ImageFormat.Gif);
+        }
 
         // Implemented some time ago. Now used in HolzShots. Do not touch.
         private unsafe static ImageFormat GetBestFittingFormatAlgorithm(Bitmap image)
@@ -128,6 +132,9 @@ namespace HolzShots.Drawing
 
         public static ImageFormat GetBestFittingFormat(Bitmap image, AlgorithmKind algorithm)
         {
+            if (image == null)
+                throw new ArgumentNullException(nameof(image));
+
             switch (algorithm)
             {
                 case AlgorithmKind.ComplexScanning:

@@ -1,6 +1,4 @@
-Imports System.Drawing
 Imports System.Drawing.Drawing2D
-Imports System.Windows.Forms
 
 Namespace UI.Forms
 
@@ -21,6 +19,8 @@ Namespace UI.Forms
         End Sub
 
         Protected Overrides Sub OnRenderMenuItemBackground(ByVal e As ToolStripItemRenderEventArgs)
+            If e Is Nothing Then Throw New ArgumentNullException(NameOf(e))
+
             If e.Item.Selected Then
                 RenderBackground(e)
             Else
@@ -28,12 +28,18 @@ Namespace UI.Forms
             End If
         End Sub
         Protected Overrides Sub OnRenderToolStripBackground(ByVal e As ToolStripRenderEventArgs)
+            If e Is Nothing Then Throw New ArgumentNullException(NameOf(e))
+
             e.Graphics.Clear(BackgroundColor1)
         End Sub
         Protected Overrides Sub OnRenderImageMargin(ByVal e As ToolStripRenderEventArgs)
+            If e Is Nothing Then Throw New ArgumentNullException(NameOf(e))
+
             e.Graphics.FillRectangle(BackgroundBrush1, e.AffectedBounds)
         End Sub
         Protected Overrides Sub OnRenderDropDownButtonBackground(ByVal e As ToolStripItemRenderEventArgs)
+            If e Is Nothing Then Throw New ArgumentNullException(NameOf(e))
+
             If e.Item.Selected Then
                 RenderBackground(e)
             Else
@@ -41,6 +47,8 @@ Namespace UI.Forms
             End If
         End Sub
         Protected Overrides Sub OnRenderItemText(ByVal e As ToolStripItemTextRenderEventArgs)
+            If e Is Nothing Then Throw New ArgumentNullException(NameOf(e))
+
             e.TextColor = Color.Black
             MyBase.OnRenderItemText(e)
         End Sub

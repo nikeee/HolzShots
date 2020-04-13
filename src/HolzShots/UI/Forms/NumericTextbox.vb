@@ -11,6 +11,8 @@ Namespace UI.Windows.Forms
         ReadOnly _negativeSign As String = _numberFormatInfo.NegativeSign
 
         Protected Overrides Sub OnKeyPress(ByVal e As KeyPressEventArgs)
+            If e Is Nothing Then Throw New ArgumentNullException(NameOf(e))
+
             MyBase.OnKeyPress(e)
 
             Dim keyInput As String = e.KeyChar.ToString()
