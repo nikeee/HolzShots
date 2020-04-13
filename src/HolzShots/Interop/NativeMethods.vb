@@ -68,17 +68,6 @@ Namespace Interop
 #End Region
 #Region "Drawing-Related"
 
-        <DllImport(User32)>
-        Friend Shared Function DestroyIcon(ByVal hIcon As IntPtr) As <MarshalAs(UnmanagedType.Bool)> Boolean
-        End Function
-
-        <DllImport(User32)>
-        Friend Shared Function LockWindowUpdate(ByVal hWndLock As IntPtr) As <MarshalAs(UnmanagedType.Bool)> Boolean
-        End Function
-
-        <DllImport(User32, CharSet:=CharSet.Auto)>
-        Friend Shared Function ReleaseDC(hWnd As IntPtr, hDc As IntPtr) As Integer
-        End Function
 
 #End Region
 

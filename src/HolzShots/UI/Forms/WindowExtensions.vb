@@ -59,7 +59,7 @@ Namespace UI.Windows.Forms
             Catch
                 Debug.Assert(False)
             Finally
-                Interop.NativeMethods.DestroyIcon(iconHandle)
+                Native.User32.DestroyIcon(iconHandle)
             End Try
         End Sub
 

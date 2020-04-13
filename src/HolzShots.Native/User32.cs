@@ -39,5 +39,17 @@ namespace HolzShots.Native
         public static extern int GetWindowThreadProcessId(IntPtr hWnd, ref int lpdwProcessId);
 
         #endregion
+        #region Drawing
+
+        [DllImport(DllName)]
+        public static extern bool DestroyIcon(IntPtr hIcon);
+
+        [DllImport(DllName)]
+        public static extern bool LockWindowUpdate(IntPtr hWndLock);
+
+        [DllImport(DllName, CharSet = CharSet.Auto)]
+        public static extern int ReleaseDC(IntPtr hWnd, IntPtr hDc);
+
+        #endregion
     }
 }

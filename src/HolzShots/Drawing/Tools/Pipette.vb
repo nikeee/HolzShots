@@ -47,10 +47,13 @@ Namespace Drawing.Tools
             End Using
 
             Dim hIcon As IntPtr = _cursorImage.GetHicon()
-            Dim temp As Icon = Icon.FromHandle(hIcon)
-            Dim ico As Icon = DirectCast(temp.Clone(), Icon)
-            temp.Dispose()
-            Interop.NativeMethods.DestroyIcon(hIcon)
+
+            Dim ico As Icon
+            Using temp As Icon = Icon.FromHandle(hIcon)
+                ico = DirectCast(temp.Clone(), Icon)
+            End Using
+
+            Native.User32.DestroyIcon(hIcon)
             Return ico
         End Function
 
