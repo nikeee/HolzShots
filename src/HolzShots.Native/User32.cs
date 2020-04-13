@@ -36,12 +36,12 @@ namespace HolzShots.Native
         public static extern int GetClassName(IntPtr hWnd, StringBuilder lpClassName, int nMaxCount);
 
         [DllImport(DllName)]
-        public static extern bool FlashWindowEx(in FlashWindowInfo pwfi);
+        private static extern bool FlashWindowEx(in FlashWindowInfo pwfi);
 
         #region Window Position
 
         [DllImport(DllName)]
-        public static extern bool GetWindowRect(IntPtr hWnd, ref Native.Rect lpRect);
+        public static extern bool GetWindowRect(IntPtr hWnd, ref Rect lpRect);
 
         [DllImport(DllName)]
         public static extern bool GetWindowPlacement(IntPtr hWnd, ref WindowPlacement lpwndpl);
