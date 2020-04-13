@@ -10,7 +10,7 @@ Namespace UI.Forms
             Get
                 Dim cp As CreateParams = MyBase.CreateParams
                 If EnvironmentEx.IsVistaOrHigher AndAlso Not Scrollable Then
-                    cp.Style = CInt(cp.Style Or Interop.NativeTypes.Tv.NoHScroll)
+                    cp.Style = cp.Style Or Native.WindowStyleFlags.TVS_NoHScroll
                 End If
                 Return cp
             End Get
@@ -19,10 +19,10 @@ Namespace UI.Forms
         Protected Overrides Sub OnHandleCreated(ByVal e As System.EventArgs)
             MyBase.OnHandleCreated(e)
             If EnvironmentEx.IsVistaOrHigher Then
-                Dim hndl = Native.User32.SendMessage(Me.Handle, DirectCast(Interop.NativeTypes.Tv.GetExtendedStyle, Integer), IntPtr.Zero, IntPtr.Zero)
-                hndl = New IntPtr(hndl.ToInt32 Or Interop.NativeTypes.Tv.ExAutoSHcroll) ' Or NativeMethods.TVS_EX_FADEINOUTEXPANDOS)
+                Dim extendedStyleIntPtr = Native.User32.SendMessage(Me.Handle, Native.WindowMessage.TVM_GetExtendedStyle, IntPtr.Zero, IntPtr.Zero)
+                Dim extendedStyle = extendedStyleIntPtr.ToInt32() Or Native.ExtendedWindowStyleFlags.TVS_EX_AutoHScroll ' Or Native.ExtendedWindowStyleFlags.TVS_EX_FadeInOutExpandOs)
 
-                Native.User32.SendMessage(Me.Handle, DirectCast(Interop.NativeTypes.Tv.SetExtendedStyle, Integer), IntPtr.Zero, hndl)
+                Native.User32.SendMessage(Me.Handle, Native.WindowMessage.TVM_SetExtendedStyle, IntPtr.Zero, New IntPtr(extendedStyle))
 
                 Dim unused = Native.UxTheme.SetWindowTheme(Me.Handle, "explorer", 0)
             End If
@@ -54,8 +54,9 @@ Namespace UI.Forms
         <SecurityPermission(SecurityAction.LinkDemand, Flags:=SecurityPermissionFlag.UnmanagedCode)>
         Protected Overrides Sub WndProc(ByRef m As Message)
             If View = View.Details Then
-                Select Case m.Msg
-                    Case Interop.NativeTypes.WindowMessage.Paint
+                Dim msg = DirectCast(Convert.ToUInt32(m.Msg), Native.WindowMessage)
+                Select Case msg
+                    Case Native.WindowMessage.WM_Paint
                         For Each ec As EmbeddedControl In _ecs
 
                             Dim rc As Rectangle = ec.Item.Bounds
