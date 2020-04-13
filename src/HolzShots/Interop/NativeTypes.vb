@@ -24,13 +24,6 @@ Namespace Interop
             Public normalPosition As Rectangle
         End Structure
 
-        <StructLayout(LayoutKind.Sequential)>
-        Public Structure WtaOptions
-            Public Flags As Wtnca
-            Public Mask As Wtnca
-        End Structure
-
-
         Public Enum Tv As Integer
             First = &H1100
             SetExtendedStyle = First + 44
@@ -52,14 +45,6 @@ Namespace Interop
             NoValidate = &H100
             NoTestFileCreate = &H10000
             DontAddToRecent = &H2000000
-        End Enum
-
-        <Flags()>
-        Public Enum Wtnca As UInteger
-            NoDrawCaption = &H1
-            NoDrawIcon = &H2
-            NoSysMenu = &H4
-            NoMirrorHelp = &H8
         End Enum
 
         ''' <summary>
