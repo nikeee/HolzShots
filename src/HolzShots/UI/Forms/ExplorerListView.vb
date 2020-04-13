@@ -19,10 +19,10 @@ Namespace UI.Forms
         Protected Overrides Sub OnHandleCreated(ByVal e As System.EventArgs)
             MyBase.OnHandleCreated(e)
             If EnvironmentEx.IsVistaOrHigher Then
-                Dim hndl = Native.User32.SendMessage(Me.Handle, DirectCast(Interop.NativeTypes.Tv.GetExtendedStyle, Integer), IntPtr.Zero, IntPtr.Zero)
-                hndl = New IntPtr(hndl.ToInt32 Or Interop.NativeTypes.Tv.ExAutoSHcroll) ' Or NativeMethods.TVS_EX_FADEINOUTEXPANDOS)
+                Dim hndl = Native.User32.SendMessage(Me.Handle, Native.WindowMessage.TVM_GetExtendedStyle, IntPtr.Zero, IntPtr.Zero)
+                hndl = New IntPtr(hndl.ToInt32() Or Interop.NativeTypes.Tv.ExAutoSHcroll) ' Or NativeMethods.TVS_EX_FADEINOUTEXPANDOS)
 
-                Native.User32.SendMessage(Me.Handle, DirectCast(Interop.NativeTypes.Tv.SetExtendedStyle, Integer), IntPtr.Zero, hndl)
+                Native.User32.SendMessage(Me.Handle, Native.WindowMessage.TVM_SetExtendedStyle, IntPtr.Zero, hndl)
 
                 Dim unused = Native.UxTheme.SetWindowTheme(Me.Handle, "explorer", 0)
             End If
@@ -54,8 +54,9 @@ Namespace UI.Forms
         <SecurityPermission(SecurityAction.LinkDemand, Flags:=SecurityPermissionFlag.UnmanagedCode)>
         Protected Overrides Sub WndProc(ByRef m As Message)
             If View = View.Details Then
-                Select Case m.Msg
-                    Case Interop.NativeTypes.WindowMessage.Paint
+                Dim msg = DirectCast(Convert.ToUInt32(m.Msg), Native.WindowMessage)
+                Select Case msg
+                    Case Native.WindowMessage.WM_Paint
                         For Each ec As EmbeddedControl In _ecs
 
                             Dim rc As Rectangle = ec.Item.Bounds

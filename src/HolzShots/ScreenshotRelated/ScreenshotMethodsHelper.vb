@@ -9,11 +9,11 @@ Namespace ScreenshotRelated
 
         Public Shared Sub StartRedraw(ByVal whandle As IntPtr)
             Native.User32.LockWindowUpdate(IntPtr.Zero)
-            Native.User32.SendMessage(whandle, 11, New IntPtr(1), IntPtr.Zero)
+            Native.User32.SendMessage(whandle, Native.WindowMessage.WM_SetRedraw, New IntPtr(1), IntPtr.Zero)
         End Sub
 
         Public Shared Sub StopRedraw(ByVal whandle As IntPtr)
-            Native.User32.SendMessage(whandle, 11, IntPtr.Zero, IntPtr.Zero)
+            Native.User32.SendMessage(whandle, Native.WindowMessage.WM_SetRedraw, IntPtr.Zero, IntPtr.Zero)
             Native.User32.LockWindowUpdate(whandle)
         End Sub
 
