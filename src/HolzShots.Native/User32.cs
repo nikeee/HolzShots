@@ -21,6 +21,14 @@ namespace HolzShots.Native
         public static extern IntPtr SendMessage(IntPtr hWnd, uint msg, IntPtr wParam, [MarshalAs(UnmanagedType.LPWStr)] string lParam);
 
         #endregion
+        #region Window Text
 
+        [DllImport(DllName, SetLastError = true, CharSet = CharSet.Unicode)]
+        public static extern int GetWindowText(IntPtr hwnd, StringBuilder lpString, int cch);
+
+        [DllImport(DllName, SetLastError = true, CharSet = CharSet.Auto)]
+        public static extern int GetWindowTextLength(IntPtr hwnd);
+
+        #endregion
     }
 }

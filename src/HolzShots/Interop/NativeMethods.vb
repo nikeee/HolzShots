@@ -21,17 +21,6 @@ Namespace Interop
         End Function
 
 #End Region
-#Region "GetWindowText"
-
-        <DllImport(User32, SetLastError:=True, CharSet:=CharSet.Unicode)>
-        Friend Shared Function GetWindowText(ByVal hwnd As IntPtr, ByVal lpString As StringBuilder, ByVal cch As Integer) As Integer
-        End Function
-
-        <DllImport(User32, SetLastError:=True, CharSet:=CharSet.Auto)>
-        Friend Shared Function GetWindowTextLength(ByVal hwnd As IntPtr) As Integer
-        End Function
-
-#End Region
 #Region "Window Position"
 
         <DllImport(User32)>

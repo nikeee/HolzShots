@@ -1,7 +1,4 @@
-Imports System.Drawing
 Imports System.Security.Permissions
-Imports System.Windows.Forms
-Imports HolzShots.Interop
 
 Namespace UI.Forms
 

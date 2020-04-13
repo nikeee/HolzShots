@@ -144,11 +144,10 @@ Namespace ScreenshotRelated
                         ' Old method:
                         ' ScreenshotMethodsHelper.ComputeAlphaChannel(bmpWhite, bmpBlack)
 
-                        Dim wndTitle = String.Empty
-                        Dim procName As String = String.Empty
-                        ScreenshotMethodsHelper.GetWindowInformation(wndHandle, wndTitle, procName)
+                        Dim windowTitle = ScreenshotMethodsHelper.GetWindowTitle(wndHandle)
+                        Dim processName = ScreenshotMethodsHelper.GetProcessNameOfWindow(wndHandle)
 
-                        Return New WindowScreenshotSet(result, curp, wndTitle, procName)
+                        Return New WindowScreenshotSet(result, curp, windowTitle, processName)
                     End Using
                 End Using
             End Using
@@ -169,10 +168,10 @@ Namespace ScreenshotRelated
                 g.Flush()
             End Using
 
-            Dim wndTitle = String.Empty, procName As String = String.Empty
-            ScreenshotMethodsHelper.GetWindowInformation(wndHandle, wndTitle, procName)
+            Dim windowTitle = ScreenshotMethodsHelper.GetWindowTitle(wndHandle)
+            Dim processName = ScreenshotMethodsHelper.GetProcessNameOfWindow(wndHandle)
 
-            Return New WindowScreenshotSet(bmp, curp, wndTitle, procName)
+            Return New WindowScreenshotSet(bmp, curp, windowTitle, processName)
         End Function
 
         Protected Shared Function CaptureCursor() As Bitmap

@@ -17,19 +17,25 @@ Namespace ScreenshotRelated
             NativeMethods.LockWindowUpdate(whandle)
         End Sub
 
-        Friend Shared Sub GetWindowInformation(ByVal whandle As IntPtr, ByRef wndTitle As String, ByRef procName As String)
+        Friend Shared Function GetWindowTitle(windowHandle As IntPtr) As String
+
+            Dim windowTitleLength As Integer = Native.User32.GetWindowTextLength(windowHandle)
+            Dim windowTitleBuffer As New StringBuilder(windowTitleLength + 1)
+
+            Dim unused = Native.User32.GetWindowText(windowHandle, windowTitleBuffer, windowTitleBuffer.Capacity)
+
+            Return windowTitleBuffer.ToString()
+        End Function
+
+        Friend Shared Function GetProcessNameOfWindow(windowHandle As IntPtr) As String
+
             Dim pid As Integer
-            Dim unused = NativeMethods.GetWindowThreadProcessId(whandle, pid)
+            Dim unused = NativeMethods.GetWindowThreadProcessId(windowHandle, pid)
 
-            Dim p As Process = Process.GetProcessById(pid)
-            Dim windTitlelen As Integer = NativeMethods.GetWindowTextLength(whandle)
-            Dim wndTitlesb As New StringBuilder(windTitlelen + 1)
+            Dim process = Diagnostics.Process.GetProcessById(pid)
 
-            Dim unused1 = NativeMethods.GetWindowText(whandle, wndTitlesb, wndTitlesb.Capacity)
-
-            wndTitle = wndTitlesb.ToString
-            procName = p.ProcessName
-        End Sub
+            Return process.ProcessName
+        End Function
 
     End Class
 End Namespace
