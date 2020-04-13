@@ -60,7 +60,7 @@ namespace HolzShots.UI.Transitions.TransitionTypes
         /// </summary>
         public void Setup(IList<TransitionElement> elements, int transitionTime)
         {
-            _elements = elements;
+            _elements = elements ?? throw new ArgumentNullException(nameof(elements));
             _transitionTime = transitionTime;
 
             // We check that the elements list has some members...

@@ -94,6 +94,9 @@ namespace HolzShots.UI.Transitions
         /// </summary>
         public static void Run<T>(object target, string propertyName, T initialValue, T destinationValue, ITransitionType transitionMethod)
         {
+            if (target == null)
+                throw new ArgumentNullException(nameof(target));
+
             Utility.SetValue(target, propertyName, initialValue);
             Run(target, propertyName, destinationValue, transitionMethod);
         }
@@ -124,6 +127,9 @@ namespace HolzShots.UI.Transitions
         /// </summary>
         public void Add<T>(object target, string propertyName, T destinationValue)
         {
+            if (target == null)
+                throw new ArgumentNullException(nameof(target));
+
             // We get the property info...
             Type targetType = target.GetType();
             PropertyInfo propertyInfo = targetType.GetProperty(propertyName);
