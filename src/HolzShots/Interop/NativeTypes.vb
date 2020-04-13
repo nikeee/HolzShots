@@ -5,34 +5,6 @@ Namespace Interop
         Private Sub New()
         End Sub
 
-
-        <StructLayout(LayoutKind.Sequential)>
-        Public Structure Rect
-            Public Left As Integer
-            Public Top As Integer
-            Public Right As Integer
-            Public Bottom As Integer
-
-            Public Shared Function ToRectangle(ByVal rct As Rect) As Rectangle
-                Return Rectangle.FromLTRB(rct.Left, rct.Top, rct.Right, rct.Bottom)
-            End Function
-
-            Public Sub New(ByVal left As Integer, ByVal top As Integer, ByVal right As Integer, ByVal bottom As Integer)
-                Me.Left = left
-                Me.Top = top
-                Me.Right = right
-                Me.Bottom = bottom
-            End Sub
-
-            ' Implicit operators ftw
-            Public Shared Widening Operator CType(ByVal rct As Rect) As Rectangle
-                Return Rectangle.FromLTRB(rct.Left, rct.Top, rct.Right, rct.Bottom)
-            End Operator
-            Public Shared Widening Operator CType(ByVal rectangle As Rectangle) As Rect
-                Return New Rect(rectangle.Left, rectangle.Top, rectangle.Right, rectangle.Bottom)
-            End Operator
-        End Structure
-
         <StructLayout(LayoutKind.Sequential)>
         Public Structure Size
             Public Width As Integer
@@ -95,7 +67,7 @@ Namespace Interop
             Public hWnd As IntPtr
             Public uCallbackMessage As Integer
             Public uEdge As TaskbarPosition
-            Public rc As Rect
+            Public rc As Native.Rect
             Public lParam As IntPtr
         End Structure
 

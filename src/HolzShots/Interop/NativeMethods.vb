@@ -125,7 +125,7 @@ Namespace Interop
 #Region "Window Position"
 
         <DllImport(User32)>
-        Friend Shared Function GetWindowRect(ByVal hWnd As IntPtr, ByRef lpRect As NativeTypes.Rect) As Boolean
+        Friend Shared Function GetWindowRect(ByVal hWnd As IntPtr, ByRef lpRect As HolzShots.Native.Rect) As Boolean
         End Function
 
         <DllImport(User32)>
