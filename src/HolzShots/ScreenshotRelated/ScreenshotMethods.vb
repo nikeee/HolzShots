@@ -55,7 +55,7 @@ Namespace ScreenshotRelated
 
 
         Public Shared Function CaptureWindow(windowHandle As IntPtr, Optional includeMargin As Boolean = True) As Screenshot
-            If NativeMethods.IsIconic(windowHandle) Then Return Nothing
+            If Native.User32.IsIconic(windowHandle) Then Return Nothing
 
             Using prio As New ProcessPriorityRequest()
                 Using shotSet = GetShotSet(windowHandle, includeMargin)

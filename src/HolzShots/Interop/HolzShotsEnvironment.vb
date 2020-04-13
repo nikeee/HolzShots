@@ -23,7 +23,7 @@ Namespace Interop
             Dim hndl As IntPtr = NativeMethods.GetForegroundWindow()
             Dim sb As New StringBuilder()
 
-            Dim unused = NativeMethods.GetClassName(hndl, sb, sb.Capacity)
+            Dim unused = Native.User32.GetClassName(hndl, sb, sb.Capacity)
 
             If sb.ToString = "WorkerW" Then Return False
             Dim rct As Native.Rect

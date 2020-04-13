@@ -51,25 +51,6 @@ Namespace Interop
         End Function
 
 #End Region
-#Region "Window State/Information"
-
-        <DllImport(User32)>
-        Friend Shared Function IsIconic(ByVal hWnd As IntPtr) As <MarshalAs(UnmanagedType.Bool)> Boolean
-        End Function
-
-        <DllImport(User32, CharSet:=CharSet.Unicode)>
-        Friend Shared Function GetClassName(ByVal hWnd As IntPtr, ByVal lpClassName As StringBuilder, ByVal nMaxCount As Integer) As Integer
-        End Function
-
-        <DllImport(User32)>
-        Public Shared Function FlashWindowEx(ByRef pwfi As NativeTypes.FlashWindowInfo) As <MarshalAs(UnmanagedType.Bool)> Boolean
-        End Function
-
-#End Region
-#Region "Drawing-Related"
-
-
-#End Region
 
 #End Region
 

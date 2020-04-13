@@ -108,53 +108,6 @@ Namespace Interop
             TextColor = 1
         End Enum
 
-        <Flags()>
-        Public Enum FlashWindowFlags As UInteger
-            ''' <summary>Stop flashing. The system restores the window to its original state.</summary>
-            [Stop] = 0
-            ''' <summary>Flash the window caption.</summary>
-            Caption = 1
-            ''' <summary>Flash the taskbar button.</summary>
-            Tray = 2
-            ''' <summary>
-            ''' Flash both the window caption and taskbar button.
-            ''' This is equivalent to setting the FLASHW_CAPTION | FLASHW_TRAY flags.
-            ''' </summary>
-            [All] = 3
-            ''' <summary>Flash continuously, until the FLASHW_STOP flag is set.</summary>
-            Timer = 4
-            ''' <summary>Flash continuously until the window comes to the foreground.</summary>
-            TimerNoFg = 12
-        End Enum
-
-        <StructLayout(LayoutKind.Sequential)>
-        Public Structure FlashWindowInfo
-            Private _size As UInt32
-            Private _handle As IntPtr
-            Private _flags As FlashWindowFlags
-            Private _count As UInt32
-            Private _timeout As UInt32
-
-            Public Sub New(ByVal handle As IntPtr)
-                Me.New(handle, FlashWindowFlags.TimerNoFg Or FlashWindowFlags.Tray, UInt32.MaxValue)
-            End Sub
-            Public Sub New(ByVal handle As IntPtr, ByVal flags As FlashWindowFlags, ByVal count As UInteger)
-                Me.New(handle, flags, count, 0)
-            End Sub
-            Public Sub New(ByVal handle As IntPtr, ByVal flags As FlashWindowFlags, ByVal count As UInteger, ByVal timeout As UInteger)
-                Me._size = Convert.ToUInt32(Marshal.SizeOf(Me))
-                Me._handle = handle
-                Me._flags = flags
-                Me._count = count
-                Me._timeout = timeout
-            End Sub
-
-            Sub Flash()
-                NativeMethods.FlashWindowEx(Me)
-            End Sub
-
-        End Structure
-
         <StructLayout(LayoutKind.Sequential)>
         Public Structure DwmColorizationParams
             Public Color1 As Integer
