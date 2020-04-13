@@ -7,16 +7,8 @@ Namespace Interop
         End Sub
 
         Private Const User32 As String = "user32.dll"
-        Private Const DwmApi As String = "dwmapi.dll"
         Private Const UxTheme As String = "Uxtheme.dll"
 
-#Region "dwmapi"
-
-        <DllImport(DwmApi, PreserveSig:=False)>
-        Friend Shared Function DwmIsCompositionEnabled() As <MarshalAs(UnmanagedType.U1)> Boolean
-        End Function
-
-#End Region
 #Region "user32"
 
 #Region "SendMessage"
