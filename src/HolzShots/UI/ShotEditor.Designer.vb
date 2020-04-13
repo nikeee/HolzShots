@@ -952,7 +952,7 @@ Namespace UI.Specialized
             Me.ThePanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
             Me.ThePanel.BlurFactor = 7
             Me.ThePanel.BrightenColor = System.Drawing.Color.Black
-            Me.ThePanel.CurrentTool = HolzShots.UI.Controls.PaintPanel.Tools.None
+            Me.ThePanel.CurrentTool = HolzShots.UI.Controls.PaintPanel.Tool.None
             Me.ThePanel.Cursor = System.Windows.Forms.Cursors.Default
             Me.ThePanel.DrawCursor = False
             Me.ThePanel.EllipseColor = System.Drawing.Color.Empty

@@ -34,7 +34,7 @@ Namespace Drawing.Tools
             End Get
         End Property
 
-        Public Overrides ReadOnly Property ToolType As PaintPanel.Tools = PaintPanel.Tools.Marker
+        Public Overrides ReadOnly Property ToolType As PaintPanel.ShotEditorTool = PaintPanel.ShotEditorTool.Marker
 
         Public Overrides Sub RenderFinalImage(ByRef rawImage As Image, ByVal sender As PaintPanel)
             Debug.Assert(TypeOf rawImage Is Bitmap)

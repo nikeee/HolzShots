@@ -6,7 +6,7 @@ Namespace Drawing.Tools
     Friend Class Pipette
         Inherits Tool
         Implements IDisposable
-        Public Overrides ReadOnly Property ToolType As PaintPanel.Tools = PaintPanel.Tools.Pipette
+        Public Overrides ReadOnly Property ToolType As PaintPanel.ShotEditorTool = PaintPanel.ShotEditorTool.Pipette
 
         Public Overrides ReadOnly Property Cursor As Cursor = Cursors.Cross
 

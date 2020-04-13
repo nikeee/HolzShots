@@ -6,7 +6,7 @@ Namespace Drawing.Tools
         Inherits Tool
 
         Public Overrides ReadOnly Property Cursor As Cursor = Cursors.Arrow
-        Public Overrides ReadOnly Property ToolType As PaintPanel.Tools = PaintPanel.Tools.Scale
+        Public Overrides ReadOnly Property ToolType As PaintPanel.ShotEditorTool = PaintPanel.ShotEditorTool.Scale
 
         Public Overrides Sub RenderFinalImage(ByRef rawImage As Image, ByVal sender As PaintPanel)
 
@@ -51,7 +51,7 @@ Namespace Drawing.Tools
                     GC.Collect()
 
                 Else
-                    sender.CurrentTool = PaintPanel.Tools.None
+                    sender.CurrentTool = PaintPanel.ShotEditorTool.None
                 End If
             End Using
         End Sub

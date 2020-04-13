@@ -5,7 +5,7 @@ Namespace Drawing.Tools
         Inherits Tool
         Private Shared ReadOnly CursorInstance As Cursor = New Cursor(My.Resources.crossMedium.GetHicon())
         Public Overrides ReadOnly Property Cursor As Cursor = CursorInstance
-        Public Overrides ReadOnly Property ToolType As PaintPanel.Tools = PaintPanel.Tools.Brighten
+        Public Overrides ReadOnly Property ToolType As PaintPanel.ShotEditorTool = PaintPanel.ShotEditorTool.Brighten
 
         Public Overrides Sub RenderFinalImage(ByRef rawImage As Image, ByVal sender As PaintPanel)
             Dim thePoint As New Point(If(BeginCoords.X > EndCoords.X, EndCoords.X, BeginCoords.X),

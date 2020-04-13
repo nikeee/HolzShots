@@ -34,7 +34,7 @@ Namespace Drawing.Tools
             End Get
         End Property
 
-        Public Overrides ReadOnly Property ToolType As PaintPanel.Tools = PaintPanel.Tools.Eraser
+        Public Overrides ReadOnly Property ToolType As PaintPanel.ShotEditorTool = PaintPanel.ShotEditorTool.Eraser
 
         Private Shared ReadOnly ClearBrush As Brush = New SolidBrush(Color.FromArgb(0, Color.White))
         Private _isFirstClick As Boolean = True

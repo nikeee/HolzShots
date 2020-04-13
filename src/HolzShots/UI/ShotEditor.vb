@@ -22,7 +22,7 @@ Namespace UI.Specialized
 #Region "Properties"
 
         ' TODO: Remove?
-        Friend ReadOnly Property CurrentTool As PaintPanel.Tools
+        Friend ReadOnly Property CurrentTool As PaintPanel.ShotEditorTool
             Get
                 'Return ThePanel.CurrentTool
             End Get
@@ -357,7 +357,7 @@ Namespace UI.Specialized
         End Sub
 
         Private Sub ResetTools()
-            ThePanel.CurrentTool = PaintPanel.Tools.None
+            ThePanel.CurrentTool = PaintPanel.ShotEditorTool.None
             CensorTool.Checked = False
             MarkerTool.Checked = False
             TextToolButton.Checked = False
@@ -378,20 +378,20 @@ Namespace UI.Specialized
 
         Private Sub AddSettingsPanels()
             _activator = New PanelActivator(Me)
-            _activator.AddPanel(PaintPanel.Tools.Arrow, ArrowSettingsPanel)
-            _activator.AddPanel(PaintPanel.Tools.Brighten, BrightenSettingsPanel)
-            _activator.AddPanel(PaintPanel.Tools.Blur, BlurSettingsPanel)
-            _activator.AddPanel(PaintPanel.Tools.Ellipse, EllipseSettingsPanel)
-            _activator.AddPanel(PaintPanel.Tools.Eraser, EraserSettingsPanel)
-            _activator.AddPanel(PaintPanel.Tools.Marker, MarkerSettingsPanel)
-            _activator.AddPanel(PaintPanel.Tools.Censor, CensorSettingsPanel)
+            _activator.AddPanel(PaintPanel.ShotEditorTool.Arrow, ArrowSettingsPanel)
+            _activator.AddPanel(PaintPanel.ShotEditorTool.Brighten, BrightenSettingsPanel)
+            _activator.AddPanel(PaintPanel.ShotEditorTool.Blur, BlurSettingsPanel)
+            _activator.AddPanel(PaintPanel.ShotEditorTool.Ellipse, EllipseSettingsPanel)
+            _activator.AddPanel(PaintPanel.ShotEditorTool.Eraser, EraserSettingsPanel)
+            _activator.AddPanel(PaintPanel.ShotEditorTool.Marker, MarkerSettingsPanel)
+            _activator.AddPanel(PaintPanel.ShotEditorTool.Censor, CensorSettingsPanel)
         End Sub
 
         Private Sub PipettenToolClick(ByVal sender As Object, ByVal e As EventArgs) Handles PipettenTool.Click
-            If CurrentTool = PaintPanel.Tools.Pipette Then
+            If CurrentTool = PaintPanel.ShotEditorTool.Pipette Then
                 ResetTools()
             Else
-                ThePanel.CurrentTool = PaintPanel.Tools.Pipette
+                ThePanel.CurrentTool = PaintPanel.ShotEditorTool.Pipette
                 MarkerTool.Checked = False
                 CensorTool.Checked = False
                 TextToolButton.Checked = False
@@ -407,10 +407,10 @@ Namespace UI.Specialized
         End Sub
 
         Private Sub ScaleToolClick(ByVal sender As Object, ByVal e As EventArgs) Handles ScaleTool.Click
-            If CurrentTool = PaintPanel.Tools.Scale Then
+            If CurrentTool = PaintPanel.ShotEditorTool.Scale Then
                 ResetTools()
             Else
-                ThePanel.CurrentTool = PaintPanel.Tools.Scale
+                ThePanel.CurrentTool = PaintPanel.ShotEditorTool.Scale
                 MarkerTool.Checked = False
                 CensorTool.Checked = False
                 TextToolButton.Checked = False
@@ -427,10 +427,10 @@ Namespace UI.Specialized
         End Sub
 
         Private Sub CircleToolClick(ByVal sender As Object, ByVal e As EventArgs) Handles EllipseTool.Click
-            If CurrentTool = PaintPanel.Tools.Ellipse Then
+            If CurrentTool = PaintPanel.ShotEditorTool.Ellipse Then
                 ResetTools()
             Else
-                ThePanel.CurrentTool = PaintPanel.Tools.Ellipse
+                ThePanel.CurrentTool = PaintPanel.ShotEditorTool.Ellipse
                 _activator.ActivateSettingsPanel(ThePanel.CurrentTool)
                 MarkerTool.Checked = False
                 CensorTool.Checked = False
@@ -447,10 +447,10 @@ Namespace UI.Specialized
         End Sub
 
         Private Sub TextToolButtonClick(ByVal sender As Object, ByVal e As EventArgs) Handles TextToolButton.Click
-            If CurrentTool = PaintPanel.Tools.Text Then
+            If CurrentTool = PaintPanel.ShotEditorTool.Text Then
                 ResetTools()
             Else
-                ThePanel.CurrentTool = PaintPanel.Tools.Text
+                ThePanel.CurrentTool = PaintPanel.ShotEditorTool.Text
                 MarkerTool.Checked = False
                 CensorTool.Checked = False
                 TextToolButton.Checked = True
@@ -467,10 +467,10 @@ Namespace UI.Specialized
         End Sub
 
         Private Sub EraserButtonClick(ByVal sender As Object, ByVal e As EventArgs) Handles EraserTool.Click
-            If CurrentTool = PaintPanel.Tools.Eraser Then
+            If CurrentTool = PaintPanel.ShotEditorTool.Eraser Then
                 ResetTools()
             Else
-                ThePanel.CurrentTool = PaintPanel.Tools.Eraser
+                ThePanel.CurrentTool = PaintPanel.ShotEditorTool.Eraser
                 _activator.ActivateSettingsPanel(ThePanel.CurrentTool)
                 MarkerTool.Checked = False
                 CensorTool.Checked = False
@@ -487,10 +487,10 @@ Namespace UI.Specialized
         End Sub
 
         Private Sub CroppingToolClick(ByVal sender As Object, ByVal e As EventArgs) Handles CroppingTool.Click
-            If CurrentTool = PaintPanel.Tools.Crop Then
+            If CurrentTool = PaintPanel.ShotEditorTool.Crop Then
                 ResetTools()
             Else
-                ThePanel.CurrentTool = PaintPanel.Tools.Crop
+                ThePanel.CurrentTool = PaintPanel.ShotEditorTool.Crop
                 MarkerTool.Checked = False
                 CensorTool.Checked = False
                 TextToolButton.Checked = False
@@ -507,10 +507,10 @@ Namespace UI.Specialized
         End Sub
 
         Private Sub ArrowToolClick(ByVal sender As Object, ByVal e As EventArgs) Handles ArrowTool.Click
-            If CurrentTool = PaintPanel.Tools.Arrow Then
+            If CurrentTool = PaintPanel.ShotEditorTool.Arrow Then
                 ResetTools()
             Else
-                ThePanel.CurrentTool = PaintPanel.Tools.Arrow
+                ThePanel.CurrentTool = PaintPanel.ShotEditorTool.Arrow
                 _activator.ActivateSettingsPanel(ThePanel.CurrentTool)
                 MarkerTool.Checked = False
                 CensorTool.Checked = False
@@ -527,10 +527,10 @@ Namespace UI.Specialized
         End Sub
 
         Private Sub ZensursulaClick(ByVal sender As Object, ByVal e As EventArgs) Handles CensorTool.Click
-            If CurrentTool = PaintPanel.Tools.Censor Then
+            If CurrentTool = PaintPanel.ShotEditorTool.Censor Then
                 ResetTools()
             Else
-                ThePanel.CurrentTool = PaintPanel.Tools.Censor
+                ThePanel.CurrentTool = PaintPanel.ShotEditorTool.Censor
                 _activator.ActivateSettingsPanel(ThePanel.CurrentTool)
                 CensorTool.Checked = True
                 MarkerTool.Checked = False
@@ -547,10 +547,10 @@ Namespace UI.Specialized
         End Sub
 
         Private Sub HighlightClick(ByVal sender As Object, ByVal e As EventArgs) Handles MarkerTool.Click
-            If CurrentTool = PaintPanel.Tools.Marker Then
+            If CurrentTool = PaintPanel.ShotEditorTool.Marker Then
                 ResetTools()
             Else
-                ThePanel.CurrentTool = PaintPanel.Tools.Marker
+                ThePanel.CurrentTool = PaintPanel.ShotEditorTool.Marker
                 _activator.ActivateSettingsPanel(ThePanel.CurrentTool)
                 MarkerTool.Checked = True
                 CensorTool.Checked = False
@@ -567,10 +567,10 @@ Namespace UI.Specialized
         End Sub
 
         Private Sub PixelateAreaClick(ByVal sender As Object, ByVal e As EventArgs) Handles BlurTool.Click
-            If CurrentTool = PaintPanel.Tools.Blur Then
+            If CurrentTool = PaintPanel.ShotEditorTool.Blur Then
                 ResetTools()
             Else
-                ThePanel.CurrentTool = PaintPanel.Tools.Blur
+                ThePanel.CurrentTool = PaintPanel.ShotEditorTool.Blur
                 _activator.ActivateSettingsPanel(ThePanel.CurrentTool)
                 MarkerTool.Checked = False
                 CensorTool.Checked = False
@@ -587,10 +587,10 @@ Namespace UI.Specialized
         End Sub
 
         Private Sub BrightenToolClick(ByVal sender As Object, ByVal e As EventArgs) Handles BrightenTool.Click
-            If CurrentTool = PaintPanel.Tools.Brighten Then
+            If CurrentTool = PaintPanel.ShotEditorTool.Brighten Then
                 ResetTools()
             Else
-                ThePanel.CurrentTool = PaintPanel.Tools.Brighten
+                ThePanel.CurrentTool = PaintPanel.ShotEditorTool.Brighten
                 _activator.ActivateSettingsPanel(ThePanel.CurrentTool)
                 MarkerTool.Checked = False
                 CensorTool.Checked = False
