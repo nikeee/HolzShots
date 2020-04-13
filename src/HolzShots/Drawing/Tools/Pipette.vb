@@ -30,20 +30,21 @@ Namespace Drawing.Tools
         Private Function DrawCursor(ByVal c As Color) As Icon
             _cursorImage = New Bitmap(195, 195)
             _cursorImage.MakeTransparent()
-            Dim cursorGraphics As Graphics = Graphics.FromImage(_cursorImage)
+            Using cursorGraphics As Graphics = Graphics.FromImage(_cursorImage)
 
-            cursorGraphics.SmoothingMode = SmoothingMode.AntiAlias
-            _cursorPen.Width = 1
-            _cursorPen.Color = c
+                cursorGraphics.SmoothingMode = SmoothingMode.AntiAlias
+                _cursorPen.Width = 1
+                _cursorPen.Color = c
 
-            cursorGraphics.DrawLine(PenWhite, 10, CInt(195 / 2) - 1, CInt(195 / 2) - 1, CInt(195 / 2) - 1)
-            cursorGraphics.DrawLine(PenWhite, CInt(195 / 2), CInt(195 / 2) - 1, 190, CInt(195 / 2) - 1)
-            cursorGraphics.DrawLine(PenWhite, CInt(195 / 2) - 1, 10, CInt(195 / 2) - 1, CInt(195 / 2) - 2)
+                cursorGraphics.DrawLine(PenWhite, 10, CInt(195 / 2) - 1, CInt(195 / 2) - 1, CInt(195 / 2) - 1)
+                cursorGraphics.DrawLine(PenWhite, CInt(195 / 2), CInt(195 / 2) - 1, 190, CInt(195 / 2) - 1)
+                cursorGraphics.DrawLine(PenWhite, CInt(195 / 2) - 1, 10, CInt(195 / 2) - 1, CInt(195 / 2) - 2)
 
-            _cursorPen.Width = 18
+                _cursorPen.Width = 18
 
-            cursorGraphics.DrawEllipse(_cursorPen, CursorRectangle)
-            cursorGraphics.Dispose()
+                cursorGraphics.DrawEllipse(_cursorPen, CursorRectangle)
+
+            End Using
 
             Dim hIcon As IntPtr = _cursorImage.GetHicon()
             Dim temp As Icon = Icon.FromHandle(hIcon)
