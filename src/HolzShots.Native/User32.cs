@@ -30,5 +30,14 @@ namespace HolzShots.Native
         public static extern int GetWindowTextLength(IntPtr hwnd);
 
         #endregion
+        #region Threading
+
+        [DllImport(DllName)]
+        public static extern bool AttachThreadInput(int idAttach, int idAttachTo, bool fAttach);
+
+        [DllImport(DllName, SetLastError = true)]
+        public static extern int GetWindowThreadProcessId(IntPtr hWnd, ref int lpdwProcessId);
+
+        #endregion
     }
 }

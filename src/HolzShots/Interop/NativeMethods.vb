@@ -81,17 +81,6 @@ Namespace Interop
         End Function
 
 #End Region
-#Region "Window-Threading"
-
-        <DllImport(User32)>
-        Friend Shared Function AttachThreadInput(ByVal idAttach As Integer, ByVal idAttachTo As Integer, ByVal fAttach As Boolean) As Boolean
-        End Function
-
-        <DllImport(User32, SetLastError:=True)>
-        Friend Shared Function GetWindowThreadProcessId(ByVal hWnd As IntPtr, ByRef lpdwProcessId As Integer) As Integer
-        End Function
-
-#End Region
 
 #End Region
 

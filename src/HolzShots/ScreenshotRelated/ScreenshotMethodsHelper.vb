@@ -30,7 +30,7 @@ Namespace ScreenshotRelated
         Friend Shared Function GetProcessNameOfWindow(windowHandle As IntPtr) As String
 
             Dim pid As Integer
-            Dim unused = NativeMethods.GetWindowThreadProcessId(windowHandle, pid)
+            Dim unused = Native.User32.GetWindowThreadProcessId(windowHandle, pid)
 
             Dim process = Diagnostics.Process.GetProcessById(pid)
 

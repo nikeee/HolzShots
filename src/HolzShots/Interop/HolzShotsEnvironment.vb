@@ -67,8 +67,8 @@ Namespace Interop
             ' gebracht werden soll.
             ' Falls das Fenster dem gleichen Thread wie das aktuelle
             ' Vordergrundfenster angehört, ist kein Workaround erforderlich:
-            lThreadWindow = NativeMethods.GetWindowThreadProcessId(hWndWindow, 0)
-            lThreadForeWin = NativeMethods.GetWindowThreadProcessId(NativeMethods.GetForegroundWindow(), 0)
+            lThreadWindow = Native.User32.GetWindowThreadProcessId(hWndWindow, 0)
+            lThreadForeWin = Native.User32.GetWindowThreadProcessId(NativeMethods.GetForegroundWindow(), 0)
             If lThreadWindow = lThreadForeWin Then
                 ' Vordergrundfenster und zu aktivierendes Fenster gehören zum
                 ' gleichen Thread. SetForegroundWindow allein reicht aus:
@@ -80,9 +80,9 @@ Namespace Interop
                 ' Eingabeverarbeitung des Threads des Vordergrundfensters,
                 ' so dass SetForegroundWindow wie erwartet arbeitet:
                 Dim result As Boolean
-                NativeMethods.AttachThreadInput(lThreadForeWin, lThreadWindow, True)
+                Native.User32.AttachThreadInput(lThreadForeWin, lThreadWindow, True)
                 result = NativeMethods.SetForegroundWindow(hWndWindow)
-                NativeMethods.AttachThreadInput(lThreadForeWin, lThreadWindow, False)
+                Native.User32.AttachThreadInput(lThreadForeWin, lThreadWindow, False)
                 Return result
             End If
         End Function
