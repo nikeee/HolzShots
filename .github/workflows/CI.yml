@@ -5,6 +5,10 @@ on: push
 jobs:
   build:
     runs-on: windows-latest
+    name: Build and Test
+    env:
+      CONFIGURATION: Release
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
 
     steps:
     - uses: actions/checkout@v2
@@ -14,14 +18,129 @@ jobs:
     - name: Setup Nuget.exe
       uses: warrenbuckley/Setup-Nuget@v1
 
-    - name: Add msbuild to PATH
+    - name: Setup msbuild
       uses: microsoft/setup-msbuild@v1.0.0
 
     - name: Nuget Restore
       run: nuget restore HolzShots.sln
 
     - name: Compile Solution
-      run: msbuild HolzShots.sln -p:Configuration=Release
+      run: msbuild HolzShots.sln -p:Configuration=$env:CONFIGURATION
 
     - name: Run Tests
-      run: dotnet test -c Release --no-build src\HolzShots.Core.Tests\HolzShots.Core.Tests.csproj
+      run: dotnet test -c $env:CONFIGURATION --no-build src\HolzShots.Core.Tests\HolzShots.Core.Tests.csproj
+
+    - name: Collect Artifacts
+      run: |
+        7z a HolzShots.zip "src\HolzShots\bin\$env:CONFIGURATION\*.exe"
+        7z a HolzShots.zip "src\HolzShots\bin\$env:CONFIGURATION\*.dll"
+        7z a HolzShots.zip "src\HolzShots\bin\$env:CONFIGURATION\*.config"
+        7z a HolzShots.zip "src\HolzShots\bin\$env:CONFIGURATION\*.manifest"
+        sha256sum HolzShots.zip > sha256sums.txt
+
+    - uses: actions/upload-artifact@v1
+      if: startsWith(github.ref, 'refs/tags/v')
+      with:
+        name: HolzShots.zip
+        path: HolzShots.zip
+
+    - uses: actions/upload-artifact@v1
+      if: startsWith(github.ref, 'refs/tags/v')
+      with:
+        name: sha256sums.txt
+        path: sha256sums.txt
+
+  release:
+    runs-on: windows-latest
+    needs: [build]
+    name: Publish Release
+    if: startsWith(github.ref, 'refs/tags/v')
+    env:
+      CONFIGURATION: Release
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/download-artifact@v1
+        with:
+          name: HolzShots.zip
+          path: .
+
+      - uses: actions/download-artifact@v1
+        with:
+          name: sha256sums.txt
+          path: .
+
+      - name: Perpare Version Data
+        id: release_info
+        shell: bash
+        run: |
+          RELEASE_VERSION=${GITHUB_REF#refs/tags/v}
+          RELEASE_YEAR=`date +"%Y"`
+          RELEASE_HASH=`grep -ohiE "^[0-9a-z]+" sha256sums.txt`
+
+          echo ::set-output name=version::${RELEASE_VERSION}
+          echo ::set-output name=year::${RELEASE_YEAR}
+          echo ::set-output name=checksum::${RELEASE_HASH}
+
+          sed -i -e "s/__REPLACE_YEAR__/${RELEASE_YEAR}/g" package/holzshots.nuspec
+          sed -i -e "s/__REPLACE_VERSION__/${RELEASE_VERSION}/g" package/holzshots.nuspec
+          sed -i -e "s/__REPLACE_VERSION__/${RELEASE_VERSION}/g" package/tools/chocolateyinstall.ps1
+          sed -i -e "s/__REPLACE_CHECKSUM__/${RELEASE_HASH}/g" package/tools/chocolateyinstall.ps1
+
+      - name: Bundle Chocolatey Package
+        uses: crazy-max/ghaction-chocolatey@v1.1.0
+        with:
+          args: pack --out . ./package/holzshots.nuspec
+
+      # https://github.com/actions/upload-artifact/issues/11#issuecomment-568101677
+      - id: get_choco_package
+        shell: bash
+        run: echo "::set-output name=file::$(ls holzshots*.nupkg)"
+
+      - uses: actions/upload-artifact@v1
+        with:
+          name: holzshots.nupkg
+          path: ${{ steps.get_choco_package.outputs.file }}
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+
+      - name: Upload Release Asset HolzShots.zip
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./HolzShots.zip
+          asset_name: HolzShots.zip
+          asset_content_type: application/zip
+
+      - name: Upload Release Asset sha256sums.txt
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./sha256sums.txt
+          asset_name: sha256sums.txt
+          asset_content_type: text/plain
+
+      - name: Upload Release Asset Chocolatey-Package
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ steps.get_choco_package.outputs.file }}
+          asset_name: ${{ steps.get_choco_package.outputs.file }}
+          asset_content_type: application/zip
