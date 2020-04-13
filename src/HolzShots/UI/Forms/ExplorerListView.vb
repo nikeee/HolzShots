@@ -56,7 +56,7 @@ Namespace UI.Forms
         Protected Overrides Sub WndProc(ByRef m As Message)
             If View = View.Details Then
                 Select Case m.Msg
-                    Case Interop.NativeTypes.WindowMessages.Paint
+                    Case Interop.NativeTypes.WindowMessage.Paint
                         For Each ec As EmbeddedControl In _ecs
 
                             Dim rc As Rectangle = ec.Item.Bounds

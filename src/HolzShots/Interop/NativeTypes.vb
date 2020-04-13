@@ -132,14 +132,14 @@ Namespace Interop
             CaptureBlt = &H40000000
         End Enum
 
-        Public Enum WindowMessages
+        Public Enum WindowMessage
             NcCalcSize = &H83
             NcHitTest = &H84
             DwmCompositionChanged = &H31E
             Paint = &HF
             User = &H400
         End Enum
-        Public Enum ProgressBarMessages
+        Public Enum ProgressBarMessage
             SetState = 16
         End Enum
 
