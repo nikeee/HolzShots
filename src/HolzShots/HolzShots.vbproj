@@ -397,7 +397,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\Forms\VSRenderer.vb" />
-    <Compile Include="UI\Forms\WindowExtensions.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="UI\Controls\ColorViewer.resx">
