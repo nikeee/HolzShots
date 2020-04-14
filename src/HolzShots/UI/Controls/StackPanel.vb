@@ -27,11 +27,8 @@ Namespace UI.Controls
 
         Private Class StackLayout
             Inherits LayoutEngine
-            Friend Shared ReadOnly Instance As StackLayout
 
-            Shared Sub New()
-                Instance = New StackLayout()
-            End Sub
+            Friend Shared ReadOnly Instance As StackLayout = New StackLayout()
 
             Public Overrides Function Layout(container As Object, layoutEventArgs As LayoutEventArgs) As Boolean
                 Dim stackPanel As StackPanel = TryCast(container, StackPanel)

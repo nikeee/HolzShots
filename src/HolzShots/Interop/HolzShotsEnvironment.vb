@@ -14,8 +14,6 @@ Namespace Interop
         Private Sub New()
         End Sub
 
-        Private Const GtkWindow As String = "gdkWindowToplevel"
-
         Public Shared ReadOnly ApplicationDataRoaming As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
 
 
