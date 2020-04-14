@@ -22,7 +22,7 @@ Namespace UI.Specialized
             Public Const SetHotkeyFullscreen = "Set Fullscreen Hotkey"
         End Class
 
-        Public Shared Instance As SettingsWindow = New SettingsWindow()
+        Public Shared ReadOnly Instance As SettingsWindow = New SettingsWindow()
 
         Private Shared ReadOnly Target As MainWindow = MainWindow.Instance
 
