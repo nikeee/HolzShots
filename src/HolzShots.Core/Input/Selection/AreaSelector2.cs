@@ -47,7 +47,9 @@ namespace HolzShots.Input.Selection
 
         public Task<Rectangle> PromptSelectionAsync(Bitmap image)
         {
-            Debug.Assert(image != null);
+            if (image == null)
+                throw new ArgumentNullException(nameof(image));
+
             Debug.Assert(_image == null);
             Debug.Assert(_tcs == null);
 
