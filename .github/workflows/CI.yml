@@ -145,3 +145,8 @@ jobs:
           asset_path: ${{ steps.get_choco_package.outputs.file }}
           asset_name: ${{ steps.get_choco_package.outputs.file }}
           asset_content_type: application/zip
+
+      - name: Publish Chocolatey Package to Community Feed
+        shell: bash
+        run: |
+          choco push ${{ steps.get_choco_package.outputs.file }} --source "https://push.chocolatey.org/" -k="${{ secrets.CHOCO_API_KEY }}"
