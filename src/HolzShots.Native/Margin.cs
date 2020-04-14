@@ -31,6 +31,9 @@ namespace HolzShots.Native
             cyBottomheight = bottomHeight;
         }
 
+        public static bool operator ==(Margin left, Margin right) => left.cxLeftWidth == right.cxLeftWidth && left.cxRightWidth == right.cxRightWidth && left.cyTopHeight == right.cyTopHeight && left.cyBottomheight == right.cyBottomheight;
+        public static bool operator !=(Margin left, Margin right) => !(left == right);
+
         /*
         public static implicit operator System.Windows.Forms.Padding(Margin mrg)
         {

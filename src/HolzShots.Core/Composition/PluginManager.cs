@@ -67,6 +67,7 @@ namespace HolzShots.Composition
             }
             catch (Exception e)
             {
+                Debug.Write(e);
                 MessageBox.Show("Error loading plugins. Try updating them, they seem to be incompatible.");
             }
 

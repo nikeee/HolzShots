@@ -27,6 +27,9 @@ namespace HolzShots.Native
 
         public static implicit operator Rectangle(Rect rct) => Rectangle.FromLTRB(rct.Left, rct.Top, rct.Right, rct.Bottom);
         public static implicit operator Rect(Rectangle rectangle) => new Rect(rectangle.Left, rectangle.Top, rectangle.Right, rectangle.Bottom);
-    }
 
+
+        public static bool operator ==(Rect left, Rect right) => left.Left == right.Left && left.Right == right.Right && left.Top == right.Top && left.Bottom == right.Bottom;
+        public static bool operator !=(Rect left, Rect right) => !(left == right);
+    }
 }

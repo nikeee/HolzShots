@@ -207,8 +207,8 @@ namespace HolzShots.Input.Selection
                 case MouseButtons.Right:
                     switch (_state)
                     {
-                        case InitialState initial: break; // Releasing the left mouse button without being in some state should not be possible
-                        case ResizingRectangleState resizing: break;// Releasing the right mouse button without leaving first is not possible
+                        case InitialState _: break; // Releasing the left mouse button without being in some state should not be possible
+                        case ResizingRectangleState _: break;// Releasing the right mouse button without leaving first is not possible
                         case MovingRectangleState moving:
                             _state = new ResizingRectangleState(moving.UserSelectionStart, moving.CursorPosition);
                             break;
