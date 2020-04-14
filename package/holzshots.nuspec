@@ -1,5 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<!-- Test your packages in a test environment: https://github.com/chocolatey/chocolatey-test-environment -->
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>holzshots</id>
@@ -13,7 +12,7 @@
     <authors>Niklas Mollenhauer</authors>
     <projectUrl>https://holzshots.net</projectUrl>
     <!-- <iconUrl>TODO</iconUrl> -->
-    <copyright>__REPLACE_YEAR__</copyright>
+    <copyright>2010-__REPLACE_YEAR__ Niklas Mollenhauer</copyright>
     <licenseUrl>https://raw.githubusercontent.com/nikeee/HolzShots/master/LICENSE</licenseUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <projectSourceUrl>https://github.com/nikeee/HolzShots</projectSourceUrl>
