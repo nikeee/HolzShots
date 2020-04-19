@@ -12,9 +12,10 @@ insert_final_newline = true
 indent_style = space
 indent_size = 4
 
-# Xml project files
 [*.{csproj,vbproj,vcxproj,vcxproj.filters,proj,projitems,shproj}]
 indent_size = 2
+end_of_line = crlf
+charset = utf-8-bom
 
 # Xml config files
 [*.{props,targets,ruleset,config,nuspec,resx,vsixmanifest,vsct}]
