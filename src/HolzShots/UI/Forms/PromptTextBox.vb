@@ -7,7 +7,7 @@ Namespace UI.Windows.Forms
 
         Private _description As String
 
-        <Browsable(True), Description("Der Text, der gräulich angezeigt wird, wenn kein Text eingegeben wurde. Könnte für eine Kurzbeschreibung verwendet werden."), Category("Appearance")>
+        <Browsable(True), Description("Plceholder text"), Category("Appearance")>
         Public Property Prompt As String
             Get
                 Return _description
@@ -24,7 +24,9 @@ Namespace UI.Windows.Forms
         End Sub
 
         Private Sub UpdateMessage()
-            Native.User32.SendMessage(Me.Handle, Native.WindowMessage.EM_SetCueBanner, IntPtr.Zero, _description)
+            If Not DesignMode Then
+                Native.User32.SendMessage(Me.Handle, Native.WindowMessage.EM_SetCueBanner, IntPtr.Zero, _description)
+            End If
         End Sub
     End Class
 End Namespace

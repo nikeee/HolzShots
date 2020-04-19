@@ -14,8 +14,6 @@ namespace HolzShots.Input
         /// <summary>Overridden to get the notifications.</summary>
         protected override void WndProc(ref Message m)
         {
-            base.WndProc(ref m);
-
             const int WM_HOTKEY = 0x0312;
 
             // check if we got a hotkey pressed.
@@ -28,12 +26,16 @@ namespace HolzShots.Input
                 // invoke the event to notify the parent.
                 KeyPressed?.Invoke(this, new KeyPressedEventArgs(modifier, key));
             }
+            else
+            {
+                base.WndProc(ref m);
+            }
         }
 
         public void RegisterHotkey(ModifierKeys modifiers, Keys key, int id)
         {
             Trace.WriteLine($"REGISTERING hotkey: {id} {modifiers} {key}");
-            if (!NativeMethods.RegisterHotKey(Handle, id, modifiers, key))
+            if (!NativeMethods.RegisterHotKey(Handle, id, modifiers | ModifierKeys.NoRepeat, key))
                 throw new Win32Exception();
         }
 

@@ -133,7 +133,7 @@ namespace HolzShots.Input
             }
         }
 
-        private System.Collections.Generic.HashSet<EventHandler<HotkeyPressedEventArgs>> _delegates = new System.Collections.Generic.HashSet<EventHandler<HotkeyPressedEventArgs>>();
+        private readonly System.Collections.Generic.HashSet<EventHandler<HotkeyPressedEventArgs>> _delegates = new System.Collections.Generic.HashSet<EventHandler<HotkeyPressedEventArgs>>();
         private event EventHandler<HotkeyPressedEventArgs> _keyPressed;
 
         /// <summary>The hotkey has been pressed.</summary>
