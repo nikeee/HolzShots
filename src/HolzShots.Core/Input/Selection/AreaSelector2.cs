@@ -66,6 +66,8 @@ namespace HolzShots.Input.Selection
             Visible = true;
             Cursor = _cursor;
 
+            BackgroundImage = _dimmedImage.GetBitmap();
+
             return _tcs.Task;
         }
 
@@ -207,7 +209,6 @@ namespace HolzShots.Input.Selection
             Debug.Assert(_blackOverlayBrush != null);
 
             g.Antialias = false;
-            g.DrawBitmap(_dimmedImage, _imageBounds);
 
             switch (_state)
             {
