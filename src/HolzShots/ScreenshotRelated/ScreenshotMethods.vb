@@ -37,21 +37,22 @@ Namespace ScreenshotRelated
                 Using screen = ScreenshotCreator.CaptureScreenshot(SystemInformation.VirtualScreen)
                     ' Using selector As New AreaSelector()
                     Using selector As New Global.HolzShots.Input.Selection.AreaSelector2()
+                        'Using selector As New Global.HolzShots.Input.Selection.AreaSelector3()
                         Dim selectedArea = Await selector.PromptSelectionAsync(screen).ConfigureAwait(True)
 
-                        Debug.Assert(selectedArea.Width > 0)
-                        Debug.Assert(selectedArea.Height > 0)
+                            Debug.Assert(selectedArea.Width > 0)
+                            Debug.Assert(selectedArea.Height > 0)
 
-                        Dim selectedImage As New Bitmap(selectedArea.Width, selectedArea.Height)
+                            Dim selectedImage As New Bitmap(selectedArea.Width, selectedArea.Height)
 
-                        Using g As Graphics = Graphics.FromImage(selectedImage)
-                            g.DrawImage(screen, New Rectangle(0, 0, selectedArea.Width, selectedArea.Height), selectedArea, GraphicsUnit.Pixel)
+                            Using g As Graphics = Graphics.FromImage(selectedImage)
+                                g.DrawImage(screen, New Rectangle(0, 0, selectedArea.Width, selectedArea.Height), selectedArea, GraphicsUnit.Pixel)
+                            End Using
+
+                            Return Screenshot.FromSelection(selectedImage, Cursor.Position)
                         End Using
-
-                        Return Screenshot.FromSelection(selectedImage, Cursor.Position)
                     End Using
                 End Using
-            End Using
         End Function
 
 

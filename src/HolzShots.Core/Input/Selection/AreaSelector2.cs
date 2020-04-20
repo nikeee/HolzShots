@@ -21,6 +21,7 @@ namespace HolzShots.Input.Selection
         private D2DBitmap _image;
         private D2DBitmapGraphics _dimmedImage;
         private Rectangle _imageBounds;
+        private SelectionState _state = new InitialState();
 
         public AreaSelector2()
         {
@@ -77,69 +78,6 @@ namespace HolzShots.Input.Selection
             res.EndRender();
             return res;
         }
-
-        #region Window State
-        private SelectionState _state = new InitialState();
-
-        abstract class SelectionState { }
-        class InitialState : SelectionState
-        {
-            public IInitialStateDecoration[] Decorations => new[] { new HelpTextDecoration() };
-        }
-        abstract class RectangleState : SelectionState
-        {
-            public Point UserSelectionStart { get; protected set; }
-            public Point CursorPosition { get; protected set; }
-            protected RectangleState(Point userSelectionStart, Point cursorPosition)
-            {
-                UserSelectionStart = userSelectionStart;
-                CursorPosition = cursorPosition;
-            }
-
-            public Rectangle GetSelectedOutline(Rectangle canvasBounds)
-            {
-                var start = UserSelectionStart;
-                var cursor = CursorPosition;
-                var x = Math.Min(start.X, cursor.X);
-                var y = Math.Min(start.Y, cursor.Y);
-                var width = Math.Abs(start.X - cursor.X);
-                var height = Math.Abs(start.Y - cursor.Y);
-
-                var unconstrainedSelection = new Rectangle(x, y, width, height);
-
-                return Rectangle.Intersect(unconstrainedSelection, canvasBounds);
-            }
-        }
-        class ResizingRectangleState : RectangleState
-        {
-            public ResizingRectangleState(Point userSelectionStart, Point cursorPosition) : base(userSelectionStart, cursorPosition) { }
-            public void UpdateCursorPosition(Point newCursorPosition) => CursorPosition = newCursorPosition;
-        }
-
-        class MovingRectangleState : RectangleState
-        {
-            public MovingRectangleState(Point userSelectionStart, Point cursorPosition) : base(userSelectionStart, cursorPosition) { }
-            public void MoveByNewCursorPosition(Point newCursorPosition)
-            {
-                var prevStart = UserSelectionStart;
-                var prev = CursorPosition;
-                var offset = new Point(
-                    newCursorPosition.X - prev.X,
-                    newCursorPosition.Y - prev.Y
-                );
-                UserSelectionStart = new Point(
-                    prevStart.X + offset.X,
-                    prevStart.Y + offset.Y
-                );
-                CursorPosition = newCursorPosition;
-            }
-        }
-        class FinalState : SelectionState
-        {
-            public Rectangle Result { get; }
-            public FinalState(Rectangle result) => Result = result;
-        }
-        #endregion
 
         #region Mouse and Keyboard Stuff
         protected override void OnMouseDown(MouseEventArgs e)
@@ -274,8 +212,8 @@ namespace HolzShots.Input.Selection
             switch (_state)
             {
                 case InitialState initial:
-                    foreach (var d in initial.Decorations)
-                        d.Render(g, initial, _imageBounds);
+                    // foreach (var d in initial.Decorations)
+                    //     d.Render(g, initial, _imageBounds);
 
                     break; // Nothing to be updated
                 case RectangleState availableSelection:
