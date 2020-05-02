@@ -38,6 +38,9 @@ namespace HolzShots.Input.Selection
             FormBorderStyle = FormBorderStyle.None;
             // DesktopLocation = new Point(0, 0);
 
+            AnimationDraw = true;
+            ShowFPS = true;
+
             Bounds = SystemInformation.VirtualScreen;
 #if !DEBUG
             TopMost = true;
@@ -79,6 +82,11 @@ namespace HolzShots.Input.Selection
             res.FillRectangle(_imageBounds, _blackOverlayBrush);
             res.EndRender();
             return res;
+        }
+
+        protected override void OnFrame()
+        {
+            SceneChanged = true;
         }
 
         #region Mouse and Keyboard Stuff
@@ -232,7 +240,7 @@ namespace HolzShots.Input.Selection
                         outline.Width + 1f,
                         outline.Height + 1f
                     );
-                    g.DrawRectangle(selectionOutline, _selectionBorder);
+                    g.DrawRectangle(selectionOutline, _selectionBorder, 1.0f, D2DDashStyle.Dash);
 
                     break;
                 case FinalState _: break; // Nothing to be updated

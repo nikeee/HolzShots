@@ -57,7 +57,6 @@ namespace HolzShots.Input.Selection
             TopMost = true;
 #endif
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint, true);
-
             ResumeLayout(false);
         }
 

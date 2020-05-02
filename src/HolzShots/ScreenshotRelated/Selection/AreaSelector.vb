@@ -34,11 +34,13 @@ Namespace ScreenshotRelated.Selection
         Private Shared ReadOnly SelectionBorderPen As Pen = New Pen(Color.FromArgb(120, 255, 255, 255), 1.0)
         Private Shared ReadOnly MagnifierBorderPen As Pen = New Pen(Color.FromArgb(120, 255, 0, 0), 1.0)
 
+        Private ReadOnly _fpsWatch As New Global.HolzShots.Input.Selection.FpsStopWatch
+
         Friend Shared Property IsInAreaSelector As Boolean
 
         Sub New()
             MyBase.New()
-
+            SuspendLayout()
 
             DoubleBuffered = True
             ShowInTaskbar = False
@@ -60,6 +62,8 @@ Namespace ScreenshotRelated.Selection
             _noSelectionDecoration = New DefaultNoSelectionDecoration()
 
             SetStyle(ControlStyles.AllPaintingInWmPaint Or ControlStyles.OptimizedDoubleBuffer Or ControlStyles.UserPaint, True)
+
+            ResumeLayout(False)
         End Sub
         Private Function GetCurrentDecoration() As ISelectionDecoration
             Select Case ManagedSettings.SelectionDecoration
@@ -164,9 +168,9 @@ Namespace ScreenshotRelated.Selection
                 _firstInvalidation = False
                 Invalidate(False)
             Else
-                Invalidate(Rectangle.Inflate(Rectangle.Union(Rectangle.Union(Rectangle.Union(
-                                    _previousSelection, _currentSelection), _decoration.InvalidationRectangle), _previousQuickInfoLocation),
-                        80, 40), False)
+                ' Invalidate(Rectangle.Inflate(Rectangle.Union(Rectangle.Union(Rectangle.Union(
+                ' _previousSelection, _currentSelection), _decoration.InvalidationRectangle), _previousQuickInfoLocation),
+                ' 80, 40), False)
             End If
             _previousSelection = _currentSelection
             _previousQuickInfoLocation = _decoration.InvalidationRectangle
@@ -196,10 +200,18 @@ Namespace ScreenshotRelated.Selection
             If _drawMangifier Then
                 _magnifier.Draw(g, _wholeScreen, MagnifierBorderPen, SelectionBorderPen)
             End If
+
+            g.DrawString(_fpsWatch.FramesPerSecond.ToString(), New Font("Consolas", 14.0F), New SolidBrush(Color.White), 10.0F, 10.0F)
+        End Sub
+
+        Protected Overrides Sub OnPaintBackground(e As PaintEventArgs)
+            ' MyBase.OnPaintBackground(e)
         End Sub
 
         Protected Overrides Sub OnPaint(e As PaintEventArgs)
+            _fpsWatch.Update()
             RenderInGraphics(e.Graphics)
+            Invalidate()
         End Sub
 
         Private Sub AreaSelectorKeyPress(sender As Object, e As KeyPressEventArgs) Handles Me.KeyPress
@@ -224,6 +236,7 @@ Namespace ScreenshotRelated.Selection
             IsInAreaSelector = True
 
             Visible = True
+            _fpsWatch.Start()
 
             Native.User32.SetForegroundWindow(Handle)
 
