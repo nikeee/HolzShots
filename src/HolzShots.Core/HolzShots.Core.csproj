@@ -68,7 +68,10 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Input\Selection\FpsStopWatch.cs" />
+    <Compile Include="Input\Selection\RectangleExtensions.cs" />
     <Compile Include="Input\Selection\State.cs" />
+    <Compile Include="Input\Selection\WindowFinder.cs" />
+    <Compile Include="Input\Selection\WindowHelpers.cs" />
     <Compile Include="IO\DirectoryEx.cs" />
     <Compile Include="IO\Naming\DatePatternItem.cs" />
     <Compile Include="IO\Naming\FileMetadata.cs" />

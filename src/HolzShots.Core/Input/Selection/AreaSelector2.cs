@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Threading.Tasks;
@@ -23,13 +24,14 @@ namespace HolzShots.Input.Selection
         private Rectangle _imageBounds;
         private SelectionState _state = new InitialState();
 
+        private ISet<WindowRectangle> availableWindowsForOutline;
+
         public AreaSelector2()
         {
             InitializeComponent();
 
             BackColor = Color.Black;
 
-            EscapeKeyToClose = false;
             ShowFPS = false;
             AnimationDraw = false;
 
@@ -37,6 +39,8 @@ namespace HolzShots.Input.Selection
             WindowState = FormWindowState.Normal;
             FormBorderStyle = FormBorderStyle.None;
             // DesktopLocation = new Point(0, 0);
+
+            availableWindowsForOutline = WindowFinder.GetCurrentWindowRectangles(Handle);
 
             AnimationDraw = true;
             ShowFPS = true;
@@ -224,25 +228,42 @@ namespace HolzShots.Input.Selection
                     // foreach (var d in initial.Decorations)
                     //     d.Render(g, initial, _imageBounds);
 
+                    foreach (var window in availableWindowsForOutline)
+                    {
+                        D2DRect rect = window.Rectangle;
+                        var selectionOutline = new D2DRect(
+                            rect.X - 0.5f,
+                            rect.Y - 0.5f,
+                            rect.Width + 1f,
+                            rect.Height + 1f
+                        );
+                        g.DrawRectangle(selectionOutline, D2DColor.Red, 1.0f);
+                        g.DrawTextCenter(window.Title, D2DColor.CornflowerBlue, "Consolas", 14.0f, selectionOutline);
+                        // g.DrawText(window.Title, D2DColor.CornflowerBlue, selectionOutline.X, selectionOutline.Y);//SystemFonts.DefaultFont.Name, 36)
+                    }
+
                     break; // Nothing to be updated
                 case RectangleState availableSelection:
+                    {
 
-                    var outline = availableSelection.GetSelectedOutline(_imageBounds);
-                    D2DRect rect = outline; // Caution: implicit conversion which we don't want to do twice
 
-                    g.DrawBitmap(_image, rect, rect);
+                        var outline = availableSelection.GetSelectedOutline(_imageBounds);
+                        D2DRect rect = outline; // Caution: implicit conversion which we don't want to do twice
 
-                    // We need to widen the rectangle by 0.5px so that the result will be exactly 1px wide.
-                    // Otherwise, it will be 2px and darker.
-                    var selectionOutline = new D2DRect(
-                        outline.X - 0.5f,
-                        outline.Y - 0.5f,
-                        outline.Width + 1f,
-                        outline.Height + 1f
-                    );
-                    g.DrawRectangle(selectionOutline, _selectionBorder, 1.0f, D2DDashStyle.Dash);
+                        g.DrawBitmap(_image, rect, rect);
 
-                    break;
+                        // We need to widen the rectangle by 0.5px so that the result will be exactly 1px wide.
+                        // Otherwise, it will be 2px and darker.
+                        var selectionOutline = new D2DRect(
+                            outline.X - 0.5f,
+                            outline.Y - 0.5f,
+                            outline.Width + 1f,
+                            outline.Height + 1f
+                        );
+                        g.DrawRectangle(selectionOutline, _selectionBorder, 1.0f, D2DDashStyle.Dash);
+
+                        break;
+                    }
                 case FinalState _: break; // Nothing to be updated
                 default: Debug.Fail("Unhandled State"); break;
             }
@@ -259,7 +280,7 @@ namespace HolzShots.Input.Selection
         }
         private void FinishSelection(FinalState state)
         {
-            if (state.Result.Width < 1 || state.Result.Height < 1)
+            if (!state.Result.HasArea())
             {
                 CancelSelection();
                 return;

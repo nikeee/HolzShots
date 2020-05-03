@@ -17,15 +17,6 @@ Namespace ScreenshotRelated
             Native.User32.LockWindowUpdate(whandle)
         End Sub
 
-        Friend Shared Function GetWindowTitle(windowHandle As IntPtr) As String
-
-            Dim windowTitleLength As Integer = Native.User32.GetWindowTextLength(windowHandle)
-            Dim windowTitleBuffer As New StringBuilder(windowTitleLength + 1)
-
-            Dim unused = Native.User32.GetWindowText(windowHandle, windowTitleBuffer, windowTitleBuffer.Capacity)
-
-            Return windowTitleBuffer.ToString()
-        End Function
 
         Friend Shared Function GetProcessNameOfWindow(windowHandle As IntPtr) As String
 

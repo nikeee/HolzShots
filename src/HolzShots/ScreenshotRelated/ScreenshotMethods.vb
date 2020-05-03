@@ -2,6 +2,7 @@ Imports System.Drawing.Drawing2D
 Imports System.Drawing.Imaging
 Imports System.Threading.Tasks
 Imports HolzShots.Drawing
+Imports HolzShots.Input.Selection
 Imports HolzShots.Interop
 Imports HolzShots.ScreenshotRelated.Selection
 Imports HolzShots.Threading
@@ -40,19 +41,19 @@ Namespace ScreenshotRelated
                         'Using selector As New Global.HolzShots.Input.Selection.AreaSelector3()
                         Dim selectedArea = Await selector.PromptSelectionAsync(screen).ConfigureAwait(True)
 
-                            Debug.Assert(selectedArea.Width > 0)
-                            Debug.Assert(selectedArea.Height > 0)
+                        Debug.Assert(selectedArea.Width > 0)
+                        Debug.Assert(selectedArea.Height > 0)
 
-                            Dim selectedImage As New Bitmap(selectedArea.Width, selectedArea.Height)
+                        Dim selectedImage As New Bitmap(selectedArea.Width, selectedArea.Height)
 
-                            Using g As Graphics = Graphics.FromImage(selectedImage)
-                                g.DrawImage(screen, New Rectangle(0, 0, selectedArea.Width, selectedArea.Height), selectedArea, GraphicsUnit.Pixel)
-                            End Using
-
-                            Return Screenshot.FromSelection(selectedImage, Cursor.Position)
+                        Using g As Graphics = Graphics.FromImage(selectedImage)
+                            g.DrawImage(screen, New Rectangle(0, 0, selectedArea.Width, selectedArea.Height), selectedArea, GraphicsUnit.Pixel)
                         End Using
+
+                        Return Screenshot.FromSelection(selectedImage, Cursor.Position)
                     End Using
                 End Using
+            End Using
         End Function
 
 
@@ -149,7 +150,7 @@ Namespace ScreenshotRelated
                         ' Old method:
                         ' ScreenshotMethodsHelper.ComputeAlphaChannel(bmpWhite, bmpBlack)
 
-                        Dim windowTitle = ScreenshotMethodsHelper.GetWindowTitle(wndHandle)
+                        Dim windowTitle = WindowHelpers.GetWindowTitle(wndHandle)
                         Dim processName = ScreenshotMethodsHelper.GetProcessNameOfWindow(wndHandle)
 
                         Return New WindowScreenshotSet(result, cursorPositonOnScreenshot, windowTitle, processName)
@@ -167,7 +168,7 @@ Namespace ScreenshotRelated
 
             Dim bmp = ScreenshotCreator.CaptureScreenshot(drawingRectangle)
 
-            Dim windowTitle = ScreenshotMethodsHelper.GetWindowTitle(wndHandle)
+            Dim windowTitle = WindowHelpers.GetWindowTitle(wndHandle)
             Dim processName = ScreenshotMethodsHelper.GetProcessNameOfWindow(wndHandle)
 
             Return New WindowScreenshotSet(bmp, cursorPositonOnScreenshot, windowTitle, processName)
