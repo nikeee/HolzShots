@@ -82,7 +82,7 @@ namespace HolzShots.Input.Selection
         }
     }
 
-    readonly struct WindowRectangle : IEquatable<WindowRectangle>
+    class WindowRectangle : IEquatable<WindowRectangle>
     {
         public IntPtr Handle { get; }
         public System.Drawing.Rectangle Rectangle { get; }

@@ -1,12 +1,30 @@
 using System;
+using System.Collections.Generic;
 using System.Drawing;
+using unvell.D2DLib;
 
 namespace HolzShots.Input.Selection
 {
     internal abstract class SelectionState { }
     internal class InitialState : SelectionState
     {
+        public WindowRectangle? CurrentOutlinedWindow { get; protected set; }
         // public IInitialStateDecoration[] Decorations => new[] { new HelpTextDecoration() };
+        public void UpdateOutlinedWindow(ISet<WindowRectangle> windows, Point cursorPosition)
+        {
+            if (windows == null)
+                CurrentOutlinedWindow = null;
+
+            foreach (var candidate in windows)
+            {
+                if (candidate.Rectangle.Contains(cursorPosition))
+                {
+                    CurrentOutlinedWindow = candidate;
+                    return;
+                }
+            }
+            CurrentOutlinedWindow = null;
+        }
     }
 
     internal abstract class RectangleState : SelectionState

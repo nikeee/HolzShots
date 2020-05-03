@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using unvell.D2DLib;
@@ -24,7 +25,7 @@ namespace HolzShots.Input.Selection
         private Rectangle _imageBounds;
         private SelectionState _state = new InitialState();
 
-        private ISet<WindowRectangle> availableWindowsForOutline;
+        private ISet<WindowRectangle> availableWindowsForOutline = null;
 
         public AreaSelector2()
         {
@@ -35,12 +36,17 @@ namespace HolzShots.Input.Selection
             ShowFPS = false;
             AnimationDraw = false;
 
+            EscapeKeyToClose = false;
             StartPosition = FormStartPosition.Manual;
             WindowState = FormWindowState.Normal;
             FormBorderStyle = FormBorderStyle.None;
             // DesktopLocation = new Point(0, 0);
 
-            availableWindowsForOutline = WindowFinder.GetCurrentWindowRectangles(Handle);
+            var cts = new CancellationTokenSource();
+            cts.CancelAfter(5000);
+            WindowFinder.GetCurrentWindowRectanglesAsync(Handle, cts.Token).ContinueWith(t => availableWindowsForOutline = t.Result);
+
+            // availableWindowsForOutline = WindowFinder.GetCurrentWindowRectangles(Handle);
 
             AnimationDraw = true;
             ShowFPS = true;
@@ -148,9 +154,22 @@ namespace HolzShots.Input.Selection
                         case InitialState _: break; // Releasing the left mouse button without being in some state should not be possible
                         case RectangleState availableSelection:
                             var res = availableSelection.GetSelectedOutline(_imageBounds);
-                            var finalState = new FinalState(new Rectangle(res.X, res.Y, res.Width, res.Height));
-                            _state = finalState;
-                            FinishSelection(finalState);
+
+                            if (res.HasArea())
+                            {
+                                var finalState = new FinalState(new Rectangle(res.X, res.Y, res.Width, res.Height));
+                                _state = finalState;
+                                FinishSelection(finalState);
+                            }
+                            else
+                            {
+                                // The user most likely just clicked
+                                // In this case, he propably wantet to select a window that was outlined (if there was one)
+                                // TODO: This is a hack, we need to make this more pretty (put this in the FinalState)
+                                var i = new InitialState();
+                                i.UpdateOutlinedWindow(availableWindowsForOutline, e.Location);
+                                FinishSelectionByWindowOutlineClick(i);
+                            }
                             break;
                         case FinalState _: Debug.Fail("Unhandled State"); break; // Not possible
                         default: Debug.Fail("Unhandled State"); break;
@@ -184,7 +203,9 @@ namespace HolzShots.Input.Selection
 
             switch (_state)
             {
-                case InitialState _: break; // Nothing to be updated
+                case InitialState initial:
+                    initial.UpdateOutlinedWindow(availableWindowsForOutline, currentPos);
+                    break;
                 case ResizingRectangleState resizing:
                     resizing.UpdateCursorPosition(currentPos);
                     break;
@@ -225,28 +246,30 @@ namespace HolzShots.Input.Selection
             switch (_state)
             {
                 case InitialState initial:
-                    // foreach (var d in initial.Decorations)
-                    //     d.Render(g, initial, _imageBounds);
-
-                    foreach (var window in availableWindowsForOutline)
                     {
-                        D2DRect rect = window.Rectangle;
-                        var selectionOutline = new D2DRect(
-                            rect.X - 0.5f,
-                            rect.Y - 0.5f,
-                            rect.Width + 1f,
-                            rect.Height + 1f
-                        );
-                        g.DrawRectangle(selectionOutline, D2DColor.Red, 1.0f);
-                        g.DrawTextCenter(window.Title, D2DColor.CornflowerBlue, "Consolas", 14.0f, selectionOutline);
-                        // g.DrawText(window.Title, D2DColor.CornflowerBlue, selectionOutline.X, selectionOutline.Y);//SystemFonts.DefaultFont.Name, 36)
-                    }
+                        // foreach (var d in initial.Decorations)
+                        //     d.Render(g, initial, _imageBounds);
 
-                    break; // Nothing to be updated
+                        var outlinedWindow = initial.CurrentOutlinedWindow;
+                        if (outlinedWindow != null)
+                        {
+                            D2DRect rect = outlinedWindow.Rectangle;
+                            var selectionOutline = new D2DRect(
+                                rect.X + 0.5f,
+                                rect.Y + 0.5f,
+                                rect.Width - 1f,
+                                rect.Height - 1f
+                            );
+
+                            // TODO: Animate
+                            // TODO: Make this pretty
+                            g.DrawRectangle(selectionOutline, D2DColor.CornflowerBlue, 1.0f);
+                            g.DrawTextCenter(outlinedWindow.Title, D2DColor.CornflowerBlue, "Consolas", 14.0f, selectionOutline);
+                        }
+                        break;
+                    }
                 case RectangleState availableSelection:
                     {
-
-
                         var outline = availableSelection.GetSelectedOutline(_imageBounds);
                         D2DRect rect = outline; // Caution: implicit conversion which we don't want to do twice
 
@@ -276,6 +299,19 @@ namespace HolzShots.Input.Selection
         {
             Debug.Assert(_tcs != null);
             _tcs.SetCanceled();
+            CloseInternal();
+        }
+        private void FinishSelectionByWindowOutlineClick(InitialState state)
+        {
+            var outline = state.CurrentOutlinedWindow;
+            if (outline == null)
+            {
+                CancelSelection();
+                return;
+            }
+
+            Debug.Assert(_tcs != null);
+            _tcs.SetResult(outline.Rectangle);
             CloseInternal();
         }
         private void FinishSelection(FinalState state)
