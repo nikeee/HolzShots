@@ -41,17 +41,7 @@ namespace HolzShots
         internal static extern IntPtr CreateCompatibleBitmap(IntPtr hdc, int width, int height);
 
         #endregion
-        #region user32
-
-        [DllImport(user32)]
-        internal static extern bool ReleaseDC(IntPtr window, IntPtr hdc);
-        [DllImport(user32)]
-        internal static extern IntPtr GetWindowDC(IntPtr window);
-        [DllImport(user32)]
-        internal static extern IntPtr GetDesktopWindow();
-
-        #endregion
-    }
+      }
 
     namespace NativeTypes
     {
@@ -71,7 +61,7 @@ namespace HolzShots
                 }
 
                 public static DeviceContext CreateCompatible(DeviceContext hdc) => new DeviceContext(NativeMethods.CreateCompatibleDC(hdc.DC));
-                public static DeviceContext FromWindow(IntPtr window) => new DeviceContext(NativeMethods.GetWindowDC(window));
+                public static DeviceContext FromWindow(IntPtr window) => new DeviceContext(Native.User32.GetWindowDC(window));
             }
 
             struct BitmapHandle : IDisposable

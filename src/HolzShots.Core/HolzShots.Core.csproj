@@ -119,6 +119,10 @@
       <Project>{3aadc160-9020-4f59-a2f0-7941752c047e}</Project>
       <Name>HolzShots.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\HolzShots.Native\HolzShots.Native.csproj">
+      <Project>{419f051b-09ad-400d-83c5-b9e9f32e0148}</Project>
+      <Name>HolzShots.Native</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
