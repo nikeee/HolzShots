@@ -58,6 +58,9 @@
     <Compile Include="Input\HotkeyActionCollection.cs" />
     <Compile Include="Input\IAreaSelector.cs" />
     <Compile Include="Input\IHotkeyAction.cs" />
+    <Compile Include="Input\Selection\AnimatedForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Input\Selection\AreaSelector2.cs">
       <SubType>Form</SubType>
     </Compile>

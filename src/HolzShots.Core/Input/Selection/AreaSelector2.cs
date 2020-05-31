@@ -6,11 +6,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using unvell.D2DLib;
-using unvell.D2DLib.WinForm;
 
 namespace HolzShots.Input.Selection
 {
-    public partial class AreaSelector2 : D2DForm, IAreaSelector
+    public partial class AreaSelector2 : AnimatedForm, IAreaSelector
     {
         private static readonly D2DColor _overlayColor = new D2DColor(0.8f, D2DColor.Black);
         private static readonly D2DColor _selectionBorder = new D2DColor(0.6f, D2DColor.White);
@@ -22,6 +21,7 @@ namespace HolzShots.Input.Selection
 
         private D2DBitmap _image;
         private D2DBitmapGraphics _dimmedImage;
+        private D2DBitmap _background;
         private Rectangle _imageBounds;
         private SelectionState _state = new InitialState();
 
@@ -33,10 +33,7 @@ namespace HolzShots.Input.Selection
 
             BackColor = Color.Black;
 
-            ShowFPS = false;
-            AnimationDraw = false;
-
-            EscapeKeyToClose = false;
+            DrawFPS = false;
             StartPosition = FormStartPosition.Manual;
             WindowState = FormWindowState.Normal;
             FormBorderStyle = FormBorderStyle.None;
@@ -46,14 +43,10 @@ namespace HolzShots.Input.Selection
             cts.CancelAfter(5000);
             WindowFinder.GetCurrentWindowRectanglesAsync(Handle, cts.Token).ContinueWith(t => availableWindowsForOutline = t.Result);
 
-            // availableWindowsForOutline = WindowFinder.GetCurrentWindowRectangles(Handle);
-
-            AnimationDraw = true;
-            ShowFPS = true;
-
             Bounds = SystemInformation.VirtualScreen;
 #if !DEBUG
             TopMost = true;
+            DrawFPS = false;
 #endif
 
             _blackOverlayBrush = Device.CreateSolidColorBrush(_overlayColor);
@@ -73,13 +66,12 @@ namespace HolzShots.Input.Selection
             _imageBounds = new Rectangle(0, 0, image.Width, image.Height);
             _image = Device.CreateBitmapFromGDIBitmap(image);
             _dimmedImage = CreateDimemdImage(image.Width, image.Height);
+            _background = _dimmedImage.GetBitmap();
 
             _tcs = new TaskCompletionSource<Rectangle>();
 
             Visible = true;
             Cursor = _cursor;
-
-            BackgroundImage = _dimmedImage.GetBitmap();
 
             return _tcs.Task;
         }
@@ -94,12 +86,8 @@ namespace HolzShots.Input.Selection
             return res;
         }
 
-        protected override void OnFrame()
-        {
-            SceneChanged = true;
-        }
-
         #region Mouse and Keyboard Stuff
+
         protected override void OnMouseDown(MouseEventArgs e)
         {
             if (_state is FinalState)
@@ -137,8 +125,6 @@ namespace HolzShots.Input.Selection
                 default:
                     break; // Ignore all other mouse buttons
             }
-
-            Invalidate();
         }
         protected override void OnMouseUp(MouseEventArgs e)
         {
@@ -190,8 +176,6 @@ namespace HolzShots.Input.Selection
                 default:
                     break; // Ignore all other mouse buttons
             }
-
-            Invalidate();
         }
         protected override void OnMouseMove(MouseEventArgs e)
         {
@@ -215,9 +199,7 @@ namespace HolzShots.Input.Selection
                 case FinalState _: break; // Nothing to be updated
                 default: Debug.Fail("Unhandled State"); break;
             }
-            Invalidate();
         }
-
         protected override void OnKeyUp(KeyEventArgs e)
         {
             switch (e.KeyCode)
@@ -232,9 +214,10 @@ namespace HolzShots.Input.Selection
             }
             base.OnKeyUp(e);
         }
+
         #endregion
 
-        protected override void OnRender(D2DGraphics g)
+        protected override void Draw(TimeSpan elapsed, D2DGraphics g)
         {
             if (_state is FinalState)
                 return;
@@ -242,6 +225,8 @@ namespace HolzShots.Input.Selection
             Debug.Assert(_blackOverlayBrush != null);
 
             g.Antialias = false;
+
+            g.BeginRender(_background);
 
             switch (_state)
             {
