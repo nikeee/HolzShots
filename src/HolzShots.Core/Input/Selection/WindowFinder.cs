@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using HolzShots.Native;
@@ -95,7 +93,7 @@ namespace HolzShots.Input.Selection
             Title = title;
         }
 
-        public override string ToString() => $"{Title}: ${Rectangle}";
+        public override string ToString() => $"{Title}: {Rectangle}";
 
         public override int GetHashCode() => Handle.GetHashCode();
 
