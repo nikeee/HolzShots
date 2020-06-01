@@ -48,7 +48,6 @@ namespace HolzShots.Input.Selection
             TopMost = true;
             DrawFPS = false;
 #endif
-
             _blackOverlayBrush = Device.CreateSolidColorBrush(_overlayColor);
         }
 
@@ -217,7 +216,7 @@ namespace HolzShots.Input.Selection
 
         #endregion
 
-        protected override void Draw(TimeSpan elapsed, D2DGraphics g)
+        protected override void Draw(DateTime now, TimeSpan elapsed, D2DGraphics g)
         {
             if (_state is FinalState)
                 return;
@@ -235,10 +234,14 @@ namespace HolzShots.Input.Selection
                         // foreach (var d in initial.Decorations)
                         //     d.Render(g, initial, _imageBounds);
 
-                        var outlinedWindow = initial.CurrentOutlinedWindow;
-                        if (outlinedWindow != null)
+                        var outlineAnimation = initial.CurrentOutline;
+                        if (outlineAnimation != null)
                         {
-                            D2DRect rect = outlinedWindow.Rectangle;
+                            Debug.Assert(initial.Title != null);
+
+                            outlineAnimation.Update(now);
+
+                            var rect = outlineAnimation.CurrentRectangle;
                             var selectionOutline = new D2DRect(
                                 rect.X + 0.5f,
                                 rect.Y + 0.5f,
@@ -249,7 +252,7 @@ namespace HolzShots.Input.Selection
                             // TODO: Animate
                             // TODO: Make this pretty
                             g.DrawRectangle(selectionOutline, D2DColor.CornflowerBlue, 1.0f);
-                            g.DrawTextCenter(outlinedWindow.Title, D2DColor.CornflowerBlue, "Consolas", 14.0f, selectionOutline);
+                            g.DrawTextCenter(initial.Title, D2DColor.CornflowerBlue, "Consolas", 14.0f, selectionOutline);
                         }
                         break;
                     }
@@ -288,7 +291,7 @@ namespace HolzShots.Input.Selection
         }
         private void FinishSelectionByWindowOutlineClick(InitialState state)
         {
-            var outline = state.CurrentOutlinedWindow;
+            var outline = state.CurrentOutline;
             if (outline == null)
             {
                 CancelSelection();
@@ -296,7 +299,7 @@ namespace HolzShots.Input.Selection
             }
 
             Debug.Assert(_tcs != null);
-            _tcs.SetResult(outline.Rectangle);
+            _tcs.SetResult((Rectangle)outline.Destination);
             CloseInternal();
         }
         private void FinishSelection(FinalState state)
@@ -334,6 +337,7 @@ namespace HolzShots.Input.Selection
         {
             void Render(D2DGraphics g, InitialState state, Rectangle bounds);
         }
+
 
         class HelpTextDecoration : IInitialStateDecoration
         {

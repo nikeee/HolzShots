@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using HolzShots.Input.Selection.Animation;
 using unvell.D2DLib;
 
 namespace HolzShots.Input.Selection
@@ -8,22 +9,47 @@ namespace HolzShots.Input.Selection
     internal abstract class SelectionState { }
     internal class InitialState : SelectionState
     {
-        public WindowRectangle? CurrentOutlinedWindow { get; protected set; }
+        private WindowRectangle? _currentSelectedWindow;
+        public RectangleAnimation? CurrentOutline { get; private set; }
+        public string? Title { get; private set; }
+
         // public IInitialStateDecoration[] Decorations => new[] { new HelpTextDecoration() };
         public void UpdateOutlinedWindow(ISet<WindowRectangle> windows, Point cursorPosition)
         {
             if (windows == null)
-                CurrentOutlinedWindow = null;
+            {
+                CurrentOutline = null;
+                Title = null;
+            }
+
+            var previousOutline = CurrentOutline;
+            var previousWindow = _currentSelectedWindow;
+
+            // TODO: Clean up this mess
 
             foreach (var candidate in windows)
             {
                 if (candidate.Rectangle.Contains(cursorPosition))
                 {
-                    CurrentOutlinedWindow = candidate;
+                    if (previousWindow == candidate)
+                        return;
+
+                    _currentSelectedWindow = candidate;
+
+                    var source = previousOutline?.CurrentRectangle ?? candidate.Rectangle;
+
+                    Title = candidate.Title;
+                    CurrentOutline = new RectangleAnimation(
+                        TimeSpan.FromMilliseconds(200),
+                        source,
+                        candidate.Rectangle
+                    );
                     return;
                 }
             }
-            CurrentOutlinedWindow = null;
+
+            CurrentOutline = null;
+            Title = null;
         }
     }
 
