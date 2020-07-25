@@ -7,7 +7,6 @@ namespace HolzShots.Core.Tests.Net.Custom
     {
         [Theory]
         [FileStringContentData("Files/DirectUpload.net.hsjson")]
-        [FileStringContentData("Files/FotosHochladen.hsjson")]
         public void ValidateTest(string content)
         {
             var parseResult = CustomUploader.TryParse(content, out var result);
