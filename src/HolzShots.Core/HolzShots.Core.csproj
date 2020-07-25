@@ -96,6 +96,7 @@
     <Compile Include="Net\UploadResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Screenshot.cs" />
+    <Compile Include="Settings\Settings.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HolzShots.Common\HolzShots.Common.csproj">
