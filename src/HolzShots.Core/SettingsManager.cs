@@ -1,21 +1,37 @@
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
-namespace HolzShots.Settings
+namespace HolzShots
 {
-    class SettingsManager<T> : IDisposable, INotifyPropertyChanged
+    /// <summary>
+    /// TODO: Migrate to System.Text.Json some day:
+    /// https://docs.microsoft.com/dotnet/standard/serialization/system-text-json-migrate-from-newtonsoft-how-to
+    ///
+    /// TODO: Maybe we want another type that can be transformed to T
+    /// </summary>
+    public class SettingsManager<T> : IDisposable, INotifyPropertyChanged
         where T : new()
     {
-        public T CurrentSettings { get; private set; } = default;
+        private static readonly JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings()
+        {
+            ContractResolver = new NonPublicPropertiesResolver()
+        };
+
+        public T CurrentSettings { get; private set; } = new T();
         public string SettingsFilePath { get; }
 
         private readonly FileSystemWatcher _fsw;
 
-        public SettingsManager(string settingsFilePath)
+        public SettingsManager(string settingsFilePath, ISynchronizeInvoke synchronizingObject = null)
         {
+            Debug.Assert(!string.IsNullOrEmpty(settingsFilePath));
+
             SettingsFilePath = settingsFilePath ?? throw new ArgumentNullException(nameof(settingsFilePath));
 
             _fsw = new FileSystemWatcher
@@ -24,7 +40,7 @@ namespace HolzShots.Settings
                 Filter = Path.GetFileName(settingsFilePath),
                 NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.CreationTime,
                 IncludeSubdirectories = false,
-                // TODO SynchronizingObject?
+                SynchronizingObject = synchronizingObject,
             };
         }
 
@@ -34,11 +50,12 @@ namespace HolzShots.Settings
             _fsw.Deleted += OnSettingsFileChanged;
             _fsw.EnableRaisingEvents = true;
 
-            return UpdateSettings(File.Exists(SettingsFilePath));
+            return ForceReload();
         }
 
-        private void OnSettingsFileChanged(object sender, FileSystemEventArgs e) => UpdateSettings(false);
-        private void OnSettingsFileDeleted(object sender, FileSystemEventArgs e) => UpdateSettings(true);
+        public Task ForceReload() => UpdateSettings(!File.Exists(SettingsFilePath));
+        private void OnSettingsFileChanged(object sender, FileSystemEventArgs e) => _ = UpdateSettings(false);
+        private void OnSettingsFileDeleted(object sender, FileSystemEventArgs e) => _ = UpdateSettings(true);
 
         private async Task UpdateSettings(bool deleted)
         {
@@ -48,11 +65,13 @@ namespace HolzShots.Settings
                 return;
             }
 
+            // TODO: Maybe we want to add a de-bouncer here
+
             var (success, newSettings) = await DeserializeSettings(SettingsFilePath);
             if (!success)
                 return;
 
-            var settingsAreValid = ValidateSettingsCandidate(newSettings);
+            var settingsAreValid = IsValidSettingsCandidate(newSettings);
             if (!settingsAreValid)
                 return;
 
@@ -76,7 +95,7 @@ namespace HolzShots.Settings
                 using var reader = File.OpenText(path);
                 // No check for File.Exists because we'll get an exception anyways and avoid race conditions
                 var settingsContent = await reader.ReadToEndAsync();
-                var newSettings = JsonConvert.DeserializeObject<T>(settingsContent);
+                var newSettings = JsonConvert.DeserializeObject<T>(settingsContent, _jsonSerializerSettings);
 
                 return (true, newSettings);
             }
@@ -89,7 +108,7 @@ namespace HolzShots.Settings
         public event EventHandler<T> OnSettingsUpdated;
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected virtual bool ValidateSettingsCandidate(T candidate) => true;
+        protected virtual bool IsValidSettingsCandidate(T candidate) => true;
 
         #region IDisposable
 
@@ -118,24 +137,17 @@ namespace HolzShots.Settings
         #endregion
     }
 
-    class Test
+    public class NonPublicPropertiesResolver : CamelCasePropertyNamesContractResolver
     {
-        class HSSettings
+        protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
         {
-            public int Test { get; }
-        }
-
-        async Task TestTest()
-        {
-
-            var sm = new SettingsManager<HSSettings>("settings.json");
-
-            sm.OnSettingsUpdated += (_, newSettings) =>
+            var prop = base.CreateProperty(member, memberSerialization);
+            if (member is PropertyInfo pi)
             {
-                var a = newSettings.Test;
-            };
-
-            await sm.InitializeSettings();
+                prop.Readable = (pi.GetMethod != null);
+                prop.Writable = (pi.SetMethod != null);
+            }
+            return prop;
         }
     }
 }

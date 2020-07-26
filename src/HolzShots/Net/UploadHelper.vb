@@ -88,7 +88,7 @@ Namespace Net
             Else
                 If Not result.Url.SetAsClipboardText() Then
                     HumanInterop.CopyingFailed(result.Url)
-                ElseIf ManagedSettings.ShowCopyConfirmation Then
+                ElseIf UserSettings.Current.ShowCopyConfirmation Then
                     HumanInterop.ShowCopyConfirmation(result.Url)
                 End If
             End If

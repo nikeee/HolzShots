@@ -66,8 +66,8 @@ Namespace UI.Specialized
 
             InitializeComponent()
 
-            autoCloseShotEditor.Checked = ManagedSettings.AutoCloseShotEditor
-            ' autoCloseShotEditor.Enabled = True ' Not ManagedSettings.AutoCloseShotEditorPolicy.IsSet
+            autoCloseShotEditor.Checked = UserSettings.Current.AutoCloseShotEditor
+            autoCloseShotEditor.Enabled = False ' We only support reading that setting for now
 
             Me.Screenshot = screenshot
 
@@ -831,7 +831,7 @@ Namespace UI.Specialized
         End Sub
 
         Private Sub HandleAfterUpload()
-            If ManagedSettings.AutoCloseShotEditor Then
+            If UserSettings.Current.AutoCloseShotEditor Then
                 Close()
             End If
         End Sub
@@ -858,8 +858,10 @@ Namespace UI.Specialized
         End Sub
 
         Private Sub AutoCloseShotEditorCheckedChanged(sender As Object, e As EventArgs) Handles autoCloseShotEditor.CheckedChanged
-            ManagedSettings.AutoCloseShotEditor = autoCloseShotEditor.Checked
-            HolzShots.My.MySettings.Default.Save()
+            ' We only support reding this property for now
+
+            ' ManagedSettings.AutoCloseShotEditor = autoCloseShotEditor.Checked
+            ' HolzShots.My.MySettings.Default.Save()
         End Sub
 
         Protected Overrides Sub Dispose(ByVal disposing As Boolean)

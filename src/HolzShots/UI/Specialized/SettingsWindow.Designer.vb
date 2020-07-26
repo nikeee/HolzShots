@@ -78,6 +78,7 @@ Namespace UI.Specialized
             Me.Label10 = New System.Windows.Forms.Label()
             Me.Abort = New System.Windows.Forms.Button()
             Me.gpoInfoBanner = New HolzShots.UI.Forms.Banner()
+            Me.OpenSettingsJson = New System.Windows.Forms.Button()
             Me.Tabs.SuspendLayout()
             Me.SelectorsTab.SuspendLayout()
             Me.Panel3.SuspendLayout()
@@ -364,7 +365,7 @@ Namespace UI.Specialized
             Me.disableShotEditorCheckBox.Font = New System.Drawing.Font("Segoe UI", 9.0!)
             Me.disableShotEditorCheckBox.Location = New System.Drawing.Point(23, 53)
             Me.disableShotEditorCheckBox.Name = "disableShotEditorCheckBox"
-            Me.disableShotEditorCheckBox.Size = New System.Drawing.Size(374, 20)
+            Me.disableShotEditorCheckBox.Size = New System.Drawing.Size(381, 20)
             Me.disableShotEditorCheckBox.TabIndex = 14
             Me.disableShotEditorCheckBox.Text = "Upload image straight to default hoster (disable screenshot editor)"
             Me.disableShotEditorCheckBox.UseVisualStyleBackColor = True
@@ -573,7 +574,7 @@ Namespace UI.Specialized
             Me.openImageInExplorerMenu.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
             Me.openImageInExplorerMenu.Location = New System.Drawing.Point(43, 80)
             Me.openImageInExplorerMenu.Name = "openImageInExplorerMenu"
-            Me.openImageInExplorerMenu.Size = New System.Drawing.Size(265, 20)
+            Me.openImageInExplorerMenu.Size = New System.Drawing.Size(267, 20)
             Me.openImageInExplorerMenu.TabIndex = 12
             Me.openImageInExplorerMenu.Text = "Add „ShotEditor"" to explorer's context menu"
             Me.openImageInExplorerMenu.UseVisualStyleBackColor = True
@@ -585,7 +586,7 @@ Namespace UI.Specialized
             Me.uploadImageInExplorerMenu.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
             Me.uploadImageInExplorerMenu.Location = New System.Drawing.Point(43, 54)
             Me.uploadImageInExplorerMenu.Name = "uploadImageInExplorerMenu"
-            Me.uploadImageInExplorerMenu.Size = New System.Drawing.Size(248, 20)
+            Me.uploadImageInExplorerMenu.Size = New System.Drawing.Size(250, 20)
             Me.uploadImageInExplorerMenu.TabIndex = 11
             Me.uploadImageInExplorerMenu.Text = "Add „Upload"" to explorer's context menu"
             Me.uploadImageInExplorerMenu.UseVisualStyleBackColor = True
@@ -679,6 +680,19 @@ Namespace UI.Specialized
             Me.gpoInfoBanner.Size = New System.Drawing.Size(454, 24)
             Me.gpoInfoBanner.TabIndex = 9
             '
+            'OpenSettingsJson
+            '
+            Me.OpenSettingsJson.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Me.OpenSettingsJson.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
+            Me.OpenSettingsJson.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+            Me.OpenSettingsJson.Location = New System.Drawing.Point(6, 334)
+            Me.OpenSettingsJson.Name = "OpenSettingsJson"
+            Me.OpenSettingsJson.Size = New System.Drawing.Size(142, 30)
+            Me.OpenSettingsJson.TabIndex = 10
+            Me.OpenSettingsJson.Text = "Open Settings (JSON)"
+            Me.OpenSettingsJson.UseVisualStyleBackColor = True
+            '
             'SettingsWindow
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
@@ -686,6 +700,7 @@ Namespace UI.Specialized
             Me.BackColor = System.Drawing.SystemColors.Window
             Me.CancelButton = Me.Abort
             Me.ClientSize = New System.Drawing.Size(466, 376)
+            Me.Controls.Add(Me.OpenSettingsJson)
             Me.Controls.Add(Me.gpoInfoBanner)
             Me.Controls.Add(Me.Tabs)
             Me.Controls.Add(Me.Abort)
@@ -776,5 +791,6 @@ Namespace UI.Specialized
         Friend WithEvents decoration1 As System.Windows.Forms.RadioButton
         Friend WithEvents pluginListPanel As HolzShots.UI.Controls.StackPanel
         Friend WithEvents showCopyConfirmation As CheckBox
+        Friend WithEvents OpenSettingsJson As Button
     End Class
 End Namespace

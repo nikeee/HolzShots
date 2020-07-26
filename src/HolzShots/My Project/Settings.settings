@@ -122,12 +122,6 @@
     <Setting Name="IsFirstRun" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="AutoCloseShotEditor" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="ShowCopyConfimation" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
     <Setting Name="SaveImagesPattern" Type="System.String" Scope="User">
       <Value Profile="(Default)">Screenshot-&lt;Date&gt;</Value>
     </Setting>

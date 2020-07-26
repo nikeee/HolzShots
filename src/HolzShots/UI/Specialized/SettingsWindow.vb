@@ -86,12 +86,11 @@ Namespace UI.Specialized
 
             start_with_windows.Checked = HolzShotsEnvironment.AutoStart
 
-            enableStatusToaster.Checked = ManagedSettings.EnableStatusToaster
-            'enableStatusToaster.Enabled = Not ManagedSettings.EnableStatusToasterPolicy.IsSet
+            enableStatusToaster.Checked = UserSettings.Current.EnableUploadProgressToast
+            enableStatusToaster.Enabled = False ' we only support reading the current setting for now
 
-
-            AutoCloseLinkViewer.Checked = ManagedSettings.AutoCloseLinkViewer
-            'AutoCloseLinkViewer.Enabled = Not deactivateLinkViewerCheckBox.Checked AndAlso Not ManagedSettings.AutoCloseLinkViewerPolicy.IsSet
+            AutoCloseLinkViewer.Checked = UserSettings.Current.AutoCloseLinkViewer
+            'AutoCloseLinkViewer.Enabled = False ' we only support reading the current setting for now
 
             enableSmartFormatForUpload.Checked = ManagedSettings.EnableSmartFormatForUpload
             'enableSmartFormatForUpload.Enabled = Not ManagedSettings.EnableSmartFormatForUploadPolicy.IsSet
@@ -106,8 +105,10 @@ Namespace UI.Specialized
             Activate_Window.Checked = ManagedSettings.EnableWindowScreenshot
             'Activate_Window.Enabled = Not ManagedSettings.EnableWindowScreenshotPolicy.IsSet
 
-            showCopyConfirmation.Checked = ManagedSettings.ShowCopyConfirmation
-            showCopyConfirmation.Enabled = deactivateLinkViewerCheckBox.Checked
+            showCopyConfirmation.Checked = UserSettings.Current.ShowCopyConfirmation
+            showCopyConfirmation.Enabled = False ' we only support reading the current setting for now
+            ' deactivateLinkViewerCheckBox.Checked
+
             ' /Screenshot Methods
 
             Dim d As SelectionDecorations = ManagedSettings.SelectionDecoration
@@ -161,10 +162,10 @@ Namespace UI.Specialized
             ManagedSettings.EnableFullscreenScreenshot = Activate_Fullscreen.Checked
             ManagedSettings.EnableLinkViewer = Not deactivateLinkViewerCheckBox.Checked
             ManagedSettings.EnableShotEditor = Not disableShotEditorCheckBox.Checked
-            ManagedSettings.AutoCloseLinkViewer = AutoCloseLinkViewer.Checked
+            ' ManagedSettings.AutoCloseLinkViewer = AutoCloseLinkViewer.Checked
             ManagedSettings.EnableAreaScreenshot = Activate_Area.Checked
-            ManagedSettings.EnableStatusToaster = enableStatusToaster.Checked
-            ManagedSettings.ShowCopyConfirmation = showCopyConfirmation.Checked
+            ' ManagedSettings.EnableStatusToaster = enableStatusToaster.Checked
+            ' ManagedSettings.ShowCopyConfirmation = showCopyConfirmation.Checked
 
             ManagedSettings.EnableSmartFormatForUpload = enableSmartFormatForUpload.Checked
             ManagedSettings.EnableSmartFormatForSaving = enableSmartFormatForSaving.Checked
@@ -453,6 +454,11 @@ Namespace UI.Specialized
 
         Private Sub PluginsTabPaint(sender As Object, e As PaintEventArgs) Handles PluginsTab.Paint
             e.Graphics.DrawLine(BorderPen, 0, pluginListPanel.Location.Y - 1, Width - 1, pluginListPanel.Location.Y - 1)
+        End Sub
+
+        Private Async Sub OpenSettingsJson_Click(sender As Object, e As EventArgs) Handles OpenSettingsJson.Click
+            Await UserSettings.CreateUserSettingsIfNotPresent()
+            UserSettings.OpenSettingsInDefaultEditor()
         End Sub
     End Class
 End Namespace

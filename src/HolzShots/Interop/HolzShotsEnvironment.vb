@@ -14,9 +14,6 @@ Namespace Interop
         Private Sub New()
         End Sub
 
-        Public Shared ReadOnly ApplicationDataRoaming As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
-
-
         Public Shared Function IsFullScreen() As Boolean
             Dim hndl As IntPtr = Native.User32.GetForegroundWindow()
             Dim sb As New StringBuilder()
