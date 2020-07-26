@@ -36,8 +36,6 @@ namespace HolzShots
             if (File.Exists(HolzShotsPaths.UserSettingsFilePath))
                 return;
 
-            using var writer = File.OpenWrite(HolzShotsPaths.UserSettingsFilePath);
-
             var defaultSettingsStr = @"{
     // 'autoCloseShotEditor': false,
     // 'autoCloseLinkViewer': true,
@@ -45,9 +43,11 @@ namespace HolzShots
     // 'showCopyConfirmation': false,
 }
 ";
-
-            var defaultSettings = System.Text.Encoding.UTF8.GetBytes(defaultSettingsStr.Replace("'", "\""));
-            await writer.WriteAsync(defaultSettings, 0, defaultSettings.Length);
+            using (var writer = File.OpenWrite(HolzShotsPaths.UserSettingsFilePath))
+            {
+                var defaultSettings = System.Text.Encoding.UTF8.GetBytes(defaultSettingsStr.Replace("'", "\""));
+                await writer.WriteAsync(defaultSettings, 0, defaultSettings.Length);
+            }
         }
 
         public static void OpenSettingsInDefaultEditor() => Process.Start(HolzShotsPaths.UserSettingsFilePath);
