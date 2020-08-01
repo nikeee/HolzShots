@@ -31,7 +31,7 @@ Namespace ScreenshotRelated
         Public Shared Async Function CaptureSelection() As Task(Of Screenshot)
             Debug.Assert(Not AreaSelector.IsInAreaSelector)
             If AreaSelector.IsInAreaSelector Then Return Nothing
-            If ManagedSettings.EnableIngameMode AndAlso HolzShotsEnvironment.IsFullScreen Then Return Nothing
+            If UserSettings.Current.EnableIngameMode AndAlso HolzShotsEnvironment.IsFullScreen Then Return Nothing
 
             Using prio As New ProcessPriorityRequest()
                 Using screen = ScreenshotCreator.CaptureScreenshot(SystemInformation.VirtualScreen)

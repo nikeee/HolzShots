@@ -66,7 +66,7 @@ Namespace Net
         End Function
 
         Friend Shared Function GetImageFormat(image As Image) As ImageFormat
-            If ManagedSettings.EnableSmartFormatForUpload AndAlso Drawing.ImageFormatAnalyser.IsOptimizable(image) Then
+            If UserSettings.Current.EnableSmartFormatForUpload AndAlso Drawing.ImageFormatAnalyser.IsOptimizable(image) Then
                 Try
                     Dim bmp As Bitmap = If(TypeOf image Is Bitmap, DirectCast(image, Bitmap), New Bitmap(image))
                     Return Drawing.ImageFormatAnalyser.GetBestFittingFormat(bmp) ' Experimental?

@@ -6,13 +6,7 @@ Imports HolzShots.ScreenshotRelated.Selection
 Namespace Interop
     Friend Module ManagedSettings
 
-        ' TODO: ApplicationInformation?
-        Private Const PublisherName As String = "nikeee Software"
-        Private Const ApplicationName As String = LibraryInformation.Name
-
         Private Const CustomUploadersFileName = "custom-uploaders.json"
-
-        Public Property ShotEditorTitleText As String = String.Empty
 
         Public Property ScreenshotPath As String
             Get
@@ -105,33 +99,6 @@ Namespace Interop
             End Get
             Set
                 My.Settings.EnableWindowScreenshot = Value
-            End Set
-        End Property
-
-        Public Property EnableIngameMode As Boolean
-            Get
-                Return My.Settings.EnableIngameMode
-            End Get
-            Set
-                My.Settings.EnableIngameMode = Value
-            End Set
-        End Property
-
-        Public Property EnableSmartFormatForUpload As Boolean
-            Get
-                Return My.Settings.EnableSmartFormatForUpload
-            End Get
-            Set
-                My.Settings.EnableSmartFormatForUpload = Value
-            End Set
-        End Property
-
-        Public Property EnableSmartFormatForSaving As Boolean
-            Get
-                Return My.Settings.EnableSmartFormatForSaving
-            End Get
-            Set
-                My.Settings.EnableSmartFormatForSaving = Value
             End Set
         End Property
 

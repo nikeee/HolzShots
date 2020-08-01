@@ -20,9 +20,6 @@
     <Setting Name="MarkerWidth" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">15</Value>
     </Setting>
-    <Setting Name="EnableIngameMode" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
     <Setting Name="ZensursulaColor" Type="System.Drawing.Color" Scope="User">
       <Value Profile="(Default)">Black</Value>
     </Setting>
@@ -100,12 +97,6 @@
     </Setting>
     <Setting Name="SelectionDecoration" Type="HolzShots.ScreenshotRelated.Selection.SelectionDecorations" Scope="User">
       <Value Profile="(Default)">Nomination1</Value>
-    </Setting>
-    <Setting Name="EnableSmartFormatForUpload" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="EnableSmartFormatForSaving" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="EnableDebugMode" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>

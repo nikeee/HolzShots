@@ -79,10 +79,10 @@ Namespace UI.Specialized
             'disableShotEditorCheckBox.Enabled = Not ManagedSettings.EnableShotEditorPolicy.IsSet
 
             deactivateLinkViewerCheckBox.Checked = Not ManagedSettings.EnableLinkViewer
-            'deactivateLinkViewerCheckBox.Enabled = Not ManagedSettings.EnableLinkViewerPolicy.IsSet
+            deactivateLinkViewerCheckBox.Enabled = False ' we only support reading the current setting for now
 
-            EnableIngameMode.Checked = Not ManagedSettings.EnableIngameMode
-            'EnableIngameMode.Enabled = Not ManagedSettings.EnableIngameModePolicy.IsSet
+            EnableIngameMode.Checked = Not UserSettings.Current.EnableIngameMode
+            EnableIngameMode.Enabled = False ' we only support reading the current setting for now
 
             start_with_windows.Checked = HolzShotsEnvironment.AutoStart
 
@@ -90,10 +90,10 @@ Namespace UI.Specialized
             enableStatusToaster.Enabled = False ' we only support reading the current setting for now
 
             AutoCloseLinkViewer.Checked = UserSettings.Current.AutoCloseLinkViewer
-            'AutoCloseLinkViewer.Enabled = False ' we only support reading the current setting for now
+            AutoCloseLinkViewer.Enabled = False ' we only support reading the current setting for now
 
-            enableSmartFormatForUpload.Checked = ManagedSettings.EnableSmartFormatForUpload
-            'enableSmartFormatForUpload.Enabled = Not ManagedSettings.EnableSmartFormatForUploadPolicy.IsSet
+            enableSmartFormatForUpload.Checked = UserSettings.Current.EnableSmartFormatForUpload
+            enableSmartFormatForUpload.Enabled = False ' we only support reading the current setting for now
 
             ' Screenshot Methods
             Activate_Area.Checked = ManagedSettings.EnableAreaScreenshot
@@ -126,8 +126,8 @@ Namespace UI.Specialized
             fileNamingPattern.Text = ManagedSettings.SaveImagesPattern
             'fileNamingPattern.Enabled = Not ManagedSettings.SaveImagesPatternPolicy.IsSet
 
-            enableSmartFormatForSaving.Checked = ManagedSettings.EnableSmartFormatForSaving
-            'enableSmartFormatForSaving.Enabled = Not ManagedSettings.EnableSmartFormatForSavingPolicy.IsSet
+            enableSmartFormatForSaving.Checked = UserSettings.Current.EnableSmartFormatForSaving
+            enableSmartFormatForSaving.Enabled = False ' we only support reading the current setting for now
 
             'Dim enableCustomPaths = Not ManagedSettings.ScreenshotPathPolicy.IsSet
             Dim p = ManagedSettings.ScreenshotPath
@@ -157,20 +157,11 @@ Namespace UI.Specialized
                 .DefaultImageHoster = defaultHosterBox.Text
             End With
 
-            ManagedSettings.EnableIngameMode = Not EnableIngameMode.Checked
             ManagedSettings.EnableWindowScreenshot = Activate_Window.Checked
             ManagedSettings.EnableFullscreenScreenshot = Activate_Fullscreen.Checked
             ManagedSettings.EnableLinkViewer = Not deactivateLinkViewerCheckBox.Checked
             ManagedSettings.EnableShotEditor = Not disableShotEditorCheckBox.Checked
-            ' ManagedSettings.AutoCloseLinkViewer = AutoCloseLinkViewer.Checked
             ManagedSettings.EnableAreaScreenshot = Activate_Area.Checked
-            ' ManagedSettings.EnableStatusToaster = enableStatusToaster.Checked
-            ' ManagedSettings.ShowCopyConfirmation = showCopyConfirmation.Checked
-
-            ManagedSettings.EnableSmartFormatForUpload = enableSmartFormatForUpload.Checked
-            ManagedSettings.EnableSmartFormatForSaving = enableSmartFormatForSaving.Checked
-
-
 
             Dim d As SelectionDecorations
             If decoration1.Checked Then

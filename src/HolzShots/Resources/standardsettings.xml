@@ -17,7 +17,6 @@
     <highlightmouse>False</highlightmouse>
     <AGBs_DirectUploadPlugin>True</AGBs_DirectUploadPlugin>
     <ShowCursor>False</ShowCursor>
-    <EnableIngameMode>False</EnableIngameMode>
     <activate_formsymbol>False</activate_formsymbol>
     <activate_saving_in_db>True</activate_saving_in_db>
     <start_with_windows>False</start_with_windows>

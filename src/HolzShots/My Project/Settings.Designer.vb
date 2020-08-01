@@ -128,18 +128,6 @@ Namespace My
 
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
-        Public Property EnableIngameMode() As Boolean
-            Get
-                Return CType(Me("EnableIngameMode"),Boolean)
-            End Get
-            Set
-                Me("EnableIngameMode") = value
-            End Set
-        End Property
-
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("Black")>  _
         Public Property ZensursulaColor() As Global.System.Drawing.Color
             Get
@@ -447,30 +435,6 @@ Namespace My
             End Get
             Set
                 Me("SelectionDecoration") = value
-            End Set
-        End Property
-
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
-        Public Property EnableSmartFormatForUpload() As Boolean
-            Get
-                Return CType(Me("EnableSmartFormatForUpload"),Boolean)
-            End Get
-            Set
-                Me("EnableSmartFormatForUpload") = value
-            End Set
-        End Property
-
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
-        Public Property EnableSmartFormatForSaving() As Boolean
-            Get
-                Return CType(Me("EnableSmartFormatForSaving"),Boolean)
-            End Get
-            Set
-                Me("EnableSmartFormatForSaving") = value
             End Set
         End Property
 

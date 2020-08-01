@@ -17,6 +17,12 @@ namespace HolzShots
         public bool AutoCloseLinkViewer { get; private set; } = true;
         public bool EnableUploadProgressToast { get; private set; } = true;
         public bool ShowCopyConfirmation { get; private set; } = false;
+
+        /// <summary> TODO: Change name </summary>
+        public bool EnableIngameMode { get; private set; } = false;
+        /// <summary> TODO: Maybe use a different name for that. </summary>
+        public bool EnableSmartFormatForUpload { get; private set; } = false;
+        public bool EnableSmartFormatForSaving { get; private set; } = false;
     }
 
     public static class UserSettings

@@ -52,7 +52,7 @@ Namespace Interop.LocalDisk
             Debug.Assert(TypeOf shot.Image Is Bitmap)
             Dim screenshotImage = If(TypeOf shot.Image Is Bitmap, DirectCast(shot.Image, Bitmap), New Bitmap(shot.Image))
 
-            If ManagedSettings.EnableSmartFormatForSaving AndAlso Drawing.ImageFormatAnalyser.IsOptimizable(screenshotImage) Then
+            If UserSettings.Current.EnableSmartFormatForSaving AndAlso Drawing.ImageFormatAnalyser.IsOptimizable(screenshotImage) Then
                 format = Drawing.ImageFormatAnalyser.GetBestFittingFormat(screenshotImage)
                 fileExtension = (format.GetFormatMetadata()?.Extension)
                 Debug.Assert(Not String.IsNullOrWhiteSpace(fileExtension))

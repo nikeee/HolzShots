@@ -73,7 +73,7 @@ Namespace UI.Specialized
 
             InitializeThumbnailToolbar()
 
-            If ManagedSettings.EnableIngameMode AndAlso HolzShotsEnvironment.IsFullScreen() Then
+            If UserSettings.Current.EnableIngameMode AndAlso HolzShotsEnvironment.IsFullScreen() Then
                 WindowState = FormWindowState.Minimized
             ElseIf screenshot.Size = SystemInformation.VirtualScreen.Size Then
                 WindowState = FormWindowState.Maximized
@@ -134,10 +134,6 @@ Namespace UI.Specialized
         Private Sub ShotShowerLoad(ByVal sender As Object, ByVal e As EventArgs) Handles MyBase.Load
             ThePanel.Initialize(Screenshot)
             LoadToolSettings()
-            'If ManagedSettings.ShotEditorTitleTextPolicy.IsSet Then
-            If Not String.IsNullOrEmpty(ManagedSettings.ShotEditorTitleText) Then
-                Text = String.Concat(Text, " ", ManagedSettings.ShotEditorTitleText)
-            End If
         End Sub
 
 #Region "Settings and stuff"
