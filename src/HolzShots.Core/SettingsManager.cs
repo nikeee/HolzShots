@@ -31,18 +31,20 @@ namespace HolzShots
         public string SettingsFilePath { get; }
 
         private readonly FileSystemWatcher _fsw;
+        private readonly Func<T, IReadOnlyList<ValidationError>> _candidateValidator;
 
-        public SettingsManager(string settingsFilePath, ISynchronizeInvoke synchronizingObject = null)
+        public SettingsManager(string settingsFilePath, Func<T, IReadOnlyList<ValidationError>> candidateValidator = null, ISynchronizeInvoke synchronizingObject = null)
         {
             Debug.Assert(!string.IsNullOrEmpty(settingsFilePath));
 
             SettingsFilePath = settingsFilePath ?? throw new ArgumentNullException(nameof(settingsFilePath));
 
+            _candidateValidator = candidateValidator;
             _fsw = new FileSystemWatcher
             {
                 Path = Path.GetDirectoryName(settingsFilePath),
                 Filter = Path.GetFileName(settingsFilePath),
-                NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.CreationTime,
+                NotifyFilter = NotifyFilters.LastWrite,
                 IncludeSubdirectories = false,
                 SynchronizingObject = synchronizingObject,
             };
@@ -51,7 +53,7 @@ namespace HolzShots
         public Task InitializeSettings()
         {
             _fsw.Changed += OnSettingsFileChanged;
-            _fsw.Deleted += OnSettingsFileChanged;
+            _fsw.Deleted += OnSettingsFileDeleted;
             _fsw.EnableRaisingEvents = true;
 
             return ForceReload();
@@ -63,26 +65,35 @@ namespace HolzShots
 
         private async Task UpdateSettings(bool deleted)
         {
-            if (deleted)
+            try
             {
-                SetCurrentSettings(new T());
-                return;
+                _fsw.EnableRaisingEvents = false;
+
+                if (deleted)
+                {
+                    SetCurrentSettings(new T());
+                    return;
+                }
+
+                // TODO: Maybe we want to add a de-bouncer here
+
+                var (success, newSettings) = await DeserializeSettings(SettingsFilePath);
+                if (!success || newSettings == null)
+                    return;
+
+                var validationErrors = IsValidSettingsCandidate(newSettings);
+                if (validationErrors.Count > 0)
+                {
+                    OnValidationError?.Invoke(this, validationErrors);
+                    return;
+                }
+
+                SetCurrentSettings(newSettings);
             }
-
-            // TODO: Maybe we want to add a de-bouncer here
-
-            var (success, newSettings) = await DeserializeSettings(SettingsFilePath);
-            if (!success)
-                return;
-
-            var validationErrors = IsValidSettingsCandidate(newSettings);
-            if (validationErrors.Count > 0)
+            finally
             {
-                OnValidationError?.Invoke(this, validationErrors);
-                return;
+                _fsw.EnableRaisingEvents = true;
             }
-
-            SetCurrentSettings(newSettings);
         }
 
         private void SetCurrentSettings(T newSettings)

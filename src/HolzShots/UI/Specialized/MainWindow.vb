@@ -1,6 +1,3 @@
-Imports System.Configuration
-Imports System.Linq
-Imports HolzShots
 Imports HolzShots.Input
 Imports HolzShots.Input.Actions
 Imports HolzShots.Interop
@@ -48,14 +45,11 @@ Namespace UI.Specialized
 
             Drawing.DpiAwarenessFix.SetDpiAwareness()
 
-            Await UserSettings.Load(Me)
-
             _keyboardHook = KeyboardHookSelector.CreateHookForCurrentPlatform(Me)
-            _ActionContainer = New HolzShotsActionCollection(_keyboardHook,
-                                                            New SelectAreaHotkeyAction(),
-                                                            New FullscreenHotkeyAction(),
-                                                            New WindowHotkeyAction())
-            ActionContainer.Refresh()
+
+            Await UserSettings.Load(Me)
+            SettingsUpdated(Me, UserSettings.Current)
+            AddHandler UserSettings.Manager.OnSettingsUpdated, AddressOf SettingsUpdated
 
             Global.HolzShots.My.Settings.Upgrade()
 
