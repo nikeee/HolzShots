@@ -5,6 +5,7 @@ Imports System.Linq
 Imports System.Threading.Tasks
 Imports HolzShots.Composition
 Imports HolzShots.Interop
+Imports HolzShots.IO
 Imports HolzShots.ScreenshotRelated
 Imports HolzShots.UI.Specialized
 Imports Microsoft.VisualBasic.ApplicationServices
@@ -103,10 +104,10 @@ Namespace My
 
             jlist.ClearAllUserTasks()
 
-            Static imgres As String = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.System), "imageres.dll")
+            Static imgres As String = Path.Combine(HolzShotsPaths.SystemPath, "imageres.dll")
 
             If File.Exists(imgres) Then
-                Dim fullscreen As New JumpListLink(System.Windows.Forms.Application.ExecutablePath, "Shoot entire screen") With {
+                Dim fullscreen As New JumpListLink(System.Windows.Forms.Application.ExecutablePath, "Capture entire screen") With {
                     .Arguments = FullscreenScreenshotParameter,
                     .IconReference = New IconReference(imgres, 105)
                 }

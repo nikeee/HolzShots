@@ -2,12 +2,11 @@ Imports System.Drawing.Imaging
 Imports System.IO
 Imports System.Threading
 Imports HolzShots
+Imports HolzShots.IO
 Imports HolzShots.IO.Naming
 
 Namespace Interop.LocalDisk
     Friend Class ScreenshotDumper
-
-        Public Const MyPicturesFolderName As String = LibraryInformation.Name
 
         Private Shared _lastFileName As String = String.Empty
 
@@ -87,20 +86,17 @@ Namespace Interop.LocalDisk
             If Not Directory.Exists(datPath) Then
                 If String.IsNullOrWhiteSpace(datPath) Then
 
-                    Dim myPics As String = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures)
-                    Dim myHsPics As String = Path.Combine(myPics, MyPicturesFolderName)
-                    If Not Directory.Exists(myHsPics) Then
-                        Try
-                            Directory.CreateDirectory(myHsPics)
-                        Catch uae As UnauthorizedAccessException
-                            HumanInterop.UnauthorizedAccessExceptionDirectory(myHsPics)
-                            Return False
-                        Catch ptle As PathTooLongException
-                            HumanInterop.PathIsTooLong(myHsPics)
-                            Return False
-                        End Try
-                    End If
-                    ManagedSettings.ScreenshotPath = myHsPics
+                    Dim fallbackDirectory = HolzShotsPaths.DefaultScreenshotSavePath
+                    Try
+                        HolzShotsPaths.EnsureDirectory(fallbackDirectory)
+                    Catch uae As UnauthorizedAccessException
+                        HumanInterop.UnauthorizedAccessExceptionDirectory(fallbackDirectory)
+                        Return False
+                    Catch ptle As PathTooLongException
+                        HumanInterop.PathIsTooLong(fallbackDirectory)
+                        Return False
+                    End Try
+                    ManagedSettings.ScreenshotPath = fallbackDirectory
                     Return True
                 End If
 

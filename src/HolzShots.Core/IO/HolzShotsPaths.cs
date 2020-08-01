@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.IO;
 
 namespace HolzShots.IO
@@ -6,10 +7,27 @@ namespace HolzShots.IO
     public static class HolzShotsPaths
     {
         private static readonly string SystemAppDataDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        private static readonly string UserPicturesDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
         private static readonly string AppDataDirectory = Path.Combine(SystemAppDataDirectory, LibraryInformation.Name);
+
+        public static string SystemPath { get; } = Environment.GetFolderPath(Environment.SpecialFolder.System);
 
         public static string PluginDirectory { get; } = Path.Combine(AppDataDirectory, "Plugin");
         public static string UserSettingsFilePath { get; } = Path.Combine(AppDataDirectory, "settings.json");
+
+        public static string DefaultScreenshotSavePath { get; } = Path.Combine(UserPicturesDirectory, LibraryInformation.Name);
+
+        /// <exception cref="UnauthorizedAccessException" />
+        /// <exception cref="PathTooLongException" />
+        public static void EnsureDirectory(string directory)
+        {
+            Debug.Assert(directory != null);
+
+            if (Directory.Exists(directory))
+                return;
+
+            Directory.CreateDirectory(directory);
+        }
 
         // TODO: Paths for JSON upload configs
     }
