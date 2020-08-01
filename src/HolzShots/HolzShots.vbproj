@@ -480,8 +480,6 @@
   <ItemGroup>
     <None Include="Resources\eraser.png" />
     <None Include="Resources\download.png" />
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HolzShots.Common\HolzShots.Common.csproj">
