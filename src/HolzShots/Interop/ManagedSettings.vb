@@ -44,33 +44,6 @@ Namespace Interop
             End Set
         End Property
 
-        Public Property EnableAreaScreenshot As Boolean
-            Get
-                Return My.Settings.EnableAreaScreenshot
-            End Get
-            Set
-                My.Settings.EnableAreaScreenshot = Value
-            End Set
-        End Property
-
-        Public Property EnableFullscreenScreenshot As Boolean
-            Get
-                Return My.Settings.EnableFullscreenScreenshot
-            End Get
-            Set
-                My.Settings.EnableFullscreenScreenshot = Value
-            End Set
-        End Property
-
-        Public Property EnableWindowScreenshot As Boolean
-            Get
-                Return My.Settings.EnableWindowScreenshot
-            End Get
-            Set
-                My.Settings.EnableWindowScreenshot = Value
-            End Set
-        End Property
-
         Public Property TrayIconDoubleClickAction As TrayIconAction
             Get
                 Return My.Settings.TrayIconDoubleClickAction

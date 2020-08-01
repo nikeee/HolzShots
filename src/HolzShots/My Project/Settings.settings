@@ -41,15 +41,6 @@
     <Setting Name="BrightenColor" Type="System.Drawing.Color" Scope="User">
       <Value Profile="(Default)">Black</Value>
     </Setting>
-    <Setting Name="EnableWindowScreenshot" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="EnableFullscreenScreenshot" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="EnableAreaScreenshot" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
     <Setting Name="ShowFileNameDialog" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
@@ -94,15 +85,6 @@
     </Setting>
     <Setting Name="EnableDebugMode" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="SelectorHotkey" Type="HolzShots.Input.Hotkey" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="FullHotkey" Type="HolzShots.Input.Hotkey" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="WindowHotkey" Type="HolzShots.Input.Hotkey" Scope="User">
-      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="IsFirstRun" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>

@@ -43,6 +43,8 @@ Namespace UI.Specialized
         Private Sub SettingsUpdated(sender As Object, newSettings As HSSettings)
             _ActionContainer?.Dispose()
 
+            ' TODO: Issue toaster notifiction that the settings have been updated
+
             Dim parsedBindings = newSettings.KeyBindings.Select(AddressOf ReadBinding).ToArray()
 
             _ActionContainer = New HolzShotsActionCollection(_keyboardHook, parsedBindings)

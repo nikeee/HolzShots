@@ -16,24 +16,29 @@ Namespace ScreenshotRelated
 #Region "Fullscreen"
 
         Public Async Function DoFullscreen() As Task
-            Debug.Assert(ManagedSettings.EnableFullscreenScreenshot)
+            ' TODO: Add proper assertion
+            ' Debug.Assert(ManagedSettings.EnableFullscreenScreenshot)
 
-            If ManagedSettings.EnableFullscreenScreenshot Then
-                Dim shot = ScreenshotMethods.CaptureFullscreen()
-                Debug.Assert(shot IsNot Nothing)
-                Await ProceedScreenshot(shot).ConfigureAwait(True)
-            End If
+            ' TODO: Re-add proper if condition
+            ' If ManagedSettings.EnableFullscreenScreenshot Then
+            Dim shot = ScreenshotMethods.CaptureFullscreen()
+            Debug.Assert(shot IsNot Nothing)
+            Await ProceedScreenshot(shot).ConfigureAwait(True)
+            'End If
         End Function
 
 #End Region
 #Region "Selector"
 
         Public Async Function DoSelector() As Task
-            Debug.Assert(ManagedSettings.EnableAreaScreenshot)
+            ' TODO: Add proper assertion
+            ' Debug.Assert(ManagedSettings.EnableAreaScreenshot)
             Debug.Assert(Not AreaSelector.IsInAreaSelector)
             If UserSettings.Current.EnableIngameMode AndAlso HolzShotsEnvironment.IsFullScreen Then Return
 
-            If ManagedSettings.EnableAreaScreenshot AndAlso Not AreaSelector.IsInAreaSelector Then
+            ' TODO: Re-add proper if condition
+            'If ManagedSettings.EnableAreaScreenshot AndAlso Not AreaSelector.IsInAreaSelector Then
+            If Not AreaSelector.IsInAreaSelector Then
                 Dim shot As Screenshot
                 Try
                     shot = Await ScreenshotMethods.CaptureSelection().ConfigureAwait(True)
@@ -52,17 +57,19 @@ Namespace ScreenshotRelated
 #Region "Window"
 
         Public Async Function DoWindow() As Task
-            Debug.Assert(ManagedSettings.EnableWindowScreenshot)
+            ' TODO: Add proper assertion
+            ' Debug.Assert(ManagedSettings.EnableWindowScreenshot)
 
-            If ManagedSettings.EnableWindowScreenshot Then
-                Dim h As IntPtr = Native.User32.GetForegroundWindow()
+            ' TODO: Re-add proper if condition
+            ' If ManagedSettings.EnableWindowScreenshot Then
+            Dim h As IntPtr = Native.User32.GetForegroundWindow()
 
-                Dim info As Native.User32.WindowPlacement
-                Native.User32.GetWindowPlacement(h, info)
+            Dim info As Native.User32.WindowPlacement
+            Native.User32.GetWindowPlacement(h, info)
 
-                Dim shot = ScreenshotMethods.CaptureWindow(h)
-                Await ProceedScreenshot(shot).ConfigureAwait(True)
-            End If
+            Dim shot = ScreenshotMethods.CaptureWindow(h)
+            Await ProceedScreenshot(shot).ConfigureAwait(True)
+            ' End If
         End Function
 
 #End Region

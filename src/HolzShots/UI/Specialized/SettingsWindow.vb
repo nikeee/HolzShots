@@ -96,16 +96,6 @@ Namespace UI.Specialized
             enableSmartFormatForUpload.Checked = UserSettings.Current.EnableSmartFormatForUpload
             enableSmartFormatForUpload.Enabled = False ' we only support reading the current setting for now
 
-            ' Screenshot Methods
-            Activate_Area.Checked = ManagedSettings.EnableAreaScreenshot
-            'Activate_Area.Enabled = Not ManagedSettings.EnableAreaScreenshotPolicy.IsSet
-
-            Activate_Fullscreen.Checked = ManagedSettings.EnableFullscreenScreenshot
-            'Activate_Fullscreen.Enabled = Not ManagedSettings.EnableFullscreenScreenshotPolicy.IsSet
-
-            Activate_Window.Checked = ManagedSettings.EnableWindowScreenshot
-            'Activate_Window.Enabled = Not ManagedSettings.EnableWindowScreenshotPolicy.IsSet
-
             showCopyConfirmation.Checked = UserSettings.Current.ShowCopyConfirmation
             showCopyConfirmation.Enabled = False ' we only support reading the current setting for now
             ' deactivateLinkViewerCheckBox.Checked
@@ -158,11 +148,8 @@ Namespace UI.Specialized
                 .DefaultImageHoster = defaultHosterBox.Text
             End With
 
-            ManagedSettings.EnableWindowScreenshot = Activate_Window.Checked
-            ManagedSettings.EnableFullscreenScreenshot = Activate_Fullscreen.Checked
             ManagedSettings.EnableLinkViewer = Not deactivateLinkViewerCheckBox.Checked
             ManagedSettings.EnableShotEditor = Not disableShotEditorCheckBox.Checked
-            ManagedSettings.EnableAreaScreenshot = Activate_Area.Checked
 
             Dim d As SelectionDecorations
             If decoration1.Checked Then
@@ -172,7 +159,7 @@ Namespace UI.Specialized
             ElseIf decoration3.Checked Then
                 d = SelectionDecorations.Nomination3
             End If
-            'decorationPanel.Enabled = Not SelectionDecorationPolicy.IsSet
+
             ManagedSettings.SelectionDecoration = d
 
             If UserSettings.Current.SaveImagesToLocalDisk Then
@@ -181,31 +168,7 @@ Namespace UI.Specialized
 
             HolzShotsEnvironment.AutoStart = start_with_windows.Checked
 
-            SaveHotkeys()
-
             Global.HolzShots.My.Settings.Save()
-        End Sub
-
-        Private Sub SaveHotkeys()
-            Dim preSelectorHotkey = Global.HolzShots.My.Settings.SelectorHotkey
-            Dim preFullHotkey = Global.HolzShots.My.Settings.FullHotkey
-            Dim preWindowHotkey = Global.HolzShots.My.Settings.WindowHotkey
-
-            Global.HolzShots.My.Settings.SelectorHotkey = _selectorKeyStroke
-            Global.HolzShots.My.Settings.FullHotkey = _fullKeyStroke
-            Global.HolzShots.My.Settings.WindowHotkey = _windowKeyStroke
-
-            Try
-                Target.ActionContainer.Refresh()
-            Catch ex As AggregateException
-                Global.HolzShots.My.Settings.SelectorHotkey = preSelectorHotkey
-                Global.HolzShots.My.Settings.FullHotkey = preFullHotkey
-                Global.HolzShots.My.Settings.WindowHotkey = preWindowHotkey
-                Target.ActionContainer.Refresh()
-                HumanInterop.ErrorRegisteringHotkeys()
-            Finally
-            End Try
-            EnsureHotkeySettingsIntegrity()
         End Sub
 
         Private _hasShrinked As Boolean = False
@@ -232,77 +195,6 @@ Namespace UI.Specialized
 
         Private Sub SettingsLoad(ByVal sender As Object, ByVal e As EventArgs) Handles MyBase.Load
             LoadPolicies()
-            LoadHotkeys()
-        End Sub
-
-        Private Sub LoadHotkeys()
-            EnsureHotkeySettingsIntegrity()
-
-            _selectorKeyStroke = HolzShots.My.Settings.SelectorHotkey
-            _windowKeyStroke = HolzShots.My.Settings.WindowHotkey
-            _fullKeyStroke = HolzShots.My.Settings.FullHotkey
-
-            UpdateHotkeyLabels()
-        End Sub
-
-        Private Sub UpdateHotkeyLabels()
-            _selectorStrokeLabel.Text = If(_selectorKeyStroke?.ToString(), Localization.NotSet)
-            _fullStrokeLabel.Text = If(_fullKeyStroke?.ToString(), Localization.NotSet)
-            _windowStrokeLabel.Text = If(_windowKeyStroke?.ToString(), Localization.NotSet)
-        End Sub
-
-        Private Shared ReadOnly Property SelectorDefaultHotkey As Hotkey
-            Get
-                Return New Hotkey(Input.ModifierKeys.None, Keys.F8)
-            End Get
-        End Property
-
-        Private Shared ReadOnly Property FullDefaultHotkey As Hotkey
-            Get
-                Return New Hotkey(Input.ModifierKeys.None, Keys.F9)
-            End Get
-        End Property
-
-        Private Shared ReadOnly Property WindowDefaultHotkey As Hotkey
-            Get
-                Return New Hotkey(Input.ModifierKeys.None, Keys.F10)
-            End Get
-        End Property
-
-        Friend Shared Sub EnsureHotkeySettingsIntegrity()
-            Dim changed = False
-
-            If HolzShots.My.Settings.EnableAreaScreenshot Then
-                Dim r = IdentityOrDefaultHotkey(HolzShots.My.Settings.SelectorHotkey, SelectorDefaultHotkey)
-                HolzShots.My.Settings.SelectorHotkey = r.Item1
-                If r.Item2 Then
-                    changed = True
-                End If
-            Else
-                HolzShots.My.Settings.SelectorHotkey = Nothing
-            End If
-            If HolzShots.My.Settings.EnableFullscreenScreenshot Then
-                Dim r = IdentityOrDefaultHotkey(HolzShots.My.Settings.FullHotkey, FullDefaultHotkey)
-                HolzShots.My.Settings.FullHotkey = r.Item1
-                If r.Item2 Then
-                    changed = True
-                End If
-            Else
-                HolzShots.My.Settings.FullHotkey = Nothing
-            End If
-            If HolzShots.My.Settings.EnableWindowScreenshot Then
-                Dim r = IdentityOrDefaultHotkey(HolzShots.My.Settings.WindowHotkey, WindowDefaultHotkey)
-                HolzShots.My.Settings.WindowHotkey = r.Item1
-                If r.Item2 Then
-                    changed = True
-                End If
-            Else
-                HolzShots.My.Settings.WindowHotkey = Nothing
-            End If
-
-            If changed Then
-                HolzShots.My.Settings.Save()
-            End If
         End Sub
 
         Private Shared Function IdentityOrDefaultHotkey(h As Hotkey, [default] As Hotkey) As (Hotkey, Boolean)
@@ -343,12 +235,12 @@ Namespace UI.Specialized
 
         Private Sub EnableLocalSaveCheckBoxCheckedChanged(sender As Object, e As EventArgs) Handles enableLocalSaveCheckBox.CheckedChanged
             localSaveSettingsPanel.Enabled = enableLocalSaveCheckBox.Checked ' AndAlso Not ManagedSettings.SaveImagesToLocalDiskPolicy.IsSet
-            UpdateFileNameingPreviewLabel()
+            UpdateFileNamingPreviewLabel()
         End Sub
 
 
         Private Sub FileNamingPatternTextChanged(sender As Object, e As EventArgs) Handles fileNamingPattern.TextChanged
-            UpdateFileNameingPreviewLabel()
+            UpdateFileNamingPreviewLabel()
         End Sub
 
         Private Sub LocalSavePathBrowseButtonClick(sender As Object, e As EventArgs) Handles localSavePathBrowseButton.Click
@@ -378,7 +270,7 @@ Namespace UI.Specialized
             savebtn.Enabled = enableLocalSaveCheckBox.Checked
         End Sub
 
-        Private Sub UpdateFileNameingPreviewLabel()
+        Private Sub UpdateFileNamingPreviewLabel()
             If Not enableLocalSaveCheckBox.Checked Then
                 savebtn.Enabled = True
                 Return
@@ -410,36 +302,6 @@ Namespace UI.Specialized
 
         Private Shared Sub OpenPluginFolderLinkLabelLinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles openPluginFolderLinkLabel.LinkClicked
             Global.HolzShots.My.Application.Uploaders.Plugins.PluginDirectory.OpenFolderInExplorer()
-        End Sub
-
-        Private _selectorKeyStroke As Hotkey
-        Private Sub SetSelectorHotkeyClick(sender As Object, e As EventArgs) Handles setSelector.Click
-            Using s As IHotkeySelector = New SimpleHotkeySelector(Me, _selectorKeyStroke, Localization.SetHotkeyAreaSelector)
-                If s.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
-                    _selectorKeyStroke = s.SelectedKeyStroke
-                    UpdateHotkeyLabels()
-                End If
-            End Using
-        End Sub
-
-        Private _fullKeyStroke As Hotkey
-        Private Sub SetFullscreenClick(sender As Object, e As EventArgs) Handles setFullscreen.Click
-            Using s As IHotkeySelector = New SimpleHotkeySelector(Me, _fullKeyStroke, Localization.SetHotkeyFullscreen)
-                If s.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
-                    _fullKeyStroke = s.SelectedKeyStroke
-                    UpdateHotkeyLabels()
-                End If
-            End Using
-        End Sub
-
-        Private _windowKeyStroke As Hotkey
-        Private Sub SetWindowClick(sender As Object, e As EventArgs) Handles setWindow.Click
-            Using s As IHotkeySelector = New SimpleHotkeySelector(Me, _windowKeyStroke, Localization.SetHotkeyCurrentWindow)
-                If s.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
-                    _windowKeyStroke = s.SelectedKeyStroke
-                    UpdateHotkeyLabels()
-                End If
-            End Using
         End Sub
 
         Private Sub PluginsTabPaint(sender As Object, e As PaintEventArgs) Handles PluginsTab.Paint
