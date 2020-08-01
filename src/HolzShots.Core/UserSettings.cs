@@ -19,6 +19,8 @@ namespace HolzShots
         public bool EnableUploadProgressToast { get; private set; } = true;
         public bool ShowCopyConfirmation { get; private set; } = false;
 
+        public bool SaveImagesToLocalDisk { get; private set; } = true;
+
         /// <summary> TODO: Change name </summary>
         public bool EnableIngameMode { get; private set; } = false;
         /// <summary> TODO: Maybe use a different name for that. </summary>

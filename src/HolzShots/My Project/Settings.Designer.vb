@@ -404,18 +404,6 @@ Namespace My
 
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
-        Public Property SaveImagesToLocalDisk() As Boolean
-            Get
-                Return CType(Me("SaveImagesToLocalDisk"),Boolean)
-            End Get
-            Set
-                Me("SaveImagesToLocalDisk") = value
-            End Set
-        End Property
-
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("OpenSettings")>  _
         Public Property TrayIconDoubleClickAction() As Global.HolzShots.ScreenshotRelated.TrayIconAction
             Get

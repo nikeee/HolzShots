@@ -26,15 +26,6 @@ Namespace Interop
             End Set
         End Property
 
-        Public Property SaveImagesToLocalDisk As Boolean
-            Get
-                Return My.Settings.SaveImagesToLocalDisk
-            End Get
-            Set
-                My.Settings.SaveImagesToLocalDisk = Value
-            End Set
-        End Property
-
         Public Property EnableShotEditor As Boolean
             Get
                 Return My.Settings.EnableShotEditor

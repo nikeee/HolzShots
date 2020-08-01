@@ -84,10 +84,12 @@ Namespace Interop
         Shared Sub InvalidFilePattern(pattern As String)
             'If Not ManagedSettings.SaveImagesToLocalDiskPolicy.IsSet Then
             Dim res = Show(GenericErrorTitle, "No valid naming pattern provided.",
-                           $"The file naming pattern you provided is not valid. Therefore, the image was not save. Please set a valid naming pattern in settings.{N}{N}Would you like to turn off automatic saving of your screenshots?",
+                           $"The file naming pattern you provided is not valid. Therefore, the image was not saved. Please set a valid naming pattern in settings.{N}{N}Would you like to turn off automatic saving of your screenshots?",
                            TaskDialogStandardButtons.Yes Or TaskDialogStandardButtons.No, TaskDialogStandardIcon.Error)
             If res = DialogResult.Yes Then
-                ManagedSettings.SaveImagesToLocalDisk = False
+                ' UserSettings.Current.SaveImagesToLocalDisk = False
+                ' TODO: Setting settings not supported yet
+                ' Maybe we want to remove the "do you want to turn it off now" feature off
             End If
         End Sub
         Shared Sub ErrorWhileOpeningSettingsDialog(ex As Exception)

@@ -118,7 +118,7 @@ Namespace UI.Specialized
             'decorationPanel.Enabled = Not SelectionDecorationPolicy.IsSet
 
             ' Local saves
-            enableLocalSaveCheckBox.Checked = ManagedSettings.SaveImagesToLocalDisk
+            enableLocalSaveCheckBox.Checked = UserSettings.Current.SaveImagesToLocalDisk
             'enableLocalSaveCheckBox.Enabled = Not ManagedSettings.SaveImagesToLocalDiskPolicy.IsSet
 
             localSaveSettingsPanel.Enabled = enableLocalSaveCheckBox.Checked
@@ -175,8 +175,7 @@ Namespace UI.Specialized
             ManagedSettings.SelectionDecoration = d
 
             ManagedSettings.ScreenshotPath = localSavePath.Text
-            ManagedSettings.SaveImagesToLocalDisk = enableLocalSaveCheckBox.Checked
-            If ManagedSettings.SaveImagesToLocalDisk Then
+            If UserSettings.Current.SaveImagesToLocalDisk Then
                 ManagedSettings.SaveImagesPattern = fileNamingPattern.Text
             End If
 

@@ -11,7 +11,7 @@ Namespace Interop.LocalDisk
         Private Shared _lastFileName As String = String.Empty
 
         Public Shared Sub OpenPictureDumpFolderIfEnabled()
-            If ManagedSettings.SaveImagesToLocalDisk Then
+            If UserSettings.Current.SaveImagesToLocalDisk Then
                 OpenPictureDumpFolder()
             End If
         End Sub
@@ -39,7 +39,7 @@ Namespace Interop.LocalDisk
         End Sub
 
         Friend Shared Sub HandleScreenshot(shot As Screenshot)
-            If Not ManagedSettings.SaveImagesToLocalDisk OrElse Not CheckSavePath() Then Return
+            If Not UserSettings.Current.SaveImagesToLocalDisk OrElse Not CheckSavePath() Then Return
             SaveScreenshot(shot)
         End Sub
 
