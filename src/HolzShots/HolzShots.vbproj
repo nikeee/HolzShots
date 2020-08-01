@@ -480,7 +480,6 @@
   <ItemGroup>
     <None Include="Resources\eraser.png" />
     <None Include="Resources\download.png" />
-    <None Include="Resources\standardsettings.xml">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
