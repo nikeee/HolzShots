@@ -1,7 +1,10 @@
 using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -72,9 +75,12 @@ namespace HolzShots
             if (!success)
                 return;
 
-            var settingsAreValid = IsValidSettingsCandidate(newSettings);
-            if (!settingsAreValid)
+            var validationErrors = IsValidSettingsCandidate(newSettings);
+            if (validationErrors.Count > 0)
+            {
+                OnValidationError?.Invoke(this, validationErrors);
                 return;
+            }
 
             SetCurrentSettings(newSettings);
         }
@@ -111,9 +117,10 @@ namespace HolzShots
         public string SerializeSettings(T settings) => JsonConvert.SerializeObject(settings, _jsonSerializerSettings);
 
         public event EventHandler<T> OnSettingsUpdated;
+        public event EventHandler<IReadOnlyList<ValidationError>> OnValidationError;
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected virtual bool IsValidSettingsCandidate(T candidate) => true;
+        protected virtual IReadOnlyList<ValidationError> IsValidSettingsCandidate(T candidate) => ImmutableList<ValidationError>.Empty;
 
         #region IDisposable
 
@@ -140,6 +147,14 @@ namespace HolzShots
         }
 
         #endregion
+    }
+
+    public class ValidationError
+    {
+        public string Message { get; }
+        public string AffectedProperty { get; }
+        public string InvalidValue { get; }
+        public Exception? Exception { get; }
     }
 
     public class NonPublicPropertiesResolver : CamelCasePropertyNamesContractResolver
