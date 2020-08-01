@@ -154,7 +154,8 @@ namespace HolzShots
         public string Message { get; }
         public string AffectedProperty { get; }
         public string InvalidValue { get; }
-        public Exception? Exception { get; }
+        public Exception /* ? */ Exception { get; }
+        // TODO: Proper class with ctor and stuff
     }
 
     public class NonPublicPropertiesResolver : CamelCasePropertyNamesContractResolver
