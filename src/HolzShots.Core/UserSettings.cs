@@ -18,9 +18,17 @@ namespace HolzShots
 
         public static async Task Load(ISynchronizeInvoke synchronizingObject)
         {
-            Manager = new SettingsManager<HSSettings>(HolzShotsPaths.UserSettingsFilePath, synchronizingObject);
+            Manager = new SettingsManager<HSSettings>(HolzShotsPaths.UserSettingsFilePath, ValidateSettingsCandidate, synchronizingObject);
             await CreateUserSettingsIfNotPresent();
             await Manager.InitializeSettings();
+        }
+
+        static IReadOnlyList<ValidationError> ValidateSettingsCandidate(HSSettings candidate)
+        {
+            Debug.Assert(candidate != null);
+
+
+            return ImmutableList<ValidationError>.Empty;
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage", "AsyncFixer01:Unnecessary async/await usage", Justification = "using statement")]

@@ -12,7 +12,7 @@ Namespace UI.Specialized
         Private _forceclose As Boolean = False
 
         Private _keyboardHook As KeyboardHook
-        Public ReadOnly Property ActionContainer As HotkeyActionCollection
+        Public ReadOnly Property ActionContainer As HolzShotsActionCollection
 
         Private Sub HideForm()
             Opacity = 0
@@ -36,6 +36,19 @@ Namespace UI.Specialized
                 e.Cancel = False
                 TrayIcon.Visible = False
             End If
+        End Sub
+
+        Private Sub SettingsUpdated(sender As Object, newSettings As HSSettings)
+            MessageBox.Show("New settings!")
+            _ActionContainer?.Dispose()
+
+            ' TODO: Read hotkeys to register from actions
+            _ActionContainer = New HolzShotsActionCollection(_keyboardHook,
+                                                            New SelectAreaHotkeyAction(),
+                                                            New FullscreenHotkeyAction(),
+                                                            New WindowHotkeyAction())
+            _ActionContainer.Refresh()
+
         End Sub
 
         Private Async Sub MainWindowLoad(ByVal sender As Object, ByVal e As EventArgs) Handles MyBase.Load

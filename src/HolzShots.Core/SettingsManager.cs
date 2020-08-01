@@ -131,7 +131,13 @@ namespace HolzShots
         public event EventHandler<IReadOnlyList<ValidationError>> OnValidationError;
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected virtual IReadOnlyList<ValidationError> IsValidSettingsCandidate(T candidate) => ImmutableList<ValidationError>.Empty;
+        protected virtual IReadOnlyList<ValidationError> IsValidSettingsCandidate(T candidate)
+        {
+            return _candidateValidator == null
+                    ? ImmutableList<ValidationError>.Empty
+                    : _candidateValidator(candidate);
+        }
+
 
         #region IDisposable
 
