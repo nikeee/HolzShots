@@ -1,3 +1,4 @@
+Imports System.Configuration
 Imports System.Linq
 Imports HolzShots
 Imports HolzShots.Input
@@ -99,12 +100,15 @@ Namespace UI.Specialized
 
 #Region "Open Windows"
 
-        Private Sub OpenSettings()
+        Private Shared Sub OpenSettings()
             If Not SettingsWindow.Instance.Visible Then
                 SettingsWindow.Instance.ShowDialog() ' Showdialog necessary?
             End If
         End Sub
-        Private Sub OpenAbout()
+        Private Shared Sub OpenSettingsJson()
+            UserSettings.OpenSettingsInDefaultEditor()
+        End Sub
+        Private Shared Sub OpenAbout()
             If Not AboutForm.IsAboutInstanciated Then
                 Dim newAboutForm As New AboutForm()
                 newAboutForm.Show()
@@ -142,15 +146,19 @@ Namespace UI.Specialized
             OpenSettings()
         End Sub
 
-        Private Async Sub selectAreaMenuItem_Click(sender As Object, e As EventArgs) Handles selectAreaMenuItem.Click
+        Private Sub SettingsJsonMenuItemClick(sender As Object, e As EventArgs) Handles settingsJsonMenuItem.Click
+            OpenSettingsJson()
+        End Sub
+
+        Private Async Sub SelectAreaMenuItemClick(sender As Object, e As EventArgs) Handles selectAreaMenuItem.Click
             Await ScreenshotInvoker.DoSelector().ConfigureAwait(True) ' can swallow exceptions
         End Sub
 
-        Private Sub openImageMenuItem_Click(sender As Object, e As EventArgs) Handles openImageMenuItem.Click
+        Private Sub OpenImageMenuItemClick(sender As Object, e As EventArgs) Handles openImageMenuItem.Click
             ScreenshotInvoker.OpenSelectedImage()
         End Sub
 
-        Private Sub uploadImageMenuItem_Click(sender As Object, e As EventArgs) Handles uploadImageMenuItem.Click
+        Private Sub UploadImageMenuItemClick(sender As Object, e As EventArgs) Handles uploadImageMenuItem.Click
             ScreenshotInvoker.UploadSelectedImage()
         End Sub
 
@@ -158,7 +166,7 @@ Namespace UI.Specialized
             OpenAbout()
         End Sub
 
-        Private Sub feedbackMenuItem_Click(sender As Object, e As EventArgs) Handles feedbackMenuItem.Click
+        Private Sub FeedbackMenuItemClick(sender As Object, e As EventArgs) Handles feedbackMenuItem.Click
             LibraryInformation.IssuesUrl.SafeProcessStart()
         End Sub
 

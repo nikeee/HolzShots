@@ -36,6 +36,7 @@ Namespace UI.Specialized
             Me.settingsMenuItem = New System.Windows.Forms.MenuItem()
             Me.MenuItem4 = New System.Windows.Forms.MenuItem()
             Me.exitMenuItem = New System.Windows.Forms.MenuItem()
+            Me.settingsJsonMenuItem = New System.Windows.Forms.MenuItem()
             Me.SuspendLayout()
             '
             'TrayIcon
@@ -49,7 +50,7 @@ Namespace UI.Specialized
             '
             'trayIconMenu
             '
-            Me.trayIconMenu.MenuItems.AddRange(New System.Windows.Forms.MenuItem() {Me.extrasMenuItem, Me.uploadImageMenuItem, Me.openImageMenuItem, Me.selectAreaMenuItem, Me.settingsMenuItem, Me.MenuItem4, Me.exitMenuItem})
+            Me.trayIconMenu.MenuItems.AddRange(New System.Windows.Forms.MenuItem() {Me.extrasMenuItem, Me.uploadImageMenuItem, Me.openImageMenuItem, Me.selectAreaMenuItem, Me.settingsMenuItem, Me.settingsJsonMenuItem, Me.MenuItem4, Me.exitMenuItem})
             '
             'extrasMenuItem
             '
@@ -89,19 +90,24 @@ Namespace UI.Specialized
             '
             'MenuItem4
             '
-            Me.MenuItem4.Index = 5
+            Me.MenuItem4.Index = 6
             Me.MenuItem4.Text = "-"
             '
             'exitMenuItem
             '
-            Me.exitMenuItem.Index = 6
+            Me.exitMenuItem.Index = 7
             Me.exitMenuItem.Text = "Exit"
+            '
+            'settingsJsonMenuItem
+            '
+            Me.settingsJsonMenuItem.Index = 5
+            Me.settingsJsonMenuItem.Text = "Settings (JSON)"
             '
             'MainWindow
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-            Me.ClientSize = New System.Drawing.Size(10, 30)
+            Me.ClientSize = New System.Drawing.Size(10, 50)
             Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
             Me.Name = "MainWindow"
             Me.Text = "MainWindow"
@@ -119,6 +125,6 @@ Namespace UI.Specialized
         Friend WithEvents openImageMenuItem As System.Windows.Forms.MenuItem
         Friend WithEvents selectAreaMenuItem As System.Windows.Forms.MenuItem
         Friend WithEvents exitMenuItem As System.Windows.Forms.MenuItem
-
+        Friend WithEvents settingsJsonMenuItem As MenuItem
     End Class
 End Namespace
