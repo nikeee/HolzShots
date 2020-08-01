@@ -1,3 +1,5 @@
+Imports System.Collections.Immutable
+Imports System.Linq
 Imports HolzShots.Input
 Imports HolzShots.Input.Actions
 Imports HolzShots.Interop
@@ -39,17 +41,32 @@ Namespace UI.Specialized
         End Sub
 
         Private Sub SettingsUpdated(sender As Object, newSettings As HSSettings)
-            MessageBox.Show("New settings!")
             _ActionContainer?.Dispose()
 
-            ' TODO: Read hotkeys to register from actions
-            _ActionContainer = New HolzShotsActionCollection(_keyboardHook,
-                                                            New SelectAreaHotkeyAction(),
-                                                            New FullscreenHotkeyAction(),
-                                                            New WindowHotkeyAction())
-            _ActionContainer.Refresh()
+            Dim parsedBindings = newSettings.KeyBindings.Select(AddressOf ReadBinding).ToArray()
 
+            _ActionContainer = New HolzShotsActionCollection(_keyboardHook, parsedBindings)
+            _ActionContainer.Refresh()
         End Sub
+
+        Private Shared Function ReadBinding(binding As KeyBinding) As IHotkeyAction
+            ' We assume that everything is already checked (validation step should have validated that all hotkeys are != null
+            ' We also assume that every key is only assigned once
+
+            Debug.Assert(binding.Keys IsNot Nothing)
+            Debug.Assert(binding.Command IsNot Nothing)
+
+            Select Case binding.Command
+                Case "captureArea"
+                    Return New SelectAreaHotkeyAction(binding.Keys, binding.Enabled)
+                Case "captureEntireScreen"
+                    Return New FullscreenHotkeyAction(binding.Keys, binding.Enabled)
+                Case "captureWindow"
+                    Return New WindowHotkeyAction(binding.Keys, binding.Enabled)
+                Case Else
+                    Throw New ArgumentException()
+            End Select
+        End Function
 
         Private Async Sub MainWindowLoad(ByVal sender As Object, ByVal e As EventArgs) Handles MyBase.Load
             HideForm()
