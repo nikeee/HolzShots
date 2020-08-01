@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Collections.Immutable;
 using System.IO;
-using System.Runtime.Remoting.Messaging;
 using HolzShots.IO;
 
 namespace HolzShots.Composition

@@ -55,6 +55,7 @@
     <Compile Include="Composition\UploaderManager.cs" />
     <Compile Include="Composition\PluginLoadingFailedException.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="HSSettings.cs" />
     <Compile Include="Input\HotkeyActionCollection.cs" />
     <Compile Include="Input\IAreaSelector.cs" />
     <Compile Include="Input\IHotkeyAction.cs" />

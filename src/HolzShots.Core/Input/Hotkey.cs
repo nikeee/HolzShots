@@ -122,7 +122,7 @@ namespace HolzShots.Input
             return sb.ToString();
         }
 
-        // https://stackoverflow.com/questions/91778
+        /// <remarks> https://stackoverflow.com/questions/91778 </remarks>
         internal void RemoveAllEventHandlers()
         {
             lock (_delegates)
