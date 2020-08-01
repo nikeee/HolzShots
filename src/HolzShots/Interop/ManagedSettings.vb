@@ -5,9 +5,6 @@ Imports HolzShots.ScreenshotRelated.Selection
 
 Namespace Interop
     Friend Module ManagedSettings
-
-        Private Const CustomUploadersFileName = "custom-uploaders.json"
-
         Public Property EnableShotEditor As Boolean
             Get
                 Return My.Settings.EnableShotEditor
@@ -92,9 +89,5 @@ Namespace Interop
                 My.Settings.SelectionDecoration = Value
             End Set
         End Property
-
-        Public ReadOnly Property CustomUploadersPath As String = Path.Combine(HolzShots.IO.HolzShotsPaths.PluginDirectory, CustomUploadersFileName)
-
     End Module
-
 End Namespace

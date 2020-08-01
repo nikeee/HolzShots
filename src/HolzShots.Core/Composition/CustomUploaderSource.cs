@@ -6,21 +6,25 @@ using System.Linq;
 using HolzShots.Net.Custom;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using System.Collections.Immutable;
+using System.IO;
+using System.Runtime.Remoting.Messaging;
+using HolzShots.IO;
 
 namespace HolzShots.Composition
 {
     public class CustomUploaderSource : IUploaderSource
     {
-        private readonly string _customUploadersFileName;
-        private IReadOnlyDictionary<UploaderMeta, CustomUploader> _customUploaders = null;
+        private readonly string _customUploadersDirectory;
+        private IReadOnlyDictionary<UploaderMeta, CustomUploader> _customUploaders = ImmutableDictionary<UploaderMeta, CustomUploader>.Empty;
 
         public bool Loaded { get; private set; }
 
-        public CustomUploaderSource(string customUploadersFileName)
+        public CustomUploaderSource(string customUploadersDirectory)
         {
-            if (string.IsNullOrEmpty(customUploadersFileName))
-                throw new ArgumentNullException(nameof(customUploadersFileName));
-            _customUploadersFileName = customUploadersFileName;
+            if (string.IsNullOrEmpty(customUploadersDirectory))
+                throw new ArgumentNullException(nameof(customUploadersDirectory));
+            _customUploadersDirectory = customUploadersDirectory;
         }
 
         public async Task Load()
@@ -29,31 +33,34 @@ namespace HolzShots.Composition
 
             try
             {
-                using (var reader = System.IO.File.OpenText(_customUploadersFileName))
+                HolzShotsPaths.EnsureDirectory(_customUploadersDirectory);
+                // var res = new Dictionary<UploaderMeta, CustomUploader>();
+
+                var res = ImmutableDictionary.CreateBuilder<UploaderMeta, CustomUploader>();
+
+                foreach (var jsonFile in Directory.EnumerateFiles(_customUploadersDirectory))
                 {
-                    var jsonStr = await reader.ReadToEndAsync().ConfigureAwait(false);
-                    var loaded = JsonConvert.DeserializeObject<CustomUploadersFile>(jsonStr, JsonConfig.JsonSettings);
-                    Debug.Assert(loaded != null);
-
-                    var uploaders = loaded.Uploaders;
-                    Debug.Assert(uploaders != null);
-
-                    var res = new Dictionary<UploaderMeta, CustomUploader>();
-                    foreach (var u in uploaders)
+                    using (var reader = File.OpenText(jsonFile))
                     {
-                        if (CustomUploader.TryLoad(u, out var customUploader))
+                        var jsonStr = await reader.ReadToEndAsync().ConfigureAwait(false);
+                        var uploader = JsonConvert.DeserializeObject<CustomUploaderRoot>(jsonStr, JsonConfig.JsonSettings);
+
+                        // TODO: Aggregate errors of invalid files
+                        Debug.Assert(uploader != null);
+
+                        if (CustomUploader.TryLoad(uploader, out var loadedUploader))
                         {
-                            Debug.Assert(customUploader != null);
-                            res.Add(u.Meta, customUploader);
+                            Debug.Assert(loadedUploader != null);
+                            res.Add(uploader.Meta, loadedUploader);
                         }
                     }
-
-                    _customUploaders = res;
                 }
+
+                _customUploaders = res.ToImmutable();
             }
-            catch (System.IO.FileNotFoundException)
+            catch (FileNotFoundException)
             {
-                _customUploaders = new Dictionary<UploaderMeta, CustomUploader>();
+                _customUploaders = ImmutableDictionary<UploaderMeta, CustomUploader>.Empty;
             }
             finally
             {

@@ -13,6 +13,7 @@ namespace HolzShots.IO
         public static string SystemPath { get; } = Environment.GetFolderPath(Environment.SpecialFolder.System);
 
         public static string PluginDirectory { get; } = Path.Combine(AppDataDirectory, "Plugin");
+        public static string CustomUploadersDirectory { get; } = Path.Combine(AppDataDirectory, "CustomUploaders");
         public static string UserSettingsFilePath { get; } = Path.Combine(AppDataDirectory, "settings.json");
 
         public static string DefaultScreenshotSavePath { get; } = Path.Combine(UserPicturesDirectory, LibraryInformation.Name);
@@ -28,7 +29,5 @@ namespace HolzShots.IO
 
             Directory.CreateDirectory(directory);
         }
-
-        // TODO: Paths for JSON upload configs
     }
 }
