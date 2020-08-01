@@ -86,9 +86,6 @@
     <Setting Name="EnableShotEditor" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="ScreenshotPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
     <Setting Name="TrayIconDoubleClickAction" Type="HolzShots.ScreenshotRelated.TrayIconAction" Scope="User">
       <Value Profile="(Default)">OpenSettings</Value>
     </Setting>

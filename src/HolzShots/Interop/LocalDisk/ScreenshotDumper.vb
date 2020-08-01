@@ -16,7 +16,7 @@ Namespace Interop.LocalDisk
         End Sub
 
         Public Shared Sub OpenPictureDumpFolder()
-            Dim path As String = ManagedSettings.ScreenshotPath
+            Dim path As String = UserSettings.Current.SavePath
 
             If String.IsNullOrWhiteSpace(path) Then
                 HumanInterop.NoPathSpecified()
@@ -73,15 +73,10 @@ Namespace Interop.LocalDisk
             _lastFileName = path
         End Sub
 
-        Public Shared Function GetDefaultSavePath() As String
-            If CheckSavePath() Then
-                Return ManagedSettings.ScreenshotPath
-            End If
-            Return String.Empty
-        End Function
-
         Private Shared Function CheckSavePath() As Boolean
-            Dim datPath = ManagedSettings.ScreenshotPath
+
+            ' TODO: Make this prettier
+            Dim datPath = UserSettings.Current.SavePath
             If Not Directory.Exists(datPath) Then
                 If String.IsNullOrWhiteSpace(datPath) Then
 
@@ -95,11 +90,11 @@ Namespace Interop.LocalDisk
                         HumanInterop.PathIsTooLong(fallbackDirectory)
                         Return False
                     End Try
-                    ManagedSettings.ScreenshotPath = fallbackDirectory
+                    ' ManagedSettings.ScreenshotPath = fallbackDirectory
                     Return True
                 End If
 
-                Dim nPath = ManagedSettings.ScreenshotPath
+                Dim nPath = UserSettings.Current.SavePath
                 Try
                     Directory.CreateDirectory(nPath)
                 Catch uae As UnauthorizedAccessException
@@ -115,7 +110,7 @@ Namespace Interop.LocalDisk
 
         Private Shared Function GetAbsolutePath(fileName As String) As String
             If String.IsNullOrWhiteSpace(fileName) Then Throw New ArgumentNullException(NameOf(fileName))
-            Return Path.Combine(ManagedSettings.ScreenshotPath, fileName)
+            Return Path.Combine(UserSettings.Current.SavePath, fileName)
         End Function
     End Class
 End Namespace

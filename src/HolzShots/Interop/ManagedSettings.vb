@@ -8,15 +8,6 @@ Namespace Interop
 
         Private Const CustomUploadersFileName = "custom-uploaders.json"
 
-        Public Property ScreenshotPath As String
-            Get
-                Return My.Settings.ScreenshotPath
-            End Get
-            Set
-                My.Settings.ScreenshotPath = Value
-            End Set
-        End Property
-
         Public Property SaveImagesPattern As String
             Get
                 Return My.Settings.SaveImagesPattern

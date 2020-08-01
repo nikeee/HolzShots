@@ -392,18 +392,6 @@ Namespace My
 
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property ScreenshotPath() As String
-            Get
-                Return CType(Me("ScreenshotPath"),String)
-            End Get
-            Set
-                Me("ScreenshotPath") = value
-            End Set
-        End Property
-
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("OpenSettings")>  _
         Public Property TrayIconDoubleClickAction() As Global.HolzShots.ScreenshotRelated.TrayIconAction
             Get

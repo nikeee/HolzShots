@@ -14,7 +14,8 @@ namespace HolzShots
         [JsonProperty("$schema")]
         public string SchemaUrl { get; } = "";
         public string Version { get; } = "0.1.0";
-        // TODO: SchemaURL
+
+        public string SavePath { get; private set; } = HolzShotsPaths.DefaultScreenshotSavePath;
 
         public bool AutoCloseShotEditor { get; private set; } = false;
         /// <summary> Mutually exclusive with EnableLinkViewer </summary>

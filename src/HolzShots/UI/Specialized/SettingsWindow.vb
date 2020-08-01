@@ -131,9 +131,9 @@ Namespace UI.Specialized
             enableSmartFormatForSaving.Enabled = False ' we only support reading the current setting for now
 
             'Dim enableCustomPaths = Not ManagedSettings.ScreenshotPathPolicy.IsSet
-            Dim p = ManagedSettings.ScreenshotPath
+            Dim p = UserSettings.Current.SavePath
             If String.IsNullOrWhiteSpace(p) Then
-                p = ScreenshotDumper.GetDefaultSavePath()
+                p = HolzShotsPaths.DefaultScreenshotSavePath
             End If
             localSavePath.Text = p
 
@@ -175,7 +175,6 @@ Namespace UI.Specialized
             'decorationPanel.Enabled = Not SelectionDecorationPolicy.IsSet
             ManagedSettings.SelectionDecoration = d
 
-            ManagedSettings.ScreenshotPath = localSavePath.Text
             If UserSettings.Current.SaveImagesToLocalDisk Then
                 ManagedSettings.SaveImagesPattern = fileNamingPattern.Text
             End If
@@ -355,7 +354,7 @@ Namespace UI.Specialized
         Private Sub LocalSavePathBrowseButtonClick(sender As Object, e As EventArgs) Handles localSavePathBrowseButton.Click
             Using dlg As New CommonOpenFileDialog()
                 dlg.IsFolderPicker = True
-                dlg.DefaultDirectory = ManagedSettings.ScreenshotPath
+                dlg.DefaultDirectory = UserSettings.Current.SavePath
                 dlg.InitialDirectory = dlg.DefaultDirectory
                 dlg.Multiselect = False
 
