@@ -48,6 +48,7 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Composition\Command\CommandManager.cs" />
     <Compile Include="Composition\CustomUploadersFile.cs" />
     <Compile Include="Composition\CustomUploaderSource.cs" />
     <Compile Include="Composition\IUploaderSource.cs" />

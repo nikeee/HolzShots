@@ -11,10 +11,12 @@ Namespace UI.Specialized
 
         Public Shared ReadOnly Property Instance As MainWindow = New MainWindow()
 
-        Private _forceclose As Boolean = False
+        Private _forceClose As Boolean = False
 
         Private _keyboardHook As KeyboardHook
-        Public ReadOnly Property ActionContainer As HolzShotsActionCollection
+        Private _actionContainer As HolzShotsActionCollection
+        Private _commandManager As Composition.Command.CommandManager = New Composition.Command.CommandManager()
+
 
         Private Sub HideForm()
             Opacity = 0
@@ -31,7 +33,7 @@ Namespace UI.Specialized
         End Sub
 
         Private Sub MainWindowFormClosing(ByVal sender As Object, ByVal e As FormClosingEventArgs) Handles Me.FormClosing
-            If _forceclose = False Then
+            If _forceClose = False Then
                 e.Cancel = True
                 HideForm()
             Else
@@ -41,34 +43,21 @@ Namespace UI.Specialized
         End Sub
 
         Private Sub SettingsUpdated(sender As Object, newSettings As HSSettings)
-            _ActionContainer?.Dispose()
+            _actionContainer?.Dispose()
 
             ' TODO: Issue toaster notifiction that the settings have been updated
 
-            Dim parsedBindings = newSettings.KeyBindings.Select(AddressOf ReadBinding).ToArray()
+            Dim parsedBindings = newSettings.KeyBindings.Select(AddressOf _commandManager.GetHotkeyActionFromKeyBinding).ToArray()
 
-            _ActionContainer = New HolzShotsActionCollection(_keyboardHook, parsedBindings)
-            _ActionContainer.Refresh()
+            _actionContainer = New HolzShotsActionCollection(_keyboardHook, parsedBindings)
+            _actionContainer.Refresh()
         End Sub
 
-        Private Shared Function ReadBinding(binding As KeyBinding) As IHotkeyAction
-            ' We assume that everything is already checked (validation step should have validated that all hotkeys are != null
-            ' We also assume that every key is only assigned once
-
-            Debug.Assert(binding.Keys IsNot Nothing)
-            Debug.Assert(binding.Command IsNot Nothing)
-
-            Select Case binding.Command
-                Case "captureArea"
-                    Return New SelectAreaHotkeyAction(binding.Keys, binding.Enabled)
-                Case "captureEntireScreen"
-                    Return New FullscreenHotkeyAction(binding.Keys, binding.Enabled)
-                Case "captureWindow"
-                    Return New WindowHotkeyAction(binding.Keys, binding.Enabled)
-                Case Else
-                    Throw New ArgumentException()
-            End Select
-        End Function
+        Private Sub RegisterCommands()
+            _commandManager.RegisterCommand("captureArea", Function(b) New SelectAreaHotkeyAction(b.Keys, b.Enabled))
+            _commandManager.RegisterCommand("captureEntireScreen", Function(b) New FullscreenHotkeyAction(b.Keys, b.Enabled))
+            _commandManager.RegisterCommand("captureWindow", Function(b) New WindowHotkeyAction(b.Keys, b.Enabled))
+        End Sub
 
         Private Async Sub MainWindowLoad(ByVal sender As Object, ByVal e As EventArgs) Handles MyBase.Load
             HideForm()
@@ -78,6 +67,7 @@ Namespace UI.Specialized
             Drawing.DpiAwarenessFix.SetDpiAwareness()
 
             _keyboardHook = KeyboardHookSelector.CreateHookForCurrentPlatform(Me)
+            RegisterCommands()
 
             Await UserSettings.Load(Me)
             SettingsUpdated(Me, UserSettings.Current)
@@ -110,7 +100,7 @@ Namespace UI.Specialized
 #End Region
 
         Private Sub ExitApplication()
-            _forceclose = True
+            _forceClose = True
             Try
                 Dim forms = Application.OpenForms
                 For i As Integer = forms.Count - 1 To 0

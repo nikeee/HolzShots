@@ -31,21 +31,25 @@ namespace HolzShots.Composition
             config.WithAssembly(Assembly.GetEntryAssembly());
             config.WithAssembly(typeof(PluginManager<T>).Assembly);
 
-            try
+            // We allow null to be able to use the current loaded assemblies only
+            if (PluginDirectory != null)
             {
-                DirectoryEx.EnsureDirectory(PluginDirectory);
-            }
-            catch (Exception e)
-            {
-                throw new PluginLoadingFailedException(e);
-            }
+                try
+                {
+                    DirectoryEx.EnsureDirectory(PluginDirectory);
+                }
+                catch (Exception e)
+                {
+                    throw new PluginLoadingFailedException(e);
+                }
 
-            var pluginDlls = Directory.EnumerateFiles(PluginDirectory, AssemblyFilter, SearchOption.AllDirectories);
-            foreach (var pluginDll in pluginDlls)
-            {
-                var assembly = Assembly.LoadFrom(pluginDll);
-                if (assembly != null)
-                    config.WithAssembly(assembly);
+                var pluginDlls = Directory.EnumerateFiles(PluginDirectory, AssemblyFilter, SearchOption.AllDirectories);
+                foreach (var pluginDll in pluginDlls)
+                {
+                    var assembly = Assembly.LoadFrom(pluginDll);
+                    if (assembly != null)
+                        config.WithAssembly(assembly);
+                }
             }
 
             try
