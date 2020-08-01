@@ -47,7 +47,6 @@ Namespace UI.Specialized
 
             Drawing.DpiAwarenessFix.SetDpiAwareness()
 
-            Await UserSettings.CreateUserSettingsIfNotPresent()
             Await UserSettings.Load(Me)
 
             _keyboardHook = KeyboardHookSelector.CreateHookForCurrentPlatform(Me)

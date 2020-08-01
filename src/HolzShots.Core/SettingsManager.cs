@@ -20,7 +20,8 @@ namespace HolzShots
     {
         private static readonly JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings()
         {
-            ContractResolver = new NonPublicPropertiesResolver()
+            ContractResolver = new NonPublicPropertiesResolver(),
+            Formatting = Formatting.Indented,
         };
 
         public T CurrentSettings { get; private set; } = new T();
@@ -106,6 +107,8 @@ namespace HolzShots
                 return (false, default);
             }
         }
+
+        public string SerializeSettings(T settings) => JsonConvert.SerializeObject(settings, _jsonSerializerSettings);
 
         public event EventHandler<T> OnSettingsUpdated;
         public event PropertyChangedEventHandler PropertyChanged;

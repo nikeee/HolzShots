@@ -8,8 +8,11 @@ using Newtonsoft.Json;
 
 namespace HolzShots
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1056:Uri properties should not be strings")]
     public class HSSettings
     {
+        [JsonProperty("$schema")]
+        public string SchemaUrl { get; } = "";
         public string Version { get; } = "0.1.0";
         // TODO: SchemaURL
 
@@ -33,10 +36,11 @@ namespace HolzShots
         public static SettingsManager<HSSettings> Manager { get; private set; } = null;
         public static HSSettings Current => Manager.CurrentSettings;
 
-        public static Task Load(ISynchronizeInvoke synchronizingObject)
+        public static async Task Load(ISynchronizeInvoke synchronizingObject)
         {
             Manager = new SettingsManager<HSSettings>(HolzShotsPaths.UserSettingsFilePath, synchronizingObject);
-            return Manager.InitializeSettings();
+            await CreateUserSettingsIfNotPresent();
+            await Manager.InitializeSettings();
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage", "AsyncFixer01:Unnecessary async/await usage", Justification = "using statement")]
@@ -45,16 +49,10 @@ namespace HolzShots
             if (File.Exists(HolzShotsPaths.UserSettingsFilePath))
                 return;
 
-            var defaultSettingsStr = @"{
-    // 'autoCloseShotEditor': false,
-    // 'autoCloseLinkViewer': true,
-    // 'enableUploadProgressToast': true,
-    // 'showCopyConfirmation': false,
-}
-";
             using (var writer = File.OpenWrite(HolzShotsPaths.UserSettingsFilePath))
             {
-                var defaultSettings = System.Text.Encoding.UTF8.GetBytes(defaultSettingsStr.Replace("'", "\""));
+                var defaultSettingsStr = Manager.SerializeSettings(new HSSettings());
+                var defaultSettings = System.Text.Encoding.UTF8.GetBytes(defaultSettingsStr);
                 await writer.WriteAsync(defaultSettings, 0, defaultSettings.Length);
             }
         }

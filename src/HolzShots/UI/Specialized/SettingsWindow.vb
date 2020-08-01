@@ -2,6 +2,7 @@ Imports System.Linq
 Imports HolzShots.Input
 Imports HolzShots.Interop
 Imports HolzShots.Interop.LocalDisk
+Imports HolzShots.IO
 Imports HolzShots.IO.Naming
 Imports HolzShots.My
 Imports HolzShots.ScreenshotRelated.Selection
