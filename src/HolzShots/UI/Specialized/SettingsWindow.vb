@@ -140,7 +140,7 @@ Namespace UI.Specialized
             localSavePathBrowseButton.Enabled = True ' enableCustomPaths
             ' /Local saves
 
-            SetGpoBannerVisibility(ManagedSettings.IsAnyPolicyDefined)
+            SetGpoBannerVisibility(False)
         End Sub
 
         Private Sub SavePolicies()

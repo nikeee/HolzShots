@@ -111,9 +111,7 @@ Namespace Interop
             End Set
         End Property
 
-        Public ReadOnly Property PluginPath As String = HolzShots.IO.HolzShotsPaths.PluginDirectory
         Public ReadOnly Property CustomUploadersPath As String = Path.Combine(HolzShots.IO.HolzShotsPaths.PluginDirectory, CustomUploadersFileName)
-        Public ReadOnly Property IsAnyPolicyDefined As Boolean = False ' Manager.DefinedPolicyCounter > 0
 
     End Module
 

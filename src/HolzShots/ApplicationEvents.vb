@@ -33,7 +33,7 @@ Namespace My
 
         Private Async Function LoadPlugins() As Task
             Debug.Assert(_uploaders Is Nothing)
-            Dim plugins = New PluginUploaderSource(ManagedSettings.PluginPath)
+            Dim plugins = New PluginUploaderSource(HolzShotsPaths.PluginDirectory)
             Dim customs = New CustomUploaderSource(CustomUploadersPath)
             _uploaders = New UploaderManager(plugins, customs)
 
