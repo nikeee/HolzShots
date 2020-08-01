@@ -853,13 +853,6 @@ Namespace UI.Specialized
             End Try
         End Sub
 
-        Private Sub AutoCloseShotEditorCheckedChanged(sender As Object, e As EventArgs) Handles autoCloseShotEditor.CheckedChanged
-            ' We only support reding this property for now
-
-            ' ManagedSettings.AutoCloseShotEditor = autoCloseShotEditor.Checked
-            ' HolzShots.My.MySettings.Default.Save()
-        End Sub
-
         Protected Overrides Sub Dispose(ByVal disposing As Boolean)
             Try
                 If disposing AndAlso components IsNot Nothing Then
