@@ -482,18 +482,6 @@ Namespace My
                 Me("ShowCopyConfimation") = value
             End Set
         End Property
-
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Screenshot-<Date>")>  _
-        Public Property SaveImagesPattern() As String
-            Get
-                Return CType(Me("SaveImagesPattern"),String)
-            End Get
-            Set
-                Me("SaveImagesPattern") = value
-            End Set
-        End Property
     End Class
 End Namespace
 

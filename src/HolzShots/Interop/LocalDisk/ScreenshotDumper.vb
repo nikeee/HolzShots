@@ -57,7 +57,7 @@ Namespace Interop.LocalDisk
             End If
 
 
-            Dim pattern As String = ManagedSettings.SaveImagesPattern
+            Dim pattern As String = UserSettings.Current.SaveFileNamePattern
             Dim name As String
             Try
                 name = FileNamePatternFormatter.GetFileNameFromPattern(shot, format, pattern)

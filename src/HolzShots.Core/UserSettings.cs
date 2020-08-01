@@ -16,6 +16,8 @@ namespace HolzShots
         public string Version { get; } = "0.1.0";
 
         public string SavePath { get; private set; } = HolzShotsPaths.DefaultScreenshotSavePath;
+        /// <summary> TODO: Change name </summary>
+        public string SaveFileNamePattern { get; private set; } = "Screenshot-<Date>";
 
         public bool AutoCloseShotEditor { get; private set; } = false;
         /// <summary> Mutually exclusive with EnableLinkViewer </summary>

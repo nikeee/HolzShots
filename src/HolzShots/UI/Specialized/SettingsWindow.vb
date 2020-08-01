@@ -124,8 +124,8 @@ Namespace UI.Specialized
 
             localSaveSettingsPanel.Enabled = enableLocalSaveCheckBox.Checked
 
-            fileNamingPattern.Text = ManagedSettings.SaveImagesPattern
-            'fileNamingPattern.Enabled = Not ManagedSettings.SaveImagesPatternPolicy.IsSet
+            fileNamingPattern.Text = UserSettings.Current.SaveFileNamePattern
+            fileNamingPattern.Enabled = False ' we only support reading the current setting for now
 
             enableSmartFormatForSaving.Checked = UserSettings.Current.EnableSmartFormatForSaving
             enableSmartFormatForSaving.Enabled = False ' we only support reading the current setting for now
@@ -176,7 +176,7 @@ Namespace UI.Specialized
             ManagedSettings.SelectionDecoration = d
 
             If UserSettings.Current.SaveImagesToLocalDisk Then
-                ManagedSettings.SaveImagesPattern = fileNamingPattern.Text
+                ' ManagedSettings.SaveImagesPattern = fileNamingPattern.Text
             End If
 
             HolzShotsEnvironment.AutoStart = start_with_windows.Checked
