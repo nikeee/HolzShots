@@ -6,7 +6,7 @@ namespace HolzShots.Threading
 {
     public static class ThreadingExtensions
     {
-        public static void InvokeOnUIThread(this ISynchronizeInvoke target, Action action)
+        public static void InvokeIfNeeded(this ISynchronizeInvoke target, Action action)
         {
             if (target == null)
                 throw new ArgumentNullException(nameof(target));

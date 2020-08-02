@@ -4,11 +4,12 @@ using System.Collections.Immutable;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
+using HolzShots.IO;
 using System.Reflection;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using System.Threading;
 
 namespace HolzShots
 {
@@ -30,8 +31,11 @@ namespace HolzShots
         public T CurrentSettings { get; private set; } = new T();
         public string SettingsFilePath { get; }
 
-        private readonly FileSystemWatcher _fsw;
+        private static readonly TimeSpan _pollingInterval = TimeSpan.FromSeconds(1);
+
+        private readonly PollingFileWatcher _watcher;
         private readonly Func<T, IReadOnlyList<ValidationError>> _candidateValidator;
+        private CancellationTokenSource _watcherCancellation = null;
 
         public SettingsManager(string settingsFilePath, Func<T, IReadOnlyList<ValidationError>> candidateValidator = null, ISynchronizeInvoke synchronizingObject = null)
         {
@@ -40,60 +44,50 @@ namespace HolzShots
             SettingsFilePath = settingsFilePath ?? throw new ArgumentNullException(nameof(settingsFilePath));
 
             _candidateValidator = candidateValidator;
-            _fsw = new FileSystemWatcher
-            {
-                Path = Path.GetDirectoryName(settingsFilePath),
-                Filter = Path.GetFileName(settingsFilePath),
-                NotifyFilter = NotifyFilters.LastWrite,
-                IncludeSubdirectories = false,
-                SynchronizingObject = synchronizingObject,
-            };
+            _watcher = new PollingFileWatcher(settingsFilePath, _pollingInterval, synchronizingObject);
         }
 
         public Task InitializeSettings()
         {
-            _fsw.Changed += OnSettingsFileChanged;
-            _fsw.Deleted += OnSettingsFileDeleted;
-            _fsw.EnableRaisingEvents = true;
+            _watcher.OnFileWritten += OnSettingsFileChanged;
+
+            if (_watcherCancellation != null)
+                _watcherCancellation.Cancel();
+
+            _watcherCancellation = new CancellationTokenSource();
+
+            _ = _watcher.Start(_watcherCancellation.Token);
 
             return ForceReload();
         }
 
-        public Task ForceReload() => UpdateSettings(!File.Exists(SettingsFilePath));
-        private void OnSettingsFileChanged(object sender, FileSystemEventArgs e) => _ = UpdateSettings(false);
-        private void OnSettingsFileDeleted(object sender, FileSystemEventArgs e) => _ = UpdateSettings(true);
+        public Task ForceReload() => UpdateSettings(new FileInfo(SettingsFilePath));
+        private void OnSettingsFileChanged(object sender, FileInfo e) => _ = UpdateSettings(e);
 
-        private async Task UpdateSettings(bool deleted)
+        private async Task UpdateSettings(FileInfo info)
         {
-            try
+            if (!info.Exists)
             {
-                _fsw.EnableRaisingEvents = false;
-
-                if (deleted)
-                {
-                    SetCurrentSettings(new T());
-                    return;
-                }
-
-                // TODO: Maybe we want to add a de-bouncer here
-
-                var (success, newSettings) = await DeserializeSettings(SettingsFilePath);
-                if (!success || newSettings == null)
-                    return;
-
-                var validationErrors = IsValidSettingsCandidate(newSettings);
-                if (validationErrors.Count > 0)
-                {
-                    OnValidationError?.Invoke(this, validationErrors);
-                    return;
-                }
-
-                SetCurrentSettings(newSettings);
+                SetCurrentSettings(new T());
+                return;
             }
-            finally
+
+            // If we'd use a FileSystemWatcher, we should use de-bouncing here.
+            // However, we use a polling implementation that will fire at most at _pollingInterval.
+            // -> We don't need de-bouncing.
+
+            var (success, newSettings) = await DeserializeSettings(SettingsFilePath);
+            if (!success || newSettings == null)
+                return;
+
+            var validationErrors = IsValidSettingsCandidate(newSettings);
+            if (validationErrors.Count > 0)
             {
-                _fsw.EnableRaisingEvents = true;
+                OnValidationError?.Invoke(this, validationErrors);
+                return;
             }
+
+            SetCurrentSettings(newSettings);
         }
 
         private void SetCurrentSettings(T newSettings)
@@ -149,9 +143,7 @@ namespace HolzShots
             {
                 if (disposing)
                 {
-                    _fsw.Changed -= OnSettingsFileChanged;
-                    _fsw.Deleted -= OnSettingsFileChanged;
-                    _fsw.Dispose();
+                    _watcherCancellation?.Cancel();
                 }
                 disposedValue = true;
             }

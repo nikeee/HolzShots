@@ -50,6 +50,10 @@ Namespace Interop
             FlyoutNotifier.Notify("Plugins not loaded", $"We could not load the plugins. Here's the error message:{N}{ex.InnerException.Message}")
         End Sub
 
+        Friend Shared Sub SettingsUpdated()
+            FlyoutNotifier.Notify("Settings Updated", $"HolzShots has detected and loaded new settings.")
+        End Sub
+
         Public Shared Sub SecurityExceptionRegistry()
             Show(GenericErrorTitle,
                  "Access to registry was denied :(",

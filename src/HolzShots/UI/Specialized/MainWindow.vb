@@ -44,7 +44,11 @@ Namespace UI.Specialized
         Private Sub SettingsUpdated(sender As Object, newSettings As HSSettings)
             _actionContainer?.Dispose()
 
-            ' TODO: Issue toaster notifiction that the settings have been updated
+            If sender IsNot Me Then
+                ' If sender is MainWindow, the function was invoke on application startup
+                ' We only want to show this message when the user edits this file
+                HumanInterop.SettingsUpdated()
+            End If
 
             Dim parsedBindings = newSettings.KeyBindings.Select(AddressOf CommandManager.GetHotkeyActionFromKeyBinding).ToArray()
 
@@ -52,7 +56,7 @@ Namespace UI.Specialized
             _actionContainer.Refresh()
         End Sub
 
-        Private Sub RegisterCommands()
+        Private Shared Sub RegisterCommands()
             ' TODO: This looks like it could be integrated in our plugin system
             CommandManager.RegisterCommand(New SelectAreaCommand())
             CommandManager.RegisterCommand(New FullscreenCommand())

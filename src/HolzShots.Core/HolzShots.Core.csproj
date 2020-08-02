@@ -85,6 +85,7 @@
     <Compile Include="Input\KeyPressedEventArgs.cs" />
     <Compile Include="Input\ModifierKeys.cs" />
     <Compile Include="Input\WindowsKeyboardHook.cs" />
+    <Compile Include="IO\PollingFileWatcher.cs" />
     <Compile Include="NativeMethods.cs" />
     <Compile Include="Net\Custom\CustomUploader.cs" />
     <Compile Include="Net\Custom\CustomUploaderRoot.cs" />
