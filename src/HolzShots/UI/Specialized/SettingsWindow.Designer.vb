@@ -98,9 +98,9 @@ Namespace UI.Specialized
             Me.Activate_Area.Font = New System.Drawing.Font("Segoe UI", 9.0!)
             Me.Activate_Area.Location = New System.Drawing.Point(3, 8)
             Me.Activate_Area.Name = "Activate_Area"
-            Me.Activate_Area.Size = New System.Drawing.Size(95, 19)
+            Me.Activate_Area.Size = New System.Drawing.Size(119, 19)
             Me.Activate_Area.TabIndex = 1
-            Me.Activate_Area.Text = "Area Selector"
+            Me.Activate_Area.Text = "Capture Selection"
             Me.Activate_Area.UseVisualStyleBackColor = True
             '
             'EnableIngameMode
@@ -121,9 +121,9 @@ Namespace UI.Specialized
             Me.Activate_Fullscreen.AutoSize = True
             Me.Activate_Fullscreen.Location = New System.Drawing.Point(3, 8)
             Me.Activate_Fullscreen.Name = "Activate_Fullscreen"
-            Me.Activate_Fullscreen.Size = New System.Drawing.Size(79, 19)
+            Me.Activate_Fullscreen.Size = New System.Drawing.Size(139, 19)
             Me.Activate_Fullscreen.TabIndex = 5
-            Me.Activate_Fullscreen.Text = "Fullscreen"
+            Me.Activate_Fullscreen.Text = "Capture Entire Screen"
             Me.Activate_Fullscreen.UseVisualStyleBackColor = True
             '
             'savebtn
@@ -132,7 +132,7 @@ Namespace UI.Specialized
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
             Me.savebtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
             Me.savebtn.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-            Me.savebtn.Location = New System.Drawing.Point(338, 334)
+            Me.savebtn.Location = New System.Drawing.Point(338, 311)
             Me.savebtn.Name = "savebtn"
             Me.savebtn.Size = New System.Drawing.Size(122, 30)
             Me.savebtn.TabIndex = 6
@@ -155,7 +155,7 @@ Namespace UI.Specialized
             Me.Tabs.Margin = New System.Windows.Forms.Padding(12)
             Me.Tabs.Name = "Tabs"
             Me.Tabs.SelectedIndex = 0
-            Me.Tabs.Size = New System.Drawing.Size(456, 291)
+            Me.Tabs.Size = New System.Drawing.Size(456, 290)
             Me.Tabs.TabIndex = 8
             '
             'SelectorsTab
@@ -166,7 +166,7 @@ Namespace UI.Specialized
             Me.SelectorsTab.Location = New System.Drawing.Point(4, 24)
             Me.SelectorsTab.Name = "SelectorsTab"
             Me.SelectorsTab.Padding = New System.Windows.Forms.Padding(3)
-            Me.SelectorsTab.Size = New System.Drawing.Size(448, 263)
+            Me.SelectorsTab.Size = New System.Drawing.Size(448, 262)
             Me.SelectorsTab.TabIndex = 0
             Me.SelectorsTab.Text = "Hotkeys"
             Me.SelectorsTab.UseVisualStyleBackColor = True
@@ -185,9 +185,9 @@ Namespace UI.Specialized
             '
             Me.windowStrokeLabel.Font = New System.Drawing.Font("Segoe UI", 16.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel)
             Me.windowStrokeLabel.ForeColor = System.Drawing.SystemColors.ControlText
-            Me.windowStrokeLabel.Location = New System.Drawing.Point(124, 0)
+            Me.windowStrokeLabel.Location = New System.Drawing.Point(152, 0)
             Me.windowStrokeLabel.Name = "windowStrokeLabel"
-            Me.windowStrokeLabel.Size = New System.Drawing.Size(218, 30)
+            Me.windowStrokeLabel.Size = New System.Drawing.Size(190, 30)
             Me.windowStrokeLabel.TabIndex = 11
             Me.windowStrokeLabel.Text = "F10"
             Me.windowStrokeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -206,9 +206,9 @@ Namespace UI.Specialized
             Me.Activate_Window.AutoSize = True
             Me.Activate_Window.Location = New System.Drawing.Point(3, 7)
             Me.Activate_Window.Name = "Activate_Window"
-            Me.Activate_Window.Size = New System.Drawing.Size(113, 19)
+            Me.Activate_Window.Size = New System.Drawing.Size(158, 19)
             Me.Activate_Window.TabIndex = 8
-            Me.Activate_Window.Text = "Current Window"
+            Me.Activate_Window.Text = "Capture Current Window"
             Me.Activate_Window.UseVisualStyleBackColor = True
             '
             'Panel2
@@ -224,9 +224,9 @@ Namespace UI.Specialized
             'fullStrokeLabel
             '
             Me.fullStrokeLabel.Font = New System.Drawing.Font("Segoe UI", 16.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel)
-            Me.fullStrokeLabel.Location = New System.Drawing.Point(130, 1)
+            Me.fullStrokeLabel.Location = New System.Drawing.Point(148, 1)
             Me.fullStrokeLabel.Name = "fullStrokeLabel"
-            Me.fullStrokeLabel.Size = New System.Drawing.Size(213, 30)
+            Me.fullStrokeLabel.Size = New System.Drawing.Size(195, 30)
             Me.fullStrokeLabel.TabIndex = 10
             Me.fullStrokeLabel.Text = "F9"
             Me.fullStrokeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -287,9 +287,9 @@ Namespace UI.Specialized
             'selectorStrokeLabel
             '
             Me.selectorStrokeLabel.Font = New System.Drawing.Font("Segoe UI", 16.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel)
-            Me.selectorStrokeLabel.Location = New System.Drawing.Point(130, 0)
+            Me.selectorStrokeLabel.Location = New System.Drawing.Point(156, 0)
             Me.selectorStrokeLabel.Name = "selectorStrokeLabel"
-            Me.selectorStrokeLabel.Size = New System.Drawing.Size(213, 30)
+            Me.selectorStrokeLabel.Size = New System.Drawing.Size(187, 30)
             Me.selectorStrokeLabel.TabIndex = 9
             Me.selectorStrokeLabel.Text = "F8"
             Me.selectorStrokeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -315,7 +315,7 @@ Namespace UI.Specialized
             Me.UploadTab.Controls.Add(Me.defaultHosterBox)
             Me.UploadTab.Location = New System.Drawing.Point(4, 24)
             Me.UploadTab.Name = "UploadTab"
-            Me.UploadTab.Size = New System.Drawing.Size(448, 263)
+            Me.UploadTab.Size = New System.Drawing.Size(448, 262)
             Me.UploadTab.TabIndex = 7
             Me.UploadTab.Text = "Upload"
             Me.UploadTab.UseVisualStyleBackColor = True
@@ -420,7 +420,7 @@ Namespace UI.Specialized
             Me.SaveLocalTab.Location = New System.Drawing.Point(4, 24)
             Me.SaveLocalTab.Name = "SaveLocalTab"
             Me.SaveLocalTab.Padding = New System.Windows.Forms.Padding(3)
-            Me.SaveLocalTab.Size = New System.Drawing.Size(448, 263)
+            Me.SaveLocalTab.Size = New System.Drawing.Size(448, 262)
             Me.SaveLocalTab.TabIndex = 9
             Me.SaveLocalTab.Text = "Saving"
             Me.SaveLocalTab.UseVisualStyleBackColor = True
@@ -530,7 +530,7 @@ Namespace UI.Specialized
             Me.OthersTab.Controls.Add(Me.start_with_windows)
             Me.OthersTab.Location = New System.Drawing.Point(4, 24)
             Me.OthersTab.Name = "OthersTab"
-            Me.OthersTab.Size = New System.Drawing.Size(448, 263)
+            Me.OthersTab.Size = New System.Drawing.Size(448, 262)
             Me.OthersTab.TabIndex = 4
             Me.OthersTab.Text = "Misc"
             Me.OthersTab.UseVisualStyleBackColor = True
@@ -598,7 +598,7 @@ Namespace UI.Specialized
             Me.PluginsTab.Location = New System.Drawing.Point(4, 24)
             Me.PluginsTab.Margin = New System.Windows.Forms.Padding(0)
             Me.PluginsTab.Name = "PluginsTab"
-            Me.PluginsTab.Size = New System.Drawing.Size(448, 263)
+            Me.PluginsTab.Size = New System.Drawing.Size(448, 262)
             Me.PluginsTab.TabIndex = 8
             Me.PluginsTab.Text = "Plugins"
             Me.PluginsTab.UseVisualStyleBackColor = True
@@ -606,7 +606,7 @@ Namespace UI.Specialized
             'pluginListPanel
             '
             Me.pluginListPanel.Dock = System.Windows.Forms.DockStyle.Bottom
-            Me.pluginListPanel.Location = New System.Drawing.Point(0, 35)
+            Me.pluginListPanel.Location = New System.Drawing.Point(0, 34)
             Me.pluginListPanel.Margin = New System.Windows.Forms.Padding(3, 0, 3, 0)
             Me.pluginListPanel.Name = "pluginListPanel"
             Me.pluginListPanel.Padding = New System.Windows.Forms.Padding(0, 1, 0, 0)
@@ -622,7 +622,7 @@ Namespace UI.Specialized
             Me.openPluginFolderLinkLabel.Font = New System.Drawing.Font("Segoe UI", 9.0!)
             Me.openPluginFolderLinkLabel.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline
             Me.openPluginFolderLinkLabel.LinkColor = System.Drawing.SystemColors.HotTrack
-            Me.openPluginFolderLinkLabel.Location = New System.Drawing.Point(330, 11)
+            Me.openPluginFolderLinkLabel.Location = New System.Drawing.Point(330, 10)
             Me.openPluginFolderLinkLabel.Name = "openPluginFolderLinkLabel"
             Me.openPluginFolderLinkLabel.Size = New System.Drawing.Size(107, 15)
             Me.openPluginFolderLinkLabel.TabIndex = 17
@@ -646,7 +646,7 @@ Namespace UI.Specialized
             Me.Abort.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
             Me.Abort.DialogResult = System.Windows.Forms.DialogResult.Cancel
             Me.Abort.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-            Me.Abort.Location = New System.Drawing.Point(210, 334)
+            Me.Abort.Location = New System.Drawing.Point(210, 311)
             Me.Abort.Name = "Abort"
             Me.Abort.Size = New System.Drawing.Size(122, 30)
             Me.Abort.TabIndex = 7
@@ -659,7 +659,7 @@ Namespace UI.Specialized
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
             Me.OpenSettingsJson.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
             Me.OpenSettingsJson.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-            Me.OpenSettingsJson.Location = New System.Drawing.Point(6, 334)
+            Me.OpenSettingsJson.Location = New System.Drawing.Point(6, 311)
             Me.OpenSettingsJson.Name = "OpenSettingsJson"
             Me.OpenSettingsJson.Size = New System.Drawing.Size(142, 30)
             Me.OpenSettingsJson.TabIndex = 10
@@ -672,7 +672,7 @@ Namespace UI.Specialized
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
             Me.BackColor = System.Drawing.SystemColors.Window
             Me.CancelButton = Me.Abort
-            Me.ClientSize = New System.Drawing.Size(466, 376)
+            Me.ClientSize = New System.Drawing.Size(466, 353)
             Me.Controls.Add(Me.OpenSettingsJson)
             Me.Controls.Add(Me.Tabs)
             Me.Controls.Add(Me.Abort)

@@ -14,7 +14,6 @@ Namespace UI.Specialized
         Inherits Form
 
         Private Class Localization
-            Public Const AdminBannerText = "Some settings are configured by your system administrator."
             Public Const NotSet = "<not set>"
             Public Const InvalidFilePattern = "Invalid Pattern"
             Public Const SetHotkeyCurrentWindow = "Set Window Screenshot Hotkey"
@@ -68,14 +67,11 @@ Namespace UI.Specialized
         Private Sub LoadPolicies()
             uploadImageInExplorerMenu.Checked = ManagedSettings.ShellExtensionUpload
             uploadImageInExplorerMenu.Enabled = InteropHelper.IsAdministrator()
-            'uploadImageInExplorerMenu.Enabled = Not ManagedSettings.ShellExtensionUploadPolicy.IsSet AndAlso InteropHelper.IsAdministrator()
 
             openImageInExplorerMenu.Checked = ManagedSettings.ShellExtensionOpen
             openImageInExplorerMenu.Enabled = InteropHelper.IsAdministrator()
-            'openImageInExplorerMenu.Enabled = Not ManagedSettings.ShellExtensionOpenPolicy.IsSet AndAlso InteropHelper.IsAdministrator()
 
             disableShotEditorCheckBox.Checked = Not ManagedSettings.EnableShotEditor
-            'disableShotEditorCheckBox.Enabled = Not ManagedSettings.EnableShotEditorPolicy.IsSet
 
             deactivateLinkViewerCheckBox.Checked = Not ManagedSettings.EnableLinkViewer
             deactivateLinkViewerCheckBox.Enabled = False ' we only support reading the current setting for now
@@ -106,7 +102,6 @@ Namespace UI.Specialized
 
             ' Local saves
             enableLocalSaveCheckBox.Checked = UserSettings.Current.SaveImagesToLocalDisk
-            'enableLocalSaveCheckBox.Enabled = Not ManagedSettings.SaveImagesToLocalDiskPolicy.IsSet
 
             localSaveSettingsPanel.Enabled = enableLocalSaveCheckBox.Checked
 
@@ -116,7 +111,6 @@ Namespace UI.Specialized
             enableSmartFormatForSaving.Checked = UserSettings.Current.EnableSmartFormatForSaving
             enableSmartFormatForSaving.Enabled = False ' we only support reading the current setting for now
 
-            'Dim enableCustomPaths = Not ManagedSettings.ScreenshotPathPolicy.IsSet
             Dim p = UserSettings.Current.SavePath
             If String.IsNullOrWhiteSpace(p) Then
                 p = HolzShotsPaths.DefaultScreenshotSavePath
@@ -125,15 +119,12 @@ Namespace UI.Specialized
 
             localSavePath.Enabled = True ' enableCustomPaths
             localSavePathBrowseButton.Enabled = True ' enableCustomPaths
-            ' /Local saves
         End Sub
 
         Private Sub SavePolicies()
-            'If Not ManagedSettings.ShellExtensionOpenPolicy.IsSet AndAlso ShellExtensions.ShellExtensionOpen <> openImageInExplorerMenu.Checked Then
             If ShellExtensions.ShellExtensionOpen <> openImageInExplorerMenu.Checked AndAlso InteropHelper.IsAdministrator() Then
                 ShellExtensions.ShellExtensionOpen = openImageInExplorerMenu.Checked
             End If
-            'If Not ManagedSettings.ShellExtensionUploadPolicy.IsSet AndAlso ShellExtensions.ShellExtensionUpload <> uploadImageInExplorerMenu.Checked Then
             If ShellExtensions.ShellExtensionUpload <> uploadImageInExplorerMenu.Checked AndAlso InteropHelper.IsAdministrator() Then
                 ShellExtensions.ShellExtensionUpload = uploadImageInExplorerMenu.Checked
             End If
@@ -153,10 +144,6 @@ Namespace UI.Specialized
             End If
 
             ManagedSettings.SelectionDecoration = d
-
-            If UserSettings.Current.SaveImagesToLocalDisk Then
-                ' ManagedSettings.SaveImagesPattern = fileNamingPattern.Text
-            End If
 
             HolzShotsEnvironment.AutoStart = start_with_windows.Checked
 
@@ -182,20 +169,11 @@ Namespace UI.Specialized
         End Sub
 
         Private Sub ActivateAreaCheckedChanged(ByVal sender As Object, ByVal e As EventArgs) Handles Activate_Area.CheckedChanged
-            'setSelector.Enabled = Not ManagedSettings.EnableAreaScreenshotPolicy.IsSet
-            EnableIngameMode.Enabled = Activate_Area.Checked ' AndAlso Not ManagedSettings.EnableAreaScreenshotPolicy.IsSet
-        End Sub
-
-        Private Sub ActivateFullscreenCheckedChanged(ByVal sender As Object, ByVal e As EventArgs) Handles Activate_Fullscreen.CheckedChanged
-            'setFullscreen.Enabled = Not ManagedSettings.EnableFullscreenScreenshotPolicy.IsSet
-        End Sub
-
-        Private Sub ActivateWindowCheckedChanged(ByVal sender As Object, ByVal e As EventArgs) Handles Activate_Window.CheckedChanged
-            'setWindow.Enabled = Not ManagedSettings.EnableWindowScreenshotPolicy.IsSet
+            EnableIngameMode.Enabled = Activate_Area.Checked
         End Sub
 
         Private Sub ActivateFastUploadCheckBoxCheckedChanged(sender As Object, e As EventArgs) Handles deactivateLinkViewerCheckBox.CheckedChanged
-            AutoCloseLinkViewer.Enabled = Not deactivateLinkViewerCheckBox.Checked ' AndAlso Not ManagedSettings.AutoCloseLinkViewerPolicy.IsSet
+            AutoCloseLinkViewer.Enabled = Not deactivateLinkViewerCheckBox.Checked
             showCopyConfirmation.Enabled = deactivateLinkViewerCheckBox.Checked
         End Sub
 
@@ -204,7 +182,7 @@ Namespace UI.Specialized
         End Sub
 
         Private Sub EnableLocalSaveCheckBoxCheckedChanged(sender As Object, e As EventArgs) Handles enableLocalSaveCheckBox.CheckedChanged
-            localSaveSettingsPanel.Enabled = enableLocalSaveCheckBox.Checked ' AndAlso Not ManagedSettings.SaveImagesToLocalDiskPolicy.IsSet
+            localSaveSettingsPanel.Enabled = enableLocalSaveCheckBox.Checked
             UpdateFileNamingPreviewLabel()
         End Sub
 
