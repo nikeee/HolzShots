@@ -63,13 +63,13 @@ namespace HolzShots.Composition.Command
 
         public bool IsRegisteredCommand(string name) => !string.IsNullOrWhiteSpace(name) && Actions.ContainsKey(name.ToLowerInvariant());
 
-        public Task Dispatch<T>() where T : ICommand
+        public Task Dispatch<T>(params string[] parameters) where T : ICommand
         {
             var name = GetCommandNameForType<T>();
-            return Dispatch(name);
+            return Dispatch(name, parameters);
         }
 
-        public Task Dispatch(string name)
+        public Task Dispatch(string name, params string[] parameters)
         {
             Debug.Assert(IsRegisteredCommand(name));
 
@@ -78,7 +78,7 @@ namespace HolzShots.Composition.Command
 
             return cmd == null
                 ? Task.CompletedTask
-                : cmd.Invoke();
+                : cmd.Invoke(parameters);
         }
     }
 }

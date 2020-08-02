@@ -4,7 +4,7 @@ Imports HolzShots.Input
 Imports HolzShots.Input.Actions
 Imports HolzShots.Interop
 Imports HolzShots.My
-Imports HolzShots.ScreenshotRelated
+Imports HolzShots.Composition.Command
 
 Namespace UI.Specialized
     Friend Class MainWindow
@@ -15,7 +15,7 @@ Namespace UI.Specialized
 
         Private _keyboardHook As KeyboardHook
         Private _actionContainer As HolzShotsActionCollection
-        Public Shared ReadOnly CommandManager As Composition.Command.CommandManager = New Composition.Command.CommandManager()
+        Public Shared ReadOnly CommandManager As CommandManager = New CommandManager()
 
 
         Private Sub HideForm()

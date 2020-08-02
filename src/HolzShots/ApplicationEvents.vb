@@ -85,13 +85,13 @@ Namespace My
                         Await MainWindow.CommandManager.Dispatch(Of EditImageCommand)().ConfigureAwait(True)
                     Case OpenFromShellParameter
                         If i < args.Length - 1 Then
-                            ' TODO: Commands with parameters?
-                            ScreenshotInvoker.TryOpenSpecificImage(args(i + 1))
+                            Dim fileName = args(i + 1)
+                            Await MainWindow.CommandManager.Dispatch(Of EditImageCommand)(fileName).ConfigureAwait(True)
                         End If
                     Case UploadFromShellParameter
                         If i < args.Length - 1 Then
-                            ' TODO: Commands with parameters?
-                            ScreenshotInvoker.TryUploadSpecificImage(args(i + 1))
+                            Dim fileName = args(i + 1)
+                            Await MainWindow.CommandManager.Dispatch(Of UploadImageCommand)(fileName).ConfigureAwait(True)
                         End If
                 End Select
             Next

@@ -7,7 +7,7 @@ Namespace Input.Actions
     Public Class FullscreenCommand
         Implements ICommand
 
-        Public Async Function Invoke() As Task Implements ICommand.Invoke
+        Public Async Function Invoke(ParamArray params() As String) As Task Implements ICommand.Invoke
             ' TODO: Add proper assertion
             ' Debug.Assert(ManagedSettings.EnableFullscreenScreenshot)
 

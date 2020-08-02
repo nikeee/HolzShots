@@ -1,6 +1,4 @@
 Imports System.Drawing.Imaging
-Imports System.IO
-Imports System.Linq
 Imports HolzShots.Interop
 Imports HolzShots.Net
 Imports HolzShots.Interop.LocalDisk
@@ -40,10 +38,6 @@ Namespace ScreenshotRelated
             editor.Show()
         End Sub
 
-        Friend Sub TryOpenSpecificImage(path As String)
-            If CheckPath(path) Then OpenSpecificImage(path)
-        End Sub
-
         Friend Async Sub UploadSpecificImage(ByVal fileName As String)
             Using bmp As New Bitmap(fileName)
                 Dim format As ImageFormat = fileName.GetImageFormatFromFileExtension()
@@ -57,17 +51,6 @@ Namespace ScreenshotRelated
                 End Try
             End Using
         End Sub
-
-        Friend Sub TryUploadSpecificImage(ByVal path As String)
-            If CheckPath(path) Then UploadSpecificImage(path)
-        End Sub
-
-        Private ReadOnly AllowedExtensions As String() = {".bmp", ".jpg", ".jpeg", ".png", ".tif", ".tiff"}
-
-        Private Function CheckPath(directory As String) As Boolean
-            Dim ext = Path.GetExtension(directory)
-            Return AllowedExtensions.Contains(ext)
-        End Function
 
 #End Region
     End Module

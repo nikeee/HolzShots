@@ -10,8 +10,18 @@ Namespace Input.Actions
 
         Private Const OpenInShotEditor = "Open Image in ShotEditor"
 
-        Public Function Invoke() As Task Implements ICommand.Invoke
-            Dim fileName = ShowFileSelector(OpenInShotEditor)
+        Public Function Invoke(ParamArray params() As String) As Task Implements ICommand.Invoke
+            Dim fileName = If(
+                params Is Nothing OrElse params.Length <> 1,
+                ShowFileSelector(OpenInShotEditor),
+                params(0)
+            )
+
+            If Not CanProcessFile(fileName) Then
+                ' TODO: Error Message
+                Return Task.CompletedTask
+            End If
+
             If fileName IsNot Nothing Then
                 OpenSpecificImage(fileName)
             End If

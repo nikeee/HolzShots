@@ -10,8 +10,18 @@ Namespace Input.Actions
 
         Private Const UploadImage = "Select Image to Upload"
 
-        Public Function Invoke() As Task Implements ICommand.Invoke
-            Dim fileName = ShowFileSelector(UploadImage)
+        Public Function Invoke(ParamArray params() As String) As Task Implements ICommand.Invoke
+            Dim fileName = If(
+                params Is Nothing OrElse params.Length <> 1,
+                ShowFileSelector(UploadImage),
+                params(0)
+            )
+
+            If Not CanProcessFile(fileName) Then
+                ' TODO: Error Message
+                Return Task.CompletedTask
+            End If
+
             If fileName IsNot Nothing Then
                 UploadSpecificImage(fileName)
             End If

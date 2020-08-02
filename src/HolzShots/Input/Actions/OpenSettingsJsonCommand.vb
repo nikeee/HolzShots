@@ -6,7 +6,7 @@ Namespace Input.Actions
     Public Class OpenSettingsJsonCommand
         Implements ICommand
 
-        Public Function Invoke() As Task Implements ICommand.Invoke
+        Public Function Invoke(ParamArray params() As String) As Task Implements ICommand.Invoke
             UserSettings.OpenSettingsInDefaultEditor()
             Return Task.CompletedTask
         End Function

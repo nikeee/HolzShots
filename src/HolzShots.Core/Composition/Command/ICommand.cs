@@ -4,7 +4,6 @@ namespace HolzShots.Composition.Command
 {
     public interface ICommand
     {
-        // string Name { get; }
-        Task Invoke();
+        Task Invoke(params string[] parameters);
     }
 }
