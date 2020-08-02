@@ -23,8 +23,6 @@ Namespace UI.Specialized
 
         Public Shared ReadOnly Instance As SettingsWindow = New SettingsWindow()
 
-        Private Shared ReadOnly Target As MainWindow = MainWindow.Instance
-
         Private Shared ReadOnly BorderPen As New Pen(Color.FromArgb(255, &HCC, &HCC, &HCC))
 
         Private ReadOnly _pluginInfoItemList As New List(Of PluginInfoItem)
@@ -153,11 +151,6 @@ Namespace UI.Specialized
         Private Sub SettingsLoad(ByVal sender As Object, ByVal e As EventArgs) Handles MyBase.Load
             LoadPolicies()
         End Sub
-
-        Private Shared Function IdentityOrDefaultHotkey(h As Hotkey, [default] As Hotkey) As (Hotkey, Boolean)
-            If h Is Nothing OrElse h.IsNone() Then Return ([default], True)
-            Return (h, False)
-        End Function
 
         Private Sub SavebtnClick(ByVal sender As Object, ByVal e As EventArgs) Handles savebtn.Click
             SavePolicies()
