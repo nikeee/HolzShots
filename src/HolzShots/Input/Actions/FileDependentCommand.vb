@@ -3,8 +3,6 @@ Imports System.IO
 Imports System.Linq
 
 Namespace Input.Actions
-    ' TODO: Split this into multiple files
-
     Public MustInherit Class FileDependentCommand
 
         Private Shared ReadOnly AllowedExtensions As String() = {".bmp", ".jpg", ".jpeg", ".png", ".tif", ".tiff"}

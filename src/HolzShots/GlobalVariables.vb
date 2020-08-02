@@ -13,6 +13,8 @@ Friend Module GlobalVariables
     Public Const DefaultFileExtension = ".png"
     Friend Const DefaultFileName = "HolzShots"
 
+    Friend Const AutorunParamter As String = "--autorun"
+
     Friend Const AreaSelectorParameter As String = "--capture-area"
     Friend Const FullscreenScreenshotParameter As String = "--capture-full"
 

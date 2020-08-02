@@ -9,7 +9,7 @@ Namespace Interop
                                                                       RegistrationScope.Local,
                                                                       False,
                                                                       StartupProviders.Registry,
-                                                                      "-autorun")
+                                                                      AutorunParamter)
 
         Private Sub New()
         End Sub
