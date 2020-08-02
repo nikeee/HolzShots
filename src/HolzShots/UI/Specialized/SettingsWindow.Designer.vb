@@ -77,7 +77,6 @@ Namespace UI.Specialized
             Me.openPluginFolderLinkLabel = New HolzShots.UI.Forms.ExplorerLinkLabel()
             Me.Label10 = New System.Windows.Forms.Label()
             Me.Abort = New System.Windows.Forms.Button()
-            Me.gpoInfoBanner = New HolzShots.UI.Forms.Banner()
             Me.OpenSettingsJson = New System.Windows.Forms.Button()
             Me.Tabs.SuspendLayout()
             Me.SelectorsTab.SuspendLayout()
@@ -667,19 +666,6 @@ Namespace UI.Specialized
             Me.Abort.Text = "Cancel"
             Me.Abort.UseVisualStyleBackColor = True
             '
-            'gpoInfoBanner
-            '
-            Me.gpoInfoBanner.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-            Me.gpoInfoBanner.BackColor = System.Drawing.SystemColors.Info
-            Me.gpoInfoBanner.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-            Me.gpoInfoBanner.Image = Nothing
-            Me.gpoInfoBanner.Location = New System.Drawing.Point(6, 302)
-            Me.gpoInfoBanner.LockHeight = False
-            Me.gpoInfoBanner.Name = "gpoInfoBanner"
-            Me.gpoInfoBanner.Size = New System.Drawing.Size(454, 24)
-            Me.gpoInfoBanner.TabIndex = 9
-            '
             'OpenSettingsJson
             '
             Me.OpenSettingsJson.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
@@ -701,7 +687,6 @@ Namespace UI.Specialized
             Me.CancelButton = Me.Abort
             Me.ClientSize = New System.Drawing.Size(466, 376)
             Me.Controls.Add(Me.OpenSettingsJson)
-            Me.Controls.Add(Me.gpoInfoBanner)
             Me.Controls.Add(Me.Tabs)
             Me.Controls.Add(Me.Abort)
             Me.Controls.Add(Me.savebtn)
@@ -775,7 +760,6 @@ Namespace UI.Specialized
         Friend WithEvents enableSmartFormatForSaving As System.Windows.Forms.CheckBox
         Friend WithEvents enableSmartFormatForUpload As System.Windows.Forms.CheckBox
         Friend WithEvents openPluginFolderLinkLabel As HolzShots.UI.Forms.ExplorerLinkLabel
-        Friend WithEvents gpoInfoBanner As HolzShots.UI.Forms.Banner
         Friend WithEvents Panel1 As System.Windows.Forms.Panel
         Friend WithEvents Panel2 As System.Windows.Forms.Panel
         Friend WithEvents Panel3 As System.Windows.Forms.Panel

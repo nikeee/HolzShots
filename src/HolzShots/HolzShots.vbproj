@@ -247,7 +247,6 @@
     <Compile Include="UI\Controls\PluginInfoItem.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UI\DisposingContainer.vb" />
     <Compile Include="UI\SimpleHotkeySelector.Designer.vb">
       <DependentUpon>SimpleHotkeySelector.vb</DependentUpon>
     </Compile>
@@ -525,7 +524,6 @@
     <Content Include="Resources\editcutBig.png" />
     <Content Include="Resources\editcutSmall.png" />
     <Content Include="Resources\fontMedium.png" />
-    <Content Include="Resources\Header.png" />
     <Content Include="Resources\highlighterMedium.png" />
     <Content Include="Resources\historyMedium.png" />
     <Content Include="Resources\horizontalMedium.png" />

@@ -42,7 +42,6 @@ Namespace UI.Specialized
 
             elevatedRequiredPictureBox1.Image = shield
             elevatedRequiredPictureBox2.Image = shield
-            gpoInfoBanner.Image = MyApplication.SmallStockIcons.Info.Icon.ToBitmap()
         End Sub
 
 
@@ -130,8 +129,6 @@ Namespace UI.Specialized
             localSavePath.Enabled = True ' enableCustomPaths
             localSavePathBrowseButton.Enabled = True ' enableCustomPaths
             ' /Local saves
-
-            SetGpoBannerVisibility(False)
         End Sub
 
         Private Sub SavePolicies()
@@ -169,28 +166,6 @@ Namespace UI.Specialized
             HolzShotsEnvironment.AutoStart = start_with_windows.Checked
 
             Global.HolzShots.My.Settings.Save()
-        End Sub
-
-        Private _hasShrinked As Boolean = False
-        Private Sub SetGpoBannerVisibility(v As Boolean)
-            If v Then
-                If _hasShrinked Then
-                    Dim h As Integer = gpoInfoBanner.Height
-                    Height += h
-                    Tabs.Height -= h
-                    _hasShrinked = False
-                End If
-                gpoInfoBanner.Visible = True
-                gpoInfoBanner.Text = Localization.AdminBannerText
-            Else
-                If Not _hasShrinked Then
-                    gpoInfoBanner.Visible = False
-                    Dim h As Integer = gpoInfoBanner.Height
-                    Height -= h
-                    Tabs.Height += h
-                    _hasShrinked = True
-                End If
-            End If
         End Sub
 
         Private Sub SettingsLoad(ByVal sender As Object, ByVal e As EventArgs) Handles MyBase.Load
