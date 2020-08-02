@@ -24,6 +24,6 @@ namespace HolzShots.Composition.Command
             _commandToDispatch = binding.Command ?? throw new ArgumentNullException(nameof(binding.Command));
         }
 
-        public Task Invoke(object sender, HotkeyPressedEventArgs e) => _parentManager.DispatchCommand(_commandToDispatch);
+        public Task Invoke(object sender, HotkeyPressedEventArgs e) => _parentManager.Dispatch(_commandToDispatch);
     }
 }

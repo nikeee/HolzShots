@@ -5,7 +5,6 @@ Imports HolzShots.Interop
 Imports HolzShots.Net
 Imports HolzShots.Interop.LocalDisk
 Imports HolzShots.UI.Specialized
-Imports Microsoft.WindowsAPICodePack.Dialogs
 Imports System.Threading.Tasks
 
 Namespace ScreenshotRelated
@@ -33,33 +32,7 @@ Namespace ScreenshotRelated
 
 #Region "CustomImage"
 
-        Private Class Localization
-            Private Sub New()
-            End Sub
-            Public Const OpenInShotEditor = "Open Image in ShotEditor"
-            Public Const UploadImage = "Select Image to Upload"
-        End Class
-
-        Friend Sub OpenSelectedImage()
-            ShowFileSelector(Localization.OpenInShotEditor, AddressOf OpenSpecificImage)
-        End Sub
-
-        Friend Sub UploadSelectedImage()
-            ShowFileSelector(Localization.UploadImage, AddressOf UploadSpecificImage)
-        End Sub
-
-        Private Sub ShowFileSelector(title As String, callback As Action(Of String))
-            Using ofd As New CommonOpenFileDialog()
-                ofd.Title = title
-                ofd.Filters.Add(New CommonFileDialogFilter(UI.Localization.DialogFilterImages, SupportedFilesFilter))
-                ofd.Multiselect = False
-                If ofd.ShowDialog() = CommonFileDialogResult.Ok AndAlso File.Exists(ofd.FileName) Then
-                    callback(ofd.FileName)
-                End If
-            End Using
-        End Sub
-
-        Friend Sub OpenSpecificImage(fileName As String)
+        Public Sub OpenSpecificImage(fileName As String)
             Dim bmp As New Bitmap(fileName)
             Dim shot = Screenshot.FromImported(bmp)
             Dim editor As New ShotEditor(shot)

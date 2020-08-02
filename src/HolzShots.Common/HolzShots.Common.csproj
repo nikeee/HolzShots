@@ -61,6 +61,7 @@
     <Compile Include="Drawing\ScreenshotCreator.cs" />
     <Compile Include="Drawing\WindowScreenshotSet.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Input\HolzShotsActionCollection.cs" />
     <Compile Include="KeyValuePairExtensions.cs" />
     <Compile Include="LibraryInformation.cs" />
     <Compile Include="MathEx.cs" />

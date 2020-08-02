@@ -76,19 +76,21 @@ Namespace My
             For i As Integer = 0 To args.Length - 1
                 Select Case args(i)
                     Case FullscreenScreenshotParameter
-                        Await MainWindow.CommandManager.DispatchCommand(FullscreenCommand.CommandName).ConfigureAwait(True)
+                        Await MainWindow.CommandManager.Dispatch(Of FullscreenCommand)().ConfigureAwait(True)
                     Case AreaSelectorParameter
-                        Await MainWindow.CommandManager.DispatchCommand(SelectAreaCommand.CommandName).ConfigureAwait(True)
+                        Await MainWindow.CommandManager.Dispatch(Of SelectAreaCommand)().ConfigureAwait(True)
                     Case UploadParameter
-                        ScreenshotInvoker.UploadSelectedImage()
+                        Await MainWindow.CommandManager.Dispatch(Of UploadImageCommand)().ConfigureAwait(True)
                     Case OpenParameter
-                        ScreenshotInvoker.OpenSelectedImage()
+                        Await MainWindow.CommandManager.Dispatch(Of EditImageCommand)().ConfigureAwait(True)
                     Case OpenFromShellParameter
                         If i < args.Length - 1 Then
+                            ' TODO: Commands with parameters?
                             ScreenshotInvoker.TryOpenSpecificImage(args(i + 1))
                         End If
                     Case UploadFromShellParameter
                         If i < args.Length - 1 Then
+                            ' TODO: Commands with parameters?
                             ScreenshotInvoker.TryUploadSpecificImage(args(i + 1))
                         End If
                 End Select

@@ -33,6 +33,8 @@ namespace HolzShots
         public bool EnableSmartFormatForUpload { get; private set; } = false;
         public bool EnableSmartFormatForSaving { get; private set; } = false;
 
+        public string TrayIconDoubleClickCommand { get; set; } = null;
+
         // TODO: Fix visibility
         public IReadOnlyList<KeyBinding> KeyBindings { get; set; } = ImmutableList<KeyBinding>.Empty;
     }

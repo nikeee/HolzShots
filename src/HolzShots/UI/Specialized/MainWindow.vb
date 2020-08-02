@@ -54,9 +54,14 @@ Namespace UI.Specialized
         End Sub
 
         Private Sub RegisterCommands()
-            CommandManager.RegisterCommand(SelectAreaCommand.CommandName, Function() New SelectAreaCommand())
-            CommandManager.RegisterCommand(FullscreenCommand.CommandName, Function() New FullscreenCommand())
-            CommandManager.RegisterCommand(WindowCommand.CommandName, Function() New WindowCommand())
+            ' TODO: This looks like it could be integrated in our plugin system
+            CommandManager.RegisterCommand(New SelectAreaCommand())
+            CommandManager.RegisterCommand(New FullscreenCommand())
+            CommandManager.RegisterCommand(New WindowCommand())
+            CommandManager.RegisterCommand(New OpenImagesFolderCommand())
+            CommandManager.RegisterCommand(New OpenSettingsJsonCommand())
+            CommandManager.RegisterCommand(New UploadImageCommand())
+            CommandManager.RegisterCommand(New EditImageCommand())
         End Sub
 
         Private Async Sub MainWindowLoad(ByVal sender As Object, ByVal e As EventArgs) Handles MyBase.Load
@@ -121,9 +126,6 @@ Namespace UI.Specialized
                 SettingsWindow.Instance.ShowDialog() ' Showdialog necessary?
             End If
         End Sub
-        Private Shared Sub OpenSettingsJson()
-            UserSettings.OpenSettingsInDefaultEditor()
-        End Sub
         Private Shared Sub OpenAbout()
             If Not AboutForm.IsAboutInstanciated Then
                 Dim newAboutForm As New AboutForm()
@@ -135,17 +137,16 @@ Namespace UI.Specialized
 #Region "UI Events"
 
         Private Async Sub TrayIconMouseDoubleClick(ByVal sender As Object, ByVal e As MouseEventArgs) Handles TrayIcon.MouseDoubleClick
-            Select Case TrayIconDoubleClickAction ' TODO: Entry in settings dialog
-                Case TrayIconAction.InvokeAreaSelection
-                    Await CommandManager.DispatchCommand(SelectAreaCommand.CommandName).ConfigureAwait(True) ' Can swallow exceptions
-                Case TrayIconAction.OpenScreenshotFolder
-                    LocalDisk.ScreenshotDumper.OpenPictureDumpFolderIfEnabled()
-                Case TrayIconAction.OpenSettings
-                    OpenSettings()
-                Case TrayIconAction.[Nothing]
-                    Trace.WriteLine("Doin' nothin'")
-            End Select
+            Dim commandToRun = UserSettings.Current.TrayIconDoubleClickCommand
+
+            If commandToRun IsNot Nothing AndAlso CommandManager.IsRegisteredCommand(commandToRun) Then
+
+                Debug.WriteLine($"Executing command from tray icon double click: {commandToRun}")
+                Await CommandManager.Dispatch(commandToRun).ConfigureAwait(True) ' Can swallow exceptions
+                Debug.WriteLine($"Done with: {commandToRun}")
+            End If
         End Sub
+
         Private Sub MainWindowShown(sender As Object, e As EventArgs) Handles Me.Shown
             HideForm()
         End Sub
@@ -162,20 +163,20 @@ Namespace UI.Specialized
             OpenSettings()
         End Sub
 
-        Private Sub SettingsJsonMenuItemClick(sender As Object, e As EventArgs) Handles settingsJsonMenuItem.Click
-            OpenSettingsJson()
+        Private Async Sub SettingsJsonMenuItemClick(sender As Object, e As EventArgs) Handles settingsJsonMenuItem.Click
+            Await CommandManager.Dispatch(Of OpenSettingsJsonCommand)().ConfigureAwait(True)
         End Sub
 
         Private Async Sub SelectAreaMenuItemClick(sender As Object, e As EventArgs) Handles selectAreaMenuItem.Click
-            Await MainWindow.CommandManager.DispatchCommand(SelectAreaCommand.CommandName).ConfigureAwait(True)
+            Await CommandManager.Dispatch(Of SelectAreaCommand)().ConfigureAwait(True)
         End Sub
 
-        Private Sub OpenImageMenuItemClick(sender As Object, e As EventArgs) Handles openImageMenuItem.Click
-            ScreenshotInvoker.OpenSelectedImage()
+        Private Async Sub OpenImageMenuItemClick(sender As Object, e As EventArgs) Handles openImageMenuItem.Click
+            Await CommandManager.Dispatch(Of EditImageCommand)().ConfigureAwait(True)
         End Sub
 
-        Private Sub UploadImageMenuItemClick(sender As Object, e As EventArgs) Handles uploadImageMenuItem.Click
-            ScreenshotInvoker.UploadSelectedImage()
+        Private Async Sub UploadImageMenuItemClick(sender As Object, e As EventArgs) Handles uploadImageMenuItem.Click
+            Await CommandManager.Dispatch(Of UploadImageCommand)().ConfigureAwait(True)
         End Sub
 
         Private Sub AboutMenuItemClick(sender As Object, e As EventArgs) Handles aboutMenuItem.Click

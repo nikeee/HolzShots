@@ -1,27 +1,41 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Reflection;
 using System.Threading.Tasks;
 using HolzShots.Input;
 
 namespace HolzShots.Composition.Command
 {
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
+    public class CommandAttribute : Attribute
+    {
+        public string Name { get; }
+        public CommandAttribute(string name) => Name = name ?? throw new ArgumentNullException(nameof(name));
+    }
 
     public class CommandManager
     {
-        private Dictionary<string, Func<ICommand>> Actions { get; } = new Dictionary<string, Func<ICommand>>();
+        private Dictionary<string, ICommand> Actions { get; } = new Dictionary<string, ICommand>();
 
-        public void RegisterCommand(string command, Func<ICommand> ctor)
+        public void RegisterCommand(ICommand command)
         {
-            Debug.Assert(command != null);
-            Debug.Assert(ctor != null);
+            if (command == null)
+                throw new ArgumentNullException(nameof(command));
 
-            if (Actions.ContainsKey(command))
+            var name = GetCommandNameForType(command.GetType());
+            Debug.Assert(name != null);
+            if (string.IsNullOrWhiteSpace(name))
+                throw new ArgumentException("Name of command is null or white space");
+
+            name = name.ToLowerInvariant();
+
+            if (Actions.ContainsKey(name))
             {
                 Debug.Assert(false);
                 return;
             }
-            Actions[command.ToLowerInvariant()] = ctor;
+            Actions[name] = command;
         }
 
         public IHotkeyAction GetHotkeyActionFromKeyBinding(KeyBinding binding)
@@ -38,14 +52,27 @@ namespace HolzShots.Composition.Command
 
         private ICommand GetCommand(string name)
         {
-            Debug.Assert(name != null);
-            return Actions.TryGetValue(name.ToLowerInvariant(), out var commandCtor)
-                ? commandCtor()
+            Debug.Assert(IsRegisteredCommand(name));
+            return Actions.TryGetValue(name.ToLowerInvariant(), out var command)
+                ? command
                 : null;
         }
 
-        public Task DispatchCommand(string name)
+        private string GetCommandNameForType(Type t) => t.GetCustomAttribute<CommandAttribute>(false)?.Name;
+        private string GetCommandNameForType<T>() where T : ICommand => GetCommandNameForType(typeof(T));
+
+        public bool IsRegisteredCommand(string name) => !string.IsNullOrWhiteSpace(name) && Actions.ContainsKey(name.ToLowerInvariant());
+
+        public Task Dispatch<T>() where T : ICommand
         {
+            var name = GetCommandNameForType<T>();
+            return Dispatch(name);
+        }
+
+        public Task Dispatch(string name)
+        {
+            Debug.Assert(IsRegisteredCommand(name));
+
             var cmd = GetCommand(name);
             Debug.Assert(cmd != null);
 

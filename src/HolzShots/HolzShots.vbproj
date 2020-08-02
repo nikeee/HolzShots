@@ -329,7 +329,6 @@
     <Compile Include="ScreenshotRelated\Selection\Nomination1Decoration.vb" />
     <Compile Include="ScreenshotRelated\Selection\Nomination2Decoration.vb" />
     <Compile Include="ScreenshotRelated\Selection\QuickInfoDecoration.vb" />
-    <Compile Include="ScreenshotRelated\TrayIconAction.vb" />
     <Compile Include="UI\Specialized\MainWindow.vb">
       <SubType>Form</SubType>
     </Compile>

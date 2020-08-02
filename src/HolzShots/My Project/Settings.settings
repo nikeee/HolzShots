@@ -77,9 +77,6 @@
     <Setting Name="EnableShotEditor" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="TrayIconDoubleClickAction" Type="HolzShots.ScreenshotRelated.TrayIconAction" Scope="User">
-      <Value Profile="(Default)">OpenSettings</Value>
-    </Setting>
     <Setting Name="SelectionDecoration" Type="HolzShots.ScreenshotRelated.Selection.SelectionDecorations" Scope="User">
       <Value Profile="(Default)">Nomination1</Value>
     </Setting>

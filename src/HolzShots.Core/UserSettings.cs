@@ -54,6 +54,7 @@ namespace HolzShots
         {
             var s = new HSSettings
             {
+                TrayIconDoubleClickCommand = "openUserSettings",
                 KeyBindings = new List<KeyBinding>() {
                     new KeyBinding {
                         Enabled = true,

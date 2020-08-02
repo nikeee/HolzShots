@@ -9,12 +9,6 @@ Namespace Interop.LocalDisk
 
         Private Shared _lastFileName As String = String.Empty
 
-        Public Shared Sub OpenPictureDumpFolderIfEnabled()
-            If UserSettings.Current.SaveImagesToLocalDisk Then
-                OpenPictureDumpFolder()
-            End If
-        End Sub
-
         Public Shared Sub OpenPictureDumpFolder()
             Dim path As String = UserSettings.Current.SavePath
 

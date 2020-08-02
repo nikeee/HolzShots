@@ -44,15 +44,6 @@ Namespace Interop
             End Set
         End Property
 
-        Public Property TrayIconDoubleClickAction As TrayIconAction
-            Get
-                Return My.Settings.TrayIconDoubleClickAction
-            End Get
-            Set
-                My.Settings.TrayIconDoubleClickAction = Value
-            End Set
-        End Property
-
         Public Property SelectionDecoration As SelectionDecorations
             Get
                 Return My.Settings.SelectionDecoration
