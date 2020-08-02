@@ -41,7 +41,6 @@ Namespace UI.Specialized
             Me.setFullscreen = New System.Windows.Forms.Button()
             Me.Panel1 = New System.Windows.Forms.Panel()
             Me.decorationPanel = New System.Windows.Forms.Panel()
-            Me.decoration3 = New System.Windows.Forms.RadioButton()
             Me.decoration2 = New System.Windows.Forms.RadioButton()
             Me.decoration1 = New System.Windows.Forms.RadioButton()
             Me.selectorStrokeLabel = New System.Windows.Forms.Label()
@@ -255,7 +254,6 @@ Namespace UI.Specialized
             '
             'decorationPanel
             '
-            Me.decorationPanel.Controls.Add(Me.decoration3)
             Me.decorationPanel.Controls.Add(Me.decoration2)
             Me.decorationPanel.Controls.Add(Me.decoration1)
             Me.decorationPanel.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -263,17 +261,6 @@ Namespace UI.Specialized
             Me.decorationPanel.Name = "decorationPanel"
             Me.decorationPanel.Size = New System.Drawing.Size(195, 23)
             Me.decorationPanel.TabIndex = 10
-            '
-            'decoration3
-            '
-            Me.decoration3.AutoSize = True
-            Me.decoration3.Location = New System.Drawing.Point(134, 3)
-            Me.decoration3.Name = "decoration3"
-            Me.decoration3.Size = New System.Drawing.Size(59, 19)
-            Me.decoration3.TabIndex = 2
-            Me.decoration3.TabStop = True
-            Me.decoration3.Text = "Style 3"
-            Me.decoration3.UseVisualStyleBackColor = True
             '
             'decoration2
             '
@@ -770,7 +757,6 @@ Namespace UI.Specialized
         Friend WithEvents fullStrokeLabel As System.Windows.Forms.Label
         Friend WithEvents selectorStrokeLabel As System.Windows.Forms.Label
         Friend WithEvents decorationPanel As System.Windows.Forms.Panel
-        Friend WithEvents decoration3 As System.Windows.Forms.RadioButton
         Friend WithEvents decoration2 As System.Windows.Forms.RadioButton
         Friend WithEvents decoration1 As System.Windows.Forms.RadioButton
         Friend WithEvents pluginListPanel As HolzShots.UI.Controls.StackPanel

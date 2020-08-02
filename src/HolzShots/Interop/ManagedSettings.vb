@@ -44,7 +44,7 @@ Namespace Interop
             End Set
         End Property
 
-        Public Property SelectionDecoration As SelectionDecorations
+        Public Property SelectionDecoration As SelectionDecoration
             Get
                 Return My.Settings.SelectionDecoration
             End Get

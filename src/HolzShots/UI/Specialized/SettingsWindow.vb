@@ -1,7 +1,6 @@
 Imports System.Linq
 Imports HolzShots.Input
 Imports HolzShots.Interop
-Imports HolzShots.Interop.LocalDisk
 Imports HolzShots.IO
 Imports HolzShots.IO.Naming
 Imports HolzShots.My
@@ -101,11 +100,9 @@ Namespace UI.Specialized
 
             ' /Screenshot Methods
 
-            Dim d As SelectionDecorations = ManagedSettings.SelectionDecoration
-            decoration1.Checked = d = SelectionDecorations.Nomination1
-            decoration2.Checked = d = SelectionDecorations.Nomination2
-            decoration3.Checked = d = SelectionDecorations.Nomination3
-            'decorationPanel.Enabled = Not SelectionDecorationPolicy.IsSet
+            Dim d As SelectionDecoration = ManagedSettings.SelectionDecoration
+            decoration1.Checked = d = SelectionDecoration.Nomination1
+            decoration2.Checked = d = SelectionDecoration.Nomination2
 
             ' Local saves
             enableLocalSaveCheckBox.Checked = UserSettings.Current.SaveImagesToLocalDisk
@@ -148,13 +145,11 @@ Namespace UI.Specialized
             ManagedSettings.EnableLinkViewer = Not deactivateLinkViewerCheckBox.Checked
             ManagedSettings.EnableShotEditor = Not disableShotEditorCheckBox.Checked
 
-            Dim d As SelectionDecorations
+            Dim d As SelectionDecoration
             If decoration1.Checked Then
-                d = SelectionDecorations.Nomination1
+                d = SelectionDecoration.Nomination1
             ElseIf decoration2.Checked Then
-                d = SelectionDecorations.Nomination2
-            ElseIf decoration3.Checked Then
-                d = SelectionDecorations.Nomination3
+                d = SelectionDecoration.Nomination2
             End If
 
             ManagedSettings.SelectionDecoration = d

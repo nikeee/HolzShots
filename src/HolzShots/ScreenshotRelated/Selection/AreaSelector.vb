@@ -61,14 +61,12 @@ Namespace ScreenshotRelated.Selection
 
             SetStyle(ControlStyles.AllPaintingInWmPaint Or ControlStyles.OptimizedDoubleBuffer Or ControlStyles.UserPaint, True)
         End Sub
-        Private Function GetCurrentDecoration() As ISelectionDecoration
+        Private Shared Function GetCurrentDecoration() As ISelectionDecoration
             Select Case ManagedSettings.SelectionDecoration
-                Case SelectionDecorations.Nomination1
+                Case SelectionDecoration.Nomination1
                     Return New Nomination1Decoration()
-                Case SelectionDecorations.Nomination2
+                Case SelectionDecoration.Nomination2
                     Return New Nomination2Decoration()
-                Case SelectionDecorations.Nomination3
-                    Return New Nomination3Decoration()
                 Case Else
                     Return New Nomination1Decoration()
             End Select

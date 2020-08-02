@@ -11,9 +11,8 @@ Namespace ScreenshotRelated.Selection
     End Interface
 
     <Serializable>
-    Friend Enum SelectionDecorations
+    Friend Enum SelectionDecoration
         Nomination1 = 0
         Nomination2 = 1
-        Nomination3 = 2
     End Enum
 End Namespace

@@ -357,9 +357,9 @@ Namespace My
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("Nomination1")>  _
-        Public Property SelectionDecoration() As Global.HolzShots.ScreenshotRelated.Selection.SelectionDecorations
+        Public Property SelectionDecoration() As Global.HolzShots.ScreenshotRelated.Selection.SelectionDecoration
             Get
-                Return CType(Me("SelectionDecoration"),Global.HolzShots.ScreenshotRelated.Selection.SelectionDecorations)
+                Return CType(Me("SelectionDecoration"),Global.HolzShots.ScreenshotRelated.Selection.SelectionDecoration)
             End Get
             Set
                 Me("SelectionDecoration") = value
