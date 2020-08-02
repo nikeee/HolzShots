@@ -189,7 +189,14 @@
   <ItemGroup>
     <Compile Include="GlobalSuppressions.vb" />
     <Compile Include="ImageExtensions.vb" />
-    <Compile Include="Input\Actions\SelectAreaHotkeyAction.vb" />
+    <Compile Include="Input\Actions\EditImageCommand.vb" />
+    <Compile Include="Input\Actions\FileDependentCommand.vb" />
+    <Compile Include="Input\Actions\FullscreenCommand.vb" />
+    <Compile Include="Input\Actions\OpenImagesFolderCommand.vb" />
+    <Compile Include="Input\Actions\OpenSettingsJsonCommand.vb" />
+    <Compile Include="Input\Actions\SelectAreaCommand.vb" />
+    <Compile Include="Input\Actions\WindowCommand.vb" />
+    <Compile Include="Input\Actions\UploadImageCommand.vb" />
     <Compile Include="Input\HolzShotsActionCollection.vb" />
     <Compile Include="Interop\TaskBar.vb" />
     <Compile Include="Net\UploadUI.vb" />
