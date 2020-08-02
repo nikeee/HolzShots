@@ -1,88 +1,27 @@
 Imports System.Drawing.Imaging
 Imports System.IO
 Imports System.Linq
-Imports System.Threading.Tasks
 Imports HolzShots.Interop
-Imports HolzShots.Interop.LocalDisk
 Imports HolzShots.Net
-Imports HolzShots.ScreenshotRelated.Selection
+Imports HolzShots.Interop.LocalDisk
 Imports HolzShots.UI.Specialized
 Imports Microsoft.WindowsAPICodePack.Dialogs
+Imports System.Threading.Tasks
 
 Namespace ScreenshotRelated
 
     Module ScreenshotInvoker
 
-#Region "Fullscreen"
+        Public Async Function ProceedWithScreenshot(screenshot As Screenshot) As Task
+            Debug.Assert(screenshot IsNot Nothing)
 
-        Public Async Function DoFullscreen() As Task
-            ' TODO: Add proper assertion
-            ' Debug.Assert(ManagedSettings.EnableFullscreenScreenshot)
-
-            ' TODO: Re-add proper if condition
-            ' If ManagedSettings.EnableFullscreenScreenshot Then
-            Dim shot = ScreenshotMethods.CaptureFullscreen()
-            Debug.Assert(shot IsNot Nothing)
-            Await ProceedScreenshot(shot).ConfigureAwait(True)
-            'End If
-        End Function
-
-#End Region
-#Region "Selector"
-
-        Public Async Function DoSelector() As Task
-            ' TODO: Add proper assertion
-            ' Debug.Assert(ManagedSettings.EnableAreaScreenshot)
-            Debug.Assert(Not AreaSelector.IsInAreaSelector)
-            If UserSettings.Current.EnableIngameMode AndAlso HolzShotsEnvironment.IsFullScreen Then Return
-
-            ' TODO: Re-add proper if condition
-            'If ManagedSettings.EnableAreaScreenshot AndAlso Not AreaSelector.IsInAreaSelector Then
-            If Not AreaSelector.IsInAreaSelector Then
-                Dim shot As Screenshot
-                Try
-                    shot = Await ScreenshotMethods.CaptureSelection().ConfigureAwait(True)
-                    Debug.Assert(shot IsNot Nothing)
-                    If shot Is Nothing Then Throw New TaskCanceledException()
-                Catch cancelled As TaskCanceledException
-                    Debug.WriteLine("Area Selection cancelled")
-                    Return
-                End Try
-                Debug.Assert(shot IsNot Nothing)
-                Await ProceedScreenshot(shot).ConfigureAwait(True)
-            End If
-        End Function
-
-#End Region
-#Region "Window"
-
-        Public Async Function DoWindow() As Task
-            ' TODO: Add proper assertion
-            ' Debug.Assert(ManagedSettings.EnableWindowScreenshot)
-
-            ' TODO: Re-add proper if condition
-            ' If ManagedSettings.EnableWindowScreenshot Then
-            Dim h As IntPtr = Native.User32.GetForegroundWindow()
-
-            Dim info As Native.User32.WindowPlacement
-            Native.User32.GetWindowPlacement(h, info)
-
-            Dim shot = ScreenshotMethods.CaptureWindow(h)
-            Await ProceedScreenshot(shot).ConfigureAwait(True)
-            ' End If
-        End Function
-
-#End Region
-
-        Private Async Function ProceedScreenshot(shot As Screenshot) As Task
-            Debug.Assert(shot IsNot Nothing)
-            ScreenshotDumper.HandleScreenshot(shot)
+            ScreenshotDumper.HandleScreenshot(screenshot)
             If ManagedSettings.EnableShotEditor Then
-                Dim shower As New ShotEditor(shot)
+                Dim shower As New ShotEditor(screenshot)
                 shower.Show()
             Else
                 Try
-                    Dim result = Await UploadHelper.UploadToDefaultUploader(shot.Image).ConfigureAwait(True)
+                    Dim result = Await UploadHelper.UploadToDefaultUploader(screenshot.Image).ConfigureAwait(True)
                     UploadHelper.InvokeUploadFinishedUi(result)
                 Catch ex As UploadCanceledException
                     HumanInterop.ShowOperationCanceled()

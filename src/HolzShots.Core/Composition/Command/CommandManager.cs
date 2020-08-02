@@ -1,25 +1,27 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using HolzShots.Input;
 
 namespace HolzShots.Composition.Command
 {
+
     public class CommandManager
     {
-        private Dictionary<string, Func<KeyBinding, IHotkeyAction>> Actions { get; } = new Dictionary<string, Func<KeyBinding, IHotkeyAction>>();
+        private Dictionary<string, Func<ICommand>> Actions { get; } = new Dictionary<string, Func<ICommand>>();
 
-        public void RegisterCommand(string command, Func<KeyBinding, IHotkeyAction> creator)
+        public void RegisterCommand(string command, Func<ICommand> ctor)
         {
             Debug.Assert(command != null);
-            Debug.Assert(creator != null);
+            Debug.Assert(ctor != null);
 
             if (Actions.ContainsKey(command))
             {
                 Debug.Assert(false);
                 return;
             }
-            Actions[command.ToLowerInvariant()] = creator;
+            Actions[command.ToLowerInvariant()] = ctor;
         }
 
         public IHotkeyAction GetHotkeyActionFromKeyBinding(KeyBinding binding)
@@ -31,11 +33,25 @@ namespace HolzShots.Composition.Command
             Debug.Assert(binding.Keys != null);
             Debug.Assert(binding.Command != null);
 
-            var standardizedCommand = binding.Command.ToLowerInvariant();
+            return new HotkeyCommand(this, binding);
+        }
 
-            return Actions.TryGetValue(standardizedCommand, out var ctor)
-                ? ctor(binding)
+        private ICommand GetCommand(string name)
+        {
+            Debug.Assert(name != null);
+            return Actions.TryGetValue(name.ToLowerInvariant(), out var commandCtor)
+                ? commandCtor()
                 : null;
+        }
+
+        public Task DispatchCommand(string name)
+        {
+            var cmd = GetCommand(name);
+            Debug.Assert(cmd != null);
+
+            return cmd == null
+                ? Task.CompletedTask
+                : cmd.Invoke();
         }
     }
 }

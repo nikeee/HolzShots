@@ -15,7 +15,7 @@ Namespace UI.Specialized
 
         Private _keyboardHook As KeyboardHook
         Private _actionContainer As HolzShotsActionCollection
-        Private _commandManager As Composition.Command.CommandManager = New Composition.Command.CommandManager()
+        Public Shared ReadOnly CommandManager As Composition.Command.CommandManager = New Composition.Command.CommandManager()
 
 
         Private Sub HideForm()
@@ -47,16 +47,16 @@ Namespace UI.Specialized
 
             ' TODO: Issue toaster notifiction that the settings have been updated
 
-            Dim parsedBindings = newSettings.KeyBindings.Select(AddressOf _commandManager.GetHotkeyActionFromKeyBinding).ToArray()
+            Dim parsedBindings = newSettings.KeyBindings.Select(AddressOf CommandManager.GetHotkeyActionFromKeyBinding).ToArray()
 
             _actionContainer = New HolzShotsActionCollection(_keyboardHook, parsedBindings)
             _actionContainer.Refresh()
         End Sub
 
         Private Sub RegisterCommands()
-            _commandManager.RegisterCommand("captureArea", Function(b) New SelectAreaHotkeyAction(b.Keys, b.Enabled))
-            _commandManager.RegisterCommand("captureEntireScreen", Function(b) New FullscreenHotkeyAction(b.Keys, b.Enabled))
-            _commandManager.RegisterCommand("captureWindow", Function(b) New WindowHotkeyAction(b.Keys, b.Enabled))
+            CommandManager.RegisterCommand(SelectAreaCommand.CommandName, Function() New SelectAreaCommand())
+            CommandManager.RegisterCommand(FullscreenCommand.CommandName, Function() New FullscreenCommand())
+            CommandManager.RegisterCommand(WindowCommand.CommandName, Function() New WindowCommand())
         End Sub
 
         Private Async Sub MainWindowLoad(ByVal sender As Object, ByVal e As EventArgs) Handles MyBase.Load
@@ -137,7 +137,7 @@ Namespace UI.Specialized
         Private Async Sub TrayIconMouseDoubleClick(ByVal sender As Object, ByVal e As MouseEventArgs) Handles TrayIcon.MouseDoubleClick
             Select Case TrayIconDoubleClickAction ' TODO: Entry in settings dialog
                 Case TrayIconAction.InvokeAreaSelection
-                    Await DoSelector().ConfigureAwait(True) ' Can swallow exceptions
+                    Await CommandManager.DispatchCommand(SelectAreaCommand.CommandName).ConfigureAwait(True) ' Can swallow exceptions
                 Case TrayIconAction.OpenScreenshotFolder
                     LocalDisk.ScreenshotDumper.OpenPictureDumpFolderIfEnabled()
                 Case TrayIconAction.OpenSettings
@@ -167,7 +167,7 @@ Namespace UI.Specialized
         End Sub
 
         Private Async Sub SelectAreaMenuItemClick(sender As Object, e As EventArgs) Handles selectAreaMenuItem.Click
-            Await ScreenshotInvoker.DoSelector().ConfigureAwait(True) ' can swallow exceptions
+            Await MainWindow.CommandManager.DispatchCommand(SelectAreaCommand.CommandName).ConfigureAwait(True)
         End Sub
 
         Private Sub OpenImageMenuItemClick(sender As Object, e As EventArgs) Handles openImageMenuItem.Click

@@ -4,6 +4,7 @@ Imports System.IO
 Imports System.Linq
 Imports System.Threading.Tasks
 Imports HolzShots.Composition
+Imports HolzShots.Input.Actions
 Imports HolzShots.Interop
 Imports HolzShots.IO
 Imports HolzShots.ScreenshotRelated
@@ -75,9 +76,9 @@ Namespace My
             For i As Integer = 0 To args.Length - 1
                 Select Case args(i)
                     Case FullscreenScreenshotParameter
-                        Await ScreenshotInvoker.DoFullscreen().ConfigureAwait(True)
+                        Await MainWindow.CommandManager.DispatchCommand(FullscreenCommand.CommandName).ConfigureAwait(True)
                     Case AreaSelectorParameter
-                        Await ScreenshotInvoker.DoSelector().ConfigureAwait(True)
+                        Await MainWindow.CommandManager.DispatchCommand(SelectAreaCommand.CommandName).ConfigureAwait(True)
                     Case UploadParameter
                         ScreenshotInvoker.UploadSelectedImage()
                     Case OpenParameter

@@ -49,6 +49,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Composition\Command\CommandManager.cs" />
+    <Compile Include="Composition\Command\HotkeyCommand.cs" />
+    <Compile Include="Composition\Command\ICommand.cs" />
     <Compile Include="Composition\CustomUploadersFile.cs" />
     <Compile Include="Composition\CustomUploaderSource.cs" />
     <Compile Include="Composition\IUploaderSource.cs" />
