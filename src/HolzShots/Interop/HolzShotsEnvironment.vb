@@ -40,7 +40,6 @@ Namespace Interop
             End Set
         End Property
 
-        Public Shared ReadOnly Property IsEightOrHigher As Boolean = (Environment.OSVersion.Version.Major = 6 AndAlso Environment.OSVersion.Version.Minor >= 2) OrElse Environment.OSVersion.Version.Major > 6
         Public Shared ReadOnly Property IsVistaOrHigher As Boolean = Environment.OSVersion.Version.Major >= 6
         Public Shared ReadOnly Property IsAeroEnabled As Boolean
             Get

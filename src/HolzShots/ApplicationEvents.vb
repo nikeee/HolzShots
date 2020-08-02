@@ -7,7 +7,6 @@ Imports HolzShots.Composition
 Imports HolzShots.Input.Actions
 Imports HolzShots.Interop
 Imports HolzShots.IO
-Imports HolzShots.ScreenshotRelated
 Imports HolzShots.UI.Specialized
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.WindowsAPICodePack.Shell

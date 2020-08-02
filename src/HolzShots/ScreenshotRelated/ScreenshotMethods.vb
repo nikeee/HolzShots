@@ -171,14 +171,5 @@ Namespace ScreenshotRelated
             Return New WindowScreenshotSet(bmp, cursorPositonOnScreenshot, windowTitle, processName)
         End Function
 
-        Protected Shared Function CaptureCursor() As Bitmap
-            Dim c As New Bitmap(MainWindow.Instance.Cursor.Size.Width, MainWindow.Instance.Cursor.Size.Height)
-            Using ge As Graphics = Graphics.FromImage(c)
-                ge.SmoothingMode = SmoothingMode.AntiAlias
-                MainWindow.Instance.Cursor.Draw(ge, New Rectangle(0, 0, c.Width, c.Height))
-            End Using
-            Return c
-        End Function
-
     End Class
 End Namespace
