@@ -18,8 +18,6 @@ Namespace My
         Friend ReadOnly TheCulture As New CultureInfo("en-US", False)
 
         Public Shared ReadOnly Property SmallStockIcons As New StockIcons(StockIconSize.Small, False, False)
-        Public Shared ReadOnly Property ShellSizeStockIcons As New StockIcons(StockIconSize.ShellSize, False, False)
-        Public Shared ReadOnly Property LargeStockIcons As New StockIcons(StockIconSize.Large, False, False)
 
         Private _uploaders As UploaderManager
         ReadOnly Property Uploaders As UploaderManager
@@ -89,13 +87,15 @@ Namespace My
         End Function
 
         Friend Shared Sub AddTasks()
+            Debug.Assert(TaskbarManager.IsPlatformSupported)
+
             If Global.HolzShots.My.Settings.UserTasksInitialized Then Exit Sub
             Global.HolzShots.My.Settings.UserTasksInitialized = True
             Global.HolzShots.My.Settings.Save()
 
-            Dim jlist = JumpList.CreateJumpListForIndividualWindow(TaskbarManager.Instance.ApplicationId, SettingsWindow.Instance.Handle)
+            Dim jumpList = Microsoft.WindowsAPICodePack.Taskbar.JumpList.CreateJumpListForIndividualWindow(TaskbarManager.Instance.ApplicationId, SettingsWindow.Instance.Handle)
 
-            jlist.ClearAllUserTasks()
+            jumpList.ClearAllUserTasks()
 
             Static imgres As String = Path.Combine(HolzShotsPaths.SystemPath, "imageres.dll")
 
@@ -104,17 +104,17 @@ Namespace My
                     .Arguments = FullscreenScreenshotParameter,
                     .IconReference = New IconReference(imgres, 105)
                 }
-                jlist.AddUserTasks(fullscreen)
+                jumpList.AddUserTasks(fullscreen)
             End If
 
-            Dim selector As New JumpListLink(System.Windows.Forms.Application.ExecutablePath, "Select a region") With {
+            Dim selector As New JumpListLink(System.Windows.Forms.Application.ExecutablePath, "Capture Region") With {
                 .Arguments = AreaSelectorParameter,
                 .IconReference = New IconReference(System.Windows.Forms.Application.ExecutablePath, 0)
             }
-            jlist.AddUserTasks(selector)
+            jumpList.AddUserTasks(selector)
 
             Try
-                jlist.Refresh()
+                jumpList.Refresh()
             Catch ex As UnauthorizedAccessException
             End Try
         End Sub
