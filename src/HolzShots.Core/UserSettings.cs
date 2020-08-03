@@ -85,6 +85,7 @@ namespace HolzShots
                 return SingleError($"Version {candidate.Version} is not supported. This version of HolzShots only supports settings version {SupportedVersion}.", "version");
 
 
+
             var validationErrors = ImmutableList.CreateBuilder<ValidationError>();
 
             return validationErrors;

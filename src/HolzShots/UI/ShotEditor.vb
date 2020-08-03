@@ -291,6 +291,11 @@ Namespace UI.Specialized
                 Using fileStream = File.OpenWrite(fileName)
                     bmp.SaveExtended(fileStream, format)
                 End Using
+
+                If UserSettings.Current.CloseAfterSave Then
+                    Close()
+                End If
+
             Catch ex As PathTooLongException
                 HumanInterop.PathIsTooLong(fileName, Me)
             Catch ex As Exception
