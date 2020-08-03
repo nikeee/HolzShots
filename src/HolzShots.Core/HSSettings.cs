@@ -24,6 +24,9 @@ namespace HolzShots
         public bool SaveImagesToLocalDisk { get; private set; } = true;
         [JsonProperty("save.path")]
         public string SavePath { get; private set; } = HolzShotsPaths.DefaultScreenshotSavePath;
+        /// <summary>
+        /// TODO: Docs for available patterns
+        /// </summary>
         [JsonProperty("save.pattern")]
         public string SaveFileNamePattern { get; private set; } = "Screenshot-<Date>";
         /// <summary>

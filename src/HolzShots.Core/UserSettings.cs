@@ -84,25 +84,14 @@ namespace HolzShots
             if (candidate.Version != SupportedVersion)
                 return SingleError($"Version {candidate.Version} is not supported. This version of HolzShots only supports settings version {SupportedVersion}.", "version");
 
+            // var validationErrors = ImmutableList.CreateBuilder<ValidationError>();
 
-
-            var validationErrors = ImmutableList.CreateBuilder<ValidationError>();
-
-            return validationErrors;
+            return ImmutableList<ValidationError>.Empty;
         }
 
         private static IReadOnlyList<ValidationError> SingleError(string message, string affectedProperty, Exception exception = null)
         {
             return ImmutableList.Create(new ValidationError(message, affectedProperty, exception));
         }
-    }
-
-    internal static class BoolEx
-    {
-        /// <summary>
-        /// Helper function that returns "a -> b".
-        /// See: https://en.wikipedia.org/wiki/Modus_ponens#Justification_via_truth_table
-        /// </summary>
-        public static bool Implies(this bool p, bool q) => !p || q;
     }
 }

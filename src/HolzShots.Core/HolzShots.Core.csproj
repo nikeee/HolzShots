@@ -48,6 +48,7 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BoolEx.cs" />
     <Compile Include="Composition\Command\CommandManager.cs" />
     <Compile Include="Composition\Command\HotkeyCommand.cs" />
     <Compile Include="Composition\Command\ICommand.cs" />

@@ -1,9 +1,8 @@
 Imports System.Linq
-Imports HolzShots.Input
+Imports HolzShots
 Imports HolzShots.Interop
 Imports HolzShots.IO
 Imports HolzShots.IO.Naming
-Imports HolzShots.My
 Imports HolzShots.ScreenshotRelated.Selection
 Imports HolzShots.UI.Controls
 Imports Microsoft.WindowsAPICodePack.Dialogs
@@ -34,7 +33,7 @@ Namespace UI.Specialized
         End Sub
 
         Private Sub InitializeIconResources()
-            Dim shield = MyApplication.SmallStockIcons.Shield.Icon.ToBitmap()
+            Dim shield = My.MyApplication.SmallStockIcons.Shield.Icon.ToBitmap()
 
             elevatedRequiredPictureBox1.Image = shield
             elevatedRequiredPictureBox2.Image = shield
@@ -43,20 +42,20 @@ Namespace UI.Specialized
 
         Private Sub DisplayPlugins()
 
-            If Global.HolzShots.My.Application.Uploaders.Loaded Then
-                Dim uploaders = Global.HolzShots.My.Application.Uploaders.GetUploaderNames()
+            If My.Application.Uploaders.Loaded Then
+                Dim uploaders = My.Application.Uploaders.GetUploaderNames()
                 defaultHosterBox.Items.Clear()
                 defaultHosterBox.Items.AddRange(uploaders.ToArray())
 
                 pluginListPanel.Controls.Clear()
                 _pluginInfoItemList.Clear()
-                Dim metadata = Global.HolzShots.My.Application.Uploaders.GetMetadata()
+                Dim metadata = My.Application.Uploaders.GetMetadata()
                 Dim metaArr = metadata.Select(Function(i) New PluginInfoItem(i)).ToArray()
                 pluginListPanel.Controls.AddRange(metaArr)
                 _pluginInfoItemList.AddRange(metaArr)
             End If
 
-            Dim index = defaultHosterBox.Items.IndexOf(Global.HolzShots.My.Settings.DefaultImageHoster)
+            Dim index = defaultHosterBox.Items.IndexOf(My.Settings.DefaultImageHoster)
             If index > -1 Then
                 defaultHosterBox.SelectedItem = defaultHosterBox.Items(index)
             End If
@@ -91,14 +90,13 @@ Namespace UI.Specialized
 
             showCopyConfirmation.Checked = UserSettings.Current.ShowCopyConfirmation
             showCopyConfirmation.Enabled = False ' we only support reading the current setting for now
-            ' deactivateLinkViewerCheckBox.Checked
 
             ' /Screenshot Methods
 
             ' Local saves
             enableLocalSaveCheckBox.Checked = UserSettings.Current.SaveImagesToLocalDisk
-
-            localSaveSettingsPanel.Enabled = enableLocalSaveCheckBox.Checked
+            enableLocalSaveCheckBox.Enabled = False ' we only support reading the current setting for now
+            localSaveSettingsPanel.Enabled = False ' we only support reading the current setting for now
 
             fileNamingPattern.Text = UserSettings.Current.SaveFileNamePattern
             fileNamingPattern.Enabled = False ' we only support reading the current setting for now
@@ -107,13 +105,10 @@ Namespace UI.Specialized
             enableSmartFormatForSaving.Enabled = False ' we only support reading the current setting for now
 
             Dim p = UserSettings.Current.SavePath
-            If String.IsNullOrWhiteSpace(p) Then
-                p = HolzShotsPaths.DefaultScreenshotSavePath
-            End If
-            localSavePath.Text = p
+            localSavePath.Text = If(String.IsNullOrWhiteSpace(p), HolzShotsPaths.DefaultScreenshotSavePath, p)
 
-            localSavePath.Enabled = True ' enableCustomPaths
-            localSavePathBrowseButton.Enabled = True ' enableCustomPaths
+            localSavePath.Enabled = False ' we only support reading the current setting for now
+            localSavePathBrowseButton.Enabled = False ' we only support reading the current setting for now
         End Sub
 
         Private Sub SavePolicies()
@@ -124,13 +119,11 @@ Namespace UI.Specialized
                 ShellExtensions.ShellExtensionUpload = uploadImageInExplorerMenu.Checked
             End If
 
-            With Global.HolzShots.My.Settings
-                .DefaultImageHoster = defaultHosterBox.Text
-            End With
+            My.Settings.DefaultImageHoster = defaultHosterBox.Text
 
             HolzShotsEnvironment.AutoStart = start_with_windows.Checked
 
-            Global.HolzShots.My.Settings.Save()
+            My.Settings.Save()
         End Sub
 
         Private Sub SettingsLoad(ByVal sender As Object, ByVal e As EventArgs) Handles MyBase.Load
@@ -227,7 +220,7 @@ Namespace UI.Specialized
         End Sub
 
         Private Shared Sub OpenPluginFolderLinkLabelLinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles openPluginFolderLinkLabel.LinkClicked
-            Global.HolzShots.My.Application.Uploaders.Plugins.PluginDirectory.OpenFolderInExplorer()
+            My.Application.Uploaders.Plugins.PluginDirectory.OpenFolderInExplorer()
         End Sub
 
         Private Sub PluginsTabPaint(sender As Object, e As PaintEventArgs) Handles PluginsTab.Paint
