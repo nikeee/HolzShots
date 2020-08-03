@@ -43,17 +43,19 @@ namespace HolzShots
 
         #endregion
 
-        public bool EnableLinkViewer { get; private set; } = true;
-        /// <summary> Needs <see cref="EnableLinkViewer"/> to be set to true. Will do nothing otherwise. </summary>
+        /// <summary> Copy the URL of the uploaded image to clipboard instead of showing a flyout with other options. </summary>
+        public bool CopyUploadedLinkToClipboard { get; private set; } = true;
+        /// <summary>
+        /// Automatically close the flyout containing the URL to the image as soon as some button is pressed.
+        /// Needs <see cref="CopyUploadedLinkToClipboard"/> to be set to true. Will do nothing otherwise.
+        /// </summary>
         public bool AutoCloseLinkViewer { get; private set; } = true;
         /// <summary>
-        /// When set to true, HolzShots will show a progress window during upload.
+        /// When set to true, HolzShots will show a progress flyout during upload.
         /// Default: true.
         /// </summary>
         public bool ShowUploadProgress { get; private set; } = true;
-        /// <summary>
-        /// 
-        /// </summary>
+        /// <summary> When TODO is set to true, show a flyout as soon as the URL is copied to the clipboard. </summary>
         public bool ShowCopyConfirmation { get; private set; } = true;
 
         /// <summary>

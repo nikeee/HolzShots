@@ -49,7 +49,7 @@ Namespace Net
                 Await uploader.InvokeSettingsAsync(SettingsInvocationContexts.OnUse).ConfigureAwait(True)
             End If
 
-            Using ui As New UploadUi(uploader, image, format, parentWindow)
+            Using ui As New UploadUI(uploader, image, format, parentWindow)
                 ui.ShowUi()
                 Dim res As UploadResult = Nothing
                 Try
@@ -82,15 +82,15 @@ Namespace Net
             Debug.Assert(result IsNot Nothing)
             Debug.Assert(Not String.IsNullOrWhiteSpace(result.Url))
 
-            If UserSettings.Current.EnableLinkViewer Then
-                Dim lv As New UploadResultWindow(result)
-                lv.Show()
-            Else
+            If UserSettings.Current.CopyUploadedLinkToClipboard Then
                 If Not result.Url.SetAsClipboardText() Then
                     HumanInterop.CopyingFailed(result.Url)
                 ElseIf UserSettings.Current.ShowCopyConfirmation Then
                     HumanInterop.ShowCopyConfirmation(result.Url)
                 End If
+            Else
+                Dim lv As New UploadResultWindow(result)
+                lv.Show()
             End If
         End Sub
         Friend Shared Sub InvokeUploadFailedUi(ex As UploadException)

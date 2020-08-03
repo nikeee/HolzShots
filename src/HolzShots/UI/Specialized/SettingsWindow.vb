@@ -72,7 +72,7 @@ Namespace UI.Specialized
             disableShotEditorCheckBox.Checked = Not UserSettings.Current.EnableShotEditor
             disableShotEditorCheckBox.Enabled = False ' we only support reading the current setting for now
 
-            deactivateLinkViewerCheckBox.Checked = Not UserSettings.Current.EnableLinkViewer
+            deactivateLinkViewerCheckBox.Checked = UserSettings.Current.CopyUploadedLinkToClipboard
             deactivateLinkViewerCheckBox.Enabled = False ' we only support reading the current setting for now
 
             EnableIngameMode.Checked = Not UserSettings.Current.EnableIngameMode
