@@ -40,9 +40,6 @@ Namespace UI.Specialized
             Me.fullStrokeLabel = New System.Windows.Forms.Label()
             Me.setFullscreen = New System.Windows.Forms.Button()
             Me.Panel1 = New System.Windows.Forms.Panel()
-            Me.decorationPanel = New System.Windows.Forms.Panel()
-            Me.decoration2 = New System.Windows.Forms.RadioButton()
-            Me.decoration1 = New System.Windows.Forms.RadioButton()
             Me.selectorStrokeLabel = New System.Windows.Forms.Label()
             Me.setSelector = New System.Windows.Forms.Button()
             Me.UploadTab = New System.Windows.Forms.TabPage()
@@ -82,7 +79,6 @@ Namespace UI.Specialized
             Me.Panel3.SuspendLayout()
             Me.Panel2.SuspendLayout()
             Me.Panel1.SuspendLayout()
-            Me.decorationPanel.SuspendLayout()
             Me.UploadTab.SuspendLayout()
             Me.SaveLocalTab.SuspendLayout()
             Me.localSaveSettingsPanel.SuspendLayout()
@@ -185,7 +181,7 @@ Namespace UI.Specialized
             '
             Me.windowStrokeLabel.Font = New System.Drawing.Font("Segoe UI", 16.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel)
             Me.windowStrokeLabel.ForeColor = System.Drawing.SystemColors.ControlText
-            Me.windowStrokeLabel.Location = New System.Drawing.Point(152, 0)
+            Me.windowStrokeLabel.Location = New System.Drawing.Point(156, 0)
             Me.windowStrokeLabel.Name = "windowStrokeLabel"
             Me.windowStrokeLabel.Size = New System.Drawing.Size(190, 30)
             Me.windowStrokeLabel.TabIndex = 11
@@ -242,7 +238,6 @@ Namespace UI.Specialized
             '
             'Panel1
             '
-            Me.Panel1.Controls.Add(Me.decorationPanel)
             Me.Panel1.Controls.Add(Me.selectorStrokeLabel)
             Me.Panel1.Controls.Add(Me.setSelector)
             Me.Panel1.Controls.Add(Me.EnableIngameMode)
@@ -252,42 +247,10 @@ Namespace UI.Specialized
             Me.Panel1.Size = New System.Drawing.Size(434, 56)
             Me.Panel1.TabIndex = 9
             '
-            'decorationPanel
-            '
-            Me.decorationPanel.Controls.Add(Me.decoration2)
-            Me.decorationPanel.Controls.Add(Me.decoration1)
-            Me.decorationPanel.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-            Me.decorationPanel.Location = New System.Drawing.Point(3, 33)
-            Me.decorationPanel.Name = "decorationPanel"
-            Me.decorationPanel.Size = New System.Drawing.Size(195, 23)
-            Me.decorationPanel.TabIndex = 10
-            '
-            'decoration2
-            '
-            Me.decoration2.AutoSize = True
-            Me.decoration2.Location = New System.Drawing.Point(69, 3)
-            Me.decoration2.Name = "decoration2"
-            Me.decoration2.Size = New System.Drawing.Size(59, 19)
-            Me.decoration2.TabIndex = 1
-            Me.decoration2.TabStop = True
-            Me.decoration2.Text = "Style 2"
-            Me.decoration2.UseVisualStyleBackColor = True
-            '
-            'decoration1
-            '
-            Me.decoration1.AutoSize = True
-            Me.decoration1.Location = New System.Drawing.Point(3, 3)
-            Me.decoration1.Name = "decoration1"
-            Me.decoration1.Size = New System.Drawing.Size(59, 19)
-            Me.decoration1.TabIndex = 0
-            Me.decoration1.TabStop = True
-            Me.decoration1.Text = "Style 1"
-            Me.decoration1.UseVisualStyleBackColor = True
-            '
             'selectorStrokeLabel
             '
             Me.selectorStrokeLabel.Font = New System.Drawing.Font("Segoe UI", 16.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel)
-            Me.selectorStrokeLabel.Location = New System.Drawing.Point(156, 0)
+            Me.selectorStrokeLabel.Location = New System.Drawing.Point(156, 1)
             Me.selectorStrokeLabel.Name = "selectorStrokeLabel"
             Me.selectorStrokeLabel.Size = New System.Drawing.Size(187, 30)
             Me.selectorStrokeLabel.TabIndex = 9
@@ -694,8 +657,6 @@ Namespace UI.Specialized
             Me.Panel2.PerformLayout()
             Me.Panel1.ResumeLayout(False)
             Me.Panel1.PerformLayout()
-            Me.decorationPanel.ResumeLayout(False)
-            Me.decorationPanel.PerformLayout()
             Me.UploadTab.ResumeLayout(False)
             Me.UploadTab.PerformLayout()
             Me.SaveLocalTab.ResumeLayout(False)
@@ -756,9 +717,6 @@ Namespace UI.Specialized
         Friend WithEvents windowStrokeLabel As System.Windows.Forms.Label
         Friend WithEvents fullStrokeLabel As System.Windows.Forms.Label
         Friend WithEvents selectorStrokeLabel As System.Windows.Forms.Label
-        Friend WithEvents decorationPanel As System.Windows.Forms.Panel
-        Friend WithEvents decoration2 As System.Windows.Forms.RadioButton
-        Friend WithEvents decoration1 As System.Windows.Forms.RadioButton
         Friend WithEvents pluginListPanel As HolzShots.UI.Controls.StackPanel
         Friend WithEvents showCopyConfirmation As CheckBox
         Friend WithEvents OpenSettingsJson As Button

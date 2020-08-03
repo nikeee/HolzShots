@@ -23,14 +23,5 @@ Namespace Interop
                 End If
             End Set
         End Property
-
-        Public Property SelectionDecoration As SelectionDecoration
-            Get
-                Return My.Settings.SelectionDecoration
-            End Get
-            Set
-                My.Settings.SelectionDecoration = Value
-            End Set
-        End Property
     End Module
 End Namespace

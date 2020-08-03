@@ -95,10 +95,6 @@ Namespace UI.Specialized
 
             ' /Screenshot Methods
 
-            Dim d As SelectionDecoration = ManagedSettings.SelectionDecoration
-            decoration1.Checked = d = SelectionDecoration.Nomination1
-            decoration2.Checked = d = SelectionDecoration.Nomination2
-
             ' Local saves
             enableLocalSaveCheckBox.Checked = UserSettings.Current.SaveImagesToLocalDisk
 
@@ -131,15 +127,6 @@ Namespace UI.Specialized
             With Global.HolzShots.My.Settings
                 .DefaultImageHoster = defaultHosterBox.Text
             End With
-
-            Dim d As SelectionDecoration
-            If decoration1.Checked Then
-                d = SelectionDecoration.Nomination1
-            ElseIf decoration2.Checked Then
-                d = SelectionDecoration.Nomination2
-            End If
-
-            ManagedSettings.SelectionDecoration = d
 
             HolzShotsEnvironment.AutoStart = start_with_windows.Checked
 

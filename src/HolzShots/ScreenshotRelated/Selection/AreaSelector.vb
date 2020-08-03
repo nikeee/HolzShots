@@ -54,23 +54,13 @@ Namespace ScreenshotRelated.Selection
 #End If
             Icon = Nothing
 
-            _decoration = GetCurrentDecoration()
+            _decoration = New Nomination1Decoration()
             _decoration.WholeScreen = SystemInformation.VirtualScreen
 
             _noSelectionDecoration = New DefaultNoSelectionDecoration()
 
             SetStyle(ControlStyles.AllPaintingInWmPaint Or ControlStyles.OptimizedDoubleBuffer Or ControlStyles.UserPaint, True)
         End Sub
-        Private Shared Function GetCurrentDecoration() As ISelectionDecoration
-            Select Case ManagedSettings.SelectionDecoration
-                Case SelectionDecoration.Nomination1
-                    Return New Nomination1Decoration()
-                Case SelectionDecoration.Nomination2
-                    Return New Nomination2Decoration()
-                Case Else
-                    Return New Nomination1Decoration()
-            End Select
-        End Function
 
         Private Sub ApproveSelection()
             If _currentSelection.Width < 1 OrElse _currentSelection.Height < 1 Then
