@@ -68,37 +68,19 @@ Namespace Interop.LocalDisk
         End Sub
 
         Private Shared Function CheckSavePath() As Boolean
-
-            ' TODO: Make this prettier
             Dim datPath = UserSettings.Current.SavePath
-            If Not Directory.Exists(datPath) Then
-                If String.IsNullOrWhiteSpace(datPath) Then
+            Debug.Assert(Not String.IsNullOrEmpty(datPath))
 
-                    Dim fallbackDirectory = HolzShotsPaths.DefaultScreenshotSavePath
-                    Try
-                        HolzShotsPaths.EnsureDirectory(fallbackDirectory)
-                    Catch uae As UnauthorizedAccessException
-                        HumanInterop.UnauthorizedAccessExceptionDirectory(fallbackDirectory)
-                        Return False
-                    Catch ptle As PathTooLongException
-                        HumanInterop.PathIsTooLong(fallbackDirectory)
-                        Return False
-                    End Try
-                    ' ManagedSettings.ScreenshotPath = fallbackDirectory
-                    Return True
-                End If
+            Try
+                HolzShotsPaths.EnsureDirectory(datPath)
+            Catch uae As UnauthorizedAccessException
+                HumanInterop.UnauthorizedAccessExceptionDirectory(datPath)
+                Return False
+            Catch ptle As PathTooLongException
+                HumanInterop.PathIsTooLong(datPath)
+                Return False
+            End Try
 
-                Dim nPath = UserSettings.Current.SavePath
-                Try
-                    Directory.CreateDirectory(nPath)
-                Catch uae As UnauthorizedAccessException
-                    HumanInterop.UnauthorizedAccessExceptionDirectory(nPath)
-                    Return False
-                Catch ptle As PathTooLongException
-                    HumanInterop.PathIsTooLong(nPath)
-                    Return False
-                End Try
-            End If
             Return True
         End Function
 
