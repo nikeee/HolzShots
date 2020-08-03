@@ -2,18 +2,6 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="My" GeneratedClassName="MySettings" UseMySettingsClassName="true">
   <Profiles />
   <Settings>
-    <Setting Name="HighlightMouse" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="ShowCursor" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="HighlightColor" Type="System.Drawing.Color" Scope="User">
-      <Value Profile="(Default)">Transparent</Value>
-    </Setting>
-    <Setting Name="ColorAlpha" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">128</Value>
-    </Setting>
     <Setting Name="ZensursulaWidth" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">20</Value>
     </Setting>
@@ -29,9 +17,6 @@
     <Setting Name="EraserDiameter" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">20</Value>
     </Setting>
-    <Setting Name="EnableStatusToaster" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
     <Setting Name="EllipseColor" Type="System.Drawing.Color" Scope="User">
       <Value Profile="(Default)">Red</Value>
     </Setting>
@@ -41,19 +26,10 @@
     <Setting Name="BrightenColor" Type="System.Drawing.Color" Scope="User">
       <Value Profile="(Default)">Black</Value>
     </Setting>
-    <Setting Name="ShowFileNameDialog" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
     <Setting Name="ArrowColor" Type="System.Drawing.Color" Scope="User">
       <Value Profile="(Default)">Black</Value>
     </Setting>
     <Setting Name="ArrowWidth" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
-    </Setting>
-    <Setting Name="AutoCloseLinkViewer" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="ChangeAeroMode" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="Upgraded" Type="System.Boolean" Scope="User">
@@ -70,9 +46,6 @@
     </Setting>
     <Setting Name="UserTasksInitialized" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="SelectionDecoration" Type="HolzShots.ScreenshotRelated.Selection.SelectionDecorations" Scope="User">
-      <Value Profile="(Default)">Nomination1</Value>
     </Setting>
     <Setting Name="EnableDebugMode" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>

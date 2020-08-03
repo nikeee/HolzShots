@@ -56,54 +56,6 @@ Namespace My
 
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
-        Public Property HighlightMouse() As Boolean
-            Get
-                Return CType(Me("HighlightMouse"),Boolean)
-            End Get
-            Set
-                Me("HighlightMouse") = value
-            End Set
-        End Property
-
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
-        Public Property ShowCursor() As Boolean
-            Get
-                Return CType(Me("ShowCursor"),Boolean)
-            End Get
-            Set
-                Me("ShowCursor") = value
-            End Set
-        End Property
-
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Transparent")>  _
-        Public Property HighlightColor() As Global.System.Drawing.Color
-            Get
-                Return CType(Me("HighlightColor"),Global.System.Drawing.Color)
-            End Get
-            Set
-                Me("HighlightColor") = value
-            End Set
-        End Property
-
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("128")>  _
-        Public Property ColorAlpha() As Integer
-            Get
-                Return CType(Me("ColorAlpha"),Integer)
-            End Get
-            Set
-                Me("ColorAlpha") = value
-            End Set
-        End Property
-
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("20")>  _
         Public Property ZensursulaWidth() As Integer
             Get
@@ -164,18 +116,6 @@ Namespace My
 
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
-        Public Property EnableStatusToaster() As Boolean
-            Get
-                Return CType(Me("EnableStatusToaster"),Boolean)
-            End Get
-            Set
-                Me("EnableStatusToaster") = value
-            End Set
-        End Property
-
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("Red")>  _
         Public Property EllipseColor() As Global.System.Drawing.Color
             Get
@@ -212,18 +152,6 @@ Namespace My
 
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
-        Public Property ShowFileNameDialog() As Boolean
-            Get
-                Return CType(Me("ShowFileNameDialog"),Boolean)
-            End Get
-            Set
-                Me("ShowFileNameDialog") = value
-            End Set
-        End Property
-
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("Black")>  _
         Public Property ArrowColor() As Global.System.Drawing.Color
             Get
@@ -243,30 +171,6 @@ Namespace My
             End Get
             Set
                 Me("ArrowWidth") = value
-            End Set
-        End Property
-
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
-        Public Property AutoCloseLinkViewer() As Boolean
-            Get
-                Return CType(Me("AutoCloseLinkViewer"),Boolean)
-            End Get
-            Set
-                Me("AutoCloseLinkViewer") = value
-            End Set
-        End Property
-
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
-        Public Property ChangeAeroMode() As Integer
-            Get
-                Return CType(Me("ChangeAeroMode"),Integer)
-            End Get
-            Set
-                Me("ChangeAeroMode") = value
             End Set
         End Property
 
@@ -327,18 +231,6 @@ Namespace My
             End Get
             Set
                 Me("UserTasksInitialized") = value
-            End Set
-        End Property
-
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Nomination1")>  _
-        Public Property SelectionDecoration() As Global.HolzShots.ScreenshotRelated.Selection.SelectionDecoration
-            Get
-                Return CType(Me("SelectionDecoration"),Global.HolzShots.ScreenshotRelated.Selection.SelectionDecoration)
-            End Get
-            Set
-                Me("SelectionDecoration") = value
             End Set
         End Property
 

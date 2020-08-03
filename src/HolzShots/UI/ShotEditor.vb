@@ -347,12 +347,6 @@ Namespace UI.Specialized
 
             HolzShots.My.Settings.BlurFactor = ThePanel.BlurFactor
 
-            'My.Settings.highlightmouse = HighLightMouse.Checked
-            'My.Settings.ShowCursor = ShowCursor.Checked
-
-            'My.Settings.HighlightColor = ColorViewer.BackColor
-
-            'My.Settings.ColorAlpha = TransparencyBar.Value
 
             HolzShots.My.Settings.Save()
 
