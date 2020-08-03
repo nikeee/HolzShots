@@ -236,18 +236,6 @@ Namespace My
 
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
-        Public Property EnableDebugMode() As Boolean
-            Get
-                Return CType(Me("EnableDebugMode"),Boolean)
-            End Get
-            Set
-                Me("EnableDebugMode") = value
-            End Set
-        End Property
-
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
         Public Property IsFirstRun() As Boolean
             Get
