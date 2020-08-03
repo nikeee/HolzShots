@@ -15,11 +15,18 @@ namespace HolzShots
         public string SchemaUrl { get; } = "";
         public string Version { get; } = "0.1.0";
 
+        [JsonProperty("save.path")]
         public string SavePath { get; private set; } = HolzShotsPaths.DefaultScreenshotSavePath;
-        /// <summary> TODO: Change name </summary>
+        [JsonProperty("save.pattern")]
         public string SaveFileNamePattern { get; private set; } = "Screenshot-<Date>";
 
-        public bool AutoCloseShotEditor { get; private set; } = false;
+        [JsonProperty("editor.closeAfterUpload")]
+        public bool CloseAfterUpload { get; private set; } = false;
+
+        /// <summary> TODO: Use this property </summary>
+        [JsonProperty("editor.closeAfterSave")]
+        public bool CloseAfterSave { get; private set; } = false;
+
         /// <summary> Mutually exclusive with EnableLinkViewer </summary>
         public bool AutoCloseLinkViewer { get; private set; } = true;
         public bool EnableUploadProgressToast { get; private set; } = true;

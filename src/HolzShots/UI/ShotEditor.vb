@@ -66,7 +66,7 @@ Namespace UI.Specialized
 
             InitializeComponent()
 
-            autoCloseShotEditor.Checked = UserSettings.Current.AutoCloseShotEditor
+            autoCloseShotEditor.Checked = UserSettings.Current.CloseAfterUpload
             autoCloseShotEditor.Enabled = False ' We only support reading that setting for now
 
             Me.Screenshot = screenshot
@@ -827,7 +827,7 @@ Namespace UI.Specialized
         End Sub
 
         Private Sub HandleAfterUpload()
-            If UserSettings.Current.AutoCloseShotEditor Then
+            If UserSettings.Current.CloseAfterUpload Then
                 Close()
             End If
         End Sub

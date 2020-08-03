@@ -18,17 +18,9 @@ namespace HolzShots
 
         public static async Task Load(ISynchronizeInvoke synchronizingObject)
         {
-            Manager = new SettingsManager<HSSettings>(HolzShotsPaths.UserSettingsFilePath, ValidateSettingsCandidate, synchronizingObject);
+            Manager = new HolzShotsUserSettings(HolzShotsPaths.UserSettingsFilePath, synchronizingObject);
             await CreateUserSettingsIfNotPresent();
             await Manager.InitializeSettings();
-        }
-
-        static IReadOnlyList<ValidationError> ValidateSettingsCandidate(HSSettings candidate)
-        {
-            Debug.Assert(candidate != null);
-
-
-            return ImmutableList<ValidationError>.Empty;
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage", "AsyncFixer01:Unnecessary async/await usage", Justification = "using statement")]
@@ -74,6 +66,32 @@ namespace HolzShots
                 }
             };
             return s;
+        }
+    }
+
+    class HolzShotsUserSettings : SettingsManager<HSSettings>
+    {
+        const string SupportedVersion = "0.1.0";
+
+        public HolzShotsUserSettings(string settingsFilePath, ISynchronizeInvoke synchronizingObject = null)
+            : base(settingsFilePath, synchronizingObject) { }
+
+        protected override IReadOnlyList<ValidationError> IsValidSettingsCandidate(HSSettings candidate)
+        {
+            Debug.Assert(candidate != null);
+
+            // We might wan to use SemVer in the future
+            if (candidate.Version != SupportedVersion)
+                return SingleError($"Version {candidate.Version} is not supported. This version of HolzShots only supports settings version {SupportedVersion}.", "version");
+
+            var validationErrors = ImmutableList.CreateBuilder<ValidationError>();
+
+            return validationErrors;
+        }
+
+        private static IReadOnlyList<ValidationError> SingleError(string message, string affectedProperty, Exception exception = null)
+        {
+            return ImmutableList.Create(new ValidationError(message, affectedProperty, exception));
         }
     }
 }

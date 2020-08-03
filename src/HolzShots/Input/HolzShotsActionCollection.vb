@@ -38,6 +38,7 @@ Namespace Input
             End If
         End Sub
 
+#Region "IDisposable"
         Protected Overridable Sub Dispose(disposing As Boolean)
             If Not disposedValue Then
                 If disposing Then
@@ -51,7 +52,6 @@ Namespace Input
             End If
         End Sub
 
-        ' TODO: override finalizer only if 'Dispose(disposing As Boolean)' has code to free unmanaged resources
         Protected Overrides Sub Finalize()
             Dispose(disposing:=False)
             MyBase.Finalize()
@@ -61,5 +61,7 @@ Namespace Input
             Dispose(disposing:=True)
             GC.SuppressFinalize(Me)
         End Sub
+#End Region
+
     End Class
 End Namespace

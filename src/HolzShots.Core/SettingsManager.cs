@@ -5,10 +5,8 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using HolzShots.IO;
-using System.Reflection;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using System.Threading;
 
 namespace HolzShots
@@ -34,16 +32,14 @@ namespace HolzShots
         private static readonly TimeSpan _pollingInterval = TimeSpan.FromSeconds(1);
 
         private readonly PollingFileWatcher _watcher;
-        private readonly Func<T, IReadOnlyList<ValidationError>> _candidateValidator;
         private CancellationTokenSource _watcherCancellation = null;
 
-        public SettingsManager(string settingsFilePath, Func<T, IReadOnlyList<ValidationError>> candidateValidator = null, ISynchronizeInvoke synchronizingObject = null)
+        public SettingsManager(string settingsFilePath, ISynchronizeInvoke synchronizingObject = null)
         {
             Debug.Assert(!string.IsNullOrEmpty(settingsFilePath));
 
             SettingsFilePath = settingsFilePath ?? throw new ArgumentNullException(nameof(settingsFilePath));
 
-            _candidateValidator = candidateValidator;
             _watcher = new PollingFileWatcher(settingsFilePath, _pollingInterval, synchronizingObject);
         }
 
@@ -125,12 +121,7 @@ namespace HolzShots
         public event EventHandler<IReadOnlyList<ValidationError>> OnValidationError;
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected virtual IReadOnlyList<ValidationError> IsValidSettingsCandidate(T candidate)
-        {
-            return _candidateValidator == null
-                    ? ImmutableList<ValidationError>.Empty
-                    : _candidateValidator(candidate);
-        }
+        protected virtual IReadOnlyList<ValidationError> IsValidSettingsCandidate(T candidate) => ImmutableList<ValidationError>.Empty;
 
 
         #region IDisposable
@@ -156,28 +147,5 @@ namespace HolzShots
         }
 
         #endregion
-    }
-
-    public class ValidationError
-    {
-        public string Message { get; }
-        public string AffectedProperty { get; }
-        public string InvalidValue { get; }
-        public Exception /* ? */ Exception { get; }
-        // TODO: Proper class with ctor and stuff
-    }
-
-    public class NonPublicPropertiesResolver : CamelCasePropertyNamesContractResolver
-    {
-        protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
-        {
-            var prop = base.CreateProperty(member, memberSerialization);
-            if (member is PropertyInfo pi)
-            {
-                prop.Readable = (pi.GetMethod != null);
-                prop.Writable = (pi.SetMethod != null);
-            }
-            return prop;
-        }
     }
 }
