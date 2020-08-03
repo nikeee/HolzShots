@@ -22,7 +22,6 @@ namespace HolzShots
 
         [JsonProperty("editor.closeAfterUpload")]
         public bool CloseAfterUpload { get; private set; } = false;
-
         /// <summary> TODO: Use this property </summary>
         [JsonProperty("editor.closeAfterSave")]
         public bool CloseAfterSave { get; private set; } = false;

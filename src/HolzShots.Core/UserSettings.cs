@@ -80,9 +80,10 @@ namespace HolzShots
         {
             Debug.Assert(candidate != null);
 
-            // We might wan to use SemVer in the future
+            // We might want to use SemVer in the future
             if (candidate.Version != SupportedVersion)
                 return SingleError($"Version {candidate.Version} is not supported. This version of HolzShots only supports settings version {SupportedVersion}.", "version");
+
 
             var validationErrors = ImmutableList.CreateBuilder<ValidationError>();
 
@@ -93,5 +94,14 @@ namespace HolzShots
         {
             return ImmutableList.Create(new ValidationError(message, affectedProperty, exception));
         }
+    }
+
+    internal static class BoolEx
+    {
+        /// <summary>
+        /// Helper function that returns "a -> b".
+        /// See: https://en.wikipedia.org/wiki/Modus_ponens#Justification_via_truth_table
+        /// </summary>
+        public static bool Implies(this bool p, bool q) => !p || q;
     }
 }
