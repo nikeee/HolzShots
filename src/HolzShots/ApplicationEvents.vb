@@ -45,7 +45,7 @@ Namespace My
         End Function
 
         Private Async Sub MyApplicationStartup(sender As Object, e As StartupEventArgs) Handles Me.Startup
-            UpgradeSettings()
+            Global.HolzShots.My.Settings.Upgrade()
             Await LoadPlugins().ConfigureAwait(True)
             If TaskbarManager.IsPlatformSupported Then AddTasks()
         End Sub
@@ -53,14 +53,6 @@ Namespace My
         Private Sub MyApplicationStartupNextInstance(ByVal sender As Object, ByVal e As StartupNextInstanceEventArgs) Handles Me.StartupNextInstance
             If e.CommandLine.Count > 0 Then
                 ProcessCommandLineArguments(e.CommandLine)
-            End If
-        End Sub
-
-        Private Shared Sub UpgradeSettings()
-            If Not Global.HolzShots.My.Settings.Upgraded Then
-                Global.HolzShots.My.Settings.Upgrade()
-                Global.HolzShots.My.Settings.Upgraded = True
-                Global.HolzShots.My.Settings.Save()
             End If
         End Sub
 

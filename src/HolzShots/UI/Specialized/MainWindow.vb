@@ -81,8 +81,6 @@ Namespace UI.Specialized
             SettingsUpdated(Me, UserSettings.Current)
             AddHandler UserSettings.Manager.OnSettingsUpdated, AddressOf SettingsUpdated
 
-            Global.HolzShots.My.Settings.Upgrade()
-
             Dim isAutorun = HolzShotsEnvironment.CurrentStartupManager.IsStartedUp
             Dim args = HolzShotsEnvironment.CurrentStartupManager.CommandLineArguments
 
@@ -95,6 +93,7 @@ Namespace UI.Specialized
                 Global.HolzShots.My.Settings.DefaultImageHoster = "DirectUpload.net"
                 saveSettings = True
             End If
+
             If Not isAutorun AndAlso Global.HolzShots.My.Settings.IsFirstRun Then
                 Global.HolzShots.My.Settings.IsFirstRun = False
                 openSettingsOnFinish = True
