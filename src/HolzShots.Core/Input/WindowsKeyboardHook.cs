@@ -23,7 +23,6 @@ namespace HolzShots.Input
 
         private void RegisterHotkeyInternal(Hotkey hotkey)
         {
-            Debug.WriteLine($"LOL THREAD ID REGISTER: {System.Threading.Thread.CurrentThread.ManagedThreadId}");
             if (hotkey == null)
                 throw new ArgumentNullException(nameof(hotkey));
 

@@ -53,7 +53,14 @@ Namespace UI.Specialized
             Dim parsedBindings = newSettings.KeyBindings.Select(AddressOf CommandManager.GetHotkeyActionFromKeyBinding).ToArray()
 
             _actionContainer = New HolzShotsActionCollection(_keyboardHook, parsedBindings)
-            _actionContainer.Refresh()
+
+            Try
+                _actionContainer.Refresh()
+            Catch ex As AggregateException
+                Dim registrationExceptions = ex.InnerExceptions.OfType(Of HotkeyRegistrationException)
+                HumanInterop.ErrorRegisteringHotkeys(registrationExceptions)
+            End Try
+
         End Sub
 
         Private Shared Sub RegisterCommands()
