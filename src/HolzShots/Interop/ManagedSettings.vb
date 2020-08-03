@@ -1,4 +1,3 @@
-Imports HolzShots.ScreenshotRelated.Selection
 
 Namespace Interop
     Friend Module ManagedSettings

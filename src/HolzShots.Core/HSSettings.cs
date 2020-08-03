@@ -23,8 +23,17 @@ namespace HolzShots
         public string SavePath { get; private set; } = HolzShotsPaths.DefaultScreenshotSavePath;
         [JsonProperty("save.pattern")]
         public string SaveFileNamePattern { get; private set; } = "Screenshot-<Date>";
+        /// <summary>
+        /// When enabled, HolzShots decides whether a screenshot should be saved as a JPEG or a PNG.
+        /// Some screenshots are better saved as JPGs, for example if they consist of a large photo.
+        /// Saving it as a PNG is better suited for pictures of programs.
+        /// If JPG is used, there may be a loss in quality. PNG does not reduce the image quality, but uses more space when photos are saved.
+        /// </summary>
+        [JsonProperty("save.autoDetectBestImageFormat")]
+        public bool EnableSmartFormatForSaving { get; private set; } = false;
 
         #endregion
+        #region editor.*
 
         [JsonProperty("editor.closeAfterUpload")]
         public bool CloseAfterUpload { get; private set; } = false;
@@ -32,11 +41,20 @@ namespace HolzShots
         [JsonProperty("editor.closeAfterSave")]
         public bool CloseAfterSave { get; private set; } = false;
 
+        #endregion
+
         public bool EnableLinkViewer { get; private set; } = true;
         /// <summary> Needs <see cref="EnableLinkViewer"/> to be set to true. Will do nothing otherwise. </summary>
         public bool AutoCloseLinkViewer { get; private set; } = true;
-        public bool EnableUploadProgressToast { get; private set; } = true;
-        public bool ShowCopyConfirmation { get; private set; } = false;
+        /// <summary>
+        /// When set to true, HolzShots will show a progress window during upload.
+        /// Default: true.
+        /// </summary>
+        public bool ShowUploadProgress { get; private set; } = true;
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool ShowCopyConfirmation { get; private set; } = true;
 
         /// <summary>
         /// If disabled, it does not show the Shot Editor but uploads it instead.
@@ -48,16 +66,27 @@ namespace HolzShots
 
         /// <summary> TODO: Change name </summary>
         public bool EnableIngameMode { get; private set; } = false;
-        /// <summary> TODO: Maybe use a different name for that. </summary>
-        public bool EnableSmartFormatForUpload { get; private set; } = false;
-        public bool EnableSmartFormatForSaving { get; private set; } = false;
 
+        /// <summary>
+        /// When enabled, HolzShots decides whether a screenshot should be uploaded as a JPEG or a PNG.
+        /// Some screenshots are better uploaded as JPGs, for example if they consist of a large photo.
+        /// Uploading it as a PNG is better suited for pictures of programs.
+        /// If JPG is used, there may be a loss in quality. PNG does not reduce the image quality, but uses more space when photos are saved and tehrefore takes longer to upload.
+        /// 
+        /// TODO: Maybe use a different name for that.
+        /// </summary>
+        [JsonProperty("upload.autoDetectBestImageFormat")]
+        public bool EnableSmartFormatForUpload { get; private set; } = false;
+
+        [JsonProperty("tray.doubleClickCommand")]
         public string TrayIconDoubleClickCommand { get; set; } = null;
 
         // TODO: Fix visibility
         [JsonProperty("keyBindings")]
         public IReadOnlyList<KeyBinding> KeyBindings { get; set; } = ImmutableList<KeyBinding>.Empty;
     }
+
+    // TODO: When we're on C# 9, we may want to use a data class / record for this.
     public class KeyBinding
     {
         // TODO: Fix visibility

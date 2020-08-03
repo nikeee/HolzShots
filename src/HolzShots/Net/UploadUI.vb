@@ -30,7 +30,7 @@ Namespace Net
         End Sub
 
         Private Sub InitReporters(parentWindowHandle As IntPtr)
-            If UserSettings.Current.EnableUploadProgressToast Then _reporters.Add(New StatusToaster())
+            If UserSettings.Current.ShowUploadProgress Then _reporters.Add(New StatusToaster())
             If parentWindowHandle <> IntPtr.Zero Then _reporters.Add(New TaskBarItemProgressReporter(parentWindowHandle))
         End Sub
 

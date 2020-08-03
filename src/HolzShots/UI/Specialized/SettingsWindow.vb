@@ -80,7 +80,7 @@ Namespace UI.Specialized
 
             start_with_windows.Checked = HolzShotsEnvironment.AutoStart
 
-            enableStatusToaster.Checked = UserSettings.Current.EnableUploadProgressToast
+            enableStatusToaster.Checked = UserSettings.Current.ShowUploadProgress
             enableStatusToaster.Enabled = False ' we only support reading the current setting for now
 
             AutoCloseLinkViewer.Checked = UserSettings.Current.AutoCloseLinkViewer
