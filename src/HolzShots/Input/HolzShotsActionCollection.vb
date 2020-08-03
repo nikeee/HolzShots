@@ -1,4 +1,5 @@
 Namespace Input
+    ' TODO: Migrate this to C# somehow
     Public Class HolzShotsActionCollection
         Inherits HotkeyActionCollection
         Implements IDisposable

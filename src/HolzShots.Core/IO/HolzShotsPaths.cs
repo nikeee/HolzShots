@@ -18,16 +18,16 @@ namespace HolzShots.IO
 
         public static string DefaultScreenshotSavePath { get; } = Path.Combine(UserPicturesDirectory, LibraryInformation.Name);
 
-        /// <exception cref="UnauthorizedAccessException" />
-        /// <exception cref="PathTooLongException" />
+        /// <summary>
+        /// We are doing this synchronously, assuming the application is not located on a network drive.
+        /// See: https://stackoverflow.com/a/20596865
+        /// </summary>
+        /// <exception cref="System.UnauthorizedAccessException" />
+        /// <exception cref="System.IO.PathTooLongException" />
         public static void EnsureDirectory(string directory)
         {
             Debug.Assert(directory != null);
-
-            if (Directory.Exists(directory))
-                return;
-
-            Directory.CreateDirectory(directory);
+            DirectoryEx.EnsureDirectory(directory);
         }
     }
 }
