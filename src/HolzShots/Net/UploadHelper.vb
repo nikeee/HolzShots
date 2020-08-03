@@ -82,7 +82,7 @@ Namespace Net
             Debug.Assert(result IsNot Nothing)
             Debug.Assert(Not String.IsNullOrWhiteSpace(result.Url))
 
-            If ManagedSettings.EnableLinkViewer Then
+            If UserSettings.Current.EnableLinkViewer Then
                 Dim lv As New UploadResultWindow(result)
                 lv.Show()
             Else

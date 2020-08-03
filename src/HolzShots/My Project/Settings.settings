@@ -68,14 +68,8 @@
     <Setting Name="BlurFactor" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">7</Value>
     </Setting>
-    <Setting Name="EnableLinkViewer" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
     <Setting Name="UserTasksInitialized" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="EnableShotEditor" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="SelectionDecoration" Type="HolzShots.ScreenshotRelated.Selection.SelectionDecorations" Scope="User">
       <Value Profile="(Default)">Nomination1</Value>

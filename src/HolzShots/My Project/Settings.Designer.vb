@@ -320,18 +320,6 @@ Namespace My
 
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
-        Public Property EnableLinkViewer() As Boolean
-            Get
-                Return CType(Me("EnableLinkViewer"),Boolean)
-            End Get
-            Set
-                Me("EnableLinkViewer") = value
-            End Set
-        End Property
-
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
         Public Property UserTasksInitialized() As Boolean
             Get
@@ -339,18 +327,6 @@ Namespace My
             End Get
             Set
                 Me("UserTasksInitialized") = value
-            End Set
-        End Property
-
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
-        Public Property EnableShotEditor() As Boolean
-            Get
-                Return CType(Me("EnableShotEditor"),Boolean)
-            End Get
-            Set
-                Me("EnableShotEditor") = value
             End Set
         End Property
 

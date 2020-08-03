@@ -69,9 +69,10 @@ Namespace UI.Specialized
             openImageInExplorerMenu.Checked = ManagedSettings.ShellExtensionOpen
             openImageInExplorerMenu.Enabled = InteropHelper.IsAdministrator()
 
-            disableShotEditorCheckBox.Checked = Not ManagedSettings.EnableShotEditor
+            disableShotEditorCheckBox.Checked = Not UserSettings.Current.EnableShotEditor
+            disableShotEditorCheckBox.Enabled = False ' we only support reading the current setting for now
 
-            deactivateLinkViewerCheckBox.Checked = Not ManagedSettings.EnableLinkViewer
+            deactivateLinkViewerCheckBox.Checked = Not UserSettings.Current.EnableLinkViewer
             deactivateLinkViewerCheckBox.Enabled = False ' we only support reading the current setting for now
 
             EnableIngameMode.Checked = Not UserSettings.Current.EnableIngameMode
@@ -130,9 +131,6 @@ Namespace UI.Specialized
             With Global.HolzShots.My.Settings
                 .DefaultImageHoster = defaultHosterBox.Text
             End With
-
-            ManagedSettings.EnableLinkViewer = Not deactivateLinkViewerCheckBox.Checked
-            ManagedSettings.EnableShotEditor = Not disableShotEditorCheckBox.Checked
 
             Dim d As SelectionDecoration
             If decoration1.Checked Then

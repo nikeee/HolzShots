@@ -1,27 +1,7 @@
-Imports HolzShots
-Imports HolzShots.ScreenshotRelated
 Imports HolzShots.ScreenshotRelated.Selection
 
 Namespace Interop
     Friend Module ManagedSettings
-        Public Property EnableShotEditor As Boolean
-            Get
-                Return My.Settings.EnableShotEditor
-            End Get
-            Set
-                My.Settings.EnableShotEditor = Value
-            End Set
-        End Property
-
-        Public Property EnableLinkViewer As Boolean
-            Get
-                Return My.Settings.EnableLinkViewer
-            End Get
-            Set
-                My.Settings.EnableLinkViewer = Value
-            End Set
-        End Property
-
         Public Property ShellExtensionUpload As Boolean
             Get
                 Return ShellExtensions.ShellExtensionUpload

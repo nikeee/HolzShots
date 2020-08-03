@@ -13,7 +13,7 @@ Namespace ScreenshotRelated
             Debug.Assert(screenshot IsNot Nothing)
 
             ScreenshotDumper.HandleScreenshot(screenshot)
-            If ManagedSettings.EnableShotEditor Then
+            If UserSettings.Current.EnableShotEditor Then
                 Dim shower As New ShotEditor(screenshot)
                 shower.Show()
             Else

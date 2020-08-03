@@ -32,11 +32,19 @@ namespace HolzShots
         [JsonProperty("editor.closeAfterSave")]
         public bool CloseAfterSave { get; private set; } = false;
 
-        /// <summary> Mutually exclusive with EnableLinkViewer </summary>
+        public bool EnableLinkViewer { get; private set; } = true;
+        /// <summary> Needs <see cref="EnableLinkViewer"/> to be set to true. Will do nothing otherwise. </summary>
         public bool AutoCloseLinkViewer { get; private set; } = true;
         public bool EnableUploadProgressToast { get; private set; } = true;
         public bool ShowCopyConfirmation { get; private set; } = false;
 
+        /// <summary>
+        /// If disabled, it does not show the Shot Editor but uploads it instead.
+        /// We may just add a parameter to the key bindings to be able to configure this on a key-binding basis.
+        /// 
+        /// TODO: Find better name.
+        /// </summary>
+        public bool EnableShotEditor { get; private set; } = true;
 
         /// <summary> TODO: Change name </summary>
         public bool EnableIngameMode { get; private set; } = false;
