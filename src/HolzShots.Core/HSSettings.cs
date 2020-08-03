@@ -11,10 +11,13 @@ namespace HolzShots
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1056:Uri properties should not be strings")]
     public class HSSettings
     {
+        #region meta
+
         [JsonProperty("$schema")]
         public string SchemaUrl { get; } = "";
         public string Version { get; } = "0.1.0";
 
+        #endregion
         #region save.*
 
         [JsonProperty("save.enable")]
@@ -60,7 +63,7 @@ namespace HolzShots
 
         /// <summary>
         /// If disabled, it does not show the Shot Editor but uploads it instead.
-        /// We may just add a parameter to the key bindings to be able to configure this on a key-binding basis.
+        /// TODO: We may just add a parameter to the key bindings to be able to configure this on a key-binding basis.
         /// 
         /// TODO: Find better name.
         /// </summary>
