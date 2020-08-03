@@ -15,10 +15,16 @@ namespace HolzShots
         public string SchemaUrl { get; } = "";
         public string Version { get; } = "0.1.0";
 
+        #region save.*
+
+        [JsonProperty("save.enable")]
+        public bool SaveImagesToLocalDisk { get; private set; } = true;
         [JsonProperty("save.path")]
         public string SavePath { get; private set; } = HolzShotsPaths.DefaultScreenshotSavePath;
         [JsonProperty("save.pattern")]
         public string SaveFileNamePattern { get; private set; } = "Screenshot-<Date>";
+
+        #endregion
 
         [JsonProperty("editor.closeAfterUpload")]
         public bool CloseAfterUpload { get; private set; } = false;
@@ -31,7 +37,6 @@ namespace HolzShots
         public bool EnableUploadProgressToast { get; private set; } = true;
         public bool ShowCopyConfirmation { get; private set; } = false;
 
-        public bool SaveImagesToLocalDisk { get; private set; } = true;
 
         /// <summary> TODO: Change name </summary>
         public bool EnableIngameMode { get; private set; } = false;
@@ -42,6 +47,7 @@ namespace HolzShots
         public string TrayIconDoubleClickCommand { get; set; } = null;
 
         // TODO: Fix visibility
+        [JsonProperty("keyBindings")]
         public IReadOnlyList<KeyBinding> KeyBindings { get; set; } = ImmutableList<KeyBinding>.Empty;
     }
     public class KeyBinding
