@@ -72,8 +72,9 @@ namespace HolzShots
         /// </summary>
         public bool EnableShotEditor { get; private set; } = true;
 
-        /// <summary> TODO: Change name </summary>
-        public bool EnableIngameMode { get; private set; } = false;
+        /// <summary> Enable or disable hotkeys whan a full screen application is running. </summary>
+        [JsonProperty("key.enabledDuringFullscreen")]
+        public bool EnableHotkeysDuringFullscreen { get; private set; } = false;
 
         /// <summary>
         /// When enabled, HolzShots decides whether a screenshot should be uploaded as a JPEG or a PNG.
@@ -90,7 +91,7 @@ namespace HolzShots
         public string TrayIconDoubleClickCommand { get; set; } = null;
 
         // TODO: Fix visibility
-        [JsonProperty("keyBindings")]
+        [JsonProperty("key.bindings")]
         public IReadOnlyList<KeyBinding> KeyBindings { get; set; } = ImmutableList<KeyBinding>.Empty;
     }
 

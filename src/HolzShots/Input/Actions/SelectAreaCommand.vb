@@ -14,7 +14,7 @@ Namespace Input.Actions
             ' TODO: Add proper assertion
             ' Debug.Assert(ManagedSettings.EnableAreaScreenshot)
             Debug.Assert(Not AreaSelector.IsInAreaSelector)
-            If UserSettings.Current.EnableIngameMode AndAlso HolzShotsEnvironment.IsFullScreen Then Return
+            If Not UserSettings.Current.EnableHotkeysDuringFullscreen AndAlso HolzShotsEnvironment.IsFullScreen Then Return
 
             ' TODO: Re-add proper if condition
             'If ManagedSettings.EnableAreaScreenshot AndAlso Not AreaSelector.IsInAreaSelector Then

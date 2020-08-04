@@ -73,7 +73,7 @@ Namespace UI.Specialized
             deactivateLinkViewerCheckBox.Checked = UserSettings.Current.CopyUploadedLinkToClipboard
             deactivateLinkViewerCheckBox.Enabled = False ' we only support reading the current setting for now
 
-            EnableIngameMode.Checked = Not UserSettings.Current.EnableIngameMode
+            EnableIngameMode.Checked = UserSettings.Current.EnableHotkeysDuringFullscreen
             EnableIngameMode.Enabled = False ' we only support reading the current setting for now
 
             start_with_windows.Checked = HolzShotsEnvironment.AutoStart
