@@ -4,10 +4,11 @@ Imports System.Globalization
 Imports System.IO
 Imports System.Linq
 Imports System.Threading.Tasks
+Imports HolzShots
+Imports HolzShots.IO
+Imports HolzShots.Interop
 Imports HolzShots.Composition
 Imports HolzShots.Input.Actions
-Imports HolzShots.Interop
-Imports HolzShots.IO
 Imports HolzShots.UI.Specialized
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.WindowsAPICodePack.Shell
@@ -44,7 +45,7 @@ Namespace My
         End Function
 
         Private Async Sub MyApplicationStartup(sender As Object, e As StartupEventArgs) Handles Me.Startup
-            Global.HolzShots.My.Settings.Upgrade()
+            My.Settings.Upgrade()
             Await LoadPlugins().ConfigureAwait(True)
             If TaskbarManager.IsPlatformSupported Then AddTasks()
         End Sub
@@ -94,9 +95,9 @@ Namespace My
         Friend Shared Sub AddTasks()
             Debug.Assert(TaskbarManager.IsPlatformSupported)
 
-            If Global.HolzShots.My.Settings.UserTasksInitialized Then Exit Sub
-            Global.HolzShots.My.Settings.UserTasksInitialized = True
-            Global.HolzShots.My.Settings.Save()
+            If My.Settings.UserTasksInitialized Then Exit Sub
+            My.Settings.UserTasksInitialized = True
+            My.Settings.Save()
 
             Dim jumpList = Microsoft.WindowsAPICodePack.Taskbar.JumpList.CreateJumpListForIndividualWindow(TaskbarManager.Instance.ApplicationId, SettingsWindow.Instance.Handle)
 
