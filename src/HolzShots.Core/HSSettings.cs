@@ -20,14 +20,22 @@ namespace HolzShots
         #endregion
         #region save.*
 
+        [SettingsDoc(
+            "When enabled, every screenshot captured with HolzShots will be saved at the location specified under the setting \"save.path\".",
+            Default = "true"
+        )]
         [JsonProperty("save.enable")]
         public bool SaveImagesToLocalDisk { get; private set; } = true;
-        /// <summary> The path where screenshots will be saved. Feed free to use environment variables like %USERPROFILE%, %ONEDRIVE% or %TMP%. </summary>
-        /// <remarks> Note for dev: Use <see cref="ExpandedSavePath" /> internally. </remarks>
+
+        /// <summary> Note: Use <see cref="ExpandedSavePath" /> internally when actually saving something. </summary>
+        [SettingsDoc(
+            "The path where screenshots will be saved." +
+            "Feed free to use environment variables like %USERPROFILE%, %ONEDRIVE% or %TMP%."
+        )]
         [JsonProperty("save.path")]
         public string SavePath { get; private set; } = HolzShotsPaths.DefaultScreenshotSavePath;
 
-        /// <summary> Use this instead of <see cref="SavePath" /> when actually saving a file. </summary>
+        /// <remarks> Use this instead of <see cref="SavePath" /> when actually saving a file. </remarks>
         [JsonIgnore]
         public string ExpandedSavePath => Environment.ExpandEnvironmentVariables(SavePath);
 
@@ -36,12 +44,13 @@ namespace HolzShots
         /// </summary>
         [JsonProperty("save.pattern")]
         public string SaveFileNamePattern { get; private set; } = "Screenshot-<Date>";
-        /// <summary>
-        /// When enabled, HolzShots decides whether a screenshot should be saved as a JPEG or a PNG.
-        /// Some screenshots are better saved as JPGs, for example if they consist of a large photo.
-        /// Saving it as a PNG is better suited for pictures of programs.
-        /// If JPG is used, there may be a loss in quality. PNG does not reduce the image quality, but uses more space when photos are saved.
-        /// </summary>
+
+        [SettingsDoc(
+            "When enabled, HolzShots decides whether a screenshot should be saved as a JPEG or a PNG.\n" +
+            "Some screenshots are better saved as JPGs, for example if they consist of a large photo.\n" +
+            "Saving it as a PNG is better suited for pictures of programs.\n" +
+            "If JPG is used, there may be a loss in quality. PNG does not reduce the image quality, but uses more space when photos are saved."
+        )]
         [JsonProperty("save.autoDetectBestImageFormat")]
         public bool EnableSmartFormatForSaving { get; private set; } = false;
 
@@ -50,40 +59,59 @@ namespace HolzShots
 
         [JsonProperty("editor.closeAfterUpload")]
         public bool CloseAfterUpload { get; private set; } = false;
-        /// <summary> TODO: Use this property </summary>
+
         [JsonProperty("editor.closeAfterSave")]
         public bool CloseAfterSave { get; private set; } = false;
 
         #endregion
+        #region upload.*
 
-        /// <summary> Copy the URL of the uploaded image to clipboard instead of showing a flyout with other options. </summary>
-        public bool CopyUploadedLinkToClipboard { get; private set; } = true;
-        /// <summary>
-        /// Automatically close the flyout containing the URL to the image as soon as some button is pressed.
-        /// Needs <see cref="CopyUploadedLinkToClipboard"/> to be set to true. Will do nothing otherwise.
-        /// </summary>
-        public bool AutoCloseLinkViewer { get; private set; } = true;
-        /// <summary>
-        /// When set to true, HolzShots will show a progress flyout during upload.
-        /// Default: true.
-        /// </summary>
+        [SettingsDoc(
+            "When set to true, HolzShots will show a progress flyout during upload.",
+            Default = "true"
+        )]
+        [JsonProperty("upload.showProgress")]
         public bool ShowUploadProgress { get; private set; } = true;
+
+        #endregion
+
+        [SettingsDoc(
+            "Copy the URL of the uploaded image to clipboard instead of showing a flyout with other options.",
+            Default = "true"
+        )]
+        public bool CopyUploadedLinkToClipboard { get; private set; } = true;
+
+        [SettingsDoc(
+            "Automatically close the flyout containing the URL to the image as soon as some button is pressed.\n" +
+            "Needs <see cref=\"CopyUploadedLinkToClipboard\"/> to be set to true. Will do nothing otherwise.",
+            // TODO: Set property ref
+            Default = "true"
+        )]
+        public bool AutoCloseLinkViewer { get; private set; } = true;
         /// <summary> When TODO is set to true, show a flyout as soon as the URL is copied to the clipboard. </summary>
         public bool ShowCopyConfirmation { get; private set; } = true;
 
         /// <summary>
-        /// If disabled, it does not show the Shot Editor but uploads it instead.
         /// TODO: We may just add a parameter to the key bindings to be able to configure this on a key-binding basis.
-        /// 
         /// TODO: Find better name.
         /// </summary>
+        [SettingsDoc(
+            "If disabled, it does not show the Shot Editor but uploads it instead.",
+            Default = "true"
+        )]
         public bool EnableShotEditor { get; private set; } = true;
 
-        /// <summary> Enable or disable hotkeys whan a full screen application is running. </summary>
+        [SettingsDoc(
+            "Enable or disable hotkeys whan a full screen application is running.",
+            Default = "false"
+        )]
         [JsonProperty("key.enabledDuringFullscreen")]
         public bool EnableHotkeysDuringFullscreen { get; private set; } = false;
 
-        /// <summary> Opacity of the dimming effect when selection a region to capture. Must be between 0.0 and 1.0. Default: 80% </summary>
+        [SettingsDoc(
+            "Opacity of the dimming effect when selection a region to capture. Must be between 0.0 and 1.0.",
+            Default = "0.8"
+        )]
         [JsonProperty("capture.selection.dimmingOpacity")]
         public float AreaSelectorDimmingOpacity
         {
@@ -93,16 +121,22 @@ namespace HolzShots
         private float _areaSelectorDimmingOpacity = 0.8f;
 
         /// <summary>
-        /// When enabled, HolzShots decides whether a screenshot should be uploaded as a JPEG or a PNG.
-        /// Some screenshots are better uploaded as JPGs, for example if they consist of a large photo.
-        /// Uploading it as a PNG is better suited for pictures of programs.
-        /// If JPG is used, there may be a loss in quality. PNG does not reduce the image quality, but uses more space when photos are saved and tehrefore takes longer to upload.
-        /// 
         /// TODO: Maybe use a different name for that.
         /// </summary>
+        [SettingsDoc(
+            "When enabled, HolzShots decides whether a screenshot should be uploaded as a JPEG or a PNG.\n" +
+            "Some screenshots are better uploaded as JPGs, for example if they consist of a large photo.\n" +
+            "Uploading it as a PNG is better suited for pictures of programs.\n" +
+            "If JPG is used, there may be a loss in quality. PNG does not reduce the image quality, but uses more space when photos are saved and tehrefore takes longer to upload.",
+            Default = "false"
+        )]
         [JsonProperty("upload.autoDetectBestImageFormat")]
         public bool EnableSmartFormatForUpload { get; private set; } = false;
 
+        [SettingsDoc(
+            "The command to execute when the tray icon is double-clicked.",
+            Default = "null"
+        )]
         [JsonProperty("tray.doubleClickCommand")]
         public string TrayIconDoubleClickCommand { get; set; } = null;
 
@@ -135,5 +169,14 @@ namespace HolzShots
                     ? null
                     : new CommandDeclaration() { CommandName = commandName, Parameters = ImmutableDictionary<string, string>.Empty };
         }
+    }
+
+    [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
+    class SettingsDocAttribute : Attribute
+    {
+        public string Default { get; set; }
+        public string DisplayName { get; set; }
+        public string Description { get; }
+        public SettingsDocAttribute(string description) => Description = description ?? throw new ArgumentNullException(nameof(description));
     }
 }
