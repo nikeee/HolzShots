@@ -11,7 +11,7 @@ namespace HolzShots.Composition.Command
         public Hotkey Hotkey { get; }
 
         private readonly CommandManager _parentManager;
-        private readonly string _commandToDispatch;
+        private readonly CommandDeclaration _commandToDispatch;
 
         public HotkeyCommand(CommandManager parentManager, KeyBinding binding)
         {
@@ -24,6 +24,6 @@ namespace HolzShots.Composition.Command
             _commandToDispatch = binding.Command ?? throw new ArgumentNullException(nameof(binding.Command));
         }
 
-        public Task Invoke(object sender, HotkeyPressedEventArgs e) => _parentManager.Dispatch(_commandToDispatch);
+        public Task Invoke(object sender, HotkeyPressedEventArgs e) => _parentManager.Dispatch(_commandToDispatch.CommandName, _commandToDispatch.Parameters);
     }
 }

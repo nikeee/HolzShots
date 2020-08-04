@@ -104,12 +104,29 @@ namespace HolzShots
         public IReadOnlyList<KeyBinding> KeyBindings { get; set; } = ImmutableList<KeyBinding>.Empty;
     }
 
+
     // TODO: When we're on C# 9, we may want to use a data class / record for this.
     public class KeyBinding
     {
         // TODO: Fix visibility
         public bool Enabled { get; set; } = false;
-        public string Command { get; set; } = null;
+        public CommandDeclaration Command { get; set; } = null;
         public Hotkey Keys { get; set; } = null;
+    }
+
+    public class CommandDeclaration
+    {
+        public string CommandName { get; set; }
+        public IReadOnlyDictionary<string, string> Parameters { get; set; } = ImmutableDictionary<string, string>.Empty;
+
+
+        public static implicit operator CommandDeclaration(string commandName) => ToCommandDeclaration(commandName);
+        public static CommandDeclaration ToCommandDeclaration(string commandName)
+        {
+            return commandName == null
+                    ? null
+                    : new CommandDeclaration() { CommandName = commandName, Parameters = ImmutableDictionary<string, string>.Empty };
+        }
+
     }
 }
