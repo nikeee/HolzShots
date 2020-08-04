@@ -123,9 +123,10 @@ namespace HolzShots
 
     public class CommandDeclaration
     {
+        [JsonProperty("name")]
         public string CommandName { get; set; }
+        [JsonProperty("params")]
         public IReadOnlyDictionary<string, string> Parameters { get; set; } = ImmutableDictionary<string, string>.Empty;
-
 
         public static implicit operator CommandDeclaration(string commandName) => ToCommandDeclaration(commandName);
         public static CommandDeclaration ToCommandDeclaration(string commandName)
@@ -134,6 +135,5 @@ namespace HolzShots
                     ? null
                     : new CommandDeclaration() { CommandName = commandName, Parameters = ImmutableDictionary<string, string>.Empty };
         }
-
     }
 }
