@@ -22,8 +22,15 @@ namespace HolzShots
 
         [JsonProperty("save.enable")]
         public bool SaveImagesToLocalDisk { get; private set; } = true;
+        /// <summary> The path where screenshots will be saved. Feed free to use environment variables like %USERPROFILE%, %ONEDRIVE% or %TMP%. </summary>
+        /// <remarks> Note for dev: Use <see cref="ExpandedSavePath" /> internally. </remarks>
         [JsonProperty("save.path")]
         public string SavePath { get; private set; } = HolzShotsPaths.DefaultScreenshotSavePath;
+
+        /// <summary> Use this instead of <see cref="SavePath" /> when actually saving a file. </summary>
+        [JsonIgnore]
+        public string ExpandedSavePath => Environment.ExpandEnvironmentVariables(SavePath);
+
         /// <summary>
         /// TODO: Docs for available patterns
         /// </summary>

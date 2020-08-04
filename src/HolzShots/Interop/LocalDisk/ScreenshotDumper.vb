@@ -10,7 +10,7 @@ Namespace Interop.LocalDisk
         Private Shared _lastFileName As String = String.Empty
 
         Public Shared Sub OpenPictureDumpFolder()
-            Dim path As String = UserSettings.Current.SavePath
+            Dim path As String = UserSettings.Current.ExpandedSavePath
 
             If String.IsNullOrWhiteSpace(path) Then
                 HumanInterop.NoPathSpecified()
@@ -68,7 +68,7 @@ Namespace Interop.LocalDisk
         End Sub
 
         Private Shared Function CheckSavePath() As Boolean
-            Dim datPath = UserSettings.Current.SavePath
+            Dim datPath = UserSettings.Current.ExpandedSavePath
             Debug.Assert(Not String.IsNullOrEmpty(datPath))
 
             Try
@@ -86,7 +86,7 @@ Namespace Interop.LocalDisk
 
         Private Shared Function GetAbsolutePath(fileName As String) As String
             If String.IsNullOrWhiteSpace(fileName) Then Throw New ArgumentNullException(NameOf(fileName))
-            Return Path.Combine(UserSettings.Current.SavePath, fileName)
+            Return Path.Combine(UserSettings.Current.ExpandedSavePath, fileName)
         End Function
     End Class
 End Namespace

@@ -161,7 +161,7 @@ Namespace UI.Specialized
         Private Sub LocalSavePathBrowseButtonClick(sender As Object, e As EventArgs) Handles localSavePathBrowseButton.Click
             Using dlg As New CommonOpenFileDialog()
                 dlg.IsFolderPicker = True
-                dlg.DefaultDirectory = UserSettings.Current.SavePath
+                dlg.DefaultDirectory = UserSettings.Current.ExpandedSavePath
                 dlg.InitialDirectory = dlg.DefaultDirectory
                 dlg.Multiselect = False
 
