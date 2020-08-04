@@ -7,7 +7,7 @@ Namespace Input.Actions
     Public Class OpenImagesFolderCommand
         Implements ICommand
 
-        Public Function Invoke(ParamArray params() As String) As Task Implements ICommand.Invoke
+        Public Function Invoke(params As IReadOnlyDictionary(Of String, String)) As Task Implements ICommand.Invoke
             ScreenshotDumper.OpenPictureDumpFolder()
             Return Task.CompletedTask
         End Function

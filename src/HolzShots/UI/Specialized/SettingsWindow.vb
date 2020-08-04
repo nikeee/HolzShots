@@ -3,7 +3,6 @@ Imports HolzShots
 Imports HolzShots.Interop
 Imports HolzShots.IO
 Imports HolzShots.IO.Naming
-Imports HolzShots.ScreenshotRelated.Selection
 Imports HolzShots.UI.Controls
 Imports Microsoft.WindowsAPICodePack.Dialogs
 
@@ -91,9 +90,6 @@ Namespace UI.Specialized
             showCopyConfirmation.Checked = UserSettings.Current.ShowCopyConfirmation
             showCopyConfirmation.Enabled = False ' we only support reading the current setting for now
 
-            ' /Screenshot Methods
-
-            ' Local saves
             enableLocalSaveCheckBox.Checked = UserSettings.Current.SaveImagesToLocalDisk
             enableLocalSaveCheckBox.Enabled = False ' we only support reading the current setting for now
             localSaveSettingsPanel.Enabled = False ' we only support reading the current setting for now

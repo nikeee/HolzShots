@@ -10,11 +10,11 @@ Namespace Input.Actions
 
         Private Const UploadImage = "Select Image to Upload"
 
-        Public Function Invoke(ParamArray params() As String) As Task Implements ICommand.Invoke
+        Public Function Invoke(params As IReadOnlyDictionary(Of String, String)) As Task Implements ICommand.Invoke
             Dim fileName = If(
-                params Is Nothing OrElse params.Length <> 1,
+                params Is Nothing OrElse params.Count <> 1 OrElse Not params.ContainsKey(FileNameParameter),
                 ShowFileSelector(UploadImage),
-                params(0)
+                params(FileNameParameter)
             )
 
             If Not CanProcessFile(fileName) Then

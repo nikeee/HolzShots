@@ -1,3 +1,4 @@
+Imports System.Collections.Immutable
 Imports System.Collections.ObjectModel
 Imports System.Globalization
 Imports System.IO
@@ -74,13 +75,17 @@ Namespace My
                         Await MainWindow.CommandManager.Dispatch(Of EditImageCommand)().ConfigureAwait(True)
                     Case OpenFromShellParameter
                         If i < args.Length - 1 Then
-                            Dim fileName = args(i + 1)
-                            Await MainWindow.CommandManager.Dispatch(Of EditImageCommand)(fileName).ConfigureAwait(True)
+                            Dim params = New Dictionary(Of String, String)() From {
+                                {EditImageCommand.FileNameParameter, args(i + 1)}
+                            }
+                            Await MainWindow.CommandManager.Dispatch(Of EditImageCommand)(params).ConfigureAwait(True)
                         End If
                     Case UploadFromShellParameter
                         If i < args.Length - 1 Then
-                            Dim fileName = args(i + 1)
-                            Await MainWindow.CommandManager.Dispatch(Of UploadImageCommand)(fileName).ConfigureAwait(True)
+                            Dim params = New Dictionary(Of String, String)() From {
+                                {EditImageCommand.FileNameParameter, args(i + 1)}
+                            }
+                            Await MainWindow.CommandManager.Dispatch(Of UploadImageCommand)(params).ConfigureAwait(True)
                         End If
                 End Select
             Next

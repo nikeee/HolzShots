@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -63,13 +64,16 @@ namespace HolzShots.Composition.Command
 
         public bool IsRegisteredCommand(string name) => !string.IsNullOrWhiteSpace(name) && Actions.ContainsKey(name.ToLowerInvariant());
 
-        public Task Dispatch<T>(params string[] parameters) where T : ICommand
+        public Task Dispatch<T>() where T : ICommand => Dispatch<T>(ImmutableDictionary<string, string>.Empty);
+        public Task Dispatch<T>(IReadOnlyDictionary<string, string> parameters) where T : ICommand
         {
             var name = GetCommandNameForType<T>();
             return Dispatch(name, parameters);
         }
 
-        public Task Dispatch(string name, params string[] parameters)
+        public Task Dispatch(string name) => Dispatch(name, ImmutableDictionary<string, string>.Empty);
+
+        public Task Dispatch(string name, IReadOnlyDictionary<string, string> parameters)
         {
             Debug.Assert(IsRegisteredCommand(name));
 

@@ -7,6 +7,8 @@ Namespace Input.Actions
 
         Private Shared ReadOnly AllowedExtensions As String() = {".bmp", ".jpg", ".jpeg", ".png", ".tif", ".tiff"}
 
+        Public Const FileNameParameter = "fileName"
+
         Protected Shared Function CanProcessFile(fileName As String) As Boolean
             Dim ext = Path.GetExtension(fileName)
             Return AllowedExtensions.Contains(ext)
