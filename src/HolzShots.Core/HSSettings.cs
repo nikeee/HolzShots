@@ -76,6 +76,15 @@ namespace HolzShots
         [JsonProperty("key.enabledDuringFullscreen")]
         public bool EnableHotkeysDuringFullscreen { get; private set; } = false;
 
+        /// <summary> Opacity of the dimming effect when selection a region to capture. Must be between 0.0 and 1.0. Default: 80% </summary>
+        [JsonProperty("capture.selection.dimmingOpacity")]
+        public float AreaSelectorDimmingOpacity
+        {
+            get => _areaSelectorDimmingOpacity;
+            private set => _areaSelectorDimmingOpacity = MathEx.Clamp(value, 0.0f, 1.0f);
+        }
+        private float _areaSelectorDimmingOpacity = 0.8f;
+
         /// <summary>
         /// When enabled, HolzShots decides whether a screenshot should be uploaded as a JPEG or a PNG.
         /// Some screenshots are better uploaded as JPGs, for example if they consist of a large photo.

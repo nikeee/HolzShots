@@ -2,7 +2,7 @@ using System;
 
 namespace HolzShots
 {
-    internal static class MathEx
+    public static class MathEx
     {
         public static byte Clamp(byte value, byte min, byte max)
         {
