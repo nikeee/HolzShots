@@ -95,9 +95,8 @@ Namespace Net
                         HumanInterop.ShowCopyConfirmation(result.Url)
                     End If
 
-                Case UploadHandlingAction.None
-                Case Else
-
+                Case UploadHandlingAction.None ' Intentionally do nothing
+                Case Else ' Intentionally do nothing
             End Select
         End Sub
         Friend Shared Sub InvokeUploadFailedUi(ex As UploadException)

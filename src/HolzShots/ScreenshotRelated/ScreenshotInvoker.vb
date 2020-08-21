@@ -30,9 +30,8 @@ Namespace ScreenshotRelated
                         UploadHelper.InvokeUploadFailedUi(ex)
                     End Try
 
-                Case CaptureHandlingAction.None
-                Case Else
-
+                Case CaptureHandlingAction.None ' Intentionally do nothing
+                Case Else ' Intentionally do nothing
             End Select
         End Function
 
