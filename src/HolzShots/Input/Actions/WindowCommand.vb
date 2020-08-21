@@ -6,9 +6,9 @@ Namespace Input.Actions
 
     <Command("captureWindow")>
     Public Class WindowCommand
-        Implements ICommand
+        Inherits CapturingCommand
 
-        Public Async Function Invoke(params As IReadOnlyDictionary(Of String, String)) As Task Implements ICommand.Invoke
+        Public Overrides Async Function Invoke(parameters As IReadOnlyDictionary(Of String, String)) As Task
             ' TODO: Add proper assertion
             ' Debug.Assert(ManagedSettings.EnableWindowScreenshot)
 
@@ -20,7 +20,7 @@ Namespace Input.Actions
             Native.User32.GetWindowPlacement(h, info)
 
             Dim shot = ScreenshotMethods.CaptureWindow(h)
-            Await ProceedWithScreenshot(shot).ConfigureAwait(True)
+            Await ProcessCapturing(shot).ConfigureAwait(True)
             ' End If
         End Function
     End Class

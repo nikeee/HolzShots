@@ -7,9 +7,9 @@ Imports HolzShots.Composition.Command
 Namespace Input.Actions
     <Command("captureArea")>
     Public Class SelectAreaCommand
-        Implements ICommand
+        Inherits CapturingCommand
 
-        Public Async Function Invoke(params As IReadOnlyDictionary(Of String, String)) As Task Implements ICommand.Invoke
+        Public Overrides Async Function Invoke(params As IReadOnlyDictionary(Of String, String)) As Task
 
             ' TODO: Add proper assertion
             ' Debug.Assert(ManagedSettings.EnableAreaScreenshot)
@@ -29,7 +29,7 @@ Namespace Input.Actions
                     Return
                 End Try
                 Debug.Assert(shot IsNot Nothing)
-                Await ProceedWithScreenshot(shot).ConfigureAwait(True)
+                Await ProcessCapturing(shot).ConfigureAwait(True)
             End If
 
         End Function

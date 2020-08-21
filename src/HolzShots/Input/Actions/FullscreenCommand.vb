@@ -5,9 +5,9 @@ Imports HolzShots.Composition.Command
 Namespace Input.Actions
     <Command("captureEntireScreen")>
     Public Class FullscreenCommand
-        Implements ICommand
+        Inherits CapturingCommand
 
-        Public Async Function Invoke(params As IReadOnlyDictionary(Of String, String)) As Task Implements ICommand.Invoke
+        Public Overrides Async Function Invoke(parameters As IReadOnlyDictionary(Of String, String)) As Task
             ' TODO: Add proper assertion
             ' Debug.Assert(ManagedSettings.EnableFullscreenScreenshot)
 
@@ -15,7 +15,7 @@ Namespace Input.Actions
             ' If ManagedSettings.EnableFullscreenScreenshot Then
             Dim shot = ScreenshotMethods.CaptureFullscreen()
             Debug.Assert(shot IsNot Nothing)
-            Await ProceedWithScreenshot(shot).ConfigureAwait(True)
+            Await ProcessCapturing(shot).ConfigureAwait(True)
             'End If
         End Function
     End Class

@@ -189,6 +189,7 @@
   <ItemGroup>
     <Compile Include="GlobalSuppressions.vb" />
     <Compile Include="ImageExtensions.vb" />
+    <Compile Include="Input\Actions\CapturingCommand.vb" />
     <Compile Include="Input\Actions\EditImageCommand.vb" />
     <Compile Include="Input\Actions\FileDependentCommand.vb" />
     <Compile Include="Input\Actions\FullscreenCommand.vb" />
@@ -201,7 +202,6 @@
     <Compile Include="Interop\TaskBar.vb" />
     <Compile Include="Net\UploadUI.vb" />
     <Compile Include="Net\Win32WindowExtensions.vb" />
-    <Compile Include="ScreenshotRelated\ScreenshotInvoker.vb" />
     <Compile Include="ScreenshotRelated\Selection\MagnifierDecoration.vb" />
     <Compile Include="ScreenshotRelated\Selection\DefaultNoSelectionDecoration.vb" />
     <Compile Include="ScreenshotRelated\Selection\INoSelectionDecoration.vb" />
