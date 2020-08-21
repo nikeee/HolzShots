@@ -19,8 +19,8 @@ namespace HolzShots
         public static async Task Load(ISynchronizeInvoke synchronizingObject)
         {
             Manager = new HolzShotsUserSettings(HolzShotsPaths.UserSettingsFilePath, synchronizingObject);
-            await CreateUserSettingsIfNotPresent();
-            await Manager.InitializeSettings();
+            await CreateUserSettingsIfNotPresent().ConfigureAwait(false);
+            await Manager.InitializeSettings().ConfigureAwait(false);
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage", "AsyncFixer01:Unnecessary async/await usage", Justification = "using statement")]
@@ -33,7 +33,7 @@ namespace HolzShots
             {
                 var defaultSettingsStr = Manager.SerializeSettings(CreateDefaultSettings());
                 var defaultSettings = System.Text.Encoding.UTF8.GetBytes(defaultSettingsStr);
-                await writer.WriteAsync(defaultSettings, 0, defaultSettings.Length);
+                await writer.WriteAsync(defaultSettings, 0, defaultSettings.Length).ConfigureAwait(false);
             }
         }
 
