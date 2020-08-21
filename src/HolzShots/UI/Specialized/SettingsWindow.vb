@@ -1,10 +1,6 @@
 Imports System.Linq
-Imports HolzShots
 Imports HolzShots.Interop
-Imports HolzShots.IO
-Imports HolzShots.IO.Naming
 Imports HolzShots.UI.Controls
-Imports Microsoft.WindowsAPICodePack.Dialogs
 
 Namespace UI.Specialized
 
@@ -14,9 +10,6 @@ Namespace UI.Specialized
         Private Class Localization
             Public Const NotSet = "<not set>"
             Public Const InvalidFilePattern = "Invalid Pattern"
-            Public Const SetHotkeyCurrentWindow = "Set Window Screenshot Hotkey"
-            Public Const SetHotkeyAreaSelector = "Set Area Selector Hotkey"
-            Public Const SetHotkeyFullscreen = "Set Fullscreen Hotkey"
         End Class
 
         Public Shared ReadOnly Instance As SettingsWindow = New SettingsWindow()
@@ -67,44 +60,7 @@ Namespace UI.Specialized
             openImageInExplorerMenu.Checked = ManagedSettings.ShellExtensionOpen
             openImageInExplorerMenu.Enabled = InteropHelper.IsAdministrator()
 
-            disableShotEditorCheckBox.Checked = Not UserSettings.Current.ActionAfterCapture <> CaptureHandlingAction.OpenEditor
-            disableShotEditorCheckBox.Enabled = False ' we only support reading the current setting for now
-
-            deactivateLinkViewerCheckBox.Checked = UserSettings.Current.ActionAfterUpload <> UploadHandlingAction.Flyout
-            deactivateLinkViewerCheckBox.Enabled = False ' we only support reading the current setting for now
-
-            EnableIngameMode.Checked = UserSettings.Current.EnableHotkeysDuringFullscreen
-            EnableIngameMode.Enabled = False ' we only support reading the current setting for now
-
             start_with_windows.Checked = HolzShotsEnvironment.AutoStart
-
-            enableStatusToaster.Checked = UserSettings.Current.ShowUploadProgress
-            enableStatusToaster.Enabled = False ' we only support reading the current setting for now
-
-            AutoCloseLinkViewer.Checked = UserSettings.Current.AutoCloseLinkViewer
-            AutoCloseLinkViewer.Enabled = False ' we only support reading the current setting for now
-
-            enableSmartFormatForUpload.Checked = UserSettings.Current.EnableSmartFormatForUpload
-            enableSmartFormatForUpload.Enabled = False ' we only support reading the current setting for now
-
-            showCopyConfirmation.Checked = UserSettings.Current.ShowCopyConfirmation
-            showCopyConfirmation.Enabled = False ' we only support reading the current setting for now
-
-            enableLocalSaveCheckBox.Checked = UserSettings.Current.SaveImagesToLocalDisk
-            enableLocalSaveCheckBox.Enabled = False ' we only support reading the current setting for now
-            localSaveSettingsPanel.Enabled = False ' we only support reading the current setting for now
-
-            fileNamingPattern.Text = UserSettings.Current.SaveFileNamePattern
-            fileNamingPattern.Enabled = False ' we only support reading the current setting for now
-
-            enableSmartFormatForSaving.Checked = UserSettings.Current.EnableSmartFormatForSaving
-            enableSmartFormatForSaving.Enabled = False ' we only support reading the current setting for now
-
-            Dim p = UserSettings.Current.SavePath
-            localSavePath.Text = If(String.IsNullOrWhiteSpace(p), HolzShotsPaths.DefaultScreenshotSavePath, p)
-
-            localSavePath.Enabled = False ' we only support reading the current setting for now
-            localSavePathBrowseButton.Enabled = False ' we only support reading the current setting for now
         End Sub
 
         Private Sub SavePolicies()
@@ -135,84 +91,8 @@ Namespace UI.Specialized
             Close()
         End Sub
 
-        Private Sub ActivateAreaCheckedChanged(ByVal sender As Object, ByVal e As EventArgs) Handles Activate_Area.CheckedChanged
-            EnableIngameMode.Enabled = Activate_Area.Checked
-        End Sub
-
-        Private Sub ActivateFastUploadCheckBoxCheckedChanged(sender As Object, e As EventArgs) Handles deactivateLinkViewerCheckBox.CheckedChanged
-            AutoCloseLinkViewer.Enabled = Not deactivateLinkViewerCheckBox.Checked
-            showCopyConfirmation.Enabled = deactivateLinkViewerCheckBox.Checked
-        End Sub
-
         Private Sub SettingsShown(sender As Object, e As EventArgs) Handles MyBase.Shown
             Focus()
-        End Sub
-
-        Private Sub EnableLocalSaveCheckBoxCheckedChanged(sender As Object, e As EventArgs) Handles enableLocalSaveCheckBox.CheckedChanged
-            localSaveSettingsPanel.Enabled = enableLocalSaveCheckBox.Checked
-            UpdateFileNamingPreviewLabel()
-        End Sub
-
-
-        Private Sub FileNamingPatternTextChanged(sender As Object, e As EventArgs) Handles fileNamingPattern.TextChanged
-            UpdateFileNamingPreviewLabel()
-        End Sub
-
-        Private Sub LocalSavePathBrowseButtonClick(sender As Object, e As EventArgs) Handles localSavePathBrowseButton.Click
-            Using dlg As New CommonOpenFileDialog()
-                dlg.IsFolderPicker = True
-                dlg.DefaultDirectory = UserSettings.Current.ExpandedSavePath
-                dlg.InitialDirectory = dlg.DefaultDirectory
-                dlg.Multiselect = False
-
-                If dlg.ShowDialog(Me.Handle) = DialogResult.OK Then
-                    localSavePath.Text = dlg.FileName
-                End If
-            End Using
-        End Sub
-
-        Private Shared ReadOnly InvalidFilePatternColor As Color = Color.FromArgb(255, 136, 0, 21)
-        Private Shared ReadOnly ValidFilePatternColor As Color = SystemColors.ControlText
-
-        Private Sub PatternIsInvalid()
-            fileNamingPatternPreview.Text = Localization.InvalidFilePattern
-            fileNamingPatternPreview.ForeColor = InvalidFilePatternColor
-            savebtn.Enabled = Not enableLocalSaveCheckBox.Checked
-        End Sub
-        Private Sub PatternIsValid(updateText As String)
-            fileNamingPatternPreview.Text = updateText & DefaultFileExtension
-            fileNamingPatternPreview.ForeColor = ValidFilePatternColor
-            savebtn.Enabled = enableLocalSaveCheckBox.Checked
-        End Sub
-
-        Private Sub UpdateFileNamingPreviewLabel()
-            If Not enableLocalSaveCheckBox.Checked Then
-                savebtn.Enabled = True
-                Return
-            End If
-
-            Dim patternStr = fileNamingPattern.Text
-
-            If String.IsNullOrWhiteSpace(patternStr) Then
-                PatternIsInvalid()
-                Return
-            End If
-
-            Dim parsedPattern As FileNamePattern
-            Try
-                parsedPattern = FileNamePattern.Parse(patternStr)
-            Catch ex As Exception
-                PatternIsInvalid()
-                Return
-            End Try
-
-            If parsedPattern Is Nothing OrElse parsedPattern.IsEmpty Then
-                PatternIsInvalid()
-                Return
-            End If
-
-            Dim formattedSampleName = parsedPattern.FormatMetadata(FileMetadata.DemoMetadata)
-            PatternIsValid(formattedSampleName)
         End Sub
 
         Private Shared Sub OpenPluginFolderLinkLabelLinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles openPluginFolderLinkLabel.LinkClicked
@@ -224,7 +104,7 @@ Namespace UI.Specialized
         End Sub
 
         Private Async Sub OpenSettingsJson_Click(sender As Object, e As EventArgs) Handles OpenSettingsJson.Click
-            Await UserSettings.CreateUserSettingsIfNotPresent()
+            Await UserSettings.CreateUserSettingsIfNotPresent().ConfigureAwait(True)
             UserSettings.OpenSettingsInDefaultEditor()
         End Sub
     End Class
