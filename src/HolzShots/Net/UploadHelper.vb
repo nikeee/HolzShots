@@ -82,16 +82,23 @@ Namespace Net
             Debug.Assert(result IsNot Nothing)
             Debug.Assert(Not String.IsNullOrWhiteSpace(result.Url))
 
-            If UserSettings.Current.CopyUploadedLinkToClipboard Then
-                If Not result.Url.SetAsClipboardText() Then
-                    HumanInterop.CopyingFailed(result.Url)
-                ElseIf UserSettings.Current.ShowCopyConfirmation Then
-                    HumanInterop.ShowCopyConfirmation(result.Url)
-                End If
-            Else
-                Dim lv As New UploadResultWindow(result)
-                lv.Show()
-            End If
+            Select Case UserSettings.Current.ActionAfterUpload
+                Case UploadHandlingAction.Flyout
+                    Dim lv As New UploadResultWindow(result)
+                    lv.Show()
+
+                Case UploadHandlingAction.CopyToClipboard
+
+                    If Not result.Url.SetAsClipboardText() Then
+                        HumanInterop.CopyingFailed(result.Url)
+                    ElseIf UserSettings.Current.ShowCopyConfirmation Then
+                        HumanInterop.ShowCopyConfirmation(result.Url)
+                    End If
+
+                Case UploadHandlingAction.None
+                Case Else
+
+            End Select
         End Sub
         Friend Shared Sub InvokeUploadFailedUi(ex As UploadException)
             HumanInterop.UploadFailed(ex)

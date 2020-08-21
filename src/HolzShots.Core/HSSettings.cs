@@ -5,6 +5,7 @@ using HolzShots.Input;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Runtime.Serialization;
 
 namespace HolzShots
 {
@@ -79,7 +80,7 @@ namespace HolzShots
             "Copy the URL of the uploaded image to clipboard instead of showing a flyout with other options.",
             Default = "true"
         )]
-        public bool CopyUploadedLinkToClipboard { get; private set; } = true;
+        public UploadHandlingAction ActionAfterUpload { get; private set; } = UploadHandlingAction.Flyout;
 
         [SettingsDoc(
             "Automatically close the flyout containing the URL to the image as soon as some button is pressed.\n" +
@@ -169,6 +170,16 @@ namespace HolzShots
                     ? null
                     : new CommandDeclaration() { CommandName = commandName, Parameters = ImmutableDictionary<string, string>.Empty };
         }
+    }
+
+    public enum UploadHandlingAction
+    {
+        [EnumMember(Value = "flyout")]
+        Flyout,
+        [EnumMember(Value = "copy")]
+        CopyToClipboard,
+        [EnumMember(Value = "none")]
+        None,
     }
 
     [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
