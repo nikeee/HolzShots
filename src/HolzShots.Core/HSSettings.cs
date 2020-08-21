@@ -176,6 +176,7 @@ namespace HolzShots
         }
     }
 
+    [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum UploadHandlingAction
     {
         [EnumMember(Value = "flyout")]
