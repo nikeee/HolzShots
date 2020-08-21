@@ -34,7 +34,7 @@ namespace HolzShots.Input
 
         public void RegisterHotkey(ModifierKeys modifiers, Keys key, int id)
         {
-            Trace.WriteLine($"REGISTERING hotkey: {id} {modifiers} {key}");
+            Trace.WriteLine($"Registering hotkey: {id} {modifiers} {key}");
             if (!NativeMethods.RegisterHotKey(Handle, id, modifiers | ModifierKeys.NoRepeat, key))
                 throw new Win32Exception();
         }
