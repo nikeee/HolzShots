@@ -91,6 +91,26 @@ namespace HolzShots
         [JsonProperty("upload.actionAfterUpload.copy.showConfirmation")]
         public bool ShowCopyConfirmation { get; private set; } = true;
 
+        [SettingsDoc(
+            "Automatically close the flyout containing the URL to the image as soon as some button is pressed and \"upload.actionAfterUpload\" is set to \"flyout\".",
+            Default = "true"
+        )]
+        [JsonProperty("upload.actionAfterUpload.flyout.closeOnCopy")]
+        public bool AutoCloseLinkViewer { get; private set; } = true;
+
+        /// <summary>
+        /// TODO: Maybe use a different name for that.
+        /// </summary>
+        [SettingsDoc(
+            "When enabled, HolzShots decides whether a screenshot should be uploaded as a JPEG or a PNG.\n" +
+            "Some screenshots are better uploaded as JPGs, for example if they consist of a large photo.\n" +
+            "Uploading it as a PNG is better suited for pictures of programs.\n" +
+            "If JPG is used, there may be a loss in quality. PNG does not reduce the image quality, but uses more space when photos are saved and therefore takes longer to upload.",
+            Default = "false"
+        )]
+        [JsonProperty("upload.autoDetectBestImageFormat")]
+        public bool EnableSmartFormatForUpload { get; private set; } = false;
+
         #endregion
         #region capture.*
 
@@ -122,15 +142,16 @@ namespace HolzShots
         private float _areaSelectorDimmingOpacity = 0.8f;
 
         #endregion
+        #region tray.*
 
         [SettingsDoc(
-            "Automatically close the flyout containing the URL to the image as soon as some button is pressed.\n" +
-            "Needs <see cref=\"CopyUploadedLinkToClipboard\"/> to be set to true. Will do nothing otherwise.",
-            // TODO: Set property ref
-            Default = "true"
+            "The command to execute when the tray icon is double-clicked.",
+            Default = "null"
         )]
-        public bool AutoCloseLinkViewer { get; private set; } = true;
+        [JsonProperty("tray.doubleClickCommand")]
+        public CommandDeclaration TrayIconDoubleClickCommand { get; set; } = null;
 
+        #endregion
         #region key.*
 
         [SettingsDoc(
@@ -140,31 +161,11 @@ namespace HolzShots
         [JsonProperty("key.enabledDuringFullscreen")]
         public bool EnableHotkeysDuringFullscreen { get; private set; } = false;
 
-        #endregion
-
-        /// <summary>
-        /// TODO: Maybe use a different name for that.
-        /// </summary>
-        [SettingsDoc(
-            "When enabled, HolzShots decides whether a screenshot should be uploaded as a JPEG or a PNG.\n" +
-            "Some screenshots are better uploaded as JPGs, for example if they consist of a large photo.\n" +
-            "Uploading it as a PNG is better suited for pictures of programs.\n" +
-            "If JPG is used, there may be a loss in quality. PNG does not reduce the image quality, but uses more space when photos are saved and tehrefore takes longer to upload.",
-            Default = "false"
-        )]
-        [JsonProperty("upload.autoDetectBestImageFormat")]
-        public bool EnableSmartFormatForUpload { get; private set; } = false;
-
-        [SettingsDoc(
-            "The command to execute when the tray icon is double-clicked.",
-            Default = "null"
-        )]
-        [JsonProperty("tray.doubleClickCommand")]
-        public CommandDeclaration TrayIconDoubleClickCommand { get; set; } = null;
-
         // TODO: Fix visibility
         [JsonProperty("key.bindings")]
         public IReadOnlyList<KeyBinding> KeyBindings { get; set; } = ImmutableList<KeyBinding>.Empty;
+
+        #endregion
     }
 
 
