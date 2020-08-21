@@ -67,7 +67,7 @@ Namespace UI.Specialized
             openImageInExplorerMenu.Checked = ManagedSettings.ShellExtensionOpen
             openImageInExplorerMenu.Enabled = InteropHelper.IsAdministrator()
 
-            disableShotEditorCheckBox.Checked = Not UserSettings.Current.EnableShotEditor
+            disableShotEditorCheckBox.Checked = Not UserSettings.Current.ActionAfterCapture <> CaptureHandlingAction.OpenEditor
             disableShotEditorCheckBox.Enabled = False ' we only support reading the current setting for now
 
             deactivateLinkViewerCheckBox.Checked = UserSettings.Current.ActionAfterUpload <> UploadHandlingAction.Flyout

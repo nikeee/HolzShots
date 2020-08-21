@@ -13,19 +13,27 @@ Namespace ScreenshotRelated
             Debug.Assert(screenshot IsNot Nothing)
 
             ScreenshotDumper.HandleScreenshot(screenshot)
-            If UserSettings.Current.EnableShotEditor Then
-                Dim shower As New ShotEditor(screenshot)
-                shower.Show()
-            Else
-                Try
-                    Dim result = Await UploadHelper.UploadToDefaultUploader(screenshot.Image).ConfigureAwait(True)
-                    UploadHelper.InvokeUploadFinishedUi(result)
-                Catch ex As UploadCanceledException
-                    HumanInterop.ShowOperationCanceled()
-                Catch ex As UploadException
-                    UploadHelper.InvokeUploadFailedUi(ex)
-                End Try
-            End If
+
+            Select Case UserSettings.Current.ActionAfterCapture
+                Case CaptureHandlingAction.OpenEditor
+                    Dim shower As New ShotEditor(screenshot)
+                    shower.Show()
+
+                Case CaptureHandlingAction.Upload
+
+                    Try
+                        Dim result = Await UploadHelper.UploadToDefaultUploader(screenshot.Image).ConfigureAwait(True)
+                        UploadHelper.InvokeUploadFinishedUi(result)
+                    Catch ex As UploadCanceledException
+                        HumanInterop.ShowOperationCanceled()
+                    Catch ex As UploadException
+                        UploadHelper.InvokeUploadFailedUi(ex)
+                    End Try
+
+                Case CaptureHandlingAction.None
+                Case Else
+
+            End Select
         End Function
 
 #Region "CustomImage"

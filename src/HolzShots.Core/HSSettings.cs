@@ -85,33 +85,22 @@ namespace HolzShots
         public UploadHandlingAction ActionAfterUpload { get; private set; } = UploadHandlingAction.Flyout;
 
         #endregion
-
-        [SettingsDoc(
-            "Automatically close the flyout containing the URL to the image as soon as some button is pressed.\n" +
-            "Needs <see cref=\"CopyUploadedLinkToClipboard\"/> to be set to true. Will do nothing otherwise.",
-            // TODO: Set property ref
-            Default = "true"
-        )]
-        public bool AutoCloseLinkViewer { get; private set; } = true;
-        /// <summary> When TODO is set to true, show a flyout as soon as the URL is copied to the clipboard. </summary>
-        public bool ShowCopyConfirmation { get; private set; } = true;
+        #region capture.*
 
         /// <summary>
-        /// TODO: We may just add a parameter to the key bindings to be able to configure this on a key-binding basis.
-        /// TODO: Find better name.
+        /// TODO: Maybe we can replace this as well as AutoCloseLinkViewer with something command-based.
+        /// To do that, we need to be able to pass objects as command parameters.
+        /// For now, this should work.
         /// </summary>
         [SettingsDoc(
-            "If disabled, it does not show the Shot Editor but uploads it instead.",
-            Default = "true"
+            "What to do after an image got captured. Possible options are:\n" +
+            "    openEditor: Open the shot editor with the captured image\n" +
+            "    upload: Upload the image to the specified default image service\n" +
+            "    none: Do nothing (this would only trigger saving the image to disk if this is enabled)",
+            Default = "openEditor"
         )]
-        public bool EnableShotEditor { get; private set; } = true;
-
-        [SettingsDoc(
-            "Enable or disable hotkeys whan a full screen application is running.",
-            Default = "false"
-        )]
-        [JsonProperty("key.enabledDuringFullscreen")]
-        public bool EnableHotkeysDuringFullscreen { get; private set; } = false;
+        [JsonProperty("capture.actionAfterCapture")]
+        public CaptureHandlingAction ActionAfterCapture { get; private set; } = CaptureHandlingAction.OpenEditor;
 
         [SettingsDoc(
             "Opacity of the dimming effect when selection a region to capture. Must be between 0.0 and 1.0.",
@@ -124,6 +113,25 @@ namespace HolzShots
             private set => _areaSelectorDimmingOpacity = MathEx.Clamp(value, 0.0f, 1.0f);
         }
         private float _areaSelectorDimmingOpacity = 0.8f;
+
+        #endregion
+
+        [SettingsDoc(
+            "Automatically close the flyout containing the URL to the image as soon as some button is pressed.\n" +
+            "Needs <see cref=\"CopyUploadedLinkToClipboard\"/> to be set to true. Will do nothing otherwise.",
+            // TODO: Set property ref
+            Default = "true"
+        )]
+        public bool AutoCloseLinkViewer { get; private set; } = true;
+        /// <summary> When TODO is set to true, show a flyout as soon as the URL is copied to the clipboard. </summary>
+        public bool ShowCopyConfirmation { get; private set; } = true;
+
+        [SettingsDoc(
+            "Enable or disable hotkeys whan a full screen application is running.",
+            Default = "false"
+        )]
+        [JsonProperty("key.enabledDuringFullscreen")]
+        public bool EnableHotkeysDuringFullscreen { get; private set; } = false;
 
         /// <summary>
         /// TODO: Maybe use a different name for that.
@@ -191,6 +199,17 @@ namespace HolzShots
         Flyout,
         [EnumMember(Value = "copy")]
         CopyToClipboard,
+        [EnumMember(Value = "none")]
+        None,
+    }
+
+    [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    public enum CaptureHandlingAction
+    {
+        [EnumMember(Value = "openEditor")]
+        OpenEditor,
+        [EnumMember(Value = "upload")]
+        Upload,
         [EnumMember(Value = "none")]
         None,
     }
