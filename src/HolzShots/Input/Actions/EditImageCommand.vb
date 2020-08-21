@@ -1,6 +1,6 @@
 Imports System.Threading.Tasks
-Imports HolzShots.ScreenshotRelated
 Imports HolzShots.Composition.Command
+Imports HolzShots.UI.Specialized
 
 Namespace Input.Actions
     <Command("editImage")>
@@ -22,9 +22,14 @@ Namespace Input.Actions
                 Return Task.CompletedTask
             End If
 
-            If fileName IsNot Nothing Then
-                OpenSpecificImage(fileName)
-            End If
+            If fileName Is Nothing Then Return Task.CompletedTask
+
+            Dim bmp As New Bitmap(fileName)
+            Dim shot = Screenshot.FromImported(bmp)
+            Dim editor As New ShotEditor(shot)
+            AddHandler editor.Disposed, Sub() bmp.Dispose()
+            editor.Show()
+
             Return Task.CompletedTask
         End Function
     End Class

@@ -1,6 +1,8 @@
 Imports System.Threading.Tasks
-Imports HolzShots.ScreenshotRelated
 Imports HolzShots.Composition.Command
+Imports System.Drawing.Imaging
+Imports HolzShots.Net
+Imports HolzShots.Interop
 
 Namespace Input.Actions
     <Command("uploadImage")>
@@ -10,7 +12,7 @@ Namespace Input.Actions
 
         Private Const UploadImage = "Select Image to Upload"
 
-        Public Function Invoke(params As IReadOnlyDictionary(Of String, String)) As Task Implements ICommand.Invoke
+        Public Async Function Invoke(params As IReadOnlyDictionary(Of String, String)) As Task Implements ICommand.Invoke
             Dim fileName = If(
                 params Is Nothing OrElse params.Count <> 1 OrElse Not params.ContainsKey(FileNameParameter),
                 ShowFileSelector(UploadImage),
@@ -19,13 +21,23 @@ Namespace Input.Actions
 
             If Not CanProcessFile(fileName) Then
                 ' TODO: Error Message
-                Return Task.CompletedTask
+                Return
             End If
 
-            If fileName IsNot Nothing Then
-                UploadSpecificImage(fileName)
-            End If
-            Return Task.CompletedTask
+            If fileName Is Nothing Then Return
+
+            Using bmp As New Bitmap(fileName)
+                Dim format As ImageFormat = fileName.GetImageFormatFromFileExtension()
+                Try
+                    Dim result = Await UploadHelper.UploadToDefaultUploader(bmp, format).ConfigureAwait(True)
+                    UploadHelper.InvokeUploadFinishedUi(result)
+                Catch ex As UploadCanceledException
+                    HumanInterop.ShowOperationCanceled()
+                Catch ex As UploadException
+                    UploadHelper.InvokeUploadFailedUi(ex)
+                End Try
+            End Using
+
         End Function
     End Class
 End Namespace
