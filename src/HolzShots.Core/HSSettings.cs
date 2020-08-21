@@ -143,7 +143,7 @@ namespace HolzShots
             Default = "null"
         )]
         [JsonProperty("tray.doubleClickCommand")]
-        public string TrayIconDoubleClickCommand { get; set; } = null;
+        public CommandDeclaration TrayIconDoubleClickCommand { get; set; } = null;
 
         // TODO: Fix visibility
         [JsonProperty("key.bindings")]
@@ -160,6 +160,9 @@ namespace HolzShots
         public Hotkey Keys { get; set; } = null;
     }
 
+    /// <summary>
+    /// TODO: Some custom converter that converts a command that does not have any parameters to a plain string.
+    /// </summary>
     public class CommandDeclaration
     {
         [JsonProperty("name")]

@@ -148,8 +148,8 @@ Namespace UI.Specialized
         Private Async Sub TrayIconMouseDoubleClick(ByVal sender As Object, ByVal e As MouseEventArgs) Handles TrayIcon.MouseDoubleClick
             Dim commandToRun = UserSettings.Current.TrayIconDoubleClickCommand
 
-            If CommandManager.IsRegisteredCommand(commandToRun) Then
-                Await CommandManager.Dispatch(commandToRun).ConfigureAwait(True) ' Can throw exceptions and silently kill the application
+            If CommandManager.IsRegisteredCommand(commandToRun.CommandName) Then
+                Await CommandManager.Dispatch(commandToRun.CommandName, commandToRun.Parameters).ConfigureAwait(True) ' Can throw exceptions and silently kill the application
             End If
         End Sub
 
