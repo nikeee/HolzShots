@@ -30,7 +30,7 @@ namespace HolzShots
 
         /// <summary> Note: Use <see cref="ExpandedSavePath" /> internally when actually saving something. </summary>
         [SettingsDoc(
-            "The path where screenshots will be saved." +
+            "The path where screenshots will be saved.\n" +
             "Feed free to use environment variables like %USERPROFILE%, %ONEDRIVE% or %TMP%."
         )]
         [JsonProperty("save.path")]
@@ -58,9 +58,17 @@ namespace HolzShots
         #endregion
         #region editor.*
 
+        [SettingsDoc(
+            "Close the shot editor once the upload button is clicked.",
+            Default = "false"
+        )]
         [JsonProperty("editor.closeAfterUpload")]
         public bool CloseAfterUpload { get; private set; } = false;
 
+        [SettingsDoc(
+            "Close the shot editor once the image was saved.",
+            Default = "false"
+        )]
         [JsonProperty("editor.closeAfterSave")]
         public bool CloseAfterSave { get; private set; } = false;
 
@@ -76,7 +84,7 @@ namespace HolzShots
 
         [SettingsDoc(
             "What will be done with the link that you get from your upload. Possible options are:\n" +
-            "    flyout: A popup-window in the corner that shows some optiosn for copying the link\n" +
+            "    flyout: A popup-window in the corner that shows some options for copying the link\n" +
             "    copy: Copy the link to the clipboard\n" +
             "    none: Do nothing",
             Default = "flyout"
@@ -155,13 +163,16 @@ namespace HolzShots
         #region key.*
 
         [SettingsDoc(
-            "Enable or disable hotkeys whan a full screen application is running.",
+            "Enable or disable hotkeys when a full screen application is running.",
             Default = "false"
         )]
         [JsonProperty("key.enabledDuringFullscreen")]
         public bool EnableHotkeysDuringFullscreen { get; private set; } = false;
 
         // TODO: Fix visibility
+        [SettingsDoc(
+            "List of commands that get triggered by hotkeys."
+        )]
         [JsonProperty("key.bindings")]
         public IReadOnlyList<KeyBinding> KeyBindings { get; set; } = ImmutableList<KeyBinding>.Empty;
 
