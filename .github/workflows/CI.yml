@@ -35,7 +35,7 @@ jobs:
 
     - name: Validate JSON Schemas
       run: |
-        wget -O json-schema.json https://json-schema.org/draft/2019-09/schema
+        curl -o json-schema.json https://json-schema.org/draft/2019-09/schema
         ajv -s json-schema.json -d src/schema/*.schema.json
 
     - name: Collect Artifacts
