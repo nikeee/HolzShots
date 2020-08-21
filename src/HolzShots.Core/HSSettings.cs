@@ -126,12 +126,16 @@ namespace HolzShots
         /// <summary> When TODO is set to true, show a flyout as soon as the URL is copied to the clipboard. </summary>
         public bool ShowCopyConfirmation { get; private set; } = true;
 
+        #region key.*
+
         [SettingsDoc(
             "Enable or disable hotkeys whan a full screen application is running.",
             Default = "false"
         )]
         [JsonProperty("key.enabledDuringFullscreen")]
         public bool EnableHotkeysDuringFullscreen { get; private set; } = false;
+
+        #endregion
 
         /// <summary>
         /// TODO: Maybe use a different name for that.
