@@ -116,12 +116,14 @@ Namespace UI.Specialized
         Private Sub ExitApplication()
             _forceClose = True
             Try
-                Dim forms = Application.OpenForms
-                For i As Integer = forms.Count - 1 To 0
-                    If forms(i) IsNot Me Then
-                        forms(i).Close()
+                ' Defensive copy of Application.OpenForm
+                Dim forms = New List(Of Form)(Application.OpenForms.Cast(Of Form)())
+                For Each f In forms
+                    If f IsNot Me Then
+                        f.Close()
                     End If
                 Next
+
                 System.Windows.Forms.Application.Exit()
             Catch ex As Exception
                 End
