@@ -84,6 +84,13 @@ namespace HolzShots
         [JsonProperty("upload.actionAfterUpload")]
         public UploadHandlingAction ActionAfterUpload { get; private set; } = UploadHandlingAction.Flyout;
 
+        [SettingsDoc(
+            "Show a confirmation message as soon as the URL was copied and \"upload.actionAfterUpload\" is set to \"copy\".",
+            Default = "true"
+        )]
+        [JsonProperty("upload.actionAfterUpload.copy.showConfirmation")]
+        public bool ShowCopyConfirmation { get; private set; } = true;
+
         #endregion
         #region capture.*
 
@@ -123,8 +130,6 @@ namespace HolzShots
             Default = "true"
         )]
         public bool AutoCloseLinkViewer { get; private set; } = true;
-        /// <summary> When TODO is set to true, show a flyout as soon as the URL is copied to the clipboard. </summary>
-        public bool ShowCopyConfirmation { get; private set; } = true;
 
         #region key.*
 
