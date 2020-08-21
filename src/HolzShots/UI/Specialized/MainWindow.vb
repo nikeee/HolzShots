@@ -116,6 +116,15 @@ Namespace UI.Specialized
         Private Sub ExitApplication()
             _forceClose = True
             Try
+                ' We have to dispose here
+                ' If we wouldn't do it here, the finalizer of the MainWindow would do it
+                ' Then, the handle of the MainWindow is already destroyed -> InvokeRequired in InvokeWrapper returns false
+                ' (see: https://stackoverflow.com/a/4014468)
+                ' This throws an exception that the hotkey cannot be unregistered because it was not registered.
+                ' It was registered, but on a different thread.
+                ' Because InvokeRequired returns false, UnregisterHotkeyInternal is effectively called in the GC/Finalizer thread.
+                _actionContainer?.Dispose()
+
                 ' Defensive copy of Application.OpenForm
                 Dim forms = New List(Of Form)(Application.OpenForms.Cast(Of Form)())
                 For Each f In forms
