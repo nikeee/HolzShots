@@ -74,13 +74,17 @@ namespace HolzShots
         [JsonProperty("upload.showProgress")]
         public bool ShowUploadProgress { get; private set; } = true;
 
-        #endregion
-
         [SettingsDoc(
-            "Copy the URL of the uploaded image to clipboard instead of showing a flyout with other options.",
-            Default = "true"
+            "What will be done with the link that you get from your upload. Possible options are:\n" +
+            "    flyout: A popup-window in the corner that shows some optiosn for copying the link\n" +
+            "    copy: Copy the link to the clipboard\n" +
+            "    none: Do nothing",
+            Default = "flyout"
         )]
+        [JsonProperty("upload.actionAfterUpload")]
         public UploadHandlingAction ActionAfterUpload { get; private set; } = UploadHandlingAction.Flyout;
+
+        #endregion
 
         [SettingsDoc(
             "Automatically close the flyout containing the URL to the image as soon as some button is pressed.\n" +
