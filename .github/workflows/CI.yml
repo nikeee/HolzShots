@@ -34,7 +34,7 @@ jobs:
       run: npm install -g ajv-cli
 
     - name: Validate JSON Schemas
-      run: ajv -d src/schema/*.schema.json
+      run: ajv -s https://json-schema.org/draft/2019-09/schema -d src/schema/*.schema.json
 
     - name: Collect Artifacts
       if: startsWith(github.ref, 'refs/tags/v')
