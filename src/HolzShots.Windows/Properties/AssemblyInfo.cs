@@ -4,8 +4,8 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("HolzShots.Core")]
-[assembly: AssemblyProduct("HolzShots.Core")]
+[assembly: AssemblyTitle("HolzShots.Windows")]
+[assembly: AssemblyProduct("HolzShots.Windows")]
 [assembly: AssemblyDescription("HolzShots Core Components")]
 
 [assembly: AssemblyCulture("")]
