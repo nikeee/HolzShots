@@ -39,15 +39,11 @@ Namespace UI.Specialized
             Me.openImageInExplorerMenu = New System.Windows.Forms.CheckBox()
             Me.uploadImageInExplorerMenu = New System.Windows.Forms.CheckBox()
             Me.start_with_windows = New System.Windows.Forms.CheckBox()
-            Me.UploadTab = New System.Windows.Forms.TabPage()
-            Me.Label7 = New System.Windows.Forms.Label()
-            Me.defaultHosterBox = New System.Windows.Forms.ComboBox()
             Me.Tabs = New System.Windows.Forms.TabControl()
             Me.PluginsTab.SuspendLayout()
             Me.OthersTab.SuspendLayout()
             CType(Me.elevatedRequiredPictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
             CType(Me.elevatedRequiredPictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
-            Me.UploadTab.SuspendLayout()
             Me.Tabs.SuspendLayout()
             Me.SuspendLayout()
             '
@@ -209,44 +205,11 @@ Namespace UI.Specialized
             Me.start_with_windows.Text = "Start HolzShots with Windows"
             Me.start_with_windows.UseVisualStyleBackColor = True
             '
-            'UploadTab
-            '
-            Me.UploadTab.Controls.Add(Me.Label7)
-            Me.UploadTab.Controls.Add(Me.defaultHosterBox)
-            Me.UploadTab.Location = New System.Drawing.Point(4, 24)
-            Me.UploadTab.Name = "UploadTab"
-            Me.UploadTab.Size = New System.Drawing.Size(448, 262)
-            Me.UploadTab.TabIndex = 7
-            Me.UploadTab.Text = "Upload"
-            Me.UploadTab.UseVisualStyleBackColor = True
-            '
-            'Label7
-            '
-            Me.Label7.AutoSize = True
-            Me.Label7.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-            Me.Label7.Location = New System.Drawing.Point(14, 18)
-            Me.Label7.Name = "Label7"
-            Me.Label7.Size = New System.Drawing.Size(122, 15)
-            Me.Label7.TabIndex = 10
-            Me.Label7.Text = "Default Image Hoster:"
-            '
-            'defaultHosterBox
-            '
-            Me.defaultHosterBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-            Me.defaultHosterBox.FlatStyle = System.Windows.Forms.FlatStyle.System
-            Me.defaultHosterBox.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-            Me.defaultHosterBox.FormattingEnabled = True
-            Me.defaultHosterBox.Location = New System.Drawing.Point(142, 15)
-            Me.defaultHosterBox.Name = "defaultHosterBox"
-            Me.defaultHosterBox.Size = New System.Drawing.Size(180, 23)
-            Me.defaultHosterBox.TabIndex = 4
-            '
             'Tabs
             '
             Me.Tabs.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-            Me.Tabs.Controls.Add(Me.UploadTab)
             Me.Tabs.Controls.Add(Me.OthersTab)
             Me.Tabs.Controls.Add(Me.PluginsTab)
             Me.Tabs.Font = New System.Drawing.Font("Segoe UI", 9.0!)
@@ -284,8 +247,6 @@ Namespace UI.Specialized
             Me.OthersTab.PerformLayout()
             CType(Me.elevatedRequiredPictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
             CType(Me.elevatedRequiredPictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
-            Me.UploadTab.ResumeLayout(False)
-            Me.UploadTab.PerformLayout()
             Me.Tabs.ResumeLayout(False)
             Me.ResumeLayout(False)
 
@@ -303,9 +264,6 @@ Namespace UI.Specialized
         Friend WithEvents openImageInExplorerMenu As CheckBox
         Friend WithEvents uploadImageInExplorerMenu As CheckBox
         Friend WithEvents start_with_windows As CheckBox
-        Friend WithEvents UploadTab As TabPage
-        Friend WithEvents Label7 As Label
-        Friend WithEvents defaultHosterBox As ComboBox
         Friend WithEvents Tabs As TabControl
     End Class
 End Namespace

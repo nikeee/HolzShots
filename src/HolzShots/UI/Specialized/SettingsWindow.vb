@@ -35,12 +35,9 @@ Namespace UI.Specialized
         Private Sub DisplayPlugins()
 
             If My.Application.Uploaders.Loaded Then
-                Dim uploaders = My.Application.Uploaders.GetUploaderNames()
-                defaultHosterBox.Items.Clear()
-                defaultHosterBox.Items.AddRange(uploaders.ToArray())
-
                 pluginListPanel.Controls.Clear()
                 _pluginInfoItemList.Clear()
+
                 Dim metadata = My.Application.Uploaders.GetMetadata()
                 Dim metaArr = metadata.Select(Function(i) New PluginInfoItem(i)).ToArray()
                 pluginListPanel.Controls.AddRange(metaArr)
