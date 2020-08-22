@@ -71,23 +71,19 @@ Namespace My
                     Case AreaSelectorParameter
                         Await MainWindow.CommandManager.Dispatch(Of SelectAreaCommand)().ConfigureAwait(True)
                     Case UploadParameter
+                        Dim params = New Dictionary(Of String, String)()
                         If i < args.Length - 1 Then
-                            Dim params = New Dictionary(Of String, String)() From {
-                                {EditImageCommand.FileNameParameter, args(i + 1)}
-                            }
-                            Await MainWindow.CommandManager.Dispatch(Of UploadImageCommand)(params).ConfigureAwait(True)
-                        Else
-                            Await MainWindow.CommandManager.Dispatch(Of UploadImageCommand)().ConfigureAwait(True)
+                            params(FileDependentCommand.FileNameParameter) = args(i + 1)
                         End If
+
+                        Await MainWindow.CommandManager.Dispatch(Of UploadImageCommand)(params).ConfigureAwait(True)
                     Case OpenParameter
+                        Dim params = New Dictionary(Of String, String)()
                         If i < args.Length - 1 Then
-                            Dim params = New Dictionary(Of String, String)() From {
-                                {EditImageCommand.FileNameParameter, args(i + 1)}
-                            }
-                            Await MainWindow.CommandManager.Dispatch(Of EditImageCommand)(params).ConfigureAwait(True)
-                        Else
-                            Await MainWindow.CommandManager.Dispatch(Of EditImageCommand)().ConfigureAwait(True)
+                            params(FileDependentCommand.FileNameParameter) = args(i + 1)
                         End If
+
+                        Await MainWindow.CommandManager.Dispatch(Of EditImageCommand)(params).ConfigureAwait(True)
                 End Select
             Next
         End Function
