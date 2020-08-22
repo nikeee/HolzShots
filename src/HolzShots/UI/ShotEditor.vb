@@ -45,7 +45,7 @@ Namespace UI.Specialized
 
             If TaskbarManager.IsPlatformSupported Then
 
-                If _imageHoster IsNot Nothing Then
+                If _imageHoster IsNot Nothing AndAlso _imageHoster.Value.metadata IsNot Nothing Then
                     Dim uploadTooltip As String = UploadToHoster.ToolTipText.Remove(UploadToHoster.ToolTipText.IndexOf(" (", StringComparison.Ordinal))
                     uploadTooltip = String.Format(Global.HolzShots.My.Application.TheCulture, uploadTooltip, _imageHoster.Value.metadata.Name)
 
@@ -126,9 +126,9 @@ Namespace UI.Specialized
             DrawCursor.Visible = screenshot.Source <> ScreenshotSource.Selected AndAlso screenshot.Source <> ScreenshotSource.Unknown
 
 
-            UploadToHoster.Enabled = _imageHoster IsNot Nothing
+            UploadToHoster.Enabled = _imageHoster IsNot Nothing AndAlso _imageHoster.Value.metadata IsNot Nothing
             UploadToHoster.ToolTipText = If(
-                            _imageHoster?.metadata IsNot Nothing,
+                            _imageHoster?.metadata IsNot Nothing AndAlso _imageHoster.Value.metadata IsNot Nothing,
                             String.Format(Global.HolzShots.My.Application.TheCulture, UploadToHoster.ToolTipText, _imageHoster?.metadata.Name),
                             String.Empty
                         )
