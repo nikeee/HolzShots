@@ -16,7 +16,7 @@ Module Extensions
     <Extension()>
     Public Function GetImageFormatFromFileExtension(fileName As String) As ImageFormat
         Debug.Assert(Not String.IsNullOrEmpty(fileName))
-        Dim extension = path.GetExtension(fileName)
+        Dim extension = Path.GetExtension(fileName)
 
         Debug.Assert(extension IsNot Nothing)
         Dim res = _imageFormats.SingleOrDefault(Function(i) i.Value?.Extension = extension).Key
@@ -34,8 +34,8 @@ Module Extensions
     End Function
 
     Class ImageFormatMetadata
-        Public ReadOnly MimeType As String
-        Public ReadOnly Extension As String
+        Public ReadOnly Property MimeType As String
+        Public ReadOnly Property Extension As String
         Sub New(mimeType As String, extension As String)
             Me.MimeType = mimeType
             Me.Extension = extension

@@ -17,6 +17,7 @@ namespace HolzShots.Input
         public Keys Key { get; }
 
         /// <summary> Do not use. Only there for serialization. </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2222:Do not decrease inherited member visibility", Justification = "Only there for serialization.")]
         private Hotkey() { }
 
         public Hotkey(ModifierKeys modifiers, Keys key)

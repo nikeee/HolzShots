@@ -29,9 +29,9 @@ Namespace UI.Forms
         End Sub
 
         Private Structure EmbeddedControl
-            Public ReadOnly Item As ListViewItem.ListViewSubItem
-            Public ReadOnly Control As Control
-            Public ReadOnly Dock As DockStyle
+            Public ReadOnly Property Item As ListViewItem.ListViewSubItem
+            Public ReadOnly Property Control As Control
+            Public ReadOnly Property Dock As DockStyle
             Public Sub New(item As ListViewItem.ListViewSubItem, control As Control)
                 Me.Item = item
                 Me.Control = control

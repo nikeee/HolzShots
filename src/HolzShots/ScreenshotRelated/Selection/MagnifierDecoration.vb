@@ -3,11 +3,22 @@ Imports System.Drawing.Drawing2D
 Namespace ScreenshotRelated.Selection
     Friend Class MagnifierDecoration
 
-        Private _magnifierView As New Rectangle
-        Public PreviousMagnifierLocation As New Rectangle
-        Public CurrentInnerCorner As MagnifierCorner
+        Private _previousMagnifierLocation As New Rectangle
+        Public ReadOnly Property PreviousMagnifierLocation As Rectangle
+            Get
+                Return _previousMagnifierLocation
+            End Get
+        End Property
+
+        Private _currentInnerCorner As MagnifierCorner
+        Public ReadOnly Property CurrentInnerCorner As MagnifierCorner
+            Get
+                Return _currentInnerCorner
+            End Get
+        End Property
 
         Private _drawCorner As MagnifierCorner
+        Private _magnifierView As New Rectangle
 
         Private Const MagnifierDrawDimensions As Integer = 80
         Private Const MagnifierViewPortion As Integer = 40
@@ -63,23 +74,23 @@ Namespace ScreenshotRelated.Selection
                 End If
             End If
 
-            PreviousMagnifierLocation.Width = MagnifierDrawDimensions
-            PreviousMagnifierLocation.Height = MagnifierDrawDimensions
+            _previousMagnifierLocation.Width = MagnifierDrawDimensions
+            _previousMagnifierLocation.Height = MagnifierDrawDimensions
 
             Select Case _drawCorner
                 Case MagnifierCorner.BottomRight
-                    PreviousMagnifierLocation.X = cLoc.X + mouseOffset
-                    PreviousMagnifierLocation.Y = cLoc.Y + mouseOffset
+                    _previousMagnifierLocation.X = cLoc.X + mouseOffset
+                    _previousMagnifierLocation.Y = cLoc.Y + mouseOffset
                 Case MagnifierCorner.BottomLeft
-                    PreviousMagnifierLocation.X = cLoc.X - mouseOffset - MagnifierDrawDimensions
-                    PreviousMagnifierLocation.Y = cLoc.Y + mouseOffset
+                    _previousMagnifierLocation.X = cLoc.X - mouseOffset - MagnifierDrawDimensions
+                    _previousMagnifierLocation.Y = cLoc.Y + mouseOffset
 
                 Case MagnifierCorner.TopLeft
-                    PreviousMagnifierLocation.X = cLoc.X - mouseOffset - MagnifierDrawDimensions
-                    PreviousMagnifierLocation.Y = cLoc.Y - mouseOffset - MagnifierDrawDimensions
+                    _previousMagnifierLocation.X = cLoc.X - mouseOffset - MagnifierDrawDimensions
+                    _previousMagnifierLocation.Y = cLoc.Y - mouseOffset - MagnifierDrawDimensions
                 Case MagnifierCorner.TopRight
-                    PreviousMagnifierLocation.X = cLoc.X + mouseOffset
-                    PreviousMagnifierLocation.Y = cLoc.Y - mouseOffset - MagnifierDrawDimensions
+                    _previousMagnifierLocation.X = cLoc.X + mouseOffset
+                    _previousMagnifierLocation.Y = cLoc.Y - mouseOffset - MagnifierDrawDimensions
             End Select
 
             _magnifierView.X = cLoc.X - MagnifierViewPortion \ 2
@@ -89,15 +100,15 @@ Namespace ScreenshotRelated.Selection
 
             If cLoc.X = currentSelection.X Then
                 If cLoc.Y = currentSelection.Y Then
-                    CurrentInnerCorner = MagnifierCorner.BottomRight
+                    _currentInnerCorner = MagnifierCorner.BottomRight
                 Else
-                    CurrentInnerCorner = MagnifierCorner.TopRight
+                    _currentInnerCorner = MagnifierCorner.TopRight
                 End If
             Else
                 If cLoc.Y = currentSelection.Y Then
-                    CurrentInnerCorner = MagnifierCorner.BottomLeft
+                    _currentInnerCorner = MagnifierCorner.BottomLeft
                 Else
-                    CurrentInnerCorner = MagnifierCorner.TopLeft
+                    _currentInnerCorner = MagnifierCorner.TopLeft
                 End If
             End If
         End Sub

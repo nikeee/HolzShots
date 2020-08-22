@@ -84,7 +84,8 @@ Namespace UI.Specialized
             _keyboardHook = KeyboardHookSelector.CreateHookForCurrentPlatform(Me)
             RegisterCommands()
 
-            Await UserSettings.Load(Me)
+            Await UserSettings.Load(Me).ConfigureAwait(True) ' We're dealing with UI code here, we want to keep the context
+
             SettingsUpdated(Me, UserSettings.Current)
             AddHandler UserSettings.Manager.OnSettingsUpdated, AddressOf SettingsUpdated
 

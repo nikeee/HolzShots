@@ -114,9 +114,9 @@ Namespace UI.Dialogs
 
 
     Friend Class AnimationSet
-        Public Animator As FlyoutAnimator
-        Public Duration As Integer
-        Public CompletedHandler As Action
+        Public ReadOnly Property Animator As FlyoutAnimator
+        Public ReadOnly Property Duration As Integer
+        Public ReadOnly Property CompletedHandler As Action
 
         Public Sub New(ByVal animator As FlyoutAnimator, ByVal duration As Integer, ByVal completedHandler As Action)
             Me.Animator = animator

@@ -72,7 +72,7 @@ namespace HolzShots
             // However, we use a polling implementation that will fire at most at _pollingInterval.
             // -> We don't need de-bouncing.
 
-            var (success, newSettings) = await DeserializeSettings(SettingsFilePath);
+            var (success, newSettings) = await DeserializeSettings(SettingsFilePath).ConfigureAwait(false);
             if (!success || newSettings == null)
                 return;
 
@@ -103,7 +103,7 @@ namespace HolzShots
                 using (var reader = File.OpenText(path))
                 {
                     // No check for File.Exists because we'll get an exception anyways and avoid race conditions
-                    var settingsContent = await reader.ReadToEndAsync();
+                    var settingsContent = await reader.ReadToEndAsync().ConfigureAwait(false);
                     var newSettings = JsonConvert.DeserializeObject<T>(settingsContent, _jsonSerializerSettings);
 
                     return (true, newSettings);

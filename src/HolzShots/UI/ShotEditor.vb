@@ -697,8 +697,7 @@ Namespace UI.Specialized
             ThePanel.ZensursulaWidth = ZensursulaBar.Value
         End Sub
 
-        Private Sub ZensursulaViewerColorChanged(ByVal sender As Object, ByVal c As Color) _
-            Handles Zensursula_Viewer.ColorChanged
+        Private Sub ZensursulaViewerColorChanged(ByVal sender As Object, ByVal c As Color) Handles Zensursula_Viewer.ColorChanged
             ThePanel.ZensursulaColor = c
         End Sub
 
