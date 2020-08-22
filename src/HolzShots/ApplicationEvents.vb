@@ -71,22 +71,22 @@ Namespace My
                     Case AreaSelectorParameter
                         Await MainWindow.CommandManager.Dispatch(Of SelectAreaCommand)().ConfigureAwait(True)
                     Case UploadParameter
-                        Await MainWindow.CommandManager.Dispatch(Of UploadImageCommand)().ConfigureAwait(True)
-                    Case OpenParameter
-                        Await MainWindow.CommandManager.Dispatch(Of EditImageCommand)().ConfigureAwait(True)
-                    Case OpenFromShellParameter
-                        If i < args.Length - 1 Then
-                            Dim params = New Dictionary(Of String, String)() From {
-                                {EditImageCommand.FileNameParameter, args(i + 1)}
-                            }
-                            Await MainWindow.CommandManager.Dispatch(Of EditImageCommand)(params).ConfigureAwait(True)
-                        End If
-                    Case UploadFromShellParameter
                         If i < args.Length - 1 Then
                             Dim params = New Dictionary(Of String, String)() From {
                                 {EditImageCommand.FileNameParameter, args(i + 1)}
                             }
                             Await MainWindow.CommandManager.Dispatch(Of UploadImageCommand)(params).ConfigureAwait(True)
+                        Else
+                            Await MainWindow.CommandManager.Dispatch(Of UploadImageCommand)().ConfigureAwait(True)
+                        End If
+                    Case OpenParameter
+                        If i < args.Length - 1 Then
+                            Dim params = New Dictionary(Of String, String)() From {
+                                {EditImageCommand.FileNameParameter, args(i + 1)}
+                            }
+                            Await MainWindow.CommandManager.Dispatch(Of EditImageCommand)(params).ConfigureAwait(True)
+                        Else
+                            Await MainWindow.CommandManager.Dispatch(Of EditImageCommand)().ConfigureAwait(True)
                         End If
                 End Select
             Next

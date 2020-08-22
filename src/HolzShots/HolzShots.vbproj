@@ -292,9 +292,7 @@
     <Compile Include="Interop\ExplorerContextMenu.vb" />
     <Compile Include="Interop\HumanInterop.vb" />
     <Compile Include="Interop\InteropHelper.vb" />
-    <Compile Include="Interop\ManagedSettings.vb" />
     <Compile Include="Interop\LocalDisk\ScreenshotDumper.vb" />
-    <Compile Include="Interop\ShellExtensions.vb" />
     <Compile Include="Drawing\Tools\Crop.vb" />
     <Compile Include="UI\Controls\NumericTextBox.vb">
       <SubType>Component</SubType>

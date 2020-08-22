@@ -33,16 +33,10 @@ Namespace UI.Specialized
             Me.openPluginFolderLinkLabel = New HolzShots.UI.Forms.ExplorerLinkLabel()
             Me.Label10 = New System.Windows.Forms.Label()
             Me.OthersTab = New System.Windows.Forms.TabPage()
-            Me.elevatedRequiredPictureBox2 = New System.Windows.Forms.PictureBox()
-            Me.elevatedRequiredPictureBox1 = New System.Windows.Forms.PictureBox()
-            Me.openImageInExplorerMenu = New System.Windows.Forms.CheckBox()
-            Me.uploadImageInExplorerMenu = New System.Windows.Forms.CheckBox()
             Me.start_with_windows = New System.Windows.Forms.CheckBox()
             Me.Tabs = New System.Windows.Forms.TabControl()
             Me.PluginsTab.SuspendLayout()
             Me.OthersTab.SuspendLayout()
-            CType(Me.elevatedRequiredPictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(Me.elevatedRequiredPictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.Tabs.SuspendLayout()
             Me.SuspendLayout()
             '
@@ -125,10 +119,6 @@ Namespace UI.Specialized
             '
             'OthersTab
             '
-            Me.OthersTab.Controls.Add(Me.elevatedRequiredPictureBox2)
-            Me.OthersTab.Controls.Add(Me.elevatedRequiredPictureBox1)
-            Me.OthersTab.Controls.Add(Me.openImageInExplorerMenu)
-            Me.OthersTab.Controls.Add(Me.uploadImageInExplorerMenu)
             Me.OthersTab.Controls.Add(Me.start_with_windows)
             Me.OthersTab.Location = New System.Drawing.Point(4, 24)
             Me.OthersTab.Name = "OthersTab"
@@ -136,48 +126,6 @@ Namespace UI.Specialized
             Me.OthersTab.TabIndex = 4
             Me.OthersTab.Text = "Misc"
             Me.OthersTab.UseVisualStyleBackColor = True
-            '
-            'elevatedRequiredPictureBox2
-            '
-            Me.elevatedRequiredPictureBox2.Location = New System.Drawing.Point(17, 81)
-            Me.elevatedRequiredPictureBox2.Name = "elevatedRequiredPictureBox2"
-            Me.elevatedRequiredPictureBox2.Size = New System.Drawing.Size(16, 16)
-            Me.elevatedRequiredPictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
-            Me.elevatedRequiredPictureBox2.TabIndex = 14
-            Me.elevatedRequiredPictureBox2.TabStop = False
-            '
-            'elevatedRequiredPictureBox1
-            '
-            Me.elevatedRequiredPictureBox1.Location = New System.Drawing.Point(17, 56)
-            Me.elevatedRequiredPictureBox1.Name = "elevatedRequiredPictureBox1"
-            Me.elevatedRequiredPictureBox1.Size = New System.Drawing.Size(16, 16)
-            Me.elevatedRequiredPictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
-            Me.elevatedRequiredPictureBox1.TabIndex = 13
-            Me.elevatedRequiredPictureBox1.TabStop = False
-            '
-            'openImageInExplorerMenu
-            '
-            Me.openImageInExplorerMenu.AutoSize = True
-            Me.openImageInExplorerMenu.FlatStyle = System.Windows.Forms.FlatStyle.System
-            Me.openImageInExplorerMenu.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-            Me.openImageInExplorerMenu.Location = New System.Drawing.Point(43, 80)
-            Me.openImageInExplorerMenu.Name = "openImageInExplorerMenu"
-            Me.openImageInExplorerMenu.Size = New System.Drawing.Size(267, 20)
-            Me.openImageInExplorerMenu.TabIndex = 12
-            Me.openImageInExplorerMenu.Text = "Add „ShotEditor"" to explorer's context menu"
-            Me.openImageInExplorerMenu.UseVisualStyleBackColor = True
-            '
-            'uploadImageInExplorerMenu
-            '
-            Me.uploadImageInExplorerMenu.AutoSize = True
-            Me.uploadImageInExplorerMenu.FlatStyle = System.Windows.Forms.FlatStyle.System
-            Me.uploadImageInExplorerMenu.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-            Me.uploadImageInExplorerMenu.Location = New System.Drawing.Point(43, 54)
-            Me.uploadImageInExplorerMenu.Name = "uploadImageInExplorerMenu"
-            Me.uploadImageInExplorerMenu.Size = New System.Drawing.Size(250, 20)
-            Me.uploadImageInExplorerMenu.TabIndex = 11
-            Me.uploadImageInExplorerMenu.Text = "Add „Upload"" to explorer's context menu"
-            Me.uploadImageInExplorerMenu.UseVisualStyleBackColor = True
             '
             'start_with_windows
             '
@@ -230,8 +178,6 @@ Namespace UI.Specialized
             Me.PluginsTab.PerformLayout()
             Me.OthersTab.ResumeLayout(False)
             Me.OthersTab.PerformLayout()
-            CType(Me.elevatedRequiredPictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(Me.elevatedRequiredPictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
             Me.Tabs.ResumeLayout(False)
             Me.ResumeLayout(False)
 
@@ -243,10 +189,6 @@ Namespace UI.Specialized
         Friend WithEvents openPluginFolderLinkLabel As ExplorerLinkLabel
         Friend WithEvents Label10 As Label
         Friend WithEvents OthersTab As TabPage
-        Friend WithEvents elevatedRequiredPictureBox2 As PictureBox
-        Friend WithEvents elevatedRequiredPictureBox1 As PictureBox
-        Friend WithEvents openImageInExplorerMenu As CheckBox
-        Friend WithEvents uploadImageInExplorerMenu As CheckBox
         Friend WithEvents start_with_windows As CheckBox
         Friend WithEvents Tabs As TabControl
     End Class

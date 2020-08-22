@@ -7,11 +7,6 @@ Namespace UI.Specialized
     Friend Class SettingsWindow
         Inherits Form
 
-        Private Class Localization
-            Public Const NotSet = "<not set>"
-            Public Const InvalidFilePattern = "Invalid Pattern"
-        End Class
-
         Public Shared ReadOnly Instance As SettingsWindow = New SettingsWindow()
 
         Private Shared ReadOnly BorderPen As New Pen(Color.FromArgb(255, &HCC, &HCC, &HCC))
@@ -21,14 +16,6 @@ Namespace UI.Specialized
         Private Sub New()
             InitializeComponent()
             DisplayPlugins()
-            InitializeIconResources()
-        End Sub
-
-        Private Sub InitializeIconResources()
-            Dim shield = My.MyApplication.SmallStockIcons.Shield.Icon.ToBitmap()
-
-            elevatedRequiredPictureBox1.Image = shield
-            elevatedRequiredPictureBox2.Image = shield
         End Sub
 
 
@@ -46,23 +33,10 @@ Namespace UI.Specialized
         End Sub
 
         Private Sub LoadPolicies()
-            uploadImageInExplorerMenu.Checked = ManagedSettings.ShellExtensionUpload
-            uploadImageInExplorerMenu.Enabled = InteropHelper.IsAdministrator()
-
-            openImageInExplorerMenu.Checked = ManagedSettings.ShellExtensionOpen
-            openImageInExplorerMenu.Enabled = InteropHelper.IsAdministrator()
-
             start_with_windows.Checked = HolzShotsEnvironment.AutoStart
         End Sub
 
         Private Sub SavePolicies()
-            If ShellExtensions.ShellExtensionOpen <> openImageInExplorerMenu.Checked AndAlso InteropHelper.IsAdministrator() Then
-                ShellExtensions.ShellExtensionOpen = openImageInExplorerMenu.Checked
-            End If
-            If ShellExtensions.ShellExtensionUpload <> uploadImageInExplorerMenu.Checked AndAlso InteropHelper.IsAdministrator() Then
-                ShellExtensions.ShellExtensionUpload = uploadImageInExplorerMenu.Checked
-            End If
-
             HolzShotsEnvironment.AutoStart = start_with_windows.Checked
 
             My.Settings.Save()
