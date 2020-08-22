@@ -19,7 +19,7 @@ namespace HolzShots.Composition
 
         public Task Load() => Task.WhenAll(Plugins.Load(), Customs.Load());
 
-        public (IPluginMetadata metadata, Uploader uploader)? GetUploaderByName(string name)
+        public UploaderEntry /*?*/ GetUploaderByName(string name)
         {
             Debug.Assert(Plugins != null);
             Debug.Assert(Customs != null);

@@ -44,7 +44,7 @@ namespace HolzShots
         public static Task ForceReload() => Manager.ForceReload();
 
         /// <summary> TODO: This look wrong here. We should place this somewhere else. </summary>
-        public static (IPluginMetadata metadata, Uploader uploader)? GetImageServiceForSettingsContext(HSSettings context, UploaderManager uploaderManager)
+        public static UploaderEntry /*?*/ GetImageServiceForSettingsContext(HSSettings context, UploaderManager uploaderManager)
         {
             Debug.Assert(context != null);
             Debug.Assert(uploaderManager != null);

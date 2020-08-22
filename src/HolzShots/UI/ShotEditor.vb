@@ -31,7 +31,7 @@ Namespace UI.Specialized
 
         Friend Property Screenshot As Screenshot
 
-        Private ReadOnly _imageHoster As (metadata As IPluginMetadata, uploader As Uploader)?
+        Private ReadOnly _imageHoster As UploaderEntry ' ?
 
 #End Region
 
@@ -46,14 +46,14 @@ Namespace UI.Specialized
             If TaskbarManager.IsPlatformSupported Then
 
                 Dim uploadTooltip As String = String.Empty
-                If _imageHoster?.metadata IsNot Nothing Then
+                If _imageHoster?.Metadata IsNot Nothing Then
                     uploadTooltip = UploadToHoster.ToolTipText.Remove(UploadToHoster.ToolTipText.IndexOf(" (", StringComparison.Ordinal))
-                    uploadTooltip = String.Format(Global.HolzShots.My.Application.TheCulture, uploadTooltip, _imageHoster.Value.metadata.Name)
+                    uploadTooltip = String.Format(Global.HolzShots.My.Application.TheCulture, uploadTooltip, _imageHoster.Metadata.Name)
                 End If
 
                 _uploadThumbnailButton = New ThumbnailToolBarButton(Icon.FromHandle(HolzShots.My.Resources.uploadMedium.GetHicon()), uploadTooltip)
                 AddHandler _uploadThumbnailButton.Click, Sub() UploadCurrentImageToDefaultProvider()
-                _uploadThumbnailButton.Enabled = _imageHoster?.metadata IsNot Nothing
+                _uploadThumbnailButton.Enabled = _imageHoster?.Metadata IsNot Nothing
 
                 _saveThumbnailButton = New ThumbnailToolBarButton(Icon.FromHandle(HolzShots.My.Resources.saveMedium.GetHicon()), "Save image")
                 _copyThumbnailButton = New ThumbnailToolBarButton(Icon.FromHandle(HolzShots.My.Resources.clipboardMedium.GetHicon()), "Copy image")
@@ -127,10 +127,10 @@ Namespace UI.Specialized
             DrawCursor.Visible = screenshot.Source <> ScreenshotSource.Selected AndAlso screenshot.Source <> ScreenshotSource.Unknown
 
 
-            UploadToHoster.Enabled = _imageHoster IsNot Nothing AndAlso _imageHoster.Value.metadata IsNot Nothing
+            UploadToHoster.Enabled = _imageHoster?.Metadata IsNot Nothing
             UploadToHoster.ToolTipText = If(
-                            _imageHoster?.metadata IsNot Nothing AndAlso _imageHoster.Value.metadata IsNot Nothing,
-                            String.Format(Global.HolzShots.My.Application.TheCulture, UploadToHoster.ToolTipText, _imageHoster?.metadata.Name),
+                            _imageHoster?.Metadata IsNot Nothing,
+                            String.Format(Global.HolzShots.My.Application.TheCulture, UploadToHoster.ToolTipText, _imageHoster?.Metadata.Name),
                             String.Empty
                         )
 
@@ -788,34 +788,33 @@ Namespace UI.Specialized
         End Sub
 
         Private Async Sub UploadToHosterDropDownItemClicked(ByVal sender As Object, ByVal e As ToolStripItemClickedEventArgs) Handles UploadToHoster.DropDownItemClicked
+
             Dim tag = DirectCast(e.ClickedItem.Tag, String)
-            If Not String.IsNullOrWhiteSpace(tag) Then
-                ' Dirty :>
-                Dim info = HolzShots.My.Application.Uploaders.GetUploaderByName(tag)
+            ' the tag represents the name of the image hoster here
+            If String.IsNullOrWhiteSpace(tag) Then Return
 
-                Debug.Assert(info.HasValue)
+            ' Dirty :>
+            Dim info = HolzShots.My.Application.Uploaders.GetUploaderByName(tag)
 
-                Dim v = info.Value
-                Debug.Assert(v.metadata IsNot Nothing)
-                Debug.Assert(v.uploader IsNot Nothing)
-                Debug.Assert(v.metadata.Name = tag)
-                Debug.Assert(Not String.IsNullOrEmpty(tag))
+            Debug.Assert(Not String.IsNullOrEmpty(tag))
+            Debug.Assert(info IsNot Nothing)
+            Debug.Assert(info.Metadata IsNot Nothing)
+            Debug.Assert(info.Uploader IsNot Nothing)
+            Debug.Assert(Uploader.HasEqualName(info.Metadata.Name, tag))
 
-                Dim image = ThePanel.CombinedImage
-                Dim format = UploadHelper.GetImageFormat(image)
-                Dim result As UploadResult
-                Try
-                    result = Await UploadHelper.Upload(v.uploader, image, format, Me).ConfigureAwait(True)
-                    Debug.Assert(result IsNot Nothing)
-                    UploadHelper.InvokeUploadFinishedUi(result)
-                Catch ex As UploadCanceledException
-                    HumanInterop.ShowOperationCanceled()
-                Catch ex As UploadException
-                    HumanInterop.UploadFailed(ex)
-                    Return
-                End Try
-                HandleAfterUpload()
-            End If
+            Dim image = ThePanel.CombinedImage
+            Dim format = UploadHelper.GetImageFormat(image)
+            Try
+                Dim result = Await UploadHelper.Upload(info.Uploader, image, format, Me).ConfigureAwait(True)
+                Debug.Assert(result IsNot Nothing)
+                UploadHelper.InvokeUploadFinishedUi(result)
+            Catch ex As UploadCanceledException
+                HumanInterop.ShowOperationCanceled()
+            Catch ex As UploadException
+                HumanInterop.UploadFailed(ex)
+                Return
+            End Try
+            HandleAfterUpload()
         End Sub
 
         Private Sub UploadToHosterButtonClick(ByVal sender As Object, ByVal e As EventArgs) Handles UploadToHoster.ButtonClick

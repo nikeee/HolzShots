@@ -15,16 +15,15 @@ Namespace Net
         Friend Shared Function UploadToDefaultUploader(image As Image, Optional format As ImageFormat = Nothing, Optional parentWindow As IWin32Window = Nothing) As Task(Of UploadResult)
 
             Dim info = UserSettings.GetImageServiceForSettingsContext(UserSettings.Current, HolzShots.My.Application.Uploaders)
-            Debug.Assert(info.HasValue)
-
-            If Not info.HasValue Then Throw New Exception()
-            Dim v = info.Value
-
             Debug.Assert(info IsNot Nothing)
-            Debug.Assert(v.metadata IsNot Nothing)
-            Debug.Assert(v.uploader IsNot Nothing)
+            Debug.Assert(info.Metadata IsNot Nothing)
+            Debug.Assert(info.Uploader IsNot Nothing)
 
-            Return Upload(v.uploader, image, format, parentWindow)
+#If RELEASE Then
+            If info Is Nothing Then Throw New Exception()
+#End If
+
+            Return Upload(info.Uploader, image, format, parentWindow)
         End Function
 
         ''' <summary>

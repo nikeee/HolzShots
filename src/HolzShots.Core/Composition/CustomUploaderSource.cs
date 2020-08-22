@@ -67,7 +67,7 @@ namespace HolzShots.Composition
             }
         }
 
-        public (IPluginMetadata metadata, Uploader uploader)? GetUploaderByName(string name)
+        public UploaderEntry? GetUploaderByName(string name)
         {
             var cupls = _customUploaders;
             Debug.Assert(cupls != null);
@@ -81,13 +81,13 @@ namespace HolzShots.Composition
                 Debug.Assert(uploader != null);
 
                 if (Uploader.HasEqualName(info.Name, name))
-                    return (metadata: info, uploader);
+                    return new UploaderEntry(info, uploader);
             }
 
             return null;
         }
         public IReadOnlyList<string> GetUploaderNames() => GetMetadata().Select(i => i.Name).ToList();
         public IReadOnlyList<IPluginMetadata> GetMetadata() => _customUploaders.Select(kv => kv.Key).ToList();
-
     }
+
 }
