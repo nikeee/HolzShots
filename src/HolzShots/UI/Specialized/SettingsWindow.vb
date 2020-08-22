@@ -32,22 +32,9 @@ Namespace UI.Specialized
             End If
         End Sub
 
-        Private Sub LoadPolicies()
-            start_with_windows.Checked = HolzShotsEnvironment.AutoStart
-        End Sub
-
-        Private Sub SavePolicies()
-            HolzShotsEnvironment.AutoStart = start_with_windows.Checked
-
-            My.Settings.Save()
-        End Sub
-
-        Private Sub SettingsLoad(ByVal sender As Object, ByVal e As EventArgs) Handles MyBase.Load
-            LoadPolicies()
-        End Sub
 
         Private Sub SavebtnClick(ByVal sender As Object, ByVal e As EventArgs) Handles savebtn.Click
-            SavePolicies()
+            My.Settings.Save()
             Close()
         End Sub
 

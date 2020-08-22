@@ -32,11 +32,8 @@ Namespace UI.Specialized
             Me.pluginListPanel = New HolzShots.UI.Controls.StackPanel()
             Me.openPluginFolderLinkLabel = New HolzShots.UI.Forms.ExplorerLinkLabel()
             Me.Label10 = New System.Windows.Forms.Label()
-            Me.OthersTab = New System.Windows.Forms.TabPage()
-            Me.start_with_windows = New System.Windows.Forms.CheckBox()
             Me.Tabs = New System.Windows.Forms.TabControl()
             Me.PluginsTab.SuspendLayout()
-            Me.OthersTab.SuspendLayout()
             Me.Tabs.SuspendLayout()
             Me.SuspendLayout()
             '
@@ -117,34 +114,11 @@ Namespace UI.Specialized
             Me.Label10.TabIndex = 6
             Me.Label10.Text = "Loaded Plugins:"
             '
-            'OthersTab
-            '
-            Me.OthersTab.Controls.Add(Me.start_with_windows)
-            Me.OthersTab.Location = New System.Drawing.Point(4, 24)
-            Me.OthersTab.Name = "OthersTab"
-            Me.OthersTab.Size = New System.Drawing.Size(448, 262)
-            Me.OthersTab.TabIndex = 4
-            Me.OthersTab.Text = "Misc"
-            Me.OthersTab.UseVisualStyleBackColor = True
-            '
-            'start_with_windows
-            '
-            Me.start_with_windows.AutoSize = True
-            Me.start_with_windows.FlatStyle = System.Windows.Forms.FlatStyle.System
-            Me.start_with_windows.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-            Me.start_with_windows.Location = New System.Drawing.Point(43, 28)
-            Me.start_with_windows.Name = "start_with_windows"
-            Me.start_with_windows.Size = New System.Drawing.Size(190, 20)
-            Me.start_with_windows.TabIndex = 0
-            Me.start_with_windows.Text = "Start HolzShots with Windows"
-            Me.start_with_windows.UseVisualStyleBackColor = True
-            '
             'Tabs
             '
             Me.Tabs.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-            Me.Tabs.Controls.Add(Me.OthersTab)
             Me.Tabs.Controls.Add(Me.PluginsTab)
             Me.Tabs.Font = New System.Drawing.Font("Segoe UI", 9.0!)
             Me.Tabs.HotTrack = True
@@ -176,8 +150,6 @@ Namespace UI.Specialized
             Me.Text = "Settings - HolzShots"
             Me.PluginsTab.ResumeLayout(False)
             Me.PluginsTab.PerformLayout()
-            Me.OthersTab.ResumeLayout(False)
-            Me.OthersTab.PerformLayout()
             Me.Tabs.ResumeLayout(False)
             Me.ResumeLayout(False)
 
@@ -188,8 +160,6 @@ Namespace UI.Specialized
         Friend WithEvents pluginListPanel As Controls.StackPanel
         Friend WithEvents openPluginFolderLinkLabel As ExplorerLinkLabel
         Friend WithEvents Label10 As Label
-        Friend WithEvents OthersTab As TabPage
-        Friend WithEvents start_with_windows As CheckBox
         Friend WithEvents Tabs As TabControl
     End Class
 End Namespace

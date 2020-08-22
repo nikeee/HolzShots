@@ -92,6 +92,8 @@ Namespace UI.Specialized
             Dim isAutorun = HolzShotsEnvironment.CurrentStartupManager.IsStartedUp
             Dim args = HolzShotsEnvironment.CurrentStartupManager.CommandLineArguments
 
+            StartWithWindows.Checked = HolzShotsEnvironment.CurrentStartupManager.IsRegistered
+
             Await MyApplication.ProcessCommandLineArguments(args).ConfigureAwait(True)
 
             Dim saveSettings As Boolean = False
@@ -198,6 +200,15 @@ Namespace UI.Specialized
 
         Private Sub FeedbackMenuItemClick(sender As Object, e As EventArgs) Handles feedbackMenuItem.Click
             LibraryInformation.IssuesUrl.SafeProcessStart()
+        End Sub
+
+        Private Sub StartWithWindowsClick(sender As Object, e As EventArgs) Handles StartWithWindows.Click
+            If HolzShotsEnvironment.CurrentStartupManager.IsRegistered Then
+                HolzShotsEnvironment.CurrentStartupManager.Unregister()
+            Else
+                HolzShotsEnvironment.CurrentStartupManager.Register()
+            End If
+            StartWithWindows.Checked = HolzShotsEnvironment.CurrentStartupManager.IsRegistered
         End Sub
 
 #End Region
