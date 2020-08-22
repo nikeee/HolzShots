@@ -1,19 +1,20 @@
 {
-    "schemaVersion": "0.1.0",
-    "meta": {
-        "version": "1.0.0",
-        "name": "DirectUpload.net"
+  "schemaVersion": "0.1.0",
+  "meta": {
+    "version": "1.0.0",
+    "name": "DirectUpload.net",
+    "author": "nikeee"
+  },
+  "uploader": {
+    "fileFormName": "bilddatei",
+    "requestUrl": "https://directupload.net/index.php?mode=upload",
+    "postParams": {
+      "input": "file"
     },
-    "uploader": {
-        "fileFormName": "bilddatei",
-        "requestUrl": "https://directupload.net",
-        "postParams": {
-            "input": "file"
-        },
-        "parser": {
-            "kind": "regex",
-            "success": "(?<url>http://[a-zA-Z0-9]*.directupload.net/images/\\d{1,}/\\w{1,}.[a-zA-Z]{1,3})",
-            "url": "$3,url$"
-        }
+    "parser": {
+      "kind": "regex",
+      "success": "(?<url>https://[a-zA-Z0-9]*.directupload.net/images/\\d{1,}/\\b(?!temp\\b).*?\\b.[a-zA-Z]{1,3})",
+      "url": "$1,url$"
     }
+  }
 }

@@ -145,7 +145,7 @@ namespace HolzShots.Net.Custom
                             var fail = obj.SelectToken(parser.Failure);
                             if (fail == null) // Check if there is an error message
                                 throw new UploadException("Response did not contain valid data.");
-                            throw new UploadException($"Server returned error: {fail.ToString()}");
+                            throw new UploadException($"Server returned error: {fail}");
                         }
                         var imageUrl = parser.Url.Replace("$match$", suc.ToString());
                         return imageUrl;
