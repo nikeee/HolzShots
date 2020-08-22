@@ -28,7 +28,6 @@ Namespace UI.Specialized
             Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(SettingsWindow))
             Me.savebtn = New System.Windows.Forms.Button()
             Me.Abort = New System.Windows.Forms.Button()
-            Me.OpenSettingsJson = New System.Windows.Forms.Button()
             Me.PluginsTab = New System.Windows.Forms.TabPage()
             Me.pluginListPanel = New HolzShots.UI.Controls.StackPanel()
             Me.openPluginFolderLinkLabel = New HolzShots.UI.Forms.ExplorerLinkLabel()
@@ -73,19 +72,6 @@ Namespace UI.Specialized
             Me.Abort.TabIndex = 7
             Me.Abort.Text = "Cancel"
             Me.Abort.UseVisualStyleBackColor = True
-            '
-            'OpenSettingsJson
-            '
-            Me.OpenSettingsJson.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-            Me.OpenSettingsJson.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
-            Me.OpenSettingsJson.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-            Me.OpenSettingsJson.Location = New System.Drawing.Point(6, 311)
-            Me.OpenSettingsJson.Name = "OpenSettingsJson"
-            Me.OpenSettingsJson.Size = New System.Drawing.Size(142, 30)
-            Me.OpenSettingsJson.TabIndex = 10
-            Me.OpenSettingsJson.Text = "Open Settings (JSON)"
-            Me.OpenSettingsJson.UseVisualStyleBackColor = True
             '
             'PluginsTab
             '
@@ -228,7 +214,6 @@ Namespace UI.Specialized
             Me.BackColor = System.Drawing.SystemColors.Window
             Me.CancelButton = Me.Abort
             Me.ClientSize = New System.Drawing.Size(466, 353)
-            Me.Controls.Add(Me.OpenSettingsJson)
             Me.Controls.Add(Me.Tabs)
             Me.Controls.Add(Me.Abort)
             Me.Controls.Add(Me.savebtn)
@@ -253,7 +238,6 @@ Namespace UI.Specialized
         End Sub
         Friend WithEvents savebtn As System.Windows.Forms.Button
         Friend WithEvents Abort As System.Windows.Forms.Button
-        Friend WithEvents OpenSettingsJson As Button
         Friend WithEvents PluginsTab As TabPage
         Friend WithEvents pluginListPanel As Controls.StackPanel
         Friend WithEvents openPluginFolderLinkLabel As ExplorerLinkLabel

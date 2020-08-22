@@ -92,10 +92,5 @@ Namespace UI.Specialized
         Private Sub PluginsTabPaint(sender As Object, e As PaintEventArgs) Handles PluginsTab.Paint
             e.Graphics.DrawLine(BorderPen, 0, pluginListPanel.Location.Y - 1, Width - 1, pluginListPanel.Location.Y - 1)
         End Sub
-
-        Private Async Sub OpenSettingsJson_Click(sender As Object, e As EventArgs) Handles OpenSettingsJson.Click
-            Await UserSettings.CreateUserSettingsIfNotPresent().ConfigureAwait(True)
-            UserSettings.OpenSettingsInDefaultEditor()
-        End Sub
     End Class
 End Namespace
