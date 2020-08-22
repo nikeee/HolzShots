@@ -191,21 +191,28 @@ namespace HolzShots.Net.Custom
         {
             if (string.IsNullOrEmpty(Success))
                 return false;
-            try
-            {
-                new Regex(Success); // TODO: RegEx options
-            }
-            catch (Exception) { return false; }
+
+            if (!IsValidRegularExpression(Success))
+                return false;
+
             if (Failure != null)
             {
-                try
-                {
-                    new Regex(Failure); // TODO: RegEx options
-                }
-                catch (Exception) { return false; }
+                if(!IsValidRegularExpression(Failure))
+                    return false;
             }
+
             return true;
         }
+        private static bool IsValidRegularExpression(string exp)
+        {
+            try
+            {
+                _ = new Regex(exp); // TODO: RegEx options
+                return true;
+            }
+            catch (Exception) { return false; }
+        }
+
         private bool ValidateJson(SemVersion schemaVersion)
         {
             if (string.IsNullOrWhiteSpace(Success))
