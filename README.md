@@ -11,3 +11,17 @@ Or install it using [Chocolatey](https://chocolatey.org):
 ```shell
 choco install holzshots
 ```
+
+## CLI Options
+HolzShots is a single-instance application. However, you can interact with the running instance.
+If you pass command-line parameters, they'll invoke actions on the running instance.
+
+Currently, these are supported:
+```shell
+holzshots --capture-area
+holzshots --capture-full
+
+holzshots --open-image [optional image path]
+holzshots --upload-image [optional image path]
+```
+Feel free to integrate this into your tooling!
