@@ -8,7 +8,7 @@ namespace HolzShots.Composition
     public interface IUploaderSource
     {
         bool Loaded { get; }
-        UploaderEntry /*?*/ GetUploaderByName(string name);
+        UploaderEntry/*?*/ GetUploaderByName(string name);
         IReadOnlyList<string> GetUploaderNames();
         IReadOnlyList<IPluginMetadata> GetMetadata();
         Task Load();

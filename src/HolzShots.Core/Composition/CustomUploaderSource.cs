@@ -67,7 +67,7 @@ namespace HolzShots.Composition
             }
         }
 
-        public UploaderEntry? GetUploaderByName(string name)
+        public UploaderEntry/*?*/ GetUploaderByName(string name)
         {
             var cupls = _customUploaders;
             Debug.Assert(cupls != null);

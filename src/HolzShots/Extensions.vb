@@ -4,6 +4,7 @@ Imports System.Linq
 Imports System.Runtime.CompilerServices
 
 Module Extensions
+    ' TODO: Move to C#
 
     Private _imageFormats As New Dictionary(Of ImageFormat, ImageFormatMetadata) From {
             {ImageFormat.Png, New ImageFormatMetadata("image/png", ".png")},
