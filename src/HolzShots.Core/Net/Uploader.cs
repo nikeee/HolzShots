@@ -19,6 +19,8 @@ namespace HolzShots.Net
 
         // TODO Return null if no action needed?
         public abstract Task<UploadResult> InvokeAsync(Stream data, string suggestedFileName, string mimeType, IProgress<UploadProgress> progress, CancellationToken cancellationToken);
+
+        public static bool HasEqualName(string a, string b) => a.Trim().Equals(b.Trim(), StringComparison.OrdinalIgnoreCase);
     }
 
     [Flags]
