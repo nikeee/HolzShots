@@ -89,6 +89,7 @@ namespace HolzShots.Composition
         public IReadOnlyList<string> GetUploaderNames() => GetMetadata().Select(i => i.Name).ToList();
         public IReadOnlyList<IPluginMetadata> GetMetadata() => _customUploaders.Select(kv => kv.Key).ToList();
 
-        private static bool HasEqualUploaderName(string a, string b) => a.Trim().Equals(b.Trim(), StringComparison.OrdinalIgnoreCase);
+        /// <summary> TODO: Move this somewhere else </summary>
+        public static bool HasEqualUploaderName(string a, string b) => a.Trim().Equals(b.Trim(), StringComparison.OrdinalIgnoreCase);
     }
 }

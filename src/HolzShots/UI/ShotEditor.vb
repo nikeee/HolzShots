@@ -45,14 +45,15 @@ Namespace UI.Specialized
 
             If TaskbarManager.IsPlatformSupported Then
 
-                If _imageHoster IsNot Nothing AndAlso _imageHoster.Value.metadata IsNot Nothing Then
-                    Dim uploadTooltip As String = UploadToHoster.ToolTipText.Remove(UploadToHoster.ToolTipText.IndexOf(" (", StringComparison.Ordinal))
+                Dim uploadTooltip As String = String.Empty
+                If _imageHoster?.metadata IsNot Nothing Then
+                    uploadTooltip = UploadToHoster.ToolTipText.Remove(UploadToHoster.ToolTipText.IndexOf(" (", StringComparison.Ordinal))
                     uploadTooltip = String.Format(Global.HolzShots.My.Application.TheCulture, uploadTooltip, _imageHoster.Value.metadata.Name)
-
-                    _uploadThumbnailButton = New ThumbnailToolBarButton(Icon.FromHandle(HolzShots.My.Resources.uploadMedium.GetHicon()), uploadTooltip)
-
-                    AddHandler _uploadThumbnailButton.Click, Sub() UploadCurrentImageToDefaultProvider()
                 End If
+
+                _uploadThumbnailButton = New ThumbnailToolBarButton(Icon.FromHandle(HolzShots.My.Resources.uploadMedium.GetHicon()), uploadTooltip)
+                AddHandler _uploadThumbnailButton.Click, Sub() UploadCurrentImageToDefaultProvider()
+                _uploadThumbnailButton.Enabled = _imageHoster?.metadata IsNot Nothing
 
                 _saveThumbnailButton = New ThumbnailToolBarButton(Icon.FromHandle(HolzShots.My.Resources.saveMedium.GetHicon()), "Save image")
                 _copyThumbnailButton = New ThumbnailToolBarButton(Icon.FromHandle(HolzShots.My.Resources.clipboardMedium.GetHicon()), "Copy image")

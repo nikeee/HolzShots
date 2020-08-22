@@ -22,7 +22,7 @@ namespace HolzShots.Composition
             Debug.Assert(pls != null);
 
             return pls
-                .Where(p => p.metadata.Name == name)
+                .Where(p => CustomUploaderSource.HasEqualUploaderName(p.metadata.Name, name))
                 .Select(p => (new PluginMetadata(p.metadata), p.instance))
                 .FirstOrDefault();
         }
