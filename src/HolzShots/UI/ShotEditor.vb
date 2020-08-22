@@ -89,7 +89,7 @@ Namespace UI.Specialized
                 WindowState = FormWindowState.Minimized
             ElseIf screenshot.Size = SystemInformation.VirtualScreen.Size Then
                 WindowState = FormWindowState.Maximized
-            ElseIf screenshot.Image.IsLargeImage() Then
+            ElseIf screenshot.Image.ShouldMaximizeEditorWindowForImage() Then
                 WindowState = FormWindowState.Maximized
             Else
                 Width = screenshot.Image.Width
