@@ -28,7 +28,7 @@ Namespace UI.Specialized
 
         Private Sub New()
             InitializeComponent()
-            TrayIcon.ContextMenu = trayIconMenu
+            TrayIcon.ContextMenuStrip = trayMenu
         End Sub
 
         Private Sub MainWindowFormClosing(ByVal sender As Object, ByVal e As FormClosingEventArgs) Handles Me.FormClosing
@@ -92,7 +92,7 @@ Namespace UI.Specialized
             Dim isAutorun = HolzShotsEnvironment.CurrentStartupManager.IsStartedUp
             Dim args = HolzShotsEnvironment.CurrentStartupManager.CommandLineArguments
 
-            StartWithWindows.Checked = HolzShotsEnvironment.CurrentStartupManager.IsRegistered
+            StartWithWindowsToolStripMenuItem.Checked = HolzShotsEnvironment.CurrentStartupManager.IsRegistered
 
             Await MyApplication.ProcessCommandLineArguments(args).ConfigureAwait(True)
 
@@ -153,7 +153,6 @@ Namespace UI.Specialized
 
 #End Region
 #Region "UI Events"
-
         Private Async Sub TrayIconMouseDoubleClick(ByVal sender As Object, ByVal e As MouseEventArgs) Handles TrayIcon.MouseDoubleClick
             Dim commandToRun = UserSettings.Current.TrayIconDoubleClickCommand
 
@@ -161,54 +160,44 @@ Namespace UI.Specialized
                 Await CommandManager.Dispatch(commandToRun.CommandName, commandToRun.Parameters).ConfigureAwait(True) ' Can throw exceptions and silently kill the application
             End If
         End Sub
-
         Private Sub MainWindowShown(sender As Object, e As EventArgs) Handles Me.Shown
             HideForm()
         End Sub
 
 #End Region
-
 #Region "Tray Menu Actions"
 
-        Private Sub ExitMenuItemClick(sender As Object, e As EventArgs) Handles exitMenuItem.Click
+        Private Sub ExitToolStripMenuItemClick(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem.Click
             ExitApplication()
         End Sub
-
-        Private Sub SettingsMenuItemClick(sender As Object, e As EventArgs) Handles settingsMenuItem.Click
-            OpenSettings()
-        End Sub
-
-        Private Async Sub SettingsJsonMenuItemClick(sender As Object, e As EventArgs) Handles settingsJsonMenuItem.Click
+        Private Async Sub OpenSettingsjsonToolStripMenuItemClick(sender As Object, e As EventArgs) Handles OpenSettingsjsonToolStripMenuItem.Click
             Await CommandManager.Dispatch(Of OpenSettingsJsonCommand)().ConfigureAwait(True)
         End Sub
-
-        Private Async Sub SelectAreaMenuItemClick(sender As Object, e As EventArgs) Handles selectAreaMenuItem.Click
+        Private Async Sub SelectAreaToolStripMenuItemClick(sender As Object, e As EventArgs) Handles SelectAreaToolStripMenuItem.Click
             Await CommandManager.Dispatch(Of SelectAreaCommand)().ConfigureAwait(True)
         End Sub
-
-        Private Async Sub OpenImageMenuItemClick(sender As Object, e As EventArgs) Handles openImageMenuItem.Click
+        Private Async Sub OpenImageToolStripMenuItemClick(sender As Object, e As EventArgs) Handles OpenImageToolStripMenuItem.Click
             Await CommandManager.Dispatch(Of EditImageCommand)().ConfigureAwait(True)
         End Sub
-
-        Private Async Sub UploadImageMenuItemClick(sender As Object, e As EventArgs) Handles uploadImageMenuItem.Click
+        Private Async Sub UploadImageToolStripMenuItemClick(sender As Object, e As EventArgs) Handles UploadImageToolStripMenuItem.Click
             Await CommandManager.Dispatch(Of UploadImageCommand)().ConfigureAwait(True)
         End Sub
-
-        Private Sub AboutMenuItemClick(sender As Object, e As EventArgs) Handles aboutMenuItem.Click
+        Private Sub AboutToolStripMenuItemClick(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem.Click
             OpenAbout()
         End Sub
-
-        Private Sub FeedbackMenuItemClick(sender As Object, e As EventArgs) Handles feedbackMenuItem.Click
+        Private Sub FeedbackAndIssuesToolStripMenuItemClick(sender As Object, e As EventArgs) Handles FeedbackAndIssuesToolStripMenuItem.Click
             LibraryInformation.IssuesUrl.SafeProcessStart()
         End Sub
-
-        Private Sub StartWithWindowsClick(sender As Object, e As EventArgs) Handles StartWithWindows.Click
+        Private Sub StartWithWindowsToolStripMenuItemClick(sender As Object, e As EventArgs) Handles StartWithWindowsToolStripMenuItem.Click
             If HolzShotsEnvironment.CurrentStartupManager.IsRegistered Then
                 HolzShotsEnvironment.CurrentStartupManager.Unregister()
             Else
                 HolzShotsEnvironment.CurrentStartupManager.Register()
             End If
-            StartWithWindows.Checked = HolzShotsEnvironment.CurrentStartupManager.IsRegistered
+            StartWithWindowsToolStripMenuItem.Checked = HolzShotsEnvironment.CurrentStartupManager.IsRegistered
+        End Sub
+        Private Sub PluginsToolStripMenuItemClick(sender As Object, e As EventArgs) Handles PluginsToolStripMenuItem.Click
+            OpenSettings()
         End Sub
 
 #End Region

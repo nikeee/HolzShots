@@ -1,10 +1,10 @@
 Namespace UI.Specialized
-    <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+    <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
     Partial Class MainWindow
         Inherits System.Windows.Forms.Form
 
         'Das Formular überschreibt den Löschvorgang, um die Komponentenliste zu bereinigen.
-        <System.Diagnostics.DebuggerNonUserCode()> _
+        <System.Diagnostics.DebuggerNonUserCode()>
         Protected Overrides Sub Dispose(ByVal disposing As Boolean)
             Try
                 If disposing AndAlso components IsNot Nothing Then
@@ -21,25 +21,26 @@ Namespace UI.Specialized
         'Hinweis: Die folgende Prozedur ist für den Windows Form-Designer erforderlich.
         'Das Bearbeiten ist mit dem Windows Form-Designer möglich.  
         'Das Bearbeiten mit dem Code-Editor ist nicht möglich.
-        <System.Diagnostics.DebuggerStepThrough()> _
+        <System.Diagnostics.DebuggerStepThrough()>
         Private Sub InitializeComponent()
             Me.components = New System.ComponentModel.Container()
             Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainWindow))
             Me.TrayIcon = New System.Windows.Forms.NotifyIcon(Me.components)
-            Me.trayIconMenu = New System.Windows.Forms.ContextMenu()
-            Me.extrasMenuItem = New System.Windows.Forms.MenuItem()
-            Me.aboutMenuItem = New System.Windows.Forms.MenuItem()
-            Me.feedbackMenuItem = New System.Windows.Forms.MenuItem()
-            Me.Separator1 = New System.Windows.Forms.MenuItem()
-            Me.StartWithWindows = New System.Windows.Forms.MenuItem()
-            Me.Separator2 = New System.Windows.Forms.MenuItem()
-            Me.uploadImageMenuItem = New System.Windows.Forms.MenuItem()
-            Me.openImageMenuItem = New System.Windows.Forms.MenuItem()
-            Me.selectAreaMenuItem = New System.Windows.Forms.MenuItem()
-            Me.settingsMenuItem = New System.Windows.Forms.MenuItem()
-            Me.settingsJsonMenuItem = New System.Windows.Forms.MenuItem()
-            Me.Separator3 = New System.Windows.Forms.MenuItem()
-            Me.exitMenuItem = New System.Windows.Forms.MenuItem()
+            Me.trayMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
+            Me.ExtrasToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.FeedbackAndIssuesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
+            Me.UploadImageToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.OpenImageToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.SelectAreaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
+            Me.StartWithWindowsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.PluginsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.OpenSettingsjsonToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
+            Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+            Me.trayMenu.SuspendLayout()
             Me.SuspendLayout()
             '
             'TrayIcon
@@ -48,101 +49,115 @@ Namespace UI.Specialized
             Me.TrayIcon.Text = "HolzShots"
             Me.TrayIcon.Visible = True
             '
-            'trayIconMenu
+            'trayMenu
             '
-            Me.trayIconMenu.MenuItems.AddRange(New System.Windows.Forms.MenuItem() {Me.extrasMenuItem, Me.Separator1, Me.StartWithWindows, Me.Separator2, Me.uploadImageMenuItem, Me.openImageMenuItem, Me.selectAreaMenuItem, Me.settingsMenuItem, Me.settingsJsonMenuItem, Me.Separator3, Me.exitMenuItem})
+            Me.trayMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ExtrasToolStripMenuItem, Me.ToolStripSeparator2, Me.UploadImageToolStripMenuItem, Me.OpenImageToolStripMenuItem, Me.SelectAreaToolStripMenuItem, Me.ToolStripSeparator3, Me.StartWithWindowsToolStripMenuItem, Me.PluginsToolStripMenuItem, Me.OpenSettingsjsonToolStripMenuItem, Me.ToolStripSeparator1, Me.ExitToolStripMenuItem})
+            Me.trayMenu.Name = "trayMenu"
+            Me.trayMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
+            Me.trayMenu.Size = New System.Drawing.Size(177, 198)
             '
-            'extrasMenuItem
+            'ExtrasToolStripMenuItem
             '
-            Me.extrasMenuItem.Index = 0
-            Me.extrasMenuItem.MenuItems.AddRange(New System.Windows.Forms.MenuItem() {Me.aboutMenuItem, Me.feedbackMenuItem})
-            Me.extrasMenuItem.Text = "Extras"
+            Me.ExtrasToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AboutToolStripMenuItem, Me.FeedbackAndIssuesToolStripMenuItem})
+            Me.ExtrasToolStripMenuItem.Name = "ExtrasToolStripMenuItem"
+            Me.ExtrasToolStripMenuItem.Size = New System.Drawing.Size(176, 22)
+            Me.ExtrasToolStripMenuItem.Text = "Extras"
             '
-            'aboutMenuItem
+            'AboutToolStripMenuItem
             '
-            Me.aboutMenuItem.Index = 0
-            Me.aboutMenuItem.Text = "About"
+            Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
+            Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(181, 22)
+            Me.AboutToolStripMenuItem.Text = "About"
             '
-            'feedbackMenuItem
+            'FeedbackAndIssuesToolStripMenuItem
             '
-            Me.feedbackMenuItem.Index = 1
-            Me.feedbackMenuItem.Text = "Feedback"
+            Me.FeedbackAndIssuesToolStripMenuItem.Name = "FeedbackAndIssuesToolStripMenuItem"
+            Me.FeedbackAndIssuesToolStripMenuItem.Size = New System.Drawing.Size(181, 22)
+            Me.FeedbackAndIssuesToolStripMenuItem.Text = "Feedback and Issues"
             '
-            'Separator1
+            'ToolStripSeparator2
             '
-            Me.Separator1.Index = 1
-            Me.Separator1.Text = "-"
+            Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
+            Me.ToolStripSeparator2.Size = New System.Drawing.Size(173, 6)
             '
-            'StartWithWindows
+            'UploadImageToolStripMenuItem
             '
-            Me.StartWithWindows.Index = 2
-            Me.StartWithWindows.Text = "Start with Windows"
+            Me.UploadImageToolStripMenuItem.Name = "UploadImageToolStripMenuItem"
+            Me.UploadImageToolStripMenuItem.Size = New System.Drawing.Size(176, 22)
+            Me.UploadImageToolStripMenuItem.Text = "Upload Image"
             '
-            'Separator2
+            'OpenImageToolStripMenuItem
             '
-            Me.Separator2.Index = 3
-            Me.Separator2.Text = "-"
+            Me.OpenImageToolStripMenuItem.Name = "OpenImageToolStripMenuItem"
+            Me.OpenImageToolStripMenuItem.Size = New System.Drawing.Size(176, 22)
+            Me.OpenImageToolStripMenuItem.Text = "Open Image"
             '
-            'uploadImageMenuItem
+            'SelectAreaToolStripMenuItem
             '
-            Me.uploadImageMenuItem.Index = 4
-            Me.uploadImageMenuItem.Text = "Upload image"
+            Me.SelectAreaToolStripMenuItem.Name = "SelectAreaToolStripMenuItem"
+            Me.SelectAreaToolStripMenuItem.Size = New System.Drawing.Size(176, 22)
+            Me.SelectAreaToolStripMenuItem.Text = "Select Area"
             '
-            'openImageMenuItem
+            'ToolStripSeparator3
             '
-            Me.openImageMenuItem.Index = 5
-            Me.openImageMenuItem.Text = "Open image"
+            Me.ToolStripSeparator3.Name = "ToolStripSeparator3"
+            Me.ToolStripSeparator3.Size = New System.Drawing.Size(173, 6)
             '
-            'selectAreaMenuItem
+            'StartWithWindowsToolStripMenuItem
             '
-            Me.selectAreaMenuItem.Index = 6
-            Me.selectAreaMenuItem.Text = "Select Area"
+            Me.StartWithWindowsToolStripMenuItem.Name = "StartWithWindowsToolStripMenuItem"
+            Me.StartWithWindowsToolStripMenuItem.Size = New System.Drawing.Size(176, 22)
+            Me.StartWithWindowsToolStripMenuItem.Text = "Start with Windows"
             '
-            'settingsMenuItem
+            'PluginsToolStripMenuItem
             '
-            Me.settingsMenuItem.Index = 7
-            Me.settingsMenuItem.Text = "Settings"
+            Me.PluginsToolStripMenuItem.Name = "PluginsToolStripMenuItem"
+            Me.PluginsToolStripMenuItem.Size = New System.Drawing.Size(176, 22)
+            Me.PluginsToolStripMenuItem.Text = "Plugins"
             '
-            'settingsJsonMenuItem
+            'OpenSettingsjsonToolStripMenuItem
             '
-            Me.settingsJsonMenuItem.Index = 8
-            Me.settingsJsonMenuItem.Text = "Settings (JSON)"
+            Me.OpenSettingsjsonToolStripMenuItem.Name = "OpenSettingsjsonToolStripMenuItem"
+            Me.OpenSettingsjsonToolStripMenuItem.Size = New System.Drawing.Size(176, 22)
+            Me.OpenSettingsjsonToolStripMenuItem.Text = "Open settings.json"
             '
-            'Separator3
+            'ToolStripSeparator1
             '
-            Me.Separator3.Index = 9
-            Me.Separator3.Text = "-"
+            Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
+            Me.ToolStripSeparator1.Size = New System.Drawing.Size(173, 6)
             '
-            'exitMenuItem
+            'ExitToolStripMenuItem
             '
-            Me.exitMenuItem.Index = 10
-            Me.exitMenuItem.Text = "Exit"
+            Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
+            Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(176, 22)
+            Me.ExitToolStripMenuItem.Text = "Exit"
             '
             'MainWindow
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-            Me.ClientSize = New System.Drawing.Size(91, 182)
+            Me.ClientSize = New System.Drawing.Size(91, 28)
             Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
             Me.Name = "MainWindow"
             Me.Text = "MainWindow"
+            Me.trayMenu.ResumeLayout(False)
             Me.ResumeLayout(False)
 
         End Sub
         Friend WithEvents TrayIcon As System.Windows.Forms.NotifyIcon
-        Friend WithEvents trayIconMenu As System.Windows.Forms.ContextMenu
-        Friend WithEvents extrasMenuItem As System.Windows.Forms.MenuItem
-        Friend WithEvents settingsMenuItem As System.Windows.Forms.MenuItem
-        Friend WithEvents Separator3 As System.Windows.Forms.MenuItem
-        Friend WithEvents aboutMenuItem As System.Windows.Forms.MenuItem
-        Friend WithEvents feedbackMenuItem As System.Windows.Forms.MenuItem
-        Friend WithEvents uploadImageMenuItem As System.Windows.Forms.MenuItem
-        Friend WithEvents openImageMenuItem As System.Windows.Forms.MenuItem
-        Friend WithEvents selectAreaMenuItem As System.Windows.Forms.MenuItem
-        Friend WithEvents exitMenuItem As System.Windows.Forms.MenuItem
-        Friend WithEvents settingsJsonMenuItem As MenuItem
-        Friend WithEvents StartWithWindows As MenuItem
-        Friend WithEvents Separator1 As MenuItem
-        Friend WithEvents Separator2 As MenuItem
+        Friend WithEvents trayMenu As ContextMenuStrip
+        Friend WithEvents ExitToolStripMenuItem As ToolStripMenuItem
+        Friend WithEvents OpenSettingsjsonToolStripMenuItem As ToolStripMenuItem
+        Friend WithEvents UploadImageToolStripMenuItem As ToolStripMenuItem
+        Friend WithEvents OpenImageToolStripMenuItem As ToolStripMenuItem
+        Friend WithEvents SelectAreaToolStripMenuItem As ToolStripMenuItem
+        Friend WithEvents StartWithWindowsToolStripMenuItem As ToolStripMenuItem
+        Friend WithEvents ExtrasToolStripMenuItem As ToolStripMenuItem
+        Friend WithEvents AboutToolStripMenuItem As ToolStripMenuItem
+        Friend WithEvents FeedbackAndIssuesToolStripMenuItem As ToolStripMenuItem
+        Friend WithEvents ToolStripSeparator2 As ToolStripSeparator
+        Friend WithEvents ToolStripSeparator3 As ToolStripSeparator
+        Friend WithEvents ToolStripSeparator1 As ToolStripSeparator
+        Friend WithEvents PluginsToolStripMenuItem As ToolStripMenuItem
     End Class
 End Namespace
