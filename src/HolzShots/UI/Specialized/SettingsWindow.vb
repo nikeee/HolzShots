@@ -46,11 +46,6 @@ Namespace UI.Specialized
                 pluginListPanel.Controls.AddRange(metaArr)
                 _pluginInfoItemList.AddRange(metaArr)
             End If
-
-            Dim index = defaultHosterBox.Items.IndexOf(My.Settings.DefaultImageHoster)
-            If index > -1 Then
-                defaultHosterBox.SelectedItem = defaultHosterBox.Items(index)
-            End If
         End Sub
 
         Private Sub LoadPolicies()
@@ -70,8 +65,6 @@ Namespace UI.Specialized
             If ShellExtensions.ShellExtensionUpload <> uploadImageInExplorerMenu.Checked AndAlso InteropHelper.IsAdministrator() Then
                 ShellExtensions.ShellExtensionUpload = uploadImageInExplorerMenu.Checked
             End If
-
-            My.Settings.DefaultImageHoster = defaultHosterBox.Text
 
             HolzShotsEnvironment.AutoStart = start_with_windows.Checked
 

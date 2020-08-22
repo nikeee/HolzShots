@@ -96,11 +96,6 @@ Namespace UI.Specialized
             Dim saveSettings As Boolean = False
             Dim openSettingsOnFinish As Boolean = False
 
-            If String.IsNullOrWhiteSpace(Global.HolzShots.My.Settings.DefaultImageHoster) Then
-                Global.HolzShots.My.Settings.DefaultImageHoster = "DirectUpload.net"
-                saveSettings = True
-            End If
-
             If Not isAutorun AndAlso Global.HolzShots.My.Settings.IsFirstRun Then
                 Global.HolzShots.My.Settings.IsFirstRun = False
                 openSettingsOnFinish = True

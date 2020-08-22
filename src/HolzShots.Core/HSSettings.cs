@@ -119,6 +119,13 @@ namespace HolzShots
         [JsonProperty("upload.autoDetectBestImageFormat")]
         public bool EnableSmartFormatForUpload { get; private set; } = false;
 
+        [SettingsDoc(
+            "Name of the service HolzShots is goind to upload the image.",
+            Default = "directupload.net"
+        )]
+        [JsonProperty("upload.service")]
+        public string TargetImageHoster { get; private set; } = "directupload.net";
+
         #endregion
         #region capture.*
 

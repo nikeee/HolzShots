@@ -79,13 +79,16 @@ namespace HolzShots.Composition
                 Debug.Assert(info != null);
                 Debug.Assert(!string.IsNullOrEmpty(info.Name));
                 Debug.Assert(uploader != null);
-                if (info.Name == name)
-                    return (metadata: info, uploader: uploader);
+
+                if (HasEqualUploaderName(info.Name, name))
+                    return (metadata: info, uploader);
             }
 
             return null;
         }
         public IReadOnlyList<string> GetUploaderNames() => GetMetadata().Select(i => i.Name).ToList();
         public IReadOnlyList<IPluginMetadata> GetMetadata() => _customUploaders.Select(kv => kv.Key).ToList();
+
+        private static bool HasEqualUploaderName(string a, string b) => a.Trim().Equals(b.Trim(), StringComparison.OrdinalIgnoreCase);
     }
 }

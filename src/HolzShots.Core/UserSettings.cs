@@ -6,8 +6,10 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using HolzShots.Composition;
 using HolzShots.Input;
 using HolzShots.IO;
+using HolzShots.Net;
 
 namespace HolzShots
 {
@@ -41,6 +43,15 @@ namespace HolzShots
 
         public static Task ForceReload() => Manager.ForceReload();
 
+        /// <summary> TODO: This look wrong here. We should place this somewhere else. </summary>
+        public static (IPluginMetadata metadata, Uploader uploader)? GetImageServiceForSettingsContext(HSSettings context, UploaderManager uploaderManager)
+        {
+            Debug.Assert(context != null);
+            Debug.Assert(uploaderManager != null);
+            Debug.Assert(uploaderManager.Loaded);
+
+            return uploaderManager.GetUploaderByName(context.TargetImageHoster);
+        }
 
         private static HSSettings CreateDefaultSettings()
         {
@@ -83,6 +94,11 @@ namespace HolzShots
             // We might want to use SemVer in the future
             if (candidate.Version != SupportedVersion)
                 return SingleError($"Version {candidate.Version} is not supported. This version of HolzShots only supports settings version {SupportedVersion}.", "version");
+
+            if (candidate.TargetImageHoster != null)
+            {
+                // TODO: Validate that we actually have an image service that is named like that
+            }
 
             // var validationErrors = ImmutableList.CreateBuilder<ValidationError>();
 

@@ -38,9 +38,6 @@
     <Setting Name="UseBoxInsteadOfCirlce" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="DefaultImageHoster" Type="System.String" Scope="User">
-      <Value Profile="(Default)">DirectUpload.net</Value>
-    </Setting>
     <Setting Name="BlurFactor" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">7</Value>
     </Setting>

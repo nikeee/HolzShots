@@ -13,16 +13,16 @@ Namespace Net
         End Function
 
         Friend Shared Function UploadToDefaultUploader(image As Image, Optional format As ImageFormat = Nothing, Optional parentWindow As IWin32Window = Nothing) As Task(Of UploadResult)
-            Dim uploaderName = My.Settings.DefaultImageHoster
-            Dim info = My.Application.Uploaders.GetUploaderByName(uploaderName)
+
+            Dim info = UserSettings.GetImageServiceForSettingsContext(UserSettings.Current, HolzShots.My.Application.Uploaders)
             Debug.Assert(info.HasValue)
+
             If Not info.HasValue Then Throw New Exception()
             Dim v = info.Value
 
             Debug.Assert(info IsNot Nothing)
             Debug.Assert(v.metadata IsNot Nothing)
             Debug.Assert(v.uploader IsNot Nothing)
-            Debug.Assert(v.metadata.Name = uploaderName)
 
             Return Upload(v.uploader, image, format, parentWindow)
         End Function

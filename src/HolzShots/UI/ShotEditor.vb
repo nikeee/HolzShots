@@ -11,6 +11,7 @@ Imports HolzShots.UI.Controls.Helpers
 Imports HolzShots.UI.Forms
 Imports Microsoft.WindowsAPICodePack.Dialogs
 Imports Microsoft.WindowsAPICodePack.Taskbar
+Imports HolzShots.Composition
 
 Namespace UI.Specialized
     Friend Class ShotEditor
@@ -30,6 +31,8 @@ Namespace UI.Specialized
 
         Friend Property Screenshot As Screenshot
 
+        Private ReadOnly _imageHoster As (metadata As IPluginMetadata, uploader As Uploader)?
+
 #End Region
 
 #Region "Win7/8-Thumbnails"
@@ -41,14 +44,19 @@ Namespace UI.Specialized
         Private Sub InitializeThumbnailToolbar()
 
             If TaskbarManager.IsPlatformSupported Then
-                Dim uploadTooltip As String = UploadToHoster.ToolTipText.Remove(UploadToHoster.ToolTipText.IndexOf(" (", StringComparison.Ordinal))
-                uploadTooltip = String.Format(Global.HolzShots.My.Application.TheCulture, uploadTooltip, HolzShots.My.Settings.DefaultImageHoster)
 
-                _uploadThumbnailButton = New ThumbnailToolBarButton(Icon.FromHandle(HolzShots.My.Resources.uploadMedium.GetHicon()), uploadTooltip)
+                If _imageHoster IsNot Nothing Then
+                    Dim uploadTooltip As String = UploadToHoster.ToolTipText.Remove(UploadToHoster.ToolTipText.IndexOf(" (", StringComparison.Ordinal))
+                    uploadTooltip = String.Format(Global.HolzShots.My.Application.TheCulture, uploadTooltip, _imageHoster.Value.metadata.Name)
+
+                    _uploadThumbnailButton = New ThumbnailToolBarButton(Icon.FromHandle(HolzShots.My.Resources.uploadMedium.GetHicon()), uploadTooltip)
+
+                    AddHandler _uploadThumbnailButton.Click, Sub() UploadCurrentImageToDefaultProvider()
+                End If
+
                 _saveThumbnailButton = New ThumbnailToolBarButton(Icon.FromHandle(HolzShots.My.Resources.saveMedium.GetHicon()), "Save image")
                 _copyThumbnailButton = New ThumbnailToolBarButton(Icon.FromHandle(HolzShots.My.Resources.clipboardMedium.GetHicon()), "Copy image")
 
-                AddHandler _uploadThumbnailButton.Click, Sub() UploadCurrentImageToDefaultProvider()
                 AddHandler _saveThumbnailButton.Click, Sub() SaveImage()
                 AddHandler _copyThumbnailButton.Click, Sub() CopyImage()
 
@@ -70,6 +78,8 @@ Namespace UI.Specialized
             autoCloseShotEditor.Enabled = False ' We only support reading that setting for now
 
             Me.Screenshot = screenshot
+
+            _imageHoster = UserSettings.GetImageServiceForSettingsContext(UserSettings.Current, HolzShots.My.Application.Uploaders)
 
             InitializeThumbnailToolbar()
 
@@ -115,7 +125,13 @@ Namespace UI.Specialized
 
             DrawCursor.Visible = screenshot.Source <> ScreenshotSource.Selected AndAlso screenshot.Source <> ScreenshotSource.Unknown
 
-            UploadToHoster.ToolTipText = String.Format(Global.HolzShots.My.Application.TheCulture, UploadToHoster.ToolTipText, HolzShots.My.Settings.DefaultImageHoster)
+
+            UploadToHoster.Enabled = _imageHoster IsNot Nothing
+            UploadToHoster.ToolTipText = If(
+                            _imageHoster?.metadata IsNot Nothing,
+                            String.Format(Global.HolzShots.My.Application.TheCulture, UploadToHoster.ToolTipText, _imageHoster?.metadata.Name),
+                            String.Empty
+                        )
 
             ShareStrip.Renderer = GlobalSubMenuContextMenuRenderer
             ToolStrip1.Renderer = GlobalSubMenuContextMenuRenderer

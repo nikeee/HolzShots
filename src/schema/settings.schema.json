@@ -130,6 +130,12 @@
 			"default": "false"
 		},
 
+		"upload.service": {
+			"description": "Name of the service HolzShots is goind to upload the image.",
+			"type": "string",
+			"default": "directupload.net"
+		},
+
 		"capture.actionAfterCapture": {
 			"description": "What to do after an image got captured. Possible options are:\nopenEditor: Open the shot editor with the captured image\nupload: Upload the image to the specified default image service\nnone: Do nothing (this would only trigger saving the image to disk if this is enabled)",
 			"$ref": "#/definitions/captureHandlingAction",
