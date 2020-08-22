@@ -3,6 +3,7 @@ Imports HolzShots.Composition.Command
 Imports System.Drawing.Imaging
 Imports HolzShots.Net
 Imports HolzShots.Interop
+Imports HolzShots.Drawing
 
 Namespace Input.Actions
     <Command("uploadImage")>
@@ -27,7 +28,9 @@ Namespace Input.Actions
             If fileName Is Nothing Then Return
 
             Using bmp As New Bitmap(fileName)
-                Dim format As ImageFormat = fileName.GetImageFormatFromFileExtension()
+                Dim format As ImageFormat = ImageFormatInformation.GetImageFormatFromFileName(fileName)
+                Debug.Assert(format IsNot Nothing)
+
                 Try
                     Dim result = Await UploadHelper.UploadToDefaultUploader(bmp, format).ConfigureAwait(True)
                     UploadHelper.InvokeUploadFinishedUi(result)

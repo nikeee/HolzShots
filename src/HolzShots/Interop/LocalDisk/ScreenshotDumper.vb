@@ -1,6 +1,7 @@
 Imports System.Drawing.Imaging
 Imports System.IO
 Imports HolzShots
+Imports HolzShots.Drawing
 Imports HolzShots.IO
 Imports HolzShots.IO.Naming
 
@@ -46,7 +47,7 @@ Namespace Interop.LocalDisk
 
             If UserSettings.Current.EnableSmartFormatForSaving AndAlso Drawing.ImageFormatAnalyser.IsOptimizable(screenshotImage) Then
                 format = Drawing.ImageFormatAnalyser.GetBestFittingFormat(screenshotImage)
-                fileExtension = (format.GetFormatMetadata()?.Extension)
+                fileExtension = format.GetExtensionAndMimeType().FileExtension
                 Debug.Assert(Not String.IsNullOrWhiteSpace(fileExtension))
             End If
 

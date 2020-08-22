@@ -2,6 +2,7 @@ Imports System.Drawing.Imaging
 Imports System.IO
 Imports System.Threading
 Imports System.Threading.Tasks
+Imports HolzShots.Drawing
 Imports HolzShots.Interop
 Imports HolzShots.UI.Dialogs
 
@@ -40,12 +41,11 @@ Namespace Net
             Dim stream = _image.GetImageStream(_format)
             Debug.Assert(stream IsNot Nothing)
 
-            Dim metadata = _format.GetFormatMetadata()
-            Debug.Assert(metadata IsNot Nothing)
+            Dim metadata = _format.GetExtensionAndMimeType()
             Debug.Assert(Not String.IsNullOrWhiteSpace(metadata.MimeType))
-            Debug.Assert(Not String.IsNullOrWhiteSpace(metadata.Extension))
+            Debug.Assert(Not String.IsNullOrWhiteSpace(metadata.FileExtension))
 
-            Dim fileName = Path.ChangeExtension(GlobalVariables.DefaultFileName, metadata.Extension)
+            Dim fileName = Path.ChangeExtension(GlobalVariables.DefaultFileName, metadata.FileExtension)
 
             Dim cts As New CancellationTokenSource()
 

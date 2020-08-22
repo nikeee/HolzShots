@@ -286,7 +286,6 @@
     <Compile Include="UI\Dialogs\UploadResultWindow.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Extensions.vb" />
     <Compile Include="GlobalVariables.vb" />
     <Compile Include="Drawing\Tools\Helper.vb" />
     <Compile Include="Interop\HolzShotsEnvironment.vb" />

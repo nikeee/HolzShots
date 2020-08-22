@@ -40,7 +40,6 @@ Namespace Net
             If uploader Is Nothing Then Throw New ArgumentNullException(NameOf(uploader))
             If image Is Nothing Then Throw New ArgumentNullException(NameOf(image))
             Debug.Assert(format IsNot Nothing)
-            Debug.Assert(format.GetFormatMetadata() IsNot Nothing)
 
             ' Invoke settings if the uploader wants it
             Dim sc = uploader.GetSupportedSettingsContexts()

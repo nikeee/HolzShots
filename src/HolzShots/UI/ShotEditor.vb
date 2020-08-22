@@ -12,6 +12,7 @@ Imports HolzShots.UI.Forms
 Imports Microsoft.WindowsAPICodePack.Dialogs
 Imports Microsoft.WindowsAPICodePack.Taskbar
 Imports HolzShots.Composition
+Imports HolzShots.Drawing
 
 Namespace UI.Specialized
     Friend Class ShotEditor
@@ -302,9 +303,11 @@ Namespace UI.Specialized
             If String.IsNullOrEmpty(fileName) Then Throw New ArgumentNullException(NameOf(fileName))
             Try
                 Dim bmp = ThePanel.CombinedImage()
-                Dim extension = Path.GetExtension(fileName)
-                Dim format = Extensions.GetImageFormatFromFileExtension(extension)
                 Debug.Assert(bmp IsNot Nothing)
+
+                Dim format = ImageFormatInformation.GetImageFormatFromFileName(fileName)
+                Debug.Assert(format IsNot Nothing)
+
                 Using fileStream = File.OpenWrite(fileName)
                     bmp.SaveExtended(fileStream, format)
                 End Using
