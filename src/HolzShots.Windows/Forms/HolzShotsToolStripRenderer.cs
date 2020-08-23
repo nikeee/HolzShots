@@ -18,7 +18,7 @@ namespace HolzShots.Windows.Forms
     /// </summary>
     public class HolzShotsToolStripRenderer : ToolStripProfessionalRenderer
     {
-        public HolzShotsToolStripRenderer() : base(new HolzShotsColorTable()) { }
+        public HolzShotsToolStripRenderer() : base(new LightColorTable()) { }
 
         protected override void OnRenderArrow(ToolStripArrowRenderEventArgs e)
         {
@@ -44,7 +44,7 @@ namespace HolzShots.Windows.Forms
         }
     }
 
-    public class HolzShotsColorTable : ProfessionalColorTable
+    public class LightColorTable : ProfessionalColorTable
     {
         public override Color MenuItemBorder => Color.WhiteSmoke;
         public override Color MenuItemSelected => Color.WhiteSmoke;

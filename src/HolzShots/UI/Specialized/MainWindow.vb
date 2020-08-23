@@ -29,6 +29,7 @@ Namespace UI.Specialized
         Private Sub New()
             InitializeComponent()
             TrayIcon.ContextMenuStrip = trayMenu
+            trayMenu.Renderer = New Global.HolzShots.Windows.Forms.HolzShotsToolStripRenderer()
         End Sub
 
         Private Sub MainWindowFormClosing(ByVal sender As Object, ByVal e As FormClosingEventArgs) Handles Me.FormClosing
