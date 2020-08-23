@@ -1,6 +1,5 @@
 Imports System.Drawing.Imaging
 Imports System.IO
-Imports HolzShots
 Imports HolzShots.Drawing
 Imports HolzShots.IO
 Imports HolzShots.IO.Naming

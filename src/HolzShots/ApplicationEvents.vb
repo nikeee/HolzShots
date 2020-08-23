@@ -3,7 +3,6 @@ Imports System.Globalization
 Imports System.IO
 Imports System.Linq
 Imports System.Threading.Tasks
-Imports HolzShots
 Imports HolzShots.IO
 Imports HolzShots.Interop
 Imports HolzShots.Composition

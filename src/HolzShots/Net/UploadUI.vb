@@ -1,9 +1,7 @@
 Imports System.Drawing.Imaging
-Imports System.IO
 Imports System.Threading
 Imports System.Threading.Tasks
 Imports HolzShots.Drawing
-Imports HolzShots.Interop
 Imports HolzShots.UI.Dialogs
 
 Namespace Net

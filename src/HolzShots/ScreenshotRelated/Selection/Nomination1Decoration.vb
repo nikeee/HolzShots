@@ -1,5 +1,4 @@
 
-
 Namespace ScreenshotRelated.Selection
     Friend Class Nomination1Decoration
         Inherits QuickInfoDecoration
