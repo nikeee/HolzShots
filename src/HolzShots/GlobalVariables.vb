@@ -3,7 +3,6 @@ Imports HolzShots.UI.Forms
 
 Friend Module GlobalVariables
 
-    Friend GlobalContextMenuRenderer As ToolStripRenderer = New ToolStripAeroRenderer(ToolBarTheme.MediaToolbar)
     Friend GlobalSubMenuContextMenuRenderer As ToolStripRenderer = New VSRenderer()
 
     Public Const SupportedFilesFilter As String = "*.bmp;*.jpg;*.jpeg;*.png;*.gif;*.tif;*.tiff"

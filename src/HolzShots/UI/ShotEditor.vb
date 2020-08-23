@@ -172,7 +172,7 @@ Namespace UI.Specialized
             UploadToHoster.DropDown.ImageScalingSize = New Size(16, 16)
             UploadToHoster.DropDown.AutoSize = True
             If HolzShots.My.Application.Uploaders.Loaded Then
-                UploadToHoster.DropDown.Renderer = GlobalContextMenuRenderer
+                UploadToHoster.DropDown.Renderer = HolzShots.Windows.Forms.EnvironmentEx.GetToolStripRendererForCurrentTheme()
                 Dim pls = HolzShots.My.Application.Uploaders.GetUploaderNames()
                 For Each uploaderName In pls
                     Dim item As ToolStripItem = UploadToHoster.DropDown.Items.Add(String.Format(Localization.UploadTo, uploaderName))

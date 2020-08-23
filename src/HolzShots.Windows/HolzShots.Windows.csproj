@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\AeroToolStripRenderer.cs" />
     <Compile Include="Forms\CommandLine.cs" />
     <Compile Include="Forms\EnvironmentEx.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

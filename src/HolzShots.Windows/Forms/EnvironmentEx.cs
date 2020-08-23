@@ -55,5 +55,19 @@ namespace HolzShots.Windows.Forms
             return Screen.PrimaryScreen.Bounds.Height == fgWindowRect.Bottom
                 && Screen.PrimaryScreen.Bounds.Width == fgWindowRect.Right;
         }
+
+
+        private static ToolStripRenderer _rendererInstance = null;
+        public static ToolStripRenderer GetToolStripRendererForCurrentTheme()
+        {
+            if (_rendererInstance != null)
+                return _rendererInstance;
+
+            var newTheme = AppsUseLightTheme()
+                    ? (ToolStripRenderer)new HolzShotsToolStripRenderer()
+                    : new AeroToolStripRenderer(ToolBarTheme.Toolbar);
+
+            return _rendererInstance = newTheme;
+        }
     }
 }
