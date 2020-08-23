@@ -45,7 +45,7 @@ Namespace Net
             Debug.Assert(Not String.IsNullOrWhiteSpace(metadata.MimeType))
             Debug.Assert(Not String.IsNullOrWhiteSpace(metadata.FileExtension))
 
-            Dim fileName = Path.ChangeExtension(GlobalVariables.DefaultFileName, metadata.FileExtension)
+            Dim suggestedFileName = Path.ChangeExtension(GlobalVariables.DefaultFileName, metadata.FileExtension)
 
             Dim cts As New CancellationTokenSource()
 
@@ -54,7 +54,7 @@ Namespace Net
 
             speed.Start()
             Try
-                Dim res = Await _uploader.InvokeAsync(stream, fileName, metadata.MimeType, speed, cts.Token).ConfigureAwait(False)
+                Dim res = Await _uploader.InvokeAsync(stream, suggestedFileName, metadata.MimeType, speed, cts.Token).ConfigureAwait(False)
                 Return res
             Finally
                 speed.Stop()
