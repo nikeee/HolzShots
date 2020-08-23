@@ -141,10 +141,10 @@ namespace HolzShots.Net.Custom
 
         public string Failure { get; } = null;
 
-        public Parser(string kind, string urlTempalte, string success, string failure)
+        public Parser(string kind, string urlTemplate, string success, string failure)
         {
             Kind = kind;
-            UrlTemplate = urlTempalte;
+            UrlTemplate = urlTemplate;
             Success = success;
             Failure = failure;
         }

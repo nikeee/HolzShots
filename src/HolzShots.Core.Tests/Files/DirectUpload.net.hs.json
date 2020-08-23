@@ -11,7 +11,7 @@
     "postParams": {
       "input": "file"
     },
-    "resposneParser": {
+    "responseParser": {
       "kind": "regex",
       "success": "(?<url>https://[a-zA-Z0-9]*.directupload.net/images/\\d{1,}/\\b(?!temp\\b).*?\\b.[a-zA-Z]{1,3})",
       "urlTemplate": "$1,url$"
