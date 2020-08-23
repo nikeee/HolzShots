@@ -85,7 +85,7 @@ Namespace UI.Specialized
 
             InitializeThumbnailToolbar()
 
-            If Not UserSettings.Current.EnableHotkeysDuringFullscreen AndAlso HolzShotsEnvironment.IsFullScreen() Then
+            If Not UserSettings.Current.EnableHotkeysDuringFullscreen AndAlso HolzShots.Windows.Forms.EnvironmentEx.IsFullscreenAppRunning() Then
                 WindowState = FormWindowState.Minimized
             ElseIf screenshot.Size = SystemInformation.VirtualScreen.Size Then
                 WindowState = FormWindowState.Maximized

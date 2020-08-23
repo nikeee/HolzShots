@@ -31,7 +31,7 @@ Namespace ScreenshotRelated
         Public Shared Async Function CaptureSelection() As Task(Of Screenshot)
             Debug.Assert(Not AreaSelector.IsInAreaSelector)
             If AreaSelector.IsInAreaSelector Then Return Nothing
-            If Not UserSettings.Current.EnableHotkeysDuringFullscreen AndAlso HolzShotsEnvironment.IsFullScreen Then Return Nothing
+            If Not UserSettings.Current.EnableHotkeysDuringFullscreen AndAlso HolzShots.Windows.Forms.EnvironmentEx.IsFullscreenAppRunning() Then Return Nothing
 
             Using prio As New ProcessPriorityRequest()
                 Using screen = ScreenshotCreator.CaptureScreenshot(SystemInformation.VirtualScreen)
@@ -78,7 +78,7 @@ Namespace ScreenshotRelated
 
         Private Shared Function DoAeroOn(wndHandle As IntPtr, includeMargin As Boolean, smallMargin As Boolean) As WindowScreenshotSet
 
-            Dim nativeRectangle As HolzShots.Native.Rect
+            Dim nativeRectangle As Native.Rect
             Native.User32.GetWindowRect(wndHandle, nativeRectangle)
 
             Dim placement As Native.User32.WindowPlacement
@@ -121,8 +121,8 @@ Namespace ScreenshotRelated
 
                         ScreenshotMethodsHelper.StopRedraw(wndHandle)
 
-                        HolzShotsEnvironment.SetForegroundWindowEx(bg.Handle)
-                        HolzShotsEnvironment.SetForegroundWindowEx(wndHandle)
+                        Native.User32.SetForegroundWindowEx(bg.Handle)
+                        Native.User32.SetForegroundWindowEx(wndHandle)
 
                         Using ga As Graphics = Graphics.FromImage(bmpBlack)
                             ga.CompositingQuality = CompositingQuality.HighQuality
