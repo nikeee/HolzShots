@@ -14,7 +14,7 @@ Namespace Input.Actions
             Return AllowedExtensions.Contains(ext)
         End Function
 
-        Protected Function ShowFileSelector(title As String) As String
+        Protected Shared Function ShowFileSelector(title As String) As String
             Using ofd As New CommonOpenFileDialog()
                 ofd.Title = title
                 ofd.Filters.Add(New CommonFileDialogFilter(UI.Localization.DialogFilterImages, SupportedFilesFilter))

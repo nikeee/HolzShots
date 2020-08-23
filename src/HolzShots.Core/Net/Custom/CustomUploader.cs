@@ -154,7 +154,8 @@ namespace HolzShots.Net.Custom
             }
         }
 
-        private string FillUrlTemplate(string template, IReadOnlyList<Match> matches)
+        // TODO: Move this templating to a separate class
+        private static string FillUrlTemplate(string template, IReadOnlyList<Match> matches)
         {
             Debug.Assert(!string.IsNullOrEmpty(template));
             Debug.Assert(matches != null);

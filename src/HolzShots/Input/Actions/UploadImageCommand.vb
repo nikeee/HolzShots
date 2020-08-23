@@ -20,12 +20,12 @@ Namespace Input.Actions
                 params(FileNameParameter)
             )
 
+            If fileName Is Nothing Then Return ' We did not get a valid file name (user cancelled or something else was strange)
+
             If Not CanProcessFile(fileName) Then
                 ' TODO: Error Message
                 Return
             End If
-
-            If fileName Is Nothing Then Return
 
             Using bmp As New Bitmap(fileName)
                 Dim format As ImageFormat = ImageFormatInformation.GetImageFormatFromFileName(fileName)

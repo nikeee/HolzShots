@@ -17,12 +17,12 @@ Namespace Input.Actions
                 params(FileNameParameter)
             )
 
+            If fileName Is Nothing Then Return Task.CompletedTask ' We did not get a valid file name (user cancelled or something else was strange)
+
             If Not CanProcessFile(fileName) Then
                 ' TODO: Error Message
                 Return Task.CompletedTask
             End If
-
-            If fileName Is Nothing Then Return Task.CompletedTask
 
             Dim bmp As New Bitmap(fileName)
             Dim shot = Screenshot.FromImported(bmp)
