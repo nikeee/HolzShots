@@ -366,12 +366,6 @@
     </Compile>
     <Compile Include="Drawing\Tools\Censor.vb" />
     <Compile Include="Net\UploadHelper.vb" />
-    <Compile Include="UI\Forms\Banner.Designer.vb">
-      <DependentUpon>Banner.vb</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Forms\Banner.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="UI\Forms\ExplorerInfoPanel.vb">
       <SubType>Component</SubType>
     </Compile>
@@ -385,12 +379,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\Forms\InfoPanelLabel.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="UI\Forms\NumericTextbox.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="UI\Forms\PromptTextBox.vb">
       <SubType>Component</SubType>
     </Compile>
   </ItemGroup>
@@ -451,9 +439,6 @@
     <EmbeddedResource Include="UI\ShotEditor.resx">
       <DependentUpon>ShotEditor.vb</DependentUpon>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\Forms\Banner.resx">
-      <DependentUpon>Banner.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
