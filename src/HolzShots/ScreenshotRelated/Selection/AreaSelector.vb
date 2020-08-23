@@ -20,6 +20,7 @@ Namespace ScreenshotRelated.Selection
 
         Private ReadOnly _decoration As ISelectionDecoration
         Private ReadOnly _noSelectionDecoration As INoSelectionDecoration
+        Private ReadOnly _backgroundOverlayBrush As Brush
 
         Private _wholeScreen As Image
         Private _resizeSelection As Boolean = False
@@ -30,7 +31,6 @@ Namespace ScreenshotRelated.Selection
         Private _secondCoordinates As Point
 
         Private _previousQuickInfoLocation As Rectangle
-        Private Shared ReadOnly BackgroundOverlayBrush As Brush = New SolidBrush(Color.FromArgb(200, 0, 0, 0))
         Private Shared ReadOnly SelectionBorderPen As Pen = New Pen(Color.FromArgb(120, 255, 255, 255), 1.0)
         Private Shared ReadOnly MagnifierBorderPen As Pen = New Pen(Color.FromArgb(120, 255, 0, 0), 1.0)
 
@@ -46,6 +46,7 @@ Namespace ScreenshotRelated.Selection
             ShowInTaskbar = False
 
             Opacity = 1.0
+            _backgroundOverlayBrush = New SolidBrush(Color.FromArgb(CInt(UserSettings.Current.AreaSelectorDimmingOpacity * 255), 0, 0, 0))
 
             StartPosition = FormStartPosition.Manual
             Bounds = SystemInformation.VirtualScreen
@@ -56,7 +57,7 @@ Namespace ScreenshotRelated.Selection
 #End If
             Icon = Nothing
 
-            _decoration = GetCurrentDecoration()
+            _decoration = New Nomination1Decoration()
             _decoration.WholeScreen = SystemInformation.VirtualScreen
 
             _noSelectionDecoration = New DefaultNoSelectionDecoration()
@@ -65,18 +66,6 @@ Namespace ScreenshotRelated.Selection
 
             ResumeLayout(False)
         End Sub
-        Private Function GetCurrentDecoration() As ISelectionDecoration
-            Select Case ManagedSettings.SelectionDecoration
-                Case SelectionDecorations.Nomination1
-                    Return New Nomination1Decoration()
-                Case SelectionDecorations.Nomination2
-                    Return New Nomination2Decoration()
-                Case SelectionDecorations.Nomination3
-                    Return New Nomination3Decoration()
-                Case Else
-                    Return New Nomination1Decoration()
-            End Select
-        End Function
 
         Private Sub ApproveSelection()
             If _currentSelection.Width < 1 OrElse _currentSelection.Height < 1 Then
@@ -186,14 +175,14 @@ Namespace ScreenshotRelated.Selection
             g.DrawImage(_wholeScreen, 0, 0, _wholeScreen.Width, _wholeScreen.Height)
 
             If _resizeSelection OrElse _moveSelection Then
-                g.FillRectangle(BackgroundOverlayBrush, 0, 0, Width, _currentSelection.Y)
-                g.FillRectangle(BackgroundOverlayBrush, 0, _currentSelection.Y, _currentSelection.X, Height - _currentSelection.Y)
-                g.FillRectangle(BackgroundOverlayBrush, _currentSelection.X, _currentSelection.Y + _currentSelection.Height, Width - _currentSelection.X, Height - _currentSelection.Y)
-                g.FillRectangle(BackgroundOverlayBrush, _currentSelection.X + _currentSelection.Width, _currentSelection.Y, Width - _currentSelection.X - _currentSelection.Width, _currentSelection.Height)
+                g.FillRectangle(_backgroundOverlayBrush, 0, 0, Width, _currentSelection.Y)
+                g.FillRectangle(_backgroundOverlayBrush, 0, _currentSelection.Y, _currentSelection.X, Height - _currentSelection.Y)
+                g.FillRectangle(_backgroundOverlayBrush, _currentSelection.X, _currentSelection.Y + _currentSelection.Height, Width - _currentSelection.X, Height - _currentSelection.Y)
+                g.FillRectangle(_backgroundOverlayBrush, _currentSelection.X + _currentSelection.Width, _currentSelection.Y, Width - _currentSelection.X - _currentSelection.Width, _currentSelection.Height)
 
                 _decoration.DrawSelection(g, SelectionBorderPen)
             Else
-                g.FillRectangle(BackgroundOverlayBrush, 0, 0, Width, Height)
+                g.FillRectangle(_backgroundOverlayBrush, 0, 0, Width, Height)
                 _noSelectionDecoration.DrawNoSelection(g, Bounds)
             End If
 

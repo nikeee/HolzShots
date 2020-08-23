@@ -3,23 +3,22 @@ Imports System.Globalization
 Imports System.IO
 Imports System.Linq
 Imports System.Threading.Tasks
-Imports HolzShots.Composition
+Imports HolzShots.IO
 Imports HolzShots.Interop
-Imports HolzShots.ScreenshotRelated
+Imports HolzShots.Composition
+Imports HolzShots.Input.Actions
 Imports HolzShots.UI.Specialized
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.WindowsAPICodePack.Shell
 Imports Microsoft.WindowsAPICodePack.Taskbar
+Imports HolzShots.Windows.Forms
 
 Namespace My
     Partial Friend Class MyApplication
 
-        Private Const CultureString As String = "en-US"
-        Friend ReadOnly TheCulture As New CultureInfo(CultureString, False)
+        Friend ReadOnly TheCulture As New CultureInfo("en-US", False)
 
         Public Shared ReadOnly Property SmallStockIcons As New StockIcons(StockIconSize.Small, False, False)
-        Public Shared ReadOnly Property ShellSizeStockIcons As New StockIcons(StockIconSize.ShellSize, False, False)
-        Public Shared ReadOnly Property LargeStockIcons As New StockIcons(StockIconSize.Large, False, False)
 
         Private _uploaders As UploaderManager
         ReadOnly Property Uploaders As UploaderManager
@@ -32,8 +31,8 @@ Namespace My
 
         Private Async Function LoadPlugins() As Task
             Debug.Assert(_uploaders Is Nothing)
-            Dim plugins = New PluginUploaderSource(ManagedSettings.PluginPath)
-            Dim customs = New CustomUploaderSource(CustomUploadersPath)
+            Dim plugins = New PluginUploaderSource(HolzShotsPaths.PluginDirectory)
+            Dim customs = New CustomUploaderSource(HolzShotsPaths.CustomUploadersDirectory)
             _uploaders = New UploaderManager(plugins, customs)
 
             Try
@@ -45,7 +44,7 @@ Namespace My
         End Function
 
         Private Async Sub MyApplicationStartup(sender As Object, e As StartupEventArgs) Handles Me.Startup
-            UpgradeSettings()
+            My.Settings.Upgrade()
             Await LoadPlugins().ConfigureAwait(True)
             If TaskbarManager.IsPlatformSupported Then AddTasks()
         End Sub
@@ -53,14 +52,6 @@ Namespace My
         Private Sub MyApplicationStartupNextInstance(ByVal sender As Object, ByVal e As StartupNextInstanceEventArgs) Handles Me.StartupNextInstance
             If e.CommandLine.Count > 0 Then
                 ProcessCommandLineArguments(e.CommandLine)
-            End If
-        End Sub
-
-        Private Shared Sub UpgradeSettings()
-            If Not Global.HolzShots.My.Settings.Upgraded Then
-                Global.HolzShots.My.Settings.Upgrade()
-                Global.HolzShots.My.Settings.Upgraded = True
-                Global.HolzShots.My.Settings.Save()
             End If
         End Sub
 
@@ -74,53 +65,57 @@ Namespace My
             ' TODO: Proper command line parsing?
             For i As Integer = 0 To args.Length - 1
                 Select Case args(i)
-                    Case FullscreenScreenshotParameter
-                        Await ScreenshotInvoker.DoFullscreen().ConfigureAwait(True)
-                    Case AreaSelectorParameter
-                        Await ScreenshotInvoker.DoSelector().ConfigureAwait(True)
-                    Case UploadParameter
-                        ScreenshotInvoker.UploadSelectedImage()
-                    Case OpenParameter
-                        ScreenshotInvoker.OpenSelectedImage()
-                    Case OpenFromShellParameter
+                    Case CommandLine.FullscreenScreenshotParameter
+                        Await MainWindow.CommandManager.Dispatch(Of FullscreenCommand)().ConfigureAwait(True)
+                    Case CommandLine.AreaSelectorParameter
+                        Await MainWindow.CommandManager.Dispatch(Of SelectAreaCommand)().ConfigureAwait(True)
+                    Case CommandLine.UploadParameter
+                        Dim params = New Dictionary(Of String, String)()
                         If i < args.Length - 1 Then
-                            ScreenshotInvoker.TryOpenSpecificImage(args(i + 1))
+                            params(FileDependentCommand.FileNameParameter) = args(i + 1)
                         End If
-                    Case UploadFromShellParameter
+
+                        Await MainWindow.CommandManager.Dispatch(Of UploadImageCommand)(params).ConfigureAwait(True)
+                    Case CommandLine.OpenParameter
+                        Dim params = New Dictionary(Of String, String)()
                         If i < args.Length - 1 Then
-                            ScreenshotInvoker.TryUploadSpecificImage(args(i + 1))
+                            params(FileDependentCommand.FileNameParameter) = args(i + 1)
                         End If
+
+                        Await MainWindow.CommandManager.Dispatch(Of EditImageCommand)(params).ConfigureAwait(True)
                 End Select
             Next
         End Function
 
         Friend Shared Sub AddTasks()
-            If Global.HolzShots.My.Settings.UserTasksInitialized Then Exit Sub
-            Global.HolzShots.My.Settings.UserTasksInitialized = True
-            Global.HolzShots.My.Settings.Save()
+            Debug.Assert(TaskbarManager.IsPlatformSupported)
 
-            Dim jlist = JumpList.CreateJumpListForIndividualWindow(TaskbarManager.Instance.ApplicationId, SettingsWindow.Instance.Handle)
+            If My.Settings.UserTasksInitialized Then Exit Sub
+            My.Settings.UserTasksInitialized = True
+            My.Settings.Save()
 
-            jlist.ClearAllUserTasks()
+            Dim jumpList = Microsoft.WindowsAPICodePack.Taskbar.JumpList.CreateJumpListForIndividualWindow(TaskbarManager.Instance.ApplicationId, SettingsWindow.Instance.Handle)
 
-            Static imgres As String = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.System), "imageres.dll")
+            jumpList.ClearAllUserTasks()
+
+            Static imgres As String = Path.Combine(HolzShotsPaths.SystemPath, "imageres.dll")
 
             If File.Exists(imgres) Then
-                Dim fullscreen As New JumpListLink(System.Windows.Forms.Application.ExecutablePath, "Shoot entire screen") With {
-                    .Arguments = FullscreenScreenshotParameter,
+                Dim fullscreen As New JumpListLink(System.Windows.Forms.Application.ExecutablePath, "Capture entire screen") With {
+                    .Arguments = CommandLine.FullscreenScreenshotParameter,
                     .IconReference = New IconReference(imgres, 105)
                 }
-                jlist.AddUserTasks(fullscreen)
+                jumpList.AddUserTasks(fullscreen)
             End If
 
-            Dim selector As New JumpListLink(System.Windows.Forms.Application.ExecutablePath, "Select a region") With {
-                .Arguments = AreaSelectorParameter,
+            Dim selector As New JumpListLink(System.Windows.Forms.Application.ExecutablePath, "Capture Region") With {
+                .Arguments = CommandLine.AreaSelectorParameter,
                 .IconReference = New IconReference(System.Windows.Forms.Application.ExecutablePath, 0)
             }
-            jlist.AddUserTasks(selector)
+            jumpList.AddUserTasks(selector)
 
             Try
-                jlist.Refresh()
+                jumpList.Refresh()
             Catch ex As UnauthorizedAccessException
             End Try
         End Sub

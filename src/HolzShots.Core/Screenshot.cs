@@ -15,8 +15,7 @@ namespace HolzShots
         public Bitmap Image { get; }
         public Size Size { get; }
 
-
-        internal Screenshot(Bitmap image, DateTime timestamp, Point cursorPosition, ScreenshotSource source, string processName, string windowTitle)
+        private Screenshot(Bitmap image, DateTime timestamp, Point cursorPosition, ScreenshotSource source, string processName, string windowTitle)
         {
             Image = image ?? throw new ArgumentNullException(nameof(image));
             Size = image.Size;

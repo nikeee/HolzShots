@@ -6,9 +6,7 @@ namespace HolzShots.Input
 {
     public abstract class KeyboardHook : IDisposable
     {
-        private readonly Dictionary<int, Hotkey> registeredKeys = new Dictionary<int, Hotkey>();
-
-        protected Dictionary<int, Hotkey> RegisteredKeys => registeredKeys;
+        protected Dictionary<int, Hotkey> RegisteredKeys { get; } = new Dictionary<int, Hotkey>();
 
         /// <summary>Registers a hotkey in the system.</summary>
         public abstract void RegisterHotkey(Hotkey hotkey);

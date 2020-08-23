@@ -59,10 +59,12 @@
     <Compile Include="Drawing\GraphicsExtension.cs" />
     <Compile Include="Drawing\ImageExtensions.cs" />
     <Compile Include="Drawing\ImageFormatAnalyser.cs" />
+    <Compile Include="Drawing\ImageFormatInformation.cs" />
     <Compile Include="Drawing\NativePen.cs" />
     <Compile Include="Drawing\ScreenshotCreator.cs" />
     <Compile Include="Drawing\WindowScreenshotSet.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Input\HolzShotsActionCollection.cs" />
     <Compile Include="KeyValuePairExtensions.cs" />
     <Compile Include="LibraryInformation.cs" />
     <Compile Include="MathEx.cs" />
@@ -112,7 +114,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="AsyncFixer" Version="1.1.6">
+    <PackageReference Include="AsyncFixer" Version="1.3.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
@@ -125,6 +127,7 @@
     </PackageReference>
     <PackageReference Include="System.Runtime.Analyzers" Version="1.2.0-beta2" />
     <PackageReference Include="System.Runtime.InteropServices.Analyzers" Version="1.2.0-beta2" />
+    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HolzShots.Native\HolzShots.Native.csproj">

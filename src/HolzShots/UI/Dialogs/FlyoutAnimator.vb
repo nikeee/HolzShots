@@ -50,7 +50,7 @@ Namespace UI.Dialogs
             t.Add(Me, "TargetOpacity", 1.0)
 
             If completedHandler IsNot Nothing Then
-                AddHandler t.TransitionCompletedEvent, Sub() _target.InvokeOnUIThread(completedHandler)
+                AddHandler t.TransitionCompletedEvent, Sub() _target.InvokeIfNeeded(completedHandler)
             End If
             t.Run()
         End Sub
@@ -73,7 +73,7 @@ Namespace UI.Dialogs
             t.Add(Me, "TargetOpacity", 0.0)
 
             If completedHandler IsNot Nothing Then
-                AddHandler t.TransitionCompletedEvent, Sub() _target?.InvokeOnUIThread(completedHandler)
+                AddHandler t.TransitionCompletedEvent, Sub() _target?.InvokeIfNeeded(completedHandler)
             End If
             t.Run()
         End Sub
@@ -84,7 +84,7 @@ Namespace UI.Dialogs
             End Get
             Set(value As Integer)
                 If Not _target.IsDisposed AndAlso _target.Location.X <> value Then
-                    _target.InvokeOnUIThread(Sub() _target.Location = New Point(value, _target.Location.Y))
+                    _target.InvokeIfNeeded(Sub() _target.Location = New Point(value, _target.Location.Y))
                 End If
             End Set
         End Property
@@ -95,7 +95,7 @@ Namespace UI.Dialogs
             End Get
             Set(value As Double)
                 If Not _target.IsDisposed AndAlso _target.Opacity <> value Then
-                    _target.InvokeOnUIThread(Sub() _target.Opacity = value)
+                    _target.InvokeIfNeeded(Sub() _target.Opacity = value)
                 End If
             End Set
         End Property
@@ -106,7 +106,7 @@ Namespace UI.Dialogs
             End Get
             Set(value As Integer)
                 If Not _target.IsDisposed AndAlso _target.Location.Y <> value Then
-                    _target.InvokeOnUIThread(Sub() _target.Location = New Point(_target.Location.X, value))
+                    _target.InvokeIfNeeded(Sub() _target.Location = New Point(_target.Location.X, value))
                 End If
             End Set
         End Property
@@ -114,9 +114,9 @@ Namespace UI.Dialogs
 
 
     Friend Class AnimationSet
-        Public Animator As FlyoutAnimator
-        Public Duration As Integer
-        Public CompletedHandler As Action
+        Public ReadOnly Property Animator As FlyoutAnimator
+        Public ReadOnly Property Duration As Integer
+        Public ReadOnly Property CompletedHandler As Action
 
         Public Sub New(ByVal animator As FlyoutAnimator, ByVal duration As Integer, ByVal completedHandler As Action)
             Me.Animator = animator

@@ -13,7 +13,7 @@ namespace HolzShots.Composition
             : base(pluginDirectory)
         { }
 
-        public (IPluginMetadata metadata, Uploader uploader)? GetUploaderByName(string name)
+        public UploaderEntry/*?*/ GetUploaderByName(string name)
         {
             Debug.Assert(!string.IsNullOrEmpty(name));
             Debug.Assert(Loaded);
@@ -22,8 +22,8 @@ namespace HolzShots.Composition
             Debug.Assert(pls != null);
 
             return pls
-                .Where(p => p.metadata.Name == name)
-                .Select(p => (new PluginMetadata(p.metadata), p.instance))
+                .Where(p => Uploader.HasEqualName(p.metadata.Name, name))
+                .Select(p => new UploaderEntry(new PluginMetadata(p.metadata), p.instance))
                 .FirstOrDefault();
         }
 

@@ -9,11 +9,4 @@ Namespace ScreenshotRelated.Selection
         Sub DrawSelection(ByRef g As Graphics, ByRef selectionBorderPen As Pen)
 
     End Interface
-
-    <Serializable>
-    Friend Enum SelectionDecorations
-        Nomination1 = 0
-        Nomination2 = 1
-        Nomination3 = 2
-    End Enum
 End Namespace

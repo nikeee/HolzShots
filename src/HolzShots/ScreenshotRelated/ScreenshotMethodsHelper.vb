@@ -1,5 +1,4 @@
 Imports System.Text
-Imports HolzShots.Interop
 
 Namespace ScreenshotRelated
 

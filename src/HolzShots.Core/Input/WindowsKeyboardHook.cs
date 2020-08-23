@@ -1,21 +1,20 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 
 namespace HolzShots.Input
 {
     public sealed class WindowsKeyboardHook : KeyboardHook
     {
         private readonly HotkeyWindowHost _window;
-        private ISynchronizeInvoke _invoke;
+        private readonly ISynchronizeInvoke _synchronizer;
         private readonly object _lockObj = new object();
 
-        public WindowsKeyboardHook(ISynchronizeInvoke invoke)
+        public WindowsKeyboardHook(ISynchronizeInvoke synchronizer)
         {
             _window = new HotkeyWindowHost();
             _window.KeyPressed += KeyPressed; // register the event of the inner native window.
-            _invoke = invoke;
+            _synchronizer = synchronizer;
         }
 
         /// <summary>Registers a hotkey in the system.</summary>
@@ -23,7 +22,8 @@ namespace HolzShots.Input
 
         private void RegisterHotkeyInternal(Hotkey hotkey)
         {
-            Debug.WriteLine($"LOL THREAD ID REGISTER: {System.Threading.Thread.CurrentThread.ManagedThreadId}");
+            System.Diagnostics.Trace.WriteLine($"Thread ID Register: {System.Threading.Thread.CurrentThread.ManagedThreadId}");
+
             if (hotkey == null)
                 throw new ArgumentNullException(nameof(hotkey));
 
@@ -47,14 +47,14 @@ namespace HolzShots.Input
 
         private void UnregisterHotkeyInternal(Hotkey hotkey)
         {
-            Debug.WriteLine($"LOL THREAD ID UNREGISTER: {System.Threading.Thread.CurrentThread.ManagedThreadId}");
+            System.Diagnostics.Trace.WriteLine($"Thread ID Unregister: {System.Threading.Thread.CurrentThread.ManagedThreadId}");
+
             if (hotkey == null)
                 throw new ArgumentNullException(nameof(hotkey));
 
             int id = hotkey.GetHashCode();
 
-            Hotkey hk;
-            if (!RegisteredKeys.TryGetValue(id, out hk))
+            if (!RegisteredKeys.ContainsKey(id))
                 throw new HotkeyRegistrationException(hotkey, new InvalidOperationException("Hotkey not registered."));
 
             try
@@ -82,10 +82,10 @@ namespace HolzShots.Input
 
         private void InvokeWrapper(Action action)
         {
-            if (_invoke == null || !_invoke.InvokeRequired)
+            if (_synchronizer == null || !_synchronizer.InvokeRequired)
                 action();
             else
-                _invoke.BeginInvoke(action, null);
+                _synchronizer.BeginInvoke(action, null);
         }
 
         private bool _isDisposed;

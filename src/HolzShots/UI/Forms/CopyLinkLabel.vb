@@ -1,4 +1,5 @@
 Imports System.ComponentModel
+Imports HolzShots.Windows.Forms
 
 Namespace UI.Forms
     Friend Class CopyLinkLabel

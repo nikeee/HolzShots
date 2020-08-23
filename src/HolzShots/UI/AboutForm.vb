@@ -6,7 +6,6 @@ Imports Microsoft.WindowsAPICodePack.Dialogs
 Namespace UI
     Friend Class AboutForm
         Public Shared Property IsAboutInstanciated As Boolean
-        Private Const YoutubePlaylistPage As String = "https://holz.nu/tunnel"
 
         Public Sub New()
             InitializeComponent()

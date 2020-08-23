@@ -62,10 +62,6 @@ namespace HolzShots.Native
 
         [DllImport(DllName)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool GetWindowRect(IntPtr hWnd, out Rect lpRect);
-
-        [DllImport(DllName)]
-        [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool GetClientRect(IntPtr hWnd, out Rect lpRect);
 
         [DllImport(DllName, ExactSpelling = true, SetLastError = true)]
@@ -79,6 +75,10 @@ namespace HolzShots.Native
         public static extern bool GetWindowInfo(IntPtr hwnd, ref WindowInfo pwi);
 
         #region Window Position
+
+        [DllImport(DllName)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool GetWindowRect(IntPtr hWnd, out Rect lpRect);
 
         [DllImport(DllName)]
         public static extern bool GetWindowPlacement(IntPtr hWnd, ref WindowPlacement lpwndpl);
@@ -106,6 +106,20 @@ namespace HolzShots.Native
         [DllImport(DllName)]
         public static extern IntPtr GetForegroundWindow();
 
+        public static bool SetForegroundWindowEx(IntPtr windowHandle)
+        {
+            var threadIdOfTargetWindow = GetWindowThreadProcessId(windowHandle, IntPtr.Zero);
+            var threadIdOfForegroundWindow = GetWindowThreadProcessId(GetForegroundWindow(), IntPtr.Zero);
+
+            if (threadIdOfTargetWindow == threadIdOfForegroundWindow)
+                return SetForegroundWindow(windowHandle);
+
+            AttachThreadInput(threadIdOfForegroundWindow, threadIdOfTargetWindow, true);
+            var res = SetForegroundWindow(windowHandle);
+            AttachThreadInput(threadIdOfForegroundWindow, threadIdOfTargetWindow, false);
+            return res;
+        }
+
         #endregion
 
         #endregion
@@ -114,6 +128,8 @@ namespace HolzShots.Native
         [DllImport(DllName)]
         public static extern bool AttachThreadInput(int idAttach, int idAttachTo, bool fAttach);
 
+        [DllImport(DllName, SetLastError = true)]
+        public static extern int GetWindowThreadProcessId(IntPtr hWnd, IntPtr lpdwProcessId);
         [DllImport(DllName, SetLastError = true)]
         public static extern int GetWindowThreadProcessId(IntPtr hWnd, ref int lpdwProcessId);
 

@@ -11,6 +11,8 @@ Imports HolzShots.UI.Controls.Helpers
 Imports HolzShots.UI.Forms
 Imports Microsoft.WindowsAPICodePack.Dialogs
 Imports Microsoft.WindowsAPICodePack.Taskbar
+Imports HolzShots.Composition
+Imports HolzShots.Drawing
 
 Namespace UI.Specialized
     Friend Class ShotEditor
@@ -30,6 +32,8 @@ Namespace UI.Specialized
 
         Friend Property Screenshot As Screenshot
 
+        Private ReadOnly _imageHoster As UploaderEntry ' ?
+
 #End Region
 
 #Region "Win7/8-Thumbnails"
@@ -41,14 +45,20 @@ Namespace UI.Specialized
         Private Sub InitializeThumbnailToolbar()
 
             If TaskbarManager.IsPlatformSupported Then
-                Dim uploadTooltip As String = UploadToHoster.ToolTipText.Remove(UploadToHoster.ToolTipText.IndexOf(" (", StringComparison.Ordinal))
-                uploadTooltip = String.Format(Global.HolzShots.My.Application.TheCulture, uploadTooltip, HolzShots.My.Settings.DefaultImageHoster)
+
+                Dim uploadTooltip As String = String.Empty
+                If _imageHoster?.Metadata IsNot Nothing Then
+                    uploadTooltip = UploadToHoster.ToolTipText.Remove(UploadToHoster.ToolTipText.IndexOf(" (", StringComparison.Ordinal))
+                    uploadTooltip = String.Format(Global.HolzShots.My.Application.TheCulture, uploadTooltip, _imageHoster.Metadata.Name)
+                End If
 
                 _uploadThumbnailButton = New ThumbnailToolBarButton(Icon.FromHandle(HolzShots.My.Resources.uploadMedium.GetHicon()), uploadTooltip)
+                AddHandler _uploadThumbnailButton.Click, Sub() UploadCurrentImageToDefaultProvider()
+                _uploadThumbnailButton.Enabled = _imageHoster?.Metadata IsNot Nothing
+
                 _saveThumbnailButton = New ThumbnailToolBarButton(Icon.FromHandle(HolzShots.My.Resources.saveMedium.GetHicon()), "Save image")
                 _copyThumbnailButton = New ThumbnailToolBarButton(Icon.FromHandle(HolzShots.My.Resources.clipboardMedium.GetHicon()), "Copy image")
 
-                AddHandler _uploadThumbnailButton.Click, Sub() UploadCurrentImageToDefaultProvider()
                 AddHandler _saveThumbnailButton.Click, Sub() SaveImage()
                 AddHandler _copyThumbnailButton.Click, Sub() CopyImage()
 
@@ -66,18 +76,20 @@ Namespace UI.Specialized
 
             InitializeComponent()
 
-            autoCloseShotEditor.Checked = ManagedSettings.AutoCloseShotEditor
-            ' autoCloseShotEditor.Enabled = True ' Not ManagedSettings.AutoCloseShotEditorPolicy.IsSet
+            autoCloseShotEditor.Checked = UserSettings.Current.CloseAfterUpload
+            autoCloseShotEditor.Enabled = False ' We only support reading that setting for now
 
             Me.Screenshot = screenshot
 
+            _imageHoster = UserSettings.GetImageServiceForSettingsContext(UserSettings.Current, HolzShots.My.Application.Uploaders)
+
             InitializeThumbnailToolbar()
 
-            If ManagedSettings.EnableIngameMode AndAlso HolzShotsEnvironment.IsFullScreen() Then
+            If Not UserSettings.Current.EnableHotkeysDuringFullscreen AndAlso HolzShots.Windows.Forms.EnvironmentEx.IsFullscreenAppRunning() Then
                 WindowState = FormWindowState.Minimized
             ElseIf screenshot.Size = SystemInformation.VirtualScreen.Size Then
                 WindowState = FormWindowState.Maximized
-            ElseIf screenshot.Image.IsLargeImage() Then
+            ElseIf screenshot.Image.ShouldMaximizeEditorWindowForImage() Then
                 WindowState = FormWindowState.Maximized
             Else
                 Width = screenshot.Image.Width
@@ -115,12 +127,19 @@ Namespace UI.Specialized
 
             DrawCursor.Visible = screenshot.Source <> ScreenshotSource.Selected AndAlso screenshot.Source <> ScreenshotSource.Unknown
 
-            UploadToHoster.ToolTipText = String.Format(Global.HolzShots.My.Application.TheCulture, UploadToHoster.ToolTipText, HolzShots.My.Settings.DefaultImageHoster)
 
-            ShareStrip.Renderer = GlobalSubMenuContextMenuRenderer
-            ToolStrip1.Renderer = GlobalSubMenuContextMenuRenderer
-            EditStrip.Renderer = GlobalSubMenuContextMenuRenderer
-            CopyPrintToolStrip.Renderer = GlobalSubMenuContextMenuRenderer
+            UploadToHoster.Enabled = _imageHoster?.Metadata IsNot Nothing
+            UploadToHoster.ToolTipText = If(
+                            _imageHoster?.Metadata IsNot Nothing,
+                            String.Format(Global.HolzShots.My.Application.TheCulture, UploadToHoster.ToolTipText, _imageHoster?.Metadata.Name),
+                            String.Empty
+                        )
+
+            Dim renderer = HolzShots.Windows.Forms.EnvironmentEx.GetToolStripRendererForCurrentTheme()
+            ShareStrip.Renderer = renderer
+            ToolStrip1.Renderer = renderer
+            EditStrip.Renderer = renderer
+            CopyPrintToolStrip.Renderer = renderer
         End Sub
 
 #End Region
@@ -134,10 +153,6 @@ Namespace UI.Specialized
         Private Sub ShotShowerLoad(ByVal sender As Object, ByVal e As EventArgs) Handles MyBase.Load
             ThePanel.Initialize(Screenshot)
             LoadToolSettings()
-            'If ManagedSettings.ShotEditorTitleTextPolicy.IsSet Then
-            If Not String.IsNullOrEmpty(ManagedSettings.ShotEditorTitleText) Then
-                Text = String.Concat(Text, " ", ManagedSettings.ShotEditorTitleText)
-            End If
         End Sub
 
 #Region "Settings and stuff"
@@ -158,7 +173,7 @@ Namespace UI.Specialized
             UploadToHoster.DropDown.ImageScalingSize = New Size(16, 16)
             UploadToHoster.DropDown.AutoSize = True
             If HolzShots.My.Application.Uploaders.Loaded Then
-                UploadToHoster.DropDown.Renderer = GlobalContextMenuRenderer
+                UploadToHoster.DropDown.Renderer = HolzShots.Windows.Forms.EnvironmentEx.GetToolStripRendererForCurrentTheme()
                 Dim pls = HolzShots.My.Application.Uploaders.GetUploaderNames()
                 For Each uploaderName In pls
                     Dim item As ToolStripItem = UploadToHoster.DropDown.Items.Add(String.Format(Localization.UploadTo, uploaderName))
@@ -259,7 +274,7 @@ Namespace UI.Specialized
             Using sfd As New CommonSaveFileDialog()
                 sfd.Filters.Add(New CommonFileDialogFilter(Localization.PngImage, "*.png"))
                 sfd.Filters.Add(New CommonFileDialogFilter(Localization.JpgImage, "*.jpg"))
-                sfd.DefaultExtension = DefaultFileExtension
+                sfd.DefaultExtension = sfd.Filters(0).Extensions(0)
                 sfd.AlwaysAppendDefaultExtension = True
                 sfd.EnsurePathExists = True
 
@@ -289,12 +304,19 @@ Namespace UI.Specialized
             If String.IsNullOrEmpty(fileName) Then Throw New ArgumentNullException(NameOf(fileName))
             Try
                 Dim bmp = ThePanel.CombinedImage()
-                Dim extension = Path.GetExtension(fileName)
-                Dim format = Extensions.GetImageFormatFromFileExtension(extension)
                 Debug.Assert(bmp IsNot Nothing)
+
+                Dim format = ImageFormatInformation.GetImageFormatFromFileName(fileName)
+                Debug.Assert(format IsNot Nothing)
+
                 Using fileStream = File.OpenWrite(fileName)
                     bmp.SaveExtended(fileStream, format)
                 End Using
+
+                If UserSettings.Current.CloseAfterSave Then
+                    Close()
+                End If
+
             Catch ex As PathTooLongException
                 HumanInterop.PathIsTooLong(fileName, Me)
             Catch ex As Exception
@@ -346,12 +368,6 @@ Namespace UI.Specialized
 
             HolzShots.My.Settings.BlurFactor = ThePanel.BlurFactor
 
-            'My.Settings.highlightmouse = HighLightMouse.Checked
-            'My.Settings.ShowCursor = ShowCursor.Checked
-
-            'My.Settings.HighlightColor = ColorViewer.BackColor
-
-            'My.Settings.ColorAlpha = TransparencyBar.Value
 
             HolzShots.My.Settings.Save()
 
@@ -685,8 +701,7 @@ Namespace UI.Specialized
             ThePanel.ZensursulaWidth = ZensursulaBar.Value
         End Sub
 
-        Private Sub ZensursulaViewerColorChanged(ByVal sender As Object, ByVal c As Color) _
-            Handles Zensursula_Viewer.ColorChanged
+        Private Sub ZensursulaViewerColorChanged(ByVal sender As Object, ByVal c As Color) Handles Zensursula_Viewer.ColorChanged
             ThePanel.ZensursulaColor = c
         End Sub
 
@@ -776,34 +791,33 @@ Namespace UI.Specialized
         End Sub
 
         Private Async Sub UploadToHosterDropDownItemClicked(ByVal sender As Object, ByVal e As ToolStripItemClickedEventArgs) Handles UploadToHoster.DropDownItemClicked
+
             Dim tag = DirectCast(e.ClickedItem.Tag, String)
-            If Not String.IsNullOrWhiteSpace(tag) Then
-                ' Dirty :>
-                Dim info = HolzShots.My.Application.Uploaders.GetUploaderByName(tag)
+            ' the tag represents the name of the image hoster here
+            If String.IsNullOrWhiteSpace(tag) Then Return
 
-                Debug.Assert(info.HasValue)
+            ' Dirty :>
+            Dim info = HolzShots.My.Application.Uploaders.GetUploaderByName(tag)
 
-                Dim v = info.Value
-                Debug.Assert(v.metadata IsNot Nothing)
-                Debug.Assert(v.uploader IsNot Nothing)
-                Debug.Assert(v.metadata.Name = tag)
-                Debug.Assert(Not String.IsNullOrEmpty(tag))
+            Debug.Assert(Not String.IsNullOrEmpty(tag))
+            Debug.Assert(info IsNot Nothing)
+            Debug.Assert(info.Metadata IsNot Nothing)
+            Debug.Assert(info.Uploader IsNot Nothing)
+            Debug.Assert(Uploader.HasEqualName(info.Metadata.Name, tag))
 
-                Dim image = ThePanel.CombinedImage
-                Dim format = UploadHelper.GetImageFormat(image)
-                Dim result As UploadResult
-                Try
-                    result = Await UploadHelper.Upload(v.uploader, image, format, Me).ConfigureAwait(True)
-                    Debug.Assert(result IsNot Nothing)
-                    UploadHelper.InvokeUploadFinishedUi(result)
-                Catch ex As UploadCanceledException
-                    HumanInterop.ShowOperationCanceled()
-                Catch ex As UploadException
-                    HumanInterop.UploadFailed(ex)
-                    Return
-                End Try
-                HandleAfterUpload()
-            End If
+            Dim image = ThePanel.CombinedImage
+            Dim format = UploadHelper.GetImageFormat(image)
+            Try
+                Dim result = Await UploadHelper.Upload(info.Uploader, image, format, Me).ConfigureAwait(True)
+                Debug.Assert(result IsNot Nothing)
+                UploadHelper.InvokeUploadFinishedUi(result)
+            Catch ex As UploadCanceledException
+                HumanInterop.ShowOperationCanceled()
+            Catch ex As UploadException
+                HumanInterop.UploadFailed(ex)
+                Return
+            End Try
+            HandleAfterUpload()
         End Sub
 
         Private Sub UploadToHosterButtonClick(ByVal sender As Object, ByVal e As EventArgs) Handles UploadToHoster.ButtonClick
@@ -831,7 +845,7 @@ Namespace UI.Specialized
         End Sub
 
         Private Sub HandleAfterUpload()
-            If ManagedSettings.AutoCloseShotEditor Then
+            If UserSettings.Current.CloseAfterUpload Then
                 Close()
             End If
         End Sub
@@ -855,11 +869,6 @@ Namespace UI.Specialized
             Finally
                 HandleAfterUpload()
             End Try
-        End Sub
-
-        Private Sub AutoCloseShotEditorCheckedChanged(sender As Object, e As EventArgs) Handles autoCloseShotEditor.CheckedChanged
-            ManagedSettings.AutoCloseShotEditor = autoCloseShotEditor.Checked
-            HolzShots.My.MySettings.Default.Save()
         End Sub
 
         Protected Overrides Sub Dispose(ByVal disposing As Boolean)

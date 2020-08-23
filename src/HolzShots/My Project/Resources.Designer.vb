@@ -253,16 +253,6 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
-        Friend ReadOnly Property Header() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("Header", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized resource of type System.Drawing.Bitmap.
-        '''</summary>
         Friend ReadOnly Property highlighterMedium() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("highlighterMedium", resourceCulture)
@@ -407,31 +397,6 @@ Namespace My.Resources
             Get
                 Dim obj As Object = ResourceManager.GetObject("settingsMedium", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
-        '''
-        '''&lt;holzshots&gt;
-        '''  &lt;settings name=&quot;main&quot;&gt;
-        '''    &lt;!--Integer--&gt;
-        '''    &lt;modkeyArea&gt;1&lt;/modkeyArea&gt;
-        '''    &lt;modkeyArea_fullscreen&gt;2&lt;/modkeyArea_fullscreen&gt;
-        '''    &lt;ColorAlpha&gt;128&lt;/ColorAlpha&gt;
-        '''    &lt;ZensursulaWidth&gt;10&lt;/ZensursulaWidth&gt;
-        '''    &lt;MarkerWidth&gt;20&lt;/MarkerWidth&gt;
-        '''    &lt;eraser_diameter&gt;50&lt;/eraser_diameter&gt;
-        '''    &lt;modkeyArea_window&gt;4&lt;/modkeyArea_window&gt;
-        '''    &lt;ellipse_width&gt;10&lt;/ellipse_width&gt;
-        '''    &lt;DockLocation&gt;0&lt;/DockLocation&gt;
-        '''    &lt;ArrowWidth&gt;10&lt;/ArrowWidth&gt;
-        '''    &lt;!--Booleans--&gt;
-        '''    &lt;highli [rest of string was truncated]&quot;;.
-        '''</summary>
-        Friend ReadOnly Property standardsettings() As String
-            Get
-                Return ResourceManager.GetString("standardsettings", resourceCulture)
             End Get
         End Property
         

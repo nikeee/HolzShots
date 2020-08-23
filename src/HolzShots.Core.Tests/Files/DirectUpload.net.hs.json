@@ -1,0 +1,20 @@
+{
+  "schemaVersion": "0.1.0",
+  "meta": {
+    "version": "1.0.0",
+    "name": "DirectUpload.net",
+    "author": "nikeee"
+  },
+  "uploader": {
+    "fileFormName": "bilddatei",
+    "requestUrl": "https://directupload.net/index.php?mode=upload",
+    "postParams": {
+      "input": "file"
+    },
+    "responseParser": {
+      "kind": "regex",
+      "success": "(?<url>https://[a-zA-Z0-9]*.directupload.net/images/\\d{1,}/\\b(?!temp\\b).*?\\b.[a-zA-Z]{1,3})",
+      "urlTemplate": "$1,url$"
+    }
+  }
+}
