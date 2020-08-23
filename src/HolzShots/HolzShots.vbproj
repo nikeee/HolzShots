@@ -393,7 +393,6 @@
     <Compile Include="UI\Forms\PromptTextBox.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="UI\Forms\VSRenderer.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="UI\Controls\ColorViewer.resx">

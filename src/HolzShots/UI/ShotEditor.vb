@@ -135,10 +135,11 @@ Namespace UI.Specialized
                             String.Empty
                         )
 
-            ShareStrip.Renderer = GlobalSubMenuContextMenuRenderer
-            ToolStrip1.Renderer = GlobalSubMenuContextMenuRenderer
-            EditStrip.Renderer = GlobalSubMenuContextMenuRenderer
-            CopyPrintToolStrip.Renderer = GlobalSubMenuContextMenuRenderer
+            Dim renderer = HolzShots.Windows.Forms.EnvironmentEx.GetToolStripRendererForCurrentTheme()
+            ShareStrip.Renderer = renderer
+            ToolStrip1.Renderer = renderer
+            EditStrip.Renderer = renderer
+            CopyPrintToolStrip.Renderer = renderer
         End Sub
 
 #End Region
