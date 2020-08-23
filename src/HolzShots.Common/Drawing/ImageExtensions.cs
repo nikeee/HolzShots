@@ -28,8 +28,6 @@ namespace HolzShots.Drawing
             if (image == null)
                 throw new ArgumentNullException(nameof(image));
 
-            if (image == null)
-                return null;
             var rawData = image.GetRawData();
             var copy = image.Clone() as Image;
             Debug.Assert(copy != null);
@@ -41,7 +39,7 @@ namespace HolzShots.Drawing
         {
             if (image == null)
                 throw new ArgumentNullException(nameof(image));
-            if(format == null)
+            if (format == null)
                 throw new ArgumentNullException(nameof(format));
 
             using (var ms = new System.IO.MemoryStream(image.Width * image.Height * 4))

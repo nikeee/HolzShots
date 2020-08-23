@@ -44,10 +44,15 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net" />
     <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BoolEx.cs" />
+    <Compile Include="Composition\Command\CommandManager.cs" />
+    <Compile Include="Composition\Command\HotkeyCommand.cs" />
+    <Compile Include="Composition\Command\ICommand.cs" />
     <Compile Include="Composition\CustomUploadersFile.cs" />
     <Compile Include="Composition\CustomUploaderSource.cs" />
     <Compile Include="Composition\IUploaderSource.cs" />
@@ -55,6 +60,7 @@
     <Compile Include="Composition\UploaderManager.cs" />
     <Compile Include="Composition\PluginLoadingFailedException.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="HSSettings.cs" />
     <Compile Include="Input\HotkeyActionCollection.cs" />
     <Compile Include="Input\IAreaSelector.cs" />
     <Compile Include="Input\IHotkeyAction.cs" />
@@ -81,9 +87,10 @@
     <Compile Include="Input\KeyPressedEventArgs.cs" />
     <Compile Include="Input\ModifierKeys.cs" />
     <Compile Include="Input\WindowsKeyboardHook.cs" />
+    <Compile Include="IO\PollingFileWatcher.cs" />
     <Compile Include="NativeMethods.cs" />
     <Compile Include="Net\Custom\CustomUploader.cs" />
-    <Compile Include="Net\Custom\CustomUploaderRoot.cs" />
+    <Compile Include="Net\Custom\CustomUploaderSpec.cs" />
     <Compile Include="Net\Custom\JsonConfig.cs" />
     <Compile Include="KeyValuePairExtensions.cs" />
     <Compile Include="Net\Custom\SemVersionConverter.cs" />
@@ -94,8 +101,13 @@
     <Compile Include="Net\UploadException.cs" />
     <Compile Include="Net\UploadProgress.cs" />
     <Compile Include="Net\UploadResult.cs" />
+    <Compile Include="NonPublicPropertiesResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Screenshot.cs" />
+    <Compile Include="IO\HolzShotsPaths.cs" />
+    <Compile Include="UserSettings.cs" />
+    <Compile Include="SettingsManager.cs" />
+    <Compile Include="ValidationError.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HolzShots.Common\HolzShots.Common.csproj">
@@ -137,6 +149,9 @@
     <PackageReference Include="System.Security.Cryptography.X509Certificates" Version="4.3.2" />
     <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Input\Hotkey\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

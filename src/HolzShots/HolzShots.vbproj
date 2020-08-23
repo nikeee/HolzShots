@@ -189,18 +189,22 @@
   <ItemGroup>
     <Compile Include="GlobalSuppressions.vb" />
     <Compile Include="ImageExtensions.vb" />
-    <Compile Include="Input\Actions\SelectAreaHotkeyAction.vb" />
+    <Compile Include="Input\Actions\CapturingCommand.vb" />
+    <Compile Include="Input\Actions\EditImageCommand.vb" />
+    <Compile Include="Input\Actions\FileDependentCommand.vb" />
+    <Compile Include="Input\Actions\FullscreenCommand.vb" />
+    <Compile Include="Input\Actions\OpenImagesFolderCommand.vb" />
+    <Compile Include="Input\Actions\OpenSettingsJsonCommand.vb" />
+    <Compile Include="Input\Actions\SelectAreaCommand.vb" />
+    <Compile Include="Input\Actions\WindowCommand.vb" />
+    <Compile Include="Input\Actions\UploadImageCommand.vb" />
     <Compile Include="Input\HolzShotsActionCollection.vb" />
     <Compile Include="Interop\TaskBar.vb" />
     <Compile Include="Net\UploadUI.vb" />
     <Compile Include="Net\Win32WindowExtensions.vb" />
-    <Compile Include="ScreenshotRelated\ScreenshotInvoker.vb" />
     <Compile Include="ScreenshotRelated\Selection\MagnifierDecoration.vb" />
     <Compile Include="ScreenshotRelated\Selection\DefaultNoSelectionDecoration.vb" />
     <Compile Include="ScreenshotRelated\Selection\INoSelectionDecoration.vb" />
-    <Compile Include="UI\BorderPanelWindow.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="UI\Controls\BigColorViewer.vb">
       <SubType>Component</SubType>
     </Compile>
@@ -211,9 +215,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\Forms\CopyLinkLabel.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="UI\Controls\ImageButton.vb">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\Controls\PaintPanel.Designer.vb">
@@ -239,13 +240,6 @@
     </Compile>
     <Compile Include="UI\Controls\PluginInfoItem.vb">
       <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UI\DisposingContainer.vb" />
-    <Compile Include="UI\SimpleHotkeySelector.Designer.vb">
-      <DependentUpon>SimpleHotkeySelector.vb</DependentUpon>
-    </Compile>
-    <Compile Include="UI\SimpleHotkeySelector.vb">
-      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\Dialogs\FlyoutNotifier.Designer.vb">
       <DependentUpon>FlyoutNotifier.vb</DependentUpon>
@@ -280,16 +274,12 @@
     <Compile Include="UI\Dialogs\UploadResultWindow.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Extensions.vb" />
     <Compile Include="GlobalVariables.vb" />
     <Compile Include="Drawing\Tools\Helper.vb" />
-    <Compile Include="Interop\HolzShotsEnvironment.vb" />
     <Compile Include="Interop\ExplorerContextMenu.vb" />
     <Compile Include="Interop\HumanInterop.vb" />
     <Compile Include="Interop\InteropHelper.vb" />
-    <Compile Include="Interop\ManagedSettings.vb" />
     <Compile Include="Interop\LocalDisk\ScreenshotDumper.vb" />
-    <Compile Include="Interop\ShellExtensions.vb" />
     <Compile Include="Drawing\Tools\Crop.vb" />
     <Compile Include="UI\Controls\NumericTextBox.vb">
       <SubType>Component</SubType>
@@ -313,23 +303,13 @@
     <Compile Include="Drawing\Tools\Eraser.vb" />
     <Compile Include="Drawing\Tools\ITool.vb" />
     <Compile Include="Drawing\Tools\Marker.vb" />
-    <Compile Include="UI\HotkeySelector.Designer.vb">
-      <DependentUpon>HotkeySelector.vb</DependentUpon>
-    </Compile>
-    <Compile Include="UI\HotkeySelector.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\IHotkeySelector.vb" />
     <Compile Include="Drawing\Tools\Pipette.vb" />
     <Compile Include="Drawing\Tools\Pixelate.vb" />
     <Compile Include="ScreenshotRelated\ScreenshotMethods.vb" />
     <Compile Include="ScreenshotRelated\ScreenshotMethodsHelper.vb" />
-    <Compile Include="ScreenshotRelated\Selection\Nomination3Decoration.vb" />
     <Compile Include="ScreenshotRelated\Selection\ISelectionDecoration.vb" />
     <Compile Include="ScreenshotRelated\Selection\Nomination1Decoration.vb" />
-    <Compile Include="ScreenshotRelated\Selection\Nomination2Decoration.vb" />
     <Compile Include="ScreenshotRelated\Selection\QuickInfoDecoration.vb" />
-    <Compile Include="ScreenshotRelated\TrayIconAction.vb" />
     <Compile Include="UI\Specialized\MainWindow.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -367,36 +347,9 @@
     </Compile>
     <Compile Include="Drawing\Tools\Censor.vb" />
     <Compile Include="Net\UploadHelper.vb" />
-    <Compile Include="UI\Forms\EnvironmentEx.vb" />
-    <Compile Include="UI\Forms\Banner.Designer.vb">
-      <DependentUpon>Banner.vb</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Forms\Banner.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="UI\Forms\ExplorerInfoPanel.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="UI\Forms\ExplorerLinkLabel.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="UI\Forms\ExplorerListView.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="UI\Forms\ExplorerTreeView.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="UI\Forms\InfoPanelLabel.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="UI\Forms\ToolStripAeroRenderer.vb" />
-    <Compile Include="UI\Forms\NumericTextbox.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="UI\Forms\PromptTextBox.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="UI\Forms\VSRenderer.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="UI\Controls\ColorViewer.resx">
@@ -412,9 +365,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Controls\PluginInfoItem.resx">
       <DependentUpon>PluginInfoItem.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\SimpleHotkeySelector.resx">
-      <DependentUpon>SimpleHotkeySelector.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Dialogs\FlyoutNotifier.resx">
       <DependentUpon>FlyoutNotifier.vb</DependentUpon>
@@ -435,9 +385,6 @@
     <EmbeddedResource Include="Drawing\Tools\UI\ScaleWindow.resx">
       <DependentUpon>ScaleWindow.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\HotkeySelector.resx">
-      <DependentUpon>HotkeySelector.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="UI\Specialized\MainWindow.resx">
       <DependentUpon>MainWindow.vb</DependentUpon>
       <SubType>Designer</SubType>
@@ -455,9 +402,6 @@
     <EmbeddedResource Include="UI\ShotEditor.resx">
       <DependentUpon>ShotEditor.vb</DependentUpon>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\Forms\Banner.resx">
-      <DependentUpon>Banner.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -480,9 +424,6 @@
   <ItemGroup>
     <None Include="Resources\eraser.png" />
     <None Include="Resources\download.png" />
-    <None Include="Resources\standardsettings.xml">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HolzShots.Common\HolzShots.Common.csproj">
@@ -492,6 +433,10 @@
     <ProjectReference Include="..\HolzShots.Core\HolzShots.Core.csproj">
       <Project>{4f1b3465-2915-4e00-bb15-fc1808b01cd6}</Project>
       <Name>HolzShots.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HolzShots.Windows\HolzShots.Windows.csproj">
+      <Project>{fe4e3471-9137-4a49-a230-26c90b14a9f2}</Project>
+      <Name>HolzShots.Windows</Name>
     </ProjectReference>
     <ProjectReference Include="..\HolzShots.Native\HolzShots.Native.csproj">
       <Project>{419f051b-09ad-400d-83c5-b9e9f32e0148}</Project>
@@ -522,7 +467,6 @@
     <Content Include="Resources\editcutBig.png" />
     <Content Include="Resources\editcutSmall.png" />
     <Content Include="Resources\fontMedium.png" />
-    <Content Include="Resources\Header.png" />
     <Content Include="Resources\highlighterMedium.png" />
     <Content Include="Resources\historyMedium.png" />
     <Content Include="Resources\horizontalMedium.png" />

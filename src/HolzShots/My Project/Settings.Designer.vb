@@ -15,7 +15,7 @@ Option Explicit On
 Namespace My
     
     <Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute(),  _
-     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.5.0.0"),  _
+     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.7.0.0"),  _
      Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)>  _
     Partial Friend NotInheritable Class MySettings
         Inherits Global.System.Configuration.ApplicationSettingsBase
@@ -56,54 +56,6 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
-        Public Property HighlightMouse() As Boolean
-            Get
-                Return CType(Me("HighlightMouse"),Boolean)
-            End Get
-            Set
-                Me("HighlightMouse") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
-        Public Property ShowCursor() As Boolean
-            Get
-                Return CType(Me("ShowCursor"),Boolean)
-            End Get
-            Set
-                Me("ShowCursor") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Transparent")>  _
-        Public Property HighlightColor() As Global.System.Drawing.Color
-            Get
-                Return CType(Me("HighlightColor"),Global.System.Drawing.Color)
-            End Get
-            Set
-                Me("HighlightColor") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("128")>  _
-        Public Property ColorAlpha() As Integer
-            Get
-                Return CType(Me("ColorAlpha"),Integer)
-            End Get
-            Set
-                Me("ColorAlpha") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("20")>  _
         Public Property ZensursulaWidth() As Integer
             Get
@@ -123,18 +75,6 @@ Namespace My
             End Get
             Set
                 Me("MarkerWidth") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
-        Public Property EnableIngameMode() As Boolean
-            Get
-                Return CType(Me("EnableIngameMode"),Boolean)
-            End Get
-            Set
-                Me("EnableIngameMode") = value
             End Set
         End Property
         
@@ -176,18 +116,6 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
-        Public Property EnableStatusToaster() As Boolean
-            Get
-                Return CType(Me("EnableStatusToaster"),Boolean)
-            End Get
-            Set
-                Me("EnableStatusToaster") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("Red")>  _
         Public Property EllipseColor() As Global.System.Drawing.Color
             Get
@@ -224,54 +152,6 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
-        Public Property EnableWindowScreenshot() As Boolean
-            Get
-                Return CType(Me("EnableWindowScreenshot"),Boolean)
-            End Get
-            Set
-                Me("EnableWindowScreenshot") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
-        Public Property EnableFullscreenScreenshot() As Boolean
-            Get
-                Return CType(Me("EnableFullscreenScreenshot"),Boolean)
-            End Get
-            Set
-                Me("EnableFullscreenScreenshot") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
-        Public Property EnableAreaScreenshot() As Boolean
-            Get
-                Return CType(Me("EnableAreaScreenshot"),Boolean)
-            End Get
-            Set
-                Me("EnableAreaScreenshot") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
-        Public Property ShowFileNameDialog() As Boolean
-            Get
-                Return CType(Me("ShowFileNameDialog"),Boolean)
-            End Get
-            Set
-                Me("ShowFileNameDialog") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("Black")>  _
         Public Property ArrowColor() As Global.System.Drawing.Color
             Get
@@ -291,30 +171,6 @@ Namespace My
             End Get
             Set
                 Me("ArrowWidth") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
-        Public Property AutoCloseLinkViewer() As Boolean
-            Get
-                Return CType(Me("AutoCloseLinkViewer"),Boolean)
-            End Get
-            Set
-                Me("AutoCloseLinkViewer") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
-        Public Property ChangeAeroMode() As Integer
-            Get
-                Return CType(Me("ChangeAeroMode"),Integer)
-            End Get
-            Set
-                Me("ChangeAeroMode") = value
             End Set
         End Property
         
@@ -344,18 +200,6 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("DirectUpload.net")>  _
-        Public Property DefaultImageHoster() As String
-            Get
-                Return CType(Me("DefaultImageHoster"),String)
-            End Get
-            Set
-                Me("DefaultImageHoster") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("7")>  _
         Public Property BlurFactor() As Integer
             Get
@@ -363,18 +207,6 @@ Namespace My
             End Get
             Set
                 Me("BlurFactor") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
-        Public Property EnableLinkViewer() As Boolean
-            Get
-                Return CType(Me("EnableLinkViewer"),Boolean)
-            End Get
-            Set
-                Me("EnableLinkViewer") = value
             End Set
         End Property
         
@@ -393,177 +225,12 @@ Namespace My
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
-        Public Property EnableShotEditor() As Boolean
-            Get
-                Return CType(Me("EnableShotEditor"),Boolean)
-            End Get
-            Set
-                Me("EnableShotEditor") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property ScreenshotPath() As String
-            Get
-                Return CType(Me("ScreenshotPath"),String)
-            End Get
-            Set
-                Me("ScreenshotPath") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
-        Public Property SaveImagesToLocalDisk() As Boolean
-            Get
-                Return CType(Me("SaveImagesToLocalDisk"),Boolean)
-            End Get
-            Set
-                Me("SaveImagesToLocalDisk") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("OpenSettings")>  _
-        Public Property TrayIconDoubleClickAction() As Global.HolzShots.ScreenshotRelated.TrayIconAction
-            Get
-                Return CType(Me("TrayIconDoubleClickAction"),Global.HolzShots.ScreenshotRelated.TrayIconAction)
-            End Get
-            Set
-                Me("TrayIconDoubleClickAction") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Nomination1")>  _
-        Public Property SelectionDecoration() As Global.HolzShots.ScreenshotRelated.Selection.SelectionDecorations
-            Get
-                Return CType(Me("SelectionDecoration"),Global.HolzShots.ScreenshotRelated.Selection.SelectionDecorations)
-            End Get
-            Set
-                Me("SelectionDecoration") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
-        Public Property EnableSmartFormatForUpload() As Boolean
-            Get
-                Return CType(Me("EnableSmartFormatForUpload"),Boolean)
-            End Get
-            Set
-                Me("EnableSmartFormatForUpload") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
-        Public Property EnableSmartFormatForSaving() As Boolean
-            Get
-                Return CType(Me("EnableSmartFormatForSaving"),Boolean)
-            End Get
-            Set
-                Me("EnableSmartFormatForSaving") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
-        Public Property EnableDebugMode() As Boolean
-            Get
-                Return CType(Me("EnableDebugMode"),Boolean)
-            End Get
-            Set
-                Me("EnableDebugMode") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>  _
-        Public Property SelectorHotkey() As Global.HolzShots.Input.Hotkey
-            Get
-                Return CType(Me("SelectorHotkey"),Global.HolzShots.Input.Hotkey)
-            End Get
-            Set
-                Me("SelectorHotkey") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>  _
-        Public Property FullHotkey() As Global.HolzShots.Input.Hotkey
-            Get
-                Return CType(Me("FullHotkey"),Global.HolzShots.Input.Hotkey)
-            End Get
-            Set
-                Me("FullHotkey") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute()>  _
-        Public Property WindowHotkey() As Global.HolzShots.Input.Hotkey
-            Get
-                Return CType(Me("WindowHotkey"),Global.HolzShots.Input.Hotkey)
-            End Get
-            Set
-                Me("WindowHotkey") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
         Public Property IsFirstRun() As Boolean
             Get
                 Return CType(Me("IsFirstRun"),Boolean)
             End Get
             Set
                 Me("IsFirstRun") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
-        Public Property AutoCloseShotEditor() As Boolean
-            Get
-                Return CType(Me("AutoCloseShotEditor"),Boolean)
-            End Get
-            Set
-                Me("AutoCloseShotEditor") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
-        Public Property ShowCopyConfimation() As Boolean
-            Get
-                Return CType(Me("ShowCopyConfimation"),Boolean)
-            End Get
-            Set
-                Me("ShowCopyConfimation") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Screenshot-<Date>")>  _
-        Public Property SaveImagesPattern() As String
-            Get
-                Return CType(Me("SaveImagesPattern"),String)
-            End Get
-            Set
-                Me("SaveImagesPattern") = value
             End Set
         End Property
     End Class

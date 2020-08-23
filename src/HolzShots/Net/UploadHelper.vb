@@ -13,18 +13,17 @@ Namespace Net
         End Function
 
         Friend Shared Function UploadToDefaultUploader(image As Image, Optional format As ImageFormat = Nothing, Optional parentWindow As IWin32Window = Nothing) As Task(Of UploadResult)
-            Dim uploaderName = My.Settings.DefaultImageHoster
-            Dim info = My.Application.Uploaders.GetUploaderByName(uploaderName)
-            Debug.Assert(info.HasValue)
-            If Not info.HasValue Then Throw New Exception()
-            Dim v = info.Value
 
+            Dim info = UserSettings.GetImageServiceForSettingsContext(UserSettings.Current, HolzShots.My.Application.Uploaders)
             Debug.Assert(info IsNot Nothing)
-            Debug.Assert(v.metadata IsNot Nothing)
-            Debug.Assert(v.uploader IsNot Nothing)
-            Debug.Assert(v.metadata.Name = uploaderName)
+            Debug.Assert(info.Metadata IsNot Nothing)
+            Debug.Assert(info.Uploader IsNot Nothing)
 
-            Return Upload(v.uploader, image, format, parentWindow)
+#If RELEASE Then
+            If info Is Nothing Then Throw New Exception()
+#End If
+
+            Return Upload(info.Uploader, image, format, parentWindow)
         End Function
 
         ''' <summary>
@@ -41,7 +40,6 @@ Namespace Net
             If uploader Is Nothing Then Throw New ArgumentNullException(NameOf(uploader))
             If image Is Nothing Then Throw New ArgumentNullException(NameOf(image))
             Debug.Assert(format IsNot Nothing)
-            Debug.Assert(format.GetFormatMetadata() IsNot Nothing)
 
             ' Invoke settings if the uploader wants it
             Dim sc = uploader.GetSupportedSettingsContexts()
@@ -49,7 +47,7 @@ Namespace Net
                 Await uploader.InvokeSettingsAsync(SettingsInvocationContexts.OnUse).ConfigureAwait(True)
             End If
 
-            Using ui As New UploadUi(uploader, image, format, parentWindow)
+            Using ui As New UploadUI(uploader, image, format, parentWindow)
                 ui.ShowUi()
                 Dim res As UploadResult = Nothing
                 Try
@@ -66,7 +64,7 @@ Namespace Net
         End Function
 
         Friend Shared Function GetImageFormat(image As Image) As ImageFormat
-            If ManagedSettings.EnableSmartFormatForUpload AndAlso Drawing.ImageFormatAnalyser.IsOptimizable(image) Then
+            If UserSettings.Current.EnableSmartFormatForUpload AndAlso Drawing.ImageFormatAnalyser.IsOptimizable(image) Then
                 Try
                     Dim bmp As Bitmap = If(TypeOf image Is Bitmap, DirectCast(image, Bitmap), New Bitmap(image))
                     Return Drawing.ImageFormatAnalyser.GetBestFittingFormat(bmp) ' Experimental?
@@ -82,16 +80,22 @@ Namespace Net
             Debug.Assert(result IsNot Nothing)
             Debug.Assert(Not String.IsNullOrWhiteSpace(result.Url))
 
-            If ManagedSettings.EnableLinkViewer Then
-                Dim lv As New UploadResultWindow(result)
-                lv.Show()
-            Else
-                If Not result.Url.SetAsClipboardText() Then
-                    HumanInterop.CopyingFailed(result.Url)
-                ElseIf ManagedSettings.ShowCopyConfirmation Then
-                    HumanInterop.ShowCopyConfirmation(result.Url)
-                End If
-            End If
+            Select Case UserSettings.Current.ActionAfterUpload
+                Case UploadHandlingAction.Flyout
+                    Dim lv As New UploadResultWindow(result)
+                    lv.Show()
+
+                Case UploadHandlingAction.CopyToClipboard
+
+                    If Not result.Url.SetAsClipboardText() Then
+                        HumanInterop.CopyingFailed(result.Url)
+                    ElseIf UserSettings.Current.ShowCopyConfirmation Then
+                        HumanInterop.ShowCopyConfirmation(result.Url)
+                    End If
+
+                Case UploadHandlingAction.None ' Intentionally do nothing
+                Case Else ' Intentionally do nothing
+            End Select
         End Sub
         Friend Shared Sub InvokeUploadFailedUi(ex As UploadException)
             HumanInterop.UploadFailed(ex)

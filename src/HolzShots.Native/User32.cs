@@ -41,7 +41,7 @@ namespace HolzShots.Native
         #region Window Position
 
         [DllImport(DllName)]
-        public static extern bool GetWindowRect(IntPtr hWnd, ref Rect lpRect);
+        public static extern bool GetWindowRect(IntPtr hWnd, out Rect lpRect);
 
         [DllImport(DllName)]
         public static extern bool GetWindowPlacement(IntPtr hWnd, ref WindowPlacement lpwndpl);
@@ -69,6 +69,20 @@ namespace HolzShots.Native
         [DllImport(DllName)]
         public static extern IntPtr GetForegroundWindow();
 
+        public static bool SetForegroundWindowEx(IntPtr windowHandle)
+        {
+            var threadIdOfTargetWindow = GetWindowThreadProcessId(windowHandle, IntPtr.Zero);
+            var threadIdOfForegroundWindow = GetWindowThreadProcessId(GetForegroundWindow(), IntPtr.Zero);
+
+            if (threadIdOfTargetWindow == threadIdOfForegroundWindow)
+                return SetForegroundWindow(windowHandle);
+
+            AttachThreadInput(threadIdOfForegroundWindow, threadIdOfTargetWindow, true);
+            var res = SetForegroundWindow(windowHandle);
+            AttachThreadInput(threadIdOfForegroundWindow, threadIdOfTargetWindow, false);
+            return res;
+        }
+
         #endregion
 
         #endregion
@@ -77,6 +91,8 @@ namespace HolzShots.Native
         [DllImport(DllName)]
         public static extern bool AttachThreadInput(int idAttach, int idAttachTo, bool fAttach);
 
+        [DllImport(DllName, SetLastError = true)]
+        public static extern int GetWindowThreadProcessId(IntPtr hWnd, IntPtr lpdwProcessId);
         [DllImport(DllName, SetLastError = true)]
         public static extern int GetWindowThreadProcessId(IntPtr hWnd, ref int lpdwProcessId);
 

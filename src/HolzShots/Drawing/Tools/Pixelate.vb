@@ -71,7 +71,7 @@ Namespace Drawing.Tools
             End If
         End Sub
 
-        Private Function BlurImage(img As Image, factor As Integer, rawSrcRect As Rectangle) As Bitmap
+        Private Shared Function BlurImage(img As Image, factor As Integer, rawSrcRect As Rectangle) As Bitmap
             Dim width As Integer = CInt(Math.Round(Math.Ceiling(rawSrcRect.Width / factor)))
             Dim height As Integer = CInt(Math.Round(Math.Ceiling(rawSrcRect.Height / factor)))
 

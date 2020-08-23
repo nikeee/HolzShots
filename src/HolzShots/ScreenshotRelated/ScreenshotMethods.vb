@@ -31,7 +31,7 @@ Namespace ScreenshotRelated
         Public Shared Async Function CaptureSelection() As Task(Of Screenshot)
             Debug.Assert(Not AreaSelector.IsInAreaSelector)
             If AreaSelector.IsInAreaSelector Then Return Nothing
-            If ManagedSettings.EnableIngameMode AndAlso HolzShotsEnvironment.IsFullScreen Then Return Nothing
+            If Not UserSettings.Current.EnableHotkeysDuringFullscreen AndAlso HolzShots.Windows.Forms.EnvironmentEx.IsFullscreenAppRunning() Then Return Nothing
 
             Using prio As New ProcessPriorityRequest()
                 Using screen = ScreenshotCreator.CaptureScreenshot(SystemInformation.VirtualScreen)
@@ -66,9 +66,9 @@ Namespace ScreenshotRelated
 
         Private Shared Function GetShotSet(windowHandle As IntPtr, includeMargin As Boolean) As WindowScreenshotSet
             ' TODO: Refactor methods to WindowScreenshotSet?
-            If HolzShotsEnvironment.IsAeroEnabled Then
+            If HolzShots.Windows.Forms.EnvironmentEx.IsAeroEnabled() Then
                 Return DoAeroOn(windowHandle, includeMargin, False)
-            ElseIf HolzShotsEnvironment.IsVistaOrHigher Then
+            ElseIf HolzShots.Windows.Forms.EnvironmentEx.IsVistaOrHigher Then
                 Return DoAeroOff(windowHandle)
             Else
                 Debugger.Break() ' wait, you prick!
@@ -78,7 +78,7 @@ Namespace ScreenshotRelated
 
         Private Shared Function DoAeroOn(wndHandle As IntPtr, includeMargin As Boolean, smallMargin As Boolean) As WindowScreenshotSet
 
-            Dim nativeRectangle As HolzShots.Native.Rect
+            Dim nativeRectangle As Native.Rect
             Native.User32.GetWindowRect(wndHandle, nativeRectangle)
 
             Dim placement As Native.User32.WindowPlacement
@@ -121,8 +121,8 @@ Namespace ScreenshotRelated
 
                         ScreenshotMethodsHelper.StopRedraw(wndHandle)
 
-                        HolzShotsEnvironment.SetForegroundWindowEx(bg.Handle)
-                        HolzShotsEnvironment.SetForegroundWindowEx(wndHandle)
+                        Native.User32.SetForegroundWindowEx(bg.Handle)
+                        Native.User32.SetForegroundWindowEx(wndHandle)
 
                         Using ga As Graphics = Graphics.FromImage(bmpBlack)
                             ga.CompositingQuality = CompositingQuality.HighQuality
@@ -169,15 +169,6 @@ Namespace ScreenshotRelated
             Dim processName = ScreenshotMethodsHelper.GetProcessNameOfWindow(wndHandle)
 
             Return New WindowScreenshotSet(bmp, cursorPositonOnScreenshot, windowTitle, processName)
-        End Function
-
-        Protected Shared Function CaptureCursor() As Bitmap
-            Dim c As New Bitmap(MainWindow.Instance.Cursor.Size.Width, MainWindow.Instance.Cursor.Size.Height)
-            Using ge As Graphics = Graphics.FromImage(c)
-                ge.SmoothingMode = SmoothingMode.AntiAlias
-                MainWindow.Instance.Cursor.Draw(ge, New Rectangle(0, 0, c.Width, c.Height))
-            End Using
-            Return c
         End Function
 
     End Class

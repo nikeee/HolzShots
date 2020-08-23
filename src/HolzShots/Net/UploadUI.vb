@@ -1,8 +1,7 @@
 Imports System.Drawing.Imaging
-Imports System.IO
 Imports System.Threading
 Imports System.Threading.Tasks
-Imports HolzShots.Interop
+Imports HolzShots.Drawing
 Imports HolzShots.UI.Dialogs
 
 Namespace Net
@@ -30,7 +29,7 @@ Namespace Net
         End Sub
 
         Private Sub InitReporters(parentWindowHandle As IntPtr)
-            If ManagedSettings.EnableStatusToaster Then _reporters.Add(New StatusToaster())
+            If UserSettings.Current.ShowUploadProgress Then _reporters.Add(New StatusToaster())
             If parentWindowHandle <> IntPtr.Zero Then _reporters.Add(New TaskBarItemProgressReporter(parentWindowHandle))
         End Sub
 
@@ -40,12 +39,11 @@ Namespace Net
             Dim stream = _image.GetImageStream(_format)
             Debug.Assert(stream IsNot Nothing)
 
-            Dim metadata = _format.GetFormatMetadata()
-            Debug.Assert(metadata IsNot Nothing)
+            Dim metadata = _format.GetExtensionAndMimeType()
             Debug.Assert(Not String.IsNullOrWhiteSpace(metadata.MimeType))
-            Debug.Assert(Not String.IsNullOrWhiteSpace(metadata.Extension))
+            Debug.Assert(Not String.IsNullOrWhiteSpace(metadata.FileExtension))
 
-            Dim fileName = Path.ChangeExtension(GlobalVariables.DefaultFileName, metadata.Extension)
+            Dim suggestedFileName = ImageFormatInformation.GetSuggestedFileName(metadata)
 
             Dim cts As New CancellationTokenSource()
 
@@ -54,7 +52,7 @@ Namespace Net
 
             speed.Start()
             Try
-                Dim res = Await _uploader.InvokeAsync(stream, fileName, metadata.MimeType, speed, cts.Token).ConfigureAwait(False)
+                Dim res = Await _uploader.InvokeAsync(stream, suggestedFileName, metadata.MimeType, speed, cts.Token).ConfigureAwait(False)
                 Return res
             Finally
                 speed.Stop()

@@ -6,6 +6,7 @@ Namespace Interop
     Friend Module InteropHelper
         Friend Sub DisplayNope(ex As Exception)
             Debug.Assert(False)
+
             If ex IsNot Nothing Then
                 MessageBox.Show("Nope :(", $"Oh snap!{Environment.NewLine}{ex.Message}", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Else
@@ -15,7 +16,8 @@ Namespace Interop
 
         <Extension()>
         Public Function OpenAndSelectFileInExplorer(filePath As String) As Boolean
-            If String.IsNullOrWhiteSpace(filePath) Then Return False ' TODO: Might throw exception?
+            Debug.Assert(Not String.IsNullOrWhiteSpace(filePath))
+            If String.IsNullOrWhiteSpace(filePath) Then Return False
 
             Dim args = $"/e, /select, ""{filePath}"""
             Try
@@ -29,7 +31,8 @@ Namespace Interop
 
         <Extension()>
         Public Function OpenFolderInExplorer(folderPath As String) As Boolean
-            If String.IsNullOrWhiteSpace(folderPath) Then Return False ' TODO: Might throw exception?
+            Debug.Assert(Not String.IsNullOrWhiteSpace(folderPath))
+            If String.IsNullOrWhiteSpace(folderPath) Then Return False
 
             Dim psi = New ProcessStartInfo("explorer", folderPath) With {
                 .Verb = "open",
@@ -65,6 +68,7 @@ Namespace Interop
                 Return False
             End Try
         End Function
+
         Public Sub AddToRecentDocs(path As String)
             ' TODO: Use this again?
             If TaskbarManager.IsPlatformSupported Then

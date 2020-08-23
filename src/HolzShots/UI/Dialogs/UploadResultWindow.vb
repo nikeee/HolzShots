@@ -24,7 +24,7 @@ Namespace UI.Dialogs
 #Region "Fade and Close"
 
         Private Sub MightClose()
-            If ManagedSettings.AutoCloseLinkViewer Then
+            If UserSettings.Current.AutoCloseLinkViewer Then
                 CloseDialog()
             End If
         End Sub

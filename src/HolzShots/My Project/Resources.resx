@@ -136,12 +136,6 @@
   <data name="uploadMedium" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\uploadMedium.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Header" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Header.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="standardsettings" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\standardsettings.xml;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
   <data name="printerSmall" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\printerSmall.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
