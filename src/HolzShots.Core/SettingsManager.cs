@@ -8,6 +8,7 @@ using HolzShots.IO;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Threading;
+using HolzShots.Threading;
 
 namespace HolzShots
 {
@@ -31,6 +32,7 @@ namespace HolzShots
 
         private static readonly TimeSpan _pollingInterval = TimeSpan.FromSeconds(1);
 
+        private readonly ISynchronizeInvoke _synchronizingObject;
         private readonly PollingFileWatcher _watcher;
         private CancellationTokenSource _watcherCancellation = null;
 
@@ -41,6 +43,7 @@ namespace HolzShots
             SettingsFilePath = settingsFilePath ?? throw new ArgumentNullException(nameof(settingsFilePath));
 
             _watcher = new PollingFileWatcher(settingsFilePath, _pollingInterval, synchronizingObject);
+            _synchronizingObject = synchronizingObject;
         }
 
         public Task InitializeSettings()
@@ -79,11 +82,11 @@ namespace HolzShots
             var validationErrors = IsValidSettingsCandidate(newSettings);
             if (validationErrors.Count > 0)
             {
-                OnValidationError?.Invoke(this, validationErrors);
+                InvokeWithSynchronizingObjectIfNeeded(() => OnValidationError?.Invoke(this, validationErrors));
                 return;
             }
 
-            SetCurrentSettings(newSettings);
+            InvokeWithSynchronizingObjectIfNeeded(() => SetCurrentSettings(newSettings));
         }
 
         private void SetCurrentSettings(T newSettings)
@@ -116,6 +119,13 @@ namespace HolzShots
         }
 
         public string SerializeSettings(T settings) => JsonConvert.SerializeObject(settings, _jsonSerializerSettings);
+        private void InvokeWithSynchronizingObjectIfNeeded(Action action)
+        {
+            if (_synchronizingObject == null)
+                action();
+            else
+                _synchronizingObject.InvokeIfNeeded(action);
+        }
 
         public event EventHandler<T> OnSettingsUpdated;
         public event EventHandler<IReadOnlyList<ValidationError>> OnValidationError;

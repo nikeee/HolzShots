@@ -15,8 +15,8 @@ Namespace UI.Specialized
 
         Private _keyboardHook As KeyboardHook
         Private _actionContainer As HolzShotsActionCollection
+        Private Shared _settingsUpdates As Integer = 0
         Public Shared ReadOnly CommandManager As CommandManager = New CommandManager()
-
 
         Private Sub HideForm()
             Opacity = 0
@@ -46,8 +46,8 @@ Namespace UI.Specialized
         Private Sub SettingsUpdated(sender As Object, newSettings As HSSettings)
             _actionContainer?.Dispose()
 
-            If sender IsNot Me Then
-                ' If sender is MainWindow, the function was invoke on application startup
+            If _settingsUpdates > 0 Then
+                ' If _settingsUpdates is 0, the function was invoke on application startup
                 ' We only want to show this message when the user edits this file
                 HumanInterop.SettingsUpdated()
             End If
@@ -58,6 +58,7 @@ Namespace UI.Specialized
 
             Try
                 _actionContainer.Refresh()
+                _settingsUpdates += 1
             Catch ex As AggregateException
                 Dim registrationExceptions = ex.InnerExceptions.OfType(Of HotkeyRegistrationException)
                 HumanInterop.ErrorRegisteringHotkeys(registrationExceptions)
@@ -88,7 +89,6 @@ Namespace UI.Specialized
 
             Await UserSettings.Load(Me).ConfigureAwait(True) ' We're dealing with UI code here, we want to keep the context
 
-            SettingsUpdated(Me, UserSettings.Current)
             AddHandler UserSettings.Manager.OnSettingsUpdated, AddressOf SettingsUpdated
 
             Dim isAutorun = EnvironmentEx.CurrentStartupManager.IsStartedUp
