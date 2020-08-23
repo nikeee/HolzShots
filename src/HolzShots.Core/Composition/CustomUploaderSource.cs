@@ -37,7 +37,7 @@ namespace HolzShots.Composition
 
                 var res = ImmutableDictionary.CreateBuilder<UploaderMeta, CustomUploader>();
 
-                foreach (var jsonFile in Directory.EnumerateFiles(_customUploadersDirectory))
+                foreach (var jsonFile in Directory.EnumerateFiles(_customUploadersDirectory, HolzShotsPaths.CustomUploadersFilePattern))
                 {
                     using (var reader = File.OpenText(jsonFile))
                     {

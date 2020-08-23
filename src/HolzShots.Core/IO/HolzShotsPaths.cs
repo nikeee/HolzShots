@@ -10,6 +10,8 @@ namespace HolzShots.IO
         private static readonly string UserPicturesDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
         private static readonly string AppDataDirectory = Path.Combine(SystemAppDataDirectory, LibraryInformation.Name);
 
+        public const string CustomUploadersFilePattern = "*.json";
+
         public static string SystemPath { get; } = Environment.GetFolderPath(Environment.SpecialFolder.System);
 
         public static string PluginDirectory { get; } = Path.Combine(AppDataDirectory, "Plugin");
