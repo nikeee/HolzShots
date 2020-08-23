@@ -1,4 +1,5 @@
 Imports System.Security.Permissions
+Imports HolzShots.Windows.Forms
 
 Namespace UI.Forms
 

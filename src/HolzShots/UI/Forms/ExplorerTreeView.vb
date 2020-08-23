@@ -1,5 +1,4 @@
 Imports System.Security.Permissions
-Imports HolzShots.UI.Forms
 
 Namespace Windows.Forms
     Public Class ExplorerTreeView

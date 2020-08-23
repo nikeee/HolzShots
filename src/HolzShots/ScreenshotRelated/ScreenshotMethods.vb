@@ -66,9 +66,9 @@ Namespace ScreenshotRelated
 
         Private Shared Function GetShotSet(windowHandle As IntPtr, includeMargin As Boolean) As WindowScreenshotSet
             ' TODO: Refactor methods to WindowScreenshotSet?
-            If HolzShotsEnvironment.IsAeroEnabled Then
+            If HolzShots.Windows.Forms.EnvironmentEx.IsAeroEnabled() Then
                 Return DoAeroOn(windowHandle, includeMargin, False)
-            ElseIf HolzShotsEnvironment.IsVistaOrHigher Then
+            ElseIf HolzShots.Windows.Forms.EnvironmentEx.IsVistaOrHigher Then
                 Return DoAeroOff(windowHandle)
             Else
                 Debugger.Break() ' wait, you prick!

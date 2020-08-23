@@ -43,7 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\EnvironmentEx.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Forms\HolzShotsToolStripRenderer.cs" />
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
@@ -51,9 +53,11 @@
       <Project>{3aadc160-9020-4f59-a2f0-7941752c047e}</Project>
       <Name>HolzShots.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\HolzShots.Native\HolzShots.Native.csproj">
+      <Project>{419f051b-09ad-400d-83c5-b9e9f32e0148}</Project>
+      <Name>HolzShots.Native</Name>
+    </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Windows\Forms\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

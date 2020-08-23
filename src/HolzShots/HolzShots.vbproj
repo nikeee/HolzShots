@@ -367,7 +367,6 @@
     </Compile>
     <Compile Include="Drawing\Tools\Censor.vb" />
     <Compile Include="Net\UploadHelper.vb" />
-    <Compile Include="UI\Forms\EnvironmentEx.vb" />
     <Compile Include="UI\Forms\Banner.Designer.vb">
       <DependentUpon>Banner.vb</DependentUpon>
     </Compile>

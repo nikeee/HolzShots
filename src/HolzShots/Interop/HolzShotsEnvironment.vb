@@ -27,13 +27,6 @@ Namespace Interop
             Return Screen.PrimaryScreen.Bounds.Height = rct.Bottom AndAlso Screen.PrimaryScreen.Bounds.Width = rct.Right
         End Function
 
-        Public Shared ReadOnly Property IsVistaOrHigher As Boolean = Environment.OSVersion.Version.Major >= 6
-        Public Shared ReadOnly Property IsAeroEnabled As Boolean
-            Get
-                Return IsVistaOrHigher AndAlso Native.DwmApi.DwmIsCompositionEnabled()
-            End Get
-        End Property
-
         Friend Shared Function SetForegroundWindowEx(ByVal hWndWindow As IntPtr) As Boolean
             ' Dient dem Setzen des Vordergrundfensters mit der Funktion
             ' SetForegroundWindow, die sich unter neueren Windows-Versionen
