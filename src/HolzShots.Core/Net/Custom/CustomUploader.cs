@@ -17,9 +17,9 @@ namespace HolzShots.Net.Custom
     public class CustomUploader : Uploader
     {
         private const string SupportedSchema = "0.1.0";
-        public CustomUploaderRoot UploaderInfo { get; }
+        public CustomUploaderSpec UploaderInfo { get; }
 
-        private CustomUploader(CustomUploaderRoot customData) // TODO: Resolve warning
+        private CustomUploader(CustomUploaderSpec customData) // TODO: Resolve warning
         {
             if (customData == null)
                 throw new ArgumentNullException(nameof(customData));
@@ -41,7 +41,7 @@ namespace HolzShots.Net.Custom
 
             // If the stream has a specific length, check if it exceeds the set maximum file size
             var mfs = UploaderInfo.Uploader.MaxFileSize;
-            if (mfs.HasValue && data.CanSeek)
+            if (mfs.HasValue && mfs.Value > 0 && data.CanSeek)
             {
                 var size = data.Length;
                 if (size > mfs.Value)
@@ -85,7 +85,7 @@ namespace HolzShots.Net.Custom
 
                     var resStr = await res.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-                    var imageUrl = ParseUrlFromResponse(resStr, UploaderInfo.Uploader.Parser);
+                    var imageUrl = ParseUrlFromResponse(resStr, UploaderInfo.Uploader.ResponseParser);
                     Debug.Assert(!string.IsNullOrWhiteSpace(imageUrl));
 
                     return new UploadResult(this, imageUrl, DateTime.Now);
@@ -98,7 +98,7 @@ namespace HolzShots.Net.Custom
             Debug.Assert(response != null);
             Debug.Assert(parser != null);
 
-            switch (UploaderInfo.Uploader.Parser.Kind.ToUpperInvariant())
+            switch (UploaderInfo.Uploader.ResponseParser.Kind.ToUpperInvariant())
             {
                 case "REGEX":
                     {
@@ -116,7 +116,7 @@ namespace HolzShots.Net.Custom
                                 throw new UploadException("Response did not contain valid data.");
                             throw new UploadException($"Server returned error:\n{failureMatch.Value}");
                         }
-                        var url = FillUrlTemplate(parser.Url, matches.Cast<Match>().ToArray());
+                        var url = FillUrlTemplate(parser.UrlTemplate, matches.Cast<Match>().ToArray());
 
                         Debug.Assert(!string.IsNullOrEmpty(url));
                         return url;
@@ -147,7 +147,7 @@ namespace HolzShots.Net.Custom
                                 throw new UploadException("Response did not contain valid data.");
                             throw new UploadException($"Server returned error: {fail}");
                         }
-                        var imageUrl = parser.Url.Replace("$match$", suc.ToString());
+                        var imageUrl = parser.UrlTemplate.Replace("$match$", suc.ToString());
                         return imageUrl;
                     }
                 default: throw new InvalidDataException();
@@ -232,11 +232,11 @@ namespace HolzShots.Net.Custom
             result = null;
             if (string.IsNullOrWhiteSpace(value))
                 return false;
-            var info = JsonConvert.DeserializeObject<CustomUploaderRoot>(value, JsonConfig.JsonSettings);
+            var info = JsonConvert.DeserializeObject<CustomUploaderSpec>(value, JsonConfig.JsonSettings);
             return TryLoad(info, out result);
         }
 
-        public static bool TryLoad(CustomUploaderRoot value, out CustomUploader result)
+        public static bool TryLoad(CustomUploaderSpec value, out CustomUploader result)
         {
             result = null;
             if (value?.Validate(SupportedSchema) == true)

@@ -5,6 +5,6 @@ namespace HolzShots.Composition
 {
     internal class CustomUploadersFile
     {
-        public IReadOnlyList<CustomUploaderRoot> Uploaders { get; }
+        public IReadOnlyList<CustomUploaderSpec> Uploaders { get; }
     }
 }

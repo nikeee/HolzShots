@@ -65,7 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Files\DirectUpload.net.hsjson">
+    <None Include="Files\DirectUpload.net.hs.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

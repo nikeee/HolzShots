@@ -15,13 +15,13 @@ namespace HolzShots.Net.Custom
     }
 
     [Serializable]
-    public class CustomUploaderRoot : IValidatable
+    public class CustomUploaderSpec : IValidatable
     {
         public SemVersion SchemaVersion { get; }
         public UploaderMeta Meta { get; }
         public UploaderConfig Uploader { get; }
 
-        public CustomUploaderRoot(SemVersion schemaVersion, UploaderMeta meta, UploaderConfig uploader)
+        public CustomUploaderSpec(SemVersion schemaVersion, UploaderMeta meta, UploaderConfig uploader)
         {
             SchemaVersion = schemaVersion;
             Meta = meta;
@@ -37,6 +37,7 @@ namespace HolzShots.Net.Custom
     }
 
     [Serializable]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1054:Uri parameters should not be strings")]
     public class UploaderMeta : IValidatable, IPluginMetadata
     {
         public SemVersion Version { get; }
@@ -48,17 +49,19 @@ namespace HolzShots.Net.Custom
         public string UpdateUrl { get; } = null;
         public string Url { get; } = null;
         public string Description { get; } = null;
+        public string License { get; } = null;
 
-        public UploaderMeta(SemVersion version, string name, string author, string contact, string bugsUrl, string updateUrl, string url, string description)
+        public UploaderMeta(SemVersion version, string name, string author, string contact, string bugsUrl, string updateUrl, string url, string description, string license)
         {
             Version = version;
             Name = name;
             Author = author;
             Contact = contact;
-            bugsUrl = BugsUrl;
+            BugsUrl = bugsUrl;
             UpdateUrl = updateUrl;
             Url = url;
             Description = description;
+            License = license;
         }
 
         public bool Validate(SemVersion schemaVersion)
@@ -69,12 +72,13 @@ namespace HolzShots.Net.Custom
     }
 
     [Serializable]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1054:Uri parameters should not be strings")]
     public class UploaderConfig
     {
         private static readonly string[] ValidMethods = { "POST", "PUT" };
         public string FileFormName { get; }
         public string RequestUrl { get; }
-        public Parser Parser { get; }
+        public Parser ResponseParser { get; }
 
         public string Method { get; } = "POST";
         public ReadOnlyDictionary<string, string> Headers { get; } = null;
@@ -82,11 +86,11 @@ namespace HolzShots.Net.Custom
         public long? MaxFileSize { get; } = null;
         public string FileName { get; } = null;
 
-        public UploaderConfig(string fileFormName, string requestUrl, Parser parser, string method, ReadOnlyDictionary<string, string> headers, ReadOnlyDictionary<string, string> postParams, long? maxFileSize, string fileName)
+        public UploaderConfig(string fileFormName, string requestUrl, Parser responseParser, string method, ReadOnlyDictionary<string, string> headers, ReadOnlyDictionary<string, string> postParams, long? maxFileSize, string fileName)
         {
             FileFormName = fileFormName;
             RequestUrl = requestUrl;
-            Parser = parser;
+            ResponseParser = responseParser;
             Method = method;
             Headers = headers;
             PostParams = postParams;
@@ -102,7 +106,7 @@ namespace HolzShots.Net.Custom
                 return false;
             if (string.IsNullOrWhiteSpace(RequestUrl))
                 return false;
-            if (Parser?.Validate(schemaVersion) != true)
+            if (ResponseParser?.Validate(schemaVersion) != true)
                 return false;
             if (Headers != null && !ValidateHeaders(schemaVersion, Headers))
                 return false;
@@ -126,43 +130,21 @@ namespace HolzShots.Net.Custom
         }
     }
 
-    /*
     [Serializable]
-    public class UploaderHeaders : ReadOnlyDictionary<string, string>
-    {
-        public string UserAgent { get; } = null;
-        public string Referer { get; } = null;
-
-        public UploaderHeaders(string userAgent, string referer)
-        {
-            UserAgent = userAgent;
-            Referer = referer;
-        }
-
-        public string GetUserAgent(string fallback) => UserAgent ?? fallback;
-
-        public bool Validate(SemVersion schemaVersion)
-        {
-            // Referer can be anything
-            return ProductInfoHeaderValue.TryParse(UserAgent, out var _);
-        }
-    }
-    */
-
-    [Serializable]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1054:Uri parameters should not be strings")]
     public class Parser
     {
         private static readonly string[] SupportedKinds = { "REGEX", "JSON" /*, "xml" */ };
         public string Kind { get; }
-        public string Url { get; }
+        public string UrlTemplate { get; }
         public string Success { get; }
 
         public string Failure { get; } = null;
 
-        public Parser(string kind, string url, string success, string failure)
+        public Parser(string kind, string urlTempalte, string success, string failure)
         {
             Kind = kind;
-            Url = url;
+            UrlTemplate = urlTempalte;
             Success = success;
             Failure = failure;
         }
@@ -171,7 +153,7 @@ namespace HolzShots.Net.Custom
         {
             if (string.IsNullOrWhiteSpace(Kind))
                 return false;
-            if (string.IsNullOrWhiteSpace(Url))
+            if (string.IsNullOrWhiteSpace(UrlTemplate))
                 return false;
 
             var upperKind = Kind.ToUpperInvariant();
