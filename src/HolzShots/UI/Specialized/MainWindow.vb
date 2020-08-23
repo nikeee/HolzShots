@@ -15,7 +15,7 @@ Namespace UI.Specialized
 
         Private _keyboardHook As KeyboardHook
         Private _actionContainer As HolzShotsActionCollection
-        Private Shared _settingsUpdates As Integer = 0
+        Private Shared _applicationStarted As DateTime
         Public Shared ReadOnly CommandManager As CommandManager = New CommandManager()
 
         Private Sub HideForm()
@@ -46,7 +46,9 @@ Namespace UI.Specialized
         Private Sub SettingsUpdated(sender As Object, newSettings As HSSettings)
             _actionContainer?.Dispose()
 
-            If _settingsUpdates > 0 Then
+            Trace.WriteLine("Updated settings")
+
+            If DateTime.Now - _applicationStarted > TimeSpan.FromSeconds(2) Then
                 ' If _settingsUpdates is 0, the function was invoke on application startup
                 ' We only want to show this message when the user edits this file
                 HumanInterop.SettingsUpdated()
@@ -58,7 +60,6 @@ Namespace UI.Specialized
 
             Try
                 _actionContainer.Refresh()
-                _settingsUpdates += 1
             Catch ex As AggregateException
                 Dim registrationExceptions = ex.InnerExceptions.OfType(Of HotkeyRegistrationException)
                 HumanInterop.ErrorRegisteringHotkeys(registrationExceptions)
@@ -89,6 +90,9 @@ Namespace UI.Specialized
 
             Await UserSettings.Load(Me).ConfigureAwait(True) ' We're dealing with UI code here, we want to keep the context
 
+            _applicationStarted = DateTime.Now
+            ' TODO: Check if we need this:
+            ' SettingsUpdated(Me, UserSettings.Current)
             AddHandler UserSettings.Manager.OnSettingsUpdated, AddressOf SettingsUpdated
 
             Dim isAutorun = EnvironmentEx.CurrentStartupManager.IsStartedUp
@@ -157,6 +161,8 @@ Namespace UI.Specialized
 #Region "UI Events"
         Private Async Sub TrayIconMouseDoubleClick(ByVal sender As Object, ByVal e As MouseEventArgs) Handles TrayIcon.MouseDoubleClick
             Dim commandToRun = UserSettings.Current.TrayIconDoubleClickCommand
+
+            If commandToRun Is Nothing Then Return
 
             If CommandManager.IsRegisteredCommand(commandToRun.CommandName) Then
                 Await CommandManager.Dispatch(commandToRun.CommandName, commandToRun.Parameters).ConfigureAwait(True) ' Can throw exceptions and silently kill the application

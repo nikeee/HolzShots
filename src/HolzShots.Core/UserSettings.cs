@@ -57,7 +57,7 @@ namespace HolzShots
         {
             var s = new HSSettings
             {
-                TrayIconDoubleClickCommand = "openUserSettings",
+                TrayIconDoubleClickCommand = "openSettingsJson",
                 KeyBindings = new List<KeyBinding>() {
                     new KeyBinding {
                         Enabled = true,
@@ -82,7 +82,7 @@ namespace HolzShots
 
     class HolzShotsUserSettings : SettingsManager<HSSettings>
     {
-        const string SupportedVersion = "0.1.0";
+        const string SupportedVersion = "1.0.0";
 
         public HolzShotsUserSettings(string settingsFilePath, ISynchronizeInvoke synchronizingObject = null)
             : base(settingsFilePath, synchronizingObject) { }

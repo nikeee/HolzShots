@@ -16,7 +16,7 @@ namespace HolzShots
 
         [JsonProperty("$schema")]
         public string SchemaUrl { get; } = "https://holzshots.net/schema/settings.json";
-        public string Version { get; } = "0.1.0";
+        public string Version { get; } = "1.0.0";
 
         #endregion
         #region save.*
