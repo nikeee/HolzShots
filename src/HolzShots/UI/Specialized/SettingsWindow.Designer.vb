@@ -30,7 +30,7 @@ Namespace UI.Specialized
             Me.Abort = New System.Windows.Forms.Button()
             Me.PluginsTab = New System.Windows.Forms.TabPage()
             Me.pluginListPanel = New HolzShots.UI.Controls.StackPanel()
-            Me.openPluginFolderLinkLabel = New HolzShots.UI.Forms.ExplorerLinkLabel()
+            Me.openPluginFolderLinkLabel = New HolzShots.Windows.Forms.ExplorerLinkLabel()
             Me.Label10 = New System.Windows.Forms.Label()
             Me.Tabs = New System.Windows.Forms.TabControl()
             Me.PluginsTab.SuspendLayout()
@@ -158,7 +158,7 @@ Namespace UI.Specialized
         Friend WithEvents Abort As System.Windows.Forms.Button
         Friend WithEvents PluginsTab As TabPage
         Friend WithEvents pluginListPanel As Controls.StackPanel
-        Friend WithEvents openPluginFolderLinkLabel As ExplorerLinkLabel
+        Friend WithEvents openPluginFolderLinkLabel As HolzShots.Windows.Forms.ExplorerLinkLabel
         Friend WithEvents Label10 As Label
         Friend WithEvents Tabs As TabControl
     End Class

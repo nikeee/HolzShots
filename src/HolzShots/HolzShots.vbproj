@@ -369,9 +369,6 @@
     <Compile Include="UI\Forms\ExplorerInfoPanel.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="UI\Forms\ExplorerLinkLabel.vb">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="UI\Forms\ExplorerListView.vb">
       <SubType>Component</SubType>
     </Compile>

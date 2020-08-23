@@ -26,9 +26,9 @@ Namespace UI.Controls
             Me.pluginNameLabel = New System.Windows.Forms.Label()
             Me.pluginVersion = New System.Windows.Forms.Label()
             Me.pluginAuthor = New System.Windows.Forms.Label()
-            Me.pluginSettings = New HolzShots.UI.Forms.ExplorerLinkLabel()
-            Me.reportBug = New HolzShots.UI.Forms.ExplorerLinkLabel()
-            Me.authorWebSite = New HolzShots.UI.Forms.ExplorerLinkLabel()
+            Me.pluginSettings = New HolzShots.Windows.Forms.ExplorerLinkLabel()
+            Me.reportBug = New HolzShots.Windows.Forms.ExplorerLinkLabel()
+            Me.authorWebSite = New HolzShots.Windows.Forms.ExplorerLinkLabel()
             Me.SuspendLayout()
             '
             'pluginNameLabel
@@ -137,9 +137,9 @@ Namespace UI.Controls
 
         End Sub
         Friend WithEvents pluginNameLabel As System.Windows.Forms.Label
-        Friend WithEvents authorWebSite As HolzShots.UI.Forms.ExplorerLinkLabel
-        Friend WithEvents reportBug As HolzShots.UI.Forms.ExplorerLinkLabel
-        Friend WithEvents pluginSettings As HolzShots.UI.Forms.ExplorerLinkLabel
+        Friend WithEvents authorWebSite As HolzShots.Windows.Forms.ExplorerLinkLabel
+        Friend WithEvents reportBug As HolzShots.Windows.Forms.ExplorerLinkLabel
+        Friend WithEvents pluginSettings As HolzShots.Windows.Forms.ExplorerLinkLabel
         Friend WithEvents pluginVersion As System.Windows.Forms.Label
         Friend WithEvents pluginAuthor As System.Windows.Forms.Label
 
