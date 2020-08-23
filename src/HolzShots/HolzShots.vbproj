@@ -369,15 +369,6 @@
     <Compile Include="UI\Forms\ExplorerInfoPanel.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="UI\Forms\ExplorerListView.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="UI\Forms\ExplorerTreeView.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="UI\Forms\InfoPanelLabel.vb">
-      <SubType>Component</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="UI\Controls\ColorViewer.resx">
