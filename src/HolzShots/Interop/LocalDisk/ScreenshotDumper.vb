@@ -40,15 +40,16 @@ Namespace Interop.LocalDisk
         Friend Shared Sub SaveScreenshot(shot As Screenshot)
 
             Dim format As ImageFormat = GlobalVariables.DefaultImageFormat
-            Dim fileExtension As String = GlobalVariables.DefaultFileExtension
+            Dim extensionAndMimeType = ImageFormatInformation.GetExtensionAndMimeType(format)
 
             Debug.Assert(TypeOf shot.Image Is Bitmap)
             Dim screenshotImage = If(TypeOf shot.Image Is Bitmap, DirectCast(shot.Image, Bitmap), New Bitmap(shot.Image))
 
-            If UserSettings.Current.EnableSmartFormatForSaving AndAlso Drawing.ImageFormatAnalyser.IsOptimizable(screenshotImage) Then
-                format = Drawing.ImageFormatAnalyser.GetBestFittingFormat(screenshotImage)
-                fileExtension = format.GetExtensionAndMimeType().FileExtension
-                Debug.Assert(Not String.IsNullOrWhiteSpace(fileExtension))
+            If UserSettings.Current.EnableSmartFormatForSaving AndAlso ImageFormatAnalyser.IsOptimizable(screenshotImage) Then
+                format = ImageFormatAnalyser.GetBestFittingFormat(screenshotImage)
+
+                extensionAndMimeType = format.GetExtensionAndMimeType()
+                Debug.Assert(Not String.IsNullOrWhiteSpace(extensionAndMimeType.FileExtension))
             End If
 
 
@@ -61,7 +62,7 @@ Namespace Interop.LocalDisk
                 Return
             End Try
 
-            Dim fileName = System.IO.Path.ChangeExtension(name, fileExtension)
+            Dim fileName = System.IO.Path.ChangeExtension(name, extensionAndMimeType.FileExtension)
             Dim path As String = GetAbsolutePath(fileName)
             screenshotImage.Save(path, format)
 

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -11,7 +12,9 @@ namespace HolzShots.Drawing
 {
     public static class ImageFormatInformation
     {
+        private const string DefaultUploadFileNameWithoutExtension = LibraryInformation.Name;
         private const string JpegMimeType = "image/jpeg";
+
         private static readonly IReadOnlyDictionary<ImageFormat, ExtensionAndMimeType> _imageFormats = new Dictionary<ImageFormat, ExtensionAndMimeType>()
         {
             [ImageFormat.Png] = new ExtensionAndMimeType(".png", "image/png"),
@@ -61,6 +64,24 @@ namespace HolzShots.Drawing
 
             var encoderInfo = GetEncoderInfo(JpegMimeType);
             image.Save(destination, encoderInfo, encodeParameters);
+        }
+
+
+        public static string GetSuggestedFileName(ImageFormat format)
+        {
+            if (format == null)
+                throw new ArgumentNullException(nameof(format));
+
+            var ext = GetExtensionAndMimeType(format);
+            return GetSuggestedFileName(ext);
+        }
+        public static string GetSuggestedFileName(ExtensionAndMimeType extensionAndMimeType)
+        {
+            Debug.Assert(extensionAndMimeType != null);
+            Debug.Assert(extensionAndMimeType.FileExtension != null);
+            Debug.Assert(extensionAndMimeType.MimeType != null);
+
+            return DefaultUploadFileNameWithoutExtension + extensionAndMimeType.FileExtension;
         }
     }
 

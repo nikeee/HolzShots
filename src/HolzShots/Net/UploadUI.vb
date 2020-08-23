@@ -45,7 +45,7 @@ Namespace Net
             Debug.Assert(Not String.IsNullOrWhiteSpace(metadata.MimeType))
             Debug.Assert(Not String.IsNullOrWhiteSpace(metadata.FileExtension))
 
-            Dim suggestedFileName = Path.ChangeExtension(GlobalVariables.DefaultFileName, metadata.FileExtension)
+            Dim suggestedFileName = ImageFormatInformation.GetSuggestedFileName(metadata)
 
             Dim cts As New CancellationTokenSource()
 
