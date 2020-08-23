@@ -12,6 +12,7 @@ Imports HolzShots.UI.Specialized
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.WindowsAPICodePack.Shell
 Imports Microsoft.WindowsAPICodePack.Taskbar
+Imports HolzShots.Windows.Forms
 
 Namespace My
     Partial Friend Class MyApplication
@@ -65,18 +66,18 @@ Namespace My
             ' TODO: Proper command line parsing?
             For i As Integer = 0 To args.Length - 1
                 Select Case args(i)
-                    Case FullscreenScreenshotParameter
+                    Case CommandLine.FullscreenScreenshotParameter
                         Await MainWindow.CommandManager.Dispatch(Of FullscreenCommand)().ConfigureAwait(True)
-                    Case AreaSelectorParameter
+                    Case CommandLine.AreaSelectorParameter
                         Await MainWindow.CommandManager.Dispatch(Of SelectAreaCommand)().ConfigureAwait(True)
-                    Case UploadParameter
+                    Case CommandLine.UploadParameter
                         Dim params = New Dictionary(Of String, String)()
                         If i < args.Length - 1 Then
                             params(FileDependentCommand.FileNameParameter) = args(i + 1)
                         End If
 
                         Await MainWindow.CommandManager.Dispatch(Of UploadImageCommand)(params).ConfigureAwait(True)
-                    Case OpenParameter
+                    Case CommandLine.OpenParameter
                         Dim params = New Dictionary(Of String, String)()
                         If i < args.Length - 1 Then
                             params(FileDependentCommand.FileNameParameter) = args(i + 1)
@@ -102,14 +103,14 @@ Namespace My
 
             If File.Exists(imgres) Then
                 Dim fullscreen As New JumpListLink(System.Windows.Forms.Application.ExecutablePath, "Capture entire screen") With {
-                    .Arguments = FullscreenScreenshotParameter,
+                    .Arguments = CommandLine.FullscreenScreenshotParameter,
                     .IconReference = New IconReference(imgres, 105)
                 }
                 jumpList.AddUserTasks(fullscreen)
             End If
 
             Dim selector As New JumpListLink(System.Windows.Forms.Application.ExecutablePath, "Capture Region") With {
-                .Arguments = AreaSelectorParameter,
+                .Arguments = CommandLine.AreaSelectorParameter,
                 .IconReference = New IconReference(System.Windows.Forms.Application.ExecutablePath, 0)
             }
             jumpList.AddUserTasks(selector)

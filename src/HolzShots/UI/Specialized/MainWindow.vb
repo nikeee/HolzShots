@@ -4,6 +4,7 @@ Imports HolzShots.Input.Actions
 Imports HolzShots.Interop
 Imports HolzShots.My
 Imports HolzShots.Composition.Command
+Imports HolzShots.Windows.Forms
 
 Namespace UI.Specialized
     Friend Class MainWindow
@@ -78,7 +79,7 @@ Namespace UI.Specialized
         Private Async Sub MainWindowLoad(ByVal sender As Object, ByVal e As EventArgs) Handles MyBase.Load
             HideForm()
 
-            HolzShotsEnvironment.CurrentStartupManager.FixWorkingDirectory()
+            EnvironmentEx.CurrentStartupManager.FixWorkingDirectory()
 
             Drawing.DpiAwarenessFix.SetDpiAwareness()
 
@@ -90,10 +91,10 @@ Namespace UI.Specialized
             SettingsUpdated(Me, UserSettings.Current)
             AddHandler UserSettings.Manager.OnSettingsUpdated, AddressOf SettingsUpdated
 
-            Dim isAutorun = HolzShotsEnvironment.CurrentStartupManager.IsStartedUp
-            Dim args = HolzShotsEnvironment.CurrentStartupManager.CommandLineArguments
+            Dim isAutorun = EnvironmentEx.CurrentStartupManager.IsStartedUp
+            Dim args = EnvironmentEx.CurrentStartupManager.CommandLineArguments
 
-            StartWithWindowsToolStripMenuItem.Checked = HolzShotsEnvironment.CurrentStartupManager.IsRegistered
+            StartWithWindowsToolStripMenuItem.Checked = EnvironmentEx.CurrentStartupManager.IsRegistered
 
             Await MyApplication.ProcessCommandLineArguments(args).ConfigureAwait(True)
 
@@ -190,12 +191,12 @@ Namespace UI.Specialized
             LibraryInformation.IssuesUrl.SafeProcessStart()
         End Sub
         Private Sub StartWithWindowsToolStripMenuItemClick(sender As Object, e As EventArgs) Handles StartWithWindowsToolStripMenuItem.Click
-            If HolzShotsEnvironment.CurrentStartupManager.IsRegistered Then
-                HolzShotsEnvironment.CurrentStartupManager.Unregister()
+            If EnvironmentEx.CurrentStartupManager.IsRegistered Then
+                EnvironmentEx.CurrentStartupManager.Unregister()
             Else
-                HolzShotsEnvironment.CurrentStartupManager.Register()
+                EnvironmentEx.CurrentStartupManager.Register()
             End If
-            StartWithWindowsToolStripMenuItem.Checked = HolzShotsEnvironment.CurrentStartupManager.IsRegistered
+            StartWithWindowsToolStripMenuItem.Checked = EnvironmentEx.CurrentStartupManager.IsRegistered
         End Sub
         Private Sub PluginsToolStripMenuItemClick(sender As Object, e As EventArgs) Handles PluginsToolStripMenuItem.Click
             OpenSettings()

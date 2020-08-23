@@ -1,6 +1,7 @@
 using System;
 using System.Windows.Forms;
 using Microsoft.Win32;
+using StartupHelper;
 
 namespace HolzShots.Windows.Forms
 {
@@ -9,6 +10,17 @@ namespace HolzShots.Windows.Forms
         public static bool IsVistaOrHigher => Environment.OSVersion.Version.Major >= 6;
         public static bool IsSevenOrHigher => (Environment.OSVersion.Version.Major == 6 && Environment.OSVersion.Version.Minor >= 1) || Environment.OSVersion.Version.Major > 6;
         public static bool IsTenOrHigher => Environment.OSVersion.Version.Major >= 10;
+
+        private static StartupManager _currentStartupManager;
+        public static StartupManager CurrentStartupManager => _currentStartupManager ?? (_currentStartupManager =
+            new StartupManager(
+                System.Reflection.Assembly.GetEntryAssembly().Location,
+                LibraryInformation.Name,
+                RegistrationScope.Local,
+                false,
+                StartupProviders.Registry,
+                CommandLine.AutorunParamter
+            ));
 
         public static bool AppsUseLightTheme()
         {

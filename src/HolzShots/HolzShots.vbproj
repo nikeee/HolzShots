@@ -288,7 +288,6 @@
     </Compile>
     <Compile Include="GlobalVariables.vb" />
     <Compile Include="Drawing\Tools\Helper.vb" />
-    <Compile Include="Interop\HolzShotsEnvironment.vb" />
     <Compile Include="Interop\ExplorerContextMenu.vb" />
     <Compile Include="Interop\HumanInterop.vb" />
     <Compile Include="Interop\InteropHelper.vb" />

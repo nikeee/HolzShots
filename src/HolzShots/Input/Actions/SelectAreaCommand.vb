@@ -1,5 +1,4 @@
 Imports System.Threading.Tasks
-Imports HolzShots.Interop
 Imports HolzShots.ScreenshotRelated
 Imports HolzShots.ScreenshotRelated.Selection
 Imports HolzShots.Composition.Command
