@@ -7,7 +7,7 @@ Namespace Input.Actions
     Public Class FullscreenCommand
         Inherits CapturingCommand
 
-        Public Overrides Async Function Invoke(parameters As IReadOnlyDictionary(Of String, String)) As Task
+        Public Overrides Async Function Invoke(parameters As IReadOnlyDictionary(Of String, String), settingsContext As HSSettings) As Task
             ' TODO: Add proper assertion
             ' Debug.Assert(ManagedSettings.EnableFullscreenScreenshot)
 

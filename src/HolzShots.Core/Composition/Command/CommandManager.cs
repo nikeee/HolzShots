@@ -15,11 +15,11 @@ namespace HolzShots.Composition.Command
         public CommandAttribute(string name) => Name = name ?? throw new ArgumentNullException(nameof(name));
     }
 
-    public class CommandManager
+    public class CommandManager<TSettings>
     {
-        private Dictionary<string, ICommand> Actions { get; } = new Dictionary<string, ICommand>();
+        private Dictionary<string, ICommand<TSettings>> Actions { get; } = new Dictionary<string, ICommand<TSettings>>();
 
-        public void RegisterCommand(ICommand command)
+        public void RegisterCommand(ICommand<TSettings> command)
         {
             if (command == null)
                 throw new ArgumentNullException(nameof(command));
@@ -48,10 +48,10 @@ namespace HolzShots.Composition.Command
             Debug.Assert(binding.Keys != null);
             Debug.Assert(binding.Command != null);
 
-            return new HotkeyCommand(this, binding);
+            return new HotkeyCommand<TSettings>(this, binding);
         }
 
-        private ICommand GetCommand(string name)
+        private ICommand<TSettings> GetCommand(string name)
         {
             Debug.Assert(IsRegisteredCommand(name));
             return Actions.TryGetValue(name.ToLowerInvariant(), out var command)
@@ -60,12 +60,12 @@ namespace HolzShots.Composition.Command
         }
 
         private string GetCommandNameForType(Type t) => t.GetCustomAttribute<CommandAttribute>(false)?.Name;
-        private string GetCommandNameForType<T>() where T : ICommand => GetCommandNameForType(typeof(T));
+        private string GetCommandNameForType<T>() where T : ICommand<TSettings> => GetCommandNameForType(typeof(T));
 
         public bool IsRegisteredCommand(string name) => !string.IsNullOrWhiteSpace(name) && Actions.ContainsKey(name.ToLowerInvariant());
 
-        public Task Dispatch<T>() where T : ICommand => Dispatch<T>(ImmutableDictionary<string, string>.Empty);
-        public Task Dispatch<T>(IReadOnlyDictionary<string, string> parameters) where T : ICommand
+        public Task Dispatch<T>() where T : ICommand<TSettings> => Dispatch<T>(ImmutableDictionary<string, string>.Empty);
+        public Task Dispatch<T>(IReadOnlyDictionary<string, string> parameters) where T : ICommand<TSettings>
         {
             var name = GetCommandNameForType<T>();
             return Dispatch(name, parameters);
@@ -82,7 +82,7 @@ namespace HolzShots.Composition.Command
 
             return cmd == null
                 ? Task.CompletedTask
-                : cmd.Invoke(parameters);
+                : cmd.Invoke(parameters, default);
         }
     }
 }

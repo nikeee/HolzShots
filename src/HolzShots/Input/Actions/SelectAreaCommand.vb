@@ -8,7 +8,7 @@ Namespace Input.Actions
     Public Class SelectAreaCommand
         Inherits CapturingCommand
 
-        Public Overrides Async Function Invoke(params As IReadOnlyDictionary(Of String, String)) As Task
+        Public Overrides Async Function Invoke(params As IReadOnlyDictionary(Of String, String), settingsContext As HSSettings) As Task
 
             ' TODO: Add proper assertion
             ' Debug.Assert(ManagedSettings.EnableAreaScreenshot)

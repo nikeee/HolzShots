@@ -7,7 +7,7 @@ Imports HolzShots.UI.Specialized
 
 Namespace Input.Actions
     Public MustInherit Class CapturingCommand
-        Implements ICommand
+        Implements ICommand(Of HSSettings)
 
         Protected Shared Async Function ProcessCapturing(screenshot As Screenshot) As Task
             Debug.Assert(screenshot IsNot Nothing)
@@ -35,7 +35,7 @@ Namespace Input.Actions
             End Select
         End Function
 
-        Public MustOverride Function Invoke(parameters As IReadOnlyDictionary(Of String, String)) As Task Implements ICommand.Invoke
+        Public MustOverride Function Invoke(parameters As IReadOnlyDictionary(Of String, String), settingsContext As HSSettings) As Task Implements ICommand(Of HSSettings).Invoke
 
     End Class
 End Namespace

@@ -16,7 +16,7 @@ Namespace UI.Specialized
         Private _keyboardHook As KeyboardHook
         Private _actionContainer As HolzShotsActionCollection
         Private Shared _applicationStarted As DateTime
-        Public Shared ReadOnly CommandManager As CommandManager = New CommandManager()
+        Public Shared ReadOnly CommandManager As CommandManager(Of HSSettings) = New CommandManager(Of HSSettings)()
 
         Private Sub HideForm()
             Opacity = 0
