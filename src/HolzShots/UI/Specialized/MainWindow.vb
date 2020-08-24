@@ -151,10 +151,7 @@ Namespace UI.Specialized
             End If
         End Sub
         Private Shared Sub OpenAbout()
-            If Not AboutForm.IsAboutInstanciated Then
-                Dim newAboutForm As New AboutForm()
-                newAboutForm.Show()
-            End If
+            AboutForm.Instance.Show()
         End Sub
 
 #End Region
