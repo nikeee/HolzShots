@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Threading;
 using HolzShots.Threading;
+using System.Reflection;
+using System.CodeDom;
 
 namespace HolzShots
 {
@@ -132,6 +134,178 @@ namespace HolzShots
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual IReadOnlyList<ValidationError> IsValidSettingsCandidate(T candidate) => ImmutableList<ValidationError>.Empty;
+
+        public T DeriveContextEffectiveSettings(T input, IReadOnlyDictionary<string, dynamic> overrides)
+        {
+            if (overrides == null || overrides.Count == 0)
+                return input;
+
+            var settingsCopy = input.Copy();
+
+            var settingsType = typeof(T);
+            var properties = settingsType.GetProperties();
+
+            foreach (var prop in properties)
+            {
+                var jsonAttr = prop.GetCustomAttribute<JsonPropertyAttribute>();
+                var jsonPropertyName = jsonAttr?.PropertyName;
+
+                if (jsonPropertyName == null)
+                    continue;
+
+                if (!overrides.TryGetValue(jsonPropertyName, out var overriddenValue))
+                    continue;
+
+                OverrideProperty(settingsCopy, prop, overriddenValue);
+            }
+
+            return settingsCopy;
+        }
+
+        private static void OverrideProperty(T targetObject, PropertyInfo property, dynamic value)
+        {
+            Debug.Assert(targetObject != null);
+            Debug.Assert(property != null);
+
+            var propType = property.PropertyType;
+
+            if (propType.IsEnum && value is string jsonEnumMember)
+            {
+                foreach (var enumMemberName in Enum.GetNames(propType))
+                {
+                    var enumMember = propType.GetField(enumMemberName);
+                    var enumMemberAttr = enumMember.GetCustomAttribute<System.Runtime.Serialization.EnumMemberAttribute>();
+                    if (enumMemberAttr == null)
+                        continue;
+                    if (enumMemberAttr.Value == jsonEnumMember)
+                    {
+                        var enumValue = Enum.Parse(propType, enumMemberName);
+                        property.SetValue(targetObject, enumValue);
+                        return;
+                    }
+                }
+                Trace.WriteLine($"No match found for enum member of property {property.Name}");
+            }
+
+            if (propType.IsPrimitive)
+            {
+                if (value == null)
+                {
+                    // Ignore primitive values that are null (they cannot be)
+                    // Maybe we want to change this behaviour later so that this property gets set to default()
+                    return;
+                }
+
+                // What is this
+                if (propType == typeof(bool) && value is bool b)
+                {
+                    property.SetValue(targetObject, b);
+                    return;
+                }
+                if (propType == typeof(string) && value is string s)
+                {
+                    property.SetValue(targetObject, s);
+                    return;
+                }
+                if (propType == typeof(double))
+                {
+                    if (HandleFloatNumber<double>(targetObject, property, value))
+                        return;
+                }
+                if (propType == typeof(float))
+                {
+                    if (HandleFloatNumber<float>(targetObject, property, value))
+                        return;
+                }
+                if (propType == typeof(int))
+                {
+                    if (HandleIntegerNumber<int>(targetObject, property, value))
+                        return;
+                }
+                if (propType == typeof(long))
+                {
+                    if (HandleIntegerNumber<long>(targetObject, property, value))
+                        return;
+                }
+                if (propType == typeof(short))
+                {
+                    if (HandleIntegerNumber<short>(targetObject, property, value))
+                        return;
+                }
+                if (propType == typeof(byte))
+                {
+                    if (HandleIntegerNumber<byte>(targetObject, property, value))
+                        return;
+                }
+                if (propType == typeof(char) && value is char c)
+                {
+                    property.SetValue(targetObject, c);
+                    return;
+                }
+                if (propType == typeof(uint) && value is uint ui)
+                {
+                    if (HandleIntegerNumber<uint>(targetObject, property, value))
+                        return;
+                }
+                if (propType == typeof(ulong) && value is ulong ul)
+                {
+                    if (HandleIntegerNumber<ulong>(targetObject, property, value))
+                        return;
+                }
+                if (propType == typeof(ushort) && value is ushort ush)
+                {
+                    if (HandleIntegerNumber<ushort>(targetObject, property, value))
+                        return;
+                }
+                if (propType == typeof(sbyte) && value is sbyte sby)
+                {
+                    if (HandleIntegerNumber<sbyte>(targetObject, property, value))
+                        return;
+                }
+                if (propType == typeof(decimal) && value is decimal de)
+                {
+                    if (HandleFloatNumber<decimal>(targetObject, property, value))
+                        return;
+                }
+            }
+            Trace.WriteLine($"Unsupported override of property {property.Name}, doing nothing");
+        }
+        private static bool HandleFloatNumber<TProp>(T targetObject, PropertyInfo property, dynamic value)
+        {
+            if (
+                value is float
+                || value is double
+                || value is decimal
+                || value is int
+                || value is short
+                || value is long
+                || value is uint
+                || value is ushort
+                || value is ulong
+                )
+            {
+                property.SetValue(targetObject, (TProp)value);
+                return true;
+            }
+            return false;
+        }
+
+        private static bool HandleIntegerNumber<TProp>(T targetObject, PropertyInfo property, dynamic value)
+        {
+            if (
+                value is int
+                || value is short
+                || value is long
+                || value is uint
+                || value is ushort
+                || value is ulong
+                )
+            {
+                property.SetValue(targetObject, (TProp)value);
+                return true;
+            }
+            return false;
+        }
 
 
         #region IDisposable

@@ -16,8 +16,12 @@ namespace HolzShots.Composition.Command
     }
 
     public class CommandManager<TSettings>
+        where TSettings : new()
     {
         private Dictionary<string, ICommand<TSettings>> Actions { get; } = new Dictionary<string, ICommand<TSettings>>();
+
+        private readonly SettingsManager<TSettings> _settingsManager;
+        public CommandManager(SettingsManager<TSettings> settingsManager) => _settingsManager = settingsManager ?? throw new ArgumentNullException(nameof(settingsManager));
 
         public void RegisterCommand(ICommand<TSettings> command)
         {
@@ -48,7 +52,7 @@ namespace HolzShots.Composition.Command
             Debug.Assert(binding.Keys != null);
             Debug.Assert(binding.Command != null);
 
-            return new HotkeyCommand<TSettings>(this, binding);
+            return new HotkeyCommand<TSettings>(this, binding, () => _settingsManager.CurrentSettings);
         }
 
         private ICommand<TSettings> GetCommand(string name)
@@ -64,25 +68,40 @@ namespace HolzShots.Composition.Command
 
         public bool IsRegisteredCommand(string name) => !string.IsNullOrWhiteSpace(name) && Actions.ContainsKey(name.ToLowerInvariant());
 
-        public Task Dispatch<T>() where T : ICommand<TSettings> => Dispatch<T>(ImmutableDictionary<string, string>.Empty);
-        public Task Dispatch<T>(IReadOnlyDictionary<string, string> parameters) where T : ICommand<TSettings>
+        public Task Dispatch<T>(TSettings currentSettings) where T : ICommand<TSettings> => Dispatch<T>(currentSettings, ImmutableDictionary<string, string>.Empty);
+        public Task Dispatch<T>(TSettings currentSettings, IReadOnlyDictionary<string, string> parameters) where T : ICommand<TSettings>
         {
             var name = GetCommandNameForType<T>();
-            return Dispatch(name, parameters);
+            return Dispatch(name, currentSettings, parameters);
         }
 
-        public Task Dispatch(string name) => Dispatch(name, ImmutableDictionary<string, string>.Empty);
-
-        public Task Dispatch(string name, IReadOnlyDictionary<string, string> parameters)
+        public Task Dispatch(CommandDeclaration command, TSettings currentSettings)
         {
-            Debug.Assert(IsRegisteredCommand(name));
+            if (command == null)
+                throw new ArgumentNullException(nameof(command));
 
-            var cmd = GetCommand(name);
-            Debug.Assert(cmd != null);
+            Debug.Assert(IsRegisteredCommand(command.CommandName));
 
-            return cmd == null
+            var commandInstance = GetCommand(command.CommandName);
+            Debug.Assert(commandInstance != null);
+
+            var contextEffectiveSettings = _settingsManager.DeriveContextEffectiveSettings(currentSettings, command.Overrides);
+            return commandInstance == null
                 ? Task.CompletedTask
-                : cmd.Invoke(parameters, default);
+                : commandInstance.Invoke(command.Parameters, contextEffectiveSettings);
+        }
+
+        public Task Dispatch(string name, TSettings currentSettings) => Dispatch(name, currentSettings, ImmutableDictionary<string, string>.Empty);
+
+        public Task Dispatch(string name, TSettings currentSettings, IReadOnlyDictionary<string, string> parameters)
+        {
+            var commandDeclaration = new CommandDeclaration()
+            {
+                CommandName = name,
+                Parameters = parameters,
+                Overrides = ImmutableDictionary<string, dynamic>.Empty,
+            };
+            return Dispatch(commandDeclaration, currentSettings);
         }
     }
 }

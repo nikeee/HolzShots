@@ -15,14 +15,15 @@ Namespace Input.Actions
             ' TODO: Add proper assertion
             ' Debug.Assert(ManagedSettings.EnableAreaScreenshot)
             Debug.Assert(Not AreaSelector.IsInAreaSelector)
-            If Not UserSettings.Current.EnableHotkeysDuringFullscreen AndAlso HolzShots.Windows.Forms.EnvironmentEx.IsFullscreenAppRunning() Then Return
+
+            If Not settingsContext.EnableHotkeysDuringFullscreen AndAlso HolzShots.Windows.Forms.EnvironmentEx.IsFullscreenAppRunning() Then Return
 
             ' TODO: Re-add proper if condition
             'If ManagedSettings.EnableAreaScreenshot AndAlso Not AreaSelector.IsInAreaSelector Then
             If Not AreaSelector.IsInAreaSelector Then
                 Dim shot As Screenshot
                 Try
-                    shot = Await CaptureSelection().ConfigureAwait(True)
+                    shot = Await CaptureSelection(settingsContext).ConfigureAwait(True)
                     Debug.Assert(shot IsNot Nothing)
                     If shot Is Nothing Then Throw New TaskCanceledException()
                 Catch cancelled As TaskCanceledException
@@ -30,20 +31,20 @@ Namespace Input.Actions
                     Return
                 End Try
                 Debug.Assert(shot IsNot Nothing)
-                Await ProcessCapturing(shot).ConfigureAwait(True)
+                Await ProcessCapturing(shot, settingsContext).ConfigureAwait(True)
             End If
 
         End Function
 
-        Shared Async Function CaptureSelection() As Task(Of Screenshot)
+        Shared Async Function CaptureSelection(settingsContext As HSSettings) As Task(Of Screenshot)
 
             Debug.Assert(Not AreaSelector.IsInAreaSelector)
+
             If AreaSelector.IsInAreaSelector Then Return Nothing
-            If Not UserSettings.Current.EnableHotkeysDuringFullscreen AndAlso HolzShots.Windows.Forms.EnvironmentEx.IsFullscreenAppRunning() Then Return Nothing
 
             Using prio As New ProcessPriorityRequest()
                 Using screen = ScreenshotCreator.CaptureScreenshot(SystemInformation.VirtualScreen)
-                    Using selector As New AreaSelector()
+                    Using selector As New AreaSelector(settingsContext)
                         Dim selectedArea = Await selector.PromptSelectionAsync(screen).ConfigureAwait(True)
 
                         Debug.Assert(selectedArea.Width > 0)

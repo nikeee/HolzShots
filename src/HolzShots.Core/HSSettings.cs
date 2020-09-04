@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Runtime.Serialization;
+using System.Reflection;
 
 namespace HolzShots
 {
@@ -164,6 +165,7 @@ namespace HolzShots
             Default = "null"
         )]
         [JsonProperty("tray.doubleClickCommand")]
+        [field: LeaveUntouchedInObjectDeepCopy] // Support for this doesn't make any sense
         public CommandDeclaration TrayIconDoubleClickCommand { get; set; } = null;
 
         #endregion
@@ -181,6 +183,7 @@ namespace HolzShots
             "List of commands that get triggered by hotkeys."
         )]
         [JsonProperty("key.bindings")]
+        [field: LeaveUntouchedInObjectDeepCopy] // Support for this doesn't make any sense
         public IReadOnlyList<KeyBinding> KeyBindings { get; set; } = ImmutableList<KeyBinding>.Empty;
 
         #endregion
@@ -210,6 +213,12 @@ namespace HolzShots
         /// </summary>
         [JsonProperty("params")]
         public IReadOnlyDictionary<string, string> Parameters { get; set; } = ImmutableDictionary<string, string>.Empty;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [JsonProperty("overrides")]
+        public IReadOnlyDictionary<string, dynamic> Overrides { get; set; } = ImmutableDictionary<string, dynamic>.Empty;
 
         public static implicit operator CommandDeclaration(string commandName) => ToCommandDeclaration(commandName);
         public static CommandDeclaration ToCommandDeclaration(string commandName)

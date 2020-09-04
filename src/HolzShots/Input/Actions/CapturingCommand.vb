@@ -10,21 +10,21 @@ Namespace Input.Actions
     Public MustInherit Class CapturingCommand
         Implements ICommand(Of HSSettings)
 
-        Protected Shared Async Function ProcessCapturing(screenshot As Screenshot) As Task
+        Protected Shared Async Function ProcessCapturing(screenshot As Screenshot, settingsContext As HSSettings) As Task
             Debug.Assert(screenshot IsNot Nothing)
 
-            ScreenshotDumper.HandleScreenshot(screenshot)
+            ScreenshotDumper.HandleScreenshot(screenshot, settingsContext)
 
-            Select Case UserSettings.Current.ActionAfterCapture
+            Select Case settingsContext.ActionAfterCapture
                 Case CaptureHandlingAction.OpenEditor
-                    Dim shower As New ShotEditor(screenshot)
+                    Dim shower As New ShotEditor(screenshot, settingsContext)
                     shower.Show()
 
                 Case CaptureHandlingAction.Upload
 
                     Try
                         Dim result = Await UploadHelper.UploadToDefaultUploader(screenshot.Image).ConfigureAwait(True)
-                        UploadHelper.InvokeUploadFinishedUi(result)
+                        UploadHelper.InvokeUploadFinishedUi(result, settingsContext)
                     Catch ex As UploadCanceledException
                         HumanInterop.ShowOperationCanceled()
                     Catch ex As UploadException

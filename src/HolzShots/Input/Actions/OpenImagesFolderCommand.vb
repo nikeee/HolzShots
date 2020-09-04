@@ -8,7 +8,7 @@ Namespace Input.Actions
         Implements ICommand(Of HSSettings)
 
         Public Function Invoke(params As IReadOnlyDictionary(Of String, String), settingsContext As HSSettings) As Task Implements ICommand(Of HSSettings).Invoke
-            ScreenshotDumper.OpenPictureDumpFolder()
+            ScreenshotDumper.OpenPictureDumpFolder(settingsContext)
             Return Task.CompletedTask
         End Function
     End Class

@@ -26,7 +26,7 @@ Namespace Input.Actions
 
             Dim bmp As New Bitmap(fileName)
             Dim shot = Screenshot.FromImported(bmp)
-            Dim editor As New ShotEditor(shot)
+            Dim editor As New ShotEditor(shot, settingsContext)
             AddHandler editor.Disposed, Sub() bmp.Dispose()
             editor.Show()
 

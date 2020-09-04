@@ -20,7 +20,7 @@ Namespace Input.Actions
 
             Dim shot = CaptureFullScreen()
             Debug.Assert(shot IsNot Nothing)
-            Await ProcessCapturing(shot).ConfigureAwait(True)
+            Await ProcessCapturing(shot, settingsContext).ConfigureAwait(True)
             'End If
         End Function
 

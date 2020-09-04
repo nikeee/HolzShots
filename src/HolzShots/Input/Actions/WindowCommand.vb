@@ -24,7 +24,7 @@ Namespace Input.Actions
             Native.User32.GetWindowPlacement(h, info)
 
             Dim shot = CaptureWindow(h)
-            Await ProcessCapturing(shot).ConfigureAwait(True)
+            Await ProcessCapturing(shot, settingsContext).ConfigureAwait(True)
             ' End If
         End Function
 
