@@ -225,7 +225,7 @@ namespace HolzShots
     {
         [EnumMember(Value = "flyout")]
         Flyout,
-        [EnumMember(Value = "copy")]
+        [EnumMember(Value = "copyLink")]
         CopyToClipboard,
         [EnumMember(Value = "none")]
         None,
@@ -238,6 +238,8 @@ namespace HolzShots
         OpenEditor,
         [EnumMember(Value = "upload")]
         Upload,
+        [EnumMember(Value = "copyImage")]
+        Copy,
         [EnumMember(Value = "none")]
         None,
     }

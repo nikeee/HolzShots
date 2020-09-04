@@ -1,3 +1,4 @@
+Imports System.Runtime.InteropServices
 Imports System.Threading.Tasks
 Imports HolzShots.Composition.Command
 Imports HolzShots.Interop
@@ -30,6 +31,15 @@ Namespace Input.Actions
                         UploadHelper.InvokeUploadFailedUi(ex)
                     End Try
 
+                Case CaptureHandlingAction.Copy
+                    Try
+                        Clipboard.SetImage(screenshot.Image)
+                    Catch ex As Exception When _
+                            TypeOf ex Is ExternalException _
+                            OrElse TypeOf ex Is System.Threading.ThreadStateException _
+                            OrElse TypeOf ex Is ArgumentNullException
+                        HumanInterop.CopyImageFailed(ex)
+                    End Try
                 Case CaptureHandlingAction.None ' Intentionally do nothing
                 Case Else ' Intentionally do nothing
             End Select

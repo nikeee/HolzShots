@@ -71,6 +71,7 @@ Namespace UI.Specialized
             ' TODO: This looks like it could be integrated in our plugin system
             CommandManager.RegisterCommand(New SelectAreaCommand())
             CommandManager.RegisterCommand(New FullscreenCommand())
+            CommandManager.RegisterCommand(New CaptureClipboardCommand())
             CommandManager.RegisterCommand(New WindowCommand())
             CommandManager.RegisterCommand(New OpenImagesFolderCommand())
             CommandManager.RegisterCommand(New OpenSettingsJsonCommand())
@@ -151,10 +152,7 @@ Namespace UI.Specialized
             End If
         End Sub
         Private Shared Sub OpenAbout()
-            If Not AboutForm.IsAboutInstanciated Then
-                Dim newAboutForm As New AboutForm()
-                newAboutForm.Show()
-            End If
+            AboutForm.Instance.Show()
         End Sub
 
 #End Region

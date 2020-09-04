@@ -189,6 +189,7 @@
   <ItemGroup>
     <Compile Include="GlobalSuppressions.vb" />
     <Compile Include="ImageExtensions.vb" />
+    <Compile Include="Input\Actions\CaptureClipboardCommand.vb" />
     <Compile Include="Input\Actions\CapturingCommand.vb" />
     <Compile Include="Input\Actions\EditImageCommand.vb" />
     <Compile Include="Input\Actions\FileDependentCommand.vb" />
@@ -224,12 +225,6 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UI\Controls\Helpers\PanelActivator.vb" />
-    <Compile Include="UI\AboutForm.Designer.vb">
-      <DependentUpon>AboutForm.vb</DependentUpon>
-    </Compile>
-    <Compile Include="UI\AboutForm.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="ApplicationEvents.vb" />
     <Compile Include="UI\Controls\StackPanel.vb">
       <SubType>Component</SubType>
@@ -359,9 +354,6 @@
     <EmbeddedResource Include="UI\Controls\PaintPanel.resx">
       <DependentUpon>PaintPanel.vb</DependentUpon>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\AboutForm.resx">
-      <DependentUpon>AboutForm.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Controls\PluginInfoItem.resx">
       <DependentUpon>PluginInfoItem.vb</DependentUpon>
@@ -505,7 +497,7 @@
     <PackageReference Include="Microsoft.Bcl.HashCode">
       <Version>1.1.0</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.CodeQuality.Analyzers" Version="3.0.0">
+    <PackageReference Include="Microsoft.CodeQuality.Analyzers" Version="3.3.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>

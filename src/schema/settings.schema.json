@@ -51,10 +51,10 @@
 		},
 
 		"uploadHandlingAction": {
-			"enum": [ "flyout", "copy", "none" ]
+			"enum": [ "flyout", "copyLink", "none" ]
 		},
 		"captureHandlingAction": {
-			"enum": [ "openEditor", "upload", "none" ]
+			"enum": [ "openEditor", "upload", "copyImage", "none" ]
 		}
 	},
 
@@ -72,7 +72,7 @@
 		},
 
 		"save.path": {
-			"description": "The path where screenshots will be saved.\nFeed free to use environment variables like %USERPROFILE%, %ONEDRIVE% or %TMP%.",
+			"description": "The path where screenshots will be saved.\nFeel free to use environment variables like %USERPROFILE%, %ONEDRIVE% or %TMP%.",
 			"type": "string"
 		},
 
