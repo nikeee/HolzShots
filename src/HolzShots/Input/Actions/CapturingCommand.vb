@@ -34,6 +34,7 @@ Namespace Input.Actions
                 Case CaptureHandlingAction.Copy
                     Try
                         Clipboard.SetImage(screenshot.Image)
+                        HumanInterop.ShowImageCopiedConfirmation()
                     Catch ex As Exception When _
                             TypeOf ex Is ExternalException _
                             OrElse TypeOf ex Is System.Threading.ThreadStateException _

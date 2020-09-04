@@ -37,6 +37,7 @@ Namespace Input.Actions
                 End Using
             End Using
         End Function
+
         Private Shared Function GetShotSet(windowHandle As IntPtr, includeMargin As Boolean) As WindowScreenshotSet
             ' TODO: Refactor methods to WindowScreenshotSet?
             If HolzShots.Windows.Forms.EnvironmentEx.IsAeroEnabled() Then

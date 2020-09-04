@@ -73,6 +73,9 @@ Namespace Interop
         Public Shared Sub ShowCopyConfirmation(text As String)
             FlyoutNotifier.Notify("Link copied!", "The link was copied to your clipboard.")
         End Sub
+        Public Shared Sub ShowImageCopiedConfirmation()
+            FlyoutNotifier.Notify("Image copied!", "The image was copied to your clipboard.")
+        End Sub
         Public Shared Sub ShowOperationCanceled()
             FlyoutNotifier.Notify("Canceled", "You canceled the task.")
         End Sub
