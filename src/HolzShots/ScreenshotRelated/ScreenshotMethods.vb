@@ -10,31 +10,6 @@ Namespace ScreenshotRelated
         Private Sub New()
         End Sub
 
-        Public Shared Async Function CaptureSelection() As Task(Of Screenshot)
-            Debug.Assert(Not AreaSelector.IsInAreaSelector)
-            If AreaSelector.IsInAreaSelector Then Return Nothing
-            If Not UserSettings.Current.EnableHotkeysDuringFullscreen AndAlso HolzShots.Windows.Forms.EnvironmentEx.IsFullscreenAppRunning() Then Return Nothing
-
-            Using prio As New ProcessPriorityRequest()
-                Using screen = ScreenshotCreator.CaptureScreenshot(SystemInformation.VirtualScreen)
-                    Using selector As New AreaSelector()
-                        Dim selectedArea = Await selector.PromptSelectionAsync(screen).ConfigureAwait(True)
-
-                        Debug.Assert(selectedArea.Width > 0)
-                        Debug.Assert(selectedArea.Height > 0)
-
-                        Dim selectedImage As New Bitmap(selectedArea.Width, selectedArea.Height)
-
-                        Using g As Graphics = Graphics.FromImage(selectedImage)
-                            g.DrawImage(screen, New Rectangle(0, 0, selectedArea.Width, selectedArea.Height), selectedArea, GraphicsUnit.Pixel)
-                        End Using
-
-                        Return Screenshot.FromImage(selectedImage, Cursor.Position, ScreenshotSource.Selected)
-                    End Using
-                End Using
-            End Using
-        End Function
-
         Public Shared Function CaptureWindow(windowHandle As IntPtr, Optional includeMargin As Boolean = True) As Screenshot
             If Native.User32.IsIconic(windowHandle) Then Return Nothing
 

@@ -2,6 +2,8 @@ Imports System.Threading.Tasks
 Imports HolzShots.ScreenshotRelated
 Imports HolzShots.ScreenshotRelated.Selection
 Imports HolzShots.Composition.Command
+Imports HolzShots.Threading
+Imports HolzShots.Drawing
 
 Namespace Input.Actions
     <Command("captureArea")>
@@ -20,7 +22,7 @@ Namespace Input.Actions
             If Not AreaSelector.IsInAreaSelector Then
                 Dim shot As Screenshot
                 Try
-                    shot = Await ScreenshotMethods.CaptureSelection().ConfigureAwait(True)
+                    shot = Await CaptureSelection().ConfigureAwait(True)
                     Debug.Assert(shot IsNot Nothing)
                     If shot Is Nothing Then Throw New TaskCanceledException()
                 Catch cancelled As TaskCanceledException
@@ -31,6 +33,32 @@ Namespace Input.Actions
                 Await ProcessCapturing(shot).ConfigureAwait(True)
             End If
 
+        End Function
+
+        Shared Async Function CaptureSelection() As Task(Of Screenshot)
+
+            Debug.Assert(Not AreaSelector.IsInAreaSelector)
+            If AreaSelector.IsInAreaSelector Then Return Nothing
+            If Not UserSettings.Current.EnableHotkeysDuringFullscreen AndAlso HolzShots.Windows.Forms.EnvironmentEx.IsFullscreenAppRunning() Then Return Nothing
+
+            Using prio As New ProcessPriorityRequest()
+                Using screen = ScreenshotCreator.CaptureScreenshot(SystemInformation.VirtualScreen)
+                    Using selector As New AreaSelector()
+                        Dim selectedArea = Await selector.PromptSelectionAsync(screen).ConfigureAwait(True)
+
+                        Debug.Assert(selectedArea.Width > 0)
+                        Debug.Assert(selectedArea.Height > 0)
+
+                        Dim selectedImage As New Bitmap(selectedArea.Width, selectedArea.Height)
+
+                        Using g As Graphics = Graphics.FromImage(selectedImage)
+                            g.DrawImage(screen, New Rectangle(0, 0, selectedArea.Width, selectedArea.Height), selectedArea, GraphicsUnit.Pixel)
+                        End Using
+
+                        Return Screenshot.FromImage(selectedImage, Cursor.Position, ScreenshotSource.Selected)
+                    End Using
+                End Using
+            End Using
         End Function
     End Class
 End Namespace
