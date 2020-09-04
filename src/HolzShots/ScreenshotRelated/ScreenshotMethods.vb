@@ -24,7 +24,7 @@ Namespace ScreenshotRelated
                 End Using
 
                 Dim screen = ScreenshotCreator.CaptureScreenshot(SystemInformation.VirtualScreen)
-                Return Screenshot.FromFullscreen(screen, Cursor.Position)
+                Return Screenshot.FromImage(screen, Cursor.Position, ScreenshotSource.Fullscreen)
             End Using
         End Function
 
@@ -47,7 +47,7 @@ Namespace ScreenshotRelated
                             g.DrawImage(screen, New Rectangle(0, 0, selectedArea.Width, selectedArea.Height), selectedArea, GraphicsUnit.Pixel)
                         End Using
 
-                        Return Screenshot.FromSelection(selectedImage, Cursor.Position)
+                        Return Screenshot.FromImage(selectedImage, Cursor.Position, ScreenshotSource.Selected)
                     End Using
                 End Using
             End Using
