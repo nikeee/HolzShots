@@ -189,6 +189,7 @@
   <ItemGroup>
     <Compile Include="GlobalSuppressions.vb" />
     <Compile Include="ImageExtensions.vb" />
+    <Compile Include="Input\Actions\CaptureClipboardCommand.vb" />
     <Compile Include="Input\Actions\CapturingCommand.vb" />
     <Compile Include="Input\Actions\EditImageCommand.vb" />
     <Compile Include="Input\Actions\FileDependentCommand.vb" />

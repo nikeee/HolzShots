@@ -71,6 +71,7 @@ Namespace UI.Specialized
             ' TODO: This looks like it could be integrated in our plugin system
             CommandManager.RegisterCommand(New SelectAreaCommand())
             CommandManager.RegisterCommand(New FullscreenCommand())
+            CommandManager.RegisterCommand(New CaptureClipboardCommand())
             CommandManager.RegisterCommand(New WindowCommand())
             CommandManager.RegisterCommand(New OpenImagesFolderCommand())
             CommandManager.RegisterCommand(New OpenSettingsJsonCommand())

@@ -29,6 +29,14 @@ Namespace Interop
                     TaskDialogStandardButtons.Ok, TaskDialogStandardIcon.Error
             )
         End Sub
+        Public Shared Sub RetrievingImageFromClipboardFailed(ex As Exception)
+            Show(
+                    GenericErrorTitle,
+                    "Could not fetch image from clipboard",
+                    $"Maybe you know what this means:\n{ex.Message}",
+                    TaskDialogStandardButtons.Ok, TaskDialogStandardIcon.Error
+            )
+        End Sub
         Friend Shared Sub NoAdmin()
             Show(
                 GenericErrorTitle,
