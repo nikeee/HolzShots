@@ -1,6 +1,10 @@
 Imports System.Threading.Tasks
 Imports HolzShots.ScreenshotRelated
 Imports HolzShots.Composition.Command
+Imports HolzShots.Threading
+Imports HolzShots.UI.Specialized
+Imports System.Drawing.Drawing2D
+Imports HolzShots.Drawing
 
 Namespace Input.Actions
     <Command("captureEntireScreen")>
@@ -13,10 +17,18 @@ Namespace Input.Actions
 
             ' TODO: Re-add proper if condition
             ' If ManagedSettings.EnableFullscreenScreenshot Then
-            Dim shot = ScreenshotMethods.CaptureFullscreen()
+
+            Dim shot = CaptureFullScreen()
             Debug.Assert(shot IsNot Nothing)
             Await ProcessCapturing(shot).ConfigureAwait(True)
             'End If
+        End Function
+
+        Shared Function CaptureFullScreen() As Screenshot
+            Using prio As New ProcessPriorityRequest()
+                Dim screen = ScreenshotCreator.CaptureScreenshot(SystemInformation.VirtualScreen)
+                Return Screenshot.FromImage(screen, Cursor.Position, ScreenshotSource.Fullscreen)
+            End Using
         End Function
     End Class
 End Namespace

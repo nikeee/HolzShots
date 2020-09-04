@@ -2,31 +2,13 @@ Imports System.Drawing.Drawing2D
 Imports System.Drawing.Imaging
 Imports System.Threading.Tasks
 Imports HolzShots.Drawing
-Imports HolzShots.Interop
 Imports HolzShots.ScreenshotRelated.Selection
 Imports HolzShots.Threading
-Imports HolzShots.UI.Specialized
 
 Namespace ScreenshotRelated
     Friend Class ScreenshotMethods
         Private Sub New()
         End Sub
-
-        Public Shared Function CaptureFullscreen() As Screenshot
-            Using prio As New ProcessPriorityRequest()
-                Dim c As New Bitmap(MainWindow.Instance.Cursor.Size.Width, MainWindow.Instance.Cursor.Size.Height)
-                Using g As Graphics = Graphics.FromImage(c)
-                    g.SmoothingMode = SmoothingMode.AntiAlias
-                    g.CompositingQuality = CompositingQuality.HighQuality
-                    Using ico As Icon = Icon.FromHandle(MainWindow.Instance.Cursor.Handle)
-                        g.DrawIcon(ico, 0, 0)
-                    End Using
-                End Using
-
-                Dim screen = ScreenshotCreator.CaptureScreenshot(SystemInformation.VirtualScreen)
-                Return Screenshot.FromImage(screen, Cursor.Position, ScreenshotSource.Fullscreen)
-            End Using
-        End Function
 
         Public Shared Async Function CaptureSelection() As Task(Of Screenshot)
             Debug.Assert(Not AreaSelector.IsInAreaSelector)
