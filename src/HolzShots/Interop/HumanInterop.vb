@@ -12,15 +12,6 @@ Namespace Interop
         Private Const GenericErrorTitle = "Oh snap! :("
         Private Const HS = LibraryInformation.Name
 
-        Public Shared Sub UnauthorizedAccessExceptionRegistry()
-            Show(
-                GenericErrorTitle,
-                 "Access to Registry Key denied",
-                 $"The registry key is 'read only'. We could not put {HS} to autorun.",
-                 TaskDialogStandardButtons.Ok, TaskDialogStandardIcon.Error
-            )
-        End Sub
-
         Public Shared Sub CopyImageFailed(ex As Exception)
             Show(
                     GenericErrorTitle,
@@ -73,14 +64,6 @@ Namespace Interop
             FlyoutNotifier.Notify("Settings Updated", $"HolzShots has detected and loaded new settings.")
         End Sub
 
-        Public Shared Sub SecurityExceptionRegistry()
-            Show(
-                GenericErrorTitle,
-                "Access to registry was denied :(",
-                $"We tried to put {HS} to autorun, but access to the registry was denied.",
-                TaskDialogStandardButtons.Ok, TaskDialogStandardIcon.Error
-            )
-        End Sub
         Public Shared Sub UploadFailed(result As UploadException)
             Show("Error Uploading Image", String.Empty, result.Message, TaskDialogStandardButtons.Ok, TaskDialogStandardIcon.Error)
         End Sub
@@ -124,14 +107,6 @@ Namespace Interop
                 ' TODO: Setting settings not supported yet
                 ' Maybe we want to remove the "do you want to turn it off now" feature off
             End If
-        End Sub
-        Shared Sub ErrorWhileOpeningSettingsDialog(ex As Exception)
-            Show(
-                GenericErrorTitle,
-                "There was an error opening the settings dialog.",
-                ex.Message,
-                TaskDialogStandardButtons.Ok, TaskDialogStandardIcon.Error
-            )
         End Sub
         Shared Sub ErrorSavingImage(ex As Exception, parent As IWin32Window)
             Show(
