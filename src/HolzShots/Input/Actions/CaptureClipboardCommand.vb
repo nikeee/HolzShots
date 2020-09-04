@@ -6,7 +6,7 @@ Namespace Input.Actions
     Public Class CaptureClipboardCommand
         Inherits CapturingCommand
 
-        Public Overrides Async Function Invoke(parameters As IReadOnlyDictionary(Of String, String)) As Task
+        Public Overrides Async Function Invoke(parameters As IReadOnlyDictionary(Of String, String), settingsContext As HSSettings) As Task
 
             Dim image = GetClipboardImage()
             If image Is Nothing Then Return
