@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 namespace HolzShots.Composition.Command
 {
-    public interface ICommand
+    public interface ICommand<TSettings>
     {
-        Task Invoke(IReadOnlyDictionary<string, string> parameters);
+        Task Invoke(IReadOnlyDictionary<string, string> parameters, TSettings settingsContext);
     }
 }

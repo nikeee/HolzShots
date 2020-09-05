@@ -66,23 +66,27 @@ Namespace My
             For i As Integer = 0 To args.Length - 1
                 Select Case args(i)
                     Case CommandLine.FullscreenScreenshotParameter
-                        Await MainWindow.CommandManager.Dispatch(Of FullscreenCommand)().ConfigureAwait(True)
+                        Await MainWindow.CommandManager.Dispatch(Of FullscreenCommand)(UserSettings.Current).ConfigureAwait(True)
                     Case CommandLine.AreaSelectorParameter
-                        Await MainWindow.CommandManager.Dispatch(Of SelectAreaCommand)().ConfigureAwait(True)
+                        Await MainWindow.CommandManager.Dispatch(Of SelectAreaCommand)(UserSettings.Current).ConfigureAwait(True)
                     Case CommandLine.UploadParameter
+
+                        ' TODO: Maybe we can support overriding settings from the command line, too
                         Dim params = New Dictionary(Of String, String)()
                         If i < args.Length - 1 Then
                             params(FileDependentCommand.FileNameParameter) = args(i + 1)
                         End If
 
-                        Await MainWindow.CommandManager.Dispatch(Of UploadImageCommand)(params).ConfigureAwait(True)
+                        Await MainWindow.CommandManager.Dispatch(Of UploadImageCommand)(UserSettings.Current, params).ConfigureAwait(True)
                     Case CommandLine.OpenParameter
+
+                        ' TODO: Maybe we can support overriding settings from the command line, too
                         Dim params = New Dictionary(Of String, String)()
                         If i < args.Length - 1 Then
                             params(FileDependentCommand.FileNameParameter) = args(i + 1)
                         End If
 
-                        Await MainWindow.CommandManager.Dispatch(Of EditImageCommand)(params).ConfigureAwait(True)
+                        Await MainWindow.CommandManager.Dispatch(Of EditImageCommand)(UserSettings.Current, params).ConfigureAwait(True)
                 End Select
             Next
         End Function

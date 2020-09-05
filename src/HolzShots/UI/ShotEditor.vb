@@ -33,6 +33,7 @@ Namespace UI.Specialized
         Friend Property Screenshot As Screenshot
 
         Private ReadOnly _imageHoster As UploaderEntry ' ?
+        Private ReadOnly _settingsContext As HSSettings
 
 #End Region
 
@@ -70,22 +71,29 @@ Namespace UI.Specialized
 
 #Region "Ctors"
 
-        Public Sub New(ByVal screenshot As Screenshot)
+        Public Sub New(ByVal screenshot As Screenshot, settingsContext As HSSettings)
             Debug.Assert(screenshot IsNot Nothing)
             Debug.Assert(screenshot.Image IsNot Nothing)
+            Debug.Assert(settingsContext IsNot Nothing)
+
+            _settingsContext = settingsContext
 
             InitializeComponent()
 
-            autoCloseShotEditor.Checked = UserSettings.Current.CloseAfterUpload
+            autoCloseShotEditor.Checked = settingsContext.CloseAfterUpload
             autoCloseShotEditor.Enabled = False ' We only support reading that setting for now
+
+            If settingsContext.ShotEditorTitle IsNot Nothing Then
+                Text = settingsContext.ShotEditorTitle
+            End If
 
             Me.Screenshot = screenshot
 
-            _imageHoster = UserSettings.GetImageServiceForSettingsContext(UserSettings.Current, HolzShots.My.Application.Uploaders)
+            _imageHoster = UserSettings.GetImageServiceForSettingsContext(settingsContext, HolzShots.My.Application.Uploaders)
 
             InitializeThumbnailToolbar()
 
-            If Not UserSettings.Current.EnableHotkeysDuringFullscreen AndAlso HolzShots.Windows.Forms.EnvironmentEx.IsFullscreenAppRunning() Then
+            If Not settingsContext.EnableHotkeysDuringFullscreen AndAlso HolzShots.Windows.Forms.EnvironmentEx.IsFullscreenAppRunning() Then
                 WindowState = FormWindowState.Minimized
             ElseIf screenshot.Size = SystemInformation.VirtualScreen.Size Then
                 WindowState = FormWindowState.Maximized
@@ -316,7 +324,7 @@ Namespace UI.Specialized
                     bmp.SaveExtended(fileStream, format)
                 End Using
 
-                If UserSettings.Current.CloseAfterSave Then
+                If _settingsContext.CloseAfterSave Then
                     Close()
                 End If
 
@@ -809,11 +817,11 @@ Namespace UI.Specialized
             Debug.Assert(Uploader.HasEqualName(info.Metadata.Name, tag))
 
             Dim image = ThePanel.CombinedImage
-            Dim format = UploadHelper.GetImageFormat(image)
+            Dim format = UploadHelper.GetImageFormat(image, _settingsContext)
             Try
-                Dim result = Await UploadHelper.Upload(info.Uploader, image, format, Me).ConfigureAwait(True)
+                Dim result = Await UploadHelper.Upload(info.Uploader, image, _settingsContext, format, Me).ConfigureAwait(True)
                 Debug.Assert(result IsNot Nothing)
-                UploadHelper.InvokeUploadFinishedUi(result)
+                UploadHelper.InvokeUploadFinishedUi(result, _settingsContext)
             Catch ex As UploadCanceledException
                 HumanInterop.ShowOperationCanceled()
             Catch ex As UploadException
@@ -848,7 +856,7 @@ Namespace UI.Specialized
         End Sub
 
         Private Sub HandleAfterUpload()
-            If UserSettings.Current.CloseAfterUpload Then
+            If _settingsContext.CloseAfterUpload Then
                 Close()
             End If
         End Sub
@@ -859,11 +867,11 @@ Namespace UI.Specialized
 
         Private Async Sub UploadCurrentImageToDefaultProvider()
             Dim image = ThePanel.CombinedImage
-            Dim format = UploadHelper.GetImageFormat(image)
+            Dim format = UploadHelper.GetImageFormat(image, _settingsContext)
             Try
-                Dim result = Await UploadHelper.UploadToDefaultUploader(ThePanel.CombinedImage, format, Me).ConfigureAwait(True)
+                Dim result = Await UploadHelper.UploadToDefaultUploader(ThePanel.CombinedImage, _settingsContext, format, Me).ConfigureAwait(True)
                 Debug.Assert(result IsNot Nothing)
-                UploadHelper.InvokeUploadFinishedUi(result)
+                UploadHelper.InvokeUploadFinishedUi(result, _settingsContext)
             Catch ex As UploadCanceledException
                 HumanInterop.ShowOperationCanceled()
             Catch ex As UploadException

@@ -71,7 +71,10 @@ Namespace Interop
             FlyoutNotifier.Notify("Could not copy link :(", $"We could not copy the link to your image to your clipboard.")
         End Sub
         Public Shared Sub ShowCopyConfirmation(text As String)
-            FlyoutNotifier.Notify("Link copied!", "The link was copied to your clipboard.")
+            FlyoutNotifier.Notify("Link copied!", "The link has been copied to your clipboard.")
+        End Sub
+        Public Shared Sub ShowImageCopiedConfirmation()
+            FlyoutNotifier.Notify("Image copied!", "The image has been copied to your clipboard.")
         End Sub
         Public Shared Sub ShowOperationCanceled()
             FlyoutNotifier.Notify("Canceled", "You canceled the task.")

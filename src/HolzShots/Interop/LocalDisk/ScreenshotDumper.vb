@@ -9,8 +9,8 @@ Namespace Interop.LocalDisk
 
         Private Shared _lastFileName As String = String.Empty
 
-        Public Shared Sub OpenPictureDumpFolder()
-            Dim path As String = UserSettings.Current.ExpandedSavePath
+        Public Shared Sub OpenPictureDumpFolder(settingsContext As HSSettings)
+            Dim path As String = settingsContext.ExpandedSavePath
 
             If String.IsNullOrWhiteSpace(path) Then
                 HumanInterop.NoPathSpecified()
@@ -31,12 +31,12 @@ Namespace Interop.LocalDisk
 
         End Sub
 
-        Friend Shared Sub HandleScreenshot(shot As Screenshot)
-            If Not UserSettings.Current.SaveImagesToLocalDisk OrElse Not CheckSavePath() Then Return
-            SaveScreenshot(shot)
+        Friend Shared Sub HandleScreenshot(shot As Screenshot, settingsContext As HSSettings)
+            If Not settingsContext.SaveImagesToLocalDisk OrElse Not CheckSavePath(settingsContext) Then Return
+            SaveScreenshot(shot, settingsContext)
         End Sub
 
-        Friend Shared Sub SaveScreenshot(shot As Screenshot)
+        Friend Shared Sub SaveScreenshot(shot As Screenshot, settingsContext As HSSettings)
 
             Dim format As ImageFormat = GlobalVariables.DefaultImageFormat
             Dim extensionAndMimeType = ImageFormatInformation.GetExtensionAndMimeType(format)
@@ -44,7 +44,7 @@ Namespace Interop.LocalDisk
             Debug.Assert(TypeOf shot.Image Is Bitmap)
             Dim screenshotImage = If(TypeOf shot.Image Is Bitmap, DirectCast(shot.Image, Bitmap), New Bitmap(shot.Image))
 
-            If UserSettings.Current.EnableSmartFormatForSaving AndAlso ImageFormatAnalyser.IsOptimizable(screenshotImage) Then
+            If settingsContext.EnableSmartFormatForSaving AndAlso ImageFormatAnalyser.IsOptimizable(screenshotImage) Then
                 format = ImageFormatAnalyser.GetBestFittingFormat(screenshotImage)
 
                 extensionAndMimeType = format.GetExtensionAndMimeType()
@@ -52,7 +52,7 @@ Namespace Interop.LocalDisk
             End If
 
 
-            Dim pattern As String = UserSettings.Current.SaveFileNamePattern
+            Dim pattern As String = settingsContext.SaveFileNamePattern
             Dim name As String
             Try
                 name = FileNamePatternFormatter.GetFileNameFromPattern(shot, format, pattern)
@@ -62,14 +62,14 @@ Namespace Interop.LocalDisk
             End Try
 
             Dim fileName = System.IO.Path.ChangeExtension(name, extensionAndMimeType.FileExtension)
-            Dim path As String = GetAbsolutePath(fileName)
+            Dim path As String = GetAbsolutePath(fileName, settingsContext)
             screenshotImage.Save(path, format)
 
             _lastFileName = path
         End Sub
 
-        Private Shared Function CheckSavePath() As Boolean
-            Dim datPath = UserSettings.Current.ExpandedSavePath
+        Private Shared Function CheckSavePath(settingsContext As HSSettings) As Boolean
+            Dim datPath = settingsContext.ExpandedSavePath
             Debug.Assert(Not String.IsNullOrEmpty(datPath))
 
             Try
@@ -85,9 +85,9 @@ Namespace Interop.LocalDisk
             Return True
         End Function
 
-        Private Shared Function GetAbsolutePath(fileName As String) As String
+        Private Shared Function GetAbsolutePath(fileName As String, settingsContext As HSSettings) As String
             If String.IsNullOrWhiteSpace(fileName) Then Throw New ArgumentNullException(NameOf(fileName))
-            Return Path.Combine(UserSettings.Current.ExpandedSavePath, fileName)
+            Return Path.Combine(settingsContext.ExpandedSavePath, fileName)
         End Function
     End Class
 End Namespace

@@ -9,11 +9,11 @@ Namespace Input.Actions
     <Command("uploadImage")>
     Public Class UploadImageCommand
         Inherits FileDependentCommand
-        Implements ICommand
+        Implements ICommand(Of HSSettings)
 
         Private Const UploadImage = "Select Image to Upload"
 
-        Public Async Function Invoke(params As IReadOnlyDictionary(Of String, String)) As Task Implements ICommand.Invoke
+        Public Async Function Invoke(params As IReadOnlyDictionary(Of String, String), settingsContext As HSSettings) As Task Implements ICommand(Of HSSettings).Invoke
             Dim fileName = If(
                 params Is Nothing OrElse params.Count <> 1 OrElse Not params.ContainsKey(FileNameParameter),
                 ShowFileSelector(UploadImage),
@@ -32,8 +32,8 @@ Namespace Input.Actions
                 Debug.Assert(format IsNot Nothing)
 
                 Try
-                    Dim result = Await UploadHelper.UploadToDefaultUploader(bmp, format).ConfigureAwait(True)
-                    UploadHelper.InvokeUploadFinishedUi(result)
+                    Dim result = Await UploadHelper.UploadToDefaultUploader(bmp, settingsContext, format).ConfigureAwait(True)
+                    UploadHelper.InvokeUploadFinishedUi(result, settingsContext)
                 Catch ex As UploadCanceledException
                     HumanInterop.ShowOperationCanceled()
                 Catch ex As UploadException

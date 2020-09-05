@@ -300,7 +300,6 @@
     <Compile Include="Drawing\Tools\Marker.vb" />
     <Compile Include="Drawing\Tools\Pipette.vb" />
     <Compile Include="Drawing\Tools\Pixelate.vb" />
-    <Compile Include="ScreenshotRelated\ScreenshotMethods.vb" />
     <Compile Include="ScreenshotRelated\ScreenshotMethodsHelper.vb" />
     <Compile Include="ScreenshotRelated\Selection\ISelectionDecoration.vb" />
     <Compile Include="ScreenshotRelated\Selection\Nomination1Decoration.vb" />

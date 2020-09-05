@@ -16,7 +16,7 @@ Namespace Net
 
         Private ReadOnly _speedCalculator As New SpeedCalculatorProgress()
 
-        Sub New(uploader As Uploader, image As Image, format As ImageFormat, parentWindow As IWin32Window)
+        Sub New(uploader As Uploader, image As Image, format As ImageFormat, parentWindow As IWin32Window, settingsContext As HSSettings)
             Debug.Assert(uploader IsNot Nothing)
             Debug.Assert(image IsNot Nothing)
             Debug.Assert(format IsNot Nothing)
@@ -25,11 +25,11 @@ Namespace Net
             _uploader = uploader
             _image = image.CloneGifBug(format) ' TODO: Really clone this image?
             _format = format
-            InitReporters(parentWindow.GetHandle())
+            InitReporters(parentWindow.GetHandle(), settingsContext)
         End Sub
 
-        Private Sub InitReporters(parentWindowHandle As IntPtr)
-            If UserSettings.Current.ShowUploadProgress Then _reporters.Add(New StatusToaster())
+        Private Sub InitReporters(parentWindowHandle As IntPtr, settingsContext As HSSettings)
+            If settingsContext.ShowUploadProgress Then _reporters.Add(New StatusToaster())
             If parentWindowHandle <> IntPtr.Zero Then _reporters.Add(New TaskBarItemProgressReporter(parentWindowHandle))
         End Sub
 

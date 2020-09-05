@@ -16,7 +16,7 @@ Namespace UI.Specialized
         Private _keyboardHook As KeyboardHook
         Private _actionContainer As HolzShotsActionCollection
         Private Shared _applicationStarted As DateTime
-        Public Shared ReadOnly CommandManager As CommandManager = New CommandManager()
+        Public Shared CommandManager As CommandManager(Of HSSettings)
 
         Private Sub HideForm()
             Opacity = 0
@@ -87,14 +87,17 @@ Namespace UI.Specialized
             Drawing.DpiAwarenessFix.SetDpiAwareness()
 
             _keyboardHook = KeyboardHookSelector.CreateHookForCurrentPlatform(Me)
-            RegisterCommands()
 
             Await UserSettings.Load(Me).ConfigureAwait(True) ' We're dealing with UI code here, we want to keep the context
+
+            CommandManager = New CommandManager(Of HSSettings)(UserSettings.Manager)
 
             _applicationStarted = DateTime.Now
             ' TODO: Check if we need this:
             ' SettingsUpdated(Me, UserSettings.Current)
             AddHandler UserSettings.Manager.OnSettingsUpdated, AddressOf SettingsUpdated
+
+            RegisterCommands()
 
             Dim isAutorun = EnvironmentEx.CurrentStartupManager.IsStartedUp
             Dim args = EnvironmentEx.CurrentStartupManager.CommandLineArguments
@@ -163,7 +166,7 @@ Namespace UI.Specialized
             If commandToRun Is Nothing Then Return
 
             If CommandManager.IsRegisteredCommand(commandToRun.CommandName) Then
-                Await CommandManager.Dispatch(commandToRun.CommandName, commandToRun.Parameters).ConfigureAwait(True) ' Can throw exceptions and silently kill the application
+                Await CommandManager.Dispatch(commandToRun, UserSettings.Current).ConfigureAwait(True) ' Can throw exceptions and silently kill the application
             End If
         End Sub
         Private Sub MainWindowShown(sender As Object, e As EventArgs) Handles Me.Shown
@@ -177,16 +180,16 @@ Namespace UI.Specialized
             ExitApplication()
         End Sub
         Private Async Sub OpenSettingsjsonToolStripMenuItemClick(sender As Object, e As EventArgs) Handles OpenSettingsjsonToolStripMenuItem.Click
-            Await CommandManager.Dispatch(Of OpenSettingsJsonCommand)().ConfigureAwait(True)
+            Await CommandManager.Dispatch(Of OpenSettingsJsonCommand)(UserSettings.Current).ConfigureAwait(True)
         End Sub
         Private Async Sub SelectAreaToolStripMenuItemClick(sender As Object, e As EventArgs) Handles SelectAreaToolStripMenuItem.Click
-            Await CommandManager.Dispatch(Of SelectAreaCommand)().ConfigureAwait(True)
+            Await CommandManager.Dispatch(Of SelectAreaCommand)(UserSettings.Current).ConfigureAwait(True)
         End Sub
         Private Async Sub OpenImageToolStripMenuItemClick(sender As Object, e As EventArgs) Handles OpenImageToolStripMenuItem.Click
-            Await CommandManager.Dispatch(Of EditImageCommand)().ConfigureAwait(True)
+            Await CommandManager.Dispatch(Of EditImageCommand)(UserSettings.Current).ConfigureAwait(True)
         End Sub
         Private Async Sub UploadImageToolStripMenuItemClick(sender As Object, e As EventArgs) Handles UploadImageToolStripMenuItem.Click
-            Await CommandManager.Dispatch(Of UploadImageCommand)().ConfigureAwait(True)
+            Await CommandManager.Dispatch(Of UploadImageCommand)(UserSettings.Current).ConfigureAwait(True)
         End Sub
         Private Sub AboutToolStripMenuItemClick(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem.Click
             OpenAbout()
