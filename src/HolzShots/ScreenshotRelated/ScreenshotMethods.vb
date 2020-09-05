@@ -56,7 +56,6 @@ Namespace ScreenshotRelated
             End Using
         End Function
 
-
         Public Shared Function CaptureWindow(windowHandle As IntPtr, Optional includeMargin As Boolean = True) As Screenshot
             If Native.User32.IsIconic(windowHandle) Then Return Nothing
 

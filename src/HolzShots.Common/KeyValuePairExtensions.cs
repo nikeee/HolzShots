@@ -10,5 +10,4 @@ namespace HolzShots.Net.Custom
             value = kv.Value;
         }
     }
-
 }

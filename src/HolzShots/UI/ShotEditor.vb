@@ -291,7 +291,10 @@ Namespace UI.Specialized
             Dim bmp = ThePanel.CombinedImage
             Try
                 Clipboard.SetImage(bmp)
-            Catch ex As Exception
+            Catch ex As Exception When _
+                    TypeOf ex Is ExternalException _
+                    OrElse TypeOf ex Is System.Threading.ThreadStateException _
+                    OrElse TypeOf ex Is ArgumentNullException
                 HumanInterop.CopyImageFailed(ex)
             End Try
         End Sub

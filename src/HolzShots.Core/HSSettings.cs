@@ -15,8 +15,8 @@ namespace HolzShots
         #region meta
 
         [JsonProperty("$schema")]
-        public string SchemaUrl { get; } = "";
-        public string Version { get; } = "0.1.0";
+        public string SchemaUrl { get; } = "https://holzshots.net/schema/settings.json";
+        public string Version { get; } = "1.0.0";
 
         #endregion
         #region save.*
@@ -225,7 +225,7 @@ namespace HolzShots
     {
         [EnumMember(Value = "flyout")]
         Flyout,
-        [EnumMember(Value = "copy")]
+        [EnumMember(Value = "copyLink")]
         CopyToClipboard,
         [EnumMember(Value = "none")]
         None,
@@ -238,6 +238,8 @@ namespace HolzShots
         OpenEditor,
         [EnumMember(Value = "upload")]
         Upload,
+        [EnumMember(Value = "copyImage")]
+        Copy,
         [EnumMember(Value = "none")]
         None,
     }

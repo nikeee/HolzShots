@@ -15,8 +15,8 @@ Namespace UI.Specialized
 
         Private _keyboardHook As KeyboardHook
         Private _actionContainer As HolzShotsActionCollection
+        Private Shared _applicationStarted As DateTime
         Public Shared ReadOnly CommandManager As CommandManager = New CommandManager()
-
 
         Private Sub HideForm()
             Opacity = 0
@@ -46,8 +46,10 @@ Namespace UI.Specialized
         Private Sub SettingsUpdated(sender As Object, newSettings As HSSettings)
             _actionContainer?.Dispose()
 
-            If sender IsNot Me Then
-                ' If sender is MainWindow, the function was invoke on application startup
+            Trace.WriteLine("Updated settings")
+
+            If DateTime.Now - _applicationStarted > TimeSpan.FromSeconds(2) Then
+                ' If _settingsUpdates is 0, the function was invoke on application startup
                 ' We only want to show this message when the user edits this file
                 HumanInterop.SettingsUpdated()
             End If
@@ -69,6 +71,7 @@ Namespace UI.Specialized
             ' TODO: This looks like it could be integrated in our plugin system
             CommandManager.RegisterCommand(New SelectAreaCommand())
             CommandManager.RegisterCommand(New FullscreenCommand())
+            CommandManager.RegisterCommand(New CaptureClipboardCommand())
             CommandManager.RegisterCommand(New WindowCommand())
             CommandManager.RegisterCommand(New OpenImagesFolderCommand())
             CommandManager.RegisterCommand(New OpenSettingsJsonCommand())
@@ -88,7 +91,9 @@ Namespace UI.Specialized
 
             Await UserSettings.Load(Me).ConfigureAwait(True) ' We're dealing with UI code here, we want to keep the context
 
-            SettingsUpdated(Me, UserSettings.Current)
+            _applicationStarted = DateTime.Now
+            ' TODO: Check if we need this:
+            ' SettingsUpdated(Me, UserSettings.Current)
             AddHandler UserSettings.Manager.OnSettingsUpdated, AddressOf SettingsUpdated
 
             Dim isAutorun = EnvironmentEx.CurrentStartupManager.IsStartedUp
@@ -147,16 +152,15 @@ Namespace UI.Specialized
             End If
         End Sub
         Private Shared Sub OpenAbout()
-            If Not AboutForm.IsAboutInstanciated Then
-                Dim newAboutForm As New AboutForm()
-                newAboutForm.Show()
-            End If
+            AboutForm.Instance.Show()
         End Sub
 
 #End Region
 #Region "UI Events"
         Private Async Sub TrayIconMouseDoubleClick(ByVal sender As Object, ByVal e As MouseEventArgs) Handles TrayIcon.MouseDoubleClick
             Dim commandToRun = UserSettings.Current.TrayIconDoubleClickCommand
+
+            If commandToRun Is Nothing Then Return
 
             If CommandManager.IsRegisteredCommand(commandToRun.CommandName) Then
                 Await CommandManager.Dispatch(commandToRun.CommandName, commandToRun.Parameters).ConfigureAwait(True) ' Can throw exceptions and silently kill the application

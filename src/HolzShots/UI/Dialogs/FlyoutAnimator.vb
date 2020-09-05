@@ -111,17 +111,4 @@ Namespace UI.Dialogs
             End Set
         End Property
     End Class
-
-
-    Friend Class AnimationSet
-        Public ReadOnly Property Animator As FlyoutAnimator
-        Public ReadOnly Property Duration As Integer
-        Public ReadOnly Property CompletedHandler As Action
-
-        Public Sub New(ByVal animator As FlyoutAnimator, ByVal duration As Integer, ByVal completedHandler As Action)
-            Me.Animator = animator
-            Me.Duration = duration
-            Me.CompletedHandler = completedHandler
-        End Sub
-    End Class
 End Namespace

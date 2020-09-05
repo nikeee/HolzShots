@@ -10,7 +10,7 @@ namespace HolzShots
     public struct MemSize : IEquatable<MemSize>, IComparable<MemSize>
     {
         /// <summary>Represents the size 0 bytes.</summary>
-        public static MemSize Zero => default(MemSize);
+        public static MemSize Zero => default;
 
         /// <summary>Gets the number of bytes associated with this instance.</summary>
         public long ByteCount { get; }
