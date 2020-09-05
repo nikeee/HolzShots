@@ -202,11 +202,6 @@ namespace HolzShots
                     property.SetValue(targetObject, b);
                     return;
                 }
-                if (propType == typeof(string) && value is string s)
-                {
-                    property.SetValue(targetObject, s);
-                    return;
-                }
                 if (propType == typeof(double))
                 {
                     if (HandleFloatNumber<double>(targetObject, property, value))
@@ -242,32 +237,39 @@ namespace HolzShots
                     property.SetValue(targetObject, c);
                     return;
                 }
-                if (propType == typeof(uint) && value is uint ui)
+                if (propType == typeof(uint) && value is uint)
                 {
                     if (HandleIntegerNumber<uint>(targetObject, property, value))
                         return;
                 }
-                if (propType == typeof(ulong) && value is ulong ul)
+                if (propType == typeof(ulong) && value is ulong)
                 {
                     if (HandleIntegerNumber<ulong>(targetObject, property, value))
                         return;
                 }
-                if (propType == typeof(ushort) && value is ushort ush)
+                if (propType == typeof(ushort) && value is ushort)
                 {
                     if (HandleIntegerNumber<ushort>(targetObject, property, value))
                         return;
                 }
-                if (propType == typeof(sbyte) && value is sbyte sby)
+                if (propType == typeof(sbyte) && value is sbyte)
                 {
                     if (HandleIntegerNumber<sbyte>(targetObject, property, value))
                         return;
                 }
-                if (propType == typeof(decimal) && value is decimal de)
+                if (propType == typeof(decimal) && value is decimal)
                 {
                     if (HandleFloatNumber<decimal>(targetObject, property, value))
                         return;
                 }
             }
+
+            if (propType == typeof(string) && value is string s)
+            {
+                property.SetValue(targetObject, s);
+                return;
+            }
+
             Trace.WriteLine($"Unsupported override of property {property.Name}, doing nothing");
         }
         private static bool HandleFloatNumber<TProp>(T targetObject, PropertyInfo property, dynamic value)
