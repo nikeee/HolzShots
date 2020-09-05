@@ -27,7 +27,6 @@ Namespace UI.Specialized
         Private Sub InitializeComponent()
             Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(SettingsWindow))
             Me.savebtn = New System.Windows.Forms.Button()
-            Me.Abort = New System.Windows.Forms.Button()
             Me.PluginsTab = New System.Windows.Forms.TabPage()
             Me.pluginListPanel = New HolzShots.UI.Controls.StackPanel()
             Me.openPluginFolderLinkLabel = New HolzShots.Windows.Forms.ExplorerLinkLabel()
@@ -47,22 +46,8 @@ Namespace UI.Specialized
             Me.savebtn.Name = "savebtn"
             Me.savebtn.Size = New System.Drawing.Size(122, 30)
             Me.savebtn.TabIndex = 6
-            Me.savebtn.Text = "Save"
+            Me.savebtn.Text = "Close"
             Me.savebtn.UseVisualStyleBackColor = True
-            '
-            'Abort
-            '
-            Me.Abort.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-            Me.Abort.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
-            Me.Abort.DialogResult = System.Windows.Forms.DialogResult.Cancel
-            Me.Abort.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-            Me.Abort.Location = New System.Drawing.Point(210, 311)
-            Me.Abort.Name = "Abort"
-            Me.Abort.Size = New System.Drawing.Size(122, 30)
-            Me.Abort.TabIndex = 7
-            Me.Abort.Text = "Cancel"
-            Me.Abort.UseVisualStyleBackColor = True
             '
             'PluginsTab
             '
@@ -134,10 +119,8 @@ Namespace UI.Specialized
             Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
             Me.BackColor = System.Drawing.SystemColors.Window
-            Me.CancelButton = Me.Abort
             Me.ClientSize = New System.Drawing.Size(466, 353)
             Me.Controls.Add(Me.Tabs)
-            Me.Controls.Add(Me.Abort)
             Me.Controls.Add(Me.savebtn)
             Me.Font = New System.Drawing.Font("Segoe UI", 9.0!)
             Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
@@ -155,7 +138,6 @@ Namespace UI.Specialized
 
         End Sub
         Friend WithEvents savebtn As System.Windows.Forms.Button
-        Friend WithEvents Abort As System.Windows.Forms.Button
         Friend WithEvents PluginsTab As TabPage
         Friend WithEvents pluginListPanel As Controls.StackPanel
         Friend WithEvents openPluginFolderLinkLabel As HolzShots.Windows.Forms.ExplorerLinkLabel
