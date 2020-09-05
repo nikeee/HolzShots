@@ -5,14 +5,8 @@ Namespace UI.Controls.Helpers
     Friend Class PanelActivator
 
         Private Shared ReadOnly OpenPoint As New Point(475, 0) '(525, 0)
-        Private _se As ShotEditor
 
         Private ReadOnly _toolPanelDict As New Dictionary(Of PaintPanel.ShotEditorTool, Panel)
-
-        Sub New(se As ShotEditor)
-            If se Is Nothing Then Throw New ArgumentNullException(NameOf(se))
-            _se = se
-        End Sub
 
         Public Sub AddPanel(tool As PaintPanel.ShotEditorTool, targetPanel As Panel)
             If targetPanel Is Nothing Then Throw New ArgumentNullException(NameOf(targetPanel))

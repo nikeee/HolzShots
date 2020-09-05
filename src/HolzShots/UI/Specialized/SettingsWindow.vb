@@ -29,6 +29,15 @@ Namespace UI.Specialized
                 Dim metaArr = metadata.Select(Function(i) New PluginInfoItem(i)).ToArray()
                 pluginListPanel.Controls.AddRange(metaArr)
                 _pluginInfoItemList.AddRange(metaArr)
+
+
+
+                For Each m In metadata
+                    Dim c = New HolzShots.Windows.Forms.Controls.PluginItem()
+                    c.DataBindings.Add(New Binding("DataSource", m, "", True))
+                    FlowLayoutPanel1.Controls.Add(c)
+                Next
+
             End If
         End Sub
 
@@ -46,6 +55,9 @@ Namespace UI.Specialized
 
         Private Sub PluginsTabPaint(sender As Object, e As PaintEventArgs) Handles PluginsTab.Paint
             e.Graphics.DrawLine(BorderPen, 0, pluginListPanel.Location.Y - 1, Width - 1, pluginListPanel.Location.Y - 1)
+        End Sub
+
+        Private Sub SettingsWindow_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         End Sub
     End Class
 End Namespace

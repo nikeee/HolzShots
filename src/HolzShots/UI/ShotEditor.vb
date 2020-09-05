@@ -405,7 +405,7 @@ Namespace UI.Specialized
 #Region "Painting Tools"
 
         Private Sub AddSettingsPanels()
-            _activator = New PanelActivator(Me)
+            _activator = New PanelActivator()
             _activator.AddPanel(PaintPanel.ShotEditorTool.Arrow, ArrowSettingsPanel)
             _activator.AddPanel(PaintPanel.ShotEditorTool.Brighten, BrightenSettingsPanel)
             _activator.AddPanel(PaintPanel.ShotEditorTool.Blur, BlurSettingsPanel)

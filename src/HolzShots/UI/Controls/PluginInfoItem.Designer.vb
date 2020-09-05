@@ -142,6 +142,5 @@ Namespace UI.Controls
         Friend WithEvents pluginSettings As HolzShots.Windows.Forms.ExplorerLinkLabel
         Friend WithEvents pluginVersion As System.Windows.Forms.Label
         Friend WithEvents pluginAuthor As System.Windows.Forms.Label
-
     End Class
 End Namespace
