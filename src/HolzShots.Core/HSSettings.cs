@@ -73,6 +73,13 @@ namespace HolzShots
         [JsonProperty("editor.closeAfterSave")]
         public bool CloseAfterSave { get; private set; } = false;
 
+        [SettingsDoc(
+            "The window title of the shot editor. Feel free to override the title on your key bindings.",
+            Default = "Shot Editor"
+        )]
+        [JsonProperty("editor.title")]
+        public string ShotEditorTitle { get; private set; } = "Shot Editor";
+
         #endregion
         #region upload.*
 

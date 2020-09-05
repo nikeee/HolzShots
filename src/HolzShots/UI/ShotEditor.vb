@@ -83,6 +83,10 @@ Namespace UI.Specialized
             autoCloseShotEditor.Checked = settingsContext.CloseAfterUpload
             autoCloseShotEditor.Enabled = False ' We only support reading that setting for now
 
+            If settingsContext.ShotEditorTitle IsNot Nothing Then
+                Text = settingsContext.ShotEditorTitle
+            End If
+
             Me.Screenshot = screenshot
 
             _imageHoster = UserSettings.GetImageServiceForSettingsContext(settingsContext, HolzShots.My.Application.Uploaders)
