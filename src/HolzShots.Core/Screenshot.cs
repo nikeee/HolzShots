@@ -29,14 +29,11 @@ namespace HolzShots
             WindowTitle = windowTitle;
         }
 
-        public static Screenshot FromWindow(WindowScreenshotSet set)
-        {
-            // TODO: Clone this?
-            return new Screenshot((Bitmap)set.Result.Clone(), DateTime.Now, set.CursorPosition, ScreenshotSource.Window, set.ProcessName, set.WindowTitle);
-        }
+        /// <summary>
+        /// TODO: Should we clone this?
+        /// </summary>
+        public static Screenshot FromWindow(WindowScreenshotSet set) => new Screenshot(set.Result.Clone() as Image, DateTime.Now, set.CursorPosition, ScreenshotSource.Window, set.ProcessName, set.WindowTitle);
         public static Screenshot FromImage(Image image, Point cursorPosition, ScreenshotSource source) => new Screenshot(image, DateTime.Now, cursorPosition, source, null, null);
-        public static Screenshot FromSelection(Bitmap image, Point cursorPosition) => FromImage(image, cursorPosition, ScreenshotSource.Selected);
-        public static Screenshot FromFullscreen(Bitmap image, Point cursorPosition) => FromImage(image, cursorPosition, ScreenshotSource.Fullscreen);
         public static Screenshot FromImported(Bitmap image) => new Screenshot(image, DateTime.Now, Point.Empty, ScreenshotSource.Unknown, null, null);
 
         // public Image GetBitmapCopy() => _image.CloneDeep();

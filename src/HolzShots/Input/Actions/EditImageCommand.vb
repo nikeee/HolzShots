@@ -6,11 +6,11 @@ Namespace Input.Actions
     <Command("editImage")>
     Public Class EditImageCommand
         Inherits FileDependentCommand
-        Implements ICommand
+        Implements ICommand(Of HSSettings)
 
         Private Const OpenInShotEditor = "Open Image in ShotEditor"
 
-        Public Function Invoke(params As IReadOnlyDictionary(Of String, String)) As Task Implements ICommand.Invoke
+        Public Function Invoke(params As IReadOnlyDictionary(Of String, String), settingsContext As HSSettings) As Task Implements ICommand(Of HSSettings).Invoke
             Dim fileName = If(
                 params Is Nothing OrElse params.Count <> 1 OrElse Not params.ContainsKey(FileNameParameter),
                 ShowFileSelector(OpenInShotEditor),
@@ -26,7 +26,7 @@ Namespace Input.Actions
 
             Dim bmp As New Bitmap(fileName)
             Dim shot = Screenshot.FromImported(bmp)
-            Dim editor As New ShotEditor(shot)
+            Dim editor As New ShotEditor(shot, settingsContext)
             AddHandler editor.Disposed, Sub() bmp.Dispose()
             editor.Show()
 

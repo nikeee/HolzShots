@@ -6,13 +6,13 @@ Namespace Input.Actions
     Public Class CaptureClipboardCommand
         Inherits CapturingCommand
 
-        Public Overrides Async Function Invoke(parameters As IReadOnlyDictionary(Of String, String)) As Task
+        Public Overrides Async Function Invoke(parameters As IReadOnlyDictionary(Of String, String), settingsContext As HSSettings) As Task
 
             Dim image = GetClipboardImage()
             If image Is Nothing Then Return
 
             Dim shot = Screenshot.FromImage(image, Cursor.Position, ScreenshotSource.Clipboard)
-            Await ProcessCapturing(shot).ConfigureAwait(True)
+            Await ProcessCapturing(shot, settingsContext).ConfigureAwait(True)
         End Function
 
         Private Shared Function GetClipboardImage() As Image

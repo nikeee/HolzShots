@@ -36,7 +36,7 @@ Namespace ScreenshotRelated.Selection
 
         Friend Shared Property IsInAreaSelector As Boolean
 
-        Sub New()
+        Sub New(settingsContext As HSSettings)
             MyBase.New()
 
 
@@ -44,7 +44,7 @@ Namespace ScreenshotRelated.Selection
             ShowInTaskbar = False
 
             Opacity = 1.0
-            _backgroundOverlayBrush = New SolidBrush(Color.FromArgb(CInt(UserSettings.Current.AreaSelectorDimmingOpacity * 255), 0, 0, 0))
+            _backgroundOverlayBrush = New SolidBrush(Color.FromArgb(CInt(settingsContext.AreaSelectorDimmingOpacity * 255), 0, 0, 0))
 
             StartPosition = FormStartPosition.Manual
             Bounds = SystemInformation.VirtualScreen

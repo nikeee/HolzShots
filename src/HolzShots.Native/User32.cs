@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -107,6 +106,12 @@ namespace HolzShots.Native
 
         [DllImport(DllName, CharSet = CharSet.Auto)]
         public static extern int ReleaseDC(IntPtr hWnd, IntPtr hDc);
+
+        [DllImport(DllName)]
+        public static extern IntPtr GetWindowDC(IntPtr window);
+
+        [DllImport(DllName)]
+        public static extern IntPtr GetDesktopWindow();
 
         #endregion
 

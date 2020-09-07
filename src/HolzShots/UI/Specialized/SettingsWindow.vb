@@ -32,13 +32,7 @@ Namespace UI.Specialized
             End If
         End Sub
 
-
         Private Sub SavebtnClick(ByVal sender As Object, ByVal e As EventArgs) Handles savebtn.Click
-            My.Settings.Save()
-            Close()
-        End Sub
-
-        Private Sub AbortClick(ByVal sender As Object, ByVal e As EventArgs) Handles Abort.Click
             Close()
         End Sub
 

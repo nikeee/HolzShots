@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Runtime.Serialization;
+using System.Reflection;
 
 namespace HolzShots
 {
@@ -71,6 +72,13 @@ namespace HolzShots
         )]
         [JsonProperty("editor.closeAfterSave")]
         public bool CloseAfterSave { get; private set; } = false;
+
+        [SettingsDoc(
+            "The window title of the shot editor. Feel free to override the title on your key bindings.",
+            Default = "Shot Editor"
+        )]
+        [JsonProperty("editor.title")]
+        public string ShotEditorTitle { get; private set; } = "Shot Editor";
 
         #endregion
         #region upload.*
@@ -164,6 +172,7 @@ namespace HolzShots
             Default = "null"
         )]
         [JsonProperty("tray.doubleClickCommand")]
+        [field: LeaveUntouchedInObjectDeepCopy] // Support for this doesn't make any sense
         public CommandDeclaration TrayIconDoubleClickCommand { get; set; } = null;
 
         #endregion
@@ -181,6 +190,7 @@ namespace HolzShots
             "List of commands that get triggered by hotkeys."
         )]
         [JsonProperty("key.bindings")]
+        [field: LeaveUntouchedInObjectDeepCopy] // Support for this doesn't make any sense
         public IReadOnlyList<KeyBinding> KeyBindings { get; set; } = ImmutableList<KeyBinding>.Empty;
 
         #endregion
@@ -210,6 +220,12 @@ namespace HolzShots
         /// </summary>
         [JsonProperty("params")]
         public IReadOnlyDictionary<string, string> Parameters { get; set; } = ImmutableDictionary<string, string>.Empty;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [JsonProperty("overrides")]
+        public IReadOnlyDictionary<string, dynamic> Overrides { get; set; } = ImmutableDictionary<string, dynamic>.Empty;
 
         public static implicit operator CommandDeclaration(string commandName) => ToCommandDeclaration(commandName);
         public static CommandDeclaration ToCommandDeclaration(string commandName)
@@ -251,5 +267,133 @@ namespace HolzShots
         public string DisplayName { get; set; }
         public string Description { get; }
         public SettingsDocAttribute(string description) => Description = description ?? throw new ArgumentNullException(nameof(description));
+    }
+
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, Inherited = false, AllowMultiple = false)]
+    public class LeaveUntouchedInObjectDeepCopyAttribute : Attribute { }
+
+    /// <summary> Based on this solution: https://stackoverflow.com/a/11308879 </summary>
+    public static class ObjectExtensions
+    {
+        private static readonly MethodInfo CloneMethod = typeof(object).GetMethod("MemberwiseClone", BindingFlags.NonPublic | BindingFlags.Instance);
+
+        public static bool IsPrimitive(this Type type) => (type == typeof(string)) || (type.IsValueType && type.IsPrimitive);
+
+        public static object Copy(this object originalObject) => InternalCopy(originalObject, new Dictionary<object, object>(new ReferenceEqualityComparer()));
+
+        private static object InternalCopy(object originalObject, IDictionary<object, object> visited)
+        {
+            if (originalObject == null)
+                return null;
+
+            var typeToReflect = originalObject.GetType();
+            if (IsPrimitive(typeToReflect))
+                return originalObject;
+
+            if (visited.ContainsKey(originalObject))
+                return visited[originalObject];
+
+            if (typeof(Delegate).IsAssignableFrom(typeToReflect))
+                return null;
+
+            var cloneObject = CloneMethod.Invoke(originalObject, null);
+            if (typeToReflect.IsArray)
+            {
+                var arrayType = typeToReflect.GetElementType();
+                if (IsPrimitive(arrayType) == false)
+                {
+                    var clonedArray = (Array)cloneObject;
+                    ArrayExtensions.ForEach(clonedArray, (array, indices) => array.SetValue(InternalCopy(clonedArray.GetValue(indices), visited), indices));
+                }
+
+            }
+            visited.Add(originalObject, cloneObject);
+            CopyFields(originalObject, visited, cloneObject, typeToReflect);
+            RecursiveCopyBaseTypePrivateFields(originalObject, visited, cloneObject, typeToReflect);
+            return cloneObject;
+        }
+
+        private static void RecursiveCopyBaseTypePrivateFields(object originalObject, IDictionary<object, object> visited, object cloneObject, Type typeToReflect)
+        {
+            if (typeToReflect.BaseType != null)
+            {
+                RecursiveCopyBaseTypePrivateFields(originalObject, visited, cloneObject, typeToReflect.BaseType);
+                CopyFields(originalObject, visited, cloneObject, typeToReflect.BaseType, BindingFlags.Instance | BindingFlags.NonPublic, info => info.IsPrivate);
+            }
+        }
+
+        private static void CopyFields(object originalObject, IDictionary<object, object> visited, object cloneObject, Type typeToReflect, BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.FlattenHierarchy, Func<FieldInfo, bool> filter = null)
+        {
+            foreach (var fieldInfo in typeToReflect.GetFields(bindingFlags))
+            {
+                if (filter != null && filter(fieldInfo) == false)
+                    continue;
+                if (IsPrimitive(fieldInfo.FieldType))
+                    continue;
+
+                var shouldIgnoreThisField = fieldInfo.GetCustomAttribute<LeaveUntouchedInObjectDeepCopyAttribute>();
+                if (shouldIgnoreThisField != null)
+                    continue;
+
+                var originalFieldValue = fieldInfo.GetValue(originalObject);
+                var clonedFieldValue = InternalCopy(originalFieldValue, visited);
+                fieldInfo.SetValue(cloneObject, clonedFieldValue);
+            }
+        }
+        public static T Copy<T>(this T original) => (T)Copy((object)original);
+    }
+
+    public class ReferenceEqualityComparer : EqualityComparer<object>
+    {
+        public override bool Equals(object x, object y) => ReferenceEquals(x, y);
+        public override int GetHashCode(object obj) => obj == null ? 0 : obj.GetHashCode();
+    }
+
+    public static class ArrayExtensions
+    {
+        public static void ForEach(Array array, Action<Array, int[]> action)
+        {
+            if (array.LongLength == 0)
+                return;
+
+            var walker = new ArrayTraverse(array);
+            do
+            {
+                action(array, walker.Position);
+            } while (walker.Step());
+        }
+
+        private class ArrayTraverse
+        {
+            public int[] Position;
+            private int[] maxLengths;
+
+            public ArrayTraverse(Array array)
+            {
+                maxLengths = new int[array.Rank];
+                for (int i = 0; i < array.Rank; ++i)
+                {
+                    maxLengths[i] = array.GetLength(i) - 1;
+                }
+                Position = new int[array.Rank];
+            }
+
+            public bool Step()
+            {
+                for (int i = 0; i < Position.Length; ++i)
+                {
+                    if (Position[i] < maxLengths[i])
+                    {
+                        Position[i]++;
+                        for (int j = 0; j < i; j++)
+                        {
+                            Position[j] = 0;
+                        }
+                        return true;
+                    }
+                }
+                return false;
+            }
+        }
     }
 }

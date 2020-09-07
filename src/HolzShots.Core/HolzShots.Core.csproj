@@ -1,136 +1,46 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{4F1B3465-2915-4E00-BB15-FC1808B01CD6}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
+
     <RootNamespace>HolzShots</RootNamespace>
-    <AssemblyName>HolzShots.Core</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <TargetFramework>net461</TargetFramework>
+    <AssemblyTitle>HolzShots.Core</AssemblyTitle>
+    <Product>HolzShots.Core</Product>
+    <Description>HolzShots Core Components</Description>
+    <Copyright>Niklas Mollenhauer GPL-3.0</Copyright>
+
+    <Version>2.0.0</Version>
+
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+  </PropertyGroup>
+
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+
   <PropertyGroup Condition=" '$(CI)' == 'True' ">
     <DefineConstants>$(DefineConstants);CI_BUILD</DefineConstants>
   </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Net" />
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="Microsoft.CSharp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="BoolEx.cs" />
-    <Compile Include="Composition\Command\CommandManager.cs" />
-    <Compile Include="Composition\Command\HotkeyCommand.cs" />
-    <Compile Include="Composition\Command\ICommand.cs" />
-    <Compile Include="Composition\CustomUploadersFile.cs" />
-    <Compile Include="Composition\CustomUploaderSource.cs" />
-    <Compile Include="Composition\IUploaderSource.cs" />
-    <Compile Include="Composition\PluginUploaderSource.cs" />
-    <Compile Include="Composition\UploaderManager.cs" />
-    <Compile Include="Composition\PluginLoadingFailedException.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="HSSettings.cs" />
-    <Compile Include="Input\HotkeyActionCollection.cs" />
-    <Compile Include="Input\IAreaSelector.cs" />
-    <Compile Include="Input\IHotkeyAction.cs" />
-    <Compile Include="IO\DirectoryEx.cs" />
-    <Compile Include="IO\Naming\DatePatternItem.cs" />
-    <Compile Include="IO\Naming\FileMetadata.cs" />
-    <Compile Include="IO\Naming\FileNamePattern.cs" />
-    <Compile Include="IO\Naming\FileNamePatternFormatter.cs" />
-    <Compile Include="IO\Naming\ImagePatternItem.cs" />
-    <Compile Include="IO\Naming\PatternItem.cs" />
-    <Compile Include="IO\Naming\PatternSyntaxException.cs" />
-    <Compile Include="IO\Naming\TextPatternItem.cs" />
-    <Compile Include="Composition\IPluginMetadata.cs" />
-    <Compile Include="Composition\PluginAttribute.cs" />
-    <Compile Include="Composition\PluginManager.cs" />
-    <Compile Include="Composition\UploadPluginAttribute.cs" />
-    <Compile Include="Input\Hotkey.cs" />
-    <Compile Include="Input\HotkeyPressedEventArgs.cs" />
-    <Compile Include="Input\HotkeyRegistrationException.cs" />
-    <Compile Include="Input\HotkeyTypeConverter.cs" />
-    <Compile Include="Input\HotkeyWindowHost.cs" />
-    <Compile Include="Input\KeyboardHook.cs" />
-    <Compile Include="Input\KeyboardHookSelector.cs" />
-    <Compile Include="Input\KeyPressedEventArgs.cs" />
-    <Compile Include="Input\ModifierKeys.cs" />
-    <Compile Include="Input\WindowsKeyboardHook.cs" />
-    <Compile Include="IO\PollingFileWatcher.cs" />
-    <Compile Include="NativeMethods.cs" />
-    <Compile Include="Net\Custom\CustomUploader.cs" />
-    <Compile Include="Net\Custom\CustomUploaderSpec.cs" />
-    <Compile Include="Net\Custom\JsonConfig.cs" />
-    <Compile Include="KeyValuePairExtensions.cs" />
-    <Compile Include="Net\Custom\SemVersionConverter.cs" />
-    <Compile Include="Net\DirectUploadUploader.cs" />
-    <Compile Include="Net\Speed.cs" />
-    <Compile Include="Net\SpeedCalculatorProgress.cs" />
-    <Compile Include="Net\Uploader.cs" />
-    <Compile Include="Net\UploadException.cs" />
-    <Compile Include="Net\UploadProgress.cs" />
-    <Compile Include="Net\UploadResult.cs" />
-    <Compile Include="NonPublicPropertiesResolver.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Screenshot.cs" />
-    <Compile Include="IO\HolzShotsPaths.cs" />
-    <Compile Include="UserSettings.cs" />
-    <Compile Include="SettingsManager.cs" />
-    <Compile Include="ValidationError.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\HolzShots.Common\HolzShots.Common.csproj">
-      <Project>{3aadc160-9020-4f59-a2f0-7941752c047e}</Project>
-      <Name>HolzShots.Common</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="AsyncFixer" Version="1.3.0">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
+
+    <ProjectReference Include="..\HolzShots.Common\HolzShots.Common.csproj" />
+
+    <PackageReference Include="AsyncFixer" Version="1.3.0" PrivateAssets="all" />
     <PackageReference Include="Microsoft.ApiDesignGuidelines.Analyzers" Version="1.2.0-beta2" />
-    <PackageReference Include="Microsoft.Bcl.HashCode">
-      <Version>1.1.0</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.CodeQuality.Analyzers" Version="3.3.0">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
+    <PackageReference Include="Microsoft.Bcl.HashCode" Version="1.1.0" />
+    <PackageReference Include="Microsoft.CodeQuality.Analyzers" Version="3.3.0" PrivateAssets="all" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="Semver" Version="2.0.6" />
     <PackageReference Include="System.Buffers" Version="4.5.1" />
@@ -150,8 +60,4 @@
     <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Input\Hotkey\" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
