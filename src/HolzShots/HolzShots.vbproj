@@ -7,6 +7,7 @@
     <StartupObject>HolzShots.My.MyApplication</StartupObject>
     <MyType>WindowsForms</MyType>
     <TargetFramework>net461</TargetFramework>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <OptionExplicit>On</OptionExplicit>
     <OptionCompare>Binary</OptionCompare>
     <OptionStrict>On</OptionStrict>
