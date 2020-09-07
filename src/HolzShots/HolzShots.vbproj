@@ -57,18 +57,6 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 
   <ItemGroup>
-    <Reference Include="Microsoft.WindowsAPICodePack, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\References\Microsoft.WindowsAPICodePack.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="Microsoft.WindowsAPICodePack.Shell, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\References\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Update="UI\Controls\BigColorViewer.vb">
       <SubType>Component</SubType>
     </Compile>
@@ -314,6 +302,15 @@
     <ProjectReference Include="..\HolzShots.Core\HolzShots.Core.csproj" />
     <ProjectReference Include="..\HolzShots.Windows\HolzShots.Windows.csproj" />
     <ProjectReference Include="..\HolzShots.Native\HolzShots.Native.csproj" />
+
+    <Reference Include="Microsoft.WindowsAPICodePack, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\References\Microsoft.WindowsAPICodePack.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack.Shell, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\References\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
 
     <PackageReference Include="Microsoft.Bcl.HashCode" Version="1.1.0" />
     <PackageReference Include="Microsoft.CodeQuality.Analyzers" Version="3.3.0" />
