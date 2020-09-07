@@ -1,14 +1,16 @@
-<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
-    <ProductVersion>9.0.21022</ProductVersion>
-    <ProjectGuid>{42A62086-E16E-4CBD-95DE-E7866CF015AB}</ProjectGuid>
-
-    <OutputType>WinExe</OutputType>
     <StartupObject>HolzShots.My.MyApplication</StartupObject>
 
-    <MyType>WindowsForms</MyType>
+    <OutputType>WinExe</OutputType>
     <TargetFramework>net461</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <LangVersion>latest</LangVersion>
+
+    <MyType>WindowsForms</MyType>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
 
     <ApplicationIcon>editcut.ico</ApplicationIcon>
@@ -16,7 +18,6 @@
     <ApplicationVersion>2.0.0</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>false</BootstrapperEnabled>
-    <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -62,9 +63,11 @@
     <DefineConstants>$(DefineConstants),CI_BUILD=True</DefineConstants>
   </PropertyGroup>
 
+<!--
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+-->
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
+  <ItemGroup>
     <Compile Update="UI\Controls\BigColorViewer.vb">
       <SubType>Component</SubType>
     </Compile>
@@ -176,7 +179,7 @@
     </Compile>
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
+  <ItemGroup>
     <EmbeddedResource Update="UI\Controls\ColorViewer.resx">
       <DependentUpon>ColorViewer.vb</DependentUpon>
       <SubType>Designer</SubType>
