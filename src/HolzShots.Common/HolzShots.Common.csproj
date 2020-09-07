@@ -101,6 +101,12 @@
     <PackageReference Include="System.Runtime.InteropServices.Analyzers" Version="1.2.0-beta2" />
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HolzShots.Native\HolzShots.Native.csproj">
+      <Project>{419f051b-09ad-400d-83c5-b9e9f32e0148}</Project>
+      <Name>HolzShots.Native</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

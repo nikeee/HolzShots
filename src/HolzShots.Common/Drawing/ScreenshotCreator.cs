@@ -7,7 +7,7 @@ namespace HolzShots.Drawing
     {
         public static Bitmap CaptureScreenshot(Rectangle area)
         {
-            var desktopWindowHandle = NativeMethods.GetDesktopWindow();
+            var desktopWindowHandle = Native.User32.GetDesktopWindow();
             var source = DeviceContext.FromWindow(desktopWindowHandle);
             try
             {
@@ -27,7 +27,7 @@ namespace HolzShots.Drawing
             }
             finally
             {
-                NativeMethods.ReleaseDC(desktopWindowHandle, source.DC);
+                _ = Native.User32.ReleaseDC(desktopWindowHandle, source.DC);
             }
         }
     }
