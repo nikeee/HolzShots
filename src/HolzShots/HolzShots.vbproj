@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
     <StartupObject>HolzShots.My.MyApplication</StartupObject>
@@ -7,7 +7,6 @@
     <TargetFramework>net461</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
 
-    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
     <LangVersion>latest</LangVersion>
 
     <MyType>WindowsForms</MyType>
@@ -18,6 +17,11 @@
     <ApplicationVersion>2.0.0</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>false</BootstrapperEnabled>
+
+    <AssemblyTitle>HolzShots</AssemblyTitle>
+    <Product>HolzShots</Product>
+    <Description>A screenshot utility</Description>
+    <Copyright>Niklas Mollenhauer - GPL-3.0</Copyright>
   </PropertyGroup>
 
   <PropertyGroup>
