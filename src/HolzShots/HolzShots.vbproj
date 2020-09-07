@@ -243,56 +243,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Resources\eraser.png" />
-    <None Include="Resources\download.png" />
-    <None Include="Resources\folderStuffedMedium.png" />
-
     <Content Include="editcut.ico" />
-    <Content Include="Resources\arrowMedium.png" />
-    <Content Include="Resources\blurMedium.png" />
-    <Content Include="Resources\brightenMedium.png" />
-    <Content Include="Resources\cameraMedium.png" />
-    <Content Include="Resources\cancelMedium.png" />
-    <Content Include="Resources\censorMedium.png" />
-    <Content Include="Resources\circleMedium.png" />
-    <Content Include="Resources\clipboardMedium.png" />
-    <Content Include="Resources\clipboardSmall.png" />
-    <Content Include="Resources\cropMedium.png" />
-    <Content Include="Resources\cropperCursor.ico" />
-    <Content Include="Resources\crossCursor.ico" />
-    <Content Include="Resources\crossMedium.png" />
-    <Content Include="Resources\cursorMedium.png" />
-    <Content Include="Resources\cursorPositionSmall.png" />
-    <Content Include="Resources\dateMedium.png" />
-    <Content Include="Resources\editcutBig.png" />
-    <Content Include="Resources\editcutSmall.png" />
-    <Content Include="Resources\fontMedium.png" />
-    <Content Include="Resources\highlighterMedium.png" />
-    <Content Include="Resources\historyMedium.png" />
-    <Content Include="Resources\horizontalMedium.png" />
-    <Content Include="Resources\imageDimensionsSmall.png" />
-    <Content Include="Resources\invertSmall.png" />
-    <Content Include="Resources\moveMedium.png" />
-    <Content Include="Resources\nyanCat.png" />
-    <Content Include="Resources\openMedium.png" />
-    <Content Include="Resources\openSmall.png" />
-    <Content Include="Resources\PaintPanelBackground.png" />
-    <Content Include="Resources\pickerMedium.png" />
-    <Content Include="Resources\printerSmall.png" />
-    <Content Include="Resources\saveMedium.png" />
-    <Content Include="Resources\scaleSmall.png" />
-    <Content Include="Resources\selectAllMedium.png" />
-    <Content Include="Resources\settingsMedium.png" />
-    <Content Include="Resources\textCursor.ico" />
-    <Content Include="Resources\textMedium.png" />
-    <Content Include="Resources\TexttoolsBackground.png" />
-    <Content Include="Resources\uacMedium.png" />
-    <Content Include="Resources\uacSmall.png" />
-    <Content Include="Resources\undoMedium.png" />
-    <Content Include="Resources\uploadMedium.png" />
-    <Content Include="Resources\uploadSmall.png" />
-    <Content Include="Resources\verticalMedium.png" />
-    <Content Include="Resources\windowsCursorMedium.png" />
+    <Content Include="Resources\*.png" />
   </ItemGroup>
 
   <ItemGroup>  
