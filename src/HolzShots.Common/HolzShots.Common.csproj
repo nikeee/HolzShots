@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -62,7 +62,6 @@
     <Compile Include="Drawing\ScreenshotCreator.cs" />
     <Compile Include="Drawing\WindowScreenshotSet.cs" />
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="Input\HolzShotsActionCollection.cs" />
     <Compile Include="KeyValuePairExtensions.cs" />
     <Compile Include="LibraryInformation.cs" />
     <Compile Include="MathEx.cs" />
@@ -79,30 +78,6 @@
     <Compile Include="Threading\ProcessPriorityRequest.cs" />
     <Compile Include="Threading\ThreadingExtensions.cs" />
     <Compile Include="UI\Localization.cs" />
-    <Compile Include="UI\Transitions\InterpolationMethod.cs" />
-    <Compile Include="UI\Transitions\ManagedTypes\Color.cs" />
-    <Compile Include="UI\Transitions\ManagedTypes\Double.cs" />
-    <Compile Include="UI\Transitions\ManagedTypes\Float.cs" />
-    <Compile Include="UI\Transitions\ManagedTypes\IManagedType.cs" />
-    <Compile Include="UI\Transitions\ManagedTypes\Int32.cs" />
-    <Compile Include="UI\Transitions\ManagedTypes\Point.cs" />
-    <Compile Include="UI\Transitions\ManagedTypes\Rectangle.cs" />
-    <Compile Include="UI\Transitions\ManagedTypes\String.cs" />
-    <Compile Include="UI\Transitions\Transition.cs" />
-    <Compile Include="UI\Transitions\TransitionChain.cs" />
-    <Compile Include="UI\Transitions\TransitionElement.cs" />
-    <Compile Include="UI\Transitions\TransitionManager.cs" />
-    <Compile Include="UI\Transitions\TransitionTypes\Acceleration.cs" />
-    <Compile Include="UI\Transitions\TransitionTypes\Bounce.cs" />
-    <Compile Include="UI\Transitions\TransitionTypes\CriticalDamping.cs" />
-    <Compile Include="UI\Transitions\TransitionTypes\Deceleration.cs" />
-    <Compile Include="UI\Transitions\TransitionTypes\EaseInEaseOut.cs" />
-    <Compile Include="UI\Transitions\TransitionTypes\Flash.cs" />
-    <Compile Include="UI\Transitions\TransitionTypes\ITransitionType.cs" />
-    <Compile Include="UI\Transitions\TransitionTypes\Linear.cs" />
-    <Compile Include="UI\Transitions\TransitionTypes\ThrowAndCatch.cs" />
-    <Compile Include="UI\Transitions\TransitionTypes\UserDefined.cs" />
-    <Compile Include="UI\Transitions\Utility.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
