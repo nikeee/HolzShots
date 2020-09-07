@@ -395,7 +395,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
-  
+
   <ItemGroup>
     <None Include="My Project\app.manifest">
       <SubType>Designer</SubType>
@@ -516,7 +516,7 @@
     <PackageReference Include="System.Runtime.InteropServices.Analyzers" Version="1.2.0-beta2" />
     <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
-    <PackageReference Include="TaskScheduler" Version="2.8.21" />
+    <PackageReference Include="TaskScheduler" Version="2.8.18" />
   </ItemGroup>
 
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
