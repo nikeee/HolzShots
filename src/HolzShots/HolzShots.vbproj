@@ -1,396 +1,231 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.21022</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{42A62086-E16E-4CBD-95DE-E7866CF015AB}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <StartupObject>HolzShots.My.MyApplication</StartupObject>
-    <RootNamespace>HolzShots</RootNamespace>
-    <AssemblyName>HolzShots</AssemblyName>
-    <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFramework>net461</TargetFramework>
     <OptionExplicit>On</OptionExplicit>
     <OptionCompare>Binary</OptionCompare>
     <OptionStrict>On</OptionStrict>
     <OptionInfer>On</OptionInfer>
     <ApplicationIcon>editcut.ico</ApplicationIcon>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <UpgradeBackupLocation>
-    </UpgradeBackupLocation>
-    <OldToolsVersion>3.5</OldToolsVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
-    <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.0</ApplicationVersion>
+    <ApplicationVersion>2.0.0</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>false</BootstrapperEnabled>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
+    <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
+
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>
-    </DocumentationFile>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <DocumentationFile />
     <NoWarn>42353,42354,42355</NoWarn>
     <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <DefineConstants>_MYTYPE="Custom",_MYAPPLICATIONTYPE="WindowsForms"</DefineConstants>
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>None</DebugType>
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>
-    </DocumentationFile>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <DocumentationFile />
     <NoWarn>42353,42354,42355</NoWarn>
     <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <DefineConstants>_MYTYPE="Custom",_MYAPPLICATIONTYPE="WindowsForms"</DefineConstants>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
-  <PropertyGroup>
-    <ManifestCertificateThumbprint>E08BA05F39BD38B0ADB297930F80F6CD6FF0F715</ManifestCertificateThumbprint>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ManifestKeyFile>MyCertHolzShots.pfx</ManifestKeyFile>
-  </PropertyGroup>
-  <PropertyGroup>
-    <GenerateManifests>false</GenerateManifests>
-  </PropertyGroup>
-  <PropertyGroup>
-    <SignManifests>false</SignManifests>
-  </PropertyGroup>
+
   <PropertyGroup>
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-    <DebugSymbols>true</DebugSymbols>
-    <DefineDebug>true</DefineDebug>
-    <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\x86\Debug\</OutputPath>
-    <DocumentationFile>
-    </DocumentationFile>
-    <NoWarn>42353,42354,42355</NoWarn>
-    <DebugType>Full</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\x86\Release\</OutputPath>
-    <DocumentationFile>
-    </DocumentationFile>
-    <Optimize>true</Optimize>
-    <NoWarn>42353,42354,42355</NoWarn>
-    <DebugType>None</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
-    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <DebugSymbols>false</DebugSymbols>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
-    <AssemblyOriginatorKeyFile>
-    </AssemblyOriginatorKeyFile>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <DefineDebug>true</DefineDebug>
-    <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\x64\Debug\</OutputPath>
-    <DocumentationFile>
-    </DocumentationFile>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <NoWarn>42353,42354,42355</NoWarn>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\x64\Release\</OutputPath>
-    <DocumentationFile>
-    </DocumentationFile>
-    <Optimize>true</Optimize>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <NoWarn>42353,42354,42355</NoWarn>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
-    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup>
-    <TargetZone>LocalIntranet</TargetZone>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ManifestTimestampUrl>
-    </ManifestTimestampUrl>
-  </PropertyGroup>
+
   <PropertyGroup Condition=" '$(CI)' == 'True' ">
     <DefineConstants>$(DefineConstants),CI_BUILD=True</DefineConstants>
   </PropertyGroup>
+
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+
   <ItemGroup>
     <Reference Include="Microsoft.WindowsAPICodePack, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\References\Microsoft.WindowsAPICodePack.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Microsoft.WindowsAPICodePack.Shell, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\References\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.ComponentModel.Composition" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Windows.Forms" />
+
   </ItemGroup>
+
   <ItemGroup>
-    <Import Include="System" />
-    <Import Include="System.Collections.Generic" />
-    <Import Include="System.Drawing" />
-    <Import Include="System.Diagnostics" />
-    <Import Include="System.Windows.Forms" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="GlobalSuppressions.vb" />
-    <Compile Include="ImageExtensions.vb" />
-    <Compile Include="Input\Actions\CaptureClipboardCommand.vb" />
-    <Compile Include="Input\Actions\CapturingCommand.vb" />
-    <Compile Include="Input\Actions\EditImageCommand.vb" />
-    <Compile Include="Input\Actions\FileDependentCommand.vb" />
-    <Compile Include="Input\Actions\FullscreenCommand.vb" />
-    <Compile Include="Input\Actions\OpenImagesFolderCommand.vb" />
-    <Compile Include="Input\Actions\OpenSettingsJsonCommand.vb" />
-    <Compile Include="Input\Actions\SelectAreaCommand.vb" />
-    <Compile Include="Input\Actions\WindowCommand.vb" />
-    <Compile Include="Input\Actions\UploadImageCommand.vb" />
-    <Compile Include="Input\HolzShotsActionCollection.vb" />
-    <Compile Include="Interop\TaskBar.vb" />
-    <Compile Include="Net\UploadUI.vb" />
-    <Compile Include="Net\Win32WindowExtensions.vb" />
-    <Compile Include="ScreenshotRelated\Selection\MagnifierDecoration.vb" />
-    <Compile Include="ScreenshotRelated\Selection\DefaultNoSelectionDecoration.vb" />
-    <Compile Include="ScreenshotRelated\Selection\INoSelectionDecoration.vb" />
-    <Compile Include="UI\Controls\BigColorViewer.vb">
+    <Compile Update="UI\Controls\BigColorViewer.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="UI\Controls\ColorViewer.Designer.vb">
+    <Compile Update="UI\Controls\ColorViewer.Designer.vb">
       <DependentUpon>ColorViewer.vb</DependentUpon>
     </Compile>
-    <Compile Include="UI\Controls\ColorViewer.vb">
+    <Compile Update="UI\Controls\ColorViewer.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="UI\Forms\CopyLinkLabel.vb">
+    <Compile Update="UI\Forms\CopyLinkLabel.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="UI\Controls\PaintPanel.Designer.vb">
+    <Compile Update="UI\Controls\PaintPanel.Designer.vb">
       <DependentUpon>PaintPanel.vb</DependentUpon>
     </Compile>
-    <Compile Include="UI\Controls\PaintPanel.vb">
+    <Compile Update="UI\Controls\PaintPanel.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UI\Controls\Helpers\PanelActivator.vb" />
-    <Compile Include="ApplicationEvents.vb" />
-    <Compile Include="UI\Controls\StackPanel.vb">
+    <Compile Update="UI\Controls\StackPanel.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="UI\Dialogs\TaskBarItemProgressReporter.vb" />
-    <Compile Include="UI\Controls\PluginInfoItem.Designer.vb">
+    <Compile Update="UI\Controls\PluginInfoItem.Designer.vb">
       <DependentUpon>PluginInfoItem.vb</DependentUpon>
     </Compile>
-    <Compile Include="UI\Controls\PluginInfoItem.vb">
+    <Compile Update="UI\Controls\PluginInfoItem.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UI\Dialogs\FlyoutNotifier.Designer.vb">
+    <Compile Update="UI\Dialogs\FlyoutNotifier.Designer.vb">
       <DependentUpon>FlyoutNotifier.vb</DependentUpon>
     </Compile>
-    <Compile Include="UI\Dialogs\FlyoutNotifier.vb">
+    <Compile Update="UI\Dialogs\FlyoutNotifier.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Dialogs\FormattingHelpers.vb" />
-    <Compile Include="UI\Dialogs\FlyoutAnimator.vb" />
-    <Compile Include="UI\Dialogs\FlyoutWindow.Designer.vb">
+    <Compile Update="UI\Dialogs\FlyoutWindow.Designer.vb">
       <DependentUpon>FlyoutWindow.vb</DependentUpon>
     </Compile>
-    <Compile Include="UI\Dialogs\FlyoutWindow.vb">
+    <Compile Update="UI\Dialogs\FlyoutWindow.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Dialogs\IUploadProgressReporter.vb" />
-    <Compile Include="UI\Dialogs\PipettenColorViewer.Designer.vb">
+    <Compile Update="UI\Dialogs\PipettenColorViewer.Designer.vb">
       <DependentUpon>PipettenColorViewer.vb</DependentUpon>
     </Compile>
-    <Compile Include="UI\Dialogs\PipettenColorViewer.vb">
+    <Compile Update="UI\Dialogs\PipettenColorViewer.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Dialogs\StatusToaster.Designer.vb">
+    <Compile Update="UI\Dialogs\StatusToaster.Designer.vb">
       <DependentUpon>StatusToaster.vb</DependentUpon>
     </Compile>
-    <Compile Include="UI\Dialogs\StatusToaster.vb">
+    <Compile Update="UI\Dialogs\StatusToaster.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Dialogs\UploadResultWindow.Designer.vb">
+    <Compile Update="UI\Dialogs\UploadResultWindow.Designer.vb">
       <DependentUpon>UploadResultWindow.vb</DependentUpon>
     </Compile>
-    <Compile Include="UI\Dialogs\UploadResultWindow.vb">
+    <Compile Update="UI\Dialogs\UploadResultWindow.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GlobalVariables.vb" />
-    <Compile Include="Drawing\Tools\Helper.vb" />
-    <Compile Include="Interop\ExplorerContextMenu.vb" />
-    <Compile Include="Interop\HumanInterop.vb" />
-    <Compile Include="Interop\InteropHelper.vb" />
-    <Compile Include="Interop\LocalDisk\ScreenshotDumper.vb" />
-    <Compile Include="Drawing\Tools\Crop.vb" />
-    <Compile Include="UI\Controls\NumericTextBox.vb">
+    <Compile Update="UI\Controls\NumericTextBox.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Drawing\Tools\Scale.vb" />
-    <Compile Include="Drawing\Tools\UI\ScaleWindow.Designer.vb">
+    <Compile Update="Drawing\Tools\UI\ScaleWindow.Designer.vb">
       <DependentUpon>ScaleWindow.vb</DependentUpon>
     </Compile>
-    <Compile Include="Drawing\Tools\UI\ScaleWindow.vb">
+    <Compile Update="Drawing\Tools\UI\ScaleWindow.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ScreenshotRelated\Selection\AreaSelector.vb">
+    <Compile Update="ScreenshotRelated\Selection\AreaSelector.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ScreenshotRelated\BackgroundForm.vb">
+    <Compile Update="ScreenshotRelated\BackgroundForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Drawing\Tools\Arrow.vb" />
-    <Compile Include="Drawing\Tools\Brighten.vb" />
-    <Compile Include="Drawing\Tools\Circle.vb" />
-    <Compile Include="Drawing\Tools\Eraser.vb" />
-    <Compile Include="Drawing\Tools\ITool.vb" />
-    <Compile Include="Drawing\Tools\Marker.vb" />
-    <Compile Include="Drawing\Tools\Pipette.vb" />
-    <Compile Include="Drawing\Tools\Pixelate.vb" />
-    <Compile Include="ScreenshotRelated\ScreenshotMethodsHelper.vb" />
-    <Compile Include="ScreenshotRelated\Selection\ISelectionDecoration.vb" />
-    <Compile Include="ScreenshotRelated\Selection\Nomination1Decoration.vb" />
-    <Compile Include="ScreenshotRelated\Selection\QuickInfoDecoration.vb" />
-    <Compile Include="UI\Specialized\MainWindow.vb">
+    <Compile Update="UI\Specialized\MainWindow.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Specialized\MainWindow.Designer.vb">
+    <Compile Update="UI\Specialized\MainWindow.Designer.vb">
       <DependentUpon>MainWindow.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Specialized\SettingsWindow.Designer.vb">
+    <Compile Update="UI\Specialized\SettingsWindow.Designer.vb">
       <DependentUpon>SettingsWindow.vb</DependentUpon>
     </Compile>
-    <Compile Include="UI\Specialized\SettingsWindow.vb">
+    <Compile Update="UI\Specialized\SettingsWindow.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="My Project\AssemblyInfo.vb" />
-    <Compile Include="My Project\Application.Designer.vb">
+    <Compile Update="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="My Project\Resources.Designer.vb">
+    <Compile Update="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="My Project\Settings.Designer.vb">
+    <Compile Update="My Project\Settings.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="UI\ShotEditor.Designer.vb">
+    <Compile Update="UI\ShotEditor.Designer.vb">
       <DependentUpon>ShotEditor.vb</DependentUpon>
     </Compile>
-    <Compile Include="UI\ShotEditor.vb">
+    <Compile Update="UI\ShotEditor.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Drawing\Tools\Censor.vb" />
-    <Compile Include="Net\UploadHelper.vb" />
-    <Compile Include="UI\Forms\ExplorerInfoPanel.vb">
+    <Compile Update="UI\Forms\ExplorerInfoPanel.vb">
       <SubType>Component</SubType>
     </Compile>
   </ItemGroup>
+
   <ItemGroup>
-    <EmbeddedResource Include="UI\Controls\ColorViewer.resx">
+    <EmbeddedResource Update="UI\Controls\ColorViewer.resx">
       <DependentUpon>ColorViewer.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Controls\PaintPanel.resx">
+    <EmbeddedResource Update="UI\Controls\PaintPanel.resx">
       <DependentUpon>PaintPanel.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Controls\PluginInfoItem.resx">
+    <EmbeddedResource Update="UI\Controls\PluginInfoItem.resx">
       <DependentUpon>PluginInfoItem.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Dialogs\FlyoutNotifier.resx">
+    <EmbeddedResource Update="UI\Dialogs\FlyoutNotifier.resx">
       <DependentUpon>FlyoutNotifier.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Dialogs\FlyoutWindow.resx">
+    <EmbeddedResource Update="UI\Dialogs\FlyoutWindow.resx">
       <DependentUpon>FlyoutWindow.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Dialogs\PipettenColorViewer.resx">
+    <EmbeddedResource Update="UI\Dialogs\PipettenColorViewer.resx">
       <DependentUpon>PipettenColorViewer.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Dialogs\StatusToaster.resx">
+    <EmbeddedResource Update="UI\Dialogs\StatusToaster.resx">
       <DependentUpon>StatusToaster.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Dialogs\UploadResultWindow.resx">
+    <EmbeddedResource Update="UI\Dialogs\UploadResultWindow.resx">
       <DependentUpon>UploadResultWindow.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Drawing\Tools\UI\ScaleWindow.resx">
+    <EmbeddedResource Update="Drawing\Tools\UI\ScaleWindow.resx">
       <DependentUpon>ScaleWindow.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Specialized\MainWindow.resx">
+    <EmbeddedResource Update="UI\Specialized\MainWindow.resx">
       <DependentUpon>MainWindow.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Specialized\SettingsWindow.resx">
+    <EmbeddedResource Update="UI\Specialized\SettingsWindow.resx">
       <DependentUpon>SettingsWindow.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="My Project\Resources.resx">
+    <EmbeddedResource Update="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\ShotEditor.resx">
+    <EmbeddedResource Update="UI\ShotEditor.resx">
       <DependentUpon>ShotEditor.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -412,38 +247,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="app.config" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="Resources\eraser.png" />
     <None Include="Resources\download.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\HolzShots.Common\HolzShots.Common.csproj">
-      <Project>{3aadc160-9020-4f59-a2f0-7941752c047e}</Project>
-      <Name>HolzShots.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\HolzShots.Core\HolzShots.Core.csproj">
-      <Project>{4f1b3465-2915-4e00-bb15-fc1808b01cd6}</Project>
-      <Name>HolzShots.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\HolzShots.Windows\HolzShots.Windows.csproj">
-      <Project>{fe4e3471-9137-4a49-a230-26c90b14a9f2}</Project>
-      <Name>HolzShots.Windows</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\HolzShots.Native\HolzShots.Native.csproj">
-      <Project>{419f051b-09ad-400d-83c5-b9e9f32e0148}</Project>
-      <Name>HolzShots.Native</Name>
-    </ProjectReference>
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="Resources\folderStuffedMedium.png" />
-  </ItemGroup>
 
-  <ItemGroup>
     <Content Include="editcut.ico" />
     <Content Include="Resources\arrowMedium.png" />
     <Content Include="Resources\blurMedium.png" />
@@ -492,17 +299,24 @@
     <Content Include="Resources\windowsCursorMedium.png" />
   </ItemGroup>
 
-  <ItemGroup>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-  </ItemGroup>
+  <ItemGroup>  
+    <Import Include="System" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows.Forms" />
 
-  <ItemGroup>
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+
+    <ProjectReference Include="..\HolzShots.Common\HolzShots.Common.csproj" />
+    <ProjectReference Include="..\HolzShots.Core\HolzShots.Core.csproj" />
+    <ProjectReference Include="..\HolzShots.Windows\HolzShots.Windows.csproj" />
+    <ProjectReference Include="..\HolzShots.Native\HolzShots.Native.csproj" />
+
     <PackageReference Include="Microsoft.Bcl.HashCode" Version="1.1.0" />
-    <PackageReference Include="Microsoft.CodeQuality.Analyzers" Version="3.3.0" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.CodeQuality.Analyzers" Version="3.3.0" />
     <PackageReference Include="Semver" Version="2.0.6" />
     <PackageReference Include="StartupHelper" Version="1.0.3.4" />
     <PackageReference Include="System.Buffers" Version="4.5.1" />
@@ -518,6 +332,4 @@
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
     <PackageReference Include="TaskScheduler" Version="2.8.18" />
   </ItemGroup>
-
-  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
