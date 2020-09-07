@@ -94,7 +94,7 @@ Namespace UI.Specialized
 
             _applicationStarted = DateTime.Now
             ' TODO: Check if we need this:
-            ' SettingsUpdated(Me, UserSettings.Current)
+            SettingsUpdated(Me, UserSettings.Current)
             AddHandler UserSettings.Manager.OnSettingsUpdated, AddressOf SettingsUpdated
 
             RegisterCommands()
