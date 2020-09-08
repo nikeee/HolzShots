@@ -20,8 +20,8 @@ jobs:
       with:
         dotnet-version: 5.0.100-preview.8.20417.9
 
-    - name: Nuget Restore
-      run: dotnet nuget restore HolzShots.sln
+    - name: Restore Dependencies
+      run: dotnet restore
 
     - name: Compile Solution
       run: dotnetb build -c $env:CONFIGURATION
