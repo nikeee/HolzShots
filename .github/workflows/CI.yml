@@ -15,17 +15,16 @@ jobs:
 
     # TODO: Replace all this with dotnet commands
     # See issue #23
-    - name: Setup Nuget.exe
-      uses: warrenbuckley/Setup-Nuget@v1
-
-    - name: Setup msbuild
-      uses: microsoft/setup-msbuild@v1.0.0
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.100-preview.8.20417.9
 
     - name: Nuget Restore
-      run: nuget restore HolzShots.sln
+      run: dotnet nuget restore HolzShots.sln
 
     - name: Compile Solution
-      run: msbuild HolzShots.sln -p:Configuration=$env:CONFIGURATION
+      run: dotnetb build -c $env:CONFIGURATION
 
     - name: Run Tests
       run: dotnet test -c $env:CONFIGURATION --no-build src\HolzShots.Core.Tests\HolzShots.Core.Tests.csproj
