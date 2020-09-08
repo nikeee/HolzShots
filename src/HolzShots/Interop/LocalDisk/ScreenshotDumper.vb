@@ -24,9 +24,9 @@ Namespace Interop.LocalDisk
 
             ' Always select last saved file if available
             If Not String.IsNullOrWhiteSpace(_lastFileName) AndAlso File.Exists(_lastFileName) Then
-                _lastFileName.OpenAndSelectFileInExplorer()
+                HolzShotsPaths.OpenSelectedFileInExplorer(_lastFileName)
             Else
-                path.OpenFolderInExplorer()
+                HolzShotsPaths.OpenFolderInExplorer(path)
             End If
 
         End Sub

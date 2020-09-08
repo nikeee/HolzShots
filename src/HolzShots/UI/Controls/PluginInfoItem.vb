@@ -81,13 +81,13 @@ Namespace UI.Controls
 
         Private Sub AuthorWebSiteLinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles authorWebSite.LinkClicked
             If Not String.IsNullOrWhiteSpace(_pluginMetadata.Url) Then
-                _pluginMetadata.Url.SafeProcessStart()
+                IO.HolzShotsPaths.OpenLink(_pluginMetadata.Url)
             End If
         End Sub
 
         Private Sub ReportBugLinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles reportBug.LinkClicked
             If Not String.IsNullOrWhiteSpace(_pluginMetadata.BugsUrl) Then
-                _pluginMetadata.BugsUrl.SafeProcessStart()
+                IO.HolzShotsPaths.OpenLink(_pluginMetadata.BugsUrl)
             End If
         End Sub
     End Class

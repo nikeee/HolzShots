@@ -39,7 +39,7 @@ namespace HolzShots
             }
         }
 
-        public static void OpenSettingsInDefaultEditor() => Process.Start(HolzShotsPaths.UserSettingsFilePath);
+        public static void OpenSettingsInDefaultEditor() => HolzShotsPaths.OpenFileInDefaultApplication(HolzShotsPaths.UserSettingsFilePath);
 
         public static Task ForceReload() => Manager.ForceReload();
 
