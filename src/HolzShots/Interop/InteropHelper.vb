@@ -30,13 +30,5 @@ Namespace Interop
                 Native.Shell32.SHAddToRecentDocs(Native.Shell32.ShellAddToRecentDocsFlags.Path, path)
             End If
         End Sub
-
-        Private _isAdministrator As Lazy(Of Boolean) = New Lazy(Of Boolean)(Function()
-                                                                                Dim pricipal = New WindowsPrincipal(WindowsIdentity.GetCurrent())
-                                                                                Return pricipal.IsInRole(WindowsBuiltInRole.Administrator)
-                                                                            End Function, False)
-        Public Function IsAdministrator() As Boolean
-            Return _isAdministrator.Value
-        End Function
     End Module
 End Namespace
