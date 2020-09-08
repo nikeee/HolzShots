@@ -1,15 +1,11 @@
 Imports System.Drawing.Drawing2D
-Imports System.Drawing.Imaging
 Imports System.Drawing.Printing
 Imports System.IO
 Imports System.Runtime.InteropServices
-Imports HolzShots.UI
 Imports HolzShots.Interop
 Imports HolzShots.Net
 Imports HolzShots.UI.Controls
 Imports HolzShots.UI.Controls.Helpers
-Imports HolzShots.UI.Forms
-Imports Microsoft.WindowsAPICodePack.Dialogs
 Imports Microsoft.WindowsAPICodePack.Taskbar
 Imports HolzShots.Composition
 Imports HolzShots.Drawing
@@ -279,15 +275,13 @@ Namespace UI.Specialized
 
 
         Private Sub SaveImage()
-            Using sfd As New CommonSaveFileDialog()
-                sfd.Filters.Add(New CommonFileDialogFilter(Localization.PngImage, "*.png"))
-                sfd.Filters.Add(New CommonFileDialogFilter(Localization.JpgImage, "*.jpg"))
-                sfd.DefaultExtension = sfd.Filters(0).Extensions(0)
-                sfd.AlwaysAppendDefaultExtension = True
-                sfd.EnsurePathExists = True
-
+            Using sfd As New SaveFileDialog()
+                sfd.Filter = $"{Localization.PngImage}|*.png|{Localization.JpgImage}|*.jpg"
+                sfd.DefaultExt = ".png"
+                sfd.CheckPathExists = True
                 sfd.Title = Localization.ChooseDestinationFileName
-                If sfd.ShowDialog() = CommonFileDialogResult.Ok Then
+                Dim res = sfd.ShowDialog()
+                If res = DialogResult.OK Then
                     Dim f = sfd.FileName
                     If String.IsNullOrWhiteSpace(f) Then Return
                     SaveImage(f)
