@@ -25,6 +25,8 @@
     <PackageReference Include="TaskScheduler" Version="2.8.18" />
 
     <ProjectReference Include="..\HolzShots.Common\HolzShots.Common.csproj" />
+
+    <ProjectReference Include="..\HolzShots.Core\HolzShots.Core.csproj" />
     <ProjectReference Include="..\HolzShots.Native\HolzShots.Native.csproj" />
   </ItemGroup>
 

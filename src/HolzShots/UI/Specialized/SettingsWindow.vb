@@ -41,7 +41,7 @@ Namespace UI.Specialized
         End Sub
 
         Private Shared Sub OpenPluginFolderLinkLabelLinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles openPluginFolderLinkLabel.LinkClicked
-            My.Application.Uploaders.Plugins.PluginDirectory.OpenFolderInExplorer()
+            IO.HolzShotsPaths.OpenFolderInExplorer(My.Application.Uploaders.Plugins.PluginDirectory)
         End Sub
 
         Private Sub PluginsTabPaint(sender As Object, e As PaintEventArgs) Handles PluginsTab.Paint

@@ -18,21 +18,9 @@ namespace HolzShots.Windows.Forms
             ApplicationTitleLabel.Text = LibraryInformation.Name;
         }
 
-        private void LicenseLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) => OpenLink(LibraryInformation.LicenseUrl);
-        private void HolzShotsLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) => OpenLink(LibraryInformation.SiteUrl);
-        private void SendFeedbackLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) => OpenLink(LibraryInformation.IssuesUrl);
-
-        private static void OpenLink(string url)
-        {
-            try
-            {
-                Process.Start(url);
-            }
-            catch
-            {
-                Trace.WriteLine("Could not open link: " + url);
-            }
-        }
+        private void LicenseLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) => IO.HolzShotsPaths.OpenLink(LibraryInformation.LicenseUrl);
+        private void HolzShotsLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) => IO.HolzShotsPaths.OpenLink(LibraryInformation.SiteUrl);
+        private void SendFeedbackLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) => IO.HolzShotsPaths.OpenLink(LibraryInformation.IssuesUrl);
 
         private void ShowGfxResourcesLinklabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
