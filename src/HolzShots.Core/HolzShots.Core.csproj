@@ -3,7 +3,7 @@
     <ProjectGuid>{4F1B3465-2915-4E00-BB15-FC1808B01CD6}</ProjectGuid>
 
     <RootNamespace>HolzShots</RootNamespace>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>netcoreapp5.0</TargetFramework>
     <AssemblyTitle>HolzShots.Core</AssemblyTitle>
     <Product>HolzShots.Core</Product>
     <Description>HolzShots Core Components</Description>

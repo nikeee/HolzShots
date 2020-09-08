@@ -2,7 +2,7 @@
   <PropertyGroup>
     <ProjectGuid>{FE4E3471-9137-4A49-A230-26C90B14A9F2}</ProjectGuid>
 
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>netcoreapp5.0</TargetFramework>
     <AssemblyTitle>HolzShots.Windows</AssemblyTitle>
     <Product>HolzShots.Windows</Product>
     <Description>HolzShots Core Components</Description>
