@@ -24,7 +24,7 @@ jobs:
       run: dotnet restore
 
     - name: Compile Solution
-      run: dotnetb build -c $env:CONFIGURATION
+      run: dotnet build -c $env:CONFIGURATION
 
     - name: Run Tests
       run: dotnet test -c $env:CONFIGURATION --no-build src\HolzShots.Core.Tests\HolzShots.Core.Tests.csproj
