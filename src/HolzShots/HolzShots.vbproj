@@ -4,13 +4,13 @@
     <StartupObject>HolzShots.My.MyApplication</StartupObject>
 
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net461</TargetFramework>
+    <TargetFramework>netcoreapp5.0</TargetFramework>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <UseWindowsForms>true</UseWindowsForms>
 
     <LangVersion>latest</LangVersion>
 
     <MyType>WindowsForms</MyType>
-    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
 
     <ApplicationIcon>editcut.ico</ApplicationIcon>
     <MapFileExtensions>true</MapFileExtensions>

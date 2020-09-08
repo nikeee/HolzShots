@@ -1,13 +1,15 @@
-<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <PropertyGroup>
     <ProjectGuid>{FE4E3471-9137-4A49-A230-26C90B14A9F2}</ProjectGuid>
 
-    <TargetFramework>net461</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
     <AssemblyTitle>HolzShots.Windows</AssemblyTitle>
     <Product>HolzShots.Windows</Product>
     <Description>HolzShots Core Components</Description>
     <Copyright>Niklas Mollenhauer GPL-3.0</Copyright>
     <Version>2.0.0</Version>
+
+    <UseWindowsForms>true</UseWindowsForms>
 
     <OutputPath>bin\$(Configuration)\</OutputPath>
   </PropertyGroup>
