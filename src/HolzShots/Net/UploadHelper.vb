@@ -57,6 +57,8 @@ Namespace Net
                     Throw New UploadCanceledException(ex)
                 Catch ex As UploadException
                     Throw
+                Catch ex As Exception
+                    Throw New UploadException(ex.Message, ex)
                 Finally
                     ui.HideUi()
                 End Try
