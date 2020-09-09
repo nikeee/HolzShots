@@ -30,6 +30,8 @@
     <OptionCompare>Binary</OptionCompare>
     <OptionStrict>On</OptionStrict>
     <OptionInfer>On</OptionInfer>
+
+    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -59,17 +61,9 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
-  </PropertyGroup>
-
   <PropertyGroup Condition=" '$(CI)' == 'True' ">
     <DefineConstants>$(DefineConstants),CI_BUILD=True</DefineConstants>
   </PropertyGroup>
-
-<!--
-  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
--->
 
   <ItemGroup>
     <Compile Update="UI\Controls\BigColorViewer.vb">
