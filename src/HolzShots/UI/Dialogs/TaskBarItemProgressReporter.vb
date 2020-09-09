@@ -1,26 +1,20 @@
 Imports HolzShots.Net
-Imports HolzShots
-Imports Microsoft.WindowsAPICodePack.Taskbar
+Imports HolzShots.Windows.Forms
 
 Namespace UI.Dialogs
     Friend Class TaskBarItemProgressReporter
         Implements IUploadProgressReporter
 
-        Private ReadOnly _targetWindowHandle As IntPtr
+        Private ReadOnly _progressManager As TaskbarProgressManager
         Private ReadOnly _hasValidHandle As Boolean
         Private _status As TaskbarProgressBarState
 
-        Private Shared ReadOnly CurrentHandles As New List(Of IntPtr)
+        Private Shared ReadOnly CurrentManagers As New List(Of TaskbarProgressManager)
 
-        ' Public Sub New(targetWindow As IWin32Window)
-        ' Me.New(If(targetWindow Is Nothing, IntPtr.Zero, targetWindow.Handle))
-        ' ' Debug.Assert(targetWindow IsNot Nothing)
-        ' End Sub
         Public Sub New(targetWindow As IntPtr)
-            _targetWindowHandle = targetWindow
-            _hasValidHandle = targetWindow <> IntPtr.Zero AndAlso TaskbarManager.IsPlatformSupported AndAlso Not CurrentHandles.Contains(targetWindow)
-
-            If _hasValidHandle Then CurrentHandles.Add(targetWindow)
+            _progressManager = Taskbar.CreateProgressManagerForWindow(targetWindow)
+            _hasValidHandle = targetWindow <> IntPtr.Zero AndAlso Taskbar.IsPlatformSupported AndAlso Not CurrentManagers.Contains(_progressManager)
+            If _hasValidHandle Then CurrentManagers.Add(_progressManager)
         End Sub
 
         Public Sub UpdateProgress(report As UploadProgress, speed As Speed(Of MemSize)) Implements IUploadProgressReporter.UpdateProgress
@@ -44,21 +38,21 @@ Namespace UI.Dialogs
             End Select
         End Sub
 
-        Private Sub SetProgress(percentage As Integer)
-            TaskbarManager.Instance.SetProgressValue(percentage, 100, _targetWindowHandle)
+        Private Sub SetProgress(percentage As UInteger)
+            _progressManager.SetProgressValue(percentage, 100)
         End Sub
-        Private Shared Sub SetProgressState(state As TaskbarProgressBarState)
-            TaskbarManager.Instance.SetProgressState(state)
+        Private Sub SetProgressState(state As TaskbarProgressBarState)
+            _progressManager.SetProgressState(state)
         End Sub
 
         Public Sub CloseProgress() Implements IUploadProgressReporter.CloseProgress
-            CurrentHandles.Remove(_targetWindowHandle)
+            CurrentManagers.Remove(_progressManager)
             SetProgress(0)
-            SetProgressState(TaskbarProgressBarState.NoProgress)
+            _progressManager.SetProgressState(TaskbarProgressBarState.NoProgress)
         End Sub
 
         Public Sub ShowProgress() Implements IUploadProgressReporter.ShowProgress
-            SetProgressState(TaskbarProgressBarState.Indeterminate)
+            _progressManager.SetProgressState(TaskbarProgressBarState.Indeterminate)
         End Sub
 
 #Region "IDisposable Support"
