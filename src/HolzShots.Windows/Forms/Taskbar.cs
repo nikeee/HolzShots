@@ -4,6 +4,7 @@ using System.Windows.Forms;
 
 namespace HolzShots.Windows.Forms
 {
+    /// <summary> Wrapper for taskbar progress api that makes it easier to interact with a single window. </summary>
     public readonly struct TaskbarProgressManager : IEquatable<TaskbarProgressManager>
     {
         private readonly IntPtr _windowHandle;
@@ -100,6 +101,7 @@ namespace HolzShots.Windows.Forms
         Error = 0x4,
         Paused = 0x8,
     }
+
     [ComImport]
     [Guid("c43dc798-95d1-4bea-9030-bb99e2983a1a")]
     [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
