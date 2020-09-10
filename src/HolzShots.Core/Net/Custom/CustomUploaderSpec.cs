@@ -9,13 +9,8 @@ using Semver;
 
 namespace HolzShots.Net.Custom
 {
-    interface IValidatable
-    {
-        bool Validate(SemVersion schemaVersion);
-    }
-
     [Serializable]
-    public class CustomUploaderSpec : IValidatable
+    public class CustomUploaderSpec
     {
         public SemVersion SchemaVersion { get; }
         public UploaderMeta Meta { get; }
@@ -27,18 +22,10 @@ namespace HolzShots.Net.Custom
             Meta = meta;
             Uploader = uploader;
         }
-
-        public bool Validate(SemVersion schemaVersion)
-        {
-            if (SchemaVersion != schemaVersion)
-                return false;
-            return Uploader?.Validate(schemaVersion) == true && Meta?.Validate(schemaVersion) == true;
-        }
     }
 
     [Serializable]
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1054:Uri parameters should not be strings")]
-    public class UploaderMeta : IValidatable, IPluginMetadata
+    public class UploaderMeta : IPluginMetadata
     {
         public SemVersion Version { get; }
         public string Name { get; }
@@ -63,16 +50,9 @@ namespace HolzShots.Net.Custom
             Description = description;
             License = license;
         }
-
-        public bool Validate(SemVersion schemaVersion)
-        {
-            // TODO: Check if Version is valid semver
-            return Version != null && !string.IsNullOrWhiteSpace(Name);
-        }
     }
 
     [Serializable]
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1054:Uri parameters should not be strings")]
     public class UploaderConfig
     {
         private static readonly string[] ValidMethods = { "POST", "PUT" };
@@ -81,12 +61,23 @@ namespace HolzShots.Net.Custom
         public Parser ResponseParser { get; }
 
         public string Method { get; } = "POST";
-        public ReadOnlyDictionary<string, string> Headers { get; } = null;
-        public ReadOnlyDictionary<string, string> PostParams { get; } = null;
+        public IReadOnlyDictionary<string, string> Headers { get; } = null;
+        public IReadOnlyDictionary<string, string> PostParams { get; } = null;
+        public IReadOnlyList<string> RegexPatterns { get; } = null;
         public long? MaxFileSize { get; } = null;
         public string FileName { get; } = null;
 
-        public UploaderConfig(string fileFormName, string requestUrl, Parser responseParser, string method, ReadOnlyDictionary<string, string> headers, ReadOnlyDictionary<string, string> postParams, long? maxFileSize, string fileName)
+        public UploaderConfig(
+            string fileFormName,
+            string requestUrl,
+            Parser responseParser,
+            string method,
+            IReadOnlyDictionary<string, string> headers,
+            IReadOnlyDictionary<string, string> postParams,
+            IReadOnlyList<string> regexPatterns,
+            long? maxFileSize,
+            string fileName
+        )
         {
             FileFormName = fileFormName;
             RequestUrl = requestUrl;
@@ -94,6 +85,7 @@ namespace HolzShots.Net.Custom
             Method = method;
             Headers = headers;
             PostParams = postParams;
+            RegexPatterns = regexPatterns;
             MaxFileSize = maxFileSize;
             FileName = fileName;
         }
@@ -121,7 +113,7 @@ namespace HolzShots.Net.Custom
             return true;
         }
 
-        private static bool ValidateHeaders(SemVersion schemaVersion, ReadOnlyDictionary<string, string> headers)
+        private static bool ValidateHeaders(SemVersion schemaVersion, IReadOnlyDictionary<string, string> headers)
         {
             if (headers == null)
                 return false;
@@ -179,7 +171,7 @@ namespace HolzShots.Net.Custom
 
             if (Failure != null)
             {
-                if(!IsValidRegularExpression(Failure))
+                if (!IsValidRegularExpression(Failure))
                     return false;
             }
 

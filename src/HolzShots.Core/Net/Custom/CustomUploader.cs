@@ -21,11 +21,7 @@ namespace HolzShots.Net.Custom
 
         private CustomUploader(CustomUploaderSpec customData) // TODO: Resolve warning
         {
-            if (customData == null)
-                throw new ArgumentNullException(nameof(customData));
-
-            Debug.Assert(customData.Validate(SupportedSchema));
-            UploaderInfo = customData;
+            UploaderInfo = customData ?? throw new ArgumentNullException(nameof(customData));
         }
 
         public async override Task<UploadResult> InvokeAsync(Stream data, string suggestedFileName, string mimeType, IProgress<UploadProgress> progress, CancellationToken cancellationToken)
@@ -34,7 +30,6 @@ namespace HolzShots.Net.Custom
                 throw new ArgumentNullException(nameof(data));
 
             Debug.Assert(UploaderInfo != null);
-            Debug.Assert(UploaderInfo.Validate(SupportedSchema));
             Debug.Assert(UploaderInfo.Uploader != null);
             Debug.Assert(!string.IsNullOrWhiteSpace(suggestedFileName));
             Debug.Assert(!string.IsNullOrWhiteSpace(mimeType));
@@ -239,12 +234,15 @@ namespace HolzShots.Net.Custom
         public static bool TryLoad(CustomUploaderSpec value, out CustomUploader result)
         {
             result = null;
-            if (value?.Validate(SupportedSchema) == true)
+            try
             {
                 result = new CustomUploader(value);
                 return true;
             }
-            return false;
+            catch
+            {
+                return false;
+            }
         }
     }
 }
