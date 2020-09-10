@@ -25,7 +25,40 @@ namespace HolzShots.Windows.Forms
         private void ShowGfxResourcesLinklabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             const string title = "About Graphics";
+            MessageBox.Show(this, AboutDialog.GetGraphicsText(), title);
+        }
+    }
+    public static class AboutDialog
+    {
+        public static void ShowDialog(System.Drawing.Bitmap icon, string version)
+        {
+            var page = new TaskDialogPage()
+            {
+                AllowMinimize = true,
+                Icon =  new TaskDialogIcon(icon),
+                Caption = "About HolzShots",
+                Heading = "HolzShots",
+                Text = $"Open Source, GPL-3.0 licensed screenshot utility.\n",
+                AllowCancel = false,
+                Expander = new TaskDialogExpander()
+                {
+                    Text = "About graphics used:\n" + GetGraphicsText(),
+                },
+                Footnote = new TaskDialogFootnote()
+                {
+                    Text = $"Version: {version}",
+                },
+                Buttons = new TaskDialogButtonCollection()
+                {
+                    TaskDialogButton.Close,
+                },
+            };
 
+            TaskDialog.ShowDialog(page, TaskDialogStartupLocation.CenterScreen);
+        }
+
+        internal static string GetGraphicsText()
+        {
             var sb = new StringBuilder();
             sb.AppendLine("Marker Icons by:");
             sb.AppendLine("Everaldo Coelho - www.everaldo.com").AppendLine();
@@ -33,8 +66,8 @@ namespace HolzShots.Windows.Forms
             sb.AppendLine("Visual Pharm - www.visualpharm.com").AppendLine();
             sb.AppendLine("Free/remaining icons:");
             sb.AppendLine("www.iconfinder.com and VS2017ImageLibrary");
-
-            MessageBox.Show(this, sb.ToString(), title);
+            return sb.ToString();
         }
     }
+
 }

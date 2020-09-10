@@ -156,6 +156,9 @@ Namespace UI.Specialized
         End Sub
         Private Shared Sub OpenAbout()
             AboutForm.Instance.Show()
+            ' Using icon = My.Resources.editcutBig
+            '     AboutDialog.ShowDialog(icon, "2.0.0")
+            ' End Using
         End Sub
 
 #End Region
