@@ -3,7 +3,7 @@
 
 	// Leave these here, they are needed for HolzShots to get things working
 	"$schema": "https://holzshots.net/schema/uploader.json",
-	"schemaVersion": "0.1.0",
+	"schemaVersion": "0.2.0",
 
 	"meta": {
 		// Version, name and author of this uploader
@@ -40,17 +40,26 @@
 
 		// How to parse the response
 		"responseParser": {
-			"kind": "regex",
-
-			// A regex pattern that - if matches - will extract the link to your image
+			// A list of regex patterns that you can use in the urlTemplate
 			// Supports all features of .NET's regex engine.
-			"success": "(?<url>https://[a-zA-Z0-9]*.directupload.net/images/\\d{1,}/\\b(?!temp\\b).*?\\b.[a-zA-Z]{1,3})",
+			"regexPatterns": [
+				"(?<url>https://[a-zA-Z0-9]*.directupload.net/images/\\d{1,}/\\b(?!temp\\b).*?\\b.[a-zA-Z]{1,3})"
+			],
 
-			// Everything between two $ Will be filled in with named capture groups from the success regex pattern.
-			// The number indicates the index of the match, zero-based.
-			// "1" means that the "url" capturing group of the second match will be used
-			// You can also use this to prepend parts that were not matched (like "https://" or something)
-			"urlTemplate": "$1,url$"
+			// Everything between two $ will be interpreted
+			// There are multiple ways for interpreting stuff.
+			// First, there is regex:
+			//     $regex:n$
+			//         Take the match of the nth entry in regexPatterns (zero-based).
+			//     $regex:n:name$
+			//          Same as $regex:n$, but takes only the contents of a capturing group.
+			//     $regex:n:name:m$
+			//          Same as above, but takes the mth match (again, zero-based), assuming there are multiple matches.
+			// Then, you can use JSONPath if your response is JSON:
+			//     $json:data.link$
+			//          Takes the JSON path data.link
+			// Everything that is not between two $ is just taken as is.
+			"urlTemplate": "$regex:0:url:1$"
 		}
 	}
 }

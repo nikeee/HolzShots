@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Net.Http.Headers;
 using System.Text.RegularExpressions;
 using HolzShots.Composition;
 using Semver;
@@ -91,35 +90,6 @@ namespace HolzShots.Net.Custom
         }
 
         public string GetEffectiveFileName(string fallback) => FileName ?? fallback;
-
-        public bool Validate(SemVersion schemaVersion)
-        {
-            if (string.IsNullOrWhiteSpace(FileFormName))
-                return false;
-            if (string.IsNullOrWhiteSpace(RequestUrl))
-                return false;
-            if (ResponseParser?.Validate(schemaVersion) != true)
-                return false;
-            if (Headers != null && !ValidateHeaders(schemaVersion, Headers))
-                return false;
-            if (Method != null && !ValidMethods.Contains(Method.ToUpperInvariant()))
-                return false;
-
-            // PostParams can be anything
-            // FileName can be anything
-
-            if (MaxFileSize != null && MaxFileSize < 0)
-                return false;
-            return true;
-        }
-
-        private static bool ValidateHeaders(SemVersion schemaVersion, IReadOnlyDictionary<string, string> headers)
-        {
-            if (headers == null)
-                return false;
-            // TODO: Validate if all headers have valid values/names
-            return true;
-        }
     }
 
     [Serializable]
@@ -141,42 +111,6 @@ namespace HolzShots.Net.Custom
             Failure = failure;
         }
 
-        public bool Validate(SemVersion schemaVersion)
-        {
-            if (string.IsNullOrWhiteSpace(Kind))
-                return false;
-            if (string.IsNullOrWhiteSpace(UrlTemplate))
-                return false;
-
-            var upperKind = Kind.ToUpperInvariant();
-
-            Debug.Assert(SupportedKinds.Contains(upperKind));
-
-            switch (upperKind)
-            {
-                case "REGEX": return ValidateRegEx(schemaVersion);
-                case "JSON": return ValidateJson(schemaVersion);
-                case "XML": return ValidateXml(schemaVersion);
-                default: return false;
-            }
-        }
-
-        private bool ValidateRegEx(SemVersion schemaVersion)
-        {
-            if (string.IsNullOrEmpty(Success))
-                return false;
-
-            if (!IsValidRegularExpression(Success))
-                return false;
-
-            if (Failure != null)
-            {
-                if (!IsValidRegularExpression(Failure))
-                    return false;
-            }
-
-            return true;
-        }
         private static bool IsValidRegularExpression(string exp)
         {
             try
@@ -186,15 +120,5 @@ namespace HolzShots.Net.Custom
             }
             catch (Exception) { return false; }
         }
-
-        private bool ValidateJson(SemVersion schemaVersion)
-        {
-            if (string.IsNullOrWhiteSpace(Success))
-                return false;
-            // Failure can be everything
-            return true;
-
-        }
-        private bool ValidateXml(SemVersion schemaVersion) => false; // TODO: Implement
     }
 }
