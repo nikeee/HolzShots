@@ -23,7 +23,7 @@ Namespace Input.Actions
                 Case CaptureHandlingAction.Upload
 
                     Try
-                        Dim result = Await UploadHelper.UploadToDefaultUploader(screenshot.Image).ConfigureAwait(True)
+                        Dim result = Await UploadHelper.UploadToDefaultUploader(screenshot.Image, settingsContext).ConfigureAwait(True)
                         UploadHelper.InvokeUploadFinishedUi(result, settingsContext)
                     Catch ex As UploadCanceledException
                         HumanInterop.ShowOperationCanceled()
