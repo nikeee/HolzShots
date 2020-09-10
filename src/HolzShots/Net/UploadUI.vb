@@ -9,7 +9,6 @@ Namespace Net
         Implements IDisposable
 
         Private ReadOnly _reporters As New List(Of IUploadProgressReporter)(2)
-        Private ReadOnly _parentWindow As IWin32Window
         Private ReadOnly _uploader As Uploader
         Private ReadOnly _image As Image
         Private ReadOnly _format As ImageFormat
@@ -21,16 +20,17 @@ Namespace Net
             Debug.Assert(image IsNot Nothing)
             Debug.Assert(format IsNot Nothing)
 
-            _parentWindow = parentWindow
             _uploader = uploader
             _image = image.CloneGifBug(format) ' TODO: Really clone this image?
             _format = format
-            InitReporters(parentWindow.GetHandle(), settingsContext)
-        End Sub
 
-        Private Sub InitReporters(parentWindowHandle As IntPtr, settingsContext As HSSettings)
-            If settingsContext.ShowUploadProgress Then _reporters.Add(New StatusToaster())
-            If parentWindowHandle <> IntPtr.Zero Then _reporters.Add(New TaskBarItemProgressReporter(parentWindowHandle))
+            If settingsContext.ShowUploadProgress Then
+                _reporters.Add(New StatusToaster())
+            End If
+
+            If parentWindow.GetHandle() <> IntPtr.Zero Then
+                _reporters.Add(New TaskBarItemProgressReporter(parentWindow.Handle))
+            End If
         End Sub
 
         Public Async Function InvokeUploadAsync() As Task(Of UploadResult)
