@@ -59,7 +59,7 @@
 			//     $json:data.link$
 			//          Takes the JSON path data.link
 			// Everything that is not between two $ is just taken as is.
-			"urlTemplate": "$regex:0:url:1$"
+			"urlTemplate": "$regex:0:url:2$"
 		}
 	}
 }

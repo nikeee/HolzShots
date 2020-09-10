@@ -110,25 +110,18 @@
 				"responseParser": {
 					"type": "object",
 					"properties": {
-						"kind": {
-							"description": "How to parse the response. We only support Regex at the moment. Others will follow soon.",
-							"type": "string",
-							"const": "regex"
-						},
-						"success": {
-							"description": "The regex pattern that extracts the URL of the image.\nNamed capturing groups can be used in the url template later.",
-							"type": "string"
-						},
-						"failure": {
-							"description": "If the success pattern did not match, this pattern is invoked. You can match for an error reason. That reason will be displayed to the user.",
-							"type": "string"
+						"regexPatterns": {
+							"description": "TODO",
+							"type": "array",
+							"items": {
+								"type": "string"
+							}
 						},
 						"urlTemplate": {
-							"description": "Will be filled with matches of the \"success\" regex pattern.\nUse $name$ to refer to the contents of the capturing group called \"name\".\nIf the regex returned multiple matches, use $2,name$ to get the third match (we are 0-based here).",
+							"description": "TODO",
 							"type": "string"
 						}
-					},
-					"required": [ "kind", "success", "urlTemplate" ]
+					}
 				}
 			},
 			"required": [ "fileFormName", "requestUrl", "responseParser" ]

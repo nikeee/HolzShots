@@ -88,7 +88,7 @@ namespace HolzShots.Net.Custom
         [field: NonSerialized]
         public IReadOnlyList<string> RegexPatterns { get; } = null;
         public IReadOnlyList<Regex> ParsedRegexPatterns { get; }
-        public string UrlTemplate { get; }
+        public string /* ? */ UrlTemplate { get; }
         // public string Failure { get; } = null;
 
         [IgnoreDataMember]
@@ -99,10 +99,10 @@ namespace HolzShots.Net.Custom
         {
             RegexPatterns = regexPatterns;
             UrlTemplate = urlTemplate;
-            if (regexPatterns != null)
-                ParsedRegexPatterns = regexPatterns.Select(pattern => new Regex(pattern)).ToImmutableList();
-
-            UrlTemplateSpec = UrlTemplateSpec.Parse(this, urlTemplate.AsSpan());
+            ParsedRegexPatterns = regexPatterns?.Select(pattern => new Regex(pattern)).ToImmutableList();
+            UrlTemplateSpec = urlTemplate == null
+                ? null
+                : UrlTemplateSpec.Parse(this, urlTemplate.AsSpan());
         }
     }
 }

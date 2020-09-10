@@ -144,12 +144,11 @@ namespace HolzShots.Net.Custom
                 var matchIndex = MatchIndex.HasValue ? (int)MatchIndex : 0;
                 var match = matches[matchIndex];
 
-                if (GroupName == null)
-                    return match.Value;
-
                 // If the match does not contain GroupName, no exception is thrown. Instead, we get an "empty" group.
                 // This is ok for us.
-                return match.Groups[GroupName].Value;
+                return GroupName == null
+                    ? match.Value
+                    : match.Groups[GroupName].Value;
             }
             throw new UnableToFillTemplateException("The pattern did not match");
         }

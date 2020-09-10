@@ -53,12 +53,16 @@ namespace HolzShots.Net.Custom
             {
                 progressHandler.HttpSendProgress += (s, e) => progress.Report(new UploadProgress(e));
 
-                var userAgent = uplInfo.Headers?["User-Agent"] ?? SuggestedUserAgent;
-                // uplInfo.Headers?.GetUserAgent(SuggestedUserAgent) ?? SuggestedUserAgent;
-                cl.DefaultRequestHeaders.UserAgent.ParseAdd(userAgent);
+                // Add the user-agent first, so the user can override it
+                cl.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", SuggestedUserAgent);
+                
+                if (uplInfo.Headers != null)
+                {
+                    foreach (var (header, value) in uplInfo.Headers)
+                        cl.DefaultRequestHeaders.TryAddWithoutValidation(header, value);
+                }
 
-                // TODO: Set headers defined in request headers
-
+                var responseParser = uplInfo.ResponseParser;
                 using (var content = new MultipartFormDataContent())
                 {
                     foreach (var (name, value) in uplInfo.PostParams)
@@ -80,10 +84,21 @@ namespace HolzShots.Net.Custom
 
                     var resStr = await res.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-                    var imageUrl = UploaderInfo.Uploader.ResponseParser.UrlTemplateSpec.Evaluate(resStr);
-                    Debug.Assert(!string.IsNullOrWhiteSpace(imageUrl));
+                    // As the URL template is optional, we just take the entire response if it is not there
+                    if (responseParser.UrlTemplateSpec == null)
+                        return new UploadResult(this, resStr, DateTime.Now);
 
-                    return new UploadResult(this, imageUrl, DateTime.Now);
+                    try
+                    {
+                        var imageUrl = UploaderInfo.Uploader.ResponseParser.UrlTemplateSpec.Evaluate(resStr);
+                        Debug.Assert(!string.IsNullOrWhiteSpace(imageUrl));
+
+                        return new UploadResult(this, imageUrl, DateTime.Now);
+                    }
+                    catch (UnableToFillTemplateException e)
+                    {
+                        throw new UploadException(e.Message, e);
+                    }
                 }
             }
         }
