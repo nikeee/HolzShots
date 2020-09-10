@@ -27,7 +27,7 @@
 		"schemaVersion": {
 			"description": "Version of uploader spec",
 			"type": "string",
-			"const": "0.1.0"
+			"const": "0.2.0"
 		},
 
 		"meta": {
@@ -56,8 +56,8 @@
 					"type": "string",
 					"$ref": "#/definitions/url"
 				},
-				"url": {
-					"description": "Home page of this uploader",
+				"website": {
+					"description": "Home page of this uploader (or the author)",
 					"type": "string",
 					"$ref": "#/definitions/url"
 				},

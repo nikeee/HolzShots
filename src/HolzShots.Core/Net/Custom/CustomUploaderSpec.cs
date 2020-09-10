@@ -1,5 +1,5 @@
 using System;
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Http.Headers;
@@ -47,11 +47,11 @@ namespace HolzShots.Net.Custom
         public string Contact { get; } = null;
         public string BugsUrl { get; } = null;
         public string UpdateUrl { get; } = null;
-        public string Url { get; } = null;
+        public string Website { get; } = null;
         public string Description { get; } = null;
         public string License { get; } = null;
 
-        public UploaderMeta(SemVersion version, string name, string author, string contact, string bugsUrl, string updateUrl, string url, string description, string license)
+        public UploaderMeta(SemVersion version, string name, string author, string contact, string bugsUrl, string updateUrl, string website, string description, string license)
         {
             Version = version;
             Name = name;
@@ -59,7 +59,7 @@ namespace HolzShots.Net.Custom
             Contact = contact;
             BugsUrl = bugsUrl;
             UpdateUrl = updateUrl;
-            Url = url;
+            Website = website;
             Description = description;
             License = license;
         }

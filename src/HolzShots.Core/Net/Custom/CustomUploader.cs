@@ -16,7 +16,7 @@ namespace HolzShots.Net.Custom
 {
     public class CustomUploader : Uploader
     {
-        private const string SupportedSchema = "0.1.0";
+        private const string SupportedSchema = "0.2.0";
         public CustomUploaderSpec UploaderInfo { get; }
 
         private CustomUploader(CustomUploaderSpec customData) // TODO: Resolve warning
