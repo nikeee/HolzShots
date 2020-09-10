@@ -91,8 +91,5 @@ Namespace Net
                 Case Else ' Intentionally do nothing
             End Select
         End Sub
-        Friend Shared Sub InvokeUploadFailedUi(ex As UploadException)
-            HumanInterop.UploadFailed(ex)
-        End Sub
     End Class
 End Namespace

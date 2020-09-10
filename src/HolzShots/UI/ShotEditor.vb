@@ -875,7 +875,7 @@ Namespace UI.Specialized
             Catch ex As UploadCanceledException
                 HumanInterop.ShowOperationCanceled()
             Catch ex As UploadException
-                UploadHelper.InvokeUploadFailedUi(ex)
+                HumanInterop.UploadFailed(ex)
                 Return
             Finally
                 HandleAfterUpload()
