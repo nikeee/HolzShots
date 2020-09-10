@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Collections.Immutable;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
 using HolzShots.Composition;
 using Semver;
@@ -57,26 +58,15 @@ namespace HolzShots.Net.Custom
         private static readonly string[] ValidMethods = { "POST", "PUT" };
         public string FileFormName { get; }
         public string RequestUrl { get; }
-        public Parser ResponseParser { get; }
+        public ResponseParser ResponseParser { get; }
 
         public string Method { get; } = "POST";
         public IReadOnlyDictionary<string, string> Headers { get; } = null;
         public IReadOnlyDictionary<string, string> PostParams { get; } = null;
-        public IReadOnlyList<string> RegexPatterns { get; } = null;
         public long? MaxFileSize { get; } = null;
         public string FileName { get; } = null;
 
-        public UploaderConfig(
-            string fileFormName,
-            string requestUrl,
-            Parser responseParser,
-            string method,
-            IReadOnlyDictionary<string, string> headers,
-            IReadOnlyDictionary<string, string> postParams,
-            IReadOnlyList<string> regexPatterns,
-            long? maxFileSize,
-            string fileName
-        )
+        public UploaderConfig(string fileFormName, string requestUrl, ResponseParser responseParser, string method, IReadOnlyDictionary<string, string> headers, IReadOnlyDictionary<string, string> postParams, long? maxFileSize, string fileName)
         {
             FileFormName = fileFormName;
             RequestUrl = requestUrl;
@@ -84,7 +74,6 @@ namespace HolzShots.Net.Custom
             Method = method;
             Headers = headers;
             PostParams = postParams;
-            RegexPatterns = regexPatterns;
             MaxFileSize = maxFileSize;
             FileName = fileName;
         }
@@ -93,32 +82,27 @@ namespace HolzShots.Net.Custom
     }
 
     [Serializable]
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1054:Uri parameters should not be strings")]
-    public class Parser
+    public class ResponseParser
     {
-        private static readonly string[] SupportedKinds = { "REGEX", "JSON" /*, "xml" */ };
-        public string Kind { get; }
+        [IgnoreDataMember]
+        [field: NonSerialized]
+        public IReadOnlyList<string> RegexPatterns { get; } = null;
+        public IReadOnlyList<Regex> ParsedRegexPatterns { get; }
         public string UrlTemplate { get; }
-        public string Success { get; }
+        // public string Failure { get; } = null;
 
-        public string Failure { get; } = null;
+        [IgnoreDataMember]
+        [field: NonSerialized]
+        public UrlTemplateSpec UrlTemplateSpec { get; }
 
-        public Parser(string kind, string urlTemplate, string success, string failure)
+        public ResponseParser(IReadOnlyList<string> regexPatterns, string urlTemplate)
         {
-            Kind = kind;
+            RegexPatterns = regexPatterns;
             UrlTemplate = urlTemplate;
-            Success = success;
-            Failure = failure;
-        }
+            if (regexPatterns != null)
+                ParsedRegexPatterns = regexPatterns.Select(pattern => new Regex(pattern)).ToImmutableList();
 
-        private static bool IsValidRegularExpression(string exp)
-        {
-            try
-            {
-                _ = new Regex(exp); // TODO: RegEx options
-                return true;
-            }
-            catch (Exception) { return false; }
+            UrlTemplateSpec = UrlTemplateSpec.Parse(this, urlTemplate.AsSpan());
         }
     }
 }
