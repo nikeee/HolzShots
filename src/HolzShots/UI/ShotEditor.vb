@@ -428,7 +428,7 @@ Namespace UI.Specialized
             End If
         End Sub
 
-        Private Sub ScaleToolClick(ByVal sender As Object, ByVal e As EventArgs) Handles ScaleTool.Click
+        Private Sub ScaleToolClick(sender As Object, e As EventArgs) Handles ScaleTool.Click
             If CurrentTool = PaintPanel.ShotEditorTool.Scale Then
                 ResetTools()
             Else
@@ -448,7 +448,7 @@ Namespace UI.Specialized
             End If
         End Sub
 
-        Private Sub CircleToolClick(ByVal sender As Object, ByVal e As EventArgs) Handles EllipseTool.Click
+        Private Sub CircleToolClick(sender As Object, e As EventArgs) Handles EllipseTool.Click
             If CurrentTool = PaintPanel.ShotEditorTool.Ellipse Then
                 ResetTools()
             Else
@@ -468,7 +468,7 @@ Namespace UI.Specialized
             End If
         End Sub
 
-        Private Sub TextToolButtonClick(ByVal sender As Object, ByVal e As EventArgs) Handles TextToolButton.Click
+        Private Sub TextToolButtonClick(sender As Object, e As EventArgs) Handles TextToolButton.Click
             If CurrentTool = PaintPanel.ShotEditorTool.Text Then
                 ResetTools()
             Else
@@ -488,7 +488,7 @@ Namespace UI.Specialized
             End If
         End Sub
 
-        Private Sub EraserButtonClick(ByVal sender As Object, ByVal e As EventArgs) Handles EraserTool.Click
+        Private Sub EraserButtonClick(sender As Object, e As EventArgs) Handles EraserTool.Click
             If CurrentTool = PaintPanel.ShotEditorTool.Eraser Then
                 ResetTools()
             Else
@@ -508,7 +508,7 @@ Namespace UI.Specialized
             End If
         End Sub
 
-        Private Sub CroppingToolClick(ByVal sender As Object, ByVal e As EventArgs) Handles CroppingTool.Click
+        Private Sub CroppingToolClick(sender As Object, e As EventArgs) Handles CroppingTool.Click
             If CurrentTool = PaintPanel.ShotEditorTool.Crop Then
                 ResetTools()
             Else
@@ -528,7 +528,7 @@ Namespace UI.Specialized
             End If
         End Sub
 
-        Private Sub ArrowToolClick(ByVal sender As Object, ByVal e As EventArgs) Handles ArrowTool.Click
+        Private Sub ArrowToolClick(sender As Object, e As EventArgs) Handles ArrowTool.Click
             If CurrentTool = PaintPanel.ShotEditorTool.Arrow Then
                 ResetTools()
             Else
@@ -548,7 +548,7 @@ Namespace UI.Specialized
             End If
         End Sub
 
-        Private Sub ZensursulaClick(ByVal sender As Object, ByVal e As EventArgs) Handles CensorTool.Click
+        Private Sub ZensursulaClick(sender As Object, e As EventArgs) Handles CensorTool.Click
             If CurrentTool = PaintPanel.ShotEditorTool.Censor Then
                 ResetTools()
             Else
@@ -568,7 +568,7 @@ Namespace UI.Specialized
             End If
         End Sub
 
-        Private Sub HighlightClick(ByVal sender As Object, ByVal e As EventArgs) Handles MarkerTool.Click
+        Private Sub HighlightClick(sender As Object, e As EventArgs) Handles MarkerTool.Click
             If CurrentTool = PaintPanel.ShotEditorTool.Marker Then
                 ResetTools()
             Else
@@ -588,7 +588,7 @@ Namespace UI.Specialized
             End If
         End Sub
 
-        Private Sub PixelateAreaClick(ByVal sender As Object, ByVal e As EventArgs) Handles BlurTool.Click
+        Private Sub PixelateAreaClick(sender As Object, e As EventArgs) Handles BlurTool.Click
             If CurrentTool = PaintPanel.ShotEditorTool.Blur Then
                 ResetTools()
             Else
@@ -608,7 +608,7 @@ Namespace UI.Specialized
             End If
         End Sub
 
-        Private Sub BrightenToolClick(ByVal sender As Object, ByVal e As EventArgs) Handles BrightenTool.Click
+        Private Sub BrightenToolClick(sender As Object, e As EventArgs) Handles BrightenTool.Click
             If CurrentTool = PaintPanel.ShotEditorTool.Brighten Then
                 ResetTools()
             Else
@@ -628,7 +628,7 @@ Namespace UI.Specialized
             End If
         End Sub
 
-        Private Sub UndoStuffClick(ByVal sender As Object, ByVal e As EventArgs) Handles UndoStuff.Click
+        Private Sub UndoStuffClick(sender As Object, e As EventArgs) Handles UndoStuff.Click
             ThePanel.Undo()
         End Sub
 
@@ -636,7 +636,7 @@ Namespace UI.Specialized
 
 #Region "Drucken"
 
-        Private Sub DruckTeilPrintPage(ByVal sender As Object, ByVal e As PrintPageEventArgs) Handles DruckTeil.PrintPage
+        Private Sub DruckTeilPrintPage(sender As Object, e As PrintPageEventArgs) Handles DruckTeil.PrintPage
             Dim bmp = ThePanel.CombinedImage
             e.Graphics.DrawImage(bmp, e.PageBounds.Location)
         End Sub
@@ -645,55 +645,55 @@ Namespace UI.Specialized
 
 #Region "ShortcutKeys"
 
-        Private Sub ZensToolStripMenuItemClick(ByVal sender As Object, ByVal e As EventArgs) Handles ZensToolStripMenuItem.Click
+        Private Sub ZensToolStripMenuItemClick(sender As Object, e As EventArgs) Handles ZensToolStripMenuItem.Click
             CensorTool.PerformClick()
         End Sub
 
-        Private Sub MarkToolStripMenuItemClick(ByVal sender As Object, ByVal e As EventArgs) Handles MarkToolStripMenuItem.Click
+        Private Sub MarkToolStripMenuItemClick(sender As Object, e As EventArgs) Handles MarkToolStripMenuItem.Click
             MarkerTool.PerformClick()
         End Sub
 
-        Private Sub TextToolStripMenuItemClick(ByVal sender As Object, ByVal e As EventArgs) Handles TextToolStripMenuItem.Click
+        Private Sub TextToolStripMenuItemClick(sender As Object, e As EventArgs) Handles TextToolStripMenuItem.Click
             TextToolButton.PerformClick()
         End Sub
 
-        Private Sub CropToolStripMenuItemClick(ByVal sender As Object, ByVal e As EventArgs) Handles CropToolStripMenuItem.Click
+        Private Sub CropToolStripMenuItemClick(sender As Object, e As EventArgs) Handles CropToolStripMenuItem.Click
             CroppingTool.PerformClick()
         End Sub
 
-        Private Sub EraseToolStripMenuItemClick(ByVal sender As Object, ByVal e As EventArgs) Handles EraseToolStripMenuItem.Click
+        Private Sub EraseToolStripMenuItemClick(sender As Object, e As EventArgs) Handles EraseToolStripMenuItem.Click
             EraserTool.PerformClick()
         End Sub
 
-        Private Sub PixelateToolStripMenuItemClick(ByVal sender As Object, ByVal e As EventArgs) Handles PixelateToolStripMenuItem.Click
+        Private Sub PixelateToolStripMenuItemClick(sender As Object, e As EventArgs) Handles PixelateToolStripMenuItem.Click
             BlurTool.PerformClick()
         End Sub
 
-        Private Sub ArrowToolStripMenuItemClick(ByVal sender As Object, ByVal e As EventArgs) Handles ArrowToolStripMenuItem.Click
+        Private Sub ArrowToolStripMenuItemClick(sender As Object, e As EventArgs) Handles ArrowToolStripMenuItem.Click
             ArrowTool.PerformClick()
         End Sub
 
-        Private Sub ResetToolStripMenuItemClick(ByVal sender As Object, ByVal e As EventArgs) Handles ResetToolStripMenuItem.Click
+        Private Sub ResetToolStripMenuItemClick(sender As Object, e As EventArgs) Handles ResetToolStripMenuItem.Click
             UndoStuff.PerformClick()
         End Sub
 
-        Private Sub UploadToolStripMenuItemClick(ByVal sender As Object, ByVal e As EventArgs) Handles UploadToolStripMenuItem.Click
+        Private Sub UploadToolStripMenuItemClick(sender As Object, e As EventArgs) Handles UploadToolStripMenuItem.Click
             UploadToHoster.PerformButtonClick()
         End Sub
 
-        Private Sub SaveToolStripMenuItemClick(ByVal sender As Object, ByVal e As EventArgs) Handles SaveToolStripMenuItem.Click
+        Private Sub SaveToolStripMenuItemClick(sender As Object, e As EventArgs) Handles SaveToolStripMenuItem.Click
             save_btn.PerformClick()
         End Sub
 
-        Private Sub ClipboardToolStripMenuItemClick(ByVal sender As Object, ByVal e As EventArgs) Handles ClipboardToolStripMenuItem.Click
+        Private Sub ClipboardToolStripMenuItemClick(sender As Object, e As EventArgs) Handles ClipboardToolStripMenuItem.Click
             CopyToClipboard.PerformClick()
         End Sub
 
-        Private Sub PrintToolStripMenuItemClick(ByVal sender As Object, ByVal e As EventArgs) Handles PrintToolStripMenuItem.Click
+        Private Sub PrintToolStripMenuItemClick(sender As Object, e As EventArgs) Handles PrintToolStripMenuItem.Click
             Print.PerformClick()
         End Sub
 
-        Private Sub KreisToolStripMenuItemClick(ByVal sender As Object, ByVal e As EventArgs) Handles KreisToolStripMenuItem.Click
+        Private Sub KreisToolStripMenuItemClick(sender As Object, e As EventArgs) Handles KreisToolStripMenuItem.Click
             EllipseTool.PerformClick()
         End Sub
 
@@ -701,51 +701,49 @@ Namespace UI.Specialized
 
 #Region "Toolsettings"
 
-        Private Sub ZensursulaBarValueChanged(ByVal sender As Object, ByVal e As EventArgs) Handles ZensursulaBar.Scroll
+        Private Sub ZensursulaBarValueChanged(sender As Object, e As EventArgs) Handles ZensursulaBar.Scroll
             Pinsel_Width_Zensursula.Text = $"{ZensursulaBar.Value}px"
             ThePanel.ZensursulaWidth = ZensursulaBar.Value
         End Sub
 
-        Private Sub ZensursulaViewerColorChanged(ByVal sender As Object, ByVal c As Color) Handles Zensursula_Viewer.ColorChanged
+        Private Sub ZensursulaViewerColorChanged(sender As Object, c As Color) Handles Zensursula_Viewer.ColorChanged
             ThePanel.ZensursulaColor = c
         End Sub
 
-        Private Sub MarkerBarValueChanged(ByVal sender As Object, ByVal e As EventArgs) Handles MarkerBar.Scroll
+        Private Sub MarkerBarValueChanged(sender As Object, e As EventArgs) Handles MarkerBar.Scroll
             Pinsel_Width_Marker.Text = $"{MarkerBar.Value}px"
             ThePanel.MarkerWidth = MarkerBar.Value
         End Sub
 
-        Private Sub MarkerViewerColorChanged(ByVal sender As Object, ByVal c As Color) Handles Marker_Viewer.ColorChanged
+        Private Sub MarkerViewerColorChanged(sender As Object, c As Color) Handles Marker_Viewer.ColorChanged
             ThePanel.MarkerColor = c
         End Sub
 
-        Private Sub EraserBarScroll(ByVal sender As Object, ByVal e As EventArgs) Handles EraserBar.ValueChanged
+        Private Sub EraserBarScroll(sender As Object, e As EventArgs) Handles EraserBar.ValueChanged
             Eraser_Diameter.Text = $"{EraserBar.Value}px"
             ThePanel.EraserDiameter = EraserBar.Value
         End Sub
 
-        Private Sub EllipseBarValueChanged(ByVal sender As Object, ByVal e As EventArgs) Handles EllipseBar.ValueChanged
+        Private Sub EllipseBarValueChanged(sender As Object, e As EventArgs) Handles EllipseBar.ValueChanged
             Ellipse_Width.Text = $"{EllipseBar.Value}px"
             ThePanel.EllipseWidth = EllipseBar.Value
         End Sub
 
-        Private Sub EllipseViewerColorChanged(ByVal sender As Object, ByVal c As Color) Handles Ellipse_Viewer.ColorChanged
+        Private Sub EllipseViewerColorChanged(sender As Object, c As Color) Handles Ellipse_Viewer.ColorChanged
             ThePanel.EllipseColor = c
         End Sub
 
 #End Region
 
-        Private Sub ImageInfoLabelMouseClick(ByVal sender As Object, ByVal e As MouseEventArgs) Handles ImageInfoLabel.MouseUp
+        Private Sub ImageInfoLabelMouseClick(sender As Object, e As MouseEventArgs) Handles ImageInfoLabel.MouseUp
 
             Dim s = ThePanel.Screenshot
             If e.Button = MouseButtons.Left Then
-                Dim ss = $"{s.Size.Width}x{s.Size.Height}px"
-                ss.SetAsClipboardText()
+                ClipboardEx.SetText($"{s.Size.Width}x{s.Size.Height}px")
             ElseIf e.Button = MouseButtons.Right Then
-                s.Timestamp.ToString().SetAsClipboardText()
+                ClipboardEx.SetText(s.Timestamp.ToString())
             ElseIf e.Button = MouseButtons.Middle Then
-                Dim ss = $"{s.Timestamp} {s.Size.Width}x{s.Size.Height}px"
-                ss.SetAsClipboardText()
+                ClipboardEx.SetText($"{s.Timestamp} {s.Size.Width}x{s.Size.Height}px")
             End If
         End Sub
 
@@ -755,15 +753,15 @@ Namespace UI.Specialized
             MouseInfoLabel.Text = "0, 0px"
         End Sub
 
-        Private Sub ThePanelUpdateMousePosition(ByVal e As Point) Handles ThePanel.UpdateMousePosition
+        Private Sub ThePanelUpdateMousePosition(e As Point) Handles ThePanel.UpdateMousePosition
             MouseInfoLabel.Text = $"{e.X}, {e.Y}px"
         End Sub
 
 
-        Private Sub ChooseServiceToolStripMenuItem_Click(ByVal sender As Object, ByVal e As EventArgs) Handles ChooseServiceToolStripMenuItem.Click
+        Private Sub ChooseServiceToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ChooseServiceToolStripMenuItem.Click
         End Sub
 
-        Private Sub BlackWhiteTrackerScroll(ByVal sender As Object, ByVal e As EventArgs) Handles BlackWhiteTracker.Scroll
+        Private Sub BlackWhiteTrackerScroll(sender As Object, e As EventArgs) Handles BlackWhiteTracker.Scroll
             If BlackWhiteTracker.Value >= 0 AndAlso BlackWhiteTracker.Value <= 255 Then
                 ThePanel.BrightenColor = Color.FromArgb(255 - BlackWhiteTracker.Value, 0, 0, 0)
                 BigColorViewer1.Color = ThePanel.BrightenColor
@@ -773,29 +771,29 @@ Namespace UI.Specialized
             End If
         End Sub
 
-        Private Sub ArrowColorviewerColorChanged(ByVal sender As Object, ByVal c As Color) Handles ArrowColorviewer.ColorChanged
+        Private Sub ArrowColorviewerColorChanged(sender As Object, c As Color) Handles ArrowColorviewer.ColorChanged
             ThePanel.ArrowColor = c
         End Sub
 
-        Private Sub DrawCursorClick(ByVal sender As Object, ByVal e As EventArgs) Handles DrawCursor.Click
+        Private Sub DrawCursorClick(sender As Object, e As EventArgs) Handles DrawCursor.Click
             ThePanel.DrawCursor = DrawCursor.Checked
         End Sub
 
-        Private Sub ArrowWidthSliderScroll(ByVal sender As Object, ByVal e As EventArgs) Handles ArrowWidthSlider.Scroll
+        Private Sub ArrowWidthSliderScroll(sender As Object, e As EventArgs) Handles ArrowWidthSlider.Scroll
             ArrowWidthLabel.Text = If(ArrowWidthSlider.Value = 0, "Auto", $"{ArrowWidthSlider.Value}px")
             ThePanel.ArrowWidth = ArrowWidthSlider.Value
         End Sub
 
-        Private Sub ShotEditorResize(ByVal sender As Object, ByVal e As EventArgs) Handles Me.Resize
+        Private Sub ShotEditorResize(sender As Object, e As EventArgs) Handles Me.Resize
             ThePanel.VerticalLinealBox.Invalidate()
             ThePanel.HorizontalLinealBox.Invalidate()
         End Sub
 
-        Private Sub ToolStripsPaint(ByVal sender As Object, ByVal e As PaintEventArgs) Handles ToolStrip1.Paint, ShareStrip.Paint, EditStrip.Paint, CopyPrintToolStrip.Paint
+        Private Sub ToolStripsPaint(sender As Object, e As PaintEventArgs) Handles ToolStrip1.Paint, ShareStrip.Paint, EditStrip.Paint, CopyPrintToolStrip.Paint
             e.Graphics.Clear(BackColor)
         End Sub
 
-        Private Async Sub UploadToHosterDropDownItemClicked(ByVal sender As Object, ByVal e As ToolStripItemClickedEventArgs) Handles UploadToHoster.DropDownItemClicked
+        Private Async Sub UploadToHosterDropDownItemClicked(sender As Object, e As ToolStripItemClickedEventArgs) Handles UploadToHoster.DropDownItemClicked
 
             Dim tag = DirectCast(e.ClickedItem.Tag, String)
             ' the tag represents the name of the image hoster here
@@ -825,20 +823,20 @@ Namespace UI.Specialized
             HandleAfterUpload()
         End Sub
 
-        Private Sub UploadToHosterButtonClick(ByVal sender As Object, ByVal e As EventArgs) Handles UploadToHoster.ButtonClick
+        Private Sub UploadToHosterButtonClick(sender As Object, e As EventArgs) Handles UploadToHoster.ButtonClick
             UploadCurrentImageToDefaultProvider()
         End Sub
 
-        Private Sub EllipseOrRectangleValueChanged(ByVal sender As Object, ByVal e As EventArgs) Handles EllipseOrRectangle.ValueChanged
+        Private Sub EllipseOrRectangleValueChanged(sender As Object, e As EventArgs) Handles EllipseOrRectangle.ValueChanged
             ThePanel.UseBoxInsteadOfCirlce = EllipseOrRectangle.Value = 1
             EllipseOrRectangleBox.Invalidate()
         End Sub
 
-        Private Sub EllipseOrRectangleBoxClick(ByVal sender As Object, ByVal e As EventArgs) Handles EllipseOrRectangleBox.Click
+        Private Sub EllipseOrRectangleBoxClick(sender As Object, e As EventArgs) Handles EllipseOrRectangleBox.Click
             If EllipseOrRectangle.Value = 1 Then EllipseOrRectangle.Value = 0 Else EllipseOrRectangle.Value = 1
         End Sub
 
-        Private Sub EllipseOrRectangleBoxPaint(ByVal sender As Object, ByVal e As PaintEventArgs) Handles EllipseOrRectangleBox.Paint
+        Private Sub EllipseOrRectangleBoxPaint(sender As Object, e As PaintEventArgs) Handles EllipseOrRectangleBox.Paint
             Dim rct As New Rectangle(2, 2, 12, 12)
             Dim pe As New Pen(Brushes.Red) With {.Width = 2}
             If ThePanel.UseBoxInsteadOfCirlce Then

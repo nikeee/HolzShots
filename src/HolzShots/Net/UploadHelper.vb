@@ -89,7 +89,7 @@ Namespace Net
 
                 Case UploadHandlingAction.CopyToClipboard
 
-                    If Not result.Url.SetAsClipboardText() Then
+                    If Not ClipboardEx.SetText(result.Url) Then
                         HumanInterop.CopyingFailed(result.Url)
                     ElseIf settingsContext.ShowCopyConfirmation Then
                         HumanInterop.ShowCopyConfirmation(result.Url)

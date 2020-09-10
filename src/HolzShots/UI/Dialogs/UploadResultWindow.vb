@@ -50,19 +50,19 @@ Namespace UI.Dialogs
 #Region "UI Handlers"
 
         Private Sub CopyDirectClick(sender As Object, e As EventArgs) Handles copyDirect.Click
-            If _result.Url.SetAsClipboardText() Then
+            If ClipboardEx.SetText(_result.Url) Then
                 MightClose()
             End If
         End Sub
 
         Private Sub CopyHtmlClick(sender As Object, e As EventArgs) Handles copyHTML.Click
-            If $"<img src=""{_result.Url}"">".SetAsClipboardText() Then
+            If ClipboardEx.SetText($"<img src=""{_result.Url}"">") Then
                 MightClose()
             End If
         End Sub
 
         Private Sub CopyBbClick(sender As Object, e As EventArgs) Handles copyBB.Click
-            If $"[img]{_result.Url}[/img]".SetAsClipboardText() Then
+            If ClipboardEx.SetText($"[img]{_result.Url}[/img]") Then
                 MightClose()
             End If
         End Sub

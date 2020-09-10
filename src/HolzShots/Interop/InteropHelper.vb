@@ -1,5 +1,3 @@
-Imports System.Runtime.CompilerServices
-Imports System.Security.Principal
 Imports Microsoft.WindowsAPICodePack.Taskbar
 
 Namespace Interop
@@ -13,16 +11,6 @@ Namespace Interop
                 MessageBox.Show("Nope :(", "Oh snap!", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End If
         End Sub
-
-        <Extension()>
-        Public Function SetAsClipboardText(text As String) As Boolean
-            Try
-                Clipboard.SetText(text)
-                Return True
-            Catch
-                Return False
-            End Try
-        End Function
 
         Public Sub AddToRecentDocs(path As String)
             ' TODO: Use this again?
