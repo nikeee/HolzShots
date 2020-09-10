@@ -15,10 +15,11 @@ namespace HolzShots.Native
 
         #region Types
 
+        [Flags]
         public enum ShellAddToRecentDocsFlags
         {
-            Pidl = 0x1,
-            Path = 0x2,
+            Pidl = 1,
+            Path = 2,
         }
 
         [StructLayout(LayoutKind.Sequential)]

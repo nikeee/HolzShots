@@ -1,4 +1,3 @@
-Imports HolzShots.Interop
 Imports HolzShots.Net
 
 Namespace UI.Dialogs
