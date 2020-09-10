@@ -1,20 +1,37 @@
 {
-  "schemaVersion": "0.1.0",
-  "meta": {
-    "version": "1.0.0",
-    "name": "DirectUpload.net",
-    "author": "nikeee"
-  },
-  "uploader": {
-    "fileFormName": "bilddatei",
-    "requestUrl": "https://directupload.net/index.php?mode=upload",
-    "postParams": {
-      "input": "file"
-    },
-    "responseParser": {
-      "kind": "regex",
-      "success": "(?<url>https://[a-zA-Z0-9]*.directupload.net/images/\\d{1,}/\\b(?!temp\\b).*?\\b.[a-zA-Z]{1,3})",
-      "urlTemplate": "$1,url$"
-    }
-  }
+	"$schema": "https://holzshots.net/schema/uploader.json",
+	"schemaVersion": "0.1.0", // Leave these here, they are needed for HolzShots to get things working
+
+	// Feel free to use comments in your uploader definition
+
+	"meta": {
+		// Version, name and author of this uploader
+		"version": "1.0.0",
+		"name": "DirectUpload.net",
+		"author": "nikeee",
+		"license": "MIT" // SPDX license identifier
+
+		// You can also specify URLs to fetch updates to this definition
+		// Just press Ctrl+Space to get a list of available fields
+	},
+
+	"uploader": {
+		// Field name of the image file
+		"fileFormName": "bilddatei",
+
+		// URL where the request is sent to
+		"requestUrl": "https://directupload.net/index.php?mode=upload",
+
+		// Other parameters needed (will be put in the body)
+		"postParams": {
+			"input": "file"
+		},
+
+		// How to parse the response
+		"responseParser": {
+			"kind": "regex",
+			"success": "(?<url>https://[a-zA-Z0-9]*.directupload.net/images/\\d{1,}/\\b(?!temp\\b).*?\\b.[a-zA-Z]{1,3})",
+			"urlTemplate": "$1,url$"
+		}
+	}
 }
