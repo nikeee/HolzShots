@@ -1,10 +1,10 @@
-Imports System.Threading.Tasks
 Imports HolzShots.ScreenshotRelated
 Imports HolzShots.Composition.Command
 Imports HolzShots.Threading
 Imports HolzShots.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Imaging
+Imports HolzShots.Windows.Forms
 
 Namespace Input.Actions
 
@@ -118,13 +118,13 @@ Namespace Input.Actions
 
                         Dim result As New Bitmap(bmpWhite.Width, bmpWhite.Height)
 
-                        Drawing.Computation.ComputeAlphaChannel(bmpWhite, bmpBlack, result)
+                        Computation.ComputeAlphaChannel(bmpWhite, bmpBlack, result)
 
                         ' Old method:
                         ' ScreenshotMethodsHelper.ComputeAlphaChannel(bmpWhite, bmpBlack)
 
-                        Dim windowTitle = ScreenshotMethodsHelper.GetWindowTitle(wndHandle)
-                        Dim processName = ScreenshotMethodsHelper.GetProcessNameOfWindow(wndHandle)
+                        Dim windowTitle = WindowInformation.GetWindowTitle(wndHandle)
+                        Dim processName = WindowInformation.GetProcessNameOfWindow(wndHandle)
 
                         Return New WindowScreenshotSet(result, cursorPositonOnScreenshot, windowTitle, processName)
                     End Using
@@ -141,8 +141,8 @@ Namespace Input.Actions
 
             Dim bmp = ScreenshotCreator.CaptureScreenshot(drawingRectangle)
 
-            Dim windowTitle = ScreenshotMethodsHelper.GetWindowTitle(wndHandle)
-            Dim processName = ScreenshotMethodsHelper.GetProcessNameOfWindow(wndHandle)
+            Dim windowTitle = WindowInformation.GetWindowTitle(wndHandle)
+            Dim processName = WindowInformation.GetProcessNameOfWindow(wndHandle)
 
             Return New WindowScreenshotSet(bmp, cursorPositonOnScreenshot, windowTitle, processName)
         End Function
