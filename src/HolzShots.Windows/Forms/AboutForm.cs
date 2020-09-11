@@ -28,6 +28,7 @@ namespace HolzShots.Windows.Forms
             MessageBox.Show(this, AboutDialog.GetGraphicsText(), title);
         }
     }
+
     public static class AboutDialog
     {
         public static void ShowDialog(System.Drawing.Bitmap icon, string version)
@@ -69,5 +70,4 @@ namespace HolzShots.Windows.Forms
             return sb.ToString();
         }
     }
-
 }

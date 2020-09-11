@@ -37,7 +37,7 @@ Namespace Input.Actions
                 Catch ex As UploadCanceledException
                     HumanInterop.ShowOperationCanceled()
                 Catch ex As UploadException
-                    UploadHelper.InvokeUploadFailedUi(ex)
+                    HumanInterop.UploadFailed(ex)
                 End Try
             End Using
 

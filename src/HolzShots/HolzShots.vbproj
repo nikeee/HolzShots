@@ -75,9 +75,7 @@
     <Compile Update="UI\Controls\ColorViewer.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Update="UI\Forms\CopyLinkLabel.vb">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Update="UI\Forms\CopyLinkLabel.vb" />
     <Compile Update="UI\Controls\PaintPanel.Designer.vb">
       <DependentUpon>PaintPanel.vb</DependentUpon>
     </Compile>

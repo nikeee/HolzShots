@@ -32,7 +32,7 @@ namespace HolzShots
         /// <summary> Note: Use <see cref="ExpandedSavePath" /> internally when actually saving something. </summary>
         [SettingsDoc(
             "The path where screenshots will be saved.\n" +
-            "Feed free to use environment variables like %USERPROFILE%, %ONEDRIVE% or %TMP%."
+            "Feel free to use environment variables like %USERPROFILE%, %ONEDRIVE% or %TMP%."
         )]
         [JsonProperty("save.path")]
         public string SavePath { get; private set; } = HolzShotsPaths.DefaultScreenshotSavePath;
@@ -180,10 +180,10 @@ namespace HolzShots
 
         [SettingsDoc(
             "Enable or disable hotkeys when a full screen application is running.",
-            Default = "false"
+            Default = "true"
         )]
         [JsonProperty("key.enabledDuringFullscreen")]
-        public bool EnableHotkeysDuringFullscreen { get; private set; } = false;
+        public bool EnableHotkeysDuringFullscreen { get; private set; } = true;
 
         // TODO: Fix visibility
         [SettingsDoc(
@@ -202,8 +202,8 @@ namespace HolzShots
     {
         // TODO: Fix visibility
         public bool Enabled { get; set; } = false;
-        public CommandDeclaration Command { get; set; } = null;
         public Hotkey Keys { get; set; } = null;
+        public CommandDeclaration Command { get; set; } = null;
     }
 
     /// <summary>

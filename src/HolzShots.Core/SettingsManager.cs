@@ -120,7 +120,6 @@ namespace HolzShots
             }
         }
 
-        public string SerializeSettings(T settings) => JsonConvert.SerializeObject(settings, _jsonSerializerSettings);
         private void InvokeWithSynchronizingObjectIfNeeded(Action action)
         {
             if (_synchronizingObject == null)

@@ -4,12 +4,15 @@ using System.Collections.Immutable;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using HolzShots.Composition;
 using HolzShots.Input;
 using HolzShots.IO;
 using HolzShots.Net;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace HolzShots
 {
@@ -31,11 +34,11 @@ namespace HolzShots
             if (File.Exists(HolzShotsPaths.UserSettingsFilePath))
                 return;
 
-            using (var writer = File.OpenWrite(HolzShotsPaths.UserSettingsFilePath))
+            using (var fs = File.OpenWrite(HolzShotsPaths.UserSettingsFilePath))
             {
-                var defaultSettingsStr = Manager.SerializeSettings(CreateDefaultSettings());
-                var defaultSettings = System.Text.Encoding.UTF8.GetBytes(defaultSettingsStr);
-                await writer.WriteAsync(defaultSettings, 0, defaultSettings.Length).ConfigureAwait(false);
+                var defaultSettingsStr = await CreateDefaultSettingsJson().ConfigureAwait(false);
+                var defaultSettings = Encoding.UTF8.GetBytes(defaultSettingsStr);
+                await fs.WriteAsync(defaultSettings, 0, defaultSettings.Length).ConfigureAwait(false);
             }
         }
 
@@ -53,30 +56,20 @@ namespace HolzShots
             return uploaderManager.GetUploaderByName(context.TargetImageHoster);
         }
 
-        private static HSSettings CreateDefaultSettings()
+        private async static Task<string> CreateDefaultSettingsJson()
         {
-            var s = new HSSettings
+            // TODO: Make this prettier
+
+            var asm = System.Reflection.Assembly.GetExecutingAssembly();
+            using (var defaultSettingsTemplateStream = asm.GetManifestResourceStream("HolzShots.Resources.DefaultSettings.json"))
+            using (var sr = new StreamReader(defaultSettingsTemplateStream))
             {
-                TrayIconDoubleClickCommand = "openSettingsJson",
-                KeyBindings = new List<KeyBinding>() {
-                    new KeyBinding {
-                        Enabled = true,
-                        Command = "captureArea",
-                        Keys = new Hotkey(ModifierKeys.None, Keys.F8),
-                    },
-                    new KeyBinding {
-                        Enabled = true,
-                        Command = "captureEntireScreen",
-                        Keys = new Hotkey(ModifierKeys.None, Keys.F10),
-                    },
-                    new KeyBinding {
-                        Enabled = false,
-                        Command = "captureWindow",
-                        Keys = new Hotkey(ModifierKeys.None, Keys.F9),
-                    },
-                }
-            };
-            return s;
+                var defaultSettings = await sr.ReadToEndAsync().ConfigureAwait(false);
+                defaultSettings = defaultSettings
+                    .Replace("DEFAULT_SAVE_PATH", HolzShotsPaths.DefaultScreenshotSavePath.Replace(@"\", @"\\"))
+                    .Replace("DEFAULT_UPLOAD_SERVICE", "directupload.net");
+                return defaultSettings;
+            }
         }
     }
 

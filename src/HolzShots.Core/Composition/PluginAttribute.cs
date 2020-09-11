@@ -1,6 +1,4 @@
 using System;
-using System.Composition;
-using System.ComponentModel.Composition;
 using Semver;
 
 namespace HolzShots.Composition
@@ -13,7 +11,7 @@ namespace HolzShots.Composition
         public string Author { get; }
         public string Version { get; }
 
-        public string Url { get; }
+        public string Website { get; }
         public string BugsUrl { get; }
         public string Contact { get; }
         public string Description { get; }
@@ -21,14 +19,14 @@ namespace HolzShots.Composition
         public PluginAttribute(string name, string author, string version)
             : this(name, author, version, null, null, null, null)
         { }
-        public PluginAttribute(string name, string author, string version, string description, string contact, string url, string bugsUrl)
+        public PluginAttribute(string name, string author, string version, string description, string contact, string website, string bugsUrl)
         {
             Name = name;
             Author = author;
             Version = version;
             Description = description;
             Contact = contact;
-            Url = url;
+            Website = website;
             BugsUrl = bugsUrl;
         }
     }
@@ -39,7 +37,7 @@ namespace HolzShots.Composition
         string Author { get; }
         string Version { get; }
 
-        string Url { get; }
+        string Website { get; }
         string BugsUrl { get; }
         string Contact { get; }
         string Description { get; }
@@ -50,7 +48,7 @@ namespace HolzShots.Composition
         public string Name { get; }
         public string Author { get; }
         public SemVersion Version { get; }
-        public string Url { get; }
+        public string Website { get; }
         public string BugsUrl { get; }
         public string Contact { get; }
         public string Description { get; }
@@ -61,7 +59,7 @@ namespace HolzShots.Composition
             Name = sourceAttribute.Name;
             Author = sourceAttribute.Author;
             Version = SemVersion.Parse(sourceAttribute.Version);
-            Url = sourceAttribute.Url;
+            Website = sourceAttribute.Website;
             BugsUrl = sourceAttribute.BugsUrl;
             Contact = sourceAttribute.Contact;
             Description = sourceAttribute.Description;
