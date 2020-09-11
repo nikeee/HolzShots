@@ -1,5 +1,5 @@
 {
-	// Don't delete these two lines, HolzShots needs them
+	// Don't remove these two lines, HolzShots needs them
 	"$schema": "https://holzshots.net/schema/settings.json",
 	"version": "1.0.0",
 
@@ -8,7 +8,7 @@
 
 	"save.enable": true,
 
-	"save.path": "CHANGEME", // Feel free to use environment variables like %USERPROFILE%, %ONEDRIVE% or %TMP%.
+	"save.path": "DEFAULT_SAVE_PATH", // Feel free to use environment variables like %USERPROFILE%, %ONEDRIVE% or %TMP%.
 	"save.pattern": "Screenshot-<Date>",
 	"save.autoDetectBestImageFormat": false,
 
@@ -16,7 +16,7 @@
 
 	// When you are using a different image service, fill in its name
 	// You can retrieve it via the plugin list
-	"upload.service": "CHANGEME",
+	"upload.service": "DEFAULT_UPLOAD_SERVICE",
 	"upload.actionAfterUpload": "flyout",
 
 	"capture.actionAfterCapture": "openEditor",
