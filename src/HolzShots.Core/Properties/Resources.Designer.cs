@@ -59,5 +59,15 @@ namespace HolzShots.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] DefaultSettings {
+            get {
+                object obj = ResourceManager.GetObject("DefaultSettings", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }

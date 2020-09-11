@@ -9,7 +9,7 @@ namespace HolzShots.Drawing
             try
             {
                 if (Environment.OSVersion.Version.Major >= 6)
-                    _ = NativeMethods.SetProcessDpiAwareness(NativeTypes.ProcessDPIAwareness.ProcessPerMonitorDPIAware);
+                    _ = Native.Shcore.SetProcessDpiAwareness(Native.Shcore.ProcessDPIAwareness.ProcessPerMonitorDPIAware);
             }
             catch (EntryPointNotFoundException) //this exception occures if OS does not implement this API, just ignore it.
             { }

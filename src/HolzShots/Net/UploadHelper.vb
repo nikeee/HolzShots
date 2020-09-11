@@ -8,10 +8,6 @@ Namespace Net
         Private Sub New()
         End Sub
 
-        Public Shared Function UploadToDefaultUploader(image As Image) As Task(Of UploadResult)
-            Return UploadToDefaultUploader(image, Nothing, Nothing)
-        End Function
-
         Friend Shared Function UploadToDefaultUploader(image As Image, settingsContext As HSSettings, Optional format As ImageFormat = Nothing, Optional parentWindow As IWin32Window = Nothing) As Task(Of UploadResult)
 
             Dim info = UserSettings.GetImageServiceForSettingsContext(settingsContext, HolzShots.My.Application.Uploaders)
@@ -26,9 +22,7 @@ Namespace Net
             Return Upload(info.Uploader, image, settingsContext, format, parentWindow)
         End Function
 
-        ''' <summary>
-        ''' Catch the UploadException!
-        ''' </summary>
+        ''' <summary> Catch the UploadException! </summary>
         ''' <param name="uploader"></param>
         ''' <param name="image"></param>
         ''' <param name="format"></param>
@@ -96,9 +90,6 @@ Namespace Net
                 Case UploadHandlingAction.None ' Intentionally do nothing
                 Case Else ' Intentionally do nothing
             End Select
-        End Sub
-        Friend Shared Sub InvokeUploadFailedUi(ex As UploadException)
-            HumanInterop.UploadFailed(ex)
         End Sub
     End Class
 End Namespace

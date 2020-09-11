@@ -779,29 +779,29 @@ Namespace UI.Specialized
             End If
         End Sub
 
-        Private Sub ArrowColorviewerColorChanged(ByVal sender As Object, ByVal c As Color) Handles ArrowColorviewer.ColorChanged
+        Private Sub ArrowColorviewerColorChanged(sender As Object, c As Color) Handles ArrowColorviewer.ColorChanged
             ThePanel.ArrowColor = c
         End Sub
 
-        Private Sub DrawCursorClick(ByVal sender As Object, ByVal e As EventArgs) Handles DrawCursor.Click
+        Private Sub DrawCursorClick(sender As Object, e As EventArgs) Handles DrawCursor.Click
             ThePanel.DrawCursor = DrawCursor.Checked
         End Sub
 
-        Private Sub ArrowWidthSliderScroll(ByVal sender As Object, ByVal e As EventArgs) Handles ArrowWidthSlider.Scroll
+        Private Sub ArrowWidthSliderScroll(sender As Object, e As EventArgs) Handles ArrowWidthSlider.Scroll
             ArrowWidthLabel.Text = If(ArrowWidthSlider.Value = 0, "Auto", $"{ArrowWidthSlider.Value}px")
             ThePanel.ArrowWidth = ArrowWidthSlider.Value
         End Sub
 
-        Private Sub ShotEditorResize(ByVal sender As Object, ByVal e As EventArgs) Handles Me.Resize
+        Private Sub ShotEditorResize(sender As Object, e As EventArgs) Handles Me.Resize
             ThePanel.VerticalLinealBox.Invalidate()
             ThePanel.HorizontalLinealBox.Invalidate()
         End Sub
 
-        Private Sub ToolStripsPaint(ByVal sender As Object, ByVal e As PaintEventArgs) Handles ToolStrip1.Paint, ShareStrip.Paint, EditStrip.Paint, CopyPrintToolStrip.Paint
+        Private Sub ToolStripsPaint(sender As Object, e As PaintEventArgs) Handles ToolStrip1.Paint, ShareStrip.Paint, EditStrip.Paint, CopyPrintToolStrip.Paint
             e.Graphics.Clear(BackColor)
         End Sub
 
-        Private Async Sub UploadToHosterDropDownItemClicked(ByVal sender As Object, ByVal e As ToolStripItemClickedEventArgs) Handles UploadToHoster.DropDownItemClicked
+        Private Async Sub UploadToHosterDropDownItemClicked(sender As Object, e As ToolStripItemClickedEventArgs) Handles UploadToHoster.DropDownItemClicked
 
             Dim tag = DirectCast(e.ClickedItem.Tag, String)
             ' the tag represents the name of the image hoster here
@@ -831,20 +831,20 @@ Namespace UI.Specialized
             HandleAfterUpload()
         End Sub
 
-        Private Sub UploadToHosterButtonClick(ByVal sender As Object, ByVal e As EventArgs) Handles UploadToHoster.ButtonClick
+        Private Sub UploadToHosterButtonClick(sender As Object, e As EventArgs) Handles UploadToHoster.ButtonClick
             UploadCurrentImageToDefaultProvider()
         End Sub
 
-        Private Sub EllipseOrRectangleValueChanged(ByVal sender As Object, ByVal e As EventArgs) Handles EllipseOrRectangle.ValueChanged
+        Private Sub EllipseOrRectangleValueChanged(sender As Object, e As EventArgs) Handles EllipseOrRectangle.ValueChanged
             ThePanel.UseBoxInsteadOfCirlce = EllipseOrRectangle.Value = 1
             EllipseOrRectangleBox.Invalidate()
         End Sub
 
-        Private Sub EllipseOrRectangleBoxClick(ByVal sender As Object, ByVal e As EventArgs) Handles EllipseOrRectangleBox.Click
+        Private Sub EllipseOrRectangleBoxClick(sender As Object, e As EventArgs) Handles EllipseOrRectangleBox.Click
             If EllipseOrRectangle.Value = 1 Then EllipseOrRectangle.Value = 0 Else EllipseOrRectangle.Value = 1
         End Sub
 
-        Private Sub EllipseOrRectangleBoxPaint(ByVal sender As Object, ByVal e As PaintEventArgs) Handles EllipseOrRectangleBox.Paint
+        Private Sub EllipseOrRectangleBoxPaint(sender As Object, e As PaintEventArgs) Handles EllipseOrRectangleBox.Paint
             Dim rct As New Rectangle(2, 2, 12, 12)
             Dim pe As New Pen(Brushes.Red) With {.Width = 2}
             If ThePanel.UseBoxInsteadOfCirlce Then
@@ -875,7 +875,7 @@ Namespace UI.Specialized
             Catch ex As UploadCanceledException
                 HumanInterop.ShowOperationCanceled()
             Catch ex As UploadException
-                UploadHelper.InvokeUploadFailedUi(ex)
+                HumanInterop.UploadFailed(ex)
                 Return
             Finally
                 HandleAfterUpload()

@@ -27,7 +27,7 @@ Namespace UI.Controls
             pluginAuthor.Text = _pluginMetadata.Author
             pluginVersion.Text = _pluginMetadata.Version.ToString()
 
-            authorWebSite.Enabled = Not String.IsNullOrWhiteSpace(_pluginMetadata.Url)
+            authorWebSite.Enabled = Not String.IsNullOrWhiteSpace(_pluginMetadata.Website)
             reportBug.Enabled = Not String.IsNullOrWhiteSpace(_pluginMetadata.BugsUrl)
 
             ' TODO: Fix Plugin Settings
@@ -80,14 +80,14 @@ Namespace UI.Controls
         End Sub
 
         Private Sub AuthorWebSiteLinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles authorWebSite.LinkClicked
-            If Not String.IsNullOrWhiteSpace(_pluginMetadata.Url) Then
-                _pluginMetadata.Url.SafeProcessStart()
+            If Not String.IsNullOrWhiteSpace(_pluginMetadata.Website) Then
+                IO.HolzShotsPaths.OpenLink(_pluginMetadata.Website)
             End If
         End Sub
 
         Private Sub ReportBugLinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles reportBug.LinkClicked
             If Not String.IsNullOrWhiteSpace(_pluginMetadata.BugsUrl) Then
-                _pluginMetadata.BugsUrl.SafeProcessStart()
+                IO.HolzShotsPaths.OpenLink(_pluginMetadata.BugsUrl)
             End If
         End Sub
     End Class

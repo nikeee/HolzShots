@@ -94,7 +94,7 @@ Namespace UI.Specialized
 
             _applicationStarted = DateTime.Now
             ' TODO: Check if we need this:
-            ' SettingsUpdated(Me, UserSettings.Current)
+            SettingsUpdated(Me, UserSettings.Current)
             AddHandler UserSettings.Manager.OnSettingsUpdated, AddressOf SettingsUpdated
 
             RegisterCommands()
@@ -195,7 +195,7 @@ Namespace UI.Specialized
             OpenAbout()
         End Sub
         Private Sub FeedbackAndIssuesToolStripMenuItemClick(sender As Object, e As EventArgs) Handles FeedbackAndIssuesToolStripMenuItem.Click
-            LibraryInformation.IssuesUrl.SafeProcessStart()
+            IO.HolzShotsPaths.OpenLink(LibraryInformation.IssuesUrl)
         End Sub
         Private Sub StartWithWindowsToolStripMenuItemClick(sender As Object, e As EventArgs) Handles StartWithWindowsToolStripMenuItem.Click
             If EnvironmentEx.CurrentStartupManager.IsRegistered Then
