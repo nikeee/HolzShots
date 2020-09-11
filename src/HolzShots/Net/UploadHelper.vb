@@ -1,5 +1,4 @@
 Imports System.Drawing.Imaging
-Imports System.Threading.Tasks
 Imports HolzShots.Interop
 Imports HolzShots.UI.Dialogs
 
@@ -23,11 +22,6 @@ Namespace Net
         End Function
 
         ''' <summary> Catch the UploadException! </summary>
-        ''' <param name="uploader"></param>
-        ''' <param name="image"></param>
-        ''' <param name="format"></param>
-        ''' <param name="parentWindow"></param>
-        ''' <returns></returns>
         Friend Shared Async Function Upload(uploader As Uploader, image As Image, settingsContext As HSSettings, Optional format As ImageFormat = Nothing, Optional parentWindow As IWin32Window = Nothing) As Task(Of UploadResult)
             format = If(format, GetImageFormat(image, settingsContext))
 
