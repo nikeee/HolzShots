@@ -4,12 +4,14 @@ using System.Collections.Immutable;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using HolzShots.Composition;
 using HolzShots.Input;
 using HolzShots.IO;
 using HolzShots.Net;
+using Newtonsoft.Json;
 
 namespace HolzShots
 {
@@ -31,11 +33,12 @@ namespace HolzShots
             if (File.Exists(HolzShotsPaths.UserSettingsFilePath))
                 return;
 
-            using (var writer = File.OpenWrite(HolzShotsPaths.UserSettingsFilePath))
+            using (var fs = File.OpenWrite(HolzShotsPaths.UserSettingsFilePath))
             {
+
                 var defaultSettingsStr = Manager.SerializeSettings(CreateDefaultSettings());
                 var defaultSettings = System.Text.Encoding.UTF8.GetBytes(defaultSettingsStr);
-                await writer.WriteAsync(defaultSettings, 0, defaultSettings.Length).ConfigureAwait(false);
+                await fs.WriteAsync(defaultSettings, 0, defaultSettings.Length).ConfigureAwait(false);
             }
         }
 
