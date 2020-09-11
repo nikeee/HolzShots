@@ -107,16 +107,16 @@ Namespace UI.Specialized
             Await MyApplication.ProcessCommandLineArguments(args).ConfigureAwait(True)
 
             Dim saveSettings As Boolean = False
-            Dim openSettingsOnFinish As Boolean = False
+            Dim openFirstStartExperience As Boolean = False
 
             If Not isAutorun AndAlso Global.HolzShots.My.Settings.IsFirstRun Then
                 Global.HolzShots.My.Settings.IsFirstRun = False
-                openSettingsOnFinish = True
+                openFirstStartExperience = True
                 saveSettings = True
             End If
 
             If saveSettings Then Global.HolzShots.My.Settings.Save()
-            If openSettingsOnFinish Then OpenSettings()
+            If openFirstStartExperience Then InitializeFirstStartExperience()
         End Sub
 
 #End Region
@@ -149,11 +149,27 @@ Namespace UI.Specialized
 
 #Region "Open Windows"
 
-        Private Shared Sub OpenSettings()
+        Private Shared Sub InitializeFirstStartExperience()
+            Using icon = My.Resources.editcutBig
+                Dim action = FirstStartDialog.ShowDialog(icon)
+                Select Case action
+                    Case FirstStartAction.OpenPlugins
+                        OpenPlugins()
+                    Case FirstStartAction.OpenSettings
+                        CommandManager.Dispatch(Of OpenSettingsJsonCommand)(UserSettings.Current)
+                    Case FirstStartAction.None ' Intentionally left empty
+                    Case Else
+                        Debug.Assert(False)
+                End Select
+            End Using
+        End Sub
+
+        Private Shared Sub OpenPlugins()
             If Not SettingsWindow.Instance.Visible Then
                 SettingsWindow.Instance.ShowDialog() ' Showdialog necessary?
             End If
         End Sub
+
         Private Shared Sub OpenAbout()
             AboutForm.Instance.Show()
             ' Using icon = My.Resources.editcutBig
@@ -209,7 +225,7 @@ Namespace UI.Specialized
             StartWithWindowsToolStripMenuItem.Checked = EnvironmentEx.CurrentStartupManager.IsRegistered
         End Sub
         Private Sub PluginsToolStripMenuItemClick(sender As Object, e As EventArgs) Handles PluginsToolStripMenuItem.Click
-            OpenSettings()
+            OpenPlugins()
         End Sub
 
 #End Region
