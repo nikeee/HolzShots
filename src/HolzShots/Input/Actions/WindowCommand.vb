@@ -95,7 +95,7 @@ Namespace Input.Actions
 
                         bg.Visible = True
 
-                        ScreenshotMethodsHelper.StopRedraw(wndHandle)
+                        WindowRedraw.StopRedraw(wndHandle)
 
                         Native.User32.SetForegroundWindowEx(bg.Handle)
                         Native.User32.SetForegroundWindowEx(wndHandle)
@@ -112,7 +112,7 @@ Namespace Input.Actions
                             ga.CopyFromScreen(drawingRectangle.X, drawingRectangle.Y, 0, 0, bg.Size)
                         End Using
 
-                        ScreenshotMethodsHelper.StartRedraw(wndHandle)
+                        WindowRedraw.StartRedraw(wndHandle)
 
                         bg.Visible = False
 
