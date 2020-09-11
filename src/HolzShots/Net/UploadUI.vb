@@ -1,8 +1,8 @@
 Imports System.Drawing.Imaging
 Imports System.Threading
-Imports System.Threading.Tasks
 Imports HolzShots.Drawing
 Imports HolzShots.UI.Dialogs
+Imports HolzShots.Windows.Forms
 
 Namespace Net
     Friend Class UploadUI
