@@ -88,9 +88,6 @@
     <Compile Update="UI\Controls\PaintPanel.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Update="UI\Controls\StackPanel.vb">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Update="UI\Controls\PluginInfoItem.Designer.vb">
       <DependentUpon>PluginInfoItem.vb</DependentUpon>
     </Compile>

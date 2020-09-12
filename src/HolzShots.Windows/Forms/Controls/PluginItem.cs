@@ -21,33 +21,45 @@ namespace HolzShots.Windows.Forms.Controls
         public PluginItem(IPluginMetadata info)
         {
             InitializeComponent();
+            Debug.Assert(info != null);
+
             SuspendLayout();
 
-            InitializeModel(_model = DesignMode ? new DummyMetadata() : info);
+            _model = DesignMode ? new DummyMetadata() : info;
+            InitializeModel();
 
             ResumeLayout(true);
         }
 
-        private void InitializeModel(IPluginMetadata model)
+        private void InitializeModel()
         {
-            pluginVersion.Text = model.Version.ToString();
-            pluginName.Text = model.Name;
-            pluginAuthor.Text = model.Author;
+            pluginVersion.Text = _model.Version.ToString();
+            pluginName.Text = _model.Name;
+            pluginAuthor.Text = _model.Author;
 
-            authorWebsite.Enabled = model.Website != null;
-            reportBug.Enabled = model.BugsUrl != null;
+            authorWebsite.Enabled = _model.Website != null;
+            reportBug.Enabled = _model.BugsUrl != null;
         }
 
         #endregion
 
         #region Painting and UI State
 
-        private bool _isMouseHovering;
-
-        private static readonly VisualStyleRenderer _hotRenderer = new VisualStyleRenderer(VisualStyleElement.CreateElement("LISTVIEW", 6, 6));
-        private static readonly Pen _separatorPen = new Pen(Color.FromArgb(0xff, 0xcc, 0xcc, 0xcc));
-        private const int BorderPadding = 5;
+        private const int BorderPadding = 0;
         private const int HotMargin = BorderPadding;
+        private static readonly Pen _separatorPen = new Pen(Color.FromArgb(0xff, 0xcc, 0xcc, 0xcc));
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            Debug.Assert(e != null);
+            // e.Graphics.DrawLine(_separatorPen, new Point(0 + BorderPadding, Height - 1), new Point(Width - 1 - BorderPadding, Height - 1));
+            e.Graphics.DrawLine(_separatorPen, new Point(0, Height - 1), new Point(Width - 1, Height - 1));
+        }
+
+        /*
+
+        private bool _isMouseHovering;
+        private static readonly VisualStyleRenderer _hotRenderer = new VisualStyleRenderer(VisualStyleElement.CreateElement("LISTVIEW", 6, 6));
 
         protected override void OnPaint(PaintEventArgs e)
         {
@@ -70,6 +82,7 @@ namespace HolzShots.Windows.Forms.Controls
             _isMouseHovering = ClientRectangle.Contains(PointToClient(MousePosition));
             Invalidate(false);
         }
+        */
 
         #endregion
 

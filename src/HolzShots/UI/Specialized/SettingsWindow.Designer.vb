@@ -28,7 +28,7 @@ Namespace UI.Specialized
             Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(SettingsWindow))
             Me.savebtn = New System.Windows.Forms.Button()
             Me.PluginsTab = New System.Windows.Forms.TabPage()
-            Me.pluginListPanel = New HolzShots.UI.Controls.StackPanel()
+            Me.pluginListPanel = New HolzShots.Windows.Forms.Controls.StackPanel()
             Me.openPluginFolderLinkLabel = New HolzShots.Windows.Forms.ExplorerLinkLabel()
             Me.Label10 = New System.Windows.Forms.Label()
             Me.Tabs = New System.Windows.Forms.TabControl()
@@ -148,7 +148,7 @@ Namespace UI.Specialized
         End Sub
         Friend WithEvents savebtn As System.Windows.Forms.Button
         Friend WithEvents PluginsTab As TabPage
-        Friend WithEvents pluginListPanel As Controls.StackPanel
+        Friend WithEvents pluginListPanel As Windows.Forms.Controls.StackPanel
         Friend WithEvents openPluginFolderLinkLabel As HolzShots.Windows.Forms.ExplorerLinkLabel
         Friend WithEvents Label10 As Label
         Friend WithEvents Tabs As TabControl

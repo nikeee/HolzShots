@@ -150,9 +150,15 @@ Namespace UI.Specialized
 #Region "Open Windows"
 
         Private Shared Sub OpenPlugins()
-            If Not PluginForm.Instance.Visible Then
-                PluginForm.Instance.Show()
-            End If
+            Debug.Assert(My.Application.Uploaders.Loaded)
+
+            Dim pluginsModel = New PluginFormModel(
+                My.Application.Uploaders.GetMetadata(),
+                My.Application.Uploaders.Plugins.PluginDirectory
+            )
+
+            Dim form = New PluginForm(pluginsModel)
+            form.Show()
         End Sub
         Private Shared Sub OpenAbout()
             AboutForm.Instance.Show()

@@ -1,5 +1,3 @@
-Imports System.Linq
-Imports HolzShots.Interop
 Imports HolzShots.UI.Controls
 
 Namespace UI.Specialized
