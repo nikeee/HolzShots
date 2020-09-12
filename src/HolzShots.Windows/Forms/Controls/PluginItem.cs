@@ -33,7 +33,7 @@ namespace HolzShots.Windows.Forms.Controls
 
         private void authorWebSite_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            var website = _model?.Url;
+            var website = _model?.Website;
             if (website != null)
                 OpenUrl(website);
         }
@@ -62,7 +62,7 @@ namespace HolzShots.Windows.Forms.Controls
             public string Name => "Cool plugin";
             public string Author => "Even cooler author";
             public SemVersion Version => new SemVersion(1);
-            public string Url => "https://holzshots.net";
+            public string Website => "https://holzshots.net";
             public string BugsUrl => "https://github.com/nikeee/holzshots/issues";
             public string Contact => "https://github.com/nikeee/holzshots/issues";
             public string Description => "A very cool plugin";
