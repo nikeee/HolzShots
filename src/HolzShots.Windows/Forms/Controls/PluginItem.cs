@@ -10,10 +10,7 @@ namespace HolzShots.Windows.Forms.Controls
     {
         private IPluginMetadata _model = new DummyMetadata();
 
-        public PluginItem()
-        {
-            InitializeComponent();
-        }
+        public PluginItem() => InitializeComponent();
 
         [Bindable(true)]
         public IPluginMetadata DataSource
@@ -22,7 +19,7 @@ namespace HolzShots.Windows.Forms.Controls
             set
             {
                 _model = value ?? new DummyMetadata();
-                modelBindingSource.DataSource = value;
+                modelBindingSource.DataSource = _model;
             }
         }
 
@@ -31,22 +28,14 @@ namespace HolzShots.Windows.Forms.Controls
             // TODO
         }
 
-        private void authorWebSite_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            var website = _model?.Website;
-            if (website != null)
-                OpenUrl(website);
-        }
+        private void authorWebSite_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) => OpenUrlIfPresent(_model?.Website);
+        private void reportBug_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) => OpenUrlIfPresent(_model?.BugsUrl);
 
-        private void reportBug_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private static void OpenUrlIfPresent(string /* ? */ url)
         {
-            var bugsUrl = _model?.BugsUrl;
-            if (bugsUrl != null)
-                OpenUrl(bugsUrl);
-        }
+            if (url == null)
+                return;
 
-        private static void OpenUrl(string url)
-        {
             try
             {
                 Process.Start(url);
