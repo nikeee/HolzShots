@@ -6,13 +6,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using HolzShots.Composition;
-using HolzShots.Input;
 using HolzShots.IO;
-using HolzShots.Net;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace HolzShots
 {
