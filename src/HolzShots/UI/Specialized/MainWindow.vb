@@ -116,7 +116,7 @@ Namespace UI.Specialized
             End If
 
             If saveSettings Then Global.HolzShots.My.Settings.Save()
-            If openSettingsOnFinish Then OpenSettings()
+            If openSettingsOnFinish Then OpenPlugins()
         End Sub
 
 #End Region
@@ -149,9 +149,9 @@ Namespace UI.Specialized
 
 #Region "Open Windows"
 
-        Private Shared Sub OpenSettings()
-            If Not SettingsWindow.Instance.Visible Then
-                SettingsWindow.Instance.ShowDialog() ' Showdialog necessary?
+        Private Shared Sub OpenPlugins()
+            If Not PluginForm.Instance.Visible Then
+                PluginForm.Instance.Show()
             End If
         End Sub
         Private Shared Sub OpenAbout()
@@ -206,7 +206,7 @@ Namespace UI.Specialized
             StartWithWindowsToolStripMenuItem.Checked = EnvironmentEx.CurrentStartupManager.IsRegistered
         End Sub
         Private Sub PluginsToolStripMenuItemClick(sender As Object, e As EventArgs) Handles PluginsToolStripMenuItem.Click
-            OpenSettings()
+            OpenPlugins()
         End Sub
 
 #End Region
