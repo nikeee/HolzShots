@@ -1,6 +1,4 @@
 using System;
-using System.Diagnostics;
-using System.Text;
 using System.Windows.Forms;
 
 namespace HolzShots.Windows.Forms
@@ -14,5 +12,7 @@ namespace HolzShots.Windows.Forms
         {
             InitializeComponent();
         }
+
+        private void CloseButton_Click(object sender, EventArgs e) => Close();
     }
 }
