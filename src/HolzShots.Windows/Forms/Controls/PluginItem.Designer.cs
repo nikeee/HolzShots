@@ -29,37 +29,29 @@ namespace HolzShots.Windows.Forms.Controls
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.pluginNameLabel = new System.Windows.Forms.Label();
-            this.modelBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.pluginName = new System.Windows.Forms.Label();
             this.pluginAuthor = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.pluginVersion = new System.Windows.Forms.Label();
             this.pluginSettings = new HolzShots.Windows.Forms.ExplorerLinkLabel();
-            this.authorWebSite = new HolzShots.Windows.Forms.ExplorerLinkLabel();
+            this.authorWebsite = new HolzShots.Windows.Forms.ExplorerLinkLabel();
             this.reportBug = new HolzShots.Windows.Forms.ExplorerLinkLabel();
-            ((System.ComponentModel.ISupportInitialize)(this.modelBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // pluginNameLabel
             // 
-            this.pluginNameLabel.AutoSize = true;
-            this.pluginNameLabel.BackColor = System.Drawing.Color.Transparent;
-            this.pluginNameLabel.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.modelBindingSource, "Name", true));
-            this.pluginNameLabel.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.pluginNameLabel.Location = new System.Drawing.Point(3, 3);
-            this.pluginNameLabel.Name = "pluginNameLabel";
-            this.pluginNameLabel.Size = new System.Drawing.Size(115, 20);
-            this.pluginNameLabel.TabIndex = 1;
-            this.pluginNameLabel.Text = "Den Plugin - yo!";
-            // 
-            // modelBindingSource
-            // 
-            this.modelBindingSource.DataSource = typeof(HolzShots.Composition.IPluginMetadata);
+            this.pluginName.AutoSize = true;
+            this.pluginName.BackColor = System.Drawing.Color.Transparent;
+            this.pluginName.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.pluginName.Location = new System.Drawing.Point(3, 3);
+            this.pluginName.Name = "pluginNameLabel";
+            this.pluginName.Size = new System.Drawing.Size(115, 20);
+            this.pluginName.TabIndex = 1;
+            this.pluginName.Text = "Den Plugin - yo!";
             // 
             // pluginAuthor
             // 
             this.pluginAuthor.AutoSize = true;
             this.pluginAuthor.BackColor = System.Drawing.Color.Transparent;
-            this.pluginAuthor.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.modelBindingSource, "Author", true));
             this.pluginAuthor.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.pluginAuthor.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.pluginAuthor.Location = new System.Drawing.Point(4, 23);
@@ -70,17 +62,16 @@ namespace HolzShots.Windows.Forms.Controls
             // 
             // label1
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.modelBindingSource, "Version", true));
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.label1.Location = new System.Drawing.Point(235, 7);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(72, 15);
-            this.label1.TabIndex = 6;
-            this.label1.Text = "1.3.3.7";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.pluginVersion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pluginVersion.BackColor = System.Drawing.Color.Transparent;
+            this.pluginVersion.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.pluginVersion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.pluginVersion.Location = new System.Drawing.Point(235, 7);
+            this.pluginVersion.Name = "label1";
+            this.pluginVersion.Size = new System.Drawing.Size(72, 15);
+            this.pluginVersion.TabIndex = 6;
+            this.pluginVersion.Text = "1.3.3.7";
+            this.pluginVersion.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // pluginSettings
             // 
@@ -102,21 +93,21 @@ namespace HolzShots.Windows.Forms.Controls
             // 
             // authorWebSite
             // 
-            this.authorWebSite.ActiveLinkColor = System.Drawing.SystemColors.Highlight;
-            this.authorWebSite.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.authorWebSite.AutoSize = true;
-            this.authorWebSite.BackColor = System.Drawing.Color.Transparent;
-            this.authorWebSite.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.authorWebSite.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.authorWebSite.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.authorWebSite.LinkColor = System.Drawing.SystemColors.HotTrack;
-            this.authorWebSite.Location = new System.Drawing.Point(219, 23);
-            this.authorWebSite.Name = "authorWebSite";
-            this.authorWebSite.Size = new System.Drawing.Size(49, 15);
-            this.authorWebSite.TabIndex = 8;
-            this.authorWebSite.TabStop = true;
-            this.authorWebSite.Text = "Website";
-            this.authorWebSite.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.authorWebSite_LinkClicked);
+            this.authorWebsite.ActiveLinkColor = System.Drawing.SystemColors.Highlight;
+            this.authorWebsite.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.authorWebsite.AutoSize = true;
+            this.authorWebsite.BackColor = System.Drawing.Color.Transparent;
+            this.authorWebsite.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.authorWebsite.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.authorWebsite.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.authorWebsite.LinkColor = System.Drawing.SystemColors.HotTrack;
+            this.authorWebsite.Location = new System.Drawing.Point(219, 23);
+            this.authorWebsite.Name = "authorWebSite";
+            this.authorWebsite.Size = new System.Drawing.Size(49, 15);
+            this.authorWebsite.TabIndex = 8;
+            this.authorWebsite.TabStop = true;
+            this.authorWebsite.Text = "Website";
+            this.authorWebsite.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.authorWebSite_LinkClicked);
             // 
             // reportBug
             // 
@@ -142,14 +133,13 @@ namespace HolzShots.Windows.Forms.Controls
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.Controls.Add(this.pluginSettings);
-            this.Controls.Add(this.authorWebSite);
+            this.Controls.Add(this.authorWebsite);
             this.Controls.Add(this.reportBug);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.pluginVersion);
             this.Controls.Add(this.pluginAuthor);
-            this.Controls.Add(this.pluginNameLabel);
+            this.Controls.Add(this.pluginName);
             this.Name = "PluginItem";
             this.Size = new System.Drawing.Size(310, 45);
-            ((System.ComponentModel.ISupportInitialize)(this.modelBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -157,12 +147,11 @@ namespace HolzShots.Windows.Forms.Controls
 
         #endregion
 
-        internal System.Windows.Forms.Label pluginNameLabel;
+        internal System.Windows.Forms.Label pluginName;
         internal System.Windows.Forms.Label pluginAuthor;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label pluginVersion;
         internal ExplorerLinkLabel reportBug;
-        internal ExplorerLinkLabel authorWebSite;
+        internal ExplorerLinkLabel authorWebsite;
         internal ExplorerLinkLabel pluginSettings;
-        private System.Windows.Forms.BindingSource modelBindingSource;
     }
 }

@@ -8,20 +8,31 @@ namespace HolzShots.Windows.Forms.Controls
 {
     public partial class PluginItem : UserControl
     {
-        private IPluginMetadata _model = new DummyMetadata();
+        // We'd love to use WinForm's data binding here
+        // But it somehow inconvenient, since we cannot (???) disable a link label if a property is not set.
+        // Also, we don't care about two-way-databinding. We're only interested in displaying data of a single item that does not change.
+        private readonly IPluginMetadata _model;
 
-        public PluginItem() => InitializeComponent();
-
-        [Bindable(true)]
-        public IPluginMetadata DataSource
+        public PluginItem(IPluginMetadata info)
         {
-            get => _model;
-            set
-            {
-                _model = value ?? new DummyMetadata();
-                modelBindingSource.DataSource = _model;
-            }
+            InitializeComponent();
+            SuspendLayout();
+
+            InitializeModel(_model = DesignMode ? new DummyMetadata() : info);
+
+            ResumeLayout();
         }
+
+        private void InitializeModel(IPluginMetadata model)
+        {
+            pluginVersion.Text = model.Version.ToString();
+            pluginName.Text = model.Name;
+            pluginAuthor.Text = model.Author;
+
+            authorWebsite.Enabled = model.Website != null;
+            reportBug.Enabled = model.BugsUrl != null;
+        }
+
 
         private void pluginSettings_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {

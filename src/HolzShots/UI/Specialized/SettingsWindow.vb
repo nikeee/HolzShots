@@ -30,14 +30,10 @@ Namespace UI.Specialized
                 pluginListPanel.Controls.AddRange(metaArr)
                 _pluginInfoItemList.AddRange(metaArr)
 
-
-
-                For Each m In metadata
-                    Dim c = New HolzShots.Windows.Forms.Controls.PluginItem()
-                    c.DataBindings.Add(New Binding("DataSource", m, "", True))
-                    FlowLayoutPanel1.Controls.Add(c)
-                Next
-
+                metadata _
+                    .Select(Function(m) New Windows.Forms.Controls.PluginItem(m)) _
+                    .ToList() _
+                    .ForEach(AddressOf FlowLayoutPanel1.Controls.Add)
             End If
         End Sub
 
