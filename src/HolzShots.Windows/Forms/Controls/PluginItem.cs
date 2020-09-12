@@ -1,8 +1,11 @@
-using System.ComponentModel;
-using System.Windows.Forms;
-using HolzShots.Composition;
-using Semver;
+using System;
 using System.Diagnostics;
+using System.Drawing;
+using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
+using HolzShots.Composition;
+using HolzShots.IO;
+using Semver;
 
 namespace HolzShots.Windows.Forms.Controls
 {
@@ -13,6 +16,8 @@ namespace HolzShots.Windows.Forms.Controls
         // Also, we don't care about two-way-databinding. We're only interested in displaying data of a single item that does not change.
         private readonly IPluginMetadata _model;
 
+        #region Init and Model
+
         public PluginItem(IPluginMetadata info)
         {
             InitializeComponent();
@@ -20,7 +25,7 @@ namespace HolzShots.Windows.Forms.Controls
 
             InitializeModel(_model = DesignMode ? new DummyMetadata() : info);
 
-            ResumeLayout();
+            ResumeLayout(true);
         }
 
         private void InitializeModel(IPluginMetadata model)
@@ -33,10 +38,56 @@ namespace HolzShots.Windows.Forms.Controls
             reportBug.Enabled = model.BugsUrl != null;
         }
 
+        #endregion
+
+        #region Painting and UI State
+
+        private bool _isMouseHovering;
+
+        private static readonly VisualStyleRenderer _hotRenderer = new VisualStyleRenderer(VisualStyleElement.CreateElement("LISTVIEW", 6, 6));
+        private static readonly Pen _separatorPen = new Pen(Color.FromArgb(0xff, 0xcc, 0xcc, 0xcc));
+        private const int BorderPadding = 5;
+        private const int HotMargin = BorderPadding;
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            Debug.Assert(e != null);
+
+            if (_isMouseHovering)
+            {
+                var highlightRegion = new Rectangle(ClientRectangle.X + HotMargin, ClientRectangle.Y, ClientRectangle.Width - HotMargin * 2, ClientRectangle.Height - 1);
+                _hotRenderer.DrawBackground(e.Graphics, highlightRegion);
+            }
+
+            e.Graphics.DrawLine(_separatorPen, new Point(0 + BorderPadding, Height - 1), new Point(Width - 1 - BorderPadding, Height - 1));
+        }
+
+        protected override void OnMouseEnter(EventArgs e) => UpdateHoverState();
+        protected override void OnMouseLeave(EventArgs e) => UpdateHoverState();
+
+        private void UpdateHoverState()
+        {
+            _isMouseHovering = ClientRectangle.Contains(PointToClient(MousePosition));
+            Invalidate(false);
+        }
+
+        #endregion
 
         private void pluginSettings_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            // TODO
+            // TODO: Fix Plugin Settings (we don't seem to support them now)
+            // In VB, it was:
+
+            // If _pluginMetadata.SettingsMode <> SettingsModes.NoSettings Then
+            //     Try
+            //         Dim dialog = _pluginMetadata.SettingsDialog
+            //         If dialog IsNot Nothing Then
+            //             dialog.ShowDialog(Me)
+            //         End If
+            //     Catch ex As Exception
+            //         HumanInterop.ErrorWhileOpeningSettingsDialog(ex)
+            //     End Try
+            // End If
         }
 
         private void authorWebSite_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) => OpenUrlIfPresent(_model?.Website);
@@ -44,17 +95,8 @@ namespace HolzShots.Windows.Forms.Controls
 
         private static void OpenUrlIfPresent(string /* ? */ url)
         {
-            if (url == null)
-                return;
-
-            try
-            {
-                Process.Start(url);
-            }
-            catch
-            {
-                Trace.WriteLine("Failed to open url");
-            }
+            if (url != null)
+                HolzShotsPaths.OpenLink(url);
         }
 
         private class DummyMetadata : IPluginMetadata
