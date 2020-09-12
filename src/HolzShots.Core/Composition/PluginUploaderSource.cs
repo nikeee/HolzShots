@@ -1,8 +1,7 @@
-using HolzShots.Net;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using HolzShots.Net;
 
 namespace HolzShots.Composition
 {

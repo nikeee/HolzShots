@@ -1,7 +1,7 @@
-using HolzShots.Drawing;
 using System;
 using System.Diagnostics;
 using System.Drawing;
+using HolzShots.Drawing;
 
 namespace HolzShots
 {

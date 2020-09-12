@@ -1,5 +1,5 @@
-using HolzShots.Composition;
 using System;
+using System.Composition;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Net.Http.Handlers;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Composition;
+using HolzShots.Composition;
 
 namespace HolzShots.Net
 {
