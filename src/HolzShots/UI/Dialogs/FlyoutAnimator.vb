@@ -1,9 +1,7 @@
-Imports System.Linq
 Imports HolzShots.Threading
 Imports HolzShots.UI.Transitions
 Imports HolzShots.UI.Transitions.TransitionTypes
-Imports HolzShots.Interop
-Imports HolzShots.Interop.NativeTypes
+Imports HolzShots.Windows.Forms
 
 Namespace UI.Dialogs
 
@@ -25,11 +23,11 @@ Namespace UI.Dialogs
 
         Public Sub AnimateIn(duration As Integer, Optional completedHandler As Action = Nothing)
 
-            _taskBarTopOrBottom = TaskBar.Position = Native.Shell32.TaskbarPosition.Bottom OrElse TaskBar.Position = Native.Shell32.TaskbarPosition.Top
+            _taskBarTopOrBottom = TaskbarWindow.Instance.Position = Native.Shell32.TaskbarPosition.Bottom OrElse TaskbarWindow.Instance.Position = Native.Shell32.TaskbarPosition.Top
             _screenRectangle = Screen.PrimaryScreen.WorkingArea
 
             Dim startX As Integer = _screenRectangle.X + _screenRectangle.Width - _target.Width - 10
-            Dim startY As Integer = _screenRectangle.Y + _screenRectangle.Height - _target.Height + If(_taskBarTopOrBottom, CInt(TaskBar.Rectangle.Height / 2), 15)
+            Dim startY As Integer = _screenRectangle.Y + _screenRectangle.Height - _target.Height + If(_taskBarTopOrBottom, CInt(TaskbarWindow.Instance.Rectangle.Height / 2), 15)
 
             If CurrentVisibleFlyouts.Count = 0 OrElse CurrentVisibleFlyouts.Count > 3 Then
                 _instanceOffsetY = _screenRectangle.Y + _screenRectangle.Height - _target.Height

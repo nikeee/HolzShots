@@ -1,6 +1,6 @@
-using HolzShots.NativeTypes;
 using System;
 using System.Drawing;
+using HolzShots.NativeTypes;
 
 namespace HolzShots.Drawing
 {

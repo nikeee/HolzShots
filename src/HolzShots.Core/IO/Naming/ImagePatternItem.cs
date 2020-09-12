@@ -33,7 +33,7 @@ namespace HolzShots.IO.Naming
 
         public override string FormatMetadata(FileMetadata metadata)
         {
-            switch(InfoType)
+            switch (InfoType)
             {
                 case ImageInfoType.Width:
                     return metadata.Dimensions.Width.ToString();
