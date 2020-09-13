@@ -18,7 +18,7 @@ Namespace UI.Specialized
         Private Shared _applicationStarted As DateTime
         Public Shared CommandManager As CommandManager(Of HSSettings)
 
-        Private Sub HideForm()
+        Private Sub HideForm() Handles Me.Shown
             Opacity = 0
             Visible = False
             ShowInTaskbar = False
@@ -79,7 +79,7 @@ Namespace UI.Specialized
             CommandManager.RegisterCommand(New EditImageCommand())
         End Sub
 
-        Private Async Sub MainWindowLoad(ByVal sender As Object, ByVal e As EventArgs) Handles MyBase.Load
+        Private Async Sub MainWindowLoad() Handles MyBase.Load
             HideForm()
 
             EnvironmentEx.CurrentStartupManager.FixWorkingDirectory()
@@ -121,7 +121,7 @@ Namespace UI.Specialized
 
 #End Region
 
-        Private Sub ExitApplication()
+        Private Sub ExitApplication() Handles ExitToolStripMenuItem.Click
             _forceClose = True
             Try
                 ' We have to dispose here
@@ -147,20 +147,15 @@ Namespace UI.Specialized
             End Try
         End Sub
 
-#Region "Open Windows"
-
-        Private Shared Sub OpenSettings()
+        Private Shared Sub OpenSettings() Handles PluginsToolStripMenuItem.Click
             If Not SettingsWindow.Instance.Visible Then
                 SettingsWindow.Instance.ShowDialog() ' Showdialog necessary?
             End If
         End Sub
-        Private Shared Sub OpenAbout()
+        Private Shared Sub OpenAbout() Handles AboutToolStripMenuItem.Click
             AboutForm.Instance.Show()
         End Sub
-
-#End Region
-#Region "UI Events"
-        Private Async Sub TrayIconMouseDoubleClick(ByVal sender As Object, ByVal e As MouseEventArgs) Handles TrayIcon.MouseDoubleClick
+        Private Shared Async Sub TriggerTrayIconDoubleClickCommand() Handles TrayIcon.MouseDoubleClick
             Dim commandToRun = UserSettings.Current.TrayIconDoubleClickCommand
 
             If commandToRun Is Nothing Then Return
@@ -169,35 +164,22 @@ Namespace UI.Specialized
                 Await CommandManager.Dispatch(commandToRun, UserSettings.Current).ConfigureAwait(True) ' Can throw exceptions and silently kill the application
             End If
         End Sub
-        Private Sub MainWindowShown(sender As Object, e As EventArgs) Handles Me.Shown
-            HideForm()
-        End Sub
-
-#End Region
-#Region "Tray Menu Actions"
-
-        Private Sub ExitToolStripMenuItemClick(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem.Click
-            ExitApplication()
-        End Sub
-        Private Async Sub OpenSettingsjsonToolStripMenuItemClick(sender As Object, e As EventArgs) Handles OpenSettingsjsonToolStripMenuItem.Click
+        Private Shared Async Sub OpenSettingsJson() Handles OpenSettingsjsonToolStripMenuItem.Click
             Await CommandManager.Dispatch(Of OpenSettingsJsonCommand)(UserSettings.Current).ConfigureAwait(True)
         End Sub
-        Private Async Sub SelectAreaToolStripMenuItemClick(sender As Object, e As EventArgs) Handles SelectAreaToolStripMenuItem.Click
+        Private Shared Async Sub SelectArea() Handles SelectAreaToolStripMenuItem.Click
             Await CommandManager.Dispatch(Of SelectAreaCommand)(UserSettings.Current).ConfigureAwait(True)
         End Sub
-        Private Async Sub OpenImageToolStripMenuItemClick(sender As Object, e As EventArgs) Handles OpenImageToolStripMenuItem.Click
+        Private Shared Async Sub OpenImage() Handles OpenImageToolStripMenuItem.Click
             Await CommandManager.Dispatch(Of EditImageCommand)(UserSettings.Current).ConfigureAwait(True)
         End Sub
-        Private Async Sub UploadImageToolStripMenuItemClick(sender As Object, e As EventArgs) Handles UploadImageToolStripMenuItem.Click
+        Private Shared Async Sub UploadImage() Handles UploadImageToolStripMenuItem.Click
             Await CommandManager.Dispatch(Of UploadImageCommand)(UserSettings.Current).ConfigureAwait(True)
         End Sub
-        Private Sub AboutToolStripMenuItemClick(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem.Click
-            OpenAbout()
-        End Sub
-        Private Sub FeedbackAndIssuesToolStripMenuItemClick(sender As Object, e As EventArgs) Handles FeedbackAndIssuesToolStripMenuItem.Click
+        Private Shared Sub OpenIssues() Handles FeedbackAndIssuesToolStripMenuItem.Click
             IO.HolzShotsPaths.OpenLink(LibraryInformation.IssuesUrl)
         End Sub
-        Private Sub StartWithWindowsToolStripMenuItemClick(sender As Object, e As EventArgs) Handles StartWithWindowsToolStripMenuItem.Click
+        Private Sub ToogleStartWithWindows() Handles StartWithWindowsToolStripMenuItem.Click
             If EnvironmentEx.CurrentStartupManager.IsRegistered Then
                 EnvironmentEx.CurrentStartupManager.Unregister()
             Else
@@ -205,10 +187,6 @@ Namespace UI.Specialized
             End If
             StartWithWindowsToolStripMenuItem.Checked = EnvironmentEx.CurrentStartupManager.IsRegistered
         End Sub
-        Private Sub PluginsToolStripMenuItemClick(sender As Object, e As EventArgs) Handles PluginsToolStripMenuItem.Click
-            OpenSettings()
-        End Sub
 
-#End Region
     End Class
 End Namespace
