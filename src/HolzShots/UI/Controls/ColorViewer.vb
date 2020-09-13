@@ -24,7 +24,7 @@ Namespace UI.Controls
             End Set
         End Property
 
-        Private Sub ColorViewerClick(ByVal sender As Object, ByVal e As EventArgs) Handles Me.Click
+        Private Sub ColorViewerClick() Handles Me.Click
             If Not Enabled Then Exit Sub
 
             Using cfd As New ColorDialog()
@@ -51,7 +51,7 @@ Namespace UI.Controls
         Protected Shared ReadOnly HoverBorderPen As Pen = New Pen(Color.FromArgb(255, 100, 165, 231))
         Protected Shared ReadOnly HoverInnerBorderPen As Pen = New Pen(Color.FromArgb(203, 228, 253))
 
-        Protected Overrides Sub OnPaint(pe As System.Windows.Forms.PaintEventArgs)
+        Protected Overrides Sub OnPaint(pe As PaintEventArgs)
             If ContainsMouse Then
                 pe.Graphics.DrawRectangle(HoverBorderPen, 0, 0, Width - 1, Height - 1)
                 pe.Graphics.DrawRectangle(HoverInnerBorderPen, 1, 1, Width - 3, Height - 3)

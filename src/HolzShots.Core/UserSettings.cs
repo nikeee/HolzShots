@@ -13,7 +13,7 @@ namespace HolzShots
 {
     public static class UserSettings
     {
-        public static SettingsManager<HSSettings> Manager { get; private set; } = null;
+        public static SettingsManager<HSSettings> Manager { get; private set; }
         public static HSSettings Current => Manager.CurrentSettings;
 
         public static async Task Load(ISynchronizeInvoke synchronizingObject)
@@ -23,7 +23,6 @@ namespace HolzShots
             await Manager.InitializeSettings().ConfigureAwait(false);
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage", "AsyncFixer01:Unnecessary async/await usage", Justification = "using statement")]
         public static async Task CreateUserSettingsIfNotPresent()
         {
             if (File.Exists(HolzShotsPaths.UserSettingsFilePath))
