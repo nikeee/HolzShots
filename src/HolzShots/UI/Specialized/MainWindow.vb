@@ -10,13 +10,22 @@ Namespace UI.Specialized
     Friend Class MainWindow
 
         Public Shared ReadOnly Property Instance As MainWindow = New MainWindow()
+        Private Shared _commandManager As CommandManager(Of HSSettings)
+        Public Shared Property CommandManager As CommandManager(Of HSSettings)
+            Get
+                Return _commandManager
+            End Get
+            Private Set(value As CommandManager(Of HSSettings))
+                _commandManager = value
+            End Set
+        End Property
+
 
         Private _forceClose As Boolean = False
 
         Private _keyboardHook As KeyboardHook
         Private _actionContainer As HolzShotsActionCollection
         Private Shared _applicationStarted As DateTime
-        Public Shared CommandManager As CommandManager(Of HSSettings)
 
         Private Sub HideForm() Handles Me.Shown
             Opacity = 0
