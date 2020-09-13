@@ -19,21 +19,9 @@ Namespace UI.Specialized
 
         Private _activator As PanelActivator
 
-#Region "Properties"
-
-        ' TODO: Remove?
-        Friend ReadOnly Property CurrentTool As PaintPanel.ShotEditorTool
-            Get
-                'Return ThePanel.CurrentTool
-            End Get
-        End Property
-
-        Friend Property Screenshot As Screenshot
-
         Private ReadOnly _imageHoster As UploaderEntry ' ?
         Private ReadOnly _settingsContext As HSSettings
-
-#End Region
+        Private ReadOnly _screenshot As Screenshot
 
 #Region "Win7/8-Thumbnails"
 
@@ -69,12 +57,13 @@ Namespace UI.Specialized
 
 #Region "Ctors"
 
-        Public Sub New(ByVal screenshot As Screenshot, settingsContext As HSSettings)
+        Public Sub New(screenshot As Screenshot, settingsContext As HSSettings)
             Debug.Assert(screenshot IsNot Nothing)
             Debug.Assert(screenshot.Image IsNot Nothing)
             Debug.Assert(settingsContext IsNot Nothing)
 
             _settingsContext = settingsContext
+            _screenshot = screenshot
 
             InitializeComponent()
 
@@ -85,9 +74,9 @@ Namespace UI.Specialized
                 Text = settingsContext.ShotEditorTitle
             End If
 
-            Me.Screenshot = screenshot
-
             _imageHoster = UserSettings.GetImageServiceForSettingsContext(settingsContext, HolzShots.My.Application.Uploaders)
+
+            SuspendLayout()
 
             InitializeThumbnailToolbar()
 
@@ -133,7 +122,6 @@ Namespace UI.Specialized
 
             DrawCursor.Visible = screenshot.Source <> ScreenshotSource.Selected AndAlso screenshot.Source <> ScreenshotSource.Unknown
 
-
             UploadToHoster.Enabled = _imageHoster?.Metadata IsNot Nothing
             UploadToHoster.ToolTipText = If(
                             _imageHoster?.Metadata IsNot Nothing,
@@ -146,6 +134,8 @@ Namespace UI.Specialized
             ToolStrip1.Renderer = renderer
             EditStrip.Renderer = renderer
             CopyPrintToolStrip.Renderer = renderer
+
+            ResumeLayout(True)
         End Sub
 
 #End Region
@@ -153,7 +143,7 @@ Namespace UI.Specialized
 #Region "Form Events"
 
         Private Sub ShotShowerLoad() Handles MyBase.Load
-            ThePanel.Initialize(Screenshot)
+            ThePanel.Initialize(_screenshot)
             LoadToolSettings()
         End Sub
 
@@ -397,226 +387,182 @@ Namespace UI.Specialized
             _activator.AddPanel(PaintPanel.ShotEditorTool.Censor, CensorSettingsPanel)
         End Sub
 
-        Private Sub PipettenToolClick(ByVal sender As Object, ByVal e As EventArgs) Handles PipettenTool.Click
-            If CurrentTool = PaintPanel.ShotEditorTool.Pipette Then
-                ResetTools()
-            Else
-                ThePanel.CurrentTool = PaintPanel.ShotEditorTool.Pipette
-                MarkerTool.Checked = False
-                CensorTool.Checked = False
-                TextToolButton.Checked = False
-                CroppingTool.Checked = False
-                ArrowTool.Checked = False
-                EraserTool.Checked = False
-                BlurTool.Checked = False
-                EllipseTool.Checked = False
-                PipettenTool.Checked = True
-                BrightenTool.Checked = False
-                _activator.HideAll()
-            End If
+        Private Sub PipettenToolClick() Handles PipettenTool.Click
+            ThePanel.CurrentTool = PaintPanel.ShotEditorTool.Pipette
+            MarkerTool.Checked = False
+            CensorTool.Checked = False
+            TextToolButton.Checked = False
+            CroppingTool.Checked = False
+            ArrowTool.Checked = False
+            EraserTool.Checked = False
+            BlurTool.Checked = False
+            EllipseTool.Checked = False
+            PipettenTool.Checked = True
+            BrightenTool.Checked = False
+            _activator.HideAll()
         End Sub
 
-        Private Sub ScaleToolClick(ByVal sender As Object, ByVal e As EventArgs) Handles ScaleTool.Click
-            If CurrentTool = PaintPanel.ShotEditorTool.Scale Then
-                ResetTools()
-            Else
-                ThePanel.CurrentTool = PaintPanel.ShotEditorTool.Scale
-                MarkerTool.Checked = False
-                CensorTool.Checked = False
-                TextToolButton.Checked = False
-                CroppingTool.Checked = False
-                ArrowTool.Checked = False
-                EraserTool.Checked = False
-                BlurTool.Checked = False
-                EllipseTool.Checked = False
-                PipettenTool.Checked = False
-                BrightenTool.Checked = False
-                ScaleTool.Checked = False
-                _activator.HideAll()
-            End If
+        Private Sub ScaleToolClick() Handles ScaleTool.Click
+            ThePanel.CurrentTool = PaintPanel.ShotEditorTool.Scale
+            MarkerTool.Checked = False
+            CensorTool.Checked = False
+            TextToolButton.Checked = False
+            CroppingTool.Checked = False
+            ArrowTool.Checked = False
+            EraserTool.Checked = False
+            BlurTool.Checked = False
+            EllipseTool.Checked = False
+            PipettenTool.Checked = False
+            BrightenTool.Checked = False
+            ScaleTool.Checked = False
+            _activator.HideAll()
         End Sub
 
-        Private Sub CircleToolClick(ByVal sender As Object, ByVal e As EventArgs) Handles EllipseTool.Click
-            If CurrentTool = PaintPanel.ShotEditorTool.Ellipse Then
-                ResetTools()
-            Else
-                ThePanel.CurrentTool = PaintPanel.ShotEditorTool.Ellipse
-                _activator.ActivateSettingsPanel(ThePanel.CurrentTool)
-                MarkerTool.Checked = False
-                CensorTool.Checked = False
-                TextToolButton.Checked = False
-                CroppingTool.Checked = False
-                ArrowTool.Checked = False
-                EraserTool.Checked = False
-                BlurTool.Checked = False
-                EllipseTool.Checked = True
-                PipettenTool.Checked = False
-                BrightenTool.Checked = False
-                ScaleTool.Checked = False
-            End If
+        Private Sub CircleToolClick() Handles EllipseTool.Click
+            ThePanel.CurrentTool = PaintPanel.ShotEditorTool.Ellipse
+            _activator.ActivateSettingsPanel(ThePanel.CurrentTool)
+            MarkerTool.Checked = False
+            CensorTool.Checked = False
+            TextToolButton.Checked = False
+            CroppingTool.Checked = False
+            ArrowTool.Checked = False
+            EraserTool.Checked = False
+            BlurTool.Checked = False
+            EllipseTool.Checked = True
+            PipettenTool.Checked = False
+            BrightenTool.Checked = False
+            ScaleTool.Checked = False
         End Sub
 
-        Private Sub TextToolButtonClick(ByVal sender As Object, ByVal e As EventArgs) Handles TextToolButton.Click
-            If CurrentTool = PaintPanel.ShotEditorTool.Text Then
-                ResetTools()
-            Else
-                ThePanel.CurrentTool = PaintPanel.ShotEditorTool.Text
-                MarkerTool.Checked = False
-                CensorTool.Checked = False
-                TextToolButton.Checked = True
-                CroppingTool.Checked = False
-                ArrowTool.Checked = False
-                EraserTool.Checked = False
-                BlurTool.Checked = False
-                EllipseTool.Checked = False
-                PipettenTool.Checked = False
-                BrightenTool.Checked = False
-                ScaleTool.Checked = False
-                _activator.HideAll()
-            End If
+        Private Sub TextToolButtonClick() Handles TextToolButton.Click
+            ThePanel.CurrentTool = PaintPanel.ShotEditorTool.Text
+            MarkerTool.Checked = False
+            CensorTool.Checked = False
+            TextToolButton.Checked = True
+            CroppingTool.Checked = False
+            ArrowTool.Checked = False
+            EraserTool.Checked = False
+            BlurTool.Checked = False
+            EllipseTool.Checked = False
+            PipettenTool.Checked = False
+            BrightenTool.Checked = False
+            ScaleTool.Checked = False
+            _activator.HideAll()
         End Sub
 
-        Private Sub EraserButtonClick(ByVal sender As Object, ByVal e As EventArgs) Handles EraserTool.Click
-            If CurrentTool = PaintPanel.ShotEditorTool.Eraser Then
-                ResetTools()
-            Else
-                ThePanel.CurrentTool = PaintPanel.ShotEditorTool.Eraser
-                _activator.ActivateSettingsPanel(ThePanel.CurrentTool)
-                MarkerTool.Checked = False
-                CensorTool.Checked = False
-                TextToolButton.Checked = False
-                CroppingTool.Checked = False
-                ArrowTool.Checked = False
-                EraserTool.Checked = True
-                BlurTool.Checked = False
-                EllipseTool.Checked = False
-                PipettenTool.Checked = False
-                BrightenTool.Checked = False
-                ScaleTool.Checked = False
-            End If
+        Private Sub EraserButtonClick() Handles EraserTool.Click
+            ThePanel.CurrentTool = PaintPanel.ShotEditorTool.Eraser
+            _activator.ActivateSettingsPanel(ThePanel.CurrentTool)
+            MarkerTool.Checked = False
+            CensorTool.Checked = False
+            TextToolButton.Checked = False
+            CroppingTool.Checked = False
+            ArrowTool.Checked = False
+            EraserTool.Checked = True
+            BlurTool.Checked = False
+            EllipseTool.Checked = False
+            PipettenTool.Checked = False
+            BrightenTool.Checked = False
+            ScaleTool.Checked = False
         End Sub
 
-        Private Sub CroppingToolClick(ByVal sender As Object, ByVal e As EventArgs) Handles CroppingTool.Click
-            If CurrentTool = PaintPanel.ShotEditorTool.Crop Then
-                ResetTools()
-            Else
-                ThePanel.CurrentTool = PaintPanel.ShotEditorTool.Crop
-                MarkerTool.Checked = False
-                CensorTool.Checked = False
-                TextToolButton.Checked = False
-                CroppingTool.Checked = True
-                ArrowTool.Checked = False
-                EraserTool.Checked = False
-                BlurTool.Checked = False
-                EllipseTool.Checked = False
-                PipettenTool.Checked = False
-                BrightenTool.Checked = False
-                ScaleTool.Checked = False
-                _activator.HideAll()
-            End If
+        Private Sub CroppingToolClick() Handles CroppingTool.Click
+            ThePanel.CurrentTool = PaintPanel.ShotEditorTool.Crop
+            MarkerTool.Checked = False
+            CensorTool.Checked = False
+            TextToolButton.Checked = False
+            CroppingTool.Checked = True
+            ArrowTool.Checked = False
+            EraserTool.Checked = False
+            BlurTool.Checked = False
+            EllipseTool.Checked = False
+            PipettenTool.Checked = False
+            BrightenTool.Checked = False
+            ScaleTool.Checked = False
+            _activator.HideAll()
         End Sub
 
-        Private Sub ArrowToolClick(ByVal sender As Object, ByVal e As EventArgs) Handles ArrowTool.Click
-            If CurrentTool = PaintPanel.ShotEditorTool.Arrow Then
-                ResetTools()
-            Else
-                ThePanel.CurrentTool = PaintPanel.ShotEditorTool.Arrow
-                _activator.ActivateSettingsPanel(ThePanel.CurrentTool)
-                MarkerTool.Checked = False
-                CensorTool.Checked = False
-                TextToolButton.Checked = False
-                CroppingTool.Checked = False
-                ArrowTool.Checked = True
-                EraserTool.Checked = False
-                BlurTool.Checked = False
-                EllipseTool.Checked = False
-                PipettenTool.Checked = False
-                BrightenTool.Checked = False
-                ScaleTool.Checked = False
-            End If
+        Private Sub ArrowToolClick() Handles ArrowTool.Click
+            ThePanel.CurrentTool = PaintPanel.ShotEditorTool.Arrow
+            _activator.ActivateSettingsPanel(ThePanel.CurrentTool)
+            MarkerTool.Checked = False
+            CensorTool.Checked = False
+            TextToolButton.Checked = False
+            CroppingTool.Checked = False
+            ArrowTool.Checked = True
+            EraserTool.Checked = False
+            BlurTool.Checked = False
+            EllipseTool.Checked = False
+            PipettenTool.Checked = False
+            BrightenTool.Checked = False
+            ScaleTool.Checked = False
         End Sub
 
-        Private Sub ZensursulaClick(ByVal sender As Object, ByVal e As EventArgs) Handles CensorTool.Click
-            If CurrentTool = PaintPanel.ShotEditorTool.Censor Then
-                ResetTools()
-            Else
-                ThePanel.CurrentTool = PaintPanel.ShotEditorTool.Censor
-                _activator.ActivateSettingsPanel(ThePanel.CurrentTool)
-                CensorTool.Checked = True
-                MarkerTool.Checked = False
-                TextToolButton.Checked = False
-                CroppingTool.Checked = False
-                ArrowTool.Checked = False
-                EraserTool.Checked = False
-                BlurTool.Checked = False
-                EllipseTool.Checked = False
-                PipettenTool.Checked = False
-                BrightenTool.Checked = False
-                ScaleTool.Checked = False
-            End If
+        Private Sub ZensursulaClick() Handles CensorTool.Click
+            ThePanel.CurrentTool = PaintPanel.ShotEditorTool.Censor
+            _activator.ActivateSettingsPanel(ThePanel.CurrentTool)
+            CensorTool.Checked = True
+            MarkerTool.Checked = False
+            TextToolButton.Checked = False
+            CroppingTool.Checked = False
+            ArrowTool.Checked = False
+            EraserTool.Checked = False
+            BlurTool.Checked = False
+            EllipseTool.Checked = False
+            PipettenTool.Checked = False
+            BrightenTool.Checked = False
+            ScaleTool.Checked = False
         End Sub
 
-        Private Sub HighlightClick(ByVal sender As Object, ByVal e As EventArgs) Handles MarkerTool.Click
-            If CurrentTool = PaintPanel.ShotEditorTool.Marker Then
-                ResetTools()
-            Else
-                ThePanel.CurrentTool = PaintPanel.ShotEditorTool.Marker
-                _activator.ActivateSettingsPanel(ThePanel.CurrentTool)
-                MarkerTool.Checked = True
-                CensorTool.Checked = False
-                TextToolButton.Checked = False
-                CroppingTool.Checked = False
-                ArrowTool.Checked = False
-                EraserTool.Checked = False
-                BlurTool.Checked = False
-                EllipseTool.Checked = False
-                PipettenTool.Checked = False
-                BrightenTool.Checked = False
-                ScaleTool.Checked = False
-            End If
+        Private Sub HighlightClick() Handles MarkerTool.Click
+            ThePanel.CurrentTool = PaintPanel.ShotEditorTool.Marker
+            _activator.ActivateSettingsPanel(ThePanel.CurrentTool)
+            MarkerTool.Checked = True
+            CensorTool.Checked = False
+            TextToolButton.Checked = False
+            CroppingTool.Checked = False
+            ArrowTool.Checked = False
+            EraserTool.Checked = False
+            BlurTool.Checked = False
+            EllipseTool.Checked = False
+            PipettenTool.Checked = False
+            BrightenTool.Checked = False
+            ScaleTool.Checked = False
         End Sub
 
-        Private Sub PixelateAreaClick(ByVal sender As Object, ByVal e As EventArgs) Handles BlurTool.Click
-            If CurrentTool = PaintPanel.ShotEditorTool.Blur Then
-                ResetTools()
-            Else
-                ThePanel.CurrentTool = PaintPanel.ShotEditorTool.Blur
-                _activator.ActivateSettingsPanel(ThePanel.CurrentTool)
-                MarkerTool.Checked = False
-                CensorTool.Checked = False
-                TextToolButton.Checked = False
-                CroppingTool.Checked = False
-                ArrowTool.Checked = False
-                EraserTool.Checked = False
-                BlurTool.Checked = True
-                EllipseTool.Checked = False
-                PipettenTool.Checked = False
-                BrightenTool.Checked = False
-                ScaleTool.Checked = False
-            End If
+        Private Sub PixelateAreaClick() Handles BlurTool.Click
+            ThePanel.CurrentTool = PaintPanel.ShotEditorTool.Blur
+            _activator.ActivateSettingsPanel(ThePanel.CurrentTool)
+            MarkerTool.Checked = False
+            CensorTool.Checked = False
+            TextToolButton.Checked = False
+            CroppingTool.Checked = False
+            ArrowTool.Checked = False
+            EraserTool.Checked = False
+            BlurTool.Checked = True
+            EllipseTool.Checked = False
+            PipettenTool.Checked = False
+            BrightenTool.Checked = False
+            ScaleTool.Checked = False
         End Sub
 
-        Private Sub BrightenToolClick(ByVal sender As Object, ByVal e As EventArgs) Handles BrightenTool.Click
-            If CurrentTool = PaintPanel.ShotEditorTool.Brighten Then
-                ResetTools()
-            Else
-                ThePanel.CurrentTool = PaintPanel.ShotEditorTool.Brighten
-                _activator.ActivateSettingsPanel(ThePanel.CurrentTool)
-                MarkerTool.Checked = False
-                CensorTool.Checked = False
-                TextToolButton.Checked = False
-                CroppingTool.Checked = False
-                ArrowTool.Checked = False
-                EraserTool.Checked = False
-                BlurTool.Checked = False
-                EllipseTool.Checked = False
-                PipettenTool.Checked = False
-                BrightenTool.Checked = True
-                ScaleTool.Checked = False
-            End If
+        Private Sub BrightenToolClick() Handles BrightenTool.Click
+            ThePanel.CurrentTool = PaintPanel.ShotEditorTool.Brighten
+            _activator.ActivateSettingsPanel(ThePanel.CurrentTool)
+            MarkerTool.Checked = False
+            CensorTool.Checked = False
+            TextToolButton.Checked = False
+            CroppingTool.Checked = False
+            ArrowTool.Checked = False
+            EraserTool.Checked = False
+            BlurTool.Checked = False
+            EllipseTool.Checked = False
+            PipettenTool.Checked = False
+            BrightenTool.Checked = True
+            ScaleTool.Checked = False
         End Sub
 
-        Private Sub UndoStuffClick(ByVal sender As Object, ByVal e As EventArgs) Handles UndoStuff.Click
+        Private Sub UndoStuffClick() Handles UndoStuff.Click
             ThePanel.Undo()
         End Sub
 
