@@ -251,7 +251,7 @@ Namespace UI.Specialized
                 End If
             End If
             BlackWhiteTracker.Value = v
-            BlackWhiteTrackerScroll(Nothing, Nothing)
+            BlackWhiteTrackerScroll()
         End Sub
 
 #End Region
@@ -681,7 +681,7 @@ Namespace UI.Specialized
             MouseInfoLabel.Text = $"{e.X}, {e.Y}px"
         End Sub
 
-        Private Sub BlackWhiteTrackerScroll(sender As Object, e As EventArgs) Handles BlackWhiteTracker.Scroll
+        Private Sub BlackWhiteTrackerScroll() Handles BlackWhiteTracker.Scroll
             If BlackWhiteTracker.Value >= 0 AndAlso BlackWhiteTracker.Value <= 255 Then
                 ThePanel.BrightenColor = Color.FromArgb(255 - BlackWhiteTracker.Value, 0, 0, 0)
                 BigColorViewer1.Color = ThePanel.BrightenColor
