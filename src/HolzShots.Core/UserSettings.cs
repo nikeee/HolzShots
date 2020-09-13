@@ -13,7 +13,7 @@ namespace HolzShots
 {
     public static class UserSettings
     {
-        public static SettingsManager<HSSettings> Manager { get; private set; } = null;
+        public static SettingsManager<HSSettings> Manager { get; private set; }
         public static HSSettings Current => Manager.CurrentSettings;
 
         public static async Task Load(ISynchronizeInvoke synchronizingObject)
