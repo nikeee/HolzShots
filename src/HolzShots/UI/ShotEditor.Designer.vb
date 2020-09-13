@@ -757,6 +757,7 @@ Namespace UI.Specialized
             'ArrowWidthSlider
             '
             Me.ArrowWidthSlider.Location = New System.Drawing.Point(84, 3)
+            Me.ArrowWidthSlider.Minimum = 0
             Me.ArrowWidthSlider.Maximum = 100
             Me.ArrowWidthSlider.Name = "ArrowWidthSlider"
             Me.ArrowWidthSlider.Size = New System.Drawing.Size(112, 45)

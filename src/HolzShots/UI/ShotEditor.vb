@@ -207,10 +207,9 @@ Namespace UI.Specialized
         End Sub
 
         Private Sub LoadArrow()
-            ArrowColorviewer.Color = HolzShots.My.Settings.ArrowColor
+            ArrowColorviewer.Color = My.Settings.ArrowColor
             ThePanel.ArrowColor = ArrowColorviewer.Color
-            ArrowWidthSlider.Value = If(HolzShots.My.Settings.ArrowWidth <= ArrowWidthSlider.Maximum,
-                                        If(HolzShots.My.Settings.ArrowWidth >= ArrowWidthSlider.Minimum, HolzShots.My.Settings.ArrowWidth, 0), 0)
+            ArrowWidthSlider.Value = MathEx.Clamp(My.Settings.ArrowWidth, ArrowWidthSlider.Minimum, ArrowWidthSlider.Maximum)
             ArrowWidthSliderScroll()
         End Sub
 
@@ -364,9 +363,7 @@ Namespace UI.Specialized
 
             HolzShots.My.Settings.BlurFactor = ThePanel.BlurFactor
 
-
             HolzShots.My.Settings.Save()
-
         End Sub
 
         Private Sub ResetTools()
