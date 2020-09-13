@@ -368,23 +368,23 @@ Namespace UI.Controls
             End If
         End Sub
 
-        Private Sub PaintPanelDisposed(ByVal sender As Object, ByVal e As EventArgs) Handles Me.Disposed
+        Private Sub PaintPanelDisposed() Handles Me.Disposed
             For Each i In _undoStack
                 Try
                     i.Dispose()
-                Catch Ex As Exception
+                Catch ex As Exception
                     Debugger.Break()
                     Debug.Assert(False)
                 End Try
             Next
         End Sub
 
-        Private Sub PaintPanelLoad(ByVal sender As Object, ByVal e As EventArgs) Handles Me.Load
+        Private Sub PaintPanelLoad() Handles Me.Load
             BackColor = Color.FromArgb(207, 217, 231)
             RawBox.Focus()
         End Sub
 
-        Private Sub TextOkClick(ByVal sender As Object, ByVal e As EventArgs) Handles text_ok.Click
+        Private Sub TextOkClick() Handles text_ok.Click
             TextPanel.Visible = False
 
             Using rtb As New RichTextBox With {
