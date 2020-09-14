@@ -69,5 +69,13 @@ namespace HolzShots.Windows.Forms
 
             return _rendererInstance = newTheme;
         }
+
+        /// <summary> TODO: Move this somewhere else </summary>
+        public static string ShortenViaEllipsisIfNeeded(string value, int maxLength)
+        {
+            return value.Length > maxLength + 1
+                ? value.Remove(maxLength) + "…"
+                : value;
+        }
     }
 }

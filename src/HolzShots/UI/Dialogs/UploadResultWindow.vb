@@ -23,7 +23,7 @@ Namespace UI.Dialogs
             _result = res
 
             If Not String.IsNullOrWhiteSpace(res.Url) Then
-                _displayUrl = FormattingHelpers.ShortenUrlForDisplay(res.Url)
+                _displayUrl = EnvironmentEx.ShortenViaEllipsisIfNeeded(res.Url, 26)
             End If
         End Sub
 
