@@ -1,7 +1,7 @@
-using HolzShots.NativeTypes;
 using System;
-using System.Runtime.InteropServices;
 using System.Drawing;
+using System.Runtime.InteropServices;
+using HolzShots.NativeTypes;
 
 namespace HolzShots
 {
@@ -116,7 +116,7 @@ namespace HolzShots
 
             public override int GetHashCode() => HashCode.Combine(LeftWidth, RightWidth, TopHeight, BottomHeight);
 
-            public override bool Equals(object obj) => (obj is Margin) && Equals((Margin)obj);
+            public override bool Equals(object obj) => obj is Margin other && Equals(other);
 
             public bool Equals(Margin margin)
             {

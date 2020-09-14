@@ -1,0 +1,66 @@
+{
+	// Don't remove these two lines, HolzShots needs them
+	"$schema": "https://holzshots.net/schema/settings.json",
+	"version": "1.0.0",
+
+	// If you are using VSCode or a similar editor, you can always press "Ctrl+Space" to get more hints.
+	// There is more to configure! Also, you can comment in here!
+
+	"save.enable": true,
+
+	"save.path": "DEFAULT_SAVE_PATH", // Feel free to use environment variables like %USERPROFILE%, %ONEDRIVE% or %TMP%.
+	"save.pattern": "Screenshot-<Date>",
+	"save.autoDetectBestImageFormat": false,
+
+	"editor.closeAfterSave": false,
+
+	// When you are using a different image service, fill in its name
+	// You can retrieve it via the plugin list
+	"upload.service": "DEFAULT_UPLOAD_SERVICE",
+	"upload.actionAfterUpload": "flyout",
+
+	"capture.actionAfterCapture": "openEditor",
+
+	"tray.doubleClickCommand": "openSettingsJson",
+
+	// Commands have a long and a short form. If you don't need to specify overrides or parameters, you can just use the name.
+	// For example, the above command would look like this in long form:
+	/*
+	"tray.doubleClickCommand": {
+		"name": "openSettingsJson",
+		"params": {},
+		"overrides": {}
+	},
+	*/
+
+	"key.bindings": [
+	  {
+		"enabled": true,
+		"keys": "F8",
+		"command": "captureArea"
+	  },
+	  {
+		"enabled": true,
+		"keys": "F10",
+		"command": {
+			"name": "captureEntireScreen",
+			"overrides": {
+				// You can override global settings on a command-basis
+				// For example, you could choose to upload the image straight to your default image hoster:
+
+				// "capture.actionAfterCapture": "upload",
+
+				// Or, you can copy the image to your clipboard (to send it via WhatsApp etc.):
+				// "capture.actionAfterCapture": "copyImage",
+
+				// You can even change the path the image will be saved (or even if it will be saved when using this shortcut)
+			}
+		}
+	  },
+	  {
+		"enabled": false,
+		"keys": "F9",
+		"command": "captureWindow"
+	  }
+	]
+  }

@@ -22,16 +22,16 @@ Namespace UI.Dialogs
         Private components As System.ComponentModel.IContainer
 
         'NOTE: The following procedure is required by the Windows Form Designer
-        'It can be modified using the Windows Form Designer.  
+        'It can be modified using the Windows Form Designer.
         'Do not modify it using the code editor.
         '<System.Diagnostics.DebuggerStepThrough()> _
         Private Sub InitializeComponent()
             Me.Label1 = New System.Windows.Forms.Label()
-            Me.CopyLinkLabel5 = New HolzShots.UI.Forms.CopyLinkLabel()
-            Me.CopyLinkLabel4 = New HolzShots.UI.Forms.CopyLinkLabel()
-            Me.CopyLinkLabel3 = New HolzShots.UI.Forms.CopyLinkLabel()
-            Me.CopyLinkLabel2 = New HolzShots.UI.Forms.CopyLinkLabel()
-            Me.CopyLinkLabel1 = New HolzShots.UI.Forms.CopyLinkLabel()
+            Me.CopyLinkLabel5 = New HolzShots.Windows.Forms.CopyCodeLinkLabel()
+            Me.CopyLinkLabel4 = New HolzShots.Windows.Forms.CopyCodeLinkLabel()
+            Me.CopyLinkLabel3 = New HolzShots.Windows.Forms.CopyCodeLinkLabel()
+            Me.CopyLinkLabel2 = New HolzShots.Windows.Forms.CopyCodeLinkLabel()
+            Me.CopyLinkLabel1 = New HolzShots.Windows.Forms.CopyCodeLinkLabel()
             Me.ColorBox = New HolzShots.UI.Controls.BigColorViewer()
             Me.SuspendLayout()
             '
@@ -161,11 +161,11 @@ Namespace UI.Dialogs
 
         End Sub
         Friend WithEvents ColorBox As UI.Controls.BigColorViewer
-        Friend WithEvents CopyLinkLabel1 As HolzShots.UI.Forms.CopyLinkLabel
-        Friend WithEvents CopyLinkLabel2 As HolzShots.UI.Forms.CopyLinkLabel
-        Friend WithEvents CopyLinkLabel3 As HolzShots.UI.Forms.CopyLinkLabel
-        Friend WithEvents CopyLinkLabel4 As HolzShots.UI.Forms.CopyLinkLabel
+        Friend WithEvents CopyLinkLabel1 As HolzShots.Windows.Forms.CopyCodeLinkLabel
+        Friend WithEvents CopyLinkLabel2 As HolzShots.Windows.Forms.CopyCodeLinkLabel
+        Friend WithEvents CopyLinkLabel3 As HolzShots.Windows.Forms.CopyCodeLinkLabel
+        Friend WithEvents CopyLinkLabel4 As HolzShots.Windows.Forms.CopyCodeLinkLabel
         Friend WithEvents Label1 As System.Windows.Forms.Label
-        Friend WithEvents CopyLinkLabel5 As HolzShots.UI.Forms.CopyLinkLabel
+        Friend WithEvents CopyLinkLabel5 As HolzShots.Windows.Forms.CopyCodeLinkLabel
     End Class
 End Namespace
