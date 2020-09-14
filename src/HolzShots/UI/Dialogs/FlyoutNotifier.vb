@@ -1,7 +1,8 @@
+Imports HolzShots.Windows.Forms
 
 Namespace UI.Dialogs
     Friend Class FlyoutNotifier
-        Inherits HolzShots.Windows.Forms.FlyoutForm
+        Inherits FlyoutForm
 
         Private ReadOnly _animator As FlyoutAnimator
         Private ReadOnly _tmr As Timer
@@ -23,7 +24,7 @@ Namespace UI.Dialogs
 
         Private Sub CloseDialog()
             If Visible Then
-                _animator.AnimateOut(150, AddressOf Close)
+                _animator.AnimateOut(150).ContinueWith(Sub(t) Close())
             End If
         End Sub
 

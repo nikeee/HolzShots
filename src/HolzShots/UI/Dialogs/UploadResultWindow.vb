@@ -1,9 +1,10 @@
 Imports HolzShots.Interop
 Imports HolzShots.Net
+Imports HolzShots.Windows.Forms
 
 Namespace UI.Dialogs
     Public Class UploadResultWindow
-        Inherits HolzShots.Windows.Forms.FlyoutForm
+        Inherits FlyoutForm
 
         Private ReadOnly _animator As FlyoutAnimator
         Private ReadOnly _result As UploadResult
@@ -43,7 +44,7 @@ Namespace UI.Dialogs
         End Sub
 
         Private Sub CloseDialog()
-            _animator.AnimateOut(150, AddressOf Close)
+            _animator.AnimateOut(150).ContinueWith(Sub(t) Close())
         End Sub
 
 #End Region
