@@ -374,7 +374,7 @@ Namespace UI.Controls
                     i.Dispose()
                 Catch ex As Exception
                     Debugger.Break()
-                    Debug.Assert(False)
+                    Debug.Fail()
                 End Try
             Next
         End Sub

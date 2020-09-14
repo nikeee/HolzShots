@@ -51,7 +51,7 @@ namespace HolzShots.Windows.Forms
             if (pressedButton == openSettings)
                 return FirstStartAction.OpenSettings;
 
-            Debug.Assert(false);
+            Debug.Fail();
             return FirstStartAction.None;
         }
     }

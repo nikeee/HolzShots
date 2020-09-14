@@ -37,7 +37,7 @@ namespace HolzShots.Composition.Command
 
             if (Actions.ContainsKey(name))
             {
-                Debug.Assert(false);
+                Debug.Fail();
                 return;
             }
             Actions[name] = command;
