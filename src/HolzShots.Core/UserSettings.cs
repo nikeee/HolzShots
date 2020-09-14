@@ -40,16 +40,6 @@ namespace HolzShots
 
         public static Task ForceReload() => Manager.ForceReload();
 
-        /// <summary> TODO: This look wrong here. We should place this somewhere else. </summary>
-        public static UploaderEntry /*?*/ GetImageServiceForSettingsContext(HSSettings context, UploaderManager uploaderManager)
-        {
-            Debug.Assert(context != null);
-            Debug.Assert(uploaderManager != null);
-            Debug.Assert(uploaderManager.Loaded);
-
-            return uploaderManager.GetUploaderByName(context.TargetImageHoster);
-        }
-
         private async static Task<string> CreateDefaultSettingsJson()
         {
             // TODO: Make this prettier
