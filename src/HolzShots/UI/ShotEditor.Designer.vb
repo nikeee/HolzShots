@@ -19,8 +19,8 @@ Namespace UI.Specialized
             Me.ShareStrip = New System.Windows.Forms.ToolStrip()
             Me.UploadToHoster = New System.Windows.Forms.ToolStripSplitButton()
             Me.save_btn = New System.Windows.Forms.ToolStripButton()
-            Me.DruckTeil = New System.Drawing.Printing.PrintDocument()
-            Me.DruckDialog = New System.Windows.Forms.PrintDialog()
+            Me.PrintingDocument = New System.Drawing.Printing.PrintDocument()
+            Me.PrinterDialog = New System.Windows.Forms.PrintDialog()
             Me.EditStrip = New System.Windows.Forms.ToolStrip()
             Me.CensorTool = New System.Windows.Forms.ToolStripButton()
             Me.MarkerTool = New System.Windows.Forms.ToolStripButton()
@@ -168,11 +168,11 @@ Namespace UI.Specialized
             '
             'DruckTeil
             '
-            Me.DruckTeil.DocumentName = "Screenshot"
+            Me.PrintingDocument.DocumentName = "Screenshot"
             '
             'DruckDialog
             '
-            Me.DruckDialog.UseEXDialog = True
+            Me.PrinterDialog.UseEXDialog = True
             '
             'EditStrip
             '
@@ -757,6 +757,7 @@ Namespace UI.Specialized
             'ArrowWidthSlider
             '
             Me.ArrowWidthSlider.Location = New System.Drawing.Point(84, 3)
+            Me.ArrowWidthSlider.Minimum = 0
             Me.ArrowWidthSlider.Maximum = 100
             Me.ArrowWidthSlider.Name = "ArrowWidthSlider"
             Me.ArrowWidthSlider.Size = New System.Drawing.Size(112, 45)
@@ -1043,8 +1044,8 @@ Namespace UI.Specialized
         End Sub
         Friend WithEvents ShareStrip As System.Windows.Forms.ToolStrip
         Friend WithEvents save_btn As System.Windows.Forms.ToolStripButton
-        Friend WithEvents DruckTeil As System.Drawing.Printing.PrintDocument
-        Friend WithEvents DruckDialog As System.Windows.Forms.PrintDialog
+        Friend WithEvents PrintingDocument As System.Drawing.Printing.PrintDocument
+        Friend WithEvents PrinterDialog As System.Windows.Forms.PrintDialog
         Friend WithEvents EditStrip As System.Windows.Forms.ToolStrip
         Friend WithEvents CensorTool As System.Windows.Forms.ToolStripButton
         Friend WithEvents MarkerTool As System.Windows.Forms.ToolStripButton

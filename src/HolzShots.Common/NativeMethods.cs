@@ -1,7 +1,7 @@
-using HolzShots.NativeTypes;
 using System;
-using System.Runtime.InteropServices;
 using System.Drawing;
+using System.Runtime.InteropServices;
+using HolzShots.NativeTypes;
 
 namespace HolzShots
 {

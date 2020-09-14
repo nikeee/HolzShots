@@ -1,6 +1,6 @@
-using HolzShots.Drawing;
 using System;
 using System.Drawing.Imaging;
+using HolzShots.Drawing;
 
 namespace HolzShots.IO.Naming
 {

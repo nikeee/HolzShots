@@ -4,13 +4,12 @@ using System.Collections.Immutable;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
-using HolzShots.IO;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using System.Threading;
-using HolzShots.Threading;
 using System.Reflection;
-using System.CodeDom;
+using System.Threading;
+using System.Threading.Tasks;
+using HolzShots.IO;
+using HolzShots.Threading;
+using Newtonsoft.Json;
 
 namespace HolzShots
 {
@@ -120,7 +119,6 @@ namespace HolzShots
             }
         }
 
-        public string SerializeSettings(T settings) => JsonConvert.SerializeObject(settings, _jsonSerializerSettings);
         private void InvokeWithSynchronizingObjectIfNeeded(Action action)
         {
             if (_synchronizingObject == null)
