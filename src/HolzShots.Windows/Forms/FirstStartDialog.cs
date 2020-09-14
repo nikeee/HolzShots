@@ -51,7 +51,7 @@ namespace HolzShots.Windows.Forms
             if (pressedButton == openSettings)
                 return FirstStartAction.OpenSettings;
 
-            Debug.Fail();
+            Debug.Fail("Unhandled pressed button. You most likely forgot to add an if state handing that button.");
             return FirstStartAction.None;
         }
     }

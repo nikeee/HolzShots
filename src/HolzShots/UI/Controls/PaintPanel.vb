@@ -374,7 +374,7 @@ Namespace UI.Controls
                     i.Dispose()
                 Catch ex As Exception
                     Debugger.Break()
-                    Debug.Fail()
+                    Debug.Fail("Failed to dispose undoStack")
                 End Try
             Next
         End Sub

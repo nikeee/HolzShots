@@ -19,7 +19,7 @@ namespace HolzShots.Input
                 case PlatformID.MacOSX:
                 case PlatformID.Xbox:
                 default:
-                    Debug.Fail();
+                    Debug.Fail($"Unhandled platform: {Environment.OSVersion.Platform}");
                     throw new NotSupportedException();
             }
         }

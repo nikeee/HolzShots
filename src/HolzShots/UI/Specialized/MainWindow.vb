@@ -166,7 +166,7 @@ Namespace UI.Specialized
                         CommandManager.Dispatch(Of OpenSettingsJsonCommand)(UserSettings.Current)
                     Case FirstStartAction.None ' Intentionally left empty
                     Case Else
-                        Debug.Fail()
+                        Debug.Fail($"Unhandled action: '{action}'")
                 End Select
             End Using
         End Sub
