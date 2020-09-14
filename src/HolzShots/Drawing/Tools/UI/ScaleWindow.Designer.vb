@@ -39,7 +39,7 @@ Namespace Drawing.Tools.UI
             Me.cnclButton = New System.Windows.Forms.Button()
             Me.HeightBox = New HolzShots.UI.Controls.NumericTextBox()
             Me.WidthBox = New HolzShots.UI.Controls.NumericTextBox()
-            Me.ExplorerInfoPanel1 = New HolzShots.UI.Forms.ExplorerInfoPanel()
+            Me.ExplorerInfoPanel1 = New HolzShots.Windows.Forms.ExplorerInfoPanel()
             CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
             CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.ExplorerInfoPanel1.SuspendLayout()
@@ -241,6 +241,6 @@ Namespace Drawing.Tools.UI
         Friend WithEvents HeightBox As NumericTextBox
         Friend WithEvents okButton As Button
         Friend WithEvents cnclButton As Button
-        Friend WithEvents ExplorerInfoPanel1 As HolzShots.UI.Forms.ExplorerInfoPanel
+        Friend WithEvents ExplorerInfoPanel1 As HolzShots.Windows.Forms.ExplorerInfoPanel
     End Class
 End Namespace

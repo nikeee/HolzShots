@@ -26,7 +26,7 @@ Namespace UI.Dialogs
             Me.copyDirect = New System.Windows.Forms.Button()
             Me.copyHTML = New System.Windows.Forms.Button()
             Me.copyBB = New System.Windows.Forms.Button()
-            Me.ExplorerInfoPanel1 = New HolzShots.UI.Forms.ExplorerInfoPanel()
+            Me.ExplorerInfoPanel1 = New HolzShots.Windows.Forms.ExplorerInfoPanel()
             Me.closeWindowLabel = New HolzShots.Windows.Forms.ExplorerLinkLabel()
             Me.ExplorerInfoPanel1.SuspendLayout()
             Me.SuspendLayout()
@@ -116,7 +116,7 @@ Namespace UI.Dialogs
         Friend WithEvents copyDirect As System.Windows.Forms.Button
         Friend WithEvents copyHTML As System.Windows.Forms.Button
         Friend WithEvents copyBB As System.Windows.Forms.Button
-        Friend WithEvents ExplorerInfoPanel1 As HolzShots.UI.Forms.ExplorerInfoPanel
+        Friend WithEvents ExplorerInfoPanel1 As HolzShots.Windows.Forms.ExplorerInfoPanel
         Friend WithEvents closeWindowLabel As HolzShots.Windows.Forms.ExplorerLinkLabel
     End Class
 End Namespace
