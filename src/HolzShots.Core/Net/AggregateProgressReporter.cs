@@ -35,4 +35,18 @@ namespace HolzShots.Net
                 reporter.Dispose();
         }
     }
+
+#if DEBUG
+    public sealed class ConsoleProgressReporter : IUploadProgressReporter
+    {
+        public void CloseProgress() { }
+        public void ShowProgress() { }
+        public void UpdateProgress(UploadProgress progress, Speed<MemSize> speed)
+        {
+            Console.WriteLine($"{progress.State}; {progress.Current}/{progress.Total} ({progress.ProgressPercentage}%) with {speed.ItemsPerSecond}");
+        }
+        public void Dispose() { }
+    }
+
+#endif
 }
