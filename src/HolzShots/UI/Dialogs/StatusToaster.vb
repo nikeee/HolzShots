@@ -40,11 +40,11 @@ Namespace UI.Dialogs
 
         Public Sub UpdateProgress(report As UploadProgress, speed As Speed(Of MemSize)) Implements IUploadProgressReporter.UpdateProgress
             Select Case report.State
-                Case Net.UploadState.NotStarted
+                Case UploadState.NotStarted
                     SetProgressBarStyleLabel(ProgressBarStyle.Marquee)
                     SetUploadedBytesLabel("Starting Upload...")
                     SetSpeed(String.Empty)
-                Case Net.UploadState.Finished
+                Case UploadState.Finished
                     SetProgressBarStyleLabel(ProgressBarStyle.Marquee)
                     SetUploadedBytesLabel("Waiting for server reply...")
                     SetSpeed(String.Empty)
@@ -61,17 +61,18 @@ Namespace UI.Dialogs
             _animator.AnimateIn(300)
         End Sub
 
-        Private Sub CloseDialog()
+        Private Async Function CloseDialog() As Task
             If Visible Then
-                _animator.AnimateOut(150).ContinueWith(Sub(t) Close())
+                Await _animator.AnimateOut(150).ConfigureAwait(True)
+                Close()
             End If
-        End Sub
+        End Function
 
         Public Shadows Sub ShowProgress() Implements IUploadProgressReporter.ShowProgress
             Show()
         End Sub
         Public Shadows Sub CloseProgress() Implements IUploadProgressReporter.CloseProgress
-            CloseDialog()
+            Dim unused = CloseDialog()
         End Sub
     End Class
 End Namespace

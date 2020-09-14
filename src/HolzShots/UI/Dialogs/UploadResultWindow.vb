@@ -31,7 +31,7 @@ Namespace UI.Dialogs
 
         Private Sub MightClose()
             If _settingsContext.AutoCloseLinkViewer Then
-                CloseDialog()
+                Dim unused = CloseDialog()
             End If
         End Sub
 
@@ -40,12 +40,14 @@ Namespace UI.Dialogs
         End Sub
 
         Private Sub CloseWindowLabelLinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles closeWindowLabel.LinkClicked
-            CloseDialog()
+            Dim unused = CloseDialog()
         End Sub
 
-        Private Sub CloseDialog()
-            _animator.AnimateOut(150).ContinueWith(Sub(t) Close())
-        End Sub
+        Private Async Function CloseDialog() As Task
+            Await _animator.AnimateOut(150).ConfigureAwait(True)
+            Close()
+        End Function
+
 
 #End Region
 #Region "UI Handlers"
