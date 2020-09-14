@@ -1,5 +1,5 @@
-Imports HolzShots.Net
 Imports HolzShots
+Imports HolzShots.Net
 
 Namespace UI.Dialogs
     Friend Class StatusToaster

@@ -13,7 +13,7 @@ namespace HolzShots
 {
     public static class UserSettings
     {
-        public static SettingsManager<HSSettings> Manager { get; private set; } = null;
+        public static SettingsManager<HSSettings> Manager { get; private set; }
         public static HSSettings Current => Manager.CurrentSettings;
 
         public static async Task Load(ISynchronizeInvoke synchronizingObject)
@@ -23,7 +23,6 @@ namespace HolzShots
             await Manager.InitializeSettings().ConfigureAwait(false);
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("AsyncUsage", "AsyncFixer01:Unnecessary async/await usage", Justification = "using statement")]
         public static async Task CreateUserSettingsIfNotPresent()
         {
             if (File.Exists(HolzShotsPaths.UserSettingsFilePath))
@@ -40,16 +39,6 @@ namespace HolzShots
         public static void OpenSettingsInDefaultEditor() => HolzShotsPaths.OpenFileInDefaultApplication(HolzShotsPaths.UserSettingsFilePath);
 
         public static Task ForceReload() => Manager.ForceReload();
-
-        /// <summary> TODO: This look wrong here. We should place this somewhere else. </summary>
-        public static UploaderEntry /*?*/ GetImageServiceForSettingsContext(HSSettings context, UploaderManager uploaderManager)
-        {
-            Debug.Assert(context != null);
-            Debug.Assert(uploaderManager != null);
-            Debug.Assert(uploaderManager.Loaded);
-
-            return uploaderManager.GetUploaderByName(context.TargetImageHoster);
-        }
 
         private async static Task<string> CreateDefaultSettingsJson()
         {

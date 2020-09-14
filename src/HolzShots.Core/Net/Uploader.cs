@@ -15,7 +15,7 @@ namespace HolzShots.Net
         /// </summary>
         public virtual Task InvokeSettingsAsync(SettingsInvocationContexts context) => Task.FromResult(false);
 
-        public virtual SettingsInvocationContexts GetSupportedSettingsContexts() => SettingsInvocationContexts.None;
+        public virtual SettingsInvocationContexts GetSupportedSettingsInvocations() => SettingsInvocationContexts.None;
 
         // TODO Return null if no action needed?
         public abstract Task<UploadResult> InvokeAsync(Stream data, string suggestedFileName, string mimeType, IProgress<UploadProgress> progress, CancellationToken cancellationToken);
