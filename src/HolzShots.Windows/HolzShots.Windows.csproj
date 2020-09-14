@@ -45,26 +45,32 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
-    <None Include="Properties\DataSources\HolzShots.Composition.IPluginMetadata.datasource" />
-
     <Compile Update="Forms\PluginForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Forms\AboutForm.cs">
+
+    <Compile Update="Forms\FlyoutForm.cs">
       <SubType>Form</SubType>
     </Compile>
-
+    <Compile Update="Forms\FlyoutForm.Designer.cs">
+      <DependentUpon>FlyoutForm.cs</DependentUpon>
+    </Compile>
+    <Compile Update="Forms\AboutForm.cs" />
+    <Compile Update="Forms\AboutForm.Designer.cs">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </Compile>
     <Compile Update="Forms\ExplorerLinkLabel.cs" />
-    <Compile Update="Forms\Controls\PluginItem.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Forms\PluginForm.resx">
-      <DependentUpon>PluginForm.cs</DependentUpon>
+    <EmbeddedResource Update="Forms\FlyoutForm.resx">
+      <DependentUpon>FlyoutForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Update="Forms\AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Forms\PluginForm.resx">
+      <DependentUpon>PluginForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
 </Project>

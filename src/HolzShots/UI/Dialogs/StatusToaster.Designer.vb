@@ -1,7 +1,7 @@
 Namespace UI.Dialogs
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
     Partial Class StatusToaster
-        Inherits FlyoutWindow
+        Inherits HolzShots.Windows.Forms.FlyoutForm
 
         'Form overrides dispose to clean up the component list.
         <System.Diagnostics.DebuggerNonUserCode()> _

@@ -1,7 +1,8 @@
+Imports HolzShots.Windows.Forms
 
 Namespace UI.Dialogs
     Friend Class FlyoutNotifier
-        Inherits FlyoutWindow
+        Inherits FlyoutForm
 
         Private ReadOnly _animator As FlyoutAnimator
         Private ReadOnly _tmr As Timer
@@ -21,11 +22,12 @@ Namespace UI.Dialogs
             _animator.AnimateIn(300)
         End Sub
 
-        Private Sub CloseDialog()
+        Private Async Function CloseDialog() As Task
             If Visible Then
-                _animator.AnimateOut(150, AddressOf Close)
+                Await _animator.AnimateOut(150).ConfigureAwait(True)
+                Close()
             End If
-        End Sub
+        End Function
 
         Public Sub Notify()
             Visible = True
@@ -33,7 +35,7 @@ Namespace UI.Dialogs
 
             AddHandler _tmr.Tick, Sub()
                                       _tmr.Enabled = False
-                                      CloseDialog()
+                                      Dim unused = CloseDialog()
                                   End Sub
         End Sub
 

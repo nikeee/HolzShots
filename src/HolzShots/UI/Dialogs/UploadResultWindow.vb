@@ -1,9 +1,10 @@
 Imports HolzShots.Interop
 Imports HolzShots.Net
+Imports HolzShots.Windows.Forms
 
 Namespace UI.Dialogs
     Public Class UploadResultWindow
-        Inherits FlyoutWindow
+        Inherits FlyoutForm
 
         Private ReadOnly _animator As FlyoutAnimator
         Private ReadOnly _result As UploadResult
@@ -22,7 +23,7 @@ Namespace UI.Dialogs
             _result = res
 
             If Not String.IsNullOrWhiteSpace(res.Url) Then
-                _displayUrl = FormattingHelpers.ShortenUrlForDisplay(res.Url)
+                _displayUrl = EnvironmentEx.ShortenViaEllipsisIfNeeded(res.Url, 26)
             End If
         End Sub
 
@@ -30,7 +31,7 @@ Namespace UI.Dialogs
 
         Private Sub MightClose()
             If _settingsContext.AutoCloseLinkViewer Then
-                CloseDialog()
+                Dim unused = CloseDialog()
             End If
         End Sub
 
@@ -39,12 +40,14 @@ Namespace UI.Dialogs
         End Sub
 
         Private Sub CloseWindowLabelLinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles closeWindowLabel.LinkClicked
-            CloseDialog()
+            Dim unused = CloseDialog()
         End Sub
 
-        Private Sub CloseDialog()
-            _animator.AnimateOut(150, AddressOf Close)
-        End Sub
+        Private Async Function CloseDialog() As Task
+            Await _animator.AnimateOut(150).ConfigureAwait(True)
+            Close()
+        End Function
+
 
 #End Region
 #Region "UI Handlers"
