@@ -1,9 +1,8 @@
-Imports HolzShots
 Imports HolzShots.Net
 
 Namespace UI.Dialogs
     Friend Class StatusToaster
-        Inherits FlyoutWindow
+        Inherits HolzShots.Windows.Forms.FlyoutForm
         Implements IUploadProgressReporter
 
         Private ReadOnly _animator As FlyoutAnimator
@@ -42,11 +41,11 @@ Namespace UI.Dialogs
             Select Case report.State
                 Case Net.UploadState.NotStarted
                     SetProgressBarStyleLabel(ProgressBarStyle.Marquee)
-                    SetUploadedBytesLabel("Starte Upload...")
+                    SetUploadedBytesLabel("Starting Upload...")
                     SetSpeed(String.Empty)
                 Case Net.UploadState.Finished
                     SetProgressBarStyleLabel(ProgressBarStyle.Marquee)
-                    SetUploadedBytesLabel("Warte auf Antwort des Servers...")
+                    SetUploadedBytesLabel("Waiting for server reply...")
                     SetSpeed(String.Empty)
                 Case Else
                     SetProgressBarStyleLabel(ProgressBarStyle.Continuous)

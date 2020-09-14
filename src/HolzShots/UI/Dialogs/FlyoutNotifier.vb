@@ -1,7 +1,7 @@
 
 Namespace UI.Dialogs
     Friend Class FlyoutNotifier
-        Inherits FlyoutWindow
+        Inherits HolzShots.Windows.Forms.FlyoutForm
 
         Private ReadOnly _animator As FlyoutAnimator
         Private ReadOnly _tmr As Timer

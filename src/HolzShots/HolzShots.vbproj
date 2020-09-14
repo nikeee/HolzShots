@@ -102,15 +102,7 @@
     <Compile Update="UI\Dialogs\FlyoutNotifier.Designer.vb">
       <DependentUpon>FlyoutNotifier.vb</DependentUpon>
     </Compile>
-    <Compile Update="UI\Dialogs\FlyoutNotifier.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="UI\Dialogs\FlyoutWindow.Designer.vb">
-      <DependentUpon>FlyoutWindow.vb</DependentUpon>
-    </Compile>
-    <Compile Update="UI\Dialogs\FlyoutWindow.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Update="UI\Dialogs\FlyoutNotifier.vb" />
     <Compile Update="UI\Dialogs\PipettenColorViewer.Designer.vb">
       <DependentUpon>PipettenColorViewer.vb</DependentUpon>
     </Compile>
@@ -120,15 +112,11 @@
     <Compile Update="UI\Dialogs\StatusToaster.Designer.vb">
       <DependentUpon>StatusToaster.vb</DependentUpon>
     </Compile>
-    <Compile Update="UI\Dialogs\StatusToaster.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Update="UI\Dialogs\StatusToaster.vb" />
     <Compile Update="UI\Dialogs\UploadResultWindow.Designer.vb">
       <DependentUpon>UploadResultWindow.vb</DependentUpon>
     </Compile>
-    <Compile Update="UI\Dialogs\UploadResultWindow.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Update="UI\Dialogs\UploadResultWindow.vb" />
     <Compile Update="UI\Controls\NumericTextBox.vb">
       <SubType>Component</SubType>
     </Compile>
@@ -197,9 +185,6 @@
     </EmbeddedResource>
     <EmbeddedResource Update="UI\Dialogs\FlyoutNotifier.resx">
       <DependentUpon>FlyoutNotifier.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Update="UI\Dialogs\FlyoutWindow.resx">
-      <DependentUpon>FlyoutWindow.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Update="UI\Dialogs\PipettenColorViewer.resx">
       <DependentUpon>PipettenColorViewer.vb</DependentUpon>

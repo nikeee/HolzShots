@@ -7,12 +7,12 @@ Namespace UI.Dialogs
 
     Friend Class FlyoutAnimator
 
-        Private Shared ReadOnly CurrentVisibleFlyouts As New List(Of FlyoutWindow)
+        Private Shared ReadOnly CurrentVisibleFlyouts As New List(Of FlyoutForm)
         Private _instanceOffsetY As Integer
 
-        Private ReadOnly _target As FlyoutWindow
+        Private ReadOnly _target As FlyoutForm
 
-        Public Sub New(target As FlyoutWindow)
+        Public Sub New(target As FlyoutForm)
             If target Is Nothing Then Throw New ArgumentNullException(NameOf(target))
             _target = target
             _target.StartPosition = FormStartPosition.Manual

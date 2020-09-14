@@ -3,7 +3,7 @@ Imports HolzShots.Net
 
 Namespace UI.Dialogs
     Public Class UploadResultWindow
-        Inherits FlyoutWindow
+        Inherits HolzShots.Windows.Forms.FlyoutForm
 
         Private ReadOnly _animator As FlyoutAnimator
         Private ReadOnly _result As UploadResult
