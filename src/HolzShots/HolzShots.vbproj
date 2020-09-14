@@ -75,7 +75,6 @@
     <Compile Update="UI\Controls\ColorViewer.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Update="UI\Forms\CopyLinkLabel.vb" />
     <Compile Update="UI\Controls\PaintPanel.Designer.vb">
       <DependentUpon>PaintPanel.vb</DependentUpon>
     </Compile>
@@ -158,9 +157,6 @@
     <Compile Update="UI\ShotEditor.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="UI\Forms\ExplorerInfoPanel.vb">
-      <SubType>Component</SubType>
-    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -231,7 +227,7 @@
     <Content Include="Resources\*.png" />
   </ItemGroup>
 
-  <ItemGroup>  
+  <ItemGroup>
     <Import Include="System" />
     <Import Include="System.Collections.Generic" />
     <Import Include="System.Drawing" />
