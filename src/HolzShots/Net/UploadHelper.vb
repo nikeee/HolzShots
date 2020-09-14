@@ -1,69 +1,25 @@
 Imports System.Drawing.Imaging
 Imports HolzShots.Interop
 Imports HolzShots.UI.Dialogs
+Imports HolzShots.Windows.Forms
 
 Namespace Net
     Friend Class UploadHelper
         Private Sub New()
         End Sub
 
-        Friend Shared Function UploadToDefaultUploader(image As Image, settingsContext As HSSettings, Optional format As ImageFormat = Nothing, Optional parentWindow As IWin32Window = Nothing) As Task(Of UploadResult)
+        Friend Shared Function GetUploadReporterForCurrentSettingsContext(ByVal settingsContext As HSSettings, ByVal parentWindow As IWin32Window) As IUploadProgressReporter
+            Dim reporters = New List(Of IUploadProgressReporter)(2)
 
-            Dim info = UserSettings.GetImageServiceForSettingsContext(settingsContext, HolzShots.My.Application.Uploaders)
-            Debug.Assert(info IsNot Nothing)
-            Debug.Assert(info.Metadata IsNot Nothing)
-            Debug.Assert(info.Uploader IsNot Nothing)
-
-#If RELEASE Then
-            If info Is Nothing Then Throw New Exception()
-#End If
-
-            Return Upload(info.Uploader, image, settingsContext, format, parentWindow)
-        End Function
-
-        ''' <summary> Catch the UploadException! </summary>
-        Friend Shared Async Function Upload(uploader As Uploader, image As Image, settingsContext As HSSettings, Optional format As ImageFormat = Nothing, Optional parentWindow As IWin32Window = Nothing) As Task(Of UploadResult)
-            format = If(format, GetImageFormat(image, settingsContext))
-
-            If uploader Is Nothing Then Throw New ArgumentNullException(NameOf(uploader))
-            If image Is Nothing Then Throw New ArgumentNullException(NameOf(image))
-            Debug.Assert(format IsNot Nothing)
-
-            ' Invoke settings if the uploader wants it
-            Dim sc = uploader.GetSupportedSettingsContexts()
-            If (sc And SettingsInvocationContexts.OnUse) = SettingsInvocationContexts.OnUse Then
-                Await uploader.InvokeSettingsAsync(SettingsInvocationContexts.OnUse).ConfigureAwait(True)
+            If settingsContext.ShowUploadProgress Then
+                reporters.Add(New StatusToaster())
             End If
 
-            Using ui As New UploadUI(uploader, image, format, parentWindow, settingsContext)
-                ui.ShowUi()
-                Dim res As UploadResult = Nothing
-                Try
-                    res = Await ui.InvokeUploadAsync().ConfigureAwait(True)
-                    Return res
-                Catch ex As OperationCanceledException
-                    Throw New UploadCanceledException(ex)
-                Catch ex As UploadException
-                    Throw
-                Catch ex As Exception
-                    Throw New UploadException(ex.Message, ex)
-                Finally
-                    ui.HideUi()
-                End Try
-            End Using
-        End Function
-
-        Friend Shared Function GetImageFormat(image As Image, settingsContext As HSSettings) As ImageFormat
-            If settingsContext.EnableSmartFormatForUpload AndAlso Drawing.ImageFormatAnalyser.IsOptimizable(image) Then
-                Try
-                    Dim bmp As Bitmap = If(TypeOf image Is Bitmap, DirectCast(image, Bitmap), New Bitmap(image))
-                    Return Drawing.ImageFormatAnalyser.GetBestFittingFormat(bmp) ' Experimental?
-                Catch ex As Exception
-                    Return ImageFormat.Png
-                End Try
-            Else
-                Return ImageFormat.Png
+            If parentWindow.GetHandle() <> IntPtr.Zero Then
+                reporters.Add(New TaskBarItemProgressReporter(parentWindow.Handle))
             End If
+
+            Return New AggregateProgressReporter(reporters)
         End Function
 
         Friend Shared Sub InvokeUploadFinishedUi(result As UploadResult, settingsContext As HSSettings)

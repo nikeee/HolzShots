@@ -32,7 +32,7 @@ Namespace Input.Actions
                 Debug.Assert(format IsNot Nothing)
 
                 Try
-                    Dim result = Await UploadHelper.UploadToDefaultUploader(bmp, settingsContext, format).ConfigureAwait(True)
+                    Dim result = Await UploadDispatcher.InitiateUploadToDefaultUploader(bmp, settingsContext, My.Application.Uploaders, format, Nothing).ConfigureAwait(True)
                     UploadHelper.InvokeUploadFinishedUi(result, settingsContext)
                 Catch ex As UploadCanceledException
                     HumanInterop.ShowOperationCanceled()
