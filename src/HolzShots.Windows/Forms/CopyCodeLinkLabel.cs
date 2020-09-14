@@ -7,7 +7,6 @@ namespace HolzShots.Windows.Forms
     {
         private static readonly Font _font = new Font("Consolas", 9.75f, FontStyle.Regular, GraphicsUnit.Point); // Consolas; 9,75pt
 
-
         [ReadOnly(true)]
         public new Font Font
         {
