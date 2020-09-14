@@ -36,10 +36,15 @@ namespace HolzShots.Windows.Forms
             var page = new TaskDialogPage()
             {
                 AllowMinimize = true,
-                Icon =  new TaskDialogIcon(icon),
+                Icon = new TaskDialogIcon(icon),
                 Caption = "About HolzShots",
                 Heading = "HolzShots",
                 Text = $"Open Source, GPL-3.0 licensed screenshot utility.\n",
+                /*
+                   <a href="website">Website</a>
+                   <a href="issues">Report Issue</a>
+                   <a href="license">License</a>
+                */
                 AllowCancel = false,
                 Expander = new TaskDialogExpander()
                 {
@@ -54,6 +59,15 @@ namespace HolzShots.Windows.Forms
                     TaskDialogButton.Close,
                 },
             };
+
+            // TODO: Maybe check if an update is available?
+            /*
+            System.Threading.Tasks.Task.Run(async () =>
+            {
+                await System.Threading.Tasks.Task.Delay(5000);
+                page.Footnote.Text += " Update available!";
+            });
+            */
 
             TaskDialog.ShowDialog(page, TaskDialogStartupLocation.CenterScreen);
         }
