@@ -1,4 +1,3 @@
-Imports System.Drawing.Imaging
 Imports HolzShots.Interop
 Imports HolzShots.UI.Dialogs
 Imports HolzShots.Windows.Forms
@@ -16,7 +15,7 @@ Namespace Net
             End If
 
             If parentWindow.GetHandle() <> IntPtr.Zero Then
-                reporters.Add(New TaskBarItemProgressReporter(parentWindow.Handle))
+                reporters.Add(New TaskbarItemProgressReporter(parentWindow.Handle))
             End If
 
             Return New AggregateProgressReporter(reporters)
