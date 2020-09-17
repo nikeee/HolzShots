@@ -110,10 +110,6 @@
       <DependentUpon>StatusToaster.vb</DependentUpon>
     </Compile>
     <Compile Update="UI\Dialogs\StatusToaster.vb" />
-    <Compile Update="UI\Dialogs\UploadResultWindow.Designer.vb">
-      <DependentUpon>UploadResultWindow.vb</DependentUpon>
-    </Compile>
-    <Compile Update="UI\Dialogs\UploadResultWindow.vb" />
     <Compile Update="UI\Controls\NumericTextBox.vb">
       <SubType>Component</SubType>
     </Compile>
@@ -186,9 +182,6 @@
     </EmbeddedResource>
     <EmbeddedResource Update="UI\Dialogs\StatusToaster.resx">
       <DependentUpon>StatusToaster.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Update="UI\Dialogs\UploadResultWindow.resx">
-      <DependentUpon>UploadResultWindow.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Update="Drawing\Tools\UI\ScaleWindow.resx">
       <DependentUpon>ScaleWindow.vb</DependentUpon>

@@ -43,9 +43,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Forms\UploadResultForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Update="Forms\UploadResultForm.cs" />
     <Compile Update="Forms\UploadResultForm.Designer.cs">
       <DependentUpon>UploadResultForm.cs</DependentUpon>
     </Compile>
