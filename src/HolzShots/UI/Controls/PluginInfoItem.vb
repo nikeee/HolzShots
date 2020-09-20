@@ -65,7 +65,7 @@ Namespace UI.Controls
 
 #End Region
 
-        Private Sub PluginSettingsLinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles pluginSettings.LinkClicked
+        Private Sub PluginSettingsLinkClicked(sender As Object, e As EventArgs) Handles pluginSettings.Click
             ' TODO: Fix Plugin Settings
             'If _pluginMetadata.SettingsMode <> SettingsModes.NoSettings Then
             '    Try
@@ -79,13 +79,13 @@ Namespace UI.Controls
             'End If
         End Sub
 
-        Private Sub AuthorWebSiteLinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles authorWebSite.LinkClicked
+        Private Sub AuthorWebSiteLinkClicked(sender As Object, e As EventArgs) Handles authorWebSite.Click
             If Not String.IsNullOrWhiteSpace(_pluginMetadata.Website) Then
                 IO.HolzShotsPaths.OpenLink(_pluginMetadata.Website)
             End If
         End Sub
 
-        Private Sub ReportBugLinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles reportBug.LinkClicked
+        Private Sub ReportBugLinkClicked(sender As Object, e As EventArgs) Handles reportBug.Click
             If Not String.IsNullOrWhiteSpace(_pluginMetadata.BugsUrl) Then
                 IO.HolzShotsPaths.OpenLink(_pluginMetadata.BugsUrl)
             End If

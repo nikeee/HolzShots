@@ -47,11 +47,8 @@ Namespace UI.Dialogs
             '
             'CopyLinkLabel5
             '
-            Me.CopyLinkLabel5.ActiveLinkColor = System.Drawing.Color.FromArgb(CType(CType(51, Byte), Integer), CType(CType(153, Byte), Integer), CType(CType(255, Byte), Integer))
             Me.CopyLinkLabel5.AutoSize = True
             Me.CopyLinkLabel5.Cursor = System.Windows.Forms.Cursors.Hand
-            Me.CopyLinkLabel5.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline
-            Me.CopyLinkLabel5.LinkColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(102, Byte), Integer), CType(CType(204, Byte), Integer))
             Me.CopyLinkLabel5.Location = New System.Drawing.Point(14, 150)
             Me.CopyLinkLabel5.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
             Me.CopyLinkLabel5.Name = "CopyLinkLabel5"
@@ -62,11 +59,8 @@ Namespace UI.Dialogs
             '
             'CopyLinkLabel4
             '
-            Me.CopyLinkLabel4.ActiveLinkColor = System.Drawing.Color.FromArgb(CType(CType(51, Byte), Integer), CType(CType(153, Byte), Integer), CType(CType(255, Byte), Integer))
             Me.CopyLinkLabel4.AutoSize = True
             Me.CopyLinkLabel4.Cursor = System.Windows.Forms.Cursors.Hand
-            Me.CopyLinkLabel4.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline
-            Me.CopyLinkLabel4.LinkColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(102, Byte), Integer), CType(CType(204, Byte), Integer))
             Me.CopyLinkLabel4.Location = New System.Drawing.Point(14, 128)
             Me.CopyLinkLabel4.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
             Me.CopyLinkLabel4.Name = "CopyLinkLabel4"
@@ -77,11 +71,8 @@ Namespace UI.Dialogs
             '
             'CopyLinkLabel3
             '
-            Me.CopyLinkLabel3.ActiveLinkColor = System.Drawing.Color.FromArgb(CType(CType(51, Byte), Integer), CType(CType(153, Byte), Integer), CType(CType(255, Byte), Integer))
             Me.CopyLinkLabel3.AutoSize = True
             Me.CopyLinkLabel3.Cursor = System.Windows.Forms.Cursors.Hand
-            Me.CopyLinkLabel3.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline
-            Me.CopyLinkLabel3.LinkColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(102, Byte), Integer), CType(CType(204, Byte), Integer))
             Me.CopyLinkLabel3.Location = New System.Drawing.Point(14, 106)
             Me.CopyLinkLabel3.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
             Me.CopyLinkLabel3.Name = "CopyLinkLabel3"
@@ -92,11 +83,8 @@ Namespace UI.Dialogs
             '
             'CopyLinkLabel2
             '
-            Me.CopyLinkLabel2.ActiveLinkColor = System.Drawing.Color.FromArgb(CType(CType(51, Byte), Integer), CType(CType(153, Byte), Integer), CType(CType(255, Byte), Integer))
             Me.CopyLinkLabel2.AutoSize = True
             Me.CopyLinkLabel2.Cursor = System.Windows.Forms.Cursors.Hand
-            Me.CopyLinkLabel2.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline
-            Me.CopyLinkLabel2.LinkColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(102, Byte), Integer), CType(CType(204, Byte), Integer))
             Me.CopyLinkLabel2.Location = New System.Drawing.Point(14, 84)
             Me.CopyLinkLabel2.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
             Me.CopyLinkLabel2.Name = "CopyLinkLabel2"
@@ -107,11 +95,8 @@ Namespace UI.Dialogs
             '
             'CopyLinkLabel1
             '
-            Me.CopyLinkLabel1.ActiveLinkColor = System.Drawing.Color.FromArgb(CType(CType(51, Byte), Integer), CType(CType(153, Byte), Integer), CType(CType(255, Byte), Integer))
             Me.CopyLinkLabel1.AutoSize = True
             Me.CopyLinkLabel1.Cursor = System.Windows.Forms.Cursors.Hand
-            Me.CopyLinkLabel1.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline
-            Me.CopyLinkLabel1.LinkColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(102, Byte), Integer), CType(CType(204, Byte), Integer))
             Me.CopyLinkLabel1.Location = New System.Drawing.Point(14, 62)
             Me.CopyLinkLabel1.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
             Me.CopyLinkLabel1.Name = "CopyLinkLabel1"

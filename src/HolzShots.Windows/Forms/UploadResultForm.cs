@@ -49,7 +49,7 @@ namespace HolzShots.Windows.Forms
             Close();
         }
 
-        private void CloseLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) => _ = CloseFlyout();
+        // private void CloseLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) => _ = CloseFlyout();
         private void CopyAndMaybeClose(string value)
         {
             if (SetText(value))
@@ -73,5 +73,6 @@ namespace HolzShots.Windows.Forms
                 return false;
             }
         }
+        private void CloseLabel_Click(object sender, EventArgs e) => _ = CloseFlyout();
     }
 }

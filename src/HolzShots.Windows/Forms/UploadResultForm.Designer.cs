@@ -38,9 +38,10 @@ namespace HolzShots.Windows.Forms
             // 
             // CopyMarkdown
             // 
-            this.CopyMarkdown.Location = new System.Drawing.Point(12, 12);
+            this.CopyMarkdown.Location = new System.Drawing.Point(14, 16);
+            this.CopyMarkdown.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.CopyMarkdown.Name = "CopyMarkdown";
-            this.CopyMarkdown.Size = new System.Drawing.Size(211, 23);
+            this.CopyMarkdown.Size = new System.Drawing.Size(241, 31);
             this.CopyMarkdown.TabIndex = 1;
             this.CopyMarkdown.Text = "Copy Markdown";
             this.CopyMarkdown.UseVisualStyleBackColor = true;
@@ -48,9 +49,10 @@ namespace HolzShots.Windows.Forms
             // 
             // CopyHTML
             // 
-            this.CopyHTML.Location = new System.Drawing.Point(12, 41);
+            this.CopyHTML.Location = new System.Drawing.Point(14, 55);
+            this.CopyHTML.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.CopyHTML.Name = "CopyHTML";
-            this.CopyHTML.Size = new System.Drawing.Size(211, 23);
+            this.CopyHTML.Size = new System.Drawing.Size(241, 31);
             this.CopyHTML.TabIndex = 2;
             this.CopyHTML.Text = "Copy HTML";
             this.CopyHTML.UseVisualStyleBackColor = true;
@@ -58,9 +60,10 @@ namespace HolzShots.Windows.Forms
             // 
             // CopyDirectLink
             // 
-            this.CopyDirectLink.Location = new System.Drawing.Point(12, 70);
+            this.CopyDirectLink.Location = new System.Drawing.Point(14, 93);
+            this.CopyDirectLink.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.CopyDirectLink.Name = "CopyDirectLink";
-            this.CopyDirectLink.Size = new System.Drawing.Size(211, 64);
+            this.CopyDirectLink.Size = new System.Drawing.Size(241, 85);
             this.CopyDirectLink.TabIndex = 0;
             this.CopyDirectLink.Text = "Copy direct link";
             this.CopyDirectLink.UseVisualStyleBackColor = true;
@@ -71,38 +74,37 @@ namespace HolzShots.Windows.Forms
             this.panel1.BackColor = System.Drawing.SystemColors.Menu;
             this.panel1.Controls.Add(this.CloseLabel);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 149);
+            this.panel1.Location = new System.Drawing.Point(0, 196);
+            this.panel1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(235, 30);
+            this.panel1.Size = new System.Drawing.Size(266, 40);
             this.panel1.TabIndex = 3;
             // 
             // CloseLabel
             // 
-            this.CloseLabel.ActiveLinkColor = System.Drawing.SystemColors.Highlight;
             this.CloseLabel.AutoSize = true;
             this.CloseLabel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.CloseLabel.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.CloseLabel.LinkColor = System.Drawing.SystemColors.HotTrack;
-            this.CloseLabel.Location = new System.Drawing.Point(98, 6);
+            this.CloseLabel.Location = new System.Drawing.Point(112, 8);
             this.CloseLabel.Name = "CloseLabel";
-            this.CloseLabel.Size = new System.Drawing.Size(36, 15);
+            this.CloseLabel.Size = new System.Drawing.Size(45, 20);
             this.CloseLabel.TabIndex = 3;
             this.CloseLabel.TabStop = true;
             this.CloseLabel.Text = "Close";
-            this.CloseLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.CloseLabel_LinkClicked);
+            this.CloseLabel.Click += new System.EventHandler(this.CloseLabel_Click);
             // 
             // UploadResultForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(235, 179);
+            this.ClientSize = new System.Drawing.Size(266, 236);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.CopyDirectLink);
             this.Controls.Add(this.CopyHTML);
             this.Controls.Add(this.CopyMarkdown);
-            this.MaximumSize = new System.Drawing.Size(251, 195);
-            this.MinimumSize = new System.Drawing.Size(251, 195);
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.MaximumSize = new System.Drawing.Size(284, 254);
+            this.MinimumSize = new System.Drawing.Size(284, 254);
             this.Name = "UploadResultForm";
             this.Load += new System.EventHandler(this.FormLoad);
             this.panel1.ResumeLayout(false);
