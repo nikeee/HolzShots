@@ -32,7 +32,7 @@ Namespace UI.Dialogs
             Me.CopyLinkLabel3 = New HolzShots.Windows.Forms.CopyCodeLinkLabel()
             Me.CopyLinkLabel2 = New HolzShots.Windows.Forms.CopyCodeLinkLabel()
             Me.CopyLinkLabel1 = New HolzShots.Windows.Forms.CopyCodeLinkLabel()
-            Me.ColorBox = New HolzShots.UI.Controls.BigColorViewer()
+            Me.ColorBox = New HolzShots.Windows.Forms.ColorView()
             Me.SuspendLayout()
             '
             'Label1
@@ -145,7 +145,7 @@ Namespace UI.Dialogs
             Me.PerformLayout()
 
         End Sub
-        Friend WithEvents ColorBox As UI.Controls.BigColorViewer
+        Friend WithEvents ColorBox As HolzShots.Windows.Forms.ColorView
         Friend WithEvents CopyLinkLabel1 As HolzShots.Windows.Forms.CopyCodeLinkLabel
         Friend WithEvents CopyLinkLabel2 As HolzShots.Windows.Forms.CopyCodeLinkLabel
         Friend WithEvents CopyLinkLabel3 As HolzShots.Windows.Forms.CopyCodeLinkLabel

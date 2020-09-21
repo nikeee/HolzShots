@@ -72,9 +72,6 @@
 -->
 
   <ItemGroup>
-    <Compile Update="UI\Controls\BigColorViewer.vb">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Update="UI\Controls\ColorViewer.Designer.vb">
       <DependentUpon>ColorViewer.vb</DependentUpon>
     </Compile>

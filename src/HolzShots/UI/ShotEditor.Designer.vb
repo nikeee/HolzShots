@@ -74,7 +74,7 @@ Namespace UI.Specialized
             Me.Ellipse_Viewer = New HolzShots.UI.Controls.ColorViewer()
             Me.EllipseBar = New System.Windows.Forms.TrackBar()
             Me.BrightenSettingsPanel = New System.Windows.Forms.Panel()
-            Me.BigColorViewer1 = New HolzShots.UI.Controls.BigColorViewer()
+            Me.BigColorViewer1 = New HolzShots.Windows.Forms.ColorView()
             Me.BlackWhiteTracker = New System.Windows.Forms.TrackBar()
             Me.GlassLabel9 = New System.Windows.Forms.Label()
             Me.GlassLabel6 = New System.Windows.Forms.Label()
@@ -1101,7 +1101,7 @@ Namespace UI.Specialized
         Friend WithEvents BlackWhiteTracker As System.Windows.Forms.TrackBar
         Friend WithEvents GlassLabel9 As System.Windows.Forms.Label
         Friend WithEvents GlassLabel6 As System.Windows.Forms.Label
-        Friend WithEvents BigColorViewer1 As BigColorViewer
+        Friend WithEvents BigColorViewer1 As HolzShots.Windows.Forms.ColorView
         Friend WithEvents ArrowSettingsPanel As System.Windows.Forms.Panel
         Friend WithEvents GlassLabel10 As System.Windows.Forms.Label
         Friend WithEvents ArrowColorviewer As ColorViewer
