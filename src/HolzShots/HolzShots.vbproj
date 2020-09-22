@@ -87,10 +87,6 @@
     <Compile Update="UI\Controls\PluginInfoItem.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Update="UI\Dialogs\FlyoutNotifier.Designer.vb">
-      <DependentUpon>FlyoutNotifier.vb</DependentUpon>
-    </Compile>
-    <Compile Update="UI\Dialogs\FlyoutNotifier.vb" />
     <Compile Update="UI\Dialogs\PipettenColorViewer.Designer.vb">
       <DependentUpon>PipettenColorViewer.vb</DependentUpon>
     </Compile>
@@ -159,9 +155,6 @@
     </EmbeddedResource>
     <EmbeddedResource Update="UI\Controls\PluginInfoItem.resx">
       <DependentUpon>PluginInfoItem.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Update="UI\Dialogs\FlyoutNotifier.resx">
-      <DependentUpon>FlyoutNotifier.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Update="UI\Dialogs\PipettenColorViewer.resx">
       <DependentUpon>PipettenColorViewer.vb</DependentUpon>
