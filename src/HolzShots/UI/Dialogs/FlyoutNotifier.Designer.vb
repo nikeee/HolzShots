@@ -19,7 +19,7 @@ Namespace UI.Dialogs
         Private components As System.ComponentModel.IContainer
 
         'NOTE: The following procedure is required by the Windows Form Designer
-        'It can be modified using the Windows Form Designer.  
+        'It can be modified using the Windows Form Designer.
         'Do not modify it using the code editor.
         <System.Diagnostics.DebuggerStepThrough()>
         Private Sub InitializeComponent()
@@ -30,8 +30,8 @@ Namespace UI.Dialogs
             'bodyLabel
             '
             Me.bodyLabel.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                Or System.Windows.Forms.AnchorStyles.Left) _
-                Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
             Me.bodyLabel.Location = New System.Drawing.Point(12, 30)
             Me.bodyLabel.Name = "bodyLabel"
             Me.bodyLabel.Size = New System.Drawing.Size(189, 38)
@@ -51,14 +51,16 @@ Namespace UI.Dialogs
             '
             'FlyoutNotifier
             '
-            Me.AutoScaleDimensions = New System.Drawing.SizeF(120.0!, 120.0!)
+            Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
             Me.BackColor = System.Drawing.SystemColors.Window
             Me.ClientSize = New System.Drawing.Size(213, 77)
             Me.Controls.Add(Me.titleLabel)
             Me.Controls.Add(Me.bodyLabel)
+            Me.MaximumSize = New System.Drawing.Size(213, 77)
+            Me.MinimumSize = New System.Drawing.Size(213, 77)
             Me.Name = "FlyoutNotifier"
-            Me.Opacity = 0.0R
+            Me.Opacity = 0R
             Me.ResumeLayout(False)
             Me.PerformLayout()
 
