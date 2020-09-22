@@ -3,7 +3,7 @@ Imports HolzShots.Drawing
 Imports HolzShots.UI.Controls
 
 Namespace Drawing.Tools
-    Friend Class Marker
+    Friend NotInheritable Class Marker
         Inherits Tool
         Implements IDisposable
 

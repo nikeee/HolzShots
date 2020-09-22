@@ -3,7 +3,7 @@ Imports HolzShots.UI.Controls
 Imports HolzShots.UI.Dialogs
 
 Namespace Drawing.Tools
-    Friend Class Pipette
+    Friend NotInheritable Class Pipette
         Inherits Tool
         Implements IDisposable
         Public Overrides ReadOnly Property ToolType As PaintPanel.ShotEditorTool = PaintPanel.ShotEditorTool.Pipette
