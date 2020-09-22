@@ -19,7 +19,7 @@ Namespace UI.Dialogs
         Private components As System.ComponentModel.IContainer
 
         'NOTE: The following procedure is required by the Windows Form Designer
-        'It can be modified using the Windows Form Designer.  
+        'It can be modified using the Windows Form Designer.
         'Do not modify it using the code editor.
         <System.Diagnostics.DebuggerStepThrough()> _
         Private Sub InitializeComponent()
@@ -65,7 +65,7 @@ Namespace UI.Dialogs
             '
             'StatusToaster
             '
-            Me.AutoScaleDimensions = New System.Drawing.SizeF(120.0!, 120.0!)
+            Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
             Me.BackColor = System.Drawing.SystemColors.Window
             Me.ClientSize = New System.Drawing.Size(213, 77)
@@ -73,8 +73,10 @@ Namespace UI.Dialogs
             Me.Controls.Add(Me.statusTextLabel)
             Me.Controls.Add(Me.speedLabel)
             Me.Controls.Add(Me.stuffUploadedBar)
+            Me.MaximumSize = New System.Drawing.Size(213, 77)
+            Me.MinimumSize = New System.Drawing.Size(213, 77)
             Me.Name = "StatusToaster"
-            Me.Opacity = 0.0R
+            Me.Opacity = 0R
             Me.ResumeLayout(False)
             Me.PerformLayout()
 
