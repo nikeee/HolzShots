@@ -67,20 +67,7 @@
     <DefineConstants>$(DefineConstants),CI_BUILD=True</DefineConstants>
   </PropertyGroup>
 
-<!--
-  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
--->
-
   <ItemGroup>
-    <Compile Update="UI\Controls\BigColorViewer.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="UI\Controls\ColorViewer.Designer.vb">
-      <DependentUpon>ColorViewer.vb</DependentUpon>
-    </Compile>
-    <Compile Update="UI\Controls\ColorViewer.vb">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Update="UI\Controls\PaintPanel.Designer.vb">
       <DependentUpon>PaintPanel.vb</DependentUpon>
     </Compile>
@@ -93,10 +80,6 @@
     <Compile Update="UI\Controls\PluginInfoItem.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Update="UI\Dialogs\FlyoutNotifier.Designer.vb">
-      <DependentUpon>FlyoutNotifier.vb</DependentUpon>
-    </Compile>
-    <Compile Update="UI\Dialogs\FlyoutNotifier.vb" />
     <Compile Update="UI\Dialogs\PipettenColorViewer.Designer.vb">
       <DependentUpon>PipettenColorViewer.vb</DependentUpon>
     </Compile>
@@ -107,10 +90,6 @@
       <DependentUpon>StatusToaster.vb</DependentUpon>
     </Compile>
     <Compile Update="UI\Dialogs\StatusToaster.vb" />
-    <Compile Update="UI\Dialogs\UploadResultWindow.Designer.vb">
-      <DependentUpon>UploadResultWindow.vb</DependentUpon>
-    </Compile>
-    <Compile Update="UI\Dialogs\UploadResultWindow.vb" />
     <Compile Update="UI\Controls\NumericTextBox.vb">
       <SubType>Component</SubType>
     </Compile>
@@ -163,10 +142,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="UI\Controls\ColorViewer.resx">
-      <DependentUpon>ColorViewer.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Update="UI\Controls\PaintPanel.resx">
       <DependentUpon>PaintPanel.vb</DependentUpon>
       <SubType>Designer</SubType>
@@ -174,18 +149,12 @@
     <EmbeddedResource Update="UI\Controls\PluginInfoItem.resx">
       <DependentUpon>PluginInfoItem.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Update="UI\Dialogs\FlyoutNotifier.resx">
-      <DependentUpon>FlyoutNotifier.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Update="UI\Dialogs\PipettenColorViewer.resx">
       <DependentUpon>PipettenColorViewer.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Update="UI\Dialogs\StatusToaster.resx">
       <DependentUpon>StatusToaster.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Update="UI\Dialogs\UploadResultWindow.resx">
-      <DependentUpon>UploadResultWindow.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Update="Drawing\Tools\UI\ScaleWindow.resx">
       <DependentUpon>ScaleWindow.vb</DependentUpon>
@@ -255,19 +224,22 @@
       <SpecificVersion>False</SpecificVersion>
     </Reference>
 
-    <PackageReference Include="Microsoft.Bcl.HashCode" Version="1.1.0" />
     <PackageReference Include="Microsoft.CodeQuality.Analyzers" Version="3.3.0" />
+    <!--
+    <PackageReference Include="System.Runtime.Analyzers" Version="1.2.0-beta2" />
+    <PackageReference Include="System.Runtime.InteropServices.Analyzers" Version="1.2.0-beta2" />
+    -->
+
+    <PackageReference Include="Microsoft.Bcl.HashCode" Version="1.1.0" />
     <PackageReference Include="Semver" Version="2.0.6" />
     <PackageReference Include="StartupHelper" Version="1.0.3.4" />
     <PackageReference Include="System.Buffers" Version="4.5.1" />
     <PackageReference Include="System.Collections.Immutable" Version="1.7.1" />
     <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
     <PackageReference Include="System.Runtime" Version="4.3.1" />
-    <PackageReference Include="System.Runtime.Analyzers" Version="1.2.0-beta2" />
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.7.1" />
     <PackageReference Include="System.Runtime.Extensions" Version="4.3.1" />
     <PackageReference Include="System.Runtime.InteropServices" Version="4.3.0" />
-    <PackageReference Include="System.Runtime.InteropServices.Analyzers" Version="1.2.0-beta2" />
     <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
     <PackageReference Include="TaskScheduler" Version="2.8.18" />

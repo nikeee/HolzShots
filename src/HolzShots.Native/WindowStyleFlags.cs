@@ -30,5 +30,6 @@ namespace HolzShots.Native
     {
         TVS_EX_AutoHScroll = 0x20,
         TVS_EX_FadeInOutExpandOs = 0x40,
+        WS_EX_NOACTIVATE = 0x08000000,
     }
 }

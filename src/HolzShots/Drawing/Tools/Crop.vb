@@ -2,7 +2,7 @@ Imports System.Drawing.Drawing2D
 Imports HolzShots.UI.Controls
 
 Namespace Drawing.Tools
-    Friend Class Crop
+    Friend NotInheritable Class Crop
         Inherits Tool
         Implements IDisposable
 

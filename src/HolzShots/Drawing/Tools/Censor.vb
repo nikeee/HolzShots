@@ -1,10 +1,9 @@
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Text
-Imports System.Linq
 Imports HolzShots.UI.Controls
 
 Namespace Drawing.Tools
-    Friend Class Censor
+    Friend NotInheritable Class Censor
         Inherits Tool
         Implements IDisposable
 

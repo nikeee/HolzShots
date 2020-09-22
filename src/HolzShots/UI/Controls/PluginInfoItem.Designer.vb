@@ -71,13 +71,10 @@ Namespace UI.Controls
             '
             'pluginSettings
             '
-            Me.pluginSettings.ActiveLinkColor = System.Drawing.SystemColors.Highlight
             Me.pluginSettings.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
             Me.pluginSettings.AutoSize = True
             Me.pluginSettings.BackColor = System.Drawing.Color.Transparent
             Me.pluginSettings.Cursor = System.Windows.Forms.Cursors.Hand
-            Me.pluginSettings.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline
-            Me.pluginSettings.LinkColor = System.Drawing.SystemColors.HotTrack
             Me.pluginSettings.Location = New System.Drawing.Point(176, 34)
             Me.pluginSettings.Name = "pluginSettings"
             Me.pluginSettings.Size = New System.Drawing.Size(49, 15)
@@ -87,13 +84,10 @@ Namespace UI.Controls
             '
             'reportBug
             '
-            Me.reportBug.ActiveLinkColor = System.Drawing.SystemColors.Highlight
             Me.reportBug.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
             Me.reportBug.AutoSize = True
             Me.reportBug.BackColor = System.Drawing.Color.Transparent
             Me.reportBug.Cursor = System.Windows.Forms.Cursors.Hand
-            Me.reportBug.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline
-            Me.reportBug.LinkColor = System.Drawing.SystemColors.HotTrack
             Me.reportBug.Location = New System.Drawing.Point(292, 34)
             Me.reportBug.Name = "reportBug"
             Me.reportBug.Size = New System.Drawing.Size(33, 15)
@@ -103,13 +97,10 @@ Namespace UI.Controls
             '
             'authorWebSite
             '
-            Me.authorWebSite.ActiveLinkColor = System.Drawing.SystemColors.Highlight
             Me.authorWebSite.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
             Me.authorWebSite.AutoSize = True
             Me.authorWebSite.BackColor = System.Drawing.Color.Transparent
             Me.authorWebSite.Cursor = System.Windows.Forms.Cursors.Hand
-            Me.authorWebSite.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline
-            Me.authorWebSite.LinkColor = System.Drawing.SystemColors.HotTrack
             Me.authorWebSite.Location = New System.Drawing.Point(231, 34)
             Me.authorWebSite.Name = "authorWebSite"
             Me.authorWebSite.Size = New System.Drawing.Size(55, 15)

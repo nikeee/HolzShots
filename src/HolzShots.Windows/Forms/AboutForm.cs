@@ -18,11 +18,11 @@ namespace HolzShots.Windows.Forms
             ApplicationTitleLabel.Text = LibraryInformation.Name;
         }
 
-        private void LicenseLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) => IO.HolzShotsPaths.OpenLink(LibraryInformation.LicenseUrl);
-        private void HolzShotsLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) => IO.HolzShotsPaths.OpenLink(LibraryInformation.SiteUrl);
-        private void SendFeedbackLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) => IO.HolzShotsPaths.OpenLink(LibraryInformation.IssuesUrl);
+        private void LicenseLabel_LinkClicked(object sender, EventArgs e) => IO.HolzShotsPaths.OpenLink(LibraryInformation.LicenseUrl);
+        private void HolzShotsLinkLabel_LinkClicked(object sender, EventArgs e) => IO.HolzShotsPaths.OpenLink(LibraryInformation.SiteUrl);
+        private void SendFeedbackLink_LinkClicked(object sender, EventArgs e) => IO.HolzShotsPaths.OpenLink(LibraryInformation.IssuesUrl);
 
-        private void ShowGfxResourcesLinklabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void ShowGfxResourcesLinklabel_LinkClicked(object sender, EventArgs e)
         {
             const string title = "About Graphics";
 
