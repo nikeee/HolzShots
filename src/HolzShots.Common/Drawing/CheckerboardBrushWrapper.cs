@@ -13,6 +13,9 @@ namespace HolzShots.Drawing
     /// </summary>
     public sealed class CheckerboardBrushWrapper : IDisposable
     {
+        public static Color DefaultCheckerboardFirstColor { get; } = Color.FromArgb(255, 204, 204, 204);
+        public static Color DefaultCheckerboardSecondColor { get; } = Color.White;
+
         public Size TileSize { get; }
         public Color FirstColor { get; }
         public Color SecondColor { get; }
@@ -29,6 +32,8 @@ namespace HolzShots.Drawing
             SecondColor = secondColor;
             _brush = new Lazy<TextureBrush>(CreateTextureBrush, false);
         }
+
+        public static CheckerboardBrushWrapper CreateDefault(int tileSize) => new CheckerboardBrushWrapper(tileSize, DefaultCheckerboardFirstColor, DefaultCheckerboardSecondColor);
 
         private TextureBrush CreateTextureBrush()
         {

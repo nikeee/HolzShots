@@ -7,11 +7,7 @@ namespace HolzShots.Windows.Forms
 {
     public class ColorView : Control
     {
-        private readonly CheckerboardBrushWrapper _checkerboardBrushWrapper = new CheckerboardBrushWrapper(
-            10,
-            Color.FromArgb(255, 204, 204, 204),
-            Color.White
-        );
+        private readonly CheckerboardBrushWrapper _checkerboardBrushWrapper = CheckerboardBrushWrapper.CreateDefault(10);
 
         private readonly SolidBrush _brush = new SolidBrush(Color.CornflowerBlue);
         public Color Color
