@@ -1,11 +1,9 @@
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Text
-Imports System.Threading.Tasks
 Imports HolzShots.Input
-Imports HolzShots.Interop
 
 Namespace ScreenshotRelated.Selection
-    Friend Class AreaSelector
+    Friend NotInheritable Class AreaSelector
         Inherits System.Windows.Forms.Form ' TODO: Enhance?
         Implements IDisposable
         Implements IAreaSelector

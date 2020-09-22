@@ -3,7 +3,7 @@ Imports HolzShots.Windows.Forms
 
 Namespace UI.Dialogs
     Friend Class StatusToaster
-        Inherits FlyoutForm
+        Inherits NoFocusedFlyoutForm
         Implements IUploadProgressReporter
 
         Private ReadOnly _animator As FlyoutAnimator
@@ -57,7 +57,8 @@ Namespace UI.Dialogs
             End Select
         End Sub
 
-        Private Sub StatusToasterLoad(sender As Object, e As EventArgs) Handles MyBase.Load
+        Protected Overrides Sub OnLoad(e As EventArgs)
+            MyBase.OnLoad(e)
             _animator.AnimateIn(300)
         End Sub
 

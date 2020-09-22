@@ -59,27 +59,27 @@ Namespace Interop
 
         Friend Shared Sub PluginLoadingFailed(ex As PluginLoadingFailedException)
             Debug.Assert(ex IsNot Nothing)
-            FlyoutNotifier.Notify("Plugins not loaded", $"We could not load the plugins. Here's the error message:\n{ex.InnerException.Message}")
+            NotifierFlyout.ShowNotification("Plugins not loaded", $"We could not load the plugins. Here's the error message:\n{ex.InnerException.Message}")
         End Sub
 
         Friend Shared Sub SettingsUpdated()
-            FlyoutNotifier.Notify("Settings Updated", $"HolzShots has detected and loaded new settings.")
+            NotifierFlyout.ShowNotification("Settings Updated", $"HolzShots has detected and loaded new settings.")
         End Sub
 
         Public Shared Sub UploadFailed(result As UploadException)
             Show("Error Uploading Image", String.Empty, result.Message, TaskDialogIcon.Error, TaskDialogButton.OK)
         End Sub
         Public Shared Sub CopyingFailed(text As String)
-            FlyoutNotifier.Notify("Could not copy link :(", $"We could not copy the link to your image to your clipboard.")
+            NotifierFlyout.ShowNotification("Could not copy link :(", $"We could not copy the link to your image to your clipboard.")
         End Sub
         Public Shared Sub ShowCopyConfirmation(text As String)
-            FlyoutNotifier.Notify("Link copied!", "The link has been copied to your clipboard.")
+            NotifierFlyout.ShowNotification("Link copied!", "The link has been copied to your clipboard.")
         End Sub
         Public Shared Sub ShowImageCopiedConfirmation()
-            FlyoutNotifier.Notify("Image copied!", "The image has been copied to your clipboard.")
+            NotifierFlyout.ShowNotification("Image copied!", "The image has been copied to your clipboard.")
         End Sub
         Public Shared Sub ShowOperationCanceled()
-            FlyoutNotifier.Notify("Canceled", "You canceled the task.")
+            NotifierFlyout.ShowNotification("Canceled", "You canceled the task.")
         End Sub
 
         Public Shared Sub NoPathSpecified()
