@@ -67,9 +67,6 @@
     <DefineConstants>$(DefineConstants),CI_BUILD=True</DefineConstants>
   </PropertyGroup>
 
-  <!-- Fixes exceptions from some analyzers -->
-  <Features>IOperation</Features>
-
   <ItemGroup>
     <Compile Update="UI\Controls\PaintPanel.Designer.vb">
       <DependentUpon>PaintPanel.vb</DependentUpon>
