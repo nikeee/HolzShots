@@ -52,13 +52,13 @@ Namespace UI.Specialized
             Me.GlassLabel2 = New System.Windows.Forms.Label()
             Me.GlassLabel3 = New System.Windows.Forms.Label()
             Me.Pinsel_Width_Zensursula = New System.Windows.Forms.Label()
-            Me.Zensursula_Viewer = New HolzShots.UI.Controls.ColorViewer()
+            Me.Zensursula_Viewer = New HolzShots.Windows.Forms.ColorSelector()
             Me.ZensursulaBar = New System.Windows.Forms.TrackBar()
             Me.MarkerSettingsPanel = New System.Windows.Forms.Panel()
             Me.GlassLabel4 = New System.Windows.Forms.Label()
             Me.GlassLabel1 = New System.Windows.Forms.Label()
             Me.Pinsel_Width_Marker = New System.Windows.Forms.Label()
-            Me.Marker_Viewer = New HolzShots.UI.Controls.ColorViewer()
+            Me.Marker_Viewer = New HolzShots.Windows.Forms.ColorSelector()
             Me.MarkerBar = New System.Windows.Forms.TrackBar()
             Me.EraserSettingsPanel = New System.Windows.Forms.Panel()
             Me.GlassLabel5 = New System.Windows.Forms.Label()
@@ -71,7 +71,7 @@ Namespace UI.Specialized
             Me.GlassLabel8 = New System.Windows.Forms.Label()
             Me.GlassLabel7 = New System.Windows.Forms.Label()
             Me.Ellipse_Width = New System.Windows.Forms.Label()
-            Me.Ellipse_Viewer = New HolzShots.UI.Controls.ColorViewer()
+            Me.Ellipse_Viewer = New HolzShots.Windows.Forms.ColorSelector()
             Me.EllipseBar = New System.Windows.Forms.TrackBar()
             Me.BrightenSettingsPanel = New System.Windows.Forms.Panel()
             Me.BigColorViewer1 = New HolzShots.Windows.Forms.ColorView()
@@ -83,7 +83,7 @@ Namespace UI.Specialized
             Me.GlassLabel11 = New System.Windows.Forms.Label()
             Me.ArrowWidthLabel = New System.Windows.Forms.Label()
             Me.GlassLabel10 = New System.Windows.Forms.Label()
-            Me.ArrowColorviewer = New HolzShots.UI.Controls.ColorViewer()
+            Me.ArrowColorviewer = New HolzShots.Windows.Forms.ColorSelector()
             Me.BlurSettingsPanel = New System.Windows.Forms.Panel()
             Me.GlassLabel14 = New System.Windows.Forms.Label()
             Me.BlurnessBar = New System.Windows.Forms.TrackBar()
@@ -1073,14 +1073,14 @@ Namespace UI.Specialized
         Friend WithEvents KreisToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Friend WithEvents CensorSettingsPanel As System.Windows.Forms.Panel
         Friend WithEvents ZensursulaBar As System.Windows.Forms.TrackBar
-        Friend WithEvents Zensursula_Viewer As ColorViewer
+        Friend WithEvents Zensursula_Viewer As HolzShots.Windows.Forms.ColorSelector
         Friend WithEvents MarkerSettingsPanel As System.Windows.Forms.Panel
-        Friend WithEvents Marker_Viewer As ColorViewer
+        Friend WithEvents Marker_Viewer As HolzShots.Windows.Forms.ColorSelector
         Friend WithEvents MarkerBar As System.Windows.Forms.TrackBar
         Friend WithEvents EraserSettingsPanel As System.Windows.Forms.Panel
         Friend WithEvents EraserBar As System.Windows.Forms.TrackBar
         Friend WithEvents EllipseSettingsPanel As System.Windows.Forms.Panel
-        Friend WithEvents Ellipse_Viewer As ColorViewer
+        Friend WithEvents Ellipse_Viewer As HolzShots.Windows.Forms.ColorSelector
         Friend WithEvents EllipseBar As System.Windows.Forms.TrackBar
         Friend WithEvents Pinsel_Width_Zensursula As System.Windows.Forms.Label
         Friend WithEvents Pinsel_Width_Marker As System.Windows.Forms.Label
@@ -1104,7 +1104,7 @@ Namespace UI.Specialized
         Friend WithEvents BigColorViewer1 As HolzShots.Windows.Forms.ColorView
         Friend WithEvents ArrowSettingsPanel As System.Windows.Forms.Panel
         Friend WithEvents GlassLabel10 As System.Windows.Forms.Label
-        Friend WithEvents ArrowColorviewer As ColorViewer
+        Friend WithEvents ArrowColorviewer As HolzShots.Windows.Forms.ColorSelector
         Friend WithEvents ToolStrip1 As System.Windows.Forms.ToolStrip
         Friend WithEvents ScaleTool As System.Windows.Forms.ToolStripButton
         Friend WithEvents DrawCursor As System.Windows.Forms.ToolStripButton
