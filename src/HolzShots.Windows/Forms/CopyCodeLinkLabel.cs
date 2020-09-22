@@ -13,10 +13,5 @@ namespace HolzShots.Windows.Forms
             get => _font;
             set { }
         }
-
-        public CopyCodeLinkLabel()
-        {
-            LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-        }
     }
 }

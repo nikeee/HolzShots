@@ -66,15 +66,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Update="UI\Controls\BigColorViewer.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="UI\Controls\ColorViewer.Designer.vb">
-      <DependentUpon>ColorViewer.vb</DependentUpon>
-    </Compile>
-    <Compile Update="UI\Controls\ColorViewer.vb">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Update="UI\Controls\PaintPanel.Designer.vb">
       <DependentUpon>PaintPanel.vb</DependentUpon>
     </Compile>
@@ -104,10 +95,6 @@
       <DependentUpon>StatusToaster.vb</DependentUpon>
     </Compile>
     <Compile Update="UI\Dialogs\StatusToaster.vb" />
-    <Compile Update="UI\Dialogs\UploadResultWindow.Designer.vb">
-      <DependentUpon>UploadResultWindow.vb</DependentUpon>
-    </Compile>
-    <Compile Update="UI\Dialogs\UploadResultWindow.vb" />
     <Compile Update="UI\Controls\NumericTextBox.vb">
       <SubType>Component</SubType>
     </Compile>
@@ -160,10 +147,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="UI\Controls\ColorViewer.resx">
-      <DependentUpon>ColorViewer.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Update="UI\Controls\PaintPanel.resx">
       <DependentUpon>PaintPanel.vb</DependentUpon>
       <SubType>Designer</SubType>
@@ -180,9 +163,6 @@
     </EmbeddedResource>
     <EmbeddedResource Update="UI\Dialogs\StatusToaster.resx">
       <DependentUpon>StatusToaster.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Update="UI\Dialogs\UploadResultWindow.resx">
-      <DependentUpon>UploadResultWindow.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Update="Drawing\Tools\UI\ScaleWindow.resx">
       <DependentUpon>ScaleWindow.vb</DependentUpon>

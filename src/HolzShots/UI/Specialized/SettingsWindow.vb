@@ -40,7 +40,7 @@ Namespace UI.Specialized
             Focus()
         End Sub
 
-        Private Shared Sub OpenPluginFolderLinkLabelLinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles openPluginFolderLinkLabel.LinkClicked
+        Private Shared Sub OpenPluginFolderLinkLabelLinkClicked(sender As Object, e As EventArgs) Handles openPluginFolderLinkLabel.Click
             IO.HolzShotsPaths.OpenFolderInExplorer(My.Application.Uploaders.Plugins.PluginDirectory)
         End Sub
 

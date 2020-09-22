@@ -34,7 +34,7 @@ Namespace Net
 
             Select Case settingsContext.ActionAfterUpload
                 Case UploadHandlingAction.Flyout
-                    Dim lv As New UploadResultWindow(result, settingsContext)
+                    Dim lv As New UploadResultForm(result, settingsContext)
                     lv.Show()
 
                 Case UploadHandlingAction.CopyToClipboard
