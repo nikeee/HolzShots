@@ -1,13 +1,14 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using HolzShots.Drawing;
 
 namespace HolzShots.Windows.Forms
 {
     public class ColorView : Control
     {
-        private static readonly Brush _checkerboardBrush = new HatchBrush(
-            HatchStyle.LargeCheckerBoard,
+        private readonly CheckerboardBrushWrapper _checkerboardBrushWrapper = new CheckerboardBrushWrapper(
+            10,
             Color.FromArgb(255, 204, 204, 204),
             Color.White
         );
@@ -43,7 +44,7 @@ namespace HolzShots.Windows.Forms
                 var originalOrigin = g.RenderingOrigin;
 
                 g.RenderingOrigin = new Point(originalOrigin.X - 2, originalOrigin.Y - 2);
-                g.FillRectangle(_checkerboardBrush, 2, 2, Width - 4, Height - 4);
+                g.FillRectangle(_checkerboardBrushWrapper.Brush, 2, 2, Width - 4, Height - 4);
                 g.RenderingOrigin = originalOrigin;
             }
         }
@@ -53,6 +54,12 @@ namespace HolzShots.Windows.Forms
             var g = e.Graphics;
 
             g.FillRectangle(_brush, 2, 2, Width - 4, Height - 4);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+            _checkerboardBrushWrapper.Dispose();
         }
     }
 }
