@@ -1,3 +1,4 @@
+using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
@@ -18,36 +19,34 @@ namespace HolzShots.Windows.Forms
                 if (_brush.Color != value)
                 {
                     _brush.Color = value;
-                    Invalidate(new Rectangle(2, 2, Width - 4, Height - 4), false);
+                    // Invalidate(new Rectangle(2, 2, Width - 4, Height - 4), false);
+                    Invalidate();
                 }
             }
         }
 
         public bool ShowBorder => true;
 
-        protected override void OnPaintBackground(PaintEventArgs e)
+        protected static readonly Pen DefaultOuterBorderPen = Pens.Gray;
+        protected static readonly Pen DefaultInnerBorderPen = SystemPens.Window;
+        protected Pen outerBorderPen = DefaultOuterBorderPen;
+        protected Pen innerBorderPen = DefaultInnerBorderPen;
+
+        protected override void OnPaintBackground(PaintEventArgs e) { }
+        protected override void OnPaint(PaintEventArgs e)
         {
-            base.OnPaintBackground(e);
             var g = e.Graphics;
 
             if (ShowBorder)
             {
-                g.DrawRectangle(Pens.Gray, 0, 0, Width - 1, Height - 1);
+                g.DrawRectangle(outerBorderPen, 0, 0, Width - 1, Height - 1);
+                g.DrawRectangle(innerBorderPen, 1, 1, Width - 3, Height - 3);
             }
 
             if (_brush.Color.A < 255)
             {
-                var originalOrigin = g.RenderingOrigin;
-
-                g.RenderingOrigin = new Point(originalOrigin.X - 2, originalOrigin.Y - 2);
                 g.FillRectangle(_checkerboardBrushWrapper.Brush, 2, 2, Width - 4, Height - 4);
-                g.RenderingOrigin = originalOrigin;
             }
-        }
-
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            var g = e.Graphics;
 
             g.FillRectangle(_brush, 2, 2, Width - 4, Height - 4);
         }
@@ -56,6 +55,59 @@ namespace HolzShots.Windows.Forms
         {
             base.Dispose(disposing);
             _checkerboardBrushWrapper.Dispose();
+        }
+    }
+
+    public class ColorSelector : ColorView
+    {
+        protected static readonly Pen HoverOuterBorderPen = new Pen(Color.FromArgb(255, 100, 165, 231));
+        protected static readonly Pen HoverInnerBorderPen = new Pen(Color.FromArgb(255, 203, 228, 253));
+
+        public ColorSelector() => Cursor = Cursors.Hand;
+
+        private void ShowColorDialog()
+        {
+            using (var colorDialog = new ColorDialog())
+            {
+                colorDialog.FullOpen = true;
+                colorDialog.ShowHelp = false;
+                colorDialog.Color = Color;
+
+                var res = colorDialog.ShowDialog();
+                if (res == DialogResult.OK)
+                {
+                    OnColorChanged(colorDialog.Color);
+                }
+            }
+        }
+
+        #region Mouse Handling
+
+        protected override void OnClick(EventArgs e)
+        {
+            if (Enabled)
+                ShowColorDialog();
+        }
+        protected override void OnMouseEnter(EventArgs e)
+        {
+            innerBorderPen = HoverInnerBorderPen;
+            outerBorderPen = HoverOuterBorderPen;
+            Invalidate();
+        }
+        protected override void OnMouseLeave(EventArgs e)
+        {
+            innerBorderPen = DefaultInnerBorderPen;
+            outerBorderPen = DefaultOuterBorderPen;
+            Invalidate();
+        }
+
+        #endregion
+
+        public event EventHandler<Color> ColorChanged;
+        private void OnColorChanged(Color newColor)
+        {
+            Color = newColor;
+            ColorChanged?.Invoke(this, newColor);
         }
     }
 }
