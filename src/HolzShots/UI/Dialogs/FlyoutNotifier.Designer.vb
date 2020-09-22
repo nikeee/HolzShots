@@ -34,31 +34,31 @@ Namespace UI.Dialogs
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
             Me.bodyLabel.Location = New System.Drawing.Point(12, 30)
             Me.bodyLabel.Name = "bodyLabel"
-            Me.bodyLabel.Size = New System.Drawing.Size(189, 38)
+            Me.bodyLabel.Size = New System.Drawing.Size(190, 35)
             Me.bodyLabel.TabIndex = 1
-            Me.bodyLabel.Text = "B"
+            Me.bodyLabel.Text = "HolzShots has detected and loaded new settings."
             '
             'titleLabel
             '
             Me.titleLabel.AutoSize = True
             Me.titleLabel.Font = New System.Drawing.Font("Segoe UI", 12.0!)
             Me.titleLabel.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(51, Byte), Integer), CType(CType(153, Byte), Integer))
-            Me.titleLabel.Location = New System.Drawing.Point(12, 6)
+            Me.titleLabel.Location = New System.Drawing.Point(11, 9)
             Me.titleLabel.Name = "titleLabel"
-            Me.titleLabel.Size = New System.Drawing.Size(18, 21)
+            Me.titleLabel.Size = New System.Drawing.Size(129, 21)
             Me.titleLabel.TabIndex = 2
-            Me.titleLabel.Text = "T"
+            Me.titleLabel.Text = "Settings Updated"
             '
             'FlyoutNotifier
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(96.0!, 96.0!)
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
             Me.BackColor = System.Drawing.SystemColors.Window
-            Me.ClientSize = New System.Drawing.Size(213, 77)
+            Me.ClientSize = New System.Drawing.Size(214, 74)
             Me.Controls.Add(Me.titleLabel)
             Me.Controls.Add(Me.bodyLabel)
-            Me.MaximumSize = New System.Drawing.Size(213, 77)
-            Me.MinimumSize = New System.Drawing.Size(213, 77)
+            Me.MaximumSize = New System.Drawing.Size(230, 90)
+            Me.MinimumSize = New System.Drawing.Size(230, 90)
             Me.Name = "FlyoutNotifier"
             Me.Opacity = 0R
             Me.ResumeLayout(False)
