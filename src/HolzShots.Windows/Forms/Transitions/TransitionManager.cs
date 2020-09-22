@@ -19,7 +19,7 @@ namespace HolzShots.UI.Transitions
     /// back into the running transitions, which do the actual work of the transition.
     ///
     /// </remarks>
-    internal class TransitionManager : IDisposable
+    internal sealed class TransitionManager : IDisposable
     {
         #region Public methods
 

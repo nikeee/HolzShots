@@ -43,12 +43,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Forms\UploadResultForm.cs" />
+    <Compile Update="Forms\UploadResultForm.Designer.cs">
+      <DependentUpon>UploadResultForm.cs</DependentUpon>
+    </Compile>
+
     <Compile Update="Forms\FlyoutForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Forms\FlyoutForm.Designer.cs">
       <DependentUpon>FlyoutForm.cs</DependentUpon>
     </Compile>
+
     <Compile Update="Forms\AboutForm.cs" />
     <Compile Update="Forms\AboutForm.Designer.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
@@ -57,6 +63,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Forms\UploadResultForm.resx">
+      <DependentUpon>UploadResultForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Update="Forms\FlyoutForm.resx">
       <DependentUpon>FlyoutForm.cs</DependentUpon>
     </EmbeddedResource>
