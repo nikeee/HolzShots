@@ -65,8 +65,8 @@ Namespace UI.Dialogs
             '
             'StatusToaster
             '
-            Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
-            Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+            Me.AutoScaleDimensions = New System.Drawing.SizeF(120.0!, 120.0!)
+            Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi
             Me.BackColor = System.Drawing.SystemColors.Window
             Me.ClientSize = New System.Drawing.Size(213, 77)
             Me.Controls.Add(Me.uploadedBytesLabel)
