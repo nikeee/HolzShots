@@ -2,6 +2,7 @@ Imports HolzShots.Composition
 Imports HolzShots.Input
 Imports HolzShots.Net
 Imports HolzShots.UI.Dialogs
+Imports HolzShots.Windows.Forms
 
 Namespace Interop
     ' TODO: Rename to NotificationManager
