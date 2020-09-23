@@ -86,7 +86,7 @@ namespace HolzShots.Windows.Forms.Controls
 
         #endregion
 
-        private void pluginSettings_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void pluginSettings_LinkClicked(object sender, EventArgs e)
         {
             // TODO: Fix Plugin Settings (we don't seem to support them now)
             // In VB, it was:
@@ -103,8 +103,8 @@ namespace HolzShots.Windows.Forms.Controls
             // End If
         }
 
-        private void authorWebSite_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) => OpenUrlIfPresent(_model?.Website);
-        private void reportBug_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) => OpenUrlIfPresent(_model?.BugsUrl);
+        private void authorWebSite_LinkClicked(object sender, EventArgs e) => OpenUrlIfPresent(_model?.Website);
+        private void reportBug_LinkClicked(object sender, EventArgs e) => OpenUrlIfPresent(_model?.BugsUrl);
 
         private static void OpenUrlIfPresent(string /* ? */ url)
         {
