@@ -29,11 +29,11 @@ Namespace UI.Dialogs
             stuffUploadedBar.Style = value
         End Sub
 
-        Private Sub SetProgressBarValueLabel(value As Integer)
+        Private Sub SetProgressBarValueLabel(value As UInteger)
             If stuffUploadedBar.InvokeRequired Then
-                stuffUploadedBar.Invoke(Sub() stuffUploadedBar.Value = value)
+                stuffUploadedBar.Invoke(Sub() stuffUploadedBar.Value = CInt(value))
             Else
-                stuffUploadedBar.Value = value
+                stuffUploadedBar.Value = CInt(value)
             End If
         End Sub
 

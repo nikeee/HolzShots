@@ -22,7 +22,7 @@ Namespace Net
             End If
 
             If parentWindow.GetHandle() <> IntPtr.Zero Then
-                reporters.Add(New TaskBarItemProgressReporter(parentWindow.Handle))
+                reporters.Add(New TaskbarItemProgressReporter(parentWindow.Handle))
             End If
 
             Return New AggregateProgressReporter(reporters)
@@ -39,10 +39,10 @@ Namespace Net
 
                 Case UploadHandlingAction.CopyToClipboard
 
-                    If Not result.Url.SetAsClipboardText() Then
-                        HumanInterop.CopyingFailed(result.Url)
-                    ElseIf settingsContext.ShowCopyConfirmation Then
+                    If ClipboardEx.SetText(result.Url) Then
                         HumanInterop.ShowCopyConfirmation(result.Url)
+                    ElseIf settingsContext.ShowCopyConfirmation Then
+                        HumanInterop.CopyingFailed(result.Url)
                     End If
 
                 Case UploadHandlingAction.None ' Intentionally do nothing

@@ -35,8 +35,8 @@ Namespace UI.Dialogs
             CopyLinkLabel5.Tag = _defval
         End Sub
 
-        Private Sub GlassLabelButton1Click(ByVal sender As Object, ByVal e As EventArgs) Handles CopyLinkLabel1.Click, CopyLinkLabel2.Click, CopyLinkLabel3.Click, CopyLinkLabel4.Click, CopyLinkLabel5.Click
-            DirectCast(DirectCast(sender, LinkLabel).Tag, String).SetAsClipboardText()
+        Private Sub GlassLabelButton1Click(sender As Object, e As EventArgs) Handles CopyLinkLabel1.Click, CopyLinkLabel2.Click, CopyLinkLabel3.Click, CopyLinkLabel4.Click, CopyLinkLabel5.Click
+            ClipboardEx.SetText(DirectCast(DirectCast(sender, LinkLabel).Tag, String))
             Close()
         End Sub
     End Class

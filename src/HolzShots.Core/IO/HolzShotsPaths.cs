@@ -96,5 +96,11 @@ namespace HolzShots.IO
                 return false;
             }
         }
+
+        /// <summary> TODO: Consider re-adding this functionality </summary>
+        public static void AddToRecentDocuments(string path)
+        {
+            Native.Shell32.SHAddToRecentDocs(Native.Shell32.ShellAddToRecentDocsFlags.Path, path);
+        }
     }
 }
