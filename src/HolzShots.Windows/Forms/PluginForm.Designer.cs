@@ -33,9 +33,9 @@ namespace HolzShots.Windows.Forms
             this.PluginPanel = new HolzShots.Windows.Forms.Controls.StackPanel();
             this.OpenPluginsDirectoryLabel = new HolzShots.Windows.Forms.ExplorerLinkLabel();
             this.SuspendLayout();
-            // 
+            //
             // CloseButton
-            // 
+            //
             this.CloseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.CloseButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.CloseButton.Location = new System.Drawing.Point(347, 326);
@@ -45,9 +45,9 @@ namespace HolzShots.Windows.Forms
             this.CloseButton.Text = "Close";
             this.CloseButton.UseVisualStyleBackColor = true;
             this.CloseButton.Click += new System.EventHandler(this.CloseButton_Click);
-            // 
+            //
             // PrimingLabel
-            // 
+            //
             this.PrimingLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.PrimingLabel.AutoSize = true;
             this.PrimingLabel.Location = new System.Drawing.Point(12, 330);
@@ -55,35 +55,32 @@ namespace HolzShots.Windows.Forms
             this.PrimingLabel.Size = new System.Drawing.Size(46, 15);
             this.PrimingLabel.TabIndex = 62;
             this.PrimingLabel.Text = "Plugins";
-            // 
+            //
             // PluginPanel
-            // 
-            this.PluginPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.PluginPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.PluginPanel.Location = new System.Drawing.Point(-1, 0);
             this.PluginPanel.Name = "PluginPanel";
             this.PluginPanel.Size = new System.Drawing.Size(436, 320);
             this.PluginPanel.TabIndex = 63;
-            // 
+            //
             // OpenPluginsDirectoryLabel
-            // 
-            this.OpenPluginsDirectoryLabel.ActiveLinkColor = System.Drawing.SystemColors.Highlight;
+            /
             this.OpenPluginsDirectoryLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.OpenPluginsDirectoryLabel.AutoSize = true;
             this.OpenPluginsDirectoryLabel.BackColor = System.Drawing.Color.Transparent;
             this.OpenPluginsDirectoryLabel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.OpenPluginsDirectoryLabel.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.OpenPluginsDirectoryLabel.LinkColor = System.Drawing.SystemColors.HotTrack;
             this.OpenPluginsDirectoryLabel.Location = new System.Drawing.Point(227, 330);
             this.OpenPluginsDirectoryLabel.Name = "OpenPluginsDirectoryLabel";
             this.OpenPluginsDirectoryLabel.Size = new System.Drawing.Size(114, 15);
             this.OpenPluginsDirectoryLabel.TabIndex = 60;
             this.OpenPluginsDirectoryLabel.TabStop = true;
             this.OpenPluginsDirectoryLabel.Text = "Open Plugins Folder";
-            this.OpenPluginsDirectoryLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.OpenPluginsDirectoryLabel_LinkClicked);
-            // 
+            this.OpenPluginsDirectoryLabel.Click += new System.EventHandler(this.OpenPluginsDirectoryLabel_LinkClicked);
+            //
             // PluginForm
-            // 
+            //
             this.AcceptButton = this.CloseButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;

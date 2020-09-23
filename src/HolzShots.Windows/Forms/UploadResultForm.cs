@@ -49,7 +49,6 @@ namespace HolzShots.Windows.Forms
             Close();
         }
 
-        // private void CloseLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) => _ = CloseFlyout();
         private void CopyAndMaybeClose(string value)
         {
             if (SetText(value))

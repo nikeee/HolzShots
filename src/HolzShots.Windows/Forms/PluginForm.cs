@@ -33,7 +33,7 @@ namespace HolzShots.Windows.Forms
 
         private void CloseButton_Click(object sender, EventArgs e) => Close();
 
-        private void OpenPluginsDirectoryLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void OpenPluginsDirectoryLabel_LinkClicked(object sender, EventArgs e)
         {
             HolzShotsPaths.OpenFolderInExplorer(_model.PluginDirectory);
         }
