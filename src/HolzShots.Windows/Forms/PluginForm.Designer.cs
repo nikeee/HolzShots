@@ -66,7 +66,7 @@ namespace HolzShots.Windows.Forms
             this.PluginPanel.TabIndex = 63;
             //
             // OpenPluginsDirectoryLabel
-            /
+            //
             this.OpenPluginsDirectoryLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.OpenPluginsDirectoryLabel.AutoSize = true;
             this.OpenPluginsDirectoryLabel.BackColor = System.Drawing.Color.Transparent;
