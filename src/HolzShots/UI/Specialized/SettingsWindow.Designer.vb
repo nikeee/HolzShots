@@ -80,8 +80,6 @@ Namespace UI.Specialized
             Me.openPluginFolderLinkLabel.AutoSize = True
             Me.openPluginFolderLinkLabel.Cursor = System.Windows.Forms.Cursors.Hand
             Me.openPluginFolderLinkLabel.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-            Me.openPluginFolderLinkLabel.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline
-            Me.openPluginFolderLinkLabel.LinkColor = System.Drawing.SystemColors.HotTrack
             Me.openPluginFolderLinkLabel.Location = New System.Drawing.Point(330, 101)
             Me.openPluginFolderLinkLabel.Name = "openPluginFolderLinkLabel"
             Me.openPluginFolderLinkLabel.Size = New System.Drawing.Size(107, 15)
