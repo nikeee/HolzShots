@@ -1,6 +1,7 @@
 Imports System.Drawing.Drawing2D
 Imports HolzShots.UI.Controls
 Imports HolzShots.UI.Dialogs
+Imports HolzShots.Windows.Forms
 
 Namespace Drawing.Tools
     Friend NotInheritable Class Pipette
@@ -61,7 +62,7 @@ Namespace Drawing.Tools
             Debug.Assert(TypeOf rawImage Is Bitmap)
             Dim rawBmp = If(TypeOf rawImage Is Bitmap, DirectCast(rawImage, Bitmap), New Bitmap(rawImage))
             Dim c As Color = rawBmp.GetPixel(e.X, e.Y)
-            Dim viewer As New PipettenColorViewer(c, trigger.PointToScreen(e))
+            Dim viewer As New CopyColorForm(c, trigger.PointToScreen(e))
             viewer.Show()
         End Sub
 
