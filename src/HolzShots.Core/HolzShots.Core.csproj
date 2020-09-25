@@ -1,6 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <ProjectGuid>{4F1B3465-2915-4E00-BB15-FC1808B01CD6}</ProjectGuid>
 
     <RootNamespace>HolzShots</RootNamespace>
     <TargetFramework>netcoreapp5.0</TargetFramework>

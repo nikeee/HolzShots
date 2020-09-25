@@ -1,6 +1,5 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <ProjectGuid>{3AADC160-9020-4F59-A2F0-7941752C047E}</ProjectGuid>
 
     <RootNamespace>HolzShots</RootNamespace>
     <TargetFramework>netstandard2.0</TargetFramework>
