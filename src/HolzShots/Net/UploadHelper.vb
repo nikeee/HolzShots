@@ -1,5 +1,4 @@
 Imports HolzShots.Interop
-Imports HolzShots.UI.Dialogs
 Imports HolzShots.Windows.Forms
 
 Namespace Net
@@ -18,7 +17,7 @@ Namespace Net
 #End If
 
             If settingsContext.ShowUploadProgress Then
-                reporters.Add(New StatusToaster())
+                reporters.Add(New UploadStatusFlyoutForm())
             End If
 
             If parentWindow.GetHandle() <> IntPtr.Zero Then
