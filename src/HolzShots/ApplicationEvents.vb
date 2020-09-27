@@ -96,8 +96,7 @@ Namespace My
             My.Settings.UserTasksInitialized = True
             My.Settings.Save()
 
-            Dim jumpList = Microsoft.WindowsAPICodePack.Taskbar.JumpList.CreateJumpListForIndividualWindow(TaskbarManager.Instance.ApplicationId, SettingsWindow.Instance.Handle)
-
+            Dim jumpList = Microsoft.WindowsAPICodePack.Taskbar.JumpList.CreateJumpList()
             jumpList.ClearAllUserTasks()
 
             Static imgres As String = Path.Combine(HolzShotsPaths.SystemPath, "imageres.dll")
