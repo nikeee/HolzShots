@@ -122,7 +122,6 @@ namespace HolzShots.Net.Custom
     }
 
     [Serializable]
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1054:Uri parameters should not be strings")]
     public class Parser
     {
         private static readonly string[] SupportedKinds = { "REGEX", "JSON" /*, "xml" */ };

@@ -52,6 +52,7 @@ namespace HolzShots.Threading
                 catch
                 {
                     Debug.Fail("Failed to dispose");
+                    throw;
                 }
                 _instanceExists = false;
                 disposedValue = true;
