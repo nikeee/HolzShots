@@ -17,7 +17,7 @@ namespace HolzShots.Net
 
         private readonly SpeedCalculatorProgress _speedCalculator = new SpeedCalculatorProgress();
 
-        public UploadUI(Image image, Uploader uploader, ImageFormat format, IUploadProgressReporter /* ? */ progressReporter)
+        public UploadUI(Image image, Uploader uploader, ImageFormat format, IUploadProgressReporter? progressReporter)
         {
             _image = image.CloneGifBug(format) ?? throw new ArgumentNullException(nameof(image));
             _format = format ?? throw new ArgumentNullException(nameof(format));

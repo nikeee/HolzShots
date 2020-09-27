@@ -29,6 +29,6 @@ namespace HolzShots.Composition
         public static bool operator ==(UploaderEntry left, UploaderEntry right) => left is null ? right is null : left.Equals(right);
         public static bool operator !=(UploaderEntry left, UploaderEntry right) => !(left == right);
         public override bool Equals(object obj) => obj is UploaderEntry other && Equals(other);
-        public bool Equals(UploaderEntry /* ? */ other) => !(other is null) && other.Metadata.Equals(Metadata) && other.Uploader.Equals(Uploader);
+        public bool Equals(UploaderEntry? other) => !(other is null) && other.Metadata.Equals(Metadata) && other.Uploader.Equals(Uploader);
     }
 }

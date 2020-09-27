@@ -106,7 +106,7 @@ namespace HolzShots.Windows.Forms.Controls
         private void authorWebSite_LinkClicked(object sender, EventArgs e) => OpenUrlIfPresent(_model?.Website);
         private void reportBug_LinkClicked(object sender, EventArgs e) => OpenUrlIfPresent(_model?.BugsUrl);
 
-        private static void OpenUrlIfPresent(string /* ? */ url)
+        private static void OpenUrlIfPresent(string? url)
         {
             if (url != null)
                 HolzShotsPaths.OpenLink(url);

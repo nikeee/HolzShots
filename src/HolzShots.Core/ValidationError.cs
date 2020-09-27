@@ -9,7 +9,7 @@ namespace HolzShots
     {
         public string Message { get; }
         public IReadOnlyList<string> AffectedProperties { get; }
-        public Exception /* ? */ Exception { get; }
+        public Exception? Exception { get; }
 
         public ValidationError(string message, string affectedProperty, Exception exception = null)
             : this(message, ImmutableList.Create(affectedProperty), exception) { }
