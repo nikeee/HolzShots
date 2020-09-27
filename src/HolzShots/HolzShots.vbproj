@@ -1,16 +1,16 @@
-<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <StartupObject>HolzShots.My.MyApplication</StartupObject>
 
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net461</TargetFramework>
+    <TargetFramework>netcoreapp5.0</TargetFramework>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <UseWindowsForms>true</UseWindowsForms>
 
     <LangVersion>latest</LangVersion>
 
     <MyType>WindowsForms</MyType>
-    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
 
     <ApplicationIcon>editcut.ico</ApplicationIcon>
     <MapFileExtensions>true</MapFileExtensions>
@@ -30,6 +30,8 @@
     <OptionCompare>Binary</OptionCompare>
     <OptionStrict>On</OptionStrict>
     <OptionInfer>On</OptionInfer>
+
+    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -59,10 +61,6 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
-  </PropertyGroup>
-
   <PropertyGroup Condition=" '$(CI)' == 'True' ">
     <DefineConstants>$(DefineConstants),CI_BUILD=True</DefineConstants>
   </PropertyGroup>
@@ -80,16 +78,6 @@
     <Compile Update="UI\Controls\PluginInfoItem.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Update="UI\Dialogs\PipettenColorViewer.Designer.vb">
-      <DependentUpon>PipettenColorViewer.vb</DependentUpon>
-    </Compile>
-    <Compile Update="UI\Dialogs\PipettenColorViewer.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="UI\Dialogs\StatusToaster.Designer.vb">
-      <DependentUpon>StatusToaster.vb</DependentUpon>
-    </Compile>
-    <Compile Update="UI\Dialogs\StatusToaster.vb" />
     <Compile Update="UI\Controls\NumericTextBox.vb">
       <SubType>Component</SubType>
     </Compile>
@@ -148,13 +136,6 @@
     </EmbeddedResource>
     <EmbeddedResource Update="UI\Controls\PluginInfoItem.resx">
       <DependentUpon>PluginInfoItem.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Update="UI\Dialogs\PipettenColorViewer.resx">
-      <DependentUpon>PipettenColorViewer.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Update="UI\Dialogs\StatusToaster.resx">
-      <DependentUpon>StatusToaster.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Update="Drawing\Tools\UI\ScaleWindow.resx">
       <DependentUpon>ScaleWindow.vb</DependentUpon>

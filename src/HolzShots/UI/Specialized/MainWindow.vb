@@ -116,16 +116,16 @@ Namespace UI.Specialized
             Await MyApplication.ProcessCommandLineArguments(args).ConfigureAwait(True)
 
             Dim saveSettings As Boolean = False
-            Dim openSettingsOnFinish As Boolean = False
+            Dim openFirstStartExperience As Boolean = False
 
             If Not isAutorun AndAlso Global.HolzShots.My.Settings.IsFirstRun Then
                 Global.HolzShots.My.Settings.IsFirstRun = False
-                openSettingsOnFinish = True
+                openFirstStartExperience = True
                 saveSettings = True
             End If
 
             If saveSettings Then Global.HolzShots.My.Settings.Save()
-            If openSettingsOnFinish Then OpenPlugins()
+            If openFirstStartExperience Then ShowFirstStartExperience()
         End Sub
 
 #End Region
@@ -156,6 +156,20 @@ Namespace UI.Specialized
             End Try
         End Sub
 
+        Private Shared Sub ShowFirstStartExperience()
+            Using icon = My.Resources.editcutBig
+                Dim action = FirstStartDialog.ShowDialog(icon)
+                Select Case action
+                    Case FirstStartAction.OpenPlugins
+                        OpenPlugins()
+                    Case FirstStartAction.OpenSettings
+                        CommandManager.Dispatch(Of OpenSettingsJsonCommand)(UserSettings.Current)
+                    Case FirstStartAction.None ' Intentionally left empty
+                    Case Else
+                        Debug.Fail($"Unhandled action: '{action}'")
+                End Select
+            End Using
+        End Sub
         Private Shared Sub OpenPlugins() Handles PluginsToolStripMenuItem.Click
             Debug.Assert(My.Application.Uploaders.Loaded)
 
@@ -169,6 +183,9 @@ Namespace UI.Specialized
         End Sub
         Private Shared Sub OpenAbout() Handles AboutToolStripMenuItem.Click
             AboutForm.Instance.Show()
+            ' Using icon = My.Resources.editcutBig
+            '     AboutDialog.ShowDialog(icon, "2.0.0")
+            ' End Using
         End Sub
         Private Shared Async Sub TriggerTrayIconDoubleClickCommand() Handles TrayIcon.MouseDoubleClick
             Dim commandToRun = UserSettings.Current.TrayIconDoubleClickCommand

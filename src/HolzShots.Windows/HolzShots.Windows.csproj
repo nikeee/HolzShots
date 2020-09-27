@@ -1,13 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <ProjectGuid>{FE4E3471-9137-4A49-A230-26C90B14A9F2}</ProjectGuid>
 
-    <TargetFramework>net461</TargetFramework>
+    <TargetFramework>netcoreapp5.0</TargetFramework>
+
     <AssemblyTitle>HolzShots.Windows</AssemblyTitle>
     <Product>HolzShots.Windows</Product>
     <Description>HolzShots Core Components</Description>
     <Copyright>Niklas Mollenhauer GPL-3.0</Copyright>
     <Version>2.0.0</Version>
+
+    <UseWindowsForms>true</UseWindowsForms>
 
     <OutputPath>bin\$(Configuration)\</OutputPath>
   </PropertyGroup>
@@ -33,9 +35,6 @@
     <Reference Include="Microsoft.Win32.TaskScheduler, Version=2.8.20.0, Culture=neutral, PublicKeyToken=c416bc1b32d97233, processorArchitecture=MSIL">
       <HintPath>..\..\packages\TaskScheduler.2.8.20\lib\net452\Microsoft.Win32.TaskScheduler.dll</HintPath>
     </Reference>
-    <Reference Include="Semver, Version=2.0.6.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Semver.2.0.6\lib\net452\Semver.dll</HintPath>
-    </Reference>
     <Reference Include="StartupHelper, Version=1.0.3.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\StartupHelper.1.0.3.4\lib\net40\StartupHelper.dll</HintPath>
     </Reference>
@@ -45,11 +44,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Forms\PluginForm.cs">
+    <Compile Update="Forms\ExplorerLinkLabel.cs" />
+
+    <Compile Update="Forms\UploadResultForm.cs" >
       <SubType>Form</SubType>
     </Compile>
-
-    <Compile Update="Forms\UploadResultForm.cs" />
     <Compile Update="Forms\UploadResultForm.Designer.cs">
       <DependentUpon>UploadResultForm.cs</DependentUpon>
     </Compile>
@@ -61,11 +60,12 @@
       <DependentUpon>FlyoutForm.cs</DependentUpon>
     </Compile>
 
-    <Compile Update="Forms\AboutForm.cs" />
+    <Compile Update="Forms\AboutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Forms\AboutForm.Designer.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
-    <Compile Update="Forms\ExplorerLinkLabel.cs" />
   </ItemGroup>
 
   <ItemGroup>
