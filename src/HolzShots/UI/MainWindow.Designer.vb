@@ -1,4 +1,4 @@
-Namespace UI.Specialized
+Namespace UI
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
     Partial Class MainWindow
         Inherits System.Windows.Forms.Form
@@ -19,7 +19,7 @@ Namespace UI.Specialized
         Private components As System.ComponentModel.IContainer
 
         'Hinweis: Die folgende Prozedur ist für den Windows Form-Designer erforderlich.
-        'Das Bearbeiten ist mit dem Windows Form-Designer möglich.  
+        'Das Bearbeiten ist mit dem Windows Form-Designer möglich.
         'Das Bearbeiten mit dem Code-Editor ist nicht möglich.
         <System.Diagnostics.DebuggerStepThrough()>
         Private Sub InitializeComponent()

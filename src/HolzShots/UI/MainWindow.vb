@@ -1,4 +1,3 @@
-Imports System.Linq
 Imports HolzShots.Input
 Imports HolzShots.Input.Actions
 Imports HolzShots.Interop
@@ -6,7 +5,7 @@ Imports HolzShots.My
 Imports HolzShots.Composition.Command
 Imports HolzShots.Windows.Forms
 
-Namespace UI.Specialized
+Namespace UI
     Friend Class MainWindow
 
         Public Shared ReadOnly Property Instance As MainWindow = New MainWindow()

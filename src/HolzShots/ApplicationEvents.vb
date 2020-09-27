@@ -1,11 +1,11 @@
 Imports System.Collections.ObjectModel
 Imports System.Globalization
 Imports System.IO
+Imports HolzShots.UI
 Imports HolzShots.IO
 Imports HolzShots.Interop
 Imports HolzShots.Composition
 Imports HolzShots.Input.Actions
-Imports HolzShots.UI.Specialized
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.WindowsAPICodePack.Shell
 Imports Microsoft.WindowsAPICodePack.Taskbar

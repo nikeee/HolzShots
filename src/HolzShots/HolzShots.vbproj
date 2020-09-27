@@ -87,10 +87,8 @@
     <Compile Update="ScreenshotRelated\BackgroundForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="UI\Specialized\MainWindow.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="UI\Specialized\MainWindow.Designer.vb">
+    <Compile Update="UI\MainWindow.vb" />
+    <Compile Update="UI\MainWindow.Designer.vb">
       <DependentUpon>MainWindow.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
@@ -125,7 +123,7 @@
     <EmbeddedResource Update="Drawing\Tools\UI\ScaleWindow.resx">
       <DependentUpon>ScaleWindow.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Update="UI\Specialized\MainWindow.resx">
+    <EmbeddedResource Update="UI\MainWindow.resx">
       <DependentUpon>MainWindow.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -205,5 +203,9 @@
     <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
     <PackageReference Include="TaskScheduler" Version="2.8.18" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="UI\Specialized\" />
   </ItemGroup>
 </Project>
