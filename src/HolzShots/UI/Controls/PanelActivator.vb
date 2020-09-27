@@ -1,7 +1,4 @@
-Imports System.Linq
-Imports HolzShots.UI.Specialized
-
-Namespace UI.Controls.Helpers
+Namespace UI.Controls
     Friend Class PanelActivator
 
         Private Shared ReadOnly OpenPoint As New Point(475, 0) '(525, 0)
