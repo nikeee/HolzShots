@@ -24,6 +24,7 @@ jobs:
       uses: actions/cache@v2
       with:
         path: "%userprofile%\\.nuget\\packages"
+        key: ${{ runner.os }}-${{ hashFiles('%userprofile%\\.nuget\\packages\**') }}
 
     - name: Restore Dependencies
       run: dotnet restore
