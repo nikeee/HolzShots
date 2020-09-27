@@ -1,14 +1,12 @@
 Imports HolzShots.Composition
 Imports HolzShots.Input
 Imports HolzShots.Net
-Imports HolzShots.UI.Dialogs
 Imports HolzShots.Windows.Forms
 
 Namespace Interop
     ' TODO: Rename to NotificationManager
     Friend Class HumanInterop
         Private Const GenericErrorTitle = "Oh snap! :("
-        Private Const HS = LibraryInformation.Name
 
         Public Shared Sub CopyImageFailed(ex As Exception)
             Show(

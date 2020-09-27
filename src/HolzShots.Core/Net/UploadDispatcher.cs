@@ -18,7 +18,7 @@ namespace HolzShots.Net
             Debug.Assert(uploaderManager != null);
 
             var service = GetImageServiceForSettingsContext(settingsContext, uploaderManager);
-            Debug.Assert(service != null);
+            Debug.Assert(!(service is null));
             Debug.Assert(service.Metadata != null);
             Debug.Assert(service.Uploader != null);
 
