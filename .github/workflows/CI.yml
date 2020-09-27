@@ -23,7 +23,7 @@ jobs:
     - name: Cache Nuget Packages
       uses: actions/cache@v2
       with:
-        path: "%userprofile%\.nuget\packages"
+        path: "%userprofile%\\.nuget\\packages"
 
     - name: Restore Dependencies
       run: dotnet restore
