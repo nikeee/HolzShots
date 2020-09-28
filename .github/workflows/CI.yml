@@ -13,7 +13,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    # TODO: Replace all this with dotnet commands
     # See issue #23
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
@@ -21,7 +20,9 @@ jobs:
         dotnet-version: 5.0.100-rc.1.20452.10
 
     - name: Restore Dependencies
-      run: dotnet restore
+      run: |
+        dotnet tool install -g dotnet-version-cli
+        dotnet restore
 
     - name: Compile Solution
       run: dotnet build -c $env:CONFIGURATION
