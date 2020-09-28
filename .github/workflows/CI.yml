@@ -82,7 +82,6 @@ jobs:
           path: .
 
       - name: Perpare Version Data
-        id: release_info
         shell: bash
         run: |
           RELEASE_VERSION=${GITHUB_REF#refs/tags/v}
