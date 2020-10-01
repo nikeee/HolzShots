@@ -41,7 +41,6 @@ jobs:
     - run: git checkout HEAD^2
       if: ${{ github.event_name == 'pull_request' }}
 
-    # See issue #23
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:

@@ -13,7 +13,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    # See issue #23
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
