@@ -37,6 +37,7 @@ Namespace Input.Actions
         End Function
 
         Shared Async Function CaptureSelection(settingsContext As HSSettings) As Task(Of Screenshot)
+            If settingsContext Is Nothing Then Throw New ArgumentNullException(NameOf(settingsContext))
 
             Debug.Assert(Not AreaSelector.IsInAreaSelector)
 
