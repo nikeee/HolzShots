@@ -1,5 +1,3 @@
-Imports System.Threading.Tasks
-Imports HolzShots.ScreenshotRelated
 Imports HolzShots.ScreenshotRelated.Selection
 Imports HolzShots.Composition.Command
 Imports HolzShots.Threading
@@ -10,7 +8,9 @@ Namespace Input.Actions
     Public Class SelectAreaCommand
         Inherits CapturingCommand
 
-        Public Overrides Async Function Invoke(params As IReadOnlyDictionary(Of String, String), settingsContext As HSSettings) As Task
+        Public Overrides Async Function Invoke(parameters As IReadOnlyDictionary(Of String, String), settingsContext As HSSettings) As Task
+            If parameters Is Nothing Then Throw New ArgumentNullException(NameOf(parameters))
+            If settingsContext Is Nothing Then Throw New ArgumentNullException(NameOf(settingsContext))
 
             ' TODO: Add proper assertion
             ' Debug.Assert(ManagedSettings.EnableAreaScreenshot)
@@ -37,6 +37,7 @@ Namespace Input.Actions
         End Function
 
         Shared Async Function CaptureSelection(settingsContext As HSSettings) As Task(Of Screenshot)
+            If settingsContext Is Nothing Then Throw New ArgumentNullException(NameOf(settingsContext))
 
             Debug.Assert(Not AreaSelector.IsInAreaSelector)
 

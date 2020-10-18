@@ -5,7 +5,6 @@ Imports System.Runtime.InteropServices
 Imports HolzShots.Interop
 Imports HolzShots.Net
 Imports HolzShots.UI.Controls
-Imports HolzShots.UI.Controls.Helpers
 Imports Microsoft.WindowsAPICodePack.Taskbar
 Imports HolzShots.Composition
 Imports HolzShots.Drawing
