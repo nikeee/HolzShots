@@ -18,6 +18,8 @@ jobs:
   analyze:
     name: Analyze
     runs-on: windows-latest
+    env:
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
 
     strategy:
       fail-fast: false
