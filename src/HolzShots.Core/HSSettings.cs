@@ -10,7 +10,6 @@ using Newtonsoft.Json;
 
 namespace HolzShots
 {
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1056:Uri properties should not be strings")]
     public class HSSettings
     {
         #region meta
@@ -367,30 +366,28 @@ namespace HolzShots
 
         private class ArrayTraverse
         {
-            public readonly int[] Position;
-            private readonly int[] maxLengths;
+            public int[] Position { get; }
+            private readonly int[] _maxLengths;
 
             public ArrayTraverse(Array array)
             {
-                maxLengths = new int[array.Rank];
-                for (int i = 0; i < array.Rank; ++i)
-                {
-                    maxLengths[i] = array.GetLength(i) - 1;
-                }
-                Position = new int[array.Rank];
+                _maxLengths = new int[array.Rank];
+                for (var i = 0; i < array.Rank; ++i)
+                    _maxLengths[i] = array.GetLength(i) - 1;
+
+                 Position = new int[array.Rank];
             }
 
             public bool Step()
             {
-                for (int i = 0; i < Position.Length; ++i)
+                for (var i = 0; i < Position.Length; ++i)
                 {
-                    if (Position[i] < maxLengths[i])
+                    if (Position[i] < _maxLengths[i])
                     {
                         Position[i]++;
-                        for (int j = 0; j < i; j++)
-                        {
+                        for (var j = 0; j < i; j++)
                             Position[j] = 0;
-                        }
+
                         return true;
                     }
                 }
