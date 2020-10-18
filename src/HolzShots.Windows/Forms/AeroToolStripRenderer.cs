@@ -195,7 +195,7 @@ namespace HolzShots.Windows.Forms
             if (toolStripPanel == null)
                 throw new ArgumentNullException(nameof(toolStripPanel));
 
-            foreach (Control control in toolStripPanel.Controls)
+            foreach (var control in toolStripPanel.Controls)
             {
                 if (control is ToolStrip)
                     Initialize((ToolStrip)control);

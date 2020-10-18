@@ -1,11 +1,11 @@
 Imports System.Collections.ObjectModel
 Imports System.Globalization
 Imports System.IO
+Imports HolzShots.UI
 Imports HolzShots.IO
 Imports HolzShots.Interop
 Imports HolzShots.Composition
 Imports HolzShots.Input.Actions
-Imports HolzShots.UI.Specialized
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.WindowsAPICodePack.Shell
 Imports Microsoft.WindowsAPICodePack.Taskbar
@@ -96,8 +96,7 @@ Namespace My
             My.Settings.UserTasksInitialized = True
             My.Settings.Save()
 
-            Dim jumpList = Microsoft.WindowsAPICodePack.Taskbar.JumpList.CreateJumpListForIndividualWindow(TaskbarManager.Instance.ApplicationId, SettingsWindow.Instance.Handle)
-
+            Dim jumpList = Microsoft.WindowsAPICodePack.Taskbar.JumpList.CreateJumpList()
             jumpList.ClearAllUserTasks()
 
             Static imgres As String = Path.Combine(HolzShotsPaths.SystemPath, "imageres.dll")

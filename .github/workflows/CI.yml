@@ -13,19 +13,18 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    # TODO: Replace all this with dotnet commands
-    # See issue #23
-    - name: Setup Nuget.exe
-      uses: warrenbuckley/Setup-Nuget@v1
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.100-rc.1.20452.10
 
-    - name: Setup msbuild
-      uses: microsoft/setup-msbuild@v1.0.0
-
-    - name: Nuget Restore
-      run: nuget restore HolzShots.sln
+    - name: Restore Dependencies
+      run: |
+        dotnet tool install -g dotnet-version-cli
+        dotnet restore
 
     - name: Compile Solution
-      run: msbuild HolzShots.sln -p:Configuration=$env:CONFIGURATION
+      run: dotnet build -c $env:CONFIGURATION
 
     - name: Run Tests
       run: dotnet test -c $env:CONFIGURATION --no-build src\HolzShots.Core.Tests\HolzShots.Core.Tests.csproj
@@ -82,7 +81,6 @@ jobs:
           path: .
 
       - name: Perpare Version Data
-        id: release_info
         shell: bash
         run: |
           RELEASE_VERSION=${GITHUB_REF#refs/tags/v}

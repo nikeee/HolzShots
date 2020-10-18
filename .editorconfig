@@ -48,11 +48,12 @@ dotnet_style_explicit_tuple_names = true:suggestion
 # CA1801: Review unused parameters
 # We're having problems with "sender" parameters in application events
 dotnet_diagnostic.CA1801.severity = none
-
-# CA1056: URI-like properties should not be strings
-# Just don't
-dotnet_diagnostic.CA1054.severity = none
+# CA1805: Do not initialize unnecessarily
+dotnet_diagnostic.CA1805.severity = none
+# CA1056: Uri properties should not be strings
 dotnet_diagnostic.CA1056.severity = none
+# CA1054: Uri parameters should not be strings
+dotnet_diagnostic.CA1054.severity = none
 
 [*.cs]
 # Prefer "var" everywhere

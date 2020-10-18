@@ -1,7 +1,8 @@
+#nullable enable
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Linq;
 
 namespace HolzShots
 {
@@ -9,12 +10,12 @@ namespace HolzShots
     {
         public string Message { get; }
         public IReadOnlyList<string> AffectedProperties { get; }
-        public Exception /* ? */ Exception { get; }
+        public Exception? Exception { get; }
 
-        public ValidationError(string message, string affectedProperty, Exception exception = null)
+        public ValidationError(string message, string affectedProperty, Exception? exception = null)
             : this(message, ImmutableList.Create(affectedProperty), exception) { }
 
-        public ValidationError(string message, IReadOnlyList<string> affectedProperties, Exception exception = null)
+        public ValidationError(string message, IReadOnlyList<string> affectedProperties, Exception? exception = null)
         {
             Message = message ?? throw new ArgumentNullException(nameof(message));
             AffectedProperties = affectedProperties ?? ImmutableList<string>.Empty;

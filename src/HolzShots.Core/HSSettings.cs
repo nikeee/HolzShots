@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Diagnostics;
 using System.Reflection;
 using System.Runtime.Serialization;
 using HolzShots.Input;
@@ -352,6 +353,8 @@ namespace HolzShots
     {
         public static void ForEach(Array array, Action<Array, int[]> action)
         {
+            Debug.Assert(array != null);
+
             if (array.LongLength == 0)
                 return;
 
@@ -364,8 +367,8 @@ namespace HolzShots
 
         private class ArrayTraverse
         {
-            public int[] Position;
-            private int[] maxLengths;
+            public readonly int[] Position;
+            private readonly int[] maxLengths;
 
             public ArrayTraverse(Array array)
             {

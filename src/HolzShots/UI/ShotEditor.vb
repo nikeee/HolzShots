@@ -1,5 +1,4 @@
 Imports System.Drawing.Drawing2D
-Imports System.Drawing.Imaging
 Imports System.Drawing.Printing
 Imports System.IO
 Imports System.Runtime.InteropServices
@@ -7,7 +6,6 @@ Imports HolzShots.Interop
 Imports HolzShots.Net
 Imports HolzShots.UI.Controls
 Imports HolzShots.UI.Controls.Helpers
-Imports Microsoft.WindowsAPICodePack.Dialogs
 Imports Microsoft.WindowsAPICodePack.Taskbar
 Imports HolzShots.Composition
 Imports HolzShots.Drawing
@@ -261,15 +259,13 @@ Namespace UI.Specialized
 #Region "Image Actions"
 
         Private Sub SaveImage() Handles save_btn.Click
-            Using sfd As New CommonSaveFileDialog()
-                sfd.Filters.Add(New CommonFileDialogFilter(Localization.PngImage, "*.png"))
-                sfd.Filters.Add(New CommonFileDialogFilter(Localization.JpgImage, "*.jpg"))
-                sfd.DefaultExtension = sfd.Filters(0).Extensions(0)
-                sfd.AlwaysAppendDefaultExtension = True
-                sfd.EnsurePathExists = True
-
+            Using sfd As New SaveFileDialog()
+                sfd.Filter = $"{Localization.PngImage}|*.png|{Localization.JpgImage}|*.jpg"
+                sfd.DefaultExt = ".png"
+                sfd.CheckPathExists = True
                 sfd.Title = Localization.ChooseDestinationFileName
-                If sfd.ShowDialog() = CommonFileDialogResult.Ok Then
+                Dim res = sfd.ShowDialog()
+                If res = DialogResult.OK Then
                     Dim f = sfd.FileName
                     If String.IsNullOrWhiteSpace(f) Then Return
                     SaveImage(f)
@@ -377,7 +373,7 @@ Namespace UI.Specialized
 #Region "Painting Tools"
 
         Private Sub AddSettingsPanels()
-            _activator = New PanelActivator(Me)
+            _activator = New PanelActivator()
             _activator.AddPanel(PaintPanel.ShotEditorTool.Arrow, ArrowSettingsPanel)
             _activator.AddPanel(PaintPanel.ShotEditorTool.Brighten, BrightenSettingsPanel)
             _activator.AddPanel(PaintPanel.ShotEditorTool.Blur, BlurSettingsPanel)
@@ -657,17 +653,15 @@ Namespace UI.Specialized
 
 #End Region
 
-        Private Sub ImageInfoLabelMouseClick(ByVal sender As Object, ByVal e As MouseEventArgs) Handles ImageInfoLabel.MouseUp
+        Private Sub ImageInfoLabelMouseClick(sender As Object, e As MouseEventArgs) Handles ImageInfoLabel.MouseUp
 
             Dim s = ThePanel.Screenshot
             If e.Button = MouseButtons.Left Then
-                Dim ss = $"{s.Size.Width}x{s.Size.Height}px"
-                ss.SetAsClipboardText()
+                ClipboardEx.SetText($"{s.Size.Width}x{s.Size.Height}px")
             ElseIf e.Button = MouseButtons.Right Then
-                s.Timestamp.ToString().SetAsClipboardText()
+                ClipboardEx.SetText(s.Timestamp.ToString())
             ElseIf e.Button = MouseButtons.Middle Then
-                Dim ss = $"{s.Timestamp} {s.Size.Width}x{s.Size.Height}px"
-                ss.SetAsClipboardText()
+                ClipboardEx.SetText($"{s.Timestamp} {s.Size.Width}x{s.Size.Height}px")
             End If
         End Sub
 

@@ -1,9 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <ProjectGuid>{3AADC160-9020-4F59-A2F0-7941752C047E}</ProjectGuid>
 
     <RootNamespace>HolzShots</RootNamespace>
-    <TargetFramework>net461</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyTitle>HolzShots.Common</AssemblyTitle>
     <Product>HolzShots.Common</Product>
     <Description>HolzShots Common Library</Description>
@@ -28,7 +27,7 @@
   </PropertyGroup>
   <ItemGroup>
 
-    <PackageReference Include="AsyncFixer" Version="1.3.0" PrivateAssets="all"/>
+    <PackageReference Include="AsyncFixer" Version="1.3.0" PrivateAssets="all" />
     <PackageReference Include="Microsoft.CodeQuality.Analyzers" Version="3.3.0" PrivateAssets="all" />
     <!--
     <PackageReference Include="System.Runtime.Analyzers" Version="1.2.0-beta2" />
@@ -36,6 +35,7 @@
     -->
 
     <PackageReference Include="Microsoft.Bcl.HashCode" Version="1.1.0" />
+    <PackageReference Include="System.Drawing.Common" Version="4.7.0" />
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
 
     <ProjectReference Include="..\HolzShots.Native\HolzShots.Native.csproj" />

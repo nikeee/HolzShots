@@ -8,7 +8,7 @@ namespace HolzShots.Net
     {
         public MemSize Current { get; }
         public MemSize Total { get; }
-        public int ProgressPercentage => Total.ByteCount == 0 ? 100 : (int)((float)Current.ByteCount / Total.ByteCount * 100);
+        public uint ProgressPercentage => Total.ByteCount == 0 ? 100 : (uint)((float)Current.ByteCount / Total.ByteCount * 100);
         public UploadState State { get; }
 
         public UploadProgress(MemSize current, MemSize target, UploadState state)
