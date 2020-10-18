@@ -2,7 +2,7 @@
   <PropertyGroup>
     <RootNamespace>HolzShots.Tests</RootNamespace>
 
-    <TargetFramework>netcoreapp5.0</TargetFramework>
+    <TargetFramework>netcoreapp5.0-windows</TargetFramework>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <UseWindowsForms>true</UseWindowsForms>
 
