@@ -2,7 +2,7 @@
   <PropertyGroup>
 
     <RootNamespace>HolzShots</RootNamespace>
-    <TargetFramework>netcoreapp5.0-windows</TargetFramework>
+    <TargetFramework>net5.0-windows</TargetFramework>
     <AssemblyTitle>HolzShots.Core</AssemblyTitle>
     <Product>HolzShots.Core</Product>
     <Description>HolzShots Core Components</Description>

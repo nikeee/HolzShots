@@ -4,7 +4,7 @@
     <StartupObject>HolzShots.My.MyApplication</StartupObject>
 
     <OutputType>WinExe</OutputType>
-    <TargetFramework>netcoreapp5.0-windows</TargetFramework>
+    <TargetFramework>net5.0-windows</TargetFramework>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <UseWindowsForms>true</UseWindowsForms>
 
