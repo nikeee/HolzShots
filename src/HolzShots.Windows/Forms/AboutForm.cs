@@ -7,7 +7,7 @@ namespace HolzShots.Windows.Forms
 {
     public partial class AboutForm : Form
     {
-        public static Lazy<AboutForm> _instance = new Lazy<AboutForm>(() => new AboutForm());
+        private static Lazy<AboutForm> _instance = new Lazy<AboutForm>(() => new AboutForm());
         public static AboutForm Instance => _instance.Value;
 
         public AboutForm()
@@ -18,11 +18,11 @@ namespace HolzShots.Windows.Forms
             ApplicationTitleLabel.Text = LibraryInformation.Name;
         }
 
-        private void LicenseLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) => IO.HolzShotsPaths.OpenLink(LibraryInformation.LicenseUrl);
-        private void HolzShotsLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) => IO.HolzShotsPaths.OpenLink(LibraryInformation.SiteUrl);
-        private void SendFeedbackLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) => IO.HolzShotsPaths.OpenLink(LibraryInformation.IssuesUrl);
+        private void LicenseLabel_LinkClicked(object sender, EventArgs e) => IO.HolzShotsPaths.OpenLink(LibraryInformation.LicenseUrl);
+        private void HolzShotsLinkLabel_LinkClicked(object sender, EventArgs e) => IO.HolzShotsPaths.OpenLink(LibraryInformation.SiteUrl);
+        private void SendFeedbackLink_LinkClicked(object sender, EventArgs e) => IO.HolzShotsPaths.OpenLink(LibraryInformation.IssuesUrl);
 
-        private void ShowGfxResourcesLinklabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void ShowGfxResourcesLinklabel_LinkClicked(object sender, EventArgs e)
         {
             const string title = "About Graphics";
 

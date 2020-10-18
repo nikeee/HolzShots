@@ -22,17 +22,17 @@ Namespace UI.Dialogs
         Private components As System.ComponentModel.IContainer
 
         'NOTE: The following procedure is required by the Windows Form Designer
-        'It can be modified using the Windows Form Designer.  
+        'It can be modified using the Windows Form Designer.
         'Do not modify it using the code editor.
         '<System.Diagnostics.DebuggerStepThrough()> _
         Private Sub InitializeComponent()
             Me.Label1 = New System.Windows.Forms.Label()
-            Me.CopyLinkLabel5 = New HolzShots.UI.Forms.CopyLinkLabel()
-            Me.CopyLinkLabel4 = New HolzShots.UI.Forms.CopyLinkLabel()
-            Me.CopyLinkLabel3 = New HolzShots.UI.Forms.CopyLinkLabel()
-            Me.CopyLinkLabel2 = New HolzShots.UI.Forms.CopyLinkLabel()
-            Me.CopyLinkLabel1 = New HolzShots.UI.Forms.CopyLinkLabel()
-            Me.ColorBox = New HolzShots.UI.Controls.BigColorViewer()
+            Me.CopyLinkLabel5 = New HolzShots.Windows.Forms.CopyCodeLinkLabel()
+            Me.CopyLinkLabel4 = New HolzShots.Windows.Forms.CopyCodeLinkLabel()
+            Me.CopyLinkLabel3 = New HolzShots.Windows.Forms.CopyCodeLinkLabel()
+            Me.CopyLinkLabel2 = New HolzShots.Windows.Forms.CopyCodeLinkLabel()
+            Me.CopyLinkLabel1 = New HolzShots.Windows.Forms.CopyCodeLinkLabel()
+            Me.ColorBox = New HolzShots.Windows.Forms.ColorView()
             Me.SuspendLayout()
             '
             'Label1
@@ -47,11 +47,8 @@ Namespace UI.Dialogs
             '
             'CopyLinkLabel5
             '
-            Me.CopyLinkLabel5.ActiveLinkColor = System.Drawing.Color.FromArgb(CType(CType(51, Byte), Integer), CType(CType(153, Byte), Integer), CType(CType(255, Byte), Integer))
             Me.CopyLinkLabel5.AutoSize = True
             Me.CopyLinkLabel5.Cursor = System.Windows.Forms.Cursors.Hand
-            Me.CopyLinkLabel5.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline
-            Me.CopyLinkLabel5.LinkColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(102, Byte), Integer), CType(CType(204, Byte), Integer))
             Me.CopyLinkLabel5.Location = New System.Drawing.Point(14, 150)
             Me.CopyLinkLabel5.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
             Me.CopyLinkLabel5.Name = "CopyLinkLabel5"
@@ -62,11 +59,8 @@ Namespace UI.Dialogs
             '
             'CopyLinkLabel4
             '
-            Me.CopyLinkLabel4.ActiveLinkColor = System.Drawing.Color.FromArgb(CType(CType(51, Byte), Integer), CType(CType(153, Byte), Integer), CType(CType(255, Byte), Integer))
             Me.CopyLinkLabel4.AutoSize = True
             Me.CopyLinkLabel4.Cursor = System.Windows.Forms.Cursors.Hand
-            Me.CopyLinkLabel4.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline
-            Me.CopyLinkLabel4.LinkColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(102, Byte), Integer), CType(CType(204, Byte), Integer))
             Me.CopyLinkLabel4.Location = New System.Drawing.Point(14, 128)
             Me.CopyLinkLabel4.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
             Me.CopyLinkLabel4.Name = "CopyLinkLabel4"
@@ -77,11 +71,8 @@ Namespace UI.Dialogs
             '
             'CopyLinkLabel3
             '
-            Me.CopyLinkLabel3.ActiveLinkColor = System.Drawing.Color.FromArgb(CType(CType(51, Byte), Integer), CType(CType(153, Byte), Integer), CType(CType(255, Byte), Integer))
             Me.CopyLinkLabel3.AutoSize = True
             Me.CopyLinkLabel3.Cursor = System.Windows.Forms.Cursors.Hand
-            Me.CopyLinkLabel3.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline
-            Me.CopyLinkLabel3.LinkColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(102, Byte), Integer), CType(CType(204, Byte), Integer))
             Me.CopyLinkLabel3.Location = New System.Drawing.Point(14, 106)
             Me.CopyLinkLabel3.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
             Me.CopyLinkLabel3.Name = "CopyLinkLabel3"
@@ -92,11 +83,8 @@ Namespace UI.Dialogs
             '
             'CopyLinkLabel2
             '
-            Me.CopyLinkLabel2.ActiveLinkColor = System.Drawing.Color.FromArgb(CType(CType(51, Byte), Integer), CType(CType(153, Byte), Integer), CType(CType(255, Byte), Integer))
             Me.CopyLinkLabel2.AutoSize = True
             Me.CopyLinkLabel2.Cursor = System.Windows.Forms.Cursors.Hand
-            Me.CopyLinkLabel2.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline
-            Me.CopyLinkLabel2.LinkColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(102, Byte), Integer), CType(CType(204, Byte), Integer))
             Me.CopyLinkLabel2.Location = New System.Drawing.Point(14, 84)
             Me.CopyLinkLabel2.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
             Me.CopyLinkLabel2.Name = "CopyLinkLabel2"
@@ -107,11 +95,8 @@ Namespace UI.Dialogs
             '
             'CopyLinkLabel1
             '
-            Me.CopyLinkLabel1.ActiveLinkColor = System.Drawing.Color.FromArgb(CType(CType(51, Byte), Integer), CType(CType(153, Byte), Integer), CType(CType(255, Byte), Integer))
             Me.CopyLinkLabel1.AutoSize = True
             Me.CopyLinkLabel1.Cursor = System.Windows.Forms.Cursors.Hand
-            Me.CopyLinkLabel1.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline
-            Me.CopyLinkLabel1.LinkColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(102, Byte), Integer), CType(CType(204, Byte), Integer))
             Me.CopyLinkLabel1.Location = New System.Drawing.Point(14, 62)
             Me.CopyLinkLabel1.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
             Me.CopyLinkLabel1.Name = "CopyLinkLabel1"
@@ -160,12 +145,12 @@ Namespace UI.Dialogs
             Me.PerformLayout()
 
         End Sub
-        Friend WithEvents ColorBox As UI.Controls.BigColorViewer
-        Friend WithEvents CopyLinkLabel1 As HolzShots.UI.Forms.CopyLinkLabel
-        Friend WithEvents CopyLinkLabel2 As HolzShots.UI.Forms.CopyLinkLabel
-        Friend WithEvents CopyLinkLabel3 As HolzShots.UI.Forms.CopyLinkLabel
-        Friend WithEvents CopyLinkLabel4 As HolzShots.UI.Forms.CopyLinkLabel
+        Friend WithEvents ColorBox As HolzShots.Windows.Forms.ColorView
+        Friend WithEvents CopyLinkLabel1 As HolzShots.Windows.Forms.CopyCodeLinkLabel
+        Friend WithEvents CopyLinkLabel2 As HolzShots.Windows.Forms.CopyCodeLinkLabel
+        Friend WithEvents CopyLinkLabel3 As HolzShots.Windows.Forms.CopyCodeLinkLabel
+        Friend WithEvents CopyLinkLabel4 As HolzShots.Windows.Forms.CopyCodeLinkLabel
         Friend WithEvents Label1 As System.Windows.Forms.Label
-        Friend WithEvents CopyLinkLabel5 As HolzShots.UI.Forms.CopyLinkLabel
+        Friend WithEvents CopyLinkLabel5 As HolzShots.Windows.Forms.CopyCodeLinkLabel
     End Class
 End Namespace

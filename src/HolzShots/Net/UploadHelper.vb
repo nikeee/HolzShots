@@ -1,4 +1,3 @@
-Imports System.Drawing.Imaging
 Imports HolzShots.Interop
 Imports HolzShots.UI.Dialogs
 Imports HolzShots.Windows.Forms
@@ -9,7 +8,14 @@ Namespace Net
         End Sub
 
         Friend Shared Function GetUploadReporterForCurrentSettingsContext(ByVal settingsContext As HSSettings, ByVal parentWindow As IWin32Window) As IUploadProgressReporter
+
+#If DEBUG Then
+            Dim reporters = New List(Of IUploadProgressReporter)(3) From {
+                New ConsoleProgressReporter()
+            }
+#Else
             Dim reporters = New List(Of IUploadProgressReporter)(2)
+#End If
 
             If settingsContext.ShowUploadProgress Then
                 reporters.Add(New StatusToaster())
@@ -28,7 +34,7 @@ Namespace Net
 
             Select Case settingsContext.ActionAfterUpload
                 Case UploadHandlingAction.Flyout
-                    Dim lv As New UploadResultWindow(result, settingsContext)
+                    Dim lv As New UploadResultForm(result, settingsContext)
                     lv.Show()
 
                 Case UploadHandlingAction.CopyToClipboard
