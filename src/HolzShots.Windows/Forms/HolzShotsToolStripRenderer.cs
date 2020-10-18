@@ -14,7 +14,7 @@ namespace HolzShots.Windows.Forms
     /// </summary>
     public class HolzShotsToolStripRenderer : ToolStripProfessionalRenderer
     {
-        internal HolzShotsToolStripRenderer() : base(new LightColorTable()) { }
+        public HolzShotsToolStripRenderer() : base(new LightColorTable()) { }
 
         protected override void OnRenderArrow(ToolStripArrowRenderEventArgs e)
         {

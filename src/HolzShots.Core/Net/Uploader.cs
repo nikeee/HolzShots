@@ -7,6 +7,8 @@ namespace HolzShots.Net
 {
     public abstract class Uploader
     {
+        protected Uploader() { }
+
         protected string SuggestedUserAgent { get; } = "Mozilla/5.0 (compatible; HolzShots; +https://holzshots.net)"; // "HolzShots/2.0";
 
         /// <summary>
