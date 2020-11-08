@@ -274,13 +274,13 @@ namespace HolzShots
     /// <summary> Based on this solution: https://stackoverflow.com/a/11308879 </summary>
     public static class ObjectExtensions
     {
-        private static readonly MethodInfo CloneMethod = typeof(object).GetMethod("MemberwiseClone", BindingFlags.NonPublic | BindingFlags.Instance);
+        private static readonly MethodInfo CloneMethod = typeof(object).GetMethod("MemberwiseClone", BindingFlags.NonPublic | BindingFlags.Instance)!;
 
         public static bool IsPrimitive(this Type type) => (type == typeof(string)) || (type.IsValueType && type.IsPrimitive);
 
-        public static object Copy(this object originalObject) => InternalCopy(originalObject, new Dictionary<object, object>(new ReferenceEqualityComparer()));
+        public static object? Copy(this object originalObject) => InternalCopy(originalObject, new Dictionary<object, object>(new ReferenceEqualityComparer()));
 
-        private static object InternalCopy(object originalObject, IDictionary<object, object> visited)
+        private static object? InternalCopy(object? originalObject, IDictionary<object, object> visited)
         {
             if (originalObject == null)
                 return null;
@@ -344,7 +344,7 @@ namespace HolzShots
 
     public class ReferenceEqualityComparer : EqualityComparer<object>
     {
-        public override bool Equals(object x, object y) => ReferenceEquals(x, y);
+        public override bool Equals(object? x, object? y) => ReferenceEquals(x, y);
         public override int GetHashCode(object o) => o == null ? 0 : o.GetHashCode();
     }
 

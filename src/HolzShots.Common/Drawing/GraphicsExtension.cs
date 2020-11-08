@@ -21,7 +21,7 @@ namespace HolzShots.Drawing
                 throw new ArgumentNullException(nameof(pen));
 
             Debug.Assert(pen != null);
-            Debug.Assert(pen.Handle != IntPtr.Zero);
+            Debug.Assert(pen?.Handle != IntPtr.Zero);
 
             var hdc = g.GetHdc();
             var hBmp = bmp.GetHbitmap();
