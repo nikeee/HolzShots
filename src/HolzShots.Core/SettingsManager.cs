@@ -35,9 +35,9 @@ namespace HolzShots
 
         private readonly ISynchronizeInvoke _synchronizingObject;
         private readonly PollingFileWatcher _watcher;
-        private CancellationTokenSource _watcherCancellation = null;
+        private CancellationTokenSource? _watcherCancellation = null;
 
-        public SettingsManager(string settingsFilePath, ISynchronizeInvoke synchronizingObject = null)
+        public SettingsManager(string settingsFilePath, ISynchronizeInvoke? synchronizingObject = null)
         {
             Debug.Assert(!string.IsNullOrEmpty(settingsFilePath));
 
@@ -97,7 +97,7 @@ namespace HolzShots
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentSettings)));
         }
 
-        private static async Task<(bool, T)> DeserializeSettings(string path)
+        private static async Task<(bool, T?)> DeserializeSettings(string path)
         {
             try
             {
@@ -172,7 +172,7 @@ namespace HolzShots
                 foreach (var enumMemberName in Enum.GetNames(propType))
                 {
                     var enumMember = propType.GetField(enumMemberName);
-                    var enumMemberAttr = enumMember.GetCustomAttribute<System.Runtime.Serialization.EnumMemberAttribute>();
+                    var enumMemberAttr = enumMember?.GetCustomAttribute<System.Runtime.Serialization.EnumMemberAttribute>();
                     if (enumMemberAttr == null)
                         continue;
                     if (enumMemberAttr.Value == jsonEnumMember)

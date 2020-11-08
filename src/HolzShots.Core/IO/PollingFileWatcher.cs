@@ -18,7 +18,7 @@ namespace HolzShots.IO
 
         public static readonly TimeSpan MinimumPollingInterval = TimeSpan.FromMilliseconds(100);
 
-        private readonly ISynchronizeInvoke _synchronizingObject;
+        private readonly ISynchronizeInvoke? _synchronizingObject;
         private FileInfo _info;
         private DateTime _lastWriteTime;
 

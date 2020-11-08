@@ -37,7 +37,7 @@ namespace HolzShots.Input
             return new Hotkey((ModifierKeys)mod, (Keys)key);
         }
 
-        public static Hotkey Parse(string value)
+        public static Hotkey? Parse(string value)
         {
             if (string.IsNullOrWhiteSpace(value))
                 return null;

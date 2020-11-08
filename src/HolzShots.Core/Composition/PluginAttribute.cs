@@ -11,15 +11,15 @@ namespace HolzShots.Composition
         public string Author { get; }
         public string Version { get; }
 
-        public string Website { get; }
-        public string BugsUrl { get; }
-        public string Contact { get; }
-        public string Description { get; }
+        public string? Website { get; }
+        public string? BugsUrl { get; }
+        public string? Contact { get; }
+        public string? Description { get; }
 
         public PluginAttribute(string name, string author, string version)
             : this(name, author, version, null, null, null, null)
         { }
-        public PluginAttribute(string name, string author, string version, string description, string contact, string website, string bugsUrl)
+        public PluginAttribute(string name, string author, string version, string? description, string? contact, string? website, string? bugsUrl)
         {
             Name = name;
             Author = author;
@@ -37,10 +37,10 @@ namespace HolzShots.Composition
         string Author { get; }
         string Version { get; }
 
-        string Website { get; }
-        string BugsUrl { get; }
-        string Contact { get; }
-        string Description { get; }
+        string? Website { get; }
+        string? BugsUrl { get; }
+        string? Contact { get; }
+        string? Description { get; }
     }
 
     public class PluginMetadata : IPluginMetadata
@@ -48,10 +48,10 @@ namespace HolzShots.Composition
         public string Name { get; }
         public string Author { get; }
         public SemVersion Version { get; }
-        public string Website { get; }
-        public string BugsUrl { get; }
-        public string Contact { get; }
-        public string Description { get; }
+        public string? Website { get; }
+        public string? BugsUrl { get; }
+        public string? Contact { get; }
+        public string? Description { get; }
         public PluginMetadata(ICompileTimePluginMetadata sourceAttribute)
         {
             if (sourceAttribute == null)

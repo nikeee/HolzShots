@@ -60,9 +60,9 @@ namespace HolzShots.Net.Custom
         public Parser ResponseParser { get; }
 
         public string Method { get; } = "POST";
-        public IReadOnlyDictionary<string, string> Headers { get; } = null;
-        public IReadOnlyDictionary<string, string> PostParams { get; } = null;
-        public IReadOnlyList<string> RegexPatterns { get; } = null;
+        public IReadOnlyDictionary<string, string>? Headers { get; } = null;
+        public IReadOnlyDictionary<string, string>? PostParams { get; } = null;
+        public IReadOnlyList<string>? RegexPatterns { get; } = null;
         public long? MaxFileSize { get; } = null;
         public string FileName { get; } = null;
 

@@ -226,8 +226,8 @@ namespace HolzShots
         [JsonProperty("overrides")]
         public IReadOnlyDictionary<string, dynamic> Overrides { get; set; } = ImmutableDictionary<string, dynamic>.Empty;
 
-        public static implicit operator CommandDeclaration(string commandName) => ToCommandDeclaration(commandName);
-        public static CommandDeclaration ToCommandDeclaration(string commandName)
+        public static implicit operator CommandDeclaration?(string commandName) => ToCommandDeclaration(commandName);
+        public static CommandDeclaration? ToCommandDeclaration(string commandName)
         {
             return commandName == null
                     ? null

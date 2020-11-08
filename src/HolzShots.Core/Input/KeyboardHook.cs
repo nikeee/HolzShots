@@ -22,7 +22,7 @@ namespace HolzShots.Input
 
             var key = args.GetIdentifier();
 
-            if (RegisteredKeys.TryGetValue(key, out Hotkey hk) && hk != null)
+            if (RegisteredKeys.TryGetValue(key, out var hk) && hk != null)
                 hk.InvokePressed(this);
         }
 
