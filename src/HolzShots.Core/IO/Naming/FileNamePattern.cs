@@ -17,7 +17,7 @@ namespace HolzShots.IO.Naming
         };
 
         public FileNamePattern() : this(null) { }
-        public FileNamePattern(IReadOnlyList<PatternItem> tokens)
+        public FileNamePattern(IReadOnlyList<PatternItem>? tokens)
         {
             Tokens = tokens ?? Array.Empty<PatternItem>();
         }

@@ -172,7 +172,7 @@ namespace HolzShots
         )]
         [JsonProperty("tray.doubleClickCommand")]
         [field: LeaveUntouchedInObjectDeepCopy] // Support for this doesn't make any sense
-        public CommandDeclaration TrayIconDoubleClickCommand { get; set; } = null;
+        public CommandDeclaration? TrayIconDoubleClickCommand { get; set; } = null;
 
         #endregion
         #region key.*
@@ -201,8 +201,8 @@ namespace HolzShots
     {
         // TODO: Fix visibility
         public bool Enabled { get; set; } = false;
-        public Hotkey Keys { get; set; } = null;
-        public CommandDeclaration Command { get; set; } = null;
+        public Hotkey Keys { get; set; } = null!;
+        public CommandDeclaration Command { get; set; } = null!;
     }
 
     /// <summary>
@@ -211,7 +211,7 @@ namespace HolzShots
     public class CommandDeclaration
     {
         [JsonProperty("name")]
-        public string CommandName { get; set; }
+        public string CommandName { get; set; } = null!;
 
         /// <summary>
         /// TODO: Maybe we want to create somethign that every setting can be overwritten in the params.
@@ -262,8 +262,8 @@ namespace HolzShots
     [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
     class SettingsDocAttribute : Attribute
     {
-        public string Default { get; set; }
-        public string DisplayName { get; set; }
+        public string? Default { get; set; }
+        public string? DisplayName { get; set; }
         public string Description { get; }
         public SettingsDocAttribute(string description) => Description = description ?? throw new ArgumentNullException(nameof(description));
     }
@@ -299,10 +299,11 @@ namespace HolzShots
             if (typeToReflect.IsArray)
             {
                 var arrayType = typeToReflect.GetElementType();
-                if (IsPrimitive(arrayType) == false)
+                if (arrayType is not null && IsPrimitive(arrayType) == false)
                 {
-                    var clonedArray = (Array)cloneObject;
-                    ArrayExtensions.ForEach(clonedArray, (array, indices) => array.SetValue(InternalCopy(clonedArray.GetValue(indices), visited), indices));
+                    var clonedArray = cloneObject as Array;
+                    if (clonedArray is not null)
+                        ArrayExtensions.ForEach(clonedArray, (array, indices) => array.SetValue(InternalCopy(clonedArray.GetValue(indices), visited), indices));
                 }
 
             }
@@ -321,7 +322,7 @@ namespace HolzShots
             }
         }
 
-        private static void CopyFields(object originalObject, IDictionary<object, object> visited, object cloneObject, Type typeToReflect, BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.FlattenHierarchy, Func<FieldInfo, bool> filter = null)
+        private static void CopyFields(object originalObject, IDictionary<object, object> visited, object cloneObject, Type typeToReflect, BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.FlattenHierarchy, Func<FieldInfo, bool>? filter = null)
         {
             foreach (var fieldInfo in typeToReflect.GetFields(bindingFlags))
             {
@@ -339,7 +340,10 @@ namespace HolzShots
                 fieldInfo.SetValue(cloneObject, clonedFieldValue);
             }
         }
-        public static T Copy<T>(this T original) => (T)Copy((object)original);
+        public static T? Copy<T>(this T? original) =>
+            original is null
+                ? default
+                : (T)Copy((object)original);
     }
 
     public class ReferenceEqualityComparer : EqualityComparer<object>
@@ -375,7 +379,7 @@ namespace HolzShots
                 for (var i = 0; i < array.Rank; ++i)
                     _maxLengths[i] = array.GetLength(i) - 1;
 
-                 Position = new int[array.Rank];
+                Position = new int[array.Rank];
             }
 
             public bool Step()

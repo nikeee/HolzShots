@@ -29,15 +29,15 @@ namespace HolzShots.Net.Custom
         public SemVersion Version { get; }
         public string Name { get; }
 
-        public string Author { get; } = null;
-        public string Contact { get; } = null;
-        public string BugsUrl { get; } = null;
-        public string UpdateUrl { get; } = null;
-        public string Website { get; } = null;
-        public string Description { get; } = null;
+        public string Author { get; }
+        public string? Contact { get; } = null;
+        public string? BugsUrl { get; } = null;
+        public string? UpdateUrl { get; } = null;
+        public string? Website { get; } = null;
+        public string? Description { get; } = null;
         public string License { get; } = null;
 
-        public UploaderMeta(SemVersion version, string name, string author, string contact, string bugsUrl, string updateUrl, string website, string description, string license)
+        public UploaderMeta(SemVersion version, string name, string author, string? contact, string? bugsUrl, string? updateUrl, string? website, string? description, string license)
         {
             Version = version;
             Name = name;
@@ -64,16 +64,16 @@ namespace HolzShots.Net.Custom
         public IReadOnlyDictionary<string, string>? PostParams { get; } = null;
         public IReadOnlyList<string>? RegexPatterns { get; } = null;
         public long? MaxFileSize { get; } = null;
-        public string FileName { get; } = null;
+        public string FileName { get; } = null!;
 
         public UploaderConfig(
             string fileFormName,
             string requestUrl,
             Parser responseParser,
             string method,
-            IReadOnlyDictionary<string, string> headers,
-            IReadOnlyDictionary<string, string> postParams,
-            IReadOnlyList<string> regexPatterns,
+            IReadOnlyDictionary<string, string>? headers,
+            IReadOnlyDictionary<string, string>? postParams,
+            IReadOnlyList<string>? regexPatterns,
             long? maxFileSize,
             string fileName
         )
@@ -129,9 +129,9 @@ namespace HolzShots.Net.Custom
         public string UrlTemplate { get; }
         public string Success { get; }
 
-        public string Failure { get; } = null;
+        public string? Failure { get; } = null;
 
-        public Parser(string kind, string urlTemplate, string success, string failure)
+        public Parser(string kind, string urlTemplate, string success, string? failure)
         {
             Kind = kind;
             UrlTemplate = urlTemplate;

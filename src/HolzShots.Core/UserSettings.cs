@@ -13,7 +13,7 @@ namespace HolzShots
 {
     public static class UserSettings
     {
-        public static SettingsManager<HSSettings> Manager { get; private set; }
+        public static SettingsManager<HSSettings> Manager { get; private set; } = null!;
         public static HSSettings Current => Manager.CurrentSettings;
 
         public static async Task Load(ISynchronizeInvoke synchronizingObject)
@@ -46,7 +46,7 @@ namespace HolzShots
 
             var asm = System.Reflection.Assembly.GetExecutingAssembly();
             using (var defaultSettingsTemplateStream = asm.GetManifestResourceStream("HolzShots.Resources.DefaultSettings.json"))
-            using (var sr = new StreamReader(defaultSettingsTemplateStream))
+            using (var sr = new StreamReader(defaultSettingsTemplateStream!))
             {
                 var defaultSettings = await sr.ReadToEndAsync().ConfigureAwait(false);
                 defaultSettings = defaultSettings

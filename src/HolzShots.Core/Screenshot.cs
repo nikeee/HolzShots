@@ -5,7 +5,7 @@ using HolzShots.Drawing;
 
 namespace HolzShots
 {
-    public class Screenshot // : IDisposable
+    public sealed class Screenshot // : IDisposable
     {
         public DateTime Timestamp { get; }
         public string? ProcessName { get; }

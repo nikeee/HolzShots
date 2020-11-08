@@ -135,7 +135,7 @@ namespace HolzShots.Input
         }
 
         private readonly System.Collections.Generic.HashSet<EventHandler<HotkeyPressedEventArgs>> _delegates = new System.Collections.Generic.HashSet<EventHandler<HotkeyPressedEventArgs>>();
-        private event EventHandler<HotkeyPressedEventArgs> _keyPressed;
+        private event EventHandler<HotkeyPressedEventArgs>? _keyPressed;
 
         /// <summary>The hotkey has been pressed.</summary>
         public event EventHandler<HotkeyPressedEventArgs> KeyPressed

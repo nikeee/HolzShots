@@ -33,7 +33,7 @@ namespace HolzShots
 
         private static readonly TimeSpan _pollingInterval = TimeSpan.FromSeconds(1);
 
-        private readonly ISynchronizeInvoke _synchronizingObject;
+        private readonly ISynchronizeInvoke? _synchronizingObject;
         private readonly PollingFileWatcher _watcher;
         private CancellationTokenSource? _watcherCancellation = null;
 
@@ -127,9 +127,9 @@ namespace HolzShots
                 _synchronizingObject.InvokeIfNeeded(action);
         }
 
-        public event EventHandler<T> OnSettingsUpdated;
-        public event EventHandler<IReadOnlyList<ValidationError>> OnValidationError;
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event EventHandler<T>? OnSettingsUpdated;
+        public event EventHandler<IReadOnlyList<ValidationError>>? OnValidationError;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         protected virtual IReadOnlyList<ValidationError> IsValidSettingsCandidate(T candidate) => ImmutableList<ValidationError>.Empty;
 
