@@ -16,6 +16,8 @@
     <AssemblyTitle>HolzShots.Core.Tests</AssemblyTitle>
     <Product>HolzShots.Core.Tests</Product>
     <Description>HolzShots Core Component Tests</Description>
+
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
