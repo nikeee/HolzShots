@@ -15,7 +15,7 @@ namespace HolzShots.Input
 
         public abstract void UnregisterAllHotkeys();
 
-        protected void KeyPressed(object sender, KeyPressedEventArgs args)
+        protected void KeyPressed(object? sender, KeyPressedEventArgs args)
         {
             if (args == null)
                 throw new ArgumentNullException(nameof(args));
