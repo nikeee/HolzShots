@@ -9,7 +9,7 @@ Imports Microsoft.WindowsAPICodePack.Taskbar
 Imports HolzShots.Composition
 Imports HolzShots.Drawing
 
-Namespace UI.Specialized
+Namespace UI
     Friend Class ShotEditor
         Inherits System.Windows.Forms.Form
         Implements IDisposable

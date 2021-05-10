@@ -1,6 +1,6 @@
 Imports System.Threading.Tasks
 Imports HolzShots.Composition.Command
-Imports HolzShots.UI.Specialized
+Imports HolzShots.UI
 
 Namespace Input.Actions
     <Command("editImage")>

@@ -1,6 +1,6 @@
 Imports HolzShots.UI.Controls
 
-Namespace UI.Specialized
+Namespace UI
 
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
     Partial Friend Class ShotEditor

@@ -4,7 +4,7 @@ Imports HolzShots.Composition.Command
 Imports HolzShots.Interop
 Imports HolzShots.Interop.LocalDisk
 Imports HolzShots.Net
-Imports HolzShots.UI.Specialized
+Imports HolzShots.UI
 
 Namespace Input.Actions
     Public MustInherit Class CapturingCommand
