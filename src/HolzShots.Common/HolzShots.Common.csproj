@@ -13,6 +13,7 @@
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
     <DebugType>portable</DebugType>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(CI)' == 'True' ">
