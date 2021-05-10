@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace HolzShots.Windows.Forms
 {
-    public class TaskbarWindow
+    public sealed class TaskbarWindow
     {
         private static Lazy<TaskbarWindow> _instance = new Lazy<TaskbarWindow>(Initialize);
         public static TaskbarWindow Instance => _instance.Value;

@@ -33,11 +33,11 @@ namespace HolzShots
 
         private static readonly TimeSpan _pollingInterval = TimeSpan.FromSeconds(1);
 
-        private readonly ISynchronizeInvoke _synchronizingObject;
+        private readonly ISynchronizeInvoke? _synchronizingObject;
         private readonly PollingFileWatcher _watcher;
-        private CancellationTokenSource _watcherCancellation = null;
+        private CancellationTokenSource? _watcherCancellation = null;
 
-        public SettingsManager(string settingsFilePath, ISynchronizeInvoke synchronizingObject = null)
+        public SettingsManager(string settingsFilePath, ISynchronizeInvoke? synchronizingObject = null)
         {
             Debug.Assert(!string.IsNullOrEmpty(settingsFilePath));
 
@@ -97,7 +97,7 @@ namespace HolzShots
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentSettings)));
         }
 
-        private static async Task<(bool, T)> DeserializeSettings(string path)
+        private static async Task<(bool, T?)> DeserializeSettings(string path)
         {
             try
             {
@@ -127,9 +127,9 @@ namespace HolzShots
                 _synchronizingObject.InvokeIfNeeded(action);
         }
 
-        public event EventHandler<T> OnSettingsUpdated;
-        public event EventHandler<IReadOnlyList<ValidationError>> OnValidationError;
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event EventHandler<T>? OnSettingsUpdated;
+        public event EventHandler<IReadOnlyList<ValidationError>>? OnValidationError;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         protected virtual IReadOnlyList<ValidationError> IsValidSettingsCandidate(T candidate) => ImmutableList<ValidationError>.Empty;
 
@@ -172,7 +172,7 @@ namespace HolzShots
                 foreach (var enumMemberName in Enum.GetNames(propType))
                 {
                     var enumMember = propType.GetField(enumMemberName);
-                    var enumMemberAttr = enumMember.GetCustomAttribute<System.Runtime.Serialization.EnumMemberAttribute>();
+                    var enumMemberAttr = enumMember?.GetCustomAttribute<System.Runtime.Serialization.EnumMemberAttribute>();
                     if (enumMemberAttr == null)
                         continue;
                     if (enumMemberAttr.Value == jsonEnumMember)

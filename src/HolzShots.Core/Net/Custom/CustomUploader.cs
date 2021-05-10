@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -19,7 +20,7 @@ namespace HolzShots.Net.Custom
         private const string SupportedSchema = "0.2.0";
         public CustomUploaderSpec UploaderInfo { get; }
 
-        protected CustomUploader(CustomUploaderSpec customData)
+        protected CustomUploader(CustomUploaderSpec? customData)
         {
             UploaderInfo = customData ?? throw new ArgumentNullException(nameof(customData));
         }
@@ -61,8 +62,12 @@ namespace HolzShots.Net.Custom
 
                 using (var content = new MultipartFormDataContent())
                 {
-                    foreach (var (name, value) in uplInfo.PostParams)
-                        content.Add(new StringContent(value), name);
+                    var postParams = uplInfo.PostParams;
+                    if (postParams is not null)
+                    {
+                        foreach (var (name, value) in postParams)
+                            content.Add(new StringContent(value), name);
+                    }
 
                     var fname = uplInfo.GetEffectiveFileName(suggestedFileName);
 
@@ -118,7 +123,7 @@ namespace HolzShots.Net.Custom
                     }
                 case "JSON":
                     {
-                        JObject obj = null;
+                        JObject obj;
                         try
                         {
                             obj = JObject.Parse(response);
@@ -161,7 +166,7 @@ namespace HolzShots.Net.Custom
                 return template;
 
             var sb = new StringBuilder();
-            string currentToken = null;
+            string? currentToken = null;
             for (var i = 0; i < template.Length; ++i)
             {
                 var c = template[i];
@@ -222,18 +227,19 @@ namespace HolzShots.Net.Custom
             return sb.ToString();
         }
 
-        public static bool TryParse(string value, out CustomUploader result)
+        public static bool TryParse(string value, [MaybeNullWhen(false)] out CustomUploader? result)
         {
-            result = null;
             if (string.IsNullOrWhiteSpace(value))
+            {
+                result = null;
                 return false;
+            }
             var info = JsonConvert.DeserializeObject<CustomUploaderSpec>(value, JsonConfig.JsonSettings);
             return TryLoad(info, out result);
         }
 
-        public static bool TryLoad(CustomUploaderSpec value, out CustomUploader result)
+        public static bool TryLoad(CustomUploaderSpec? value, [MaybeNullWhen(false)] out CustomUploader? result)
         {
-            result = null;
             try
             {
                 result = new CustomUploader(value);
@@ -241,6 +247,7 @@ namespace HolzShots.Net.Custom
             }
             catch
             {
+                result = null;
                 return false;
             }
         }

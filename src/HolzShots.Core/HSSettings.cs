@@ -172,7 +172,7 @@ namespace HolzShots
         )]
         [JsonProperty("tray.doubleClickCommand")]
         [field: LeaveUntouchedInObjectDeepCopy] // Support for this doesn't make any sense
-        public CommandDeclaration TrayIconDoubleClickCommand { get; set; } = null;
+        public CommandDeclaration? TrayIconDoubleClickCommand { get; set; } = null;
 
         #endregion
         #region key.*
@@ -201,8 +201,8 @@ namespace HolzShots
     {
         // TODO: Fix visibility
         public bool Enabled { get; set; } = false;
-        public Hotkey Keys { get; set; } = null;
-        public CommandDeclaration Command { get; set; } = null;
+        public Hotkey Keys { get; set; } = null!;
+        public CommandDeclaration Command { get; set; } = null!;
     }
 
     /// <summary>
@@ -211,7 +211,7 @@ namespace HolzShots
     public class CommandDeclaration
     {
         [JsonProperty("name")]
-        public string CommandName { get; set; }
+        public string CommandName { get; set; } = null!;
 
         /// <summary>
         /// TODO: Maybe we want to create somethign that every setting can be overwritten in the params.
@@ -226,8 +226,8 @@ namespace HolzShots
         [JsonProperty("overrides")]
         public IReadOnlyDictionary<string, dynamic> Overrides { get; set; } = ImmutableDictionary<string, dynamic>.Empty;
 
-        public static implicit operator CommandDeclaration(string commandName) => ToCommandDeclaration(commandName);
-        public static CommandDeclaration ToCommandDeclaration(string commandName)
+        public static implicit operator CommandDeclaration?(string commandName) => ToCommandDeclaration(commandName);
+        public static CommandDeclaration? ToCommandDeclaration(string commandName)
         {
             return commandName == null
                     ? null
@@ -262,8 +262,8 @@ namespace HolzShots
     [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
     class SettingsDocAttribute : Attribute
     {
-        public string Default { get; set; }
-        public string DisplayName { get; set; }
+        public string? Default { get; set; }
+        public string? DisplayName { get; set; }
         public string Description { get; }
         public SettingsDocAttribute(string description) => Description = description ?? throw new ArgumentNullException(nameof(description));
     }
@@ -274,13 +274,13 @@ namespace HolzShots
     /// <summary> Based on this solution: https://stackoverflow.com/a/11308879 </summary>
     public static class ObjectExtensions
     {
-        private static readonly MethodInfo CloneMethod = typeof(object).GetMethod("MemberwiseClone", BindingFlags.NonPublic | BindingFlags.Instance);
+        private static readonly MethodInfo CloneMethod = typeof(object).GetMethod("MemberwiseClone", BindingFlags.NonPublic | BindingFlags.Instance)!;
 
         public static bool IsPrimitive(this Type type) => (type == typeof(string)) || (type.IsValueType && type.IsPrimitive);
 
-        public static object Copy(this object originalObject) => InternalCopy(originalObject, new Dictionary<object, object>(new ReferenceEqualityComparer()));
+        public static object? Copy(this object originalObject) => InternalCopy(originalObject, new Dictionary<object, object>(new ReferenceEqualityComparer()));
 
-        private static object InternalCopy(object originalObject, IDictionary<object, object> visited)
+        private static object? InternalCopy(object? originalObject, IDictionary<object, object> visited)
         {
             if (originalObject == null)
                 return null;
@@ -299,10 +299,11 @@ namespace HolzShots
             if (typeToReflect.IsArray)
             {
                 var arrayType = typeToReflect.GetElementType();
-                if (IsPrimitive(arrayType) == false)
+                if (arrayType is not null && IsPrimitive(arrayType) == false)
                 {
-                    var clonedArray = (Array)cloneObject;
-                    ArrayExtensions.ForEach(clonedArray, (array, indices) => array.SetValue(InternalCopy(clonedArray.GetValue(indices), visited), indices));
+                    var clonedArray = cloneObject as Array;
+                    if (clonedArray is not null)
+                        ArrayExtensions.ForEach(clonedArray, (array, indices) => array.SetValue(InternalCopy(clonedArray.GetValue(indices), visited), indices));
                 }
 
             }
@@ -321,7 +322,7 @@ namespace HolzShots
             }
         }
 
-        private static void CopyFields(object originalObject, IDictionary<object, object> visited, object cloneObject, Type typeToReflect, BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.FlattenHierarchy, Func<FieldInfo, bool> filter = null)
+        private static void CopyFields(object originalObject, IDictionary<object, object> visited, object cloneObject, Type typeToReflect, BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.FlattenHierarchy, Func<FieldInfo, bool>? filter = null)
         {
             foreach (var fieldInfo in typeToReflect.GetFields(bindingFlags))
             {
@@ -339,12 +340,15 @@ namespace HolzShots
                 fieldInfo.SetValue(cloneObject, clonedFieldValue);
             }
         }
-        public static T Copy<T>(this T original) => (T)Copy((object)original);
+        public static T? Copy<T>(this T? original) =>
+            original is null
+                ? default
+                : (T)Copy((object)original);
     }
 
     public class ReferenceEqualityComparer : EqualityComparer<object>
     {
-        public override bool Equals(object x, object y) => ReferenceEquals(x, y);
+        public override bool Equals(object? x, object? y) => ReferenceEquals(x, y);
         public override int GetHashCode(object o) => o == null ? 0 : o.GetHashCode();
     }
 
@@ -375,7 +379,7 @@ namespace HolzShots
                 for (var i = 0; i < array.Rank; ++i)
                     _maxLengths[i] = array.GetLength(i) - 1;
 
-                 Position = new int[array.Rank];
+                Position = new int[array.Rank];
             }
 
             public bool Step()

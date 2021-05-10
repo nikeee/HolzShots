@@ -11,7 +11,7 @@ namespace HolzShots.Net
         public UploadException(string description)
             : this(description, null)
         { }
-        public UploadException(string description, Exception innerException)
+        public UploadException(string description, Exception? innerException)
             : base(description, innerException)
         { }
     }

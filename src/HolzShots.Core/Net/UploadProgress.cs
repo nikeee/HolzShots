@@ -26,7 +26,7 @@ namespace HolzShots.Net
             State = UploadState.Processing;
         }
 
-        public override bool Equals(object obj) => obj is UploadProgress other && other == this;
+        public override bool Equals(object? obj) => obj is UploadProgress other && other == this;
         public bool Equals(UploadProgress other) => other == this;
 
         public override int GetHashCode()

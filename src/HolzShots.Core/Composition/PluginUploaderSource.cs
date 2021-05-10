@@ -12,7 +12,7 @@ namespace HolzShots.Composition
             : base(pluginDirectory)
         { }
 
-        public UploaderEntry/*?*/ GetUploaderByName(string name)
+        public UploaderEntry? GetUploaderByName(string name)
         {
             Debug.Assert(!string.IsNullOrEmpty(name));
             Debug.Assert(Loaded);

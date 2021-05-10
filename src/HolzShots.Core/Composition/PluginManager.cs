@@ -61,8 +61,10 @@ namespace HolzShots.Composition
                     var res = new List<(ICompileTimePluginMetadata, T)>();
                     foreach (var instance in pluginInstances)
                     {
-                        var instanceType = instance.GetType();
-                        var metadata = (PluginAttribute)instanceType.GetCustomAttribute(typeof(PluginAttribute));
+                        var instanceType = instance!.GetType();
+                        var metadata = instanceType.GetCustomAttribute<PluginAttribute>();
+                        if (metadata is null)
+                            throw new InvalidOperationException("Expected metadata not to be null");
                         res.Add((metadata, instance));
                     }
 
