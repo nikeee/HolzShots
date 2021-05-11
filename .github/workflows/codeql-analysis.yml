@@ -46,7 +46,7 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 5.0.100-rc.2.20479.15
+        dotnet-version: '5.0.202'
 
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v1
