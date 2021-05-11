@@ -15,14 +15,14 @@ namespace HolzShots.Input
 
         public abstract void UnregisterAllHotkeys();
 
-        protected void KeyPressed(object sender, KeyPressedEventArgs args)
+        protected void KeyPressed(object? sender, KeyPressedEventArgs args)
         {
             if (args == null)
                 throw new ArgumentNullException(nameof(args));
 
             var key = args.GetIdentifier();
 
-            if (RegisteredKeys.TryGetValue(key, out Hotkey hk) && hk != null)
+            if (RegisteredKeys.TryGetValue(key, out var hk) && hk != null)
                 hk.InvokePressed(this);
         }
 

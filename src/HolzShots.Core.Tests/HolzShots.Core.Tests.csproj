@@ -2,7 +2,7 @@
   <PropertyGroup>
     <RootNamespace>HolzShots.Tests</RootNamespace>
 
-    <TargetFramework>netcoreapp5.0</TargetFramework>
+    <TargetFramework>net5.0-windows</TargetFramework>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <UseWindowsForms>true</UseWindowsForms>
 
@@ -16,17 +16,10 @@
     <AssemblyTitle>HolzShots.Core.Tests</AssemblyTitle>
     <Product>HolzShots.Core.Tests</Product>
     <Description>HolzShots Core Component Tests</Description>
-  </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
     <DebugType>portable</DebugType>
-    <OutputPath>bin\$(Configuration)\</OutputPath>
-    <DebugSymbols>true</DebugSymbols>
-  </PropertyGroup>
-
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>portable</DebugType>
-    <OutputPath>bin\$(Configuration)\</OutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(CI)' == 'True' ">

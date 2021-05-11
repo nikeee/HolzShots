@@ -15,7 +15,7 @@ Namespace Input.Actions
         Protected Shared Function ShowFileSelector(title As String) As String
             Using ofd As New OpenFileDialog()
                 ofd.Title = title
-                ofd.Filter = $"{UI.Localization.DialogFilterImages}|{SupportedFilesFilter}"
+                ofd.Filter = $"{UI.Localization.DialogFilterImages}|*.bmp;*.jpg;*.jpeg;*.png;*.gif;*.tif;*.tiff"
                 ofd.Multiselect = False
                 Dim res = ofd.ShowDialog()
                 Return If(

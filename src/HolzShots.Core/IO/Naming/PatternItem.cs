@@ -20,7 +20,7 @@ namespace HolzShots.IO.Naming
 
         public override string ToString() => TextRepresentation;
 
-        internal static (string name, string prop) Parse(string value, ref int currentIndex)
+        internal static (string name, string? prop) Parse(string value, ref int currentIndex)
         {
             Debug.Assert(value != null);
             Debug.Assert(currentIndex >= 0);

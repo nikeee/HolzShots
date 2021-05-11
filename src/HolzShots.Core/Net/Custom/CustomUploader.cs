@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -19,7 +20,7 @@ namespace HolzShots.Net.Custom
         private const string SupportedSchema = "0.2.0";
         public CustomUploaderSpec UploaderInfo { get; }
 
-        private CustomUploader(CustomUploaderSpec customData) // TODO: Resolve warning
+        protected CustomUploader(CustomUploaderSpec? customData)
         {
             UploaderInfo = customData ?? throw new ArgumentNullException(nameof(customData));
         }
@@ -55,7 +56,7 @@ namespace HolzShots.Net.Custom
 
                 // Add the user-agent first, so the user can override it
                 cl.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", SuggestedUserAgent);
-                
+
                 if (uplInfo.Headers != null)
                 {
                     foreach (var (header, value) in uplInfo.Headers)
@@ -65,8 +66,12 @@ namespace HolzShots.Net.Custom
                 var responseParser = uplInfo.ResponseParser;
                 using (var content = new MultipartFormDataContent())
                 {
-                    foreach (var (name, value) in uplInfo.PostParams)
-                        content.Add(new StringContent(value), name);
+                    var postParams = uplInfo.PostParams;
+                    if (postParams is not null)
+                    {
+                        foreach (var (name, value) in postParams)
+                            content.Add(new StringContent(value), name);
+                    }
 
                     var fname = uplInfo.GetEffectiveFileName(suggestedFileName);
 
@@ -84,13 +89,15 @@ namespace HolzShots.Net.Custom
 
                     var resStr = await res.Content.ReadAsStringAsync().ConfigureAwait(false);
 
+                    var urlTemplateSpec = responseParser.UrlTemplateSpec;
+
                     // As the URL template is optional, we just take the entire response if it is not there
-                    if (responseParser.UrlTemplateSpec == null)
+                    if (urlTemplateSpec == null)
                         return new UploadResult(this, resStr, DateTime.Now);
 
                     try
                     {
-                        var imageUrl = UploaderInfo.Uploader.ResponseParser.UrlTemplateSpec.Evaluate(resStr);
+                        var imageUrl = urlTemplateSpec.Evaluate(resStr);
                         Debug.Assert(!string.IsNullOrWhiteSpace(imageUrl));
 
                         return new UploadResult(this, imageUrl, DateTime.Now);
@@ -103,18 +110,19 @@ namespace HolzShots.Net.Custom
             }
         }
 
-        public static bool TryParse(string value, out CustomUploader result)
+        public static bool TryParse(string value, [MaybeNullWhen(false)] out CustomUploader? result)
         {
-            result = null;
             if (string.IsNullOrWhiteSpace(value))
+            {
+                result = null;
                 return false;
+            }
             var info = JsonConvert.DeserializeObject<CustomUploaderSpec>(value, JsonConfig.JsonSettings);
             return TryLoad(info, out result);
         }
 
-        public static bool TryLoad(CustomUploaderSpec value, out CustomUploader result)
+        public static bool TryLoad(CustomUploaderSpec? value, [MaybeNullWhen(false)] out CustomUploader? result)
         {
-            result = null;
             try
             {
                 result = new CustomUploader(value);
@@ -122,6 +130,7 @@ namespace HolzShots.Net.Custom
             }
             catch
             {
+                result = null;
                 return false;
             }
         }

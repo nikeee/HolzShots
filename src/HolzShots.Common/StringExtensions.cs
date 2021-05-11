@@ -7,7 +7,7 @@ namespace HolzShots
     {
         private static readonly char[] _illegalFileNameChars = Path.GetInvalidFileNameChars();
         public static string SanitizeFileName(this string fileName) => SanitizeFileName(fileName, null);
-        public static string SanitizeFileName(this string fileName, string replaceWith)
+        public static string SanitizeFileName(this string fileName, string? replaceWith)
         {
             if (fileName == null)
                 throw new ArgumentNullException(nameof(fileName));

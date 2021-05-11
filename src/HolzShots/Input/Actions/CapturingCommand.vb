@@ -4,14 +4,15 @@ Imports HolzShots.Composition.Command
 Imports HolzShots.Interop
 Imports HolzShots.Interop.LocalDisk
 Imports HolzShots.Net
-Imports HolzShots.UI.Specialized
+Imports HolzShots.UI
 
 Namespace Input.Actions
     Public MustInherit Class CapturingCommand
         Implements ICommand(Of HSSettings)
 
         Protected Shared Async Function ProcessCapturing(screenshot As Screenshot, settingsContext As HSSettings) As Task
-            Debug.Assert(screenshot IsNot Nothing)
+            If screenshot Is Nothing Then Throw New ArgumentNullException(NameOf(screenshot))
+            If settingsContext Is Nothing Then Throw New ArgumentNullException(NameOf(settingsContext))
 
             ScreenshotDumper.HandleScreenshot(screenshot, settingsContext)
 

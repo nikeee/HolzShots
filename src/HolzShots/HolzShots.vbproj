@@ -4,7 +4,7 @@
     <StartupObject>HolzShots.My.MyApplication</StartupObject>
 
     <OutputType>WinExe</OutputType>
-    <TargetFramework>netcoreapp5.0</TargetFramework>
+    <TargetFramework>net5.0-windows</TargetFramework>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <UseWindowsForms>true</UseWindowsForms>
 
@@ -174,15 +174,7 @@
     <ProjectReference Include="..\HolzShots.Core\HolzShots.Core.csproj" />
     <ProjectReference Include="..\HolzShots.Windows\HolzShots.Windows.csproj" />
     <ProjectReference Include="..\HolzShots.Native\HolzShots.Native.csproj" />
-
-    <Reference Include="Microsoft.WindowsAPICodePack, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\References\Microsoft.WindowsAPICodePack.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="Microsoft.WindowsAPICodePack.Shell, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\References\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
+    <ProjectReference Include="..\WindowsAPICodePack.ShellModified\WindowsAPICodePack.ShellModified.csproj" />
 
     <PackageReference Include="Microsoft.CodeQuality.Analyzers" Version="3.3.0" />
     <!--
@@ -203,9 +195,5 @@
     <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
     <PackageReference Include="TaskScheduler" Version="2.8.18" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="UI\Specialized\" />
   </ItemGroup>
 </Project>

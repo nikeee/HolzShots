@@ -19,7 +19,7 @@ namespace HolzShots.Net.Custom
             _nodes = nodes;
         }
 
-        public static UrlTemplateSpec /* ? */ Parse(ResponseParser responseParser, ReadOnlySpan<char> value)
+        public static UrlTemplateSpec? Parse(ResponseParser responseParser, ReadOnlySpan<char> value)
         {
             if (value == null)
                 return null;
@@ -88,9 +88,9 @@ namespace HolzShots.Net.Custom
         public const string NodeKind = "regex";
 
         int PatternIndex { get; }
-        string /* ? */ GroupName { get; }
+        string? GroupName { get; }
         int? MatchIndex { get; }
-        private RegExSyntaxNode(int patternIndex, string groupName, int? matchIndex)
+        private RegExSyntaxNode(int patternIndex, string? groupName, int? matchIndex)
         {
             PatternIndex = patternIndex;
             GroupName = groupName;
@@ -114,7 +114,7 @@ namespace HolzShots.Net.Custom
             var parameters = contents.Split(':');
 
             int patternIndex = 0;
-            string groupName = null;
+            string? groupName = null;
             int? matchIndex = null;
             if (parameters.Length >= 1)
                 patternIndex = int.Parse(parameters[0]);

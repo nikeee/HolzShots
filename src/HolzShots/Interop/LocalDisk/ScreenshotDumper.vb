@@ -38,7 +38,7 @@ Namespace Interop.LocalDisk
 
         Friend Shared Sub SaveScreenshot(shot As Screenshot, settingsContext As HSSettings)
 
-            Dim format As ImageFormat = GlobalVariables.DefaultImageFormat
+            Dim format = ImageFormat.Png
             Dim extensionAndMimeType = ImageFormatInformation.GetExtensionAndMimeType(format)
 
             Debug.Assert(TypeOf shot.Image Is Bitmap)

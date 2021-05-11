@@ -18,10 +18,10 @@ If you pass command-line parameters, they'll invoke actions on the running insta
 
 Currently, these are supported:
 ```shell
-holzshots --capture-area
-holzshots --capture-full
+holzshots capture-area
+holzshots capture-full
 
-holzshots --open-image [optional image path]
-holzshots --upload-image [optional image path]
+holzshots open-image [optional image path]
+holzshots upload-image [optional image path]
 ```
 Feel free to integrate this into your tooling!

@@ -18,6 +18,8 @@ jobs:
   analyze:
     name: Analyze
     runs-on: windows-latest
+    env:
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
 
     strategy:
       fail-fast: false
@@ -44,7 +46,7 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 5.0.100-rc.1.20452.10
+        dotnet-version: '5.0.202'
 
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v1

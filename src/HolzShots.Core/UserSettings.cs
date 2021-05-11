@@ -13,7 +13,7 @@ namespace HolzShots
 {
     public static class UserSettings
     {
-        public static SettingsManager<HSSettings> Manager { get; private set; }
+        public static SettingsManager<HSSettings> Manager { get; private set; } = null!;
         public static HSSettings Current => Manager.CurrentSettings;
 
         public static async Task Load(ISynchronizeInvoke synchronizingObject)
@@ -46,7 +46,7 @@ namespace HolzShots
 
             var asm = System.Reflection.Assembly.GetExecutingAssembly();
             using (var defaultSettingsTemplateStream = asm.GetManifestResourceStream("HolzShots.Resources.DefaultSettings.json"))
-            using (var sr = new StreamReader(defaultSettingsTemplateStream))
+            using (var sr = new StreamReader(defaultSettingsTemplateStream!))
             {
                 var defaultSettings = await sr.ReadToEndAsync().ConfigureAwait(false);
                 defaultSettings = defaultSettings
@@ -61,7 +61,7 @@ namespace HolzShots
     {
         const string SupportedVersion = "1.0.0";
 
-        public HolzShotsUserSettings(string settingsFilePath, ISynchronizeInvoke synchronizingObject = null)
+        public HolzShotsUserSettings(string settingsFilePath, ISynchronizeInvoke? synchronizingObject = null)
             : base(settingsFilePath, synchronizingObject) { }
 
         protected override IReadOnlyList<ValidationError> IsValidSettingsCandidate(HSSettings candidate)
@@ -82,7 +82,7 @@ namespace HolzShots
             return ImmutableList<ValidationError>.Empty;
         }
 
-        private static IReadOnlyList<ValidationError> SingleError(string message, string affectedProperty, Exception exception = null)
+        private static IReadOnlyList<ValidationError> SingleError(string message, string affectedProperty, Exception? exception = null)
         {
             return ImmutableList.Create(new ValidationError(message, affectedProperty, exception));
         }
