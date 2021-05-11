@@ -39,9 +39,9 @@ Namespace Net
                 Case UploadHandlingAction.CopyToClipboard
 
                     If ClipboardEx.SetText(result.Url) Then
-                        HumanInterop.ShowCopyConfirmation(result.Url)
+                        NotificationManager.ShowCopyConfirmation(result.Url)
                     ElseIf settingsContext.ShowCopyConfirmation Then
-                        HumanInterop.CopyingFailed(result.Url)
+                        NotificationManager.CopyingFailed(result.Url)
                     End If
 
                 Case UploadHandlingAction.None ' Intentionally do nothing

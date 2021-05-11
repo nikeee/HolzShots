@@ -1,9 +1,8 @@
-Imports System.Threading.Tasks
 Imports HolzShots.Composition.Command
 Imports System.Drawing.Imaging
 Imports HolzShots.Net
-Imports HolzShots.Interop
 Imports HolzShots.Drawing
+Imports HolzShots.Windows.Forms
 
 Namespace Input.Actions
     <Command("uploadImage")>
@@ -38,9 +37,9 @@ Namespace Input.Actions
                     Dim result = Await UploadDispatcher.InitiateUploadToDefaultUploader(bmp, settingsContext, My.Application.Uploaders, format, Nothing).ConfigureAwait(True)
                     UploadHelper.InvokeUploadFinishedUi(result, settingsContext)
                 Catch ex As UploadCanceledException
-                    HumanInterop.ShowOperationCanceled()
+                    NotificationManager.ShowOperationCanceled()
                 Catch ex As UploadException
-                    HumanInterop.UploadFailed(ex)
+                    NotificationManager.UploadFailed(ex)
                 End Try
             End Using
 

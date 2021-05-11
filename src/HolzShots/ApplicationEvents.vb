@@ -36,7 +36,7 @@ Namespace My
             Try
                 Await _uploaders.Load().ConfigureAwait(False)
             Catch ex As PluginLoadingFailedException
-                HumanInterop.PluginLoadingFailed(ex)
+                NotificationManager.PluginLoadingFailed(ex)
                 Debugger.Break()
             End Try
         End Function

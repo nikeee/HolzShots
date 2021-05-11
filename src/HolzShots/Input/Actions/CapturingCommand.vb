@@ -1,10 +1,9 @@
 Imports System.Runtime.InteropServices
-Imports System.Threading.Tasks
 Imports HolzShots.Composition.Command
-Imports HolzShots.Interop
-Imports HolzShots.Interop.LocalDisk
+Imports HolzShots.IO
 Imports HolzShots.Net
 Imports HolzShots.UI
+Imports HolzShots.Windows.Forms
 
 Namespace Input.Actions
     Public MustInherit Class CapturingCommand
@@ -14,7 +13,7 @@ Namespace Input.Actions
             If screenshot Is Nothing Then Throw New ArgumentNullException(NameOf(screenshot))
             If settingsContext Is Nothing Then Throw New ArgumentNullException(NameOf(settingsContext))
 
-            ScreenshotDumper.HandleScreenshot(screenshot, settingsContext)
+            ScreenshotAggregator.HandleScreenshot(screenshot, settingsContext)
 
             Select Case settingsContext.ActionAfterCapture
                 Case CaptureHandlingAction.OpenEditor
@@ -27,20 +26,20 @@ Namespace Input.Actions
                         Dim result = Await UploadDispatcher.InitiateUploadToDefaultUploader(screenshot.Image, settingsContext, My.Application.Uploaders, Nothing, Nothing).ConfigureAwait(True)
                         UploadHelper.InvokeUploadFinishedUi(result, settingsContext)
                     Catch ex As UploadCanceledException
-                        HumanInterop.ShowOperationCanceled()
+                        NotificationManager.ShowOperationCanceled()
                     Catch ex As UploadException
-                        HumanInterop.UploadFailed(ex)
+                        NotificationManager.UploadFailed(ex)
                     End Try
 
                 Case CaptureHandlingAction.Copy
                     Try
                         Clipboard.SetImage(screenshot.Image)
-                        HumanInterop.ShowImageCopiedConfirmation()
+                        NotificationManager.ShowImageCopiedConfirmation()
                     Catch ex As Exception When _
                             TypeOf ex Is ExternalException _
                             OrElse TypeOf ex Is System.Threading.ThreadStateException _
                             OrElse TypeOf ex Is ArgumentNullException
-                        HumanInterop.CopyImageFailed(ex)
+                        NotificationManager.CopyImageFailed(ex)
                     End Try
                 Case CaptureHandlingAction.None ' Intentionally do nothing
                 Case Else ' Intentionally do nothing
