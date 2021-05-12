@@ -42,7 +42,6 @@
 
     <NoWarn>42353,42354,42355</NoWarn>
     <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <DefineConstants>_MYTYPE="Custom",_MYAPPLICATIONTYPE="WindowsForms"</DefineConstants>
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
     <Prefer32Bit>true</Prefer32Bit>
@@ -56,7 +55,6 @@
 
     <NoWarn>42353,42354,42355</NoWarn>
     <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <DefineConstants>_MYTYPE="Custom",_MYAPPLICATIONTYPE="WindowsForms"</DefineConstants>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
@@ -173,11 +171,7 @@
     <ProjectReference Include="..\HolzShots.Native\HolzShots.Native.csproj" />
     <ProjectReference Include="..\WindowsAPICodePack.ShellModified\WindowsAPICodePack.ShellModified.csproj" />
 
-    <PackageReference Include="Microsoft.CodeQuality.Analyzers" Version="3.3.2" />
-    <!--
-    <PackageReference Include="System.Runtime.Analyzers" Version="1.2.0-beta2" />
-    <PackageReference Include="System.Runtime.InteropServices.Analyzers" Version="1.2.0-beta2" />
-    -->
+    <PackageReference Include="Microsoft.CodeQuality.Analyzers" Version="3.3.2" PrivateAssets="all" />
 
     <PackageReference Include="Microsoft.Bcl.HashCode" Version="1.1.1" />
     <PackageReference Include="Semver" Version="2.0.6" />
