@@ -72,9 +72,6 @@
     <Compile Update="UI\Controls\PaintPanel.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Update="UI\Controls\NumericTextBox.vb">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Update="Drawing\Tools\UI\ScaleWindow.Designer.vb">
       <DependentUpon>ScaleWindow.vb</DependentUpon>
     </Compile>
