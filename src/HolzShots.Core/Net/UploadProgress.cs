@@ -29,18 +29,7 @@ namespace HolzShots.Net
         public override bool Equals(object? obj) => obj is UploadProgress other && other == this;
         public bool Equals(UploadProgress other) => other == this;
 
-        public override int GetHashCode()
-        {
-            // See: https://stackoverflow.com/a/263416
-            unchecked
-            {
-                int hash = (int)2166136261;
-                hash = (hash * 16777619) ^ State.GetHashCode();
-                hash = (hash * 16777619) ^ Current.GetHashCode();
-                hash = (hash * 16777619) ^ Total.GetHashCode();
-                return hash;
-            }
-        }
+        public override int GetHashCode() => HashCode.Combine(State, Current, Total);
 
         public static bool operator ==(UploadProgress left, UploadProgress right)
         {
