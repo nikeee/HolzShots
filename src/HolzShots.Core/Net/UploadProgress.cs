@@ -4,11 +4,11 @@ using System.Net.Http.Handlers;
 
 namespace HolzShots.Net
 {
-    public struct UploadProgress: IEquatable<UploadProgress>
+    public readonly struct UploadProgress : IEquatable<UploadProgress>
     {
         public MemSize Current { get; }
         public MemSize Total { get; }
-        public int ProgressPercentage => Total.ByteCount == 0 ? 100 : (int)((float)Current.ByteCount / Total.ByteCount * 100);
+        public uint ProgressPercentage => Total.ByteCount == 0 ? 100 : (uint)((float)Current.ByteCount / Total.ByteCount * 100);
         public UploadState State { get; }
 
         public UploadProgress(MemSize current, MemSize target, UploadState state)
@@ -26,21 +26,10 @@ namespace HolzShots.Net
             State = UploadState.Processing;
         }
 
-        public override bool Equals(object obj) => obj is UploadProgress other && other == this;
+        public override bool Equals(object? obj) => obj is UploadProgress other && other == this;
         public bool Equals(UploadProgress other) => other == this;
 
-        public override int GetHashCode()
-        {
-            // See: https://stackoverflow.com/a/263416
-            unchecked
-            {
-                int hash = (int)2166136261;
-                hash = (hash * 16777619) ^ State.GetHashCode();
-                hash = (hash * 16777619) ^ Current.GetHashCode();
-                hash = (hash * 16777619) ^ Total.GetHashCode();
-                return hash;
-            }
-        }
+        public override int GetHashCode() => HashCode.Combine(State, Current, Total);
 
         public static bool operator ==(UploadProgress left, UploadProgress right)
         {

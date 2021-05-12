@@ -1,16 +1,16 @@
 Imports System.Drawing.Drawing2D
 Imports HolzShots.UI.Controls
-Imports HolzShots.UI.Dialogs
+Imports HolzShots.Windows.Forms
 
 Namespace Drawing.Tools
-    Friend Class Pipette
+    Friend NotInheritable Class Pipette
         Inherits Tool
         Implements IDisposable
         Public Overrides ReadOnly Property ToolType As PaintPanel.ShotEditorTool = PaintPanel.ShotEditorTool.Pipette
 
         Public Overrides ReadOnly Property Cursor As Cursor = Cursors.Cross
 
-        Public Overrides Sub MouseOnlyMoved(ByVal rawImage As Image, ByRef currentCursor As Cursor, ByVal e As MouseEventArgs)
+        Public Overrides Sub MouseOnlyMoved(rawImage As Image, ByRef currentCursor As Cursor, e As MouseEventArgs)
             Debug.Assert(TypeOf rawImage Is Bitmap)
             Dim rawBmp = If(TypeOf rawImage Is Bitmap, DirectCast(rawImage, Bitmap), New Bitmap(rawImage))
             If New Rectangle(0, 0, rawImage.Width, rawImage.Height).Contains(e.Location) Then
@@ -27,7 +27,7 @@ Namespace Drawing.Tools
         Private _cursorImage As New Bitmap(28, 28)
         Private ReadOnly _cursorPen As New Pen(Brushes.Black)
 
-        Private Function DrawCursor(ByVal c As Color) As Icon
+        Private Function DrawCursor(c As Color) As Icon
             _cursorImage = New Bitmap(195, 195)
             _cursorImage.MakeTransparent()
             Using cursorGraphics As Graphics = Graphics.FromImage(_cursorImage)
@@ -57,11 +57,11 @@ Namespace Drawing.Tools
             Return ico
         End Function
 
-        Public Overrides Sub MouseClicked(ByVal rawImage As Image, ByVal e As Point, ByRef currentCursor As Cursor, ByVal trigger As Control)
+        Public Overrides Sub MouseClicked(rawImage As Image, e As Point, ByRef currentCursor As Cursor, trigger As Control)
             Debug.Assert(TypeOf rawImage Is Bitmap)
             Dim rawBmp = If(TypeOf rawImage Is Bitmap, DirectCast(rawImage, Bitmap), New Bitmap(rawImage))
             Dim c As Color = rawBmp.GetPixel(e.X, e.Y)
-            Dim viewer As New PipettenColorViewer(c, trigger.PointToScreen(e))
+            Dim viewer As New CopyColorForm(c, trigger.PointToScreen(e))
             viewer.Show()
         End Sub
 

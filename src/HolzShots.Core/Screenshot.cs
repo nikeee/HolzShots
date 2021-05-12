@@ -1,21 +1,21 @@
-using HolzShots.Drawing;
 using System;
 using System.Diagnostics;
 using System.Drawing;
+using HolzShots.Drawing;
 
 namespace HolzShots
 {
-    public class Screenshot // : IDisposable
+    public sealed class Screenshot // : IDisposable
     {
         public DateTime Timestamp { get; }
-        public string ProcessName { get; }
-        public string WindowTitle { get; }
+        public string? ProcessName { get; }
+        public string? WindowTitle { get; }
         public Point CursorPosition { get; }
         public ScreenshotSource Source { get; }
         public Image Image { get; }
         public Size Size { get; }
 
-        private Screenshot(Image image, DateTime timestamp, Point cursorPosition, ScreenshotSource source, string processName, string windowTitle)
+        private Screenshot(Image image, DateTime timestamp, Point cursorPosition, ScreenshotSource source, string? processName, string? windowTitle)
         {
             Image = image ?? throw new ArgumentNullException(nameof(image));
             Size = image.Size;
@@ -32,9 +32,17 @@ namespace HolzShots
         /// <summary>
         /// TODO: Should we clone this?
         /// </summary>
-        public static Screenshot FromWindow(WindowScreenshotSet set) => new Screenshot(set.Result.Clone() as Image, DateTime.Now, set.CursorPosition, ScreenshotSource.Window, set.ProcessName, set.WindowTitle);
-        public static Screenshot FromImage(Image image, Point cursorPosition, ScreenshotSource source) => new Screenshot(image, DateTime.Now, cursorPosition, source, null, null);
-        public static Screenshot FromImported(Bitmap image) => new Screenshot(image, DateTime.Now, Point.Empty, ScreenshotSource.Unknown, null, null);
+        public static Screenshot FromWindow(WindowScreenshotSet set) => new(
+            (set.Result.Clone() as Image)!,
+            DateTime.Now,
+            set.CursorPosition,
+            ScreenshotSource.Window,
+            set.ProcessName,
+            set.WindowTitle
+        );
+
+        public static Screenshot FromImage(Image image, Point cursorPosition, ScreenshotSource source) => new(image, DateTime.Now, cursorPosition, source, null, null);
+        public static Screenshot FromImported(Bitmap image) => new(image, DateTime.Now, Point.Empty, ScreenshotSource.Unknown, null, null);
 
         // public Image GetBitmapCopy() => _image.CloneDeep();
 

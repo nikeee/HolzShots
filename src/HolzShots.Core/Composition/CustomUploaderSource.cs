@@ -1,14 +1,14 @@
-using HolzShots.Net;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using HolzShots.Net.Custom;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
 using System.Collections.Immutable;
+using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using HolzShots.IO;
+using HolzShots.Net;
+using HolzShots.Net.Custom;
+using Newtonsoft.Json;
 
 namespace HolzShots.Composition
 {
@@ -67,7 +67,7 @@ namespace HolzShots.Composition
             }
         }
 
-        public UploaderEntry/*?*/ GetUploaderByName(string name)
+        public UploaderEntry? GetUploaderByName(string name)
         {
             var cupls = _customUploaders;
             Debug.Assert(cupls != null);

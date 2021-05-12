@@ -1,19 +1,20 @@
 Imports System.Runtime.InteropServices
-Imports System.Threading.Tasks
 Imports HolzShots.Composition.Command
-Imports HolzShots.Interop
-Imports HolzShots.Interop.LocalDisk
+Imports HolzShots.IO
 Imports HolzShots.Net
-Imports HolzShots.UI.Specialized
+Imports HolzShots.UI
+Imports HolzShots.Windows.Forms
+Imports HolzShots.Windows.Net
 
 Namespace Input.Actions
     Public MustInherit Class CapturingCommand
         Implements ICommand(Of HSSettings)
 
         Protected Shared Async Function ProcessCapturing(screenshot As Screenshot, settingsContext As HSSettings) As Task
-            Debug.Assert(screenshot IsNot Nothing)
+            If screenshot Is Nothing Then Throw New ArgumentNullException(NameOf(screenshot))
+            If settingsContext Is Nothing Then Throw New ArgumentNullException(NameOf(settingsContext))
 
-            ScreenshotDumper.HandleScreenshot(screenshot, settingsContext)
+            ScreenshotAggregator.HandleScreenshot(screenshot, settingsContext)
 
             Select Case settingsContext.ActionAfterCapture
                 Case CaptureHandlingAction.OpenEditor
@@ -23,23 +24,23 @@ Namespace Input.Actions
                 Case CaptureHandlingAction.Upload
 
                     Try
-                        Dim result = Await UploadHelper.UploadToDefaultUploader(screenshot.Image).ConfigureAwait(True)
-                        UploadHelper.InvokeUploadFinishedUi(result, settingsContext)
+                        Dim result = Await UploadDispatcher.InitiateUploadToDefaultUploader(screenshot.Image, settingsContext, My.Application.Uploaders, Nothing, Nothing).ConfigureAwait(True)
+                        UploadHelper.InvokeUploadFinishedUI(result, settingsContext)
                     Catch ex As UploadCanceledException
-                        HumanInterop.ShowOperationCanceled()
+                        NotificationManager.ShowOperationCanceled()
                     Catch ex As UploadException
-                        UploadHelper.InvokeUploadFailedUi(ex)
+                        NotificationManager.UploadFailed(ex)
                     End Try
 
                 Case CaptureHandlingAction.Copy
                     Try
                         Clipboard.SetImage(screenshot.Image)
-                        HumanInterop.ShowImageCopiedConfirmation()
+                        NotificationManager.ShowImageCopiedConfirmation()
                     Catch ex As Exception When _
                             TypeOf ex Is ExternalException _
                             OrElse TypeOf ex Is System.Threading.ThreadStateException _
                             OrElse TypeOf ex Is ArgumentNullException
-                        HumanInterop.CopyImageFailed(ex)
+                        NotificationManager.CopyImageFailed(ex)
                     End Try
                 Case CaptureHandlingAction.None ' Intentionally do nothing
                 Case Else ' Intentionally do nothing

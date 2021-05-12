@@ -37,9 +37,9 @@ Namespace Drawing.Tools.UI
             Me.UnitLabel1 = New System.Windows.Forms.Label()
             Me.okButton = New System.Windows.Forms.Button()
             Me.cnclButton = New System.Windows.Forms.Button()
-            Me.HeightBox = New HolzShots.UI.Controls.NumericTextBox()
-            Me.WidthBox = New HolzShots.UI.Controls.NumericTextBox()
-            Me.ExplorerInfoPanel1 = New HolzShots.UI.Forms.ExplorerInfoPanel()
+            Me.HeightBox = New HolzShots.Windows.Forms.Controls.NumericTextBox()
+            Me.WidthBox = New HolzShots.Windows.Forms.Controls.NumericTextBox()
+            Me.ExplorerInfoPanel1 = New HolzShots.Windows.Forms.ExplorerInfoPanel()
             CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
             CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.ExplorerInfoPanel1.SuspendLayout()
@@ -237,10 +237,10 @@ Namespace Drawing.Tools.UI
         Friend WithEvents Label3 As System.Windows.Forms.Label
         Friend WithEvents UnitLabel2 As System.Windows.Forms.Label
         Friend WithEvents UnitLabel1 As System.Windows.Forms.Label
-        Friend WithEvents WidthBox As NumericTextBox
-        Friend WithEvents HeightBox As NumericTextBox
+        Friend WithEvents WidthBox As HolzShots.Windows.Forms.Controls.NumericTextBox
+        Friend WithEvents HeightBox As HolzShots.Windows.Forms.Controls.NumericTextBox
         Friend WithEvents okButton As Button
         Friend WithEvents cnclButton As Button
-        Friend WithEvents ExplorerInfoPanel1 As HolzShots.UI.Forms.ExplorerInfoPanel
+        Friend WithEvents ExplorerInfoPanel1 As HolzShots.Windows.Forms.ExplorerInfoPanel
     End Class
 End Namespace

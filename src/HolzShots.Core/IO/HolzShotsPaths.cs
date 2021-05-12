@@ -31,5 +31,76 @@ namespace HolzShots.IO
             Debug.Assert(directory != null);
             DirectoryEx.EnsureDirectory(directory);
         }
+
+        public static void OpenLink(string url)
+        {
+            Debug.Assert(url != null);
+
+            try
+            {
+                OpenFileInDefaultApplication(url);
+            }
+            catch
+            {
+                Trace.WriteLine("Could not open link: " + url);
+            }
+        }
+        public static void OpenFileInDefaultApplication(string fileName)
+        {
+            // Necessary since .NET core, see: https://stackoverflow.com/questions/46808315
+            var psi = new ProcessStartInfo(fileName)
+            {
+                UseShellExecute = true,
+            };
+            Process.Start(psi);
+        }
+        public static bool OpenSelectedFileInExplorer(string fileName)
+        {
+            Debug.Assert(!string.IsNullOrWhiteSpace(fileName));
+            if (string.IsNullOrEmpty(fileName))
+                return false;
+
+            var psi = new ProcessStartInfo(
+                "explorer",
+                $"/e, /select, \"{fileName}\""
+            );
+            try
+            {
+                Process.Start(psi);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        public static bool OpenFolderInExplorer(string directoryName)
+        {
+            Debug.Assert(!string.IsNullOrWhiteSpace(directoryName));
+            if (string.IsNullOrEmpty(directoryName))
+                return false;
+
+            var psi = new ProcessStartInfo("explorer", directoryName)
+            {
+                Verb = "open",
+                UseShellExecute = true,
+            };
+
+            try
+            {
+                Process.Start(psi);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary> TODO: Consider re-adding this functionality </summary>
+        public static void AddToRecentDocuments(string path)
+        {
+            Native.Shell32.SHAddToRecentDocs(Native.Shell32.ShellAddToRecentDocsFlags.Path, path);
+        }
     }
 }

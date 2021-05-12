@@ -1,8 +1,7 @@
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -11,21 +10,19 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace HolzShots.Net.Custom
 {
     public class CustomUploader : Uploader
     {
-        private const string SupportedSchema = "0.1.0";
+        private const string SupportedSchema = "0.2.0";
         public CustomUploaderSpec UploaderInfo { get; }
 
-        private CustomUploader(CustomUploaderSpec customData) // TODO: Resolve warning
+        protected CustomUploader(CustomUploaderSpec? customData)
         {
-            if (customData == null)
-                throw new ArgumentNullException(nameof(customData));
-
-            Debug.Assert(customData.Validate(SupportedSchema));
-            UploaderInfo = customData;
+            UploaderInfo = customData ?? throw new ArgumentNullException(nameof(customData));
         }
 
         public async override Task<UploadResult> InvokeAsync(Stream data, string suggestedFileName, string mimeType, IProgress<UploadProgress> progress, CancellationToken cancellationToken)
@@ -34,7 +31,6 @@ namespace HolzShots.Net.Custom
                 throw new ArgumentNullException(nameof(data));
 
             Debug.Assert(UploaderInfo != null);
-            Debug.Assert(UploaderInfo.Validate(SupportedSchema));
             Debug.Assert(UploaderInfo.Uploader != null);
             Debug.Assert(!string.IsNullOrWhiteSpace(suggestedFileName));
             Debug.Assert(!string.IsNullOrWhiteSpace(mimeType));
@@ -66,8 +62,12 @@ namespace HolzShots.Net.Custom
 
                 using (var content = new MultipartFormDataContent())
                 {
-                    foreach (var (name, value) in uplInfo.PostParams)
-                        content.Add(new StringContent(value), name);
+                    var postParams = uplInfo.PostParams;
+                    if (postParams is not null)
+                    {
+                        foreach (var (name, value) in postParams)
+                            content.Add(new StringContent(value), name);
+                    }
 
                     var fname = uplInfo.GetEffectiveFileName(suggestedFileName);
 
@@ -123,7 +123,7 @@ namespace HolzShots.Net.Custom
                     }
                 case "JSON":
                     {
-                        JObject obj = null;
+                        JObject obj;
                         try
                         {
                             obj = JObject.Parse(response);
@@ -166,7 +166,7 @@ namespace HolzShots.Net.Custom
                 return template;
 
             var sb = new StringBuilder();
-            string currentToken = null;
+            string? currentToken = null;
             for (var i = 0; i < template.Length; ++i)
             {
                 var c = template[i];
@@ -227,24 +227,29 @@ namespace HolzShots.Net.Custom
             return sb.ToString();
         }
 
-        public static bool TryParse(string value, out CustomUploader result)
+        public static bool TryParse(string value, [MaybeNullWhen(false)] out CustomUploader? result)
         {
-            result = null;
             if (string.IsNullOrWhiteSpace(value))
+            {
+                result = null;
                 return false;
+            }
             var info = JsonConvert.DeserializeObject<CustomUploaderSpec>(value, JsonConfig.JsonSettings);
             return TryLoad(info, out result);
         }
 
-        public static bool TryLoad(CustomUploaderSpec value, out CustomUploader result)
+        public static bool TryLoad(CustomUploaderSpec? value, [MaybeNullWhen(false)] out CustomUploader? result)
         {
-            result = null;
-            if (value?.Validate(SupportedSchema) == true)
+            try
             {
                 result = new CustomUploader(value);
                 return true;
             }
-            return false;
+            catch
+            {
+                result = null;
+                return false;
+            }
         }
     }
 }

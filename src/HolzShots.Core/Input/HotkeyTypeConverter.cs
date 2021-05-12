@@ -8,7 +8,7 @@ namespace HolzShots.Input
     public class HotkeyTypeConverter : TypeConverter
     {
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType) => sourceType == typeof(int) || sourceType == typeof(string);
-        public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
+        public override object? ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
             if (value is int i)
                 return Hotkey.FromHashCode(i);

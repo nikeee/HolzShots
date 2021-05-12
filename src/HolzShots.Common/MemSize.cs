@@ -7,7 +7,7 @@ namespace HolzShots
     /// Supports creating instances from specific sizes and notations (decimal prefix vs binary prefix).
     /// Also has some operators (+/-/==/!=).
     /// </summary>
-    public struct MemSize : IEquatable<MemSize>, IComparable<MemSize>
+    public readonly struct MemSize : IEquatable<MemSize>, IComparable<MemSize>
     {
         /// <summary>Represents the size 0 bytes.</summary>
         public static MemSize Zero => default;
@@ -131,21 +131,21 @@ namespace HolzShots
                 return $"{size:F0} bytes";
 
             if (size < MathEx.Pow(unit, 2))
-                return $"{(size / unit):F0} K{i}B";
+                return $"{size / unit:F1} K{i}B";
 
             if (size < MathEx.Pow(unit, 3))
-                return $"{(size / MathEx.Pow(unit, 2)):F0} M{i}B";
+                return $"{size / MathEx.Pow(unit, 2):F1} M{i}B";
 
             if (size < MathEx.Pow(unit, 4))
-                return $"{(size / MathEx.Pow(unit, 3)):F0} G{i}B";
+                return $"{size / MathEx.Pow(unit, 3):F1} G{i}B";
 
             if (size < MathEx.Pow(unit, 5))
-                return $"{(size / MathEx.Pow(unit, 4)):F0} T{i}B";
+                return $"{size / MathEx.Pow(unit, 4):F1} T{i}B";
 
             if (size < MathEx.Pow(unit, 6))
-                return $"{(size / MathEx.Pow(unit, 5)):F0} P{i}B";
+                return $"{size / MathEx.Pow(unit, 5):F1} P{i}B";
 
-            return $"{(size / MathEx.Pow(unit, 6)):F0} E{i}B";
+            return $"{size / MathEx.Pow(unit, 6):F1} E{i}B";
         }
 
         #endregion

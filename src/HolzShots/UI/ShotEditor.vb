@@ -1,41 +1,25 @@
 Imports System.Drawing.Drawing2D
-Imports System.Drawing.Imaging
 Imports System.Drawing.Printing
 Imports System.IO
 Imports System.Runtime.InteropServices
-Imports HolzShots.UI
-Imports HolzShots.Interop
 Imports HolzShots.Net
 Imports HolzShots.UI.Controls
-Imports HolzShots.UI.Controls.Helpers
-Imports HolzShots.UI.Forms
-Imports Microsoft.WindowsAPICodePack.Dialogs
 Imports Microsoft.WindowsAPICodePack.Taskbar
 Imports HolzShots.Composition
 Imports HolzShots.Drawing
+Imports HolzShots.Windows.Forms
+Imports HolzShots.Windows.Net
 
-Namespace UI.Specialized
+Namespace UI
     Friend Class ShotEditor
         Inherits System.Windows.Forms.Form
         Implements IDisposable
 
         Private _activator As PanelActivator
 
-#Region "Properties"
-
-        ' TODO: Remove?
-        Friend ReadOnly Property CurrentTool As PaintPanel.ShotEditorTool
-            Get
-                'Return ThePanel.CurrentTool
-            End Get
-        End Property
-
-        Friend Property Screenshot As Screenshot
-
-        Private ReadOnly _imageHoster As UploaderEntry ' ?
+        Private ReadOnly _defaultUploader As UploaderEntry ' ?
         Private ReadOnly _settingsContext As HSSettings
-
-#End Region
+        Private ReadOnly _screenshot As Screenshot
 
 #Region "Win7/8-Thumbnails"
 
@@ -48,14 +32,14 @@ Namespace UI.Specialized
             If TaskbarManager.IsPlatformSupported Then
 
                 Dim uploadTooltip As String = String.Empty
-                If _imageHoster?.Metadata IsNot Nothing Then
+                If _defaultUploader?.Metadata IsNot Nothing Then
                     uploadTooltip = UploadToHoster.ToolTipText.Remove(UploadToHoster.ToolTipText.IndexOf(" (", StringComparison.Ordinal))
-                    uploadTooltip = String.Format(Global.HolzShots.My.Application.TheCulture, uploadTooltip, _imageHoster.Metadata.Name)
+                    uploadTooltip = String.Format(Global.HolzShots.My.Application.TheCulture, uploadTooltip, _defaultUploader.Metadata.Name)
                 End If
 
                 _uploadThumbnailButton = New ThumbnailToolBarButton(Icon.FromHandle(HolzShots.My.Resources.uploadMedium.GetHicon()), uploadTooltip)
                 AddHandler _uploadThumbnailButton.Click, Sub() UploadCurrentImageToDefaultProvider()
-                _uploadThumbnailButton.Enabled = _imageHoster?.Metadata IsNot Nothing
+                _uploadThumbnailButton.Enabled = _defaultUploader?.Metadata IsNot Nothing
 
                 _saveThumbnailButton = New ThumbnailToolBarButton(Icon.FromHandle(HolzShots.My.Resources.saveMedium.GetHicon()), "Save image")
                 _copyThumbnailButton = New ThumbnailToolBarButton(Icon.FromHandle(HolzShots.My.Resources.clipboardMedium.GetHicon()), "Copy image")
@@ -71,12 +55,13 @@ Namespace UI.Specialized
 
 #Region "Ctors"
 
-        Public Sub New(ByVal screenshot As Screenshot, settingsContext As HSSettings)
+        Public Sub New(screenshot As Screenshot, settingsContext As HSSettings)
             Debug.Assert(screenshot IsNot Nothing)
             Debug.Assert(screenshot.Image IsNot Nothing)
             Debug.Assert(settingsContext IsNot Nothing)
 
             _settingsContext = settingsContext
+            _screenshot = screenshot
 
             InitializeComponent()
 
@@ -87,9 +72,9 @@ Namespace UI.Specialized
                 Text = settingsContext.ShotEditorTitle
             End If
 
-            Me.Screenshot = screenshot
+            _defaultUploader = UploadDispatcher.GetImageServiceForSettingsContext(settingsContext, HolzShots.My.Application.Uploaders)
 
-            _imageHoster = UserSettings.GetImageServiceForSettingsContext(settingsContext, HolzShots.My.Application.Uploaders)
+            SuspendLayout()
 
             InitializeThumbnailToolbar()
 
@@ -135,11 +120,10 @@ Namespace UI.Specialized
 
             DrawCursor.Visible = screenshot.Source <> ScreenshotSource.Selected AndAlso screenshot.Source <> ScreenshotSource.Unknown
 
-
-            UploadToHoster.Enabled = _imageHoster?.Metadata IsNot Nothing
+            UploadToHoster.Enabled = _defaultUploader?.Metadata IsNot Nothing
             UploadToHoster.ToolTipText = If(
-                            _imageHoster?.Metadata IsNot Nothing,
-                            String.Format(Global.HolzShots.My.Application.TheCulture, UploadToHoster.ToolTipText, _imageHoster?.Metadata.Name),
+                            _defaultUploader?.Metadata IsNot Nothing,
+                            String.Format(Global.HolzShots.My.Application.TheCulture, UploadToHoster.ToolTipText, _defaultUploader?.Metadata.Name),
                             String.Empty
                         )
 
@@ -148,18 +132,16 @@ Namespace UI.Specialized
             ToolStrip1.Renderer = renderer
             EditStrip.Renderer = renderer
             CopyPrintToolStrip.Renderer = renderer
+
+            ResumeLayout(True)
         End Sub
 
 #End Region
 
 #Region "Form Events"
 
-        Private Sub ShotShowerFormClosing(ByVal sender As Object, ByVal e As FormClosingEventArgs) Handles MyBase.FormClosing
-            UpdateSettings()
-        End Sub
-
-        Private Sub ShotShowerLoad(ByVal sender As Object, ByVal e As EventArgs) Handles MyBase.Load
-            ThePanel.Initialize(Screenshot)
+        Private Sub ShotShowerLoad() Handles MyBase.Load
+            ThePanel.Initialize(_screenshot)
             LoadToolSettings()
         End Sub
 
@@ -213,11 +195,10 @@ Namespace UI.Specialized
         End Sub
 
         Private Sub LoadArrow()
-            ArrowColorviewer.Color = HolzShots.My.Settings.ArrowColor
+            ArrowColorviewer.Color = My.Settings.ArrowColor
             ThePanel.ArrowColor = ArrowColorviewer.Color
-            ArrowWidthSlider.Value = If(HolzShots.My.Settings.ArrowWidth <= ArrowWidthSlider.Maximum,
-                                        If(HolzShots.My.Settings.ArrowWidth >= ArrowWidthSlider.Minimum, HolzShots.My.Settings.ArrowWidth, 0), 0)
-            ArrowWidthSliderScroll(Nothing, Nothing)
+            ArrowWidthSlider.Value = MathEx.Clamp(My.Settings.ArrowWidth, ArrowWidthSlider.Minimum, ArrowWidthSlider.Maximum)
+            ArrowWidthSliderScroll()
         End Sub
 
         Private Sub LoadMarker()
@@ -268,7 +249,7 @@ Namespace UI.Specialized
                 End If
             End If
             BlackWhiteTracker.Value = v
-            BlackWhiteTrackerScroll(Nothing, Nothing)
+            BlackWhiteTrackerScroll()
         End Sub
 
 #End Region
@@ -277,17 +258,14 @@ Namespace UI.Specialized
 
 #Region "Image Actions"
 
-
-        Private Sub SaveImage()
-            Using sfd As New CommonSaveFileDialog()
-                sfd.Filters.Add(New CommonFileDialogFilter(Localization.PngImage, "*.png"))
-                sfd.Filters.Add(New CommonFileDialogFilter(Localization.JpgImage, "*.jpg"))
-                sfd.DefaultExtension = sfd.Filters(0).Extensions(0)
-                sfd.AlwaysAppendDefaultExtension = True
-                sfd.EnsurePathExists = True
-
+        Private Sub SaveImage() Handles save_btn.Click
+            Using sfd As New SaveFileDialog()
+                sfd.Filter = $"{Localization.PngImage}|*.png|{Localization.JpgImage}|*.jpg"
+                sfd.DefaultExt = ".png"
+                sfd.CheckPathExists = True
                 sfd.Title = Localization.ChooseDestinationFileName
-                If sfd.ShowDialog() = CommonFileDialogResult.Ok Then
+                Dim res = sfd.ShowDialog()
+                If res = DialogResult.OK Then
                     Dim f = sfd.FileName
                     If String.IsNullOrWhiteSpace(f) Then Return
                     SaveImage(f)
@@ -295,7 +273,7 @@ Namespace UI.Specialized
             End Using
         End Sub
 
-        Private Sub CopyImage()
+        Private Sub CopyImage() Handles CopyToClipboard.Click
             Dim bmp = ThePanel.CombinedImage
             Try
                 Clipboard.SetImage(bmp)
@@ -303,7 +281,7 @@ Namespace UI.Specialized
                     TypeOf ex Is ExternalException _
                     OrElse TypeOf ex Is System.Threading.ThreadStateException _
                     OrElse TypeOf ex Is ArgumentNullException
-                HumanInterop.CopyImageFailed(ex)
+                NotificationManager.CopyImageFailed(ex)
             End Try
         End Sub
 
@@ -329,9 +307,9 @@ Namespace UI.Specialized
                 End If
 
             Catch ex As PathTooLongException
-                HumanInterop.PathIsTooLong(fileName, Me)
+                NotificationManager.PathIsTooLong(fileName, Me)
             Catch ex As Exception
-                HumanInterop.ErrorSavingImage(ex, Me)
+                NotificationManager.ErrorSavingImage(ex, Me)
             End Try
         End Sub
 
@@ -339,19 +317,11 @@ Namespace UI.Specialized
 
 #Region "UI-Events"
 
-        Private Sub CopyToClipboardClick(ByVal sender As Object, ByVal e As EventArgs) Handles CopyToClipboard.Click
-            CopyImage()
-        End Sub
-
-        Private Sub SaveBtnClick(ByVal sender As Object, ByVal e As EventArgs) Handles save_btn.Click
-            SaveImage()
-        End Sub
-
         Private Sub PrintClick(ByVal sender As Object, ByVal e As EventArgs) Handles Print.Click
-            If DruckDialog.ShowDialog = DialogResult.OK Then
-                DruckTeil.PrinterSettings = DruckDialog.PrinterSettings
-                DruckTeil.DocumentName = $"HolzShots - Screenshot [{DateTime.Now:hh:mm:ss}]"
-                DruckTeil.Print()
+            If PrinterDialog.ShowDialog = DialogResult.OK Then
+                PrintingDocument.PrinterSettings = PrinterDialog.PrinterSettings
+                PrintingDocument.DocumentName = $"HolzShots - Screenshot [{DateTime.Now:hh:mm:ss}]"
+                PrintingDocument.Print()
             End If
         End Sub
 
@@ -359,7 +329,7 @@ Namespace UI.Specialized
 
 #Region "Updater"
 
-        Private Sub UpdateSettings()
+        Private Sub UpdateSettings() Handles MyBase.FormClosing
             HolzShots.My.Settings.ZensursulaColor = Zensursula_Viewer.Color
             HolzShots.My.Settings.ZensursulaWidth = ZensursulaBar.Value
 
@@ -379,9 +349,7 @@ Namespace UI.Specialized
 
             HolzShots.My.Settings.BlurFactor = ThePanel.BlurFactor
 
-
             HolzShots.My.Settings.Save()
-
         End Sub
 
         Private Sub ResetTools()
@@ -405,7 +373,7 @@ Namespace UI.Specialized
 #Region "Painting Tools"
 
         Private Sub AddSettingsPanels()
-            _activator = New PanelActivator(Me)
+            _activator = New PanelActivator()
             _activator.AddPanel(PaintPanel.ShotEditorTool.Arrow, ArrowSettingsPanel)
             _activator.AddPanel(PaintPanel.ShotEditorTool.Brighten, BrightenSettingsPanel)
             _activator.AddPanel(PaintPanel.ShotEditorTool.Blur, BlurSettingsPanel)
@@ -415,343 +383,285 @@ Namespace UI.Specialized
             _activator.AddPanel(PaintPanel.ShotEditorTool.Censor, CensorSettingsPanel)
         End Sub
 
-        Private Sub PipettenToolClick(ByVal sender As Object, ByVal e As EventArgs) Handles PipettenTool.Click
-            If CurrentTool = PaintPanel.ShotEditorTool.Pipette Then
-                ResetTools()
-            Else
-                ThePanel.CurrentTool = PaintPanel.ShotEditorTool.Pipette
-                MarkerTool.Checked = False
-                CensorTool.Checked = False
-                TextToolButton.Checked = False
-                CroppingTool.Checked = False
-                ArrowTool.Checked = False
-                EraserTool.Checked = False
-                BlurTool.Checked = False
-                EllipseTool.Checked = False
-                PipettenTool.Checked = True
-                BrightenTool.Checked = False
-                _activator.HideAll()
-            End If
+        Private Sub PipettenToolClick() Handles PipettenTool.Click
+            ThePanel.CurrentTool = PaintPanel.ShotEditorTool.Pipette
+            MarkerTool.Checked = False
+            CensorTool.Checked = False
+            TextToolButton.Checked = False
+            CroppingTool.Checked = False
+            ArrowTool.Checked = False
+            EraserTool.Checked = False
+            BlurTool.Checked = False
+            EllipseTool.Checked = False
+            PipettenTool.Checked = True
+            BrightenTool.Checked = False
+            _activator.HideAll()
         End Sub
 
-        Private Sub ScaleToolClick(ByVal sender As Object, ByVal e As EventArgs) Handles ScaleTool.Click
-            If CurrentTool = PaintPanel.ShotEditorTool.Scale Then
-                ResetTools()
-            Else
-                ThePanel.CurrentTool = PaintPanel.ShotEditorTool.Scale
-                MarkerTool.Checked = False
-                CensorTool.Checked = False
-                TextToolButton.Checked = False
-                CroppingTool.Checked = False
-                ArrowTool.Checked = False
-                EraserTool.Checked = False
-                BlurTool.Checked = False
-                EllipseTool.Checked = False
-                PipettenTool.Checked = False
-                BrightenTool.Checked = False
-                ScaleTool.Checked = False
-                _activator.HideAll()
-            End If
+        Private Sub ScaleToolClick() Handles ScaleTool.Click
+            ThePanel.CurrentTool = PaintPanel.ShotEditorTool.Scale
+            MarkerTool.Checked = False
+            CensorTool.Checked = False
+            TextToolButton.Checked = False
+            CroppingTool.Checked = False
+            ArrowTool.Checked = False
+            EraserTool.Checked = False
+            BlurTool.Checked = False
+            EllipseTool.Checked = False
+            PipettenTool.Checked = False
+            BrightenTool.Checked = False
+            ScaleTool.Checked = False
+            _activator.HideAll()
         End Sub
 
-        Private Sub CircleToolClick(ByVal sender As Object, ByVal e As EventArgs) Handles EllipseTool.Click
-            If CurrentTool = PaintPanel.ShotEditorTool.Ellipse Then
-                ResetTools()
-            Else
-                ThePanel.CurrentTool = PaintPanel.ShotEditorTool.Ellipse
-                _activator.ActivateSettingsPanel(ThePanel.CurrentTool)
-                MarkerTool.Checked = False
-                CensorTool.Checked = False
-                TextToolButton.Checked = False
-                CroppingTool.Checked = False
-                ArrowTool.Checked = False
-                EraserTool.Checked = False
-                BlurTool.Checked = False
-                EllipseTool.Checked = True
-                PipettenTool.Checked = False
-                BrightenTool.Checked = False
-                ScaleTool.Checked = False
-            End If
+        Private Sub CircleToolClick() Handles EllipseTool.Click
+            ThePanel.CurrentTool = PaintPanel.ShotEditorTool.Ellipse
+            _activator.ActivateSettingsPanel(ThePanel.CurrentTool)
+            MarkerTool.Checked = False
+            CensorTool.Checked = False
+            TextToolButton.Checked = False
+            CroppingTool.Checked = False
+            ArrowTool.Checked = False
+            EraserTool.Checked = False
+            BlurTool.Checked = False
+            EllipseTool.Checked = True
+            PipettenTool.Checked = False
+            BrightenTool.Checked = False
+            ScaleTool.Checked = False
         End Sub
 
-        Private Sub TextToolButtonClick(ByVal sender As Object, ByVal e As EventArgs) Handles TextToolButton.Click
-            If CurrentTool = PaintPanel.ShotEditorTool.Text Then
-                ResetTools()
-            Else
-                ThePanel.CurrentTool = PaintPanel.ShotEditorTool.Text
-                MarkerTool.Checked = False
-                CensorTool.Checked = False
-                TextToolButton.Checked = True
-                CroppingTool.Checked = False
-                ArrowTool.Checked = False
-                EraserTool.Checked = False
-                BlurTool.Checked = False
-                EllipseTool.Checked = False
-                PipettenTool.Checked = False
-                BrightenTool.Checked = False
-                ScaleTool.Checked = False
-                _activator.HideAll()
-            End If
+        Private Sub TextToolButtonClick() Handles TextToolButton.Click
+            ThePanel.CurrentTool = PaintPanel.ShotEditorTool.Text
+            MarkerTool.Checked = False
+            CensorTool.Checked = False
+            TextToolButton.Checked = True
+            CroppingTool.Checked = False
+            ArrowTool.Checked = False
+            EraserTool.Checked = False
+            BlurTool.Checked = False
+            EllipseTool.Checked = False
+            PipettenTool.Checked = False
+            BrightenTool.Checked = False
+            ScaleTool.Checked = False
+            _activator.HideAll()
         End Sub
 
-        Private Sub EraserButtonClick(ByVal sender As Object, ByVal e As EventArgs) Handles EraserTool.Click
-            If CurrentTool = PaintPanel.ShotEditorTool.Eraser Then
-                ResetTools()
-            Else
-                ThePanel.CurrentTool = PaintPanel.ShotEditorTool.Eraser
-                _activator.ActivateSettingsPanel(ThePanel.CurrentTool)
-                MarkerTool.Checked = False
-                CensorTool.Checked = False
-                TextToolButton.Checked = False
-                CroppingTool.Checked = False
-                ArrowTool.Checked = False
-                EraserTool.Checked = True
-                BlurTool.Checked = False
-                EllipseTool.Checked = False
-                PipettenTool.Checked = False
-                BrightenTool.Checked = False
-                ScaleTool.Checked = False
-            End If
+        Private Sub EraserButtonClick() Handles EraserTool.Click
+            ThePanel.CurrentTool = PaintPanel.ShotEditorTool.Eraser
+            _activator.ActivateSettingsPanel(ThePanel.CurrentTool)
+            MarkerTool.Checked = False
+            CensorTool.Checked = False
+            TextToolButton.Checked = False
+            CroppingTool.Checked = False
+            ArrowTool.Checked = False
+            EraserTool.Checked = True
+            BlurTool.Checked = False
+            EllipseTool.Checked = False
+            PipettenTool.Checked = False
+            BrightenTool.Checked = False
+            ScaleTool.Checked = False
         End Sub
 
-        Private Sub CroppingToolClick(ByVal sender As Object, ByVal e As EventArgs) Handles CroppingTool.Click
-            If CurrentTool = PaintPanel.ShotEditorTool.Crop Then
-                ResetTools()
-            Else
-                ThePanel.CurrentTool = PaintPanel.ShotEditorTool.Crop
-                MarkerTool.Checked = False
-                CensorTool.Checked = False
-                TextToolButton.Checked = False
-                CroppingTool.Checked = True
-                ArrowTool.Checked = False
-                EraserTool.Checked = False
-                BlurTool.Checked = False
-                EllipseTool.Checked = False
-                PipettenTool.Checked = False
-                BrightenTool.Checked = False
-                ScaleTool.Checked = False
-                _activator.HideAll()
-            End If
+        Private Sub CroppingToolClick() Handles CroppingTool.Click
+            ThePanel.CurrentTool = PaintPanel.ShotEditorTool.Crop
+            MarkerTool.Checked = False
+            CensorTool.Checked = False
+            TextToolButton.Checked = False
+            CroppingTool.Checked = True
+            ArrowTool.Checked = False
+            EraserTool.Checked = False
+            BlurTool.Checked = False
+            EllipseTool.Checked = False
+            PipettenTool.Checked = False
+            BrightenTool.Checked = False
+            ScaleTool.Checked = False
+            _activator.HideAll()
         End Sub
 
-        Private Sub ArrowToolClick(ByVal sender As Object, ByVal e As EventArgs) Handles ArrowTool.Click
-            If CurrentTool = PaintPanel.ShotEditorTool.Arrow Then
-                ResetTools()
-            Else
-                ThePanel.CurrentTool = PaintPanel.ShotEditorTool.Arrow
-                _activator.ActivateSettingsPanel(ThePanel.CurrentTool)
-                MarkerTool.Checked = False
-                CensorTool.Checked = False
-                TextToolButton.Checked = False
-                CroppingTool.Checked = False
-                ArrowTool.Checked = True
-                EraserTool.Checked = False
-                BlurTool.Checked = False
-                EllipseTool.Checked = False
-                PipettenTool.Checked = False
-                BrightenTool.Checked = False
-                ScaleTool.Checked = False
-            End If
+        Private Sub ArrowToolClick() Handles ArrowTool.Click
+            ThePanel.CurrentTool = PaintPanel.ShotEditorTool.Arrow
+            _activator.ActivateSettingsPanel(ThePanel.CurrentTool)
+            MarkerTool.Checked = False
+            CensorTool.Checked = False
+            TextToolButton.Checked = False
+            CroppingTool.Checked = False
+            ArrowTool.Checked = True
+            EraserTool.Checked = False
+            BlurTool.Checked = False
+            EllipseTool.Checked = False
+            PipettenTool.Checked = False
+            BrightenTool.Checked = False
+            ScaleTool.Checked = False
         End Sub
 
-        Private Sub ZensursulaClick(ByVal sender As Object, ByVal e As EventArgs) Handles CensorTool.Click
-            If CurrentTool = PaintPanel.ShotEditorTool.Censor Then
-                ResetTools()
-            Else
-                ThePanel.CurrentTool = PaintPanel.ShotEditorTool.Censor
-                _activator.ActivateSettingsPanel(ThePanel.CurrentTool)
-                CensorTool.Checked = True
-                MarkerTool.Checked = False
-                TextToolButton.Checked = False
-                CroppingTool.Checked = False
-                ArrowTool.Checked = False
-                EraserTool.Checked = False
-                BlurTool.Checked = False
-                EllipseTool.Checked = False
-                PipettenTool.Checked = False
-                BrightenTool.Checked = False
-                ScaleTool.Checked = False
-            End If
+        Private Sub ZensursulaClick() Handles CensorTool.Click
+            ThePanel.CurrentTool = PaintPanel.ShotEditorTool.Censor
+            _activator.ActivateSettingsPanel(ThePanel.CurrentTool)
+            CensorTool.Checked = True
+            MarkerTool.Checked = False
+            TextToolButton.Checked = False
+            CroppingTool.Checked = False
+            ArrowTool.Checked = False
+            EraserTool.Checked = False
+            BlurTool.Checked = False
+            EllipseTool.Checked = False
+            PipettenTool.Checked = False
+            BrightenTool.Checked = False
+            ScaleTool.Checked = False
         End Sub
 
-        Private Sub HighlightClick(ByVal sender As Object, ByVal e As EventArgs) Handles MarkerTool.Click
-            If CurrentTool = PaintPanel.ShotEditorTool.Marker Then
-                ResetTools()
-            Else
-                ThePanel.CurrentTool = PaintPanel.ShotEditorTool.Marker
-                _activator.ActivateSettingsPanel(ThePanel.CurrentTool)
-                MarkerTool.Checked = True
-                CensorTool.Checked = False
-                TextToolButton.Checked = False
-                CroppingTool.Checked = False
-                ArrowTool.Checked = False
-                EraserTool.Checked = False
-                BlurTool.Checked = False
-                EllipseTool.Checked = False
-                PipettenTool.Checked = False
-                BrightenTool.Checked = False
-                ScaleTool.Checked = False
-            End If
+        Private Sub HighlightClick() Handles MarkerTool.Click
+            ThePanel.CurrentTool = PaintPanel.ShotEditorTool.Marker
+            _activator.ActivateSettingsPanel(ThePanel.CurrentTool)
+            MarkerTool.Checked = True
+            CensorTool.Checked = False
+            TextToolButton.Checked = False
+            CroppingTool.Checked = False
+            ArrowTool.Checked = False
+            EraserTool.Checked = False
+            BlurTool.Checked = False
+            EllipseTool.Checked = False
+            PipettenTool.Checked = False
+            BrightenTool.Checked = False
+            ScaleTool.Checked = False
         End Sub
 
-        Private Sub PixelateAreaClick(ByVal sender As Object, ByVal e As EventArgs) Handles BlurTool.Click
-            If CurrentTool = PaintPanel.ShotEditorTool.Blur Then
-                ResetTools()
-            Else
-                ThePanel.CurrentTool = PaintPanel.ShotEditorTool.Blur
-                _activator.ActivateSettingsPanel(ThePanel.CurrentTool)
-                MarkerTool.Checked = False
-                CensorTool.Checked = False
-                TextToolButton.Checked = False
-                CroppingTool.Checked = False
-                ArrowTool.Checked = False
-                EraserTool.Checked = False
-                BlurTool.Checked = True
-                EllipseTool.Checked = False
-                PipettenTool.Checked = False
-                BrightenTool.Checked = False
-                ScaleTool.Checked = False
-            End If
+        Private Sub PixelateAreaClick() Handles BlurTool.Click
+            ThePanel.CurrentTool = PaintPanel.ShotEditorTool.Blur
+            _activator.ActivateSettingsPanel(ThePanel.CurrentTool)
+            MarkerTool.Checked = False
+            CensorTool.Checked = False
+            TextToolButton.Checked = False
+            CroppingTool.Checked = False
+            ArrowTool.Checked = False
+            EraserTool.Checked = False
+            BlurTool.Checked = True
+            EllipseTool.Checked = False
+            PipettenTool.Checked = False
+            BrightenTool.Checked = False
+            ScaleTool.Checked = False
         End Sub
 
-        Private Sub BrightenToolClick(ByVal sender As Object, ByVal e As EventArgs) Handles BrightenTool.Click
-            If CurrentTool = PaintPanel.ShotEditorTool.Brighten Then
-                ResetTools()
-            Else
-                ThePanel.CurrentTool = PaintPanel.ShotEditorTool.Brighten
-                _activator.ActivateSettingsPanel(ThePanel.CurrentTool)
-                MarkerTool.Checked = False
-                CensorTool.Checked = False
-                TextToolButton.Checked = False
-                CroppingTool.Checked = False
-                ArrowTool.Checked = False
-                EraserTool.Checked = False
-                BlurTool.Checked = False
-                EllipseTool.Checked = False
-                PipettenTool.Checked = False
-                BrightenTool.Checked = True
-                ScaleTool.Checked = False
-            End If
+        Private Sub BrightenToolClick() Handles BrightenTool.Click
+            ThePanel.CurrentTool = PaintPanel.ShotEditorTool.Brighten
+            _activator.ActivateSettingsPanel(ThePanel.CurrentTool)
+            MarkerTool.Checked = False
+            CensorTool.Checked = False
+            TextToolButton.Checked = False
+            CroppingTool.Checked = False
+            ArrowTool.Checked = False
+            EraserTool.Checked = False
+            BlurTool.Checked = False
+            EllipseTool.Checked = False
+            PipettenTool.Checked = False
+            BrightenTool.Checked = True
+            ScaleTool.Checked = False
         End Sub
 
-        Private Sub UndoStuffClick(ByVal sender As Object, ByVal e As EventArgs) Handles UndoStuff.Click
+        Private Sub UndoStuffClick() Handles UndoStuff.Click
             ThePanel.Undo()
         End Sub
 
 #End Region
 
-#Region "Drucken"
+#Region "Print"
 
-        Private Sub DruckTeilPrintPage(ByVal sender As Object, ByVal e As PrintPageEventArgs) Handles DruckTeil.PrintPage
+        Private Sub DruckTeilPrintPage(sender As Object, e As PrintPageEventArgs) Handles PrintingDocument.PrintPage
             Dim bmp = ThePanel.CombinedImage
             e.Graphics.DrawImage(bmp, e.PageBounds.Location)
         End Sub
 
 #End Region
 
-#Region "ShortcutKeys"
+#Region "Shortcut Keys"
 
-        Private Sub ZensToolStripMenuItemClick(ByVal sender As Object, ByVal e As EventArgs) Handles ZensToolStripMenuItem.Click
+        Private Sub ZensToolStripMenuItemClick() Handles ZensToolStripMenuItem.Click
             CensorTool.PerformClick()
         End Sub
-
-        Private Sub MarkToolStripMenuItemClick(ByVal sender As Object, ByVal e As EventArgs) Handles MarkToolStripMenuItem.Click
+        Private Sub MarkToolStripMenuItemClick() Handles MarkToolStripMenuItem.Click
             MarkerTool.PerformClick()
         End Sub
-
-        Private Sub TextToolStripMenuItemClick(ByVal sender As Object, ByVal e As EventArgs) Handles TextToolStripMenuItem.Click
+        Private Sub TextToolStripMenuItemClick() Handles TextToolStripMenuItem.Click
             TextToolButton.PerformClick()
         End Sub
-
-        Private Sub CropToolStripMenuItemClick(ByVal sender As Object, ByVal e As EventArgs) Handles CropToolStripMenuItem.Click
+        Private Sub CropToolStripMenuItemClick() Handles CropToolStripMenuItem.Click
             CroppingTool.PerformClick()
         End Sub
-
-        Private Sub EraseToolStripMenuItemClick(ByVal sender As Object, ByVal e As EventArgs) Handles EraseToolStripMenuItem.Click
+        Private Sub EraseToolStripMenuItemClick() Handles EraseToolStripMenuItem.Click
             EraserTool.PerformClick()
         End Sub
-
-        Private Sub PixelateToolStripMenuItemClick(ByVal sender As Object, ByVal e As EventArgs) Handles PixelateToolStripMenuItem.Click
+        Private Sub PixelateToolStripMenuItemClick() Handles PixelateToolStripMenuItem.Click
             BlurTool.PerformClick()
         End Sub
-
-        Private Sub ArrowToolStripMenuItemClick(ByVal sender As Object, ByVal e As EventArgs) Handles ArrowToolStripMenuItem.Click
+        Private Sub ArrowToolStripMenuItemClick() Handles ArrowToolStripMenuItem.Click
             ArrowTool.PerformClick()
         End Sub
-
-        Private Sub ResetToolStripMenuItemClick(ByVal sender As Object, ByVal e As EventArgs) Handles ResetToolStripMenuItem.Click
+        Private Sub ResetToolStripMenuItemClick() Handles ResetToolStripMenuItem.Click
             UndoStuff.PerformClick()
         End Sub
-
-        Private Sub UploadToolStripMenuItemClick(ByVal sender As Object, ByVal e As EventArgs) Handles UploadToolStripMenuItem.Click
+        Private Sub UploadToolStripMenuItemClick() Handles UploadToolStripMenuItem.Click
             UploadToHoster.PerformButtonClick()
         End Sub
-
-        Private Sub SaveToolStripMenuItemClick(ByVal sender As Object, ByVal e As EventArgs) Handles SaveToolStripMenuItem.Click
+        Private Sub SaveToolStripMenuItemClick() Handles SaveToolStripMenuItem.Click
             save_btn.PerformClick()
         End Sub
-
-        Private Sub ClipboardToolStripMenuItemClick(ByVal sender As Object, ByVal e As EventArgs) Handles ClipboardToolStripMenuItem.Click
+        Private Sub ClipboardToolStripMenuItemClick() Handles ClipboardToolStripMenuItem.Click
             CopyToClipboard.PerformClick()
         End Sub
-
-        Private Sub PrintToolStripMenuItemClick(ByVal sender As Object, ByVal e As EventArgs) Handles PrintToolStripMenuItem.Click
+        Private Sub PrintToolStripMenuItemClick() Handles PrintToolStripMenuItem.Click
             Print.PerformClick()
         End Sub
-
-        Private Sub KreisToolStripMenuItemClick(ByVal sender As Object, ByVal e As EventArgs) Handles KreisToolStripMenuItem.Click
+        Private Sub KreisToolStripMenuItemClick() Handles KreisToolStripMenuItem.Click
             EllipseTool.PerformClick()
         End Sub
 
 #End Region
 
-#Region "Toolsettings"
+#Region "Tool Settings"
 
-        Private Sub ZensursulaBarValueChanged(ByVal sender As Object, ByVal e As EventArgs) Handles ZensursulaBar.Scroll
+        Private Sub ZensursulaBarValueChanged() Handles ZensursulaBar.Scroll
             Pinsel_Width_Zensursula.Text = $"{ZensursulaBar.Value}px"
             ThePanel.ZensursulaWidth = ZensursulaBar.Value
         End Sub
 
-        Private Sub ZensursulaViewerColorChanged(ByVal sender As Object, ByVal c As Color) Handles Zensursula_Viewer.ColorChanged
+        Private Sub ZensursulaViewerColorChanged(sender As Object, c As Color) Handles Zensursula_Viewer.ColorChanged
             ThePanel.ZensursulaColor = c
         End Sub
 
-        Private Sub MarkerBarValueChanged(ByVal sender As Object, ByVal e As EventArgs) Handles MarkerBar.Scroll
+        Private Sub MarkerBarValueChanged() Handles MarkerBar.Scroll
             Pinsel_Width_Marker.Text = $"{MarkerBar.Value}px"
             ThePanel.MarkerWidth = MarkerBar.Value
         End Sub
 
-        Private Sub MarkerViewerColorChanged(ByVal sender As Object, ByVal c As Color) Handles Marker_Viewer.ColorChanged
+        Private Sub MarkerViewerColorChanged(sender As Object, c As Color) Handles Marker_Viewer.ColorChanged
             ThePanel.MarkerColor = c
         End Sub
 
-        Private Sub EraserBarScroll(ByVal sender As Object, ByVal e As EventArgs) Handles EraserBar.ValueChanged
+        Private Sub EraserBarScroll() Handles EraserBar.ValueChanged
             Eraser_Diameter.Text = $"{EraserBar.Value}px"
             ThePanel.EraserDiameter = EraserBar.Value
         End Sub
 
-        Private Sub EllipseBarValueChanged(ByVal sender As Object, ByVal e As EventArgs) Handles EllipseBar.ValueChanged
+        Private Sub EllipseBarValueChanged() Handles EllipseBar.ValueChanged
             Ellipse_Width.Text = $"{EllipseBar.Value}px"
             ThePanel.EllipseWidth = EllipseBar.Value
         End Sub
 
-        Private Sub EllipseViewerColorChanged(ByVal sender As Object, ByVal c As Color) Handles Ellipse_Viewer.ColorChanged
+        Private Sub EllipseViewerColorChanged(sender As Object, c As Color) Handles Ellipse_Viewer.ColorChanged
             ThePanel.EllipseColor = c
         End Sub
 
 #End Region
 
-        Private Sub ImageInfoLabelMouseClick(ByVal sender As Object, ByVal e As MouseEventArgs) Handles ImageInfoLabel.MouseUp
+        Private Sub ImageInfoLabelMouseClick(sender As Object, e As MouseEventArgs) Handles ImageInfoLabel.MouseUp
 
             Dim s = ThePanel.Screenshot
             If e.Button = MouseButtons.Left Then
-                Dim ss = $"{s.Size.Width}x{s.Size.Height}px"
-                ss.SetAsClipboardText()
+                ClipboardEx.SetText($"{s.Size.Width}x{s.Size.Height}px")
             ElseIf e.Button = MouseButtons.Right Then
-                s.Timestamp.ToString().SetAsClipboardText()
+                ClipboardEx.SetText(s.Timestamp.ToString())
             ElseIf e.Button = MouseButtons.Middle Then
-                Dim ss = $"{s.Timestamp} {s.Size.Width}x{s.Size.Height}px"
-                ss.SetAsClipboardText()
+                ClipboardEx.SetText($"{s.Timestamp} {s.Size.Width}x{s.Size.Height}px")
             End If
         End Sub
 
@@ -761,15 +671,11 @@ Namespace UI.Specialized
             MouseInfoLabel.Text = "0, 0px"
         End Sub
 
-        Private Sub ThePanelUpdateMousePosition(ByVal e As Point) Handles ThePanel.UpdateMousePosition
+        Private Sub ThePanelUpdateMousePosition(e As Point) Handles ThePanel.UpdateMousePosition
             MouseInfoLabel.Text = $"{e.X}, {e.Y}px"
         End Sub
 
-
-        Private Sub ChooseServiceToolStripMenuItem_Click(ByVal sender As Object, ByVal e As EventArgs) Handles ChooseServiceToolStripMenuItem.Click
-        End Sub
-
-        Private Sub BlackWhiteTrackerScroll(ByVal sender As Object, ByVal e As EventArgs) Handles BlackWhiteTracker.Scroll
+        Private Sub BlackWhiteTrackerScroll() Handles BlackWhiteTracker.Scroll
             If BlackWhiteTracker.Value >= 0 AndAlso BlackWhiteTracker.Value <= 255 Then
                 ThePanel.BrightenColor = Color.FromArgb(255 - BlackWhiteTracker.Value, 0, 0, 0)
                 BigColorViewer1.Color = ThePanel.BrightenColor
@@ -779,29 +685,29 @@ Namespace UI.Specialized
             End If
         End Sub
 
-        Private Sub ArrowColorviewerColorChanged(ByVal sender As Object, ByVal c As Color) Handles ArrowColorviewer.ColorChanged
+        Private Sub ArrowColorviewerColorChanged(sender As Object, c As Color) Handles ArrowColorviewer.ColorChanged
             ThePanel.ArrowColor = c
         End Sub
 
-        Private Sub DrawCursorClick(ByVal sender As Object, ByVal e As EventArgs) Handles DrawCursor.Click
+        Private Sub DrawCursorClick() Handles DrawCursor.Click
             ThePanel.DrawCursor = DrawCursor.Checked
         End Sub
 
-        Private Sub ArrowWidthSliderScroll(ByVal sender As Object, ByVal e As EventArgs) Handles ArrowWidthSlider.Scroll
+        Private Sub ArrowWidthSliderScroll() Handles ArrowWidthSlider.Scroll
             ArrowWidthLabel.Text = If(ArrowWidthSlider.Value = 0, "Auto", $"{ArrowWidthSlider.Value}px")
             ThePanel.ArrowWidth = ArrowWidthSlider.Value
         End Sub
 
-        Private Sub ShotEditorResize(ByVal sender As Object, ByVal e As EventArgs) Handles Me.Resize
+        Private Sub ShotEditorResize() Handles Me.Resize
             ThePanel.VerticalLinealBox.Invalidate()
             ThePanel.HorizontalLinealBox.Invalidate()
         End Sub
 
-        Private Sub ToolStripsPaint(ByVal sender As Object, ByVal e As PaintEventArgs) Handles ToolStrip1.Paint, ShareStrip.Paint, EditStrip.Paint, CopyPrintToolStrip.Paint
+        Private Sub ToolStripsPaint(sender As Object, e As PaintEventArgs) Handles ToolStrip1.Paint, ShareStrip.Paint, EditStrip.Paint, CopyPrintToolStrip.Paint
             e.Graphics.Clear(BackColor)
         End Sub
 
-        Private Async Sub UploadToHosterDropDownItemClicked(ByVal sender As Object, ByVal e As ToolStripItemClickedEventArgs) Handles UploadToHoster.DropDownItemClicked
+        Private Async Sub UploadToHosterDropDownItemClicked(sender As Object, e As ToolStripItemClickedEventArgs) Handles UploadToHoster.DropDownItemClicked
 
             Dim tag = DirectCast(e.ClickedItem.Tag, String)
             ' the tag represents the name of the image hoster here
@@ -817,34 +723,31 @@ Namespace UI.Specialized
             Debug.Assert(Uploader.HasEqualName(info.Metadata.Name, tag))
 
             Dim image = ThePanel.CombinedImage
-            Dim format = UploadHelper.GetImageFormat(image, _settingsContext)
+            Dim progressReporter = UploadHelper.GetUploadReporterForCurrentSettingsContext(_settingsContext, Me)
+
             Try
-                Dim result = Await UploadHelper.Upload(info.Uploader, image, _settingsContext, format, Me).ConfigureAwait(True)
+                Dim result = Await UploadDispatcher.InitiateUpload(image, _settingsContext, info.Uploader, Nothing, progressReporter).ConfigureAwait(True)
                 Debug.Assert(result IsNot Nothing)
                 UploadHelper.InvokeUploadFinishedUi(result, _settingsContext)
             Catch ex As UploadCanceledException
-                HumanInterop.ShowOperationCanceled()
+                NotificationManager.ShowOperationCanceled()
             Catch ex As UploadException
-                HumanInterop.UploadFailed(ex)
+                NotificationManager.UploadFailed(ex)
                 Return
             End Try
             HandleAfterUpload()
         End Sub
 
-        Private Sub UploadToHosterButtonClick(ByVal sender As Object, ByVal e As EventArgs) Handles UploadToHoster.ButtonClick
-            UploadCurrentImageToDefaultProvider()
-        End Sub
-
-        Private Sub EllipseOrRectangleValueChanged(ByVal sender As Object, ByVal e As EventArgs) Handles EllipseOrRectangle.ValueChanged
+        Private Sub EllipseOrRectangleValueChanged(sender As Object, e As EventArgs) Handles EllipseOrRectangle.ValueChanged
             ThePanel.UseBoxInsteadOfCirlce = EllipseOrRectangle.Value = 1
             EllipseOrRectangleBox.Invalidate()
         End Sub
 
-        Private Sub EllipseOrRectangleBoxClick(ByVal sender As Object, ByVal e As EventArgs) Handles EllipseOrRectangleBox.Click
+        Private Sub EllipseOrRectangleBoxClick(sender As Object, e As EventArgs) Handles EllipseOrRectangleBox.Click
             If EllipseOrRectangle.Value = 1 Then EllipseOrRectangle.Value = 0 Else EllipseOrRectangle.Value = 1
         End Sub
 
-        Private Sub EllipseOrRectangleBoxPaint(ByVal sender As Object, ByVal e As PaintEventArgs) Handles EllipseOrRectangleBox.Paint
+        Private Sub EllipseOrRectangleBoxPaint(sender As Object, e As PaintEventArgs) Handles EllipseOrRectangleBox.Paint
             Dim rct As New Rectangle(2, 2, 12, 12)
             Dim pe As New Pen(Brushes.Red) With {.Width = 2}
             If ThePanel.UseBoxInsteadOfCirlce Then
@@ -861,28 +764,30 @@ Namespace UI.Specialized
             End If
         End Sub
 
-        Private Sub BlurnessBarValueChanged(sender As Object, e As EventArgs) Handles BlurnessBar.ValueChanged
+        Private Sub BlurnessBarValueChanged() Handles BlurnessBar.ValueChanged
             ThePanel.BlurFactor = BlurnessBar.Value
         End Sub
 
-        Private Async Sub UploadCurrentImageToDefaultProvider()
+        Private Async Sub UploadCurrentImageToDefaultProvider() Handles UploadToHoster.ButtonClick
             Dim image = ThePanel.CombinedImage
-            Dim format = UploadHelper.GetImageFormat(image, _settingsContext)
+
+            Dim progressReporter = UploadHelper.GetUploadReporterForCurrentSettingsContext(_settingsContext, Me)
+
             Try
-                Dim result = Await UploadHelper.UploadToDefaultUploader(ThePanel.CombinedImage, _settingsContext, format, Me).ConfigureAwait(True)
+                Dim result = Await UploadDispatcher.InitiateUploadToDefaultUploader(ThePanel.CombinedImage, _settingsContext, My.Application.Uploaders, Nothing, progressReporter).ConfigureAwait(True)
                 Debug.Assert(result IsNot Nothing)
                 UploadHelper.InvokeUploadFinishedUi(result, _settingsContext)
             Catch ex As UploadCanceledException
-                HumanInterop.ShowOperationCanceled()
+                NotificationManager.ShowOperationCanceled()
             Catch ex As UploadException
-                UploadHelper.InvokeUploadFailedUi(ex)
+                NotificationManager.UploadFailed(ex)
                 Return
             Finally
                 HandleAfterUpload()
             End Try
         End Sub
 
-        Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+        Protected Overrides Sub Dispose(disposing As Boolean)
             Try
                 If disposing AndAlso components IsNot Nothing Then
                     components?.Dispose()

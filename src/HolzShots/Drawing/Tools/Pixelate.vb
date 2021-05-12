@@ -10,7 +10,7 @@ Namespace Drawing.Tools
         Public Overrides ReadOnly Property Cursor As Cursor = CursorInstance
         Public Overrides ReadOnly Property ToolType As PaintPanel.ShotEditorTool = PaintPanel.ShotEditorTool.Blur
 
-        Public Overrides Sub RenderFinalImage(ByRef rawImage As Image, ByVal sender As PaintPanel)
+        Public Overrides Sub RenderFinalImage(ByRef rawImage As Image, sender As PaintPanel)
             If rawImage IsNot Nothing Then
                 Dim rawSrcRect As New Rectangle(If(BeginCoords.X > EndCoords.X, EndCoords.X, BeginCoords.X),
                                                 If(BeginCoords.Y > EndCoords.Y, EndCoords.Y, BeginCoords.Y),
@@ -41,7 +41,7 @@ Namespace Drawing.Tools
             End If
         End Sub
 
-        Public Overrides Sub RenderPreview(ByVal rawImage As Image, ByVal g As Graphics, ByVal sender As PaintPanel)
+        Public Overrides Sub RenderPreview(rawImage As Image, g As Graphics, sender As PaintPanel)
             If rawImage IsNot Nothing Then
                 Dim rawSrcRect As New Rectangle(If(BeginCoords.X > EndCoords.X, EndCoords.X, BeginCoords.X),
                                                 If(BeginCoords.Y > EndCoords.Y, EndCoords.Y, BeginCoords.Y),

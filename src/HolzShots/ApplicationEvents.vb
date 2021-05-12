@@ -1,13 +1,10 @@
 Imports System.Collections.ObjectModel
 Imports System.Globalization
 Imports System.IO
-Imports System.Linq
-Imports System.Threading.Tasks
+Imports HolzShots.UI
 Imports HolzShots.IO
-Imports HolzShots.Interop
 Imports HolzShots.Composition
 Imports HolzShots.Input.Actions
-Imports HolzShots.UI.Specialized
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.WindowsAPICodePack.Shell
 Imports Microsoft.WindowsAPICodePack.Taskbar
@@ -38,8 +35,8 @@ Namespace My
             Try
                 Await _uploaders.Load().ConfigureAwait(False)
             Catch ex As PluginLoadingFailedException
-                HumanInterop.PluginLoadingFailed(ex)
-                Debug.Fail("Failed to load plugins")
+                NotificationManager.PluginLoadingFailed(ex)
+                Debugger.Break()
             End Try
         End Function
 
@@ -65,11 +62,11 @@ Namespace My
             ' TODO: Proper command line parsing?
             For i As Integer = 0 To args.Length - 1
                 Select Case args(i)
-                    Case CommandLine.FullscreenScreenshotParameter
+                    Case CommandLine.FullscreenScreenshotCliCommand
                         Await MainWindow.CommandManager.Dispatch(Of FullscreenCommand)(UserSettings.Current).ConfigureAwait(True)
-                    Case CommandLine.AreaSelectorParameter
+                    Case CommandLine.AreaSelectorCliCommand
                         Await MainWindow.CommandManager.Dispatch(Of SelectAreaCommand)(UserSettings.Current).ConfigureAwait(True)
-                    Case CommandLine.UploadParameter
+                    Case CommandLine.UploadImageCliCommand
 
                         ' TODO: Maybe we can support overriding settings from the command line, too
                         Dim params = New Dictionary(Of String, String)()
@@ -78,7 +75,7 @@ Namespace My
                         End If
 
                         Await MainWindow.CommandManager.Dispatch(Of UploadImageCommand)(UserSettings.Current, params).ConfigureAwait(True)
-                    Case CommandLine.OpenParameter
+                    Case CommandLine.OpenImageCliCommand
 
                         ' TODO: Maybe we can support overriding settings from the command line, too
                         Dim params = New Dictionary(Of String, String)()
@@ -98,22 +95,21 @@ Namespace My
             My.Settings.UserTasksInitialized = True
             My.Settings.Save()
 
-            Dim jumpList = Microsoft.WindowsAPICodePack.Taskbar.JumpList.CreateJumpListForIndividualWindow(TaskbarManager.Instance.ApplicationId, SettingsWindow.Instance.Handle)
-
+            Dim jumpList = Microsoft.WindowsAPICodePack.Taskbar.JumpList.CreateJumpList()
             jumpList.ClearAllUserTasks()
 
             Static imgres As String = Path.Combine(HolzShotsPaths.SystemPath, "imageres.dll")
 
             If File.Exists(imgres) Then
                 Dim fullscreen As New JumpListLink(System.Windows.Forms.Application.ExecutablePath, "Capture entire screen") With {
-                    .Arguments = CommandLine.FullscreenScreenshotParameter,
+                    .Arguments = CommandLine.FullscreenScreenshotCliCommand,
                     .IconReference = New IconReference(imgres, 105)
                 }
                 jumpList.AddUserTasks(fullscreen)
             End If
 
             Dim selector As New JumpListLink(System.Windows.Forms.Application.ExecutablePath, "Capture Region") With {
-                .Arguments = CommandLine.AreaSelectorParameter,
+                .Arguments = CommandLine.AreaSelectorCliCommand,
                 .IconReference = New IconReference(System.Windows.Forms.Application.ExecutablePath, 0)
             }
             jumpList.AddUserTasks(selector)

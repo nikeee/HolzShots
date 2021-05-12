@@ -2,7 +2,7 @@ Imports System.Drawing.Drawing2D
 Imports HolzShots.UI.Controls
 
 Namespace Drawing.Tools
-    Friend Class Crop
+    Friend NotInheritable Class Crop
         Inherits Tool
         Implements IDisposable
 
@@ -53,7 +53,7 @@ Namespace Drawing.Tools
             GC.Collect()
         End Sub
 
-        Public Overrides Sub RenderPreview(ByVal rawImage As Image, ByVal g As Graphics, ByVal sender As PaintPanel)
+        Public Overrides Sub RenderPreview(rawImage As Image, g As Graphics, sender As PaintPanel)
 
             _rct.X = Math.Min(EndCoords.X, BeginCoords.X)
             'If(BeginCoords.X > SecondCoords.X, SecondCoords.X, BeginCoords.X)

@@ -1,12 +1,10 @@
 using System.Drawing;
-using System.Windows.Forms;
 using HolzShots.NativeTypes.Custom;
 
 namespace HolzShots.Drawing
 {
     public static class ScreenshotCreator
     {
-        public static Bitmap CaptureScreenshot() => CaptureScreenshot(SystemInformation.VirtualScreen);
         public static Bitmap CaptureScreenshot(Rectangle area)
         {
             var desktopWindowHandle = Native.User32.GetDesktopWindow();
@@ -29,7 +27,7 @@ namespace HolzShots.Drawing
             }
             finally
             {
-                Native.User32.ReleaseDC(desktopWindowHandle, source.DC);
+                _ = Native.User32.ReleaseDC(desktopWindowHandle, source.DC);
             }
         }
     }

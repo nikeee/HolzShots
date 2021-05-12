@@ -1,6 +1,4 @@
-Imports Microsoft.WindowsAPICodePack.Dialogs
 Imports System.IO
-Imports System.Linq
 
 Namespace Input.Actions
     Public MustInherit Class FileDependentCommand
@@ -15,15 +13,17 @@ Namespace Input.Actions
         End Function
 
         Protected Shared Function ShowFileSelector(title As String) As String
-            Using ofd As New CommonOpenFileDialog()
+            Using ofd As New OpenFileDialog()
                 ofd.Title = title
-                ofd.Filters.Add(New CommonFileDialogFilter(UI.Localization.DialogFilterImages, SupportedFilesFilter))
+                ofd.Filter = $"{UI.Localization.DialogFilterImages}|*.bmp;*.jpg;*.jpeg;*.png;*.gif;*.tif;*.tiff"
                 ofd.Multiselect = False
-                If ofd.ShowDialog() = CommonFileDialogResult.Ok AndAlso File.Exists(ofd.FileName) Then
-                    Return ofd.FileName
-                End If
+                Dim res = ofd.ShowDialog()
+                Return If(
+                    res = DialogResult.OK AndAlso File.Exists(ofd.FileName),
+                    ofd.FileName,
+                    Nothing
+                )
             End Using
-            Return Nothing
         End Function
     End Class
 End Namespace

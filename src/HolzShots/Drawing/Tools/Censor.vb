@@ -1,10 +1,9 @@
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Text
-Imports System.Linq
 Imports HolzShots.UI.Controls
 
 Namespace Drawing.Tools
-    Friend Class Censor
+    Friend NotInheritable Class Censor
         Inherits Tool
         Implements IDisposable
 
@@ -12,7 +11,7 @@ Namespace Drawing.Tools
             Get
                 Return InternalBeginCoords
             End Get
-            Set(ByVal value As Point)
+            Set(value As Point)
                 InternalBeginCoords = value
                 _plist = New List(Of Point) From {InternalBeginCoords}
             End Set

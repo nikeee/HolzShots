@@ -59,52 +59,43 @@ namespace HolzShots.Windows.Forms
             // 
             // HolzShotsLinkLabel
             // 
-            this.HolzShotsLinkLabel.ActiveLinkColor = System.Drawing.SystemColors.Highlight;
             this.HolzShotsLinkLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.HolzShotsLinkLabel.AutoSize = true;
             this.HolzShotsLinkLabel.BackColor = System.Drawing.Color.Transparent;
             this.HolzShotsLinkLabel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.HolzShotsLinkLabel.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.HolzShotsLinkLabel.LinkColor = System.Drawing.SystemColors.HotTrack;
             this.HolzShotsLinkLabel.Location = new System.Drawing.Point(225, 91);
             this.HolzShotsLinkLabel.Name = "HolzShotsLinkLabel";
             this.HolzShotsLinkLabel.Size = new System.Drawing.Size(77, 15);
             this.HolzShotsLinkLabel.TabIndex = 60;
             this.HolzShotsLinkLabel.TabStop = true;
             this.HolzShotsLinkLabel.Text = "holzshots.net";
-            this.HolzShotsLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.HolzShotsLinkLabel_LinkClicked);
+            this.HolzShotsLinkLabel.Click += new System.EventHandler(this.HolzShotsLinkLabel_LinkClicked);
             // 
             // LicenseLabel
             // 
-            this.LicenseLabel.ActiveLinkColor = System.Drawing.SystemColors.Highlight;
             this.LicenseLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.LicenseLabel.AutoSize = true;
             this.LicenseLabel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.LicenseLabel.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.LicenseLabel.LinkColor = System.Drawing.SystemColors.HotTrack;
             this.LicenseLabel.Location = new System.Drawing.Point(17, 91);
             this.LicenseLabel.Name = "LicenseLabel";
             this.LicenseLabel.Size = new System.Drawing.Size(46, 15);
             this.LicenseLabel.TabIndex = 61;
             this.LicenseLabel.TabStop = true;
             this.LicenseLabel.Text = "License";
-            this.LicenseLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LicenseLabel_LinkClicked);
+            this.LicenseLabel.Click += new System.EventHandler(this.LicenseLabel_LinkClicked);
             // 
             // ShowGfxResourcesLinklabel
             // 
-            this.ShowGfxResourcesLinklabel.ActiveLinkColor = System.Drawing.SystemColors.Highlight;
             this.ShowGfxResourcesLinklabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.ShowGfxResourcesLinklabel.AutoSize = true;
             this.ShowGfxResourcesLinklabel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ShowGfxResourcesLinklabel.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.ShowGfxResourcesLinklabel.LinkColor = System.Drawing.SystemColors.HotTrack;
             this.ShowGfxResourcesLinklabel.Location = new System.Drawing.Point(69, 91);
             this.ShowGfxResourcesLinklabel.Name = "ShowGfxResourcesLinklabel";
             this.ShowGfxResourcesLinklabel.Size = new System.Drawing.Size(53, 15);
             this.ShowGfxResourcesLinklabel.TabIndex = 62;
             this.ShowGfxResourcesLinklabel.TabStop = true;
             this.ShowGfxResourcesLinklabel.Text = "Graphics";
-            this.ShowGfxResourcesLinklabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.ShowGfxResourcesLinklabel_LinkClicked);
+            this.ShowGfxResourcesLinklabel.Click += new System.EventHandler(this.ShowGfxResourcesLinklabel_LinkClicked);
             // 
             // VersionLabel
             // 
@@ -120,20 +111,17 @@ namespace HolzShots.Windows.Forms
             // 
             // SendFeedbackLink
             // 
-            this.SendFeedbackLink.ActiveLinkColor = System.Drawing.SystemColors.Highlight;
             this.SendFeedbackLink.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.SendFeedbackLink.AutoSize = true;
             this.SendFeedbackLink.BackColor = System.Drawing.Color.Transparent;
             this.SendFeedbackLink.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.SendFeedbackLink.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.SendFeedbackLink.LinkColor = System.Drawing.SystemColors.HotTrack;
             this.SendFeedbackLink.Location = new System.Drawing.Point(133, 91);
             this.SendFeedbackLink.Name = "SendFeedbackLink";
             this.SendFeedbackLink.Size = new System.Drawing.Size(86, 15);
             this.SendFeedbackLink.TabIndex = 64;
             this.SendFeedbackLink.TabStop = true;
             this.SendFeedbackLink.Text = "Send Feedback";
-            this.SendFeedbackLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.SendFeedbackLink_LinkClicked);
+            this.SendFeedbackLink.Click += new System.EventHandler(this.SendFeedbackLink_LinkClicked);
             // 
             // AboutForm
             // 

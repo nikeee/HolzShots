@@ -37,7 +37,7 @@ namespace HolzShots.Input
             return new Hotkey((ModifierKeys)mod, (Keys)key);
         }
 
-        public static Hotkey Parse(string value)
+        public static Hotkey? Parse(string value)
         {
             if (string.IsNullOrWhiteSpace(value))
                 return null;
@@ -135,7 +135,7 @@ namespace HolzShots.Input
         }
 
         private readonly System.Collections.Generic.HashSet<EventHandler<HotkeyPressedEventArgs>> _delegates = new System.Collections.Generic.HashSet<EventHandler<HotkeyPressedEventArgs>>();
-        private event EventHandler<HotkeyPressedEventArgs> _keyPressed;
+        private event EventHandler<HotkeyPressedEventArgs>? _keyPressed;
 
         /// <summary>The hotkey has been pressed.</summary>
         public event EventHandler<HotkeyPressedEventArgs> KeyPressed

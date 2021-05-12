@@ -1,22 +1,14 @@
-using HolzShots.NativeTypes;
 using System;
-using System.Runtime.InteropServices;
 using System.Drawing;
+using System.Runtime.InteropServices;
+using HolzShots.NativeTypes;
 
 namespace HolzShots
 {
     internal static class NativeMethods
     {
-        private const string shcore = "shcore.dll";
         private const string gdi32 = "gdi32.dll";
-        private const string user32 = "user32.dll";
 
-        #region shcore
-
-        [DllImport(shcore)]
-        internal static extern int SetProcessDpiAwareness(NativeTypes.ProcessDPIAwareness value);
-
-        #endregion
         #region gdi32
 
         [DllImport(gdi32)]
@@ -41,7 +33,7 @@ namespace HolzShots
         internal static extern IntPtr CreateCompatibleBitmap(IntPtr hdc, int width, int height);
 
         #endregion
-      }
+    }
 
     namespace NativeTypes
     {
@@ -108,66 +100,34 @@ namespace HolzShots
         [StructLayout(LayoutKind.Sequential)]
         public struct Margin : IEquatable<Margin>
         {
-            private readonly int _cxLeftWidth;
-            private readonly int _cxRightWidth;
-            private readonly int _cyTopHeight;
-            private readonly int _cyBottomHeight;
+            public int LeftWidth { get; }
+            public int RightWidth { get; }
+            public int TopHeight { get; }
+            public int BottomHeight { get; }
 
-            public int LeftWidth => _cxLeftWidth;
-            public int RightWidth => _cxRightWidth;
-            public int TopHeight => _cyTopHeight;
-            public int BottomHeight => _cyBottomHeight;
-
-            public Margin(int all) => _cxLeftWidth = _cxRightWidth = _cyTopHeight = _cyBottomHeight = all;
+            public Margin(int all) => LeftWidth = RightWidth = TopHeight = BottomHeight = all;
             public Margin(int leftWidth, int topHeight, int rightWidth, int bottomHeight)
             {
-                _cxLeftWidth = leftWidth;
-                _cxRightWidth = rightWidth;
-                _cyTopHeight = topHeight;
-                _cyBottomHeight = bottomHeight;
+                LeftWidth = leftWidth;
+                RightWidth = rightWidth;
+                TopHeight = topHeight;
+                BottomHeight = bottomHeight;
             }
 
-            public static implicit operator System.Windows.Forms.Padding(Margin margin) => margin.ToPadding();
-            public System.Windows.Forms.Padding ToPadding()
-            {
-                return new System.Windows.Forms.Padding(_cxLeftWidth, _cyTopHeight, _cxRightWidth, _cyBottomHeight);
-            }
+            public override int GetHashCode() => HashCode.Combine(LeftWidth, RightWidth, TopHeight, BottomHeight);
 
-            public static implicit operator Margin(System.Windows.Forms.Padding padding) => ToMargin(padding);
-            public static Margin ToMargin(System.Windows.Forms.Padding padding)
-            {
-                return new Margin(padding.Left, padding.Top, padding.Right, padding.Bottom);
-            }
-
-            public override int GetHashCode()
-            {
-                var hashCode = -1969345533;
-                hashCode = hashCode * -1521134295 + _cxLeftWidth.GetHashCode();
-                hashCode = hashCode * -1521134295 + _cxRightWidth.GetHashCode();
-                hashCode = hashCode * -1521134295 + _cyTopHeight.GetHashCode();
-                hashCode = hashCode * -1521134295 + _cyBottomHeight.GetHashCode();
-                return hashCode;
-            }
-
-            public override bool Equals(object obj) => (obj is Margin) && Equals((Margin)obj);
+            public override bool Equals(object obj) => obj is Margin other && Equals(other);
 
             public bool Equals(Margin margin)
             {
-                return _cxLeftWidth == margin._cxLeftWidth &&
-                        _cxRightWidth == margin._cxRightWidth &&
-                        _cyTopHeight == margin._cyTopHeight &&
-                        _cyBottomHeight == margin._cyBottomHeight;
+                return LeftWidth == margin.LeftWidth &&
+                        RightWidth == margin.RightWidth &&
+                        TopHeight == margin.TopHeight &&
+                        BottomHeight == margin.BottomHeight;
             }
 
             public static bool operator ==(Margin left, Margin right) => left.Equals(right);
             public static bool operator !=(Margin left, Margin right) => !(left == right);
-        }
-
-        public enum ProcessDPIAwareness
-        {
-            ProcessDPIUnaware = 0,
-            ProcessSystemDPIAware = 1,
-            ProcessPerMonitorDPIAware = 2
         }
     }
 }

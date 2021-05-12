@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Text;
 
 namespace HolzShots.IO.Naming
@@ -18,7 +17,7 @@ namespace HolzShots.IO.Naming
         };
 
         public FileNamePattern() : this(null) { }
-        public FileNamePattern(IReadOnlyList<PatternItem> tokens)
+        public FileNamePattern(IReadOnlyList<PatternItem>? tokens)
         {
             Tokens = tokens ?? Array.Empty<PatternItem>();
         }

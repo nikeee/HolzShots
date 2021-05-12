@@ -46,7 +46,7 @@ namespace HolzShots.Input
                 throw new Win32Exception();
         }
 
-        public event EventHandler<KeyPressedEventArgs> KeyPressed;
+        public event EventHandler<KeyPressedEventArgs>? KeyPressed;
 
         #region IDisposable Members
 

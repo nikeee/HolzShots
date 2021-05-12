@@ -7,7 +7,7 @@ Namespace Drawing.Tools
 
         Private _parent As PaintPanel
 
-        Public Sub SetParent(ByVal p As PaintPanel)
+        Public Sub SetParent(p As PaintPanel)
             _parent = p
         End Sub
 
@@ -39,7 +39,7 @@ Namespace Drawing.Tools
         Private Shared ReadOnly ClearBrush As Brush = New SolidBrush(Color.FromArgb(0, Color.White))
         Private _isFirstClick As Boolean = True
 
-        Public Overrides Sub RenderPreview(ByVal rawImage As Image, ByVal ga As Graphics, ByVal sender As PaintPanel)
+        Public Overrides Sub RenderPreview(rawImage As Image, ga As Graphics, sender As PaintPanel)
             Using g As Graphics = Graphics.FromImage(rawImage)
                 g.CompositingMode = CompositingMode.SourceCopy
                 g.SmoothingMode = SmoothingMode.AntiAlias

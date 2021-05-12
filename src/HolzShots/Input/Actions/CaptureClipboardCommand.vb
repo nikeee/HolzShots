@@ -1,5 +1,5 @@
-Imports System.Threading.Tasks
 Imports HolzShots.Composition.Command
+Imports HolzShots.Windows.Forms
 
 Namespace Input.Actions
     <Command("captureClipboard")>
@@ -7,6 +7,8 @@ Namespace Input.Actions
         Inherits CapturingCommand
 
         Public Overrides Async Function Invoke(parameters As IReadOnlyDictionary(Of String, String), settingsContext As HSSettings) As Task
+            If parameters Is Nothing Then Throw New ArgumentNullException(NameOf(parameters))
+            If settingsContext Is Nothing Then Throw New ArgumentNullException(NameOf(settingsContext))
 
             Dim image = GetClipboardImage()
             If image Is Nothing Then Return
@@ -21,7 +23,7 @@ Namespace Input.Actions
             Catch ex As Exception When _
                             TypeOf ex Is Runtime.InteropServices.ExternalException _
                             OrElse TypeOf ex Is System.Threading.ThreadStateException
-                Interop.HumanInterop.RetrievingImageFromClipboardFailed(ex)
+                NotificationManager.RetrievingImageFromClipboardFailed(ex)
                 Return Nothing
             End Try
         End Function

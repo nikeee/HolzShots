@@ -4,13 +4,12 @@ using System.Collections.Immutable;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
-using HolzShots.IO;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using System.Threading;
-using HolzShots.Threading;
 using System.Reflection;
-using System.CodeDom;
+using System.Threading;
+using System.Threading.Tasks;
+using HolzShots.IO;
+using HolzShots.Threading;
+using Newtonsoft.Json;
 
 namespace HolzShots
 {
@@ -34,11 +33,11 @@ namespace HolzShots
 
         private static readonly TimeSpan _pollingInterval = TimeSpan.FromSeconds(1);
 
-        private readonly ISynchronizeInvoke _synchronizingObject;
+        private readonly ISynchronizeInvoke? _synchronizingObject;
         private readonly PollingFileWatcher _watcher;
-        private CancellationTokenSource _watcherCancellation = null;
+        private CancellationTokenSource? _watcherCancellation = null;
 
-        public SettingsManager(string settingsFilePath, ISynchronizeInvoke synchronizingObject = null)
+        public SettingsManager(string settingsFilePath, ISynchronizeInvoke? synchronizingObject = null)
         {
             Debug.Assert(!string.IsNullOrEmpty(settingsFilePath));
 
@@ -63,7 +62,7 @@ namespace HolzShots
         }
 
         public Task ForceReload() => UpdateSettings(new FileInfo(SettingsFilePath));
-        private void OnSettingsFileChanged(object sender, FileInfo e) => _ = UpdateSettings(e);
+        private void OnSettingsFileChanged(object? sender, FileInfo e) => _ = UpdateSettings(e);
 
         private async Task UpdateSettings(FileInfo info)
         {
@@ -98,7 +97,7 @@ namespace HolzShots
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentSettings)));
         }
 
-        private static async Task<(bool, T)> DeserializeSettings(string path)
+        private static async Task<(bool, T?)> DeserializeSettings(string path)
         {
             try
             {
@@ -120,7 +119,6 @@ namespace HolzShots
             }
         }
 
-        public string SerializeSettings(T settings) => JsonConvert.SerializeObject(settings, _jsonSerializerSettings);
         private void InvokeWithSynchronizingObjectIfNeeded(Action action)
         {
             if (_synchronizingObject == null)
@@ -129,9 +127,9 @@ namespace HolzShots
                 _synchronizingObject.InvokeIfNeeded(action);
         }
 
-        public event EventHandler<T> OnSettingsUpdated;
-        public event EventHandler<IReadOnlyList<ValidationError>> OnValidationError;
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event EventHandler<T>? OnSettingsUpdated;
+        public event EventHandler<IReadOnlyList<ValidationError>>? OnValidationError;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         protected virtual IReadOnlyList<ValidationError> IsValidSettingsCandidate(T candidate) => ImmutableList<ValidationError>.Empty;
 
@@ -140,7 +138,7 @@ namespace HolzShots
             if (overrides == null || overrides.Count == 0)
                 return input;
 
-            var settingsCopy = input.Copy();
+            var settingsCopy = input.Copy()!;
 
             var settingsType = typeof(T);
             var properties = settingsType.GetProperties();
@@ -174,7 +172,7 @@ namespace HolzShots
                 foreach (var enumMemberName in Enum.GetNames(propType))
                 {
                     var enumMember = propType.GetField(enumMemberName);
-                    var enumMemberAttr = enumMember.GetCustomAttribute<System.Runtime.Serialization.EnumMemberAttribute>();
+                    var enumMemberAttr = enumMember?.GetCustomAttribute<System.Runtime.Serialization.EnumMemberAttribute>();
                     if (enumMemberAttr == null)
                         continue;
                     if (enumMemberAttr.Value == jsonEnumMember)

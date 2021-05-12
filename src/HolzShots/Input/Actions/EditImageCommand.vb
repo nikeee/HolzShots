@@ -1,6 +1,6 @@
 Imports System.Threading.Tasks
 Imports HolzShots.Composition.Command
-Imports HolzShots.UI.Specialized
+Imports HolzShots.UI
 
 Namespace Input.Actions
     <Command("editImage")>
@@ -10,11 +10,14 @@ Namespace Input.Actions
 
         Private Const OpenInShotEditor = "Open Image in ShotEditor"
 
-        Public Function Invoke(params As IReadOnlyDictionary(Of String, String), settingsContext As HSSettings) As Task Implements ICommand(Of HSSettings).Invoke
+        Public Function Invoke(parameters As IReadOnlyDictionary(Of String, String), settingsContext As HSSettings) As Task Implements ICommand(Of HSSettings).Invoke
+            If parameters Is Nothing Then Throw New ArgumentNullException(NameOf(parameters))
+            If settingsContext Is Nothing Then Throw New ArgumentNullException(NameOf(settingsContext))
+
             Dim fileName = If(
-                params Is Nothing OrElse params.Count <> 1 OrElse Not params.ContainsKey(FileNameParameter),
+                parameters.Count <> 1 OrElse Not parameters.ContainsKey(FileNameParameter),
                 ShowFileSelector(OpenInShotEditor),
-                params(FileNameParameter)
+                parameters(FileNameParameter)
             )
 
             If fileName Is Nothing Then Return Task.CompletedTask ' We did not get a valid file name (user cancelled or something else was strange)

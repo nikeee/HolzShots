@@ -37,7 +37,7 @@ namespace HolzShots.Composition.Command
 
             if (Actions.ContainsKey(name))
             {
-                Debug.Assert(false);
+                Debug.Fail($"Unhandled command: '{name}'");
                 return;
             }
             Actions[name] = command;
@@ -55,7 +55,7 @@ namespace HolzShots.Composition.Command
             return new HotkeyCommand<TSettings>(this, binding, () => _settingsManager.CurrentSettings);
         }
 
-        private ICommand<TSettings> GetCommand(string name)
+        private ICommand<TSettings>? GetCommand(string name)
         {
             Debug.Assert(IsRegisteredCommand(name));
             return Actions.TryGetValue(name.ToLowerInvariant(), out var command)
@@ -63,8 +63,8 @@ namespace HolzShots.Composition.Command
                 : null;
         }
 
-        private string GetCommandNameForType(Type t) => t.GetCustomAttribute<CommandAttribute>(false)?.Name;
-        private string GetCommandNameForType<T>() where T : ICommand<TSettings> => GetCommandNameForType(typeof(T));
+        private string? GetCommandNameForType(Type t) => t.GetCustomAttribute<CommandAttribute>(false)?.Name;
+        private string? GetCommandNameForType<T>() where T : ICommand<TSettings> => GetCommandNameForType(typeof(T));
 
         public bool IsRegisteredCommand(string name) => !string.IsNullOrWhiteSpace(name) && Actions.ContainsKey(name.ToLowerInvariant());
 
@@ -72,6 +72,8 @@ namespace HolzShots.Composition.Command
         public Task Dispatch<T>(TSettings currentSettings, IReadOnlyDictionary<string, string> parameters) where T : ICommand<TSettings>
         {
             var name = GetCommandNameForType<T>();
+            if (name == null)
+                throw new InvalidOperationException();
             return Dispatch(name, currentSettings, parameters);
         }
 

@@ -21,8 +21,8 @@ namespace HolzShots.Core.Tests
 
         private static string GetFullFilename(string filename)
         {
-            var executable = new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath;
-            return Path.GetFullPath(Path.Combine(Path.GetDirectoryName(executable), filename));
+            var executable = new Uri(Assembly.GetExecutingAssembly().Location).LocalPath!;
+            return Path.GetFullPath(Path.Combine(Path.GetDirectoryName(executable)!, filename));
         }
     }
 }

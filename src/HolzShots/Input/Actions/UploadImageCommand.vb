@@ -1,9 +1,9 @@
-Imports System.Threading.Tasks
 Imports HolzShots.Composition.Command
 Imports System.Drawing.Imaging
 Imports HolzShots.Net
-Imports HolzShots.Interop
 Imports HolzShots.Drawing
+Imports HolzShots.Windows.Forms
+Imports HolzShots.Windows.Net
 
 Namespace Input.Actions
     <Command("uploadImage")>
@@ -13,11 +13,14 @@ Namespace Input.Actions
 
         Private Const UploadImage = "Select Image to Upload"
 
-        Public Async Function Invoke(params As IReadOnlyDictionary(Of String, String), settingsContext As HSSettings) As Task Implements ICommand(Of HSSettings).Invoke
+        Public Async Function Invoke(parameters As IReadOnlyDictionary(Of String, String), settingsContext As HSSettings) As Task Implements ICommand(Of HSSettings).Invoke
+            If parameters Is Nothing Then Throw New ArgumentNullException(NameOf(parameters))
+            If settingsContext Is Nothing Then Throw New ArgumentNullException(NameOf(settingsContext))
+
             Dim fileName = If(
-                params Is Nothing OrElse params.Count <> 1 OrElse Not params.ContainsKey(FileNameParameter),
+                parameters.Count <> 1 OrElse Not parameters.ContainsKey(FileNameParameter),
                 ShowFileSelector(UploadImage),
-                params(FileNameParameter)
+                parameters(FileNameParameter)
             )
 
             If fileName Is Nothing Then Return ' We did not get a valid file name (user cancelled or something else was strange)
@@ -32,12 +35,12 @@ Namespace Input.Actions
                 Debug.Assert(format IsNot Nothing)
 
                 Try
-                    Dim result = Await UploadHelper.UploadToDefaultUploader(bmp, settingsContext, format).ConfigureAwait(True)
-                    UploadHelper.InvokeUploadFinishedUi(result, settingsContext)
+                    Dim result = Await UploadDispatcher.InitiateUploadToDefaultUploader(bmp, settingsContext, My.Application.Uploaders, format, Nothing).ConfigureAwait(True)
+                    UploadHelper.InvokeUploadFinishedUI(result, settingsContext)
                 Catch ex As UploadCanceledException
-                    HumanInterop.ShowOperationCanceled()
+                    NotificationManager.ShowOperationCanceled()
                 Catch ex As UploadException
-                    UploadHelper.InvokeUploadFailedUi(ex)
+                    NotificationManager.UploadFailed(ex)
                 End Try
             End Using
 

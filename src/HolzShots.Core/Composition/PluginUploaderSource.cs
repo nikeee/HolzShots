@@ -1,8 +1,7 @@
-using HolzShots.Net;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using HolzShots.Net;
 
 namespace HolzShots.Composition
 {
@@ -13,7 +12,7 @@ namespace HolzShots.Composition
             : base(pluginDirectory)
         { }
 
-        public UploaderEntry/*?*/ GetUploaderByName(string name)
+        public UploaderEntry? GetUploaderByName(string name)
         {
             Debug.Assert(!string.IsNullOrEmpty(name));
             Debug.Assert(Loaded);

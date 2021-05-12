@@ -1,4 +1,3 @@
-using HolzShots.Net;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -19,7 +18,7 @@ namespace HolzShots.Composition
 
         public Task Load() => Task.WhenAll(Plugins.Load(), Customs.Load());
 
-        public UploaderEntry /*?*/ GetUploaderByName(string name)
+        public UploaderEntry? GetUploaderByName(string name)
         {
             Debug.Assert(Plugins != null);
             Debug.Assert(Customs != null);

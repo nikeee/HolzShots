@@ -19,238 +19,238 @@ Namespace UI.Controls
         Private components As System.ComponentModel.IContainer
 
         'Hinweis: Die folgende Prozedur ist für den Windows Form-Designer erforderlich.
-        'Das Bearbeiten ist mit dem Windows Form-Designer möglich.  
+        'Das Bearbeiten ist mit dem Windows Form-Designer möglich.
         'Das Bearbeiten mit dem Code-Editor ist nicht möglich.
         <System.Diagnostics.DebuggerStepThrough()> _
         Private Sub InitializeComponent()
-            WholePanel = New System.Windows.Forms.Panel()
-            TextPanel = New System.Windows.Forms.Panel()
-            InsertDate = New System.Windows.Forms.PictureBox()
-            CancelButton = New System.Windows.Forms.PictureBox()
-            SelectAll = New System.Windows.Forms.PictureBox()
-            ChangeFont = New System.Windows.Forms.PictureBox()
-            MoverBox = New System.Windows.Forms.PictureBox()
-            text_ok = New System.Windows.Forms.Button()
-            TextInput = New System.Windows.Forms.TextBox()
-            tools_bg = New System.Windows.Forms.PictureBox()
-            RawBox = New System.Windows.Forms.PictureBox()
-            TheFontDialog = New System.Windows.Forms.FontDialog()
-            EckenTeil = New System.Windows.Forms.PictureBox()
-            VerticalLinealBox = New System.Windows.Forms.PictureBox()
-            HorizontalLinealBox = New System.Windows.Forms.PictureBox()
-            WholePanel.SuspendLayout()
-            TextPanel.SuspendLayout()
-            CType(InsertDate, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(CancelButton, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(SelectAll, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(ChangeFont, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(MoverBox, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(tools_bg, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(RawBox, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(EckenTeil, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(VerticalLinealBox, System.ComponentModel.ISupportInitialize).BeginInit()
-            CType(HorizontalLinealBox, System.ComponentModel.ISupportInitialize).BeginInit()
-            SuspendLayout()
+            Me.WholePanel = New System.Windows.Forms.Panel()
+            Me.TextPanel = New System.Windows.Forms.Panel()
+            Me.InsertDate = New System.Windows.Forms.PictureBox()
+            Me.CancelButton = New System.Windows.Forms.PictureBox()
+            Me.SelectAll = New System.Windows.Forms.PictureBox()
+            Me.ChangeFont = New System.Windows.Forms.PictureBox()
+            Me.MoverBox = New System.Windows.Forms.PictureBox()
+            Me.text_ok = New System.Windows.Forms.Button()
+            Me.TextInput = New System.Windows.Forms.TextBox()
+            Me.tools_bg = New System.Windows.Forms.PictureBox()
+            Me.RawBox = New System.Windows.Forms.PictureBox()
+            Me.TheFontDialog = New System.Windows.Forms.FontDialog()
+            Me.EckenTeil = New System.Windows.Forms.PictureBox()
+            Me.VerticalLinealBox = New System.Windows.Forms.PictureBox()
+            Me.HorizontalLinealBox = New System.Windows.Forms.PictureBox()
+            Me.WholePanel.SuspendLayout()
+            Me.TextPanel.SuspendLayout()
+            CType(Me.InsertDate, System.ComponentModel.ISupportInitialize).BeginInit()
+            CType(Me.CancelButton, System.ComponentModel.ISupportInitialize).BeginInit()
+            CType(Me.SelectAll, System.ComponentModel.ISupportInitialize).BeginInit()
+            CType(Me.ChangeFont, System.ComponentModel.ISupportInitialize).BeginInit()
+            CType(Me.MoverBox, System.ComponentModel.ISupportInitialize).BeginInit()
+            CType(Me.tools_bg, System.ComponentModel.ISupportInitialize).BeginInit()
+            CType(Me.RawBox, System.ComponentModel.ISupportInitialize).BeginInit()
+            CType(Me.EckenTeil, System.ComponentModel.ISupportInitialize).BeginInit()
+            CType(Me.VerticalLinealBox, System.ComponentModel.ISupportInitialize).BeginInit()
+            CType(Me.HorizontalLinealBox, System.ComponentModel.ISupportInitialize).BeginInit()
+            Me.SuspendLayout()
             '
             'WholePanel
             '
-            WholePanel.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Me.WholePanel.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
                                         Or System.Windows.Forms.AnchorStyles.Left) _
                                        Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-            WholePanel.AutoScroll = True
-            WholePanel.BackColor = System.Drawing.Color.FromArgb(CType(CType(202, Byte), Integer), CType(CType(212, Byte), Integer), CType(CType(227, Byte), Integer))
-            WholePanel.Controls.Add(TextPanel)
-            WholePanel.Controls.Add(RawBox)
-            WholePanel.Location = New System.Drawing.Point(20, 20)
-            WholePanel.Name = "WholePanel"
-            WholePanel.Size = New System.Drawing.Size(534, 441)
-            WholePanel.TabIndex = 14
+            Me.WholePanel.AutoScroll = True
+            Me.WholePanel.BackColor = System.Drawing.Color.FromArgb(CType(CType(202, Byte), Integer), CType(CType(212, Byte), Integer), CType(CType(227, Byte), Integer))
+            Me.WholePanel.Controls.Add(Me.TextPanel)
+            Me.WholePanel.Controls.Add(Me.RawBox)
+            Me.WholePanel.Location = New System.Drawing.Point(20, 20)
+            Me.WholePanel.Name = "WholePanel"
+            Me.WholePanel.Size = New System.Drawing.Size(534, 441)
+            Me.WholePanel.TabIndex = 14
             '
             'TextPanel
             '
-            TextPanel.BackColor = System.Drawing.SystemColors.GradientActiveCaption
-            TextPanel.Controls.Add(InsertDate)
-            TextPanel.Controls.Add(CancelButton)
-            TextPanel.Controls.Add(SelectAll)
-            TextPanel.Controls.Add(ChangeFont)
-            TextPanel.Controls.Add(MoverBox)
-            TextPanel.Controls.Add(text_ok)
-            TextPanel.Controls.Add(TextInput)
-            TextPanel.Controls.Add(tools_bg)
-            TextPanel.Location = New System.Drawing.Point(108, 2)
-            TextPanel.Name = "TextPanel"
-            TextPanel.Size = New System.Drawing.Size(223, 111)
-            TextPanel.TabIndex = 14
-            TextPanel.Visible = False
+            Me.TextPanel.BackColor = System.Drawing.SystemColors.GradientActiveCaption
+            Me.TextPanel.Controls.Add(Me.InsertDate)
+            Me.TextPanel.Controls.Add(Me.CancelButton)
+            Me.TextPanel.Controls.Add(Me.SelectAll)
+            Me.TextPanel.Controls.Add(Me.ChangeFont)
+            Me.TextPanel.Controls.Add(Me.MoverBox)
+            Me.TextPanel.Controls.Add(Me.text_ok)
+            Me.TextPanel.Controls.Add(Me.TextInput)
+            Me.TextPanel.Controls.Add(Me.tools_bg)
+            Me.TextPanel.Location = New System.Drawing.Point(108, 2)
+            Me.TextPanel.Name = "TextPanel"
+            Me.TextPanel.Size = New System.Drawing.Size(223, 111)
+            Me.TextPanel.TabIndex = 14
+            Me.TextPanel.Visible = False
             '
             'InsertDate
             '
-            InsertDate.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-            InsertDate.BackColor = System.Drawing.Color.Transparent
-            InsertDate.Image = Global.HolzShots.My.Resources.Resources.dateMedium
-            InsertDate.Location = New System.Drawing.Point(79, 75)
-            InsertDate.Name = "InsertDate"
-            InsertDate.Size = New System.Drawing.Size(32, 32)
-            InsertDate.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
-            InsertDate.TabIndex = 18
-            InsertDate.TabStop = False
+            Me.InsertDate.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Me.InsertDate.BackColor = System.Drawing.Color.Transparent
+            Me.InsertDate.Image = Global.HolzShots.My.Resources.Resources.dateMedium
+            Me.InsertDate.Location = New System.Drawing.Point(79, 75)
+            Me.InsertDate.Name = "InsertDate"
+            Me.InsertDate.Size = New System.Drawing.Size(32, 32)
+            Me.InsertDate.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
+            Me.InsertDate.TabIndex = 18
+            Me.InsertDate.TabStop = False
             '
             'CancelButton
             '
-            CancelButton.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-            CancelButton.BackColor = System.Drawing.Color.Transparent
-            CancelButton.Image = Global.HolzShots.My.Resources.Resources.cancelMedium
-            CancelButton.Location = New System.Drawing.Point(117, 75)
-            CancelButton.Name = "CancelButton"
-            CancelButton.Size = New System.Drawing.Size(32, 32)
-            CancelButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
-            CancelButton.TabIndex = 17
-            CancelButton.TabStop = False
+            Me.CancelButton.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Me.CancelButton.BackColor = System.Drawing.Color.Transparent
+            Me.CancelButton.Image = Global.HolzShots.My.Resources.Resources.cancelMedium
+            Me.CancelButton.Location = New System.Drawing.Point(117, 75)
+            Me.CancelButton.Name = "CancelButton"
+            Me.CancelButton.Size = New System.Drawing.Size(32, 32)
+            Me.CancelButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
+            Me.CancelButton.TabIndex = 17
+            Me.CancelButton.TabStop = False
             '
             'SelectAll
             '
-            SelectAll.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-            SelectAll.BackColor = System.Drawing.Color.Transparent
-            SelectAll.Image = Global.HolzShots.My.Resources.Resources.selectAllMedium
-            SelectAll.Location = New System.Drawing.Point(41, 75)
-            SelectAll.Name = "SelectAll"
-            SelectAll.Size = New System.Drawing.Size(32, 32)
-            SelectAll.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
-            SelectAll.TabIndex = 16
-            SelectAll.TabStop = False
+            Me.SelectAll.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Me.SelectAll.BackColor = System.Drawing.Color.Transparent
+            Me.SelectAll.Image = Global.HolzShots.My.Resources.Resources.selectAllMedium
+            Me.SelectAll.Location = New System.Drawing.Point(41, 75)
+            Me.SelectAll.Name = "SelectAll"
+            Me.SelectAll.Size = New System.Drawing.Size(32, 32)
+            Me.SelectAll.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
+            Me.SelectAll.TabIndex = 16
+            Me.SelectAll.TabStop = False
             '
             'ChangeFont
             '
-            ChangeFont.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-            ChangeFont.BackColor = System.Drawing.Color.Transparent
-            ChangeFont.Image = Global.HolzShots.My.Resources.Resources.fontMedium
-            ChangeFont.Location = New System.Drawing.Point(3, 75)
-            ChangeFont.Name = "ChangeFont"
-            ChangeFont.Size = New System.Drawing.Size(32, 32)
-            ChangeFont.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
-            ChangeFont.TabIndex = 3
-            ChangeFont.TabStop = False
+            Me.ChangeFont.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Me.ChangeFont.BackColor = System.Drawing.Color.Transparent
+            Me.ChangeFont.Image = Global.HolzShots.My.Resources.Resources.fontMedium
+            Me.ChangeFont.Location = New System.Drawing.Point(3, 75)
+            Me.ChangeFont.Name = "ChangeFont"
+            Me.ChangeFont.Size = New System.Drawing.Size(32, 32)
+            Me.ChangeFont.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
+            Me.ChangeFont.TabIndex = 3
+            Me.ChangeFont.TabStop = False
             '
             'MoverBox
             '
-            MoverBox.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-            MoverBox.BackColor = System.Drawing.Color.Transparent
-            MoverBox.Cursor = System.Windows.Forms.Cursors.SizeAll
-            MoverBox.Image = Global.HolzShots.My.Resources.Resources.moveMedium
-            MoverBox.Location = New System.Drawing.Point(175, 75)
-            MoverBox.Name = "MoverBox"
-            MoverBox.Size = New System.Drawing.Size(44, 32)
-            MoverBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
-            MoverBox.TabIndex = 2
-            MoverBox.TabStop = False
+            Me.MoverBox.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Me.MoverBox.BackColor = System.Drawing.Color.Transparent
+            Me.MoverBox.Cursor = System.Windows.Forms.Cursors.SizeAll
+            Me.MoverBox.Image = Global.HolzShots.My.Resources.Resources.moveMedium
+            Me.MoverBox.Location = New System.Drawing.Point(175, 75)
+            Me.MoverBox.Name = "MoverBox"
+            Me.MoverBox.Size = New System.Drawing.Size(44, 32)
+            Me.MoverBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+            Me.MoverBox.TabIndex = 2
+            Me.MoverBox.TabStop = False
             '
             'text_ok
             '
-            text_ok.Location = New System.Drawing.Point(175, 0)
-            text_ok.Name = "text_ok"
-            text_ok.Size = New System.Drawing.Size(47, 73)
-            text_ok.TabIndex = 1
-            text_ok.Text = "Ok"
-            text_ok.UseVisualStyleBackColor = True
+            Me.text_ok.Location = New System.Drawing.Point(175, 0)
+            Me.text_ok.Name = "text_ok"
+            Me.text_ok.Size = New System.Drawing.Size(47, 73)
+            Me.text_ok.TabIndex = 1
+            Me.text_ok.Text = "Ok"
+            Me.text_ok.UseVisualStyleBackColor = True
             '
             'TextInput
             '
-            TextInput.AcceptsReturn = True
-            TextInput.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Me.TextInput.AcceptsReturn = True
+            Me.TextInput.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
                                        Or System.Windows.Forms.AnchorStyles.Left) _
                                       Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-            TextInput.BackColor = System.Drawing.Color.AliceBlue
-            TextInput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-            TextInput.Font = New System.Drawing.Font("Consolas", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-            TextInput.Location = New System.Drawing.Point(0, 0)
-            TextInput.Multiline = True
-            TextInput.Name = "TextInput"
-            TextInput.Size = New System.Drawing.Size(177, 73)
-            TextInput.TabIndex = 0
-            TextInput.Text = "Sample Text"
-            TextInput.WordWrap = False
+            Me.TextInput.BackColor = System.Drawing.Color.AliceBlue
+            Me.TextInput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+            Me.TextInput.Font = New System.Drawing.Font("Consolas", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+            Me.TextInput.Location = New System.Drawing.Point(0, 0)
+            Me.TextInput.Multiline = True
+            Me.TextInput.Name = "TextInput"
+            Me.TextInput.Size = New System.Drawing.Size(177, 73)
+            Me.TextInput.TabIndex = 0
+            Me.TextInput.Text = "Sample Text"
+            Me.TextInput.WordWrap = False
             '
             'tools_bg
             '
-            tools_bg.Image = Global.HolzShots.My.Resources.Resources.TexttoolsBackground
-            tools_bg.Location = New System.Drawing.Point(0, 73)
-            tools_bg.Name = "tools_bg"
-            tools_bg.Size = New System.Drawing.Size(222, 37)
-            tools_bg.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
-            tools_bg.TabIndex = 15
-            tools_bg.TabStop = False
+            Me.tools_bg.Image = Global.HolzShots.My.Resources.Resources.TexttoolsBackground
+            Me.tools_bg.Location = New System.Drawing.Point(0, 73)
+            Me.tools_bg.Name = "tools_bg"
+            Me.tools_bg.Size = New System.Drawing.Size(222, 37)
+            Me.tools_bg.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
+            Me.tools_bg.TabIndex = 15
+            Me.tools_bg.TabStop = False
             '
             'RawBox
             '
-            RawBox.BackColor = System.Drawing.SystemColors.GradientActiveCaption
-            RawBox.BackgroundImage = Global.HolzShots.My.Resources.Resources.PaintPanelBackground
-            RawBox.Location = New System.Drawing.Point(2, 6)
-            RawBox.Name = "RawBox"
-            RawBox.Size = New System.Drawing.Size(100, 50)
-            RawBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
-            RawBox.TabIndex = 12
-            RawBox.TabStop = False
+            Me.RawBox.BackColor = System.Drawing.SystemColors.GradientActiveCaption
+            Me.RawBox.BackgroundImage = Global.HolzShots.My.Resources.Resources.PaintPanelBackground
+            Me.RawBox.Location = New System.Drawing.Point(2, 6)
+            Me.RawBox.Name = "RawBox"
+            Me.RawBox.Size = New System.Drawing.Size(100, 50)
+            Me.RawBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
+            Me.RawBox.TabIndex = 12
+            Me.RawBox.TabStop = False
             '
             'TheFontDialog
             '
-            TheFontDialog.ShowColor = True
+            Me.TheFontDialog.ShowColor = True
             '
             'EckenTeil
             '
-            EckenTeil.BackColor = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(249, Byte), Integer))
-            EckenTeil.Location = New System.Drawing.Point(0, 0)
-            EckenTeil.Name = "EckenTeil"
-            EckenTeil.Size = New System.Drawing.Size(20, 20)
-            EckenTeil.TabIndex = 14
-            EckenTeil.TabStop = False
+            Me.EckenTeil.BackColor = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(241, Byte), Integer), CType(CType(249, Byte), Integer))
+            Me.EckenTeil.Location = New System.Drawing.Point(0, 0)
+            Me.EckenTeil.Name = "EckenTeil"
+            Me.EckenTeil.Size = New System.Drawing.Size(20, 20)
+            Me.EckenTeil.TabIndex = 14
+            Me.EckenTeil.TabStop = False
             '
             'VerticalLinealBox
             '
-            VerticalLinealBox.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Me.VerticalLinealBox.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
                                               Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-            VerticalLinealBox.Location = New System.Drawing.Point(0, 20)
-            VerticalLinealBox.Name = "VerticalLinealBox"
-            VerticalLinealBox.Size = New System.Drawing.Size(20, 441)
-            VerticalLinealBox.TabIndex = 16
-            VerticalLinealBox.TabStop = False
+            Me.VerticalLinealBox.Location = New System.Drawing.Point(0, 20)
+            Me.VerticalLinealBox.Name = "VerticalLinealBox"
+            Me.VerticalLinealBox.Size = New System.Drawing.Size(20, 441)
+            Me.VerticalLinealBox.TabIndex = 16
+            Me.VerticalLinealBox.TabStop = False
             '
             'HorizontalLinealBox
             '
-            HorizontalLinealBox.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Me.HorizontalLinealBox.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
                                                 Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-            HorizontalLinealBox.Location = New System.Drawing.Point(20, 0)
-            HorizontalLinealBox.Name = "HorizontalLinealBox"
-            HorizontalLinealBox.Size = New System.Drawing.Size(534, 20)
-            HorizontalLinealBox.TabIndex = 15
-            HorizontalLinealBox.TabStop = False
+            Me.HorizontalLinealBox.Location = New System.Drawing.Point(20, 0)
+            Me.HorizontalLinealBox.Name = "HorizontalLinealBox"
+            Me.HorizontalLinealBox.Size = New System.Drawing.Size(534, 20)
+            Me.HorizontalLinealBox.TabIndex = 15
+            Me.HorizontalLinealBox.TabStop = False
             '
             'PaintPanel
             '
-            AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
-            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-            BackColor = System.Drawing.SystemColors.GradientActiveCaption
-            BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
-            Controls.Add(EckenTeil)
-            Controls.Add(VerticalLinealBox)
-            Controls.Add(HorizontalLinealBox)
-            Controls.Add(WholePanel)
-            Name = "PaintPanel"
-            Size = New System.Drawing.Size(554, 461)
-            WholePanel.ResumeLayout(False)
-            WholePanel.PerformLayout()
-            TextPanel.ResumeLayout(False)
-            TextPanel.PerformLayout()
-            CType(InsertDate, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(CancelButton, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(SelectAll, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(ChangeFont, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(MoverBox, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(tools_bg, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(RawBox, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(EckenTeil, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(VerticalLinealBox, System.ComponentModel.ISupportInitialize).EndInit()
-            CType(HorizontalLinealBox, System.ComponentModel.ISupportInitialize).EndInit()
-            ResumeLayout(False)
+            Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+            Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+            Me.BackColor = System.Drawing.SystemColors.GradientActiveCaption
+            Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
+            Me.Controls.Add(Me.EckenTeil)
+            Me.Controls.Add(Me.VerticalLinealBox)
+            Me.Controls.Add(Me.HorizontalLinealBox)
+            Me.Controls.Add(Me.WholePanel)
+            Me.Name = "PaintPanel"
+            Me.Size = New System.Drawing.Size(554, 461)
+            Me.WholePanel.ResumeLayout(False)
+            Me.WholePanel.PerformLayout()
+            Me.TextPanel.ResumeLayout(False)
+            Me.TextPanel.PerformLayout()
+            CType(Me.InsertDate, System.ComponentModel.ISupportInitialize).EndInit()
+            CType(Me.CancelButton, System.ComponentModel.ISupportInitialize).EndInit()
+            CType(Me.SelectAll, System.ComponentModel.ISupportInitialize).EndInit()
+            CType(Me.ChangeFont, System.ComponentModel.ISupportInitialize).EndInit()
+            CType(Me.MoverBox, System.ComponentModel.ISupportInitialize).EndInit()
+            CType(Me.tools_bg, System.ComponentModel.ISupportInitialize).EndInit()
+            CType(Me.RawBox, System.ComponentModel.ISupportInitialize).EndInit()
+            CType(Me.EckenTeil, System.ComponentModel.ISupportInitialize).EndInit()
+            CType(Me.VerticalLinealBox, System.ComponentModel.ISupportInitialize).EndInit()
+            CType(Me.HorizontalLinealBox, System.ComponentModel.ISupportInitialize).EndInit()
+            Me.ResumeLayout(False)
 
         End Sub
         Friend WithEvents RawBox As System.Windows.Forms.PictureBox

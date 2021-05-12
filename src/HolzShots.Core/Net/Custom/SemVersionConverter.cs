@@ -11,7 +11,7 @@ namespace HolzShots.Net.Custom
     /// </summary>
     public class SemVersionConverter : JsonConverter
     {
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
         {
             if (writer == null)
                 throw new ArgumentNullException(nameof(writer));
@@ -28,7 +28,7 @@ namespace HolzShots.Net.Custom
             }
         }
 
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
         {
             if (reader == null)
                 throw new ArgumentNullException(nameof(reader));
@@ -39,7 +39,8 @@ namespace HolzShots.Net.Custom
                 throw new JsonSerializationException($"Unexpected token or value when parsing version. Token: {reader.TokenType}, Value: {reader.Value}");
             try
             {
-                return SemVersion.Parse((string)reader.Value);
+                var v = reader.Value as string;
+                return SemVersion.Parse(v);
             }
             catch (Exception ex)
             {
