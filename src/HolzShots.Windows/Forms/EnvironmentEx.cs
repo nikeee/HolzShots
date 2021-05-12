@@ -11,16 +11,16 @@ namespace HolzShots.Windows.Forms
         public static bool IsSevenOrHigher => (Environment.OSVersion.Version.Major == 6 && Environment.OSVersion.Version.Minor >= 1) || Environment.OSVersion.Version.Major > 6;
         public static bool IsTenOrHigher => Environment.OSVersion.Version.Major >= 10;
 
-        private static StartupManager _currentStartupManager;
-        public static StartupManager CurrentStartupManager => _currentStartupManager ?? (_currentStartupManager =
-            new StartupManager(
-                System.Reflection.Assembly.GetEntryAssembly().Location,
-                LibraryInformation.Name,
-                RegistrationScope.Local,
-                false,
-                StartupProviders.Registry,
-                CommandLine.AutorunParamter
-            ));
+        private static Lazy<StartupManager> _currentStartupManager = new(() => new StartupManager(
+            System.Reflection.Assembly.GetEntryAssembly()!.Location,
+            LibraryInformation.Name,
+            RegistrationScope.Local,
+            false,
+            StartupProviders.Registry,
+            CommandLine.AutorunParamter
+        ));
+
+        public static StartupManager CurrentStartupManager => _currentStartupManager.Value;
 
         public static bool AppsUseLightTheme()
         {
@@ -28,7 +28,12 @@ namespace HolzShots.Windows.Forms
                 return false;
 
             var key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize");
-            return (int)key.GetValue("AppsUseLightTheme", 1) != 0;
+            if (key == null)
+                return true;
+
+            var value = key.GetValue("AppsUseLightTheme", 1);
+
+            return value is null || (int)value != 0;
         }
 
         /// <summary> It's a function instead of a property to singal that this call might be expensive (it involves a p/invoke) </summary>
@@ -57,18 +62,13 @@ namespace HolzShots.Windows.Forms
         }
 
 
-        private static ToolStripRenderer _rendererInstance = null;
-        public static ToolStripRenderer GetToolStripRendererForCurrentTheme()
-        {
-            if (_rendererInstance != null)
-                return _rendererInstance;
+        private static Lazy<ToolStripRenderer> _rendererInstance = new(() =>
+            AppsUseLightTheme()
+                ? new HolzShotsToolStripRenderer()
+                : new AeroToolStripRenderer(ToolBarTheme.Toolbar)
+        );
 
-            var newTheme = AppsUseLightTheme()
-                    ? (ToolStripRenderer)new HolzShotsToolStripRenderer()
-                    : new AeroToolStripRenderer(ToolBarTheme.Toolbar);
-
-            return _rendererInstance = newTheme;
-        }
+        public static ToolStripRenderer GetToolStripRendererForCurrentTheme() => _rendererInstance.Value;
 
         /// <summary> TODO: Move this somewhere else </summary>
         public static string ShortenViaEllipsisIfNeeded(string value, int maxLength)
