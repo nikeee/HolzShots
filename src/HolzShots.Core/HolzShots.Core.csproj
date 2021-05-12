@@ -17,10 +17,6 @@
     <DebugType>portable</DebugType>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-
   <PropertyGroup Condition=" '$(CI)' == 'True' ">
     <DefineConstants>$(DefineConstants);CI_BUILD</DefineConstants>
   </PropertyGroup>
