@@ -11,7 +11,7 @@ Namespace Drawing.Tools
             Get
                 Return InternalBeginCoords
             End Get
-            Set(ByVal value As Point)
+            Set(value As Point)
                 InternalBeginCoords = value
                 _plist = New List(Of Point) From {InternalBeginCoords}
             End Set

@@ -3,7 +3,6 @@ Imports System.Globalization
 Imports System.IO
 Imports HolzShots.UI
 Imports HolzShots.IO
-Imports HolzShots.Interop
 Imports HolzShots.Composition
 Imports HolzShots.Input.Actions
 Imports Microsoft.VisualBasic.ApplicationServices

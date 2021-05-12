@@ -11,7 +11,7 @@ Namespace Drawing.Tools
             Get
                 Return InternalBeginCoords
             End Get
-            Set(ByVal value As Point)
+            Set(value As Point)
                 InternalBeginCoords = value
                 _plist = New List(Of Point) From {InternalBeginCoords}
             End Set
@@ -36,7 +36,7 @@ Namespace Drawing.Tools
 
         Public Overrides ReadOnly Property ToolType As PaintPanel.ShotEditorTool = PaintPanel.ShotEditorTool.Marker
 
-        Public Overrides Sub RenderFinalImage(ByRef rawImage As Image, ByVal sender As PaintPanel)
+        Public Overrides Sub RenderFinalImage(ByRef rawImage As Image, sender As PaintPanel)
             Debug.Assert(TypeOf rawImage Is Bitmap)
 
             _plist.Add(EndCoords)
@@ -47,7 +47,7 @@ Namespace Drawing.Tools
             _plist.Clear()
         End Sub
 
-        Public Overrides Sub RenderPreview(ByVal rawImage As Image, ByVal g As Graphics, ByVal sender As PaintPanel)
+        Public Overrides Sub RenderPreview(rawImage As Image, g As Graphics, sender As PaintPanel)
             Debug.Assert(TypeOf rawImage Is Bitmap)
 
             _plist.Add(EndCoords)
@@ -57,7 +57,7 @@ Namespace Drawing.Tools
             End If
         End Sub
 
-        Public Sub New(ByVal markerWidth As Integer, ByVal markerColor As Color)
+        Public Sub New(markerWidth As Integer, markerColor As Color)
             _markerWidth = markerWidth
             _markerColor = markerColor
             _markerPen = New NativePen(_markerColor, _markerWidth)

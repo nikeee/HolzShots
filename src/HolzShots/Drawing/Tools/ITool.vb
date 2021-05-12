@@ -11,7 +11,7 @@ Namespace Drawing.Tools
             Get
                 Return InternalBeginCoords
             End Get
-            Set(ByVal value As Point)
+            Set(value As Point)
                 If value <> InternalBeginCoords Then
                     InternalBeginCoords = value
                 End If
@@ -23,7 +23,7 @@ Namespace Drawing.Tools
             Get
                 Return InternalEndCoords
             End Get
-            Set(ByVal value As Point)
+            Set(value As Point)
                 If value <> InternalEndCoords Then
                     InternalEndCoords = value
                 End If
