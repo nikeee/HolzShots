@@ -8,6 +8,7 @@ Imports Microsoft.WindowsAPICodePack.Taskbar
 Imports HolzShots.Composition
 Imports HolzShots.Drawing
 Imports HolzShots.Windows.Forms
+Imports HolzShots.Windows.Net
 
 Namespace UI
     Friend Class ShotEditor

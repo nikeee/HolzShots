@@ -4,6 +4,7 @@ Imports HolzShots.IO
 Imports HolzShots.Net
 Imports HolzShots.UI
 Imports HolzShots.Windows.Forms
+Imports HolzShots.Windows.Net
 
 Namespace Input.Actions
     Public MustInherit Class CapturingCommand
@@ -24,7 +25,7 @@ Namespace Input.Actions
 
                     Try
                         Dim result = Await UploadDispatcher.InitiateUploadToDefaultUploader(screenshot.Image, settingsContext, My.Application.Uploaders, Nothing, Nothing).ConfigureAwait(True)
-                        UploadHelper.InvokeUploadFinishedUi(result, settingsContext)
+                        UploadHelper.InvokeUploadFinishedUI(result, settingsContext)
                     Catch ex As UploadCanceledException
                         NotificationManager.ShowOperationCanceled()
                     Catch ex As UploadException

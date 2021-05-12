@@ -3,6 +3,7 @@ Imports System.Drawing.Imaging
 Imports HolzShots.Net
 Imports HolzShots.Drawing
 Imports HolzShots.Windows.Forms
+Imports HolzShots.Windows.Net
 
 Namespace Input.Actions
     <Command("uploadImage")>
@@ -35,7 +36,7 @@ Namespace Input.Actions
 
                 Try
                     Dim result = Await UploadDispatcher.InitiateUploadToDefaultUploader(bmp, settingsContext, My.Application.Uploaders, format, Nothing).ConfigureAwait(True)
-                    UploadHelper.InvokeUploadFinishedUi(result, settingsContext)
+                    UploadHelper.InvokeUploadFinishedUI(result, settingsContext)
                 Catch ex As UploadCanceledException
                     NotificationManager.ShowOperationCanceled()
                 Catch ex As UploadException
