@@ -157,7 +157,6 @@
 
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="System.Windows.Forms" />
 
     <ProjectReference Include="..\HolzShots.Common\HolzShots.Common.csproj" />
     <ProjectReference Include="..\HolzShots.Core\HolzShots.Core.csproj" />

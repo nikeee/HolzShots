@@ -26,10 +26,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="System.ComponentModel.Composition" />
-    <Reference Include="System.Net" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="Microsoft.CSharp" />
+    <Import Include="System.ComponentModel.Composition" />
+    <Import Include="System.Net" />
+    <Import Include="System.Windows.Forms" />
+    <Import Include="Microsoft.CSharp" />
 
     <ProjectReference Include="..\HolzShots.Common\HolzShots.Common.csproj" />
 

@@ -17,6 +17,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Import Include="Microsoft.CSharp" />
+    <Import Include="System.Windows.Forms" />
+
     <PackageReference Include="Forms.Transitions" Version="2.0.0" />
     <PackageReference Include="StartupHelper" Version="1.0.3.4" />
     <PackageReference Include="TaskScheduler" Version="2.8.18" />
@@ -33,9 +36,6 @@
     <Reference Include="StartupHelper, Version=1.0.3.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\StartupHelper.1.0.3.4\lib\net40\StartupHelper.dll</HintPath>
     </Reference>
-
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Windows.Forms" />
   </ItemGroup>
 
   <ItemGroup>
