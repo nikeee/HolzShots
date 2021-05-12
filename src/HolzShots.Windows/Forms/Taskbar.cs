@@ -24,7 +24,7 @@ namespace HolzShots.Windows.Forms
         public void SetProgressState(TaskbarProgressBarState state) => Taskbar.SetProgressState(_windowHandle, state);
 
         public override int GetHashCode() => _windowHandle.GetHashCode();
-        public override bool Equals(object obj) => obj is TaskbarProgressManager tpm && Equals(tpm);
+        public override bool Equals(object? obj) => obj is TaskbarProgressManager tpm && Equals(tpm);
         public bool Equals(TaskbarProgressManager other) => other._windowHandle == _windowHandle;
         public static bool operator ==(TaskbarProgressManager left, TaskbarProgressManager right) => left._windowHandle == right._windowHandle;
         public static bool operator !=(TaskbarProgressManager left, TaskbarProgressManager right) => left._windowHandle != right._windowHandle;
@@ -49,10 +49,10 @@ namespace HolzShots.Windows.Forms
             }
         }
 
-        private static readonly Lazy<ITaskbarList4> _instance = new Lazy<ITaskbarList4>(() =>
+        private static readonly Lazy<ITaskbarList4> _instance = new(() =>
         {
             if (!IsPlatformSupported)
-                return null;
+                throw new Exception("Taskbar API not supported");
 
             var inst = (ITaskbarList4)new CTaskbarList();
             inst.HrInit();

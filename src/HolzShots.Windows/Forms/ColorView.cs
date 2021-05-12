@@ -103,7 +103,7 @@ namespace HolzShots.Windows.Forms
 
         #endregion
 
-        public event EventHandler<Color> ColorChanged;
+        public event EventHandler<Color>? ColorChanged;
         private void OnColorChanged(Color newColor)
         {
             Color = newColor;

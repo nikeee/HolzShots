@@ -28,6 +28,7 @@ namespace HolzShots.Net.Custom
     {
         public SemVersion Version { get; }
         public string Name { get; }
+        public string License { get; }
 
         public string Author { get; }
         public string? Contact { get; } = null;
@@ -35,19 +36,18 @@ namespace HolzShots.Net.Custom
         public string? UpdateUrl { get; } = null;
         public string? Website { get; } = null;
         public string? Description { get; } = null;
-        public string License { get; } = null;
 
-        public UploaderMeta(SemVersion version, string name, string author, string? contact, string? bugsUrl, string? updateUrl, string? website, string? description, string license)
+        public UploaderMeta(SemVersion version, string name, string author, string license, string? contact, string? bugsUrl, string? updateUrl, string? website, string? description)
         {
             Version = version;
             Name = name;
             Author = author;
+            License = license;
             Contact = contact;
             BugsUrl = bugsUrl;
             UpdateUrl = updateUrl;
             Website = website;
             Description = description;
-            License = license;
         }
     }
 

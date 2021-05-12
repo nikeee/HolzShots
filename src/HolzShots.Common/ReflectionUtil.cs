@@ -11,7 +11,7 @@ namespace HolzShots
         /// <param name="instance">The instance object.</param>
         /// <param name="fieldName">The field's name which is to be fetched.</param>
         /// <returns>The field value from the object.</returns>
-        internal static TField GetInstanceField<TU, TField>(TU instance, string fieldName)
+        internal static TField? GetInstanceField<TU, TField>(TU instance, string fieldName)
             where TU : class
         {
             if (instance == null)
@@ -20,7 +20,7 @@ namespace HolzShots
             const BindingFlags bindFlags = BindingFlags.Instance | BindingFlags.NonPublic;
             var field = typeof(TU).GetField(fieldName, bindFlags);
             return field == null
-                ? default(TField)
+                ? default
                 : (TField)field.GetValue(instance);
         }
 
@@ -34,7 +34,7 @@ namespace HolzShots
             var field = typeof(TU).GetField(fieldName, bindFlags);
 
             if (field == null)
-                throw new ArgumentException();
+                throw new ArgumentException($"{nameof(field)} is null");
 
             field.SetValue(instance, value);
         }

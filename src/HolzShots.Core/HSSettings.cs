@@ -295,7 +295,7 @@ namespace HolzShots
             if (typeof(Delegate).IsAssignableFrom(typeToReflect))
                 return null;
 
-            var cloneObject = CloneMethod.Invoke(originalObject, null);
+            var cloneObject = CloneMethod.Invoke(originalObject, null)!;
             if (typeToReflect.IsArray)
             {
                 var arrayType = typeToReflect.GetElementType();
@@ -343,7 +343,7 @@ namespace HolzShots
         public static T? Copy<T>(this T? original) =>
             original is null
                 ? default
-                : (T)Copy((object)original);
+                : (T)Copy((object)original)!;
     }
 
     public class ReferenceEqualityComparer : EqualityComparer<object>

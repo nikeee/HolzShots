@@ -26,7 +26,7 @@ namespace HolzShots.Drawing
         {
             Debug.Assert(image != null);
 
-            var lockRectangle = new Rectangle(0, 0, image.Width, image.Height);
+            var lockRectangle = new Rectangle(0, 0, image!.Width, image.Height);
             var bits = image.LockBits(lockRectangle, ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
             try
             {

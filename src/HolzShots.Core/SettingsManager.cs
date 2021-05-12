@@ -62,7 +62,7 @@ namespace HolzShots
         }
 
         public Task ForceReload() => UpdateSettings(new FileInfo(SettingsFilePath));
-        private void OnSettingsFileChanged(object sender, FileInfo e) => _ = UpdateSettings(e);
+        private void OnSettingsFileChanged(object? sender, FileInfo e) => _ = UpdateSettings(e);
 
         private async Task UpdateSettings(FileInfo info)
         {
@@ -138,7 +138,7 @@ namespace HolzShots
             if (overrides == null || overrides.Count == 0)
                 return input;
 
-            var settingsCopy = input.Copy();
+            var settingsCopy = input.Copy()!;
 
             var settingsType = typeof(T);
             var properties = settingsType.GetProperties();

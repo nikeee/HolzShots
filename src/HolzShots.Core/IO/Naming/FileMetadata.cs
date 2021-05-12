@@ -18,7 +18,7 @@ namespace HolzShots.IO.Naming
             Dimensions = dimensions;
         }
 
-        public override bool Equals(object obj) => obj is FileMetadata m && m == this;
+        public override bool Equals(object? obj) => obj is FileMetadata m && m == this;
         public bool Equals(FileMetadata other) => other == this;
 
         public override int GetHashCode() => HashCode.Combine(Timestamp, FileSize, Dimensions);
