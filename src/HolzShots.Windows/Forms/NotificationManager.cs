@@ -127,7 +127,7 @@ namespace HolzShots.Windows.Forms
 
         public static void ErrorRegisteringHotkeys(IEnumerable<HotkeyRegistrationException> exs)
         {
-            var hotkeyList = string.Join(@"\n", exs.Select(e => "- " + e.Hotkey?.ToString() ?? "<unknown hotkey>"));
+            var hotkeyList = string.Join("\n", exs.Select(e => "- " + e.Hotkey?.ToString() ?? "<unknown hotkey>"));
 
             var affectedHotkeys = hotkeyList.Length > 0
                 ? "\nAffected hotkeys:\n" + hotkeyList
