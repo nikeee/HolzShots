@@ -118,7 +118,7 @@ namespace HolzShots.Windows.Forms
             var hotkeyList = string.Join(@"\n", exs.Select(e => "- " + e.Hotkey?.ToString() ?? "<unknown hotkey>"));
 
             var affectedHotkeys = hotkeyList.Length > 0
-                ? @"\nAffected hotkeys:\n" + hotkeyList
+                ? "\nAffected hotkeys:\n" + hotkeyList
                 : "";
 
             Show(
