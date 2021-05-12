@@ -4,7 +4,7 @@ using System.Net.Http.Handlers;
 
 namespace HolzShots.Net
 {
-    public struct UploadProgress : IEquatable<UploadProgress>
+    public readonly struct UploadProgress : IEquatable<UploadProgress>
     {
         public MemSize Current { get; }
         public MemSize Total { get; }

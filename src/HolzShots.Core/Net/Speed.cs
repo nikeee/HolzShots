@@ -3,7 +3,7 @@ using System;
 
 namespace HolzShots.Net
 {
-    public struct Speed<T> : IEquatable<Speed<T>> where T : struct
+    public readonly struct Speed<T> : IEquatable<Speed<T>> where T : struct
     {
         public T ItemsPerSecond { get; }
 
