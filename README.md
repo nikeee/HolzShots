@@ -2,7 +2,7 @@
 > A screenshot utility.
 
 ## Requirements
-- Requires >= Windows 7 SP1
+- Requires >= Windows 7 SP1; 64 Bit
 
 ## Installation
 Download the latest release [here](http://github.com/nikeee/HolzShots/releases/latest/download/HolzShots.zip).

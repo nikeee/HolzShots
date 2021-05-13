@@ -19,6 +19,7 @@ namespace HolzShots.Input.Selection
             {
                 CurrentOutline = null;
                 Title = null;
+                return;
             }
 
             var previousOutline = CurrentOutline;
@@ -39,10 +40,11 @@ namespace HolzShots.Input.Selection
 
                     Title = candidate.Title;
                     CurrentOutline = new RectangleAnimation(
-                        TimeSpan.FromMilliseconds(200),
+                        TimeSpan.FromMilliseconds(100),
                         source,
                         candidate.Rectangle
                     );
+                    CurrentOutline.Start();
                     return;
                 }
             }

@@ -6,13 +6,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using unvell.D2DLib;
+using unvell.D2DLib.WinForm;
 
 namespace HolzShots.Input.Selection
 {
     public partial class AreaSelector2 : AnimatedForm, IAreaSelector
     {
-        private static readonly D2DColor _overlayColor = new D2DColor(0.8f, D2DColor.Black);
-        private static readonly D2DColor _selectionBorder = new D2DColor(0.6f, D2DColor.White);
+        private static readonly D2DColor _overlayColor = new(0.8f, D2DColor.Black);
+        private static readonly D2DColor _selectionBorder = new(0.6f, D2DColor.White);
         private static readonly Cursor _cursor = new Cursor(Properties.Resources.CrossCursor.Handle);
 
         private static TaskCompletionSource<Rectangle> _tcs;
@@ -27,13 +28,13 @@ namespace HolzShots.Input.Selection
 
         private ISet<WindowRectangle>? availableWindowsForOutline = null;
 
-        public AreaSelector2()
+        public AreaSelector2(HSSettings settingsContext)
         {
             InitializeComponent();
 
             BackColor = Color.Black;
 
-            DrawFPS = false;
+            DrawFPS = true;
             StartPosition = FormStartPosition.Manual;
             WindowState = FormWindowState.Normal;
             FormBorderStyle = FormBorderStyle.None;
@@ -299,7 +300,7 @@ namespace HolzShots.Input.Selection
             }
 
             Debug.Assert(_tcs != null);
-            _tcs.SetResult((Rectangle)outline.Destination);
+            _tcs.SetResult(outline.Destination);
             CloseInternal();
         }
         private void FinishSelection(FinalState state)
@@ -370,24 +371,94 @@ namespace HolzShots.Input.Selection
     public abstract class AnimatedForm : Form
     {
 
-        private int currentFps = 0;
-        private int lastFps = 0;
+        private int _currentFps = 0;
+        private int _lastFps = 0;
         public bool DrawFPS { get; set; }
-        private DateTime lastFpsUpdate = DateTime.Now;
+        private DateTime _lastFpsUpdate = DateTime.Now;
+        private D2DGraphics _graphics;
 
-        private D2DDevice _device;
-        public D2DDevice Device
+        private D2DDevice? _device;
+        public D2DDevice Device => _device ??= D2DDevice.FromHwnd(Handle);
+
+        private DateTime _prevUpdate;
+
+
+        protected override void CreateHandle()
         {
-            get
-            {
-                var hwnd = Handle;
-                if (_device == null)
-                    _device = D2DDevice.FromHwnd(hwnd);
-                return _device;
-            }
+            base.CreateHandle();
+
+            DoubleBuffered = false;
+
+            _graphics = new D2DGraphics(Device);
+            _graphics.SetDPI(96, 96);
         }
 
-
         protected abstract void Draw(DateTime now, TimeSpan elapsed, D2DGraphics g);
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            if (DesignMode)
+            {
+                e.Graphics.Clear(Color.Black);
+                e.Graphics.DrawString("D2DLib windows form cannot render in design time.", Font, Brushes.White, 10, 10);
+                return;
+            }
+            var now = DateTime.Now;
+
+            Draw(now, now - _prevUpdate, _graphics);
+
+            _prevUpdate = now;
+
+            if (DrawFPS)
+            {
+                if (_lastFpsUpdate.Second != DateTime.Now.Second)
+                {
+                    _lastFps = _currentFps;
+                    _currentFps = 0;
+                    _lastFpsUpdate = DateTime.Now;
+                }
+                else
+                {
+                    ++_currentFps;
+                }
+
+                var fpsInfo = $"{_lastFps} fps";
+                var size = e.Graphics.MeasureString(fpsInfo, Font, Width);
+                _graphics.DrawText(fpsInfo, D2DColor.Silver, "Consolas", 26.0f, ClientRectangle.Right - size.Width - 10, 5);
+            }
+
+            _graphics.EndRender();
+
+            Invalidate(false);
+        }
+
+        protected override void OnPaintBackground(PaintEventArgs e) { /* prevent the .NET windows form to paint the original background */ }
+
+        protected override void WndProc(ref Message m)
+        {
+            switch (m.Msg)
+            {
+                case (int)Win32.WMessages.WM_ERASEBKGND:
+                    break;
+
+                case (int)Win32.WMessages.WM_SIZE:
+                    base.WndProc(ref m);
+                    if (Device != null)
+                    {
+                        Device.Resize();
+                        Invalidate(false);
+                    }
+                    break;
+                case (int)Win32.WMessages.WM_DESTROY:
+                    if (Device != null)
+                        Device.Dispose();
+
+                    base.WndProc(ref m);
+                    break;
+                default:
+                    base.WndProc(ref m);
+                    break;
+            }
+        }
     }
 }

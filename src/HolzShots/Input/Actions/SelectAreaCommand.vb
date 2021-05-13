@@ -2,6 +2,7 @@ Imports HolzShots.ScreenshotRelated.Selection
 Imports HolzShots.Composition.Command
 Imports HolzShots.Threading
 Imports HolzShots.Drawing
+Imports HolzShots.Input.Selection
 
 Namespace Input.Actions
     <Command("captureArea")>
@@ -45,7 +46,8 @@ Namespace Input.Actions
 
             Using prio As New ProcessPriorityRequest()
                 Using screen = ScreenshotCreator.CaptureScreenshot(SystemInformation.VirtualScreen)
-                    Using selector As New AreaSelector(settingsContext)
+                    Using selector As New AreaSelector2(settingsContext)
+                        ' Using selector As New AreaSelector(settingsContext)
                         Dim selectedArea = Await selector.PromptSelectionAsync(screen).ConfigureAwait(True)
 
                         Debug.Assert(selectedArea.Width > 0)

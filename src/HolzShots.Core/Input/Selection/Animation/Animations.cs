@@ -1,9 +1,7 @@
 using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Numerics;
+using System.Windows.Forms;
 
 namespace HolzShots.Input.Selection.Animation
 {
@@ -43,18 +41,61 @@ namespace HolzShots.Input.Selection.Animation
             if (!_isRunning)
                 return;
 
+            // if (_start < now)
+            //    return;
+
             var elasped = now - _start;
             if (elasped > Duration)
                 return;
 
             var percentageCompleted = (float)elasped.TotalMilliseconds / (float)Duration.TotalMilliseconds;
 
-            Current = new Rectangle(
-                (int)MathEx.Lerp(percentageCompleted, Source.X, Destination.X),
-                (int)MathEx.Lerp(percentageCompleted, Source.Y, Destination.Y),
-                (int)MathEx.Lerp(percentageCompleted, Source.Width, Destination.Width),
-                (int)MathEx.Lerp(percentageCompleted, Source.Height, Destination.Height)
+            Current = SimdMathEx.EaseOut(percentageCompleted, Source, Destination);
+        }
+    }
+
+    static class SimdMathEx
+    {
+        public static Rectangle EaseOut(float amount, Rectangle source, Rectangle destination)
+        {
+            var s = new Vector4(
+                source.X,
+                source.Y,
+                source.Width,
+                source.Height
             );
+
+            var d = new Vector4(
+                destination.X,
+                destination.Y,
+                destination.Width,
+                destination.Height
+            );
+
+            var o = 1.0f - amount;
+            var factor = 1 - (o * o);
+            var res = (d - s) * factor + s;
+            return new Rectangle((int)res.X, (int)res.Y, (int)res.Z, (int)res.W);
+        }
+
+        public static Rectangle Lerp(float amount, Rectangle source, Rectangle destination)
+        {
+            var s = new Vector4(
+                source.X,
+                source.Y,
+                source.Width,
+                source.Height
+            );
+
+            var d = new Vector4(
+                destination.X,
+                destination.Y,
+                destination.Width,
+                destination.Height
+            );
+
+            var res = (d - s) * amount;
+            return new Rectangle((int)res.X, (int)res.Y, (int)res.Z, (int)res.W);
         }
     }
 }
