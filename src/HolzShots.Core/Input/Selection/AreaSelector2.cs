@@ -25,7 +25,7 @@ namespace HolzShots.Input.Selection
         private Rectangle _imageBounds;
         private SelectionState _state = new InitialState();
 
-        private ISet<WindowRectangle> availableWindowsForOutline = null;
+        private ISet<WindowRectangle>? availableWindowsForOutline = null;
 
         public AreaSelector2()
         {
@@ -241,7 +241,7 @@ namespace HolzShots.Input.Selection
 
                             outlineAnimation.Update(now);
 
-                            var rect = outlineAnimation.CurrentRectangle;
+                            var rect = outlineAnimation.Current;
                             var selectionOutline = new D2DRect(
                                 rect.X + 0.5f,
                                 rect.Y + 0.5f,
@@ -364,5 +364,30 @@ namespace HolzShots.Input.Selection
                 g.DrawTextCenter(string.Join(Environment.NewLine, HelpText), D2DColor.White, "Consolas", 32, _infoBounds);
             }
         }
+    }
+
+
+    public abstract class AnimatedForm : Form
+    {
+
+        private int currentFps = 0;
+        private int lastFps = 0;
+        public bool DrawFPS { get; set; }
+        private DateTime lastFpsUpdate = DateTime.Now;
+
+        private D2DDevice _device;
+        public D2DDevice Device
+        {
+            get
+            {
+                var hwnd = Handle;
+                if (_device == null)
+                    _device = D2DDevice.FromHwnd(hwnd);
+                return _device;
+            }
+        }
+
+
+        protected abstract void Draw(DateTime now, TimeSpan elapsed, D2DGraphics g);
     }
 }

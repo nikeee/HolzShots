@@ -1,5 +1,4 @@
 using System;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -12,7 +11,7 @@ namespace HolzShots.Input.Selection
     {
         private static readonly Cursor _cursor = new Cursor(Properties.Resources.CrossCursor.Handle);
 
-        private static TaskCompletionSource<Rectangle> _tcs;
+        private static TaskCompletionSource<Rectangle>? _tcs = null;
 
         private readonly Stopwatch _timeSinceStart = new Stopwatch();
         private readonly Pen _outlinePen = new Pen(Color.FromArgb((int)(0.6f * 255), 255, 255, 255))

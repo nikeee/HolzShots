@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using HolzShots.Input.Selection.Animation;
-using unvell.D2DLib;
 
 namespace HolzShots.Input.Selection
 {
@@ -36,7 +35,7 @@ namespace HolzShots.Input.Selection
 
                     _currentSelectedWindow = candidate;
 
-                    var source = previousOutline?.CurrentRectangle ?? candidate.Rectangle;
+                    var source = previousOutline?.Current ?? candidate.Rectangle;
 
                     Title = candidate.Title;
                     CurrentOutline = new RectangleAnimation(
