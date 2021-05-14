@@ -339,125 +339,87 @@ namespace HolzShots.Input.Selection
             _dimmedImage?.Dispose();
             _blackOverlayBrush?.Dispose();
         }
+    }
 
+    internal interface IInitialStateDecoration
+    {
+        void Draw(DateTime now, TimeSpan elapsed, D2DGraphics g, InitialState state, Rectangle bounds);
+    }
 
-        /*
-        class AnimatedFadeText
-        {
-            private readonly string _text;
-            private readonly string _fontName;
-            private readonly float _fontSize;
-            public AnimatedFadeText(string text, string fontName, float fontSize)
-            {
-                _text = text;
-                _fontName = fontName;
-                _fontSize = fontSize;
-            }
-            void Draw(DateTime now, TimeSpan elapsed, D2DGraphics g, InitialState state, Rectangle bounds) { }
-        }
-        */
-
-        internal interface IInitialStateDecoration
-        {
-            void Draw(DateTime now, TimeSpan elapsed, D2DGraphics g, InitialState state, Rectangle bounds);
-        }
-
-        internal class HelpTextDecoration : IInitialStateDecoration
-        {
-            private static readonly string[] HelpText = new[] {
+    internal class HelpTextDecoration : IInitialStateDecoration
+    {
+        private static readonly string[] HelpText = new[] {
                 "Left Mouse: Select area",
                 "Right Mouse: Move selected area",
                 // "Space Bar: Toggle magnifier",
                 "Escape: Cancel",
             };
 
-            private const string FontName = "Consolas";
-            private const float FontSize = 24.0f;
-            private static readonly D2DSize Margin = new(10, 5);
-            private static readonly D2DColor BackgroundColor = new(0.2f, 1f, 1f, 1f);
-            private static readonly D2DColor FontColor = new(1f, 0.9f, 0.9f, 0.9f);
-            private static readonly TimeSpan FadeStart = TimeSpan.FromSeconds(5);
-            private static readonly TimeSpan FadeDuration = TimeSpan.FromSeconds(3);
+        private const string FontName = "Consolas";
+        private const float FontSize = 24.0f;
+        private static readonly D2DSize Margin = new(10, 5);
+        private static readonly D2DColor BackgroundColor = new(0.2f, 1f, 1f, 1f);
+        private static readonly D2DColor FontColor = new(1f, 0.9f, 0.9f, 0.9f);
+        private static readonly TimeSpan FadeStart = TimeSpan.FromSeconds(5);
+        private static readonly TimeSpan FadeDuration = TimeSpan.FromSeconds(3);
 
-            private RectangleAnimation[]? _animations = null;
-            private DateTime? _firstUpdate = null;
-            private DateTime? _fadeOutStarted = null;
+        private RectangleAnimation[]? _animations = null;
+        private DateTime? _firstUpdate = null;
+        private DateTime? _fadeOutStarted = null;
 
-            private static RectangleAnimation[] InitializeAnimations(DateTime now, D2DGraphics g)
+        private static RectangleAnimation[] InitializeAnimations(DateTime now, D2DGraphics g)
+        {
+            var res = new RectangleAnimation[HelpText.Length];
+
+            int lastX = 100;
+            int lastY = 100;
+
+            var someRandomSize = new D2DSize(1000, 1000);
+
+            for (int i = 0; i < res.Length; ++i)
             {
-                var res = new RectangleAnimation[HelpText.Length];
+                var textSize = g.MeasureText(HelpText[i], FontName, FontSize, someRandomSize);
+                var destination = new Rectangle(
+                    lastX,
+                    lastY,
+                    (int)(textSize.width + 2 * Margin.width),
+                    (int)(textSize.height + 2 * Margin.height)
+                );
 
-                int lastX = 100;
-                int lastY = 100;
+                var start = new Rectangle(
+                    destination.Location,
+                    new Size(0, destination.Height)
+                );
 
-                var someRandomSize = new D2DSize(1000, 1000);
+                var animation = new RectangleAnimation(
+                    TimeSpan.FromMilliseconds(150 * i + 50),
+                    start,
+                    destination
+                );
+                res[i] = animation;
+                animation.Start(now);
 
-                for (int i = 0; i < res.Length; ++i)
-                {
-                    var textSize = g.MeasureText(HelpText[i], FontName, FontSize, someRandomSize);
-                    var destination = new Rectangle(
-                        lastX,
-                        lastY,
-                        (int)(textSize.width + 2 * Margin.width),
-                        (int)(textSize.height + 2 * Margin.height)
-                    );
-
-                    var start = new Rectangle(
-                        destination.Location,
-                        new Size(0, destination.Height)
-                    );
-
-                    var animation = new RectangleAnimation(
-                        TimeSpan.FromMilliseconds(150 * i + 50),
-                        start,
-                        destination
-                    );
-                    res[i] = animation;
-                    animation.Start(now);
-
-                    lastY = destination.Y + destination.Height + 1;
-                }
-
-                return res;
+                lastY = destination.Y + destination.Height + 1;
             }
 
-            public void Draw(DateTime now, TimeSpan elapsed, D2DGraphics g, InitialState state, Rectangle bounds)
+            return res;
+        }
+
+        public void Draw(DateTime now, TimeSpan elapsed, D2DGraphics g, InitialState state, Rectangle bounds)
+        {
+            _animations ??= InitializeAnimations(now, g);
+            _firstUpdate ??= now;
+
+            var opacityElapsed = now - _firstUpdate;
+            if (_fadeOutStarted == null && opacityElapsed > FadeStart)
             {
-                _animations ??= InitializeAnimations(now, g);
-                _firstUpdate ??= now;
-
-                var opacityElapsed = now - _firstUpdate;
-                if (_fadeOutStarted == null && opacityElapsed > FadeStart)
-                {
-                    _fadeOutStarted = now;
-                }
+                _fadeOutStarted = now;
+            }
 
 
-                if (_fadeOutStarted != null)
-                {
-                    var opacity = MathEx.Lerp((float)(now - _fadeOutStarted.Value).TotalMilliseconds / (float)FadeDuration.TotalMilliseconds, 1, 0);
-
-                    for (int i = 0; i < _animations.Length; ++i)
-                    {
-                        var animation = _animations[i];
-                        var text = HelpText[i];
-
-                        animation.Update(now, elapsed);
-                        var rect = animation.Destination.AsD2DRect();
-
-                        var textLocation = new Rectangle(
-                            animation.Destination.X + (int)Margin.width,
-                            animation.Destination.Y + (int)Margin.height,
-                            animation.Destination.Width,
-                            animation.Destination.Height
-                        );
-
-                        g.FillRectangle(rect, new D2DColor(opacity * BackgroundColor.a, BackgroundColor));
-                        g.DrawText(text, new D2DColor(opacity * FontColor.a, FontColor), FontName, FontSize, textLocation);
-                    }
-
-                    return;
-                }
+            if (_fadeOutStarted != null)
+            {
+                var opacity = MathEx.Lerp((float)(now - _fadeOutStarted.Value).TotalMilliseconds / (float)FadeDuration.TotalMilliseconds, 1, 0);
 
                 for (int i = 0; i < _animations.Length; ++i)
                 {
@@ -465,7 +427,7 @@ namespace HolzShots.Input.Selection
                     var text = HelpText[i];
 
                     animation.Update(now, elapsed);
-                    var rect = animation.Current.AsD2DRect();
+                    var rect = animation.Destination.AsD2DRect();
 
                     var textLocation = new Rectangle(
                         animation.Destination.X + (int)Margin.width,
@@ -474,9 +436,30 @@ namespace HolzShots.Input.Selection
                         animation.Destination.Height
                     );
 
-                    g.FillRectangle(rect, BackgroundColor);
-                    g.DrawText(text, FontColor, FontName, FontSize, textLocation);
+                    g.FillRectangle(rect, new D2DColor(opacity * BackgroundColor.a, BackgroundColor));
+                    g.DrawText(text, new D2DColor(opacity * FontColor.a, FontColor), FontName, FontSize, textLocation);
                 }
+
+                return;
+            }
+
+            for (int i = 0; i < _animations.Length; ++i)
+            {
+                var animation = _animations[i];
+                var text = HelpText[i];
+
+                animation.Update(now, elapsed);
+                var rect = animation.Current.AsD2DRect();
+
+                var textLocation = new Rectangle(
+                    animation.Destination.X + (int)Margin.width,
+                    animation.Destination.Y + (int)Margin.height,
+                    animation.Destination.Width,
+                    animation.Destination.Height
+                );
+
+                g.FillRectangle(rect, BackgroundColor);
+                g.DrawText(text, FontColor, FontName, FontSize, textLocation);
             }
         }
     }
