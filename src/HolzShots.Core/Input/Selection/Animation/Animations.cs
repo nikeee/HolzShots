@@ -47,7 +47,7 @@ namespace HolzShots.Input.Selection.Animation
 
             var percentageCompleted = (float)elapsed.TotalMilliseconds / (float)Duration.TotalMilliseconds;
 
-            Current = EasingMath.EaseOut(percentageCompleted, Source, Destination);
+            Current = EasingMath.EaseOutCubic(percentageCompleted, Source, Destination);
         }
     }
 }

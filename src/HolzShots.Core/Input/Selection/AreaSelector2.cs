@@ -392,7 +392,7 @@ namespace HolzShots.Input.Selection
                 );
 
                 var animation = new RectangleAnimation(
-                    TimeSpan.FromMilliseconds(150 * i + 50),
+                    TimeSpan.FromMilliseconds(200 * i + 50),
                     start,
                     destination
                 );
@@ -419,7 +419,7 @@ namespace HolzShots.Input.Selection
 
             if (_fadeOutStarted != null)
             {
-                var opacity = EasingMath.EaseIn((float)(now - _fadeOutStarted.Value).TotalMilliseconds / (float)FadeDuration.TotalMilliseconds, 1, 0);
+                var opacity = EasingMath.EaseInSquare((float)(now - _fadeOutStarted.Value).TotalMilliseconds / (float)FadeDuration.TotalMilliseconds, 1, 0);
 
                 for (int i = 0; i < _animations.Length; ++i)
                 {
