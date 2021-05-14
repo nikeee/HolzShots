@@ -1,8 +1,8 @@
-# HolzShots ![CI](https://github.com/nikeee/HolzShots/workflows/CI/badge.svg)
+# ![Logo](src/HolzShots/Resources/editcutSmall.png) HolzShots ![CI](https://github.com/nikeee/HolzShots/workflows/CI/badge.svg)
 A lightweight screenshot utility that gets out of your way.
-- Configurable via JSON, like VSCode
-- Upload to you own services via config files, like ShareX but keep them updated like user scripts
-- No bloat like DNS changers or video recording. If you want to do video, use a tool that does it properly (like [ScreenToGif](https://github.com/NickeManarin/ScreenToGif))
+- Configurable via JSON, like VSCode.
+- Upload to you own services via config files, like ShareX, but keep them updated like user scripts.
+- No bloat like DNS changers or video recording. If you want to do video, use a tool that does it properly (like [ScreenToGif](https://github.com/NickeManarin/ScreenToGif)).
 
 ## Requirements
 - Requires >= Windows 7 SP1; 64 Bit
