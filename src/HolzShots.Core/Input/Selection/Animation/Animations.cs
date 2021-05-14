@@ -38,9 +38,6 @@ namespace HolzShots.Input.Selection.Animation
             if (!_isRunning)
                 return;
 
-            // if (_start > now)
-            //     return;
-
             var elapsed = now - _start;
             if (elapsed > Duration)
             {
