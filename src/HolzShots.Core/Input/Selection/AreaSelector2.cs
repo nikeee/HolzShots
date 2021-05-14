@@ -349,11 +349,11 @@ namespace HolzShots.Input.Selection
     internal class HelpTextDecoration : IInitialStateDecoration
     {
         private static readonly string[] HelpText = new[] {
-                "Left Mouse: Select area",
-                "Right Mouse: Move selected area",
-                // "Space Bar: Toggle magnifier",
-                "Escape: Cancel",
-            };
+            "Left Mouse: Select area",
+            "Right Mouse: Move selected area",
+            // "Space Bar: Toggle magnifier",
+            "Escape: Cancel",
+        };
 
         private const string FontName = "Consolas";
         private const float FontSize = 24.0f;
@@ -419,7 +419,7 @@ namespace HolzShots.Input.Selection
 
             if (_fadeOutStarted != null)
             {
-                var opacity = MathEx.Lerp((float)(now - _fadeOutStarted.Value).TotalMilliseconds / (float)FadeDuration.TotalMilliseconds, 1, 0);
+                var opacity = EasingMath.EaseIn((float)(now - _fadeOutStarted.Value).TotalMilliseconds / (float)FadeDuration.TotalMilliseconds, 1, 0);
 
                 for (int i = 0; i < _animations.Length; ++i)
                 {

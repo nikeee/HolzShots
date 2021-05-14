@@ -4,17 +4,6 @@ namespace HolzShots
 {
     public static class MathEx
     {
-        public static float Lerp(float x, float source, float destination)
-        {
-            x = Clamp(x, 0f, 1f);
-            return source + ((destination - source) * x);
-        }
-        public static float EaseOutQuad(float x, float source, float destination)
-        {
-            var factor = 1 - (1 - x) * (1 - x);
-            return Lerp(factor, source, destination);
-        }
-
         public static byte Clamp(byte value, byte min, byte max)
         {
             if (value < min)
