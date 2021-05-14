@@ -32,8 +32,6 @@ namespace HolzShots.Input.Selection
 
         public AreaSelector2(HSSettings settingsContext)
         {
-            InitializeComponent();
-
             BackColor = Color.Black;
 
             DrawFPS = true;
