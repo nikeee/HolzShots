@@ -13,7 +13,6 @@ namespace HolzShots.Input.Selection
     public partial class AreaSelector2 : AnimatedForm, IAreaSelector
     {
         private static readonly D2DColor _overlayColor = new(0.8f, D2DColor.Black);
-        private static readonly D2DColor _selectionBorder = new(0.6f, D2DColor.White);
         private static readonly Cursor _cursor = new(Properties.Resources.CrossCursor.Handle);
         private static readonly float[] _customDashStyle = new[] { 3f };
 
@@ -38,9 +37,6 @@ namespace HolzShots.Input.Selection
             BackColor = Color.Black;
 
             DrawFPS = true;
-            StartPosition = FormStartPosition.Manual;
-            WindowState = FormWindowState.Normal;
-            FormBorderStyle = FormBorderStyle.None;
             // DesktopLocation = new Point(0, 0);
 
             var cts = new CancellationTokenSource();
@@ -371,7 +367,7 @@ namespace HolzShots.Input.Selection
             private static readonly string[] HelpText = new[] {
                 "Left Mouse: Select area",
                 "Right Mouse: Move selected area",
-                "Space Bar: Toggle magnifier",
+                // "Space Bar: Toggle magnifier",
                 "Escape: Cancel",
             };
 

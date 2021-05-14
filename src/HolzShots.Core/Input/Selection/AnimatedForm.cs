@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 using unvell.D2DLib;
@@ -13,13 +13,20 @@ namespace HolzShots.Input.Selection
         private int _lastFps = 0;
         public bool DrawFPS { get; set; }
         private DateTime _lastFpsUpdate = DateTime.Now;
-        private D2DGraphics _graphics;
+        private D2DGraphics _graphics = null!;
 
         private D2DDevice? _device;
         public D2DDevice Device => _device ??= D2DDevice.FromHwnd(Handle);
 
         private DateTime _prevUpdate;
 
+        public AnimatedForm()
+        {
+            StartPosition = FormStartPosition.Manual;
+            WindowState = FormWindowState.Normal;
+            FormBorderStyle = FormBorderStyle.None;
+            SetStyle(ControlStyles.UserPaint, true);
+        }
 
         protected override void CreateHandle()
         {
