@@ -148,7 +148,7 @@ namespace HolzShots.Input.Selection
 
                             if (res.HasArea())
                             {
-                                var finalState = new FinalState(new Rectangle(res.X, res.Y, res.Width, res.Height));
+                                var finalState = new FinalState(res);
                                 _state = finalState;
                                 FinishSelection(finalState);
                             }
