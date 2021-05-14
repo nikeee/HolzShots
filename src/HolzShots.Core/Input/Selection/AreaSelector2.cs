@@ -5,7 +5,7 @@ using System.Drawing;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using HolzShots.Input.Selection.Animation;
+using HolzShots.Input.Selection.Decoration;
 using unvell.D2DLib;
 
 namespace HolzShots.Input.Selection
@@ -28,6 +28,8 @@ namespace HolzShots.Input.Selection
         private DateTime _selectionStarted;
         private SelectionState _state = new InitialState();
 
+        private readonly IStateDecoration<RectangleState> _rectangleStateDecoration = new SelectionOutlineDecoration();
+
         private ISet<WindowRectangle>? availableWindowsForOutline = null;
 
         public AreaSelector2(HSSettings settingsContext)
@@ -49,7 +51,6 @@ namespace HolzShots.Input.Selection
             _blackOverlayBrush = Device.CreateSolidColorBrush(_overlayColor);
         }
 
-        private IInitialStateDecoration? _decoration = null;
 
         public Task<Rectangle> PromptSelectionAsync(Bitmap image)
         {
@@ -74,7 +75,6 @@ namespace HolzShots.Input.Selection
             Visible = true;
             Cursor = _cursor;
 
-            _decoration = new HelpTextDecoration();
 
             return _tcs.Task;
         }
@@ -235,11 +235,8 @@ namespace HolzShots.Input.Selection
             {
                 case InitialState initial:
                     {
-                        // foreach (var d in initial.Decorations)
-                        //     d.Render(g, initial, _imageBounds);
-
-                        if (_decoration != null)
-                            _decoration.Draw(now, elapsed, g, initial, _imageBounds);
+                        initial.EnsureDecorationInitialization(Device, g, now);
+                        initial.DrawDecorations(g, now, elapsed, _imageBounds);
 
                         var outlineAnimation = initial.CurrentOutline;
                         if (outlineAnimation != null)
@@ -260,6 +257,14 @@ namespace HolzShots.Input.Selection
                     }
                 case RectangleState availableSelection:
                     {
+                    /*
+                        if (_rectangleStateDecoration != null)
+                        {
+                            if (!_rectangleStateDecoration.IsInitialized)
+                                _rectangleStateDecoration.Initialize(Device, g, now);
+                            _rectangleStateDecoration.UpdateAndDraw(g, now, elapsed, availableSelection, _imageBounds);
+                        }
+                    */
                         var outline = availableSelection.GetSelectedOutline(_imageBounds);
                         D2DRect rect = outline; // Caution: implicit conversion which we don't want to do twice
 
@@ -336,105 +341,6 @@ namespace HolzShots.Input.Selection
             _image?.Dispose();
             _dimmedImage?.Dispose();
             _blackOverlayBrush?.Dispose();
-        }
-    }
-
-    internal interface IInitialStateDecoration
-    {
-        void Draw(DateTime now, TimeSpan elapsed, D2DGraphics g, InitialState state, Rectangle bounds);
-    }
-
-    internal class HelpTextDecoration : IInitialStateDecoration
-    {
-        private static readonly string[] HelpText = new[] {
-            "Left Mouse: Select area",
-            "Right Mouse: Move selected area",
-            // "Space Bar: Toggle magnifier",
-            "Escape: Cancel",
-        };
-
-        private const string FontName = "Consolas";
-        private const float FontSize = 24.0f;
-        private static readonly D2DSize Margin = new(10, 5);
-        private static readonly D2DColor BackgroundColor = new(0.2f, 1f, 1f, 1f);
-        private static readonly D2DColor FontColor = new(1f, 0.9f, 0.9f, 0.9f);
-        private static readonly TimeSpan FadeStart = TimeSpan.FromSeconds(5);
-        private static readonly TimeSpan FadeDuration = TimeSpan.FromSeconds(3);
-
-        private RectangleAnimation[]? _animations = null;
-        private DateTime? _firstUpdate = null;
-        private DateTime? _fadeOutStarted = null;
-
-        private static RectangleAnimation[] InitializeAnimations(DateTime now, D2DGraphics g)
-        {
-            var res = new RectangleAnimation[HelpText.Length];
-
-            int lastX = 100;
-            int lastY = 100;
-
-            var someRandomSize = new D2DSize(1000, 1000);
-
-            for (int i = 0; i < res.Length; ++i)
-            {
-                var textSize = g.MeasureText(HelpText[i], FontName, FontSize, someRandomSize);
-                var destination = new Rectangle(
-                    lastX,
-                    lastY,
-                    (int)(textSize.width + 2 * Margin.width),
-                    (int)(textSize.height + 2 * Margin.height)
-                );
-
-                var start = new Rectangle(
-                    destination.Location,
-                    new Size(0, destination.Height)
-                );
-
-                var animation = new RectangleAnimation(
-                    TimeSpan.FromMilliseconds(150 * i + 100),
-                    start,
-                    destination
-                );
-                res[i] = animation;
-                animation.Start(now);
-
-                lastY = destination.Y + destination.Height + 1;
-            }
-
-            return res;
-        }
-
-        public void Draw(DateTime now, TimeSpan elapsed, D2DGraphics g, InitialState state, Rectangle bounds)
-        {
-            _animations ??= InitializeAnimations(now, g);
-            _firstUpdate ??= now;
-
-            var opacityElapsed = now - _firstUpdate;
-            if (_fadeOutStarted == null && opacityElapsed > FadeStart)
-                _fadeOutStarted = now;
-
-
-            var opacity = 1f;
-            if (_fadeOutStarted != null)
-                opacity = EasingMath.EaseInSquare((float)(now - _fadeOutStarted.Value).TotalMilliseconds / (float)FadeDuration.TotalMilliseconds, 1, 0);
-
-            for (int i = 0; i < _animations.Length; ++i)
-            {
-                var animation = _animations[i];
-                var text = HelpText[i];
-
-                animation.Update(now, elapsed);
-                var rect = animation.Current.AsD2DRect();
-
-                var textLocation = new Rectangle(
-                    animation.Destination.X + (int)Margin.width,
-                    animation.Destination.Y + (int)Margin.height,
-                    animation.Destination.Width,
-                    animation.Destination.Height
-                );
-
-                g.FillRectangle(rect, new D2DColor(opacity * BackgroundColor.a, BackgroundColor));
-                g.DrawText(text, new D2DColor(opacity * FontColor.a, FontColor), FontName, FontSize, textLocation);
-            }
         }
     }
 }

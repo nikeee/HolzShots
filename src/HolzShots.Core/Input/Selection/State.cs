@@ -1,18 +1,44 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using HolzShots.Input.Selection.Animation;
+using HolzShots.Input.Selection.Decoration;
+using unvell.D2DLib;
 
 namespace HolzShots.Input.Selection
 {
-    internal abstract class SelectionState { }
+    internal abstract class SelectionState
+    {
+        public abstract void DrawDecorations(D2DGraphics g, DateTime now, TimeSpan elapsed, Rectangle bounds);
+    }
+
     internal class InitialState : SelectionState
     {
         private WindowRectangle? _currentSelectedWindow;
         public RectangleAnimation? CurrentOutline { get; private set; }
         public string? Title { get; private set; }
 
-        // internal IInitialStateDecoration[] Decorations => new[] { new HelpTextDecoration() };
+        internal IStateDecoration<InitialState>[] Decorations { get; private set; } = null!;
+
+        public override void DrawDecorations(D2DGraphics g, DateTime now, TimeSpan elapsed, Rectangle bounds)
+        {
+            Debug.Assert(Decorations != null);
+            foreach (var d in Decorations)
+                d.UpdateAndDraw(g, now, elapsed, bounds, this);
+        }
+
+        public void EnsureDecorationInitialization(D2DDevice device, D2DGraphics g, DateTime now)
+        {
+            if (Decorations != null)
+                return;
+
+            var ds = new[] { new HelpTextDecoration() };
+            foreach (var d in ds)
+                d.Initialize(device, g, now);
+            Decorations = ds;
+        }
+
         public void UpdateOutlinedWindow(ISet<WindowRectangle> windows, Point cursorPosition)
         {
             if (windows == null)
@@ -82,12 +108,24 @@ namespace HolzShots.Input.Selection
     internal class ResizingRectangleState : RectangleState
     {
         public ResizingRectangleState(Point userSelectionStart, Point cursorPosition) : base(userSelectionStart, cursorPosition) { }
+
+        public override void DrawDecorations(D2DGraphics g, DateTime now, TimeSpan elapsed, Rectangle bounds)
+        {
+            // throw new NotImplementedException();
+        }
+
         public void UpdateCursorPosition(Point newCursorPosition) => CursorPosition = newCursorPosition;
     }
 
     internal class MovingRectangleState : RectangleState
     {
         public MovingRectangleState(Point userSelectionStart, Point cursorPosition) : base(userSelectionStart, cursorPosition) { }
+
+        public override void DrawDecorations(D2DGraphics g, DateTime now, TimeSpan elapsed, Rectangle bounds)
+        {
+           //  throw new NotImplementedException();
+        }
+
         public void MoveByNewCursorPosition(Point newCursorPosition)
         {
             var prevStart = UserSelectionStart;
@@ -108,5 +146,10 @@ namespace HolzShots.Input.Selection
     {
         public Rectangle Result { get; }
         public FinalState(Rectangle result) => Result = result;
+
+        public override void DrawDecorations(D2DGraphics g, DateTime now, TimeSpan elapsed, Rectangle bounds)
+        {
+            // throw new NotImplementedException();
+        }
     }
 }
