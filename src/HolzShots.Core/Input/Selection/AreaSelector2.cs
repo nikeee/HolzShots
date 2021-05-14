@@ -15,6 +15,7 @@ namespace HolzShots.Input.Selection
         private static readonly D2DColor _overlayColor = new(0.8f, D2DColor.Black);
         private static readonly D2DColor _selectionBorder = new(0.6f, D2DColor.White);
         private static readonly Cursor _cursor = new(Properties.Resources.CrossCursor.Handle);
+        private static readonly float[] _customDashStyle = new[] { 3f };
 
         private static TaskCompletionSource<Rectangle>? _tcs;
 
@@ -24,6 +25,8 @@ namespace HolzShots.Input.Selection
         private D2DBitmapGraphics _dimmedImage;
         private D2DBitmap _background;
         private Rectangle _imageBounds;
+        private float _currentDashOffset = 0.0f;
+        private DateTime _selectionStarted;
         private SelectionState _state = new InitialState();
 
         private ISet<WindowRectangle>? availableWindowsForOutline = null;
@@ -69,6 +72,8 @@ namespace HolzShots.Input.Selection
             _image = Device.CreateBitmapFromGDIBitmap(image);
             _dimmedImage = CreateDimemdImage(image.Width, image.Height);
             _background = _dimmedImage.GetBitmap();
+
+            _selectionStarted = DateTime.Now;
 
             _tcs = new TaskCompletionSource<Rectangle>();
 
@@ -269,7 +274,17 @@ namespace HolzShots.Input.Selection
                         // We need to widen the rectangle by 0.5px so that the result will be exactly 1px wide.
                         // Otherwise, it will be 2px and darker.
                         var selectionOutline = outline.AsD2DRect();
-                        g.DrawRectangle(selectionOutline, _selectionBorder, 1.0f, D2DDashStyle.Dash);
+
+                        // TODO: Make this a decoration
+                        using var selectionOutlinePen = Device.CreatePen(
+                            D2DColor.White,
+                            D2DDashStyle.Custom,
+                            _customDashStyle,
+                            _currentDashOffset
+                        );
+
+                        g.DrawRectangle(selectionOutline, selectionOutlinePen, 1.0f);
+                        _currentDashOffset = (float)(now - _selectionStarted).TotalMilliseconds / 40;
 
                         break;
                     }
@@ -360,8 +375,8 @@ namespace HolzShots.Input.Selection
                 "Escape: Cancel",
             };
 
-            private static readonly string FontName = "Consolas";
-            private static readonly float FontSize = 24.0f;
+            private const string FontName = "Consolas";
+            private const float FontSize = 24.0f;
             private static readonly D2DSize Margin = new(10, 5);
             private static readonly D2DColor BackgroundColor = new(0.2f, 1f, 1f, 1f);
             private static readonly D2DColor FontColor = new(1f, 0.9f, 0.9f, 0.9f);
