@@ -390,7 +390,7 @@ namespace HolzShots.Input.Selection
                 );
 
                 var animation = new RectangleAnimation(
-                    TimeSpan.FromMilliseconds(200 * i + 50),
+                    TimeSpan.FromMilliseconds(150 * i + 100),
                     start,
                     destination
                 );
@@ -410,36 +410,12 @@ namespace HolzShots.Input.Selection
 
             var opacityElapsed = now - _firstUpdate;
             if (_fadeOutStarted == null && opacityElapsed > FadeStart)
-            {
                 _fadeOutStarted = now;
-            }
 
 
+            var opacity = 1f;
             if (_fadeOutStarted != null)
-            {
-                var opacity = EasingMath.EaseInSquare((float)(now - _fadeOutStarted.Value).TotalMilliseconds / (float)FadeDuration.TotalMilliseconds, 1, 0);
-
-                for (int i = 0; i < _animations.Length; ++i)
-                {
-                    var animation = _animations[i];
-                    var text = HelpText[i];
-
-                    animation.Update(now, elapsed);
-                    var rect = animation.Destination.AsD2DRect();
-
-                    var textLocation = new Rectangle(
-                        animation.Destination.X + (int)Margin.width,
-                        animation.Destination.Y + (int)Margin.height,
-                        animation.Destination.Width,
-                        animation.Destination.Height
-                    );
-
-                    g.FillRectangle(rect, new D2DColor(opacity * BackgroundColor.a, BackgroundColor));
-                    g.DrawText(text, new D2DColor(opacity * FontColor.a, FontColor), FontName, FontSize, textLocation);
-                }
-
-                return;
-            }
+                opacity = EasingMath.EaseInSquare((float)(now - _fadeOutStarted.Value).TotalMilliseconds / (float)FadeDuration.TotalMilliseconds, 1, 0);
 
             for (int i = 0; i < _animations.Length; ++i)
             {
@@ -456,8 +432,8 @@ namespace HolzShots.Input.Selection
                     animation.Destination.Height
                 );
 
-                g.FillRectangle(rect, BackgroundColor);
-                g.DrawText(text, FontColor, FontName, FontSize, textLocation);
+                g.FillRectangle(rect, new D2DColor(opacity * BackgroundColor.a, BackgroundColor));
+                g.DrawText(text, new D2DColor(opacity * FontColor.a, FontColor), FontName, FontSize, textLocation);
             }
         }
     }
