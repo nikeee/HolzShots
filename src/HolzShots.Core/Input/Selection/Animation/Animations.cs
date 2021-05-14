@@ -1,19 +1,16 @@
 using System;
 using System.Drawing;
-using System.Numerics;
-using System.Windows.Forms;
 
 namespace HolzShots.Input.Selection.Animation
 {
-
     public abstract class Animation
     {
         protected DateTime _start;
         protected bool _isRunning;
 
-        public void Start()
+        public void Start(DateTime startTime)
         {
-            _start = DateTime.Now;
+            _start = startTime;
             _isRunning = true;
         }
         public void Stop()
@@ -36,66 +33,24 @@ namespace HolzShots.Input.Selection.Animation
             Destination = destination;
         }
 
-        public void Update(DateTime now)
+        public void Update(DateTime now, TimeSpan _)
         {
             if (!_isRunning)
                 return;
 
-            // if (_start < now)
-            //    return;
+            // if (_start > now)
+            //     return;
 
-            var elasped = now - _start;
-            if (elasped > Duration)
+            var elapsed = now - _start;
+            if (elapsed > Duration)
+            {
+                Current = Destination;
                 return;
+            }
 
-            var percentageCompleted = (float)elasped.TotalMilliseconds / (float)Duration.TotalMilliseconds;
+            var percentageCompleted = (float)elapsed.TotalMilliseconds / (float)Duration.TotalMilliseconds;
 
-            Current = SimdMathEx.EaseOut(percentageCompleted, Source, Destination);
-        }
-    }
-
-    static class SimdMathEx
-    {
-        public static Rectangle EaseOut(float amount, Rectangle source, Rectangle destination)
-        {
-            var s = new Vector4(
-                source.X,
-                source.Y,
-                source.Width,
-                source.Height
-            );
-
-            var d = new Vector4(
-                destination.X,
-                destination.Y,
-                destination.Width,
-                destination.Height
-            );
-
-            var o = 1.0f - amount;
-            var factor = 1 - (o * o);
-            var res = (d - s) * factor + s;
-            return new Rectangle((int)res.X, (int)res.Y, (int)res.Z, (int)res.W);
-        }
-
-        public static Rectangle Lerp(float amount, Rectangle source, Rectangle destination)
-        {
-            var s = new Vector4(
-                source.X,
-                source.Y,
-                source.Width,
-                source.Height
-            );
-
-            var d = new Vector4(
-                destination.X,
-                destination.Y,
-                destination.Width,
-                destination.Height
-            );
-
-            var res = (d - s) * amount;
-            return new Rectangle((int)res.X, (int)res.Y, (int)res.Z, (int)res.W);
+            Current = EasingMath.EaseOut(percentageCompleted, Source, Destination);
         }
     }
 }

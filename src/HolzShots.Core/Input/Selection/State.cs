@@ -12,7 +12,7 @@ namespace HolzShots.Input.Selection
         public RectangleAnimation? CurrentOutline { get; private set; }
         public string? Title { get; private set; }
 
-        // public IInitialStateDecoration[] Decorations => new[] { new HelpTextDecoration() };
+        // internal IInitialStateDecoration[] Decorations => new[] { new HelpTextDecoration() };
         public void UpdateOutlinedWindow(ISet<WindowRectangle> windows, Point cursorPosition)
         {
             if (windows == null)
@@ -44,7 +44,7 @@ namespace HolzShots.Input.Selection
                         source,
                         candidate.Rectangle
                     );
-                    CurrentOutline.Start();
+                    CurrentOutline.Start(DateTime.Now);
                     return;
                 }
             }
