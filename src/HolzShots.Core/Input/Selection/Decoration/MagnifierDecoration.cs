@@ -11,7 +11,7 @@ namespace HolzShots.Input.Selection.Decoration
     {
         private static readonly D2DColor OutlineColor = new(1f, 0.9f, 0.9f, 0.9f);
         private static readonly TimeSpan FadeDuration = TimeSpan.FromMilliseconds(150);
-        private const int CircleDiameter = 200;
+        private const int CircleDiameter = 75;
 
         private bool _draw = false;
         private Vector2Animation? _ellipseAnimation;
@@ -63,9 +63,6 @@ namespace HolzShots.Input.Selection.Decoration
                     sourceRectangle,
                     interpolationMode: D2DBitmapInterpolationMode.NearestNeighbor
                 );
-
-                g.DrawRectangle(sourceRectangle, D2DColor.Red);
-                g.DrawRectangle(destinationRectangle, D2DColor.Blue);
 
                 g.PopLayer();
             }
