@@ -10,7 +10,10 @@ namespace HolzShots.Input.Selection
 {
     internal abstract class SelectionState
     {
+        public Point CursorPosition { get; protected set; }
+
         public abstract void DrawDecorations(D2DGraphics g, DateTime now, TimeSpan elapsed, Rectangle bounds);
+        public virtual void UpdateCursorPosition(Point newCursorPosition) => CursorPosition = newCursorPosition;
     }
 
     internal class InitialState : SelectionState
@@ -80,7 +83,6 @@ namespace HolzShots.Input.Selection
     internal abstract class RectangleState : SelectionState
     {
         public Point UserSelectionStart { get; protected set; }
-        public Point CursorPosition { get; protected set; }
         protected RectangleState(Point userSelectionStart, Point cursorPosition)
         {
             UserSelectionStart = userSelectionStart;
@@ -110,8 +112,6 @@ namespace HolzShots.Input.Selection
         {
             // throw new NotImplementedException();
         }
-
-        public void UpdateCursorPosition(Point newCursorPosition) => CursorPosition = newCursorPosition;
     }
 
     internal class MovingRectangleState : RectangleState
@@ -123,7 +123,7 @@ namespace HolzShots.Input.Selection
             //  throw new NotImplementedException();
         }
 
-        public void MoveByNewCursorPosition(Point newCursorPosition)
+        public override void UpdateCursorPosition(Point newCursorPosition)
         {
             var prevStart = UserSelectionStart;
             var prev = CursorPosition;

@@ -27,6 +27,7 @@ namespace HolzShots.Input.Selection
         private float _currentDashOffset = 0.0f;
         private DateTime _selectionStarted;
         private SelectionState _state = new InitialState();
+        private readonly MagnifierDecoration _magnifier = new();
 
         private readonly IStateDecoration<RectangleState> _rectangleStateDecoration = new SelectionOutlineDecoration();
 
@@ -191,13 +192,14 @@ namespace HolzShots.Input.Selection
             switch (_state)
             {
                 case InitialState initial:
+                    initial.UpdateCursorPosition(currentPos);
                     initial.UpdateOutlinedWindow(availableWindowsForOutline, currentPos);
                     break;
                 case ResizingRectangleState resizing:
                     resizing.UpdateCursorPosition(currentPos);
                     break;
                 case MovingRectangleState moving:
-                    moving.MoveByNewCursorPosition(currentPos);
+                    moving.UpdateCursorPosition(currentPos);
                     break;
                 case FinalState _: break; // Nothing to be updated
                 default: Debug.Fail("Unhandled State"); break;
@@ -211,7 +213,7 @@ namespace HolzShots.Input.Selection
                     CancelSelection();
                     break;
                 case Keys.Space:
-                    // TODO: toggle magnifier
+                    _magnifier.Toggle();
                     break;
                 default: break;
             }
@@ -237,19 +239,10 @@ namespace HolzShots.Input.Selection
                     {
                         initial.EnsureDecorationInitialization(Device, g, now);
                         initial.DrawDecorations(g, now, elapsed, _imageBounds);
-
                         break;
                     }
                 case RectangleState availableSelection:
                     {
-                    /*
-                        if (_rectangleStateDecoration != null)
-                        {
-                            if (!_rectangleStateDecoration.IsInitialized)
-                                _rectangleStateDecoration.Initialize(Device, g, now);
-                            _rectangleStateDecoration.UpdateAndDraw(g, now, elapsed, availableSelection, _imageBounds);
-                        }
-                    */
                         var outline = availableSelection.GetSelectedOutline(_imageBounds);
                         D2DRect rect = outline; // Caution: implicit conversion which we don't want to do twice
 
@@ -275,6 +268,8 @@ namespace HolzShots.Input.Selection
                 case FinalState _: break; // Nothing to be updated
                 default: Debug.Fail("Unhandled State"); break;
             }
+
+            _magnifier.UpdateAndDraw(g, now, elapsed, _imageBounds, _state);
 #if DEBUG
             g.DrawTextCenter(_state.GetType().Name, D2DColor.White, SystemFonts.DefaultFont.Name, 36, ClientRectangle);
 #endif
