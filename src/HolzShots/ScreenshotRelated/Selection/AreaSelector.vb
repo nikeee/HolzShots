@@ -30,8 +30,6 @@ Namespace ScreenshotRelated.Selection
         Private Shared ReadOnly SelectionBorderPen As Pen = New Pen(Color.FromArgb(120, 255, 255, 255), 1.0)
         Private Shared ReadOnly MagnifierBorderPen As Pen = New Pen(Color.FromArgb(120, 255, 0, 0), 1.0)
 
-        Private ReadOnly _fpsWatch As New Global.HolzShots.Input.Selection.FpsStopWatch
-
         Friend Shared Property IsInAreaSelector As Boolean
 
         Sub New(settingsContext As HSSettings)
@@ -176,7 +174,6 @@ Namespace ScreenshotRelated.Selection
                 _magnifier.Draw(g, _wholeScreen, MagnifierBorderPen, SelectionBorderPen)
             End If
 
-            g.DrawString(_fpsWatch.FramesPerSecond.ToString(), New Font("Consolas", 14.0F), New SolidBrush(Color.White), 10.0F, 10.0F)
         End Sub
 
         Protected Overrides Sub OnPaintBackground(e As PaintEventArgs)
@@ -184,7 +181,6 @@ Namespace ScreenshotRelated.Selection
         End Sub
 
         Protected Overrides Sub OnPaint(e As PaintEventArgs)
-            _fpsWatch.Update()
             RenderInGraphics(e.Graphics)
             Invalidate()
         End Sub
@@ -211,7 +207,6 @@ Namespace ScreenshotRelated.Selection
             IsInAreaSelector = True
 
             Visible = True
-            _fpsWatch.Start()
 
             Native.User32.SetForegroundWindow(Handle)
 
