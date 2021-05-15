@@ -70,7 +70,7 @@ namespace HolzShots.Input.Selection.Decoration
                 widthLabelRect.Y + widthLabelRect.Height / 2f
             );
             var leftRulerLineEnd = new D2DPoint(
-                widthLabelRect.X,
+                widthLabelRect.X - AxisDistance,
                 widthLabelRect.Y + widthLabelRect.Height / 2f
             );
             if (leftRulerLineEnd.x - leftRulerLineStart.x > 0)
@@ -84,7 +84,7 @@ namespace HolzShots.Input.Selection.Decoration
             }
 
             var rightRulerLineStart = new D2DPoint(
-                widthLabelRect.X + widthLabelRect.Width,
+                widthLabelRect.X + widthLabelRect.Width + AxisDistance,
                 widthLabelRect.Y + widthLabelRect.Height / 2f
             );
             var rightRulerLineEnd = new D2DPoint(
