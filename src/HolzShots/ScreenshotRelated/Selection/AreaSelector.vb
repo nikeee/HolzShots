@@ -16,8 +16,6 @@ Namespace ScreenshotRelated.Selection
         Private _drawMangifier As Boolean = False
         Private ReadOnly _magnifier As New MagnifierDecoration
 
-        Private ReadOnly _decoration As ISelectionDecoration
-        Private ReadOnly _noSelectionDecoration As INoSelectionDecoration
         Private ReadOnly _backgroundOverlayBrush As Brush
 
         Private _wholeScreen As Image
@@ -54,11 +52,6 @@ Namespace ScreenshotRelated.Selection
             TopMost = True
 #End If
             Icon = Nothing
-
-            _decoration = New Nomination1Decoration()
-            _decoration.WholeScreen = SystemInformation.VirtualScreen
-
-            _noSelectionDecoration = New DefaultNoSelectionDecoration()
 
             SetStyle(ControlStyles.AllPaintingInWmPaint Or ControlStyles.OptimizedDoubleBuffer Or ControlStyles.UserPaint, True)
 
@@ -143,8 +136,6 @@ Namespace ScreenshotRelated.Selection
             _currentSelection.Height = If(_currentSelection.Y + _currentSelection.Height > Height, Height - _currentSelection.Y, _currentSelection.Height)
             _currentSelection.Width = If(_currentSelection.X + _currentSelection.Width > Width, Width - _currentSelection.X, _currentSelection.Width)
 
-            _decoration.Selection = _currentSelection
-
             If _drawMangifier Then
                 _magnifier.Update(_currentSelection, Bounds)
                 _previousQuickInfoLocation = Rectangle.Union(_previousQuickInfoLocation, _magnifier.PreviousMagnifierLocation)
@@ -160,7 +151,6 @@ Namespace ScreenshotRelated.Selection
                 ' 80, 40), False)
             End If
             _previousSelection = _currentSelection
-            _previousQuickInfoLocation = _decoration.InvalidationRectangle
         End Sub
 
         Private Sub RenderInGraphics(g As Graphics)
@@ -178,10 +168,8 @@ Namespace ScreenshotRelated.Selection
                 g.FillRectangle(_backgroundOverlayBrush, _currentSelection.X, _currentSelection.Y + _currentSelection.Height, Width - _currentSelection.X, Height - _currentSelection.Y)
                 g.FillRectangle(_backgroundOverlayBrush, _currentSelection.X + _currentSelection.Width, _currentSelection.Y, Width - _currentSelection.X - _currentSelection.Width, _currentSelection.Height)
 
-                _decoration.DrawSelection(g, SelectionBorderPen)
             Else
                 g.FillRectangle(_backgroundOverlayBrush, 0, 0, Width, Height)
-                _noSelectionDecoration.DrawNoSelection(g, Bounds)
             End If
 
             If _drawMangifier Then

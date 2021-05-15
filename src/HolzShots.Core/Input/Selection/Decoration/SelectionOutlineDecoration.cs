@@ -4,6 +4,7 @@ using unvell.D2DLib;
 
 namespace HolzShots.Input.Selection.Decoration
 {
+    // TODO: Draw selection dimensions ("Consolas", 9pt)
     class SelectionOutlineDecoration : IStateDecoration<RectangleState>
     {
         public bool IsInitialized { get; private set; }
