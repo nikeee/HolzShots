@@ -30,13 +30,10 @@ namespace HolzShots.Input.Selection
 
         public void EnsureDecorationInitialization(D2DDevice device, D2DGraphics g, DateTime now)
         {
-            if (Decorations != null)
-                return;
-
-            var ds = new[] { new HelpTextDecoration() };
-            foreach (var d in ds)
-                d.Initialize(device, g, now);
-            Decorations = ds;
+            Decorations ??= new IStateDecoration<InitialState>[] {
+                HelpTextDecoration.ForContext(device, g, now),
+                MouseWindowOutlineDecoration.ForContext(device, g, now),
+            };
         }
 
         public void UpdateOutlinedWindow(ISet<WindowRectangle> windows, Point cursorPosition)
@@ -123,7 +120,7 @@ namespace HolzShots.Input.Selection
 
         public override void DrawDecorations(D2DGraphics g, DateTime now, TimeSpan elapsed, Rectangle bounds)
         {
-           //  throw new NotImplementedException();
+            //  throw new NotImplementedException();
         }
 
         public void MoveByNewCursorPosition(Point newCursorPosition)

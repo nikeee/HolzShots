@@ -24,13 +24,15 @@ namespace HolzShots.Input.Selection.Decoration
         private static readonly TimeSpan FadeStart = TimeSpan.FromSeconds(5);
         private static readonly TimeSpan FadeDuration = TimeSpan.FromSeconds(3);
 
-        private RectangleAnimation[]? _animations = null;
+        private readonly RectangleAnimation[] _animations;
         private DateTime? _firstUpdate = null;
         private DateTime? _fadeOutStarted = null;
 
-        public bool IsInitialized { get; private set; }
+        public HelpTextDecoration(RectangleAnimation[] animations) => _animations = animations;
 
-        private RectangleAnimation[] InitializeAnimations(DateTime now, D2DGraphics g)
+        public static HelpTextDecoration ForContext(D2DDevice _, D2DGraphics g, DateTime now) => new(BuildAnimations(now, g));
+
+        private static RectangleAnimation[] BuildAnimations(DateTime now, D2DGraphics g)
         {
             var res = new RectangleAnimation[HelpText.Length];
 
@@ -67,15 +69,9 @@ namespace HolzShots.Input.Selection.Decoration
                 lastY = destination.Y + destination.Height + 1;
             }
 
-            IsInitialized = true;
-
             return res;
         }
 
-        public void Initialize(D2DDevice device, D2DGraphics g, DateTime now)
-        {
-            _animations = InitializeAnimations(now, g);
-        }
         public void UpdateAndDraw(D2DGraphics g, DateTime now, TimeSpan elapsed, Rectangle bounds, InitialState state)
         {
             _firstUpdate ??= now;
@@ -107,6 +103,6 @@ namespace HolzShots.Input.Selection.Decoration
                 g.DrawText(text, new D2DColor(opacity * FontColor.a, FontColor), FontName, helpSize, textLocation);
             }
         }
-        public void Dispose() => IsInitialized = false;
+        public void Dispose() { }
     }
 }

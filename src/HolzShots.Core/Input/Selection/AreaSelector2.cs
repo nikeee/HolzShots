@@ -238,19 +238,6 @@ namespace HolzShots.Input.Selection
                         initial.EnsureDecorationInitialization(Device, g, now);
                         initial.DrawDecorations(g, now, elapsed, _imageBounds);
 
-                        var outlineAnimation = initial.CurrentOutline;
-                        if (outlineAnimation != null)
-                        {
-                            Debug.Assert(initial.Title != null);
-
-                            outlineAnimation.Update(now, elapsed);
-
-                            var rect = outlineAnimation.Current;
-                            var selectionOutline = rect.AsD2DRect();
-
-                            g.DrawRectangle(selectionOutline, D2DColor.White, 1.0f);
-                            g.DrawTextCenter(initial.Title, D2DColor.WhiteSmoke, "Consolas", 14.0f, selectionOutline);
-                        }
                         break;
                     }
                 case RectangleState availableSelection:
