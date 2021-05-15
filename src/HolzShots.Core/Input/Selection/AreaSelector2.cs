@@ -231,38 +231,13 @@ namespace HolzShots.Input.Selection
 
             g.BeginRender(_background);
 
+            _state.EnsureDecorationInitialization(g, now);
+            _state.Draw(g, now, elapsed, _imageBounds, _image);
+
             switch (_state)
             {
-                case InitialState initial:
-                    {
-                        initial.EnsureDecorationInitialization(g, now);
-                        initial.DrawDecorations(g, now, elapsed, _imageBounds, _image);
-                        break;
-                    }
-                case RectangleState availableSelection:
-                    {
-                        var outline = availableSelection.GetSelectedOutline(_imageBounds);
-                        D2DRect rect = outline; // Caution: implicit conversion which we don't want to do twice
-
-                        g.DrawBitmap(_image, rect, rect);
-
-                        // We need to widen the rectangle by 0.5px so that the result will be exactly 1px wide.
-                        // Otherwise, it will be 2px and darker.
-                        var selectionOutline = outline.AsD2DRect();
-
-                        // TODO: Make this a decoration
-                        using var selectionOutlinePen = Device.CreatePen(
-                            D2DColor.White,
-                            D2DDashStyle.Custom,
-                            _customDashStyle,
-                            _currentDashOffset
-                        );
-
-                        g.DrawRectangle(selectionOutline, selectionOutlinePen, 1.0f);
-                        _currentDashOffset = (float)(now - _selectionStarted).TotalMilliseconds / 40;
-
-                        break;
-                    }
+                case InitialState initial: break;
+                case RectangleState availableSelection: break;
                 case FinalState _: break; // Nothing to be updated
                 default: Debug.Fail("Unhandled State"); break;
             }
