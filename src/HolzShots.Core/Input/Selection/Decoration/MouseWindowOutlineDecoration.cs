@@ -12,9 +12,9 @@ namespace HolzShots.Input.Selection.Decoration
         private D2DColor FontColor = D2DColor.WhiteSmoke;
         private D2DColor OutlineColor = D2DColor.White;
 
-        public static MouseWindowOutlineDecoration ForContext(D2DDevice _, D2DGraphics g, DateTime now) => new();
+        public static MouseWindowOutlineDecoration ForContext(D2DGraphics g, DateTime now) => new();
 
-        public void UpdateAndDraw(D2DGraphics g, DateTime now, TimeSpan elapsed, Rectangle bounds, InitialState state)
+        public void UpdateAndDraw(D2DGraphics g, DateTime now, TimeSpan elapsed, Rectangle bounds, D2DBitmap image, InitialState state)
         {
             var outlineAnimation = state.CurrentOutline;
             if (outlineAnimation == null)

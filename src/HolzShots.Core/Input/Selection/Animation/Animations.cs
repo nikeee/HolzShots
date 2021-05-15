@@ -58,6 +58,7 @@ namespace HolzShots.Input.Selection.Animation
         public Vector2 Source { get; }
         public Vector2 Destination { get; }
         public Vector2 Current { get; private set; }
+        public float Completed { get; private set; }
         public TimeSpan Duration { get; }
 
         public Vector2Animation(TimeSpan duration, Vector2 source, Vector2 destination)
@@ -81,6 +82,7 @@ namespace HolzShots.Input.Selection.Animation
 
             var percentageCompleted = (float)elapsed.TotalMilliseconds / (float)Duration.TotalMilliseconds;
 
+            Completed = percentageCompleted;
             Current = EasingMath.EaseOutCubic(percentageCompleted, Source, Destination);
         }
     }

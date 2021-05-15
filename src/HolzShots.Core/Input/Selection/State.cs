@@ -12,7 +12,7 @@ namespace HolzShots.Input.Selection
     {
         public Point CursorPosition { get; protected set; }
 
-        public abstract void DrawDecorations(D2DGraphics g, DateTime now, TimeSpan elapsed, Rectangle bounds);
+        public abstract void DrawDecorations(D2DGraphics g, DateTime now, TimeSpan elapsed, Rectangle bounds, D2DBitmap image);
         public virtual void UpdateCursorPosition(Point newCursorPosition) => CursorPosition = newCursorPosition;
     }
 
@@ -24,18 +24,18 @@ namespace HolzShots.Input.Selection
 
         internal IStateDecoration<InitialState>[] Decorations { get; private set; } = null!;
 
-        public override void DrawDecorations(D2DGraphics g, DateTime now, TimeSpan elapsed, Rectangle bounds)
+        public override void DrawDecorations(D2DGraphics g, DateTime now, TimeSpan elapsed, Rectangle bounds, D2DBitmap image)
         {
             Debug.Assert(Decorations != null);
             foreach (var d in Decorations)
-                d.UpdateAndDraw(g, now, elapsed, bounds, this);
+                d.UpdateAndDraw(g, now, elapsed, bounds, image, this);
         }
 
-        public void EnsureDecorationInitialization(D2DDevice device, D2DGraphics g, DateTime now)
+        public void EnsureDecorationInitialization(D2DGraphics g, DateTime now)
         {
             Decorations ??= new IStateDecoration<InitialState>[] {
-                HelpTextDecoration.ForContext(device, g, now),
-                MouseWindowOutlineDecoration.ForContext(device, g, now),
+                HelpTextDecoration.ForContext(g, now),
+                MouseWindowOutlineDecoration.ForContext(g, now),
             };
         }
 
@@ -108,7 +108,7 @@ namespace HolzShots.Input.Selection
     {
         public ResizingRectangleState(Point userSelectionStart, Point cursorPosition) : base(userSelectionStart, cursorPosition) { }
 
-        public override void DrawDecorations(D2DGraphics g, DateTime now, TimeSpan elapsed, Rectangle bounds)
+        public override void DrawDecorations(D2DGraphics g, DateTime now, TimeSpan elapsed, Rectangle bounds, D2DBitmap image)
         {
             // throw new NotImplementedException();
         }
@@ -118,7 +118,7 @@ namespace HolzShots.Input.Selection
     {
         public MovingRectangleState(Point userSelectionStart, Point cursorPosition) : base(userSelectionStart, cursorPosition) { }
 
-        public override void DrawDecorations(D2DGraphics g, DateTime now, TimeSpan elapsed, Rectangle bounds)
+        public override void DrawDecorations(D2DGraphics g, DateTime now, TimeSpan elapsed, Rectangle bounds, D2DBitmap image)
         {
             //  throw new NotImplementedException();
         }
@@ -144,7 +144,7 @@ namespace HolzShots.Input.Selection
         public Rectangle Result { get; }
         public FinalState(Rectangle result) => Result = result;
 
-        public override void DrawDecorations(D2DGraphics g, DateTime now, TimeSpan elapsed, Rectangle bounds)
+        public override void DrawDecorations(D2DGraphics g, DateTime now, TimeSpan elapsed, Rectangle bounds, D2DBitmap image)
         {
             // throw new NotImplementedException();
         }

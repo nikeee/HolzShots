@@ -1,9 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using unvell.D2DLib;
 
 namespace HolzShots.Input.Selection.Decoration
@@ -16,7 +12,7 @@ namespace HolzShots.Input.Selection.Decoration
         {
             //throw new NotImplementedException();
         }
-        public void UpdateAndDraw(D2DGraphics g, DateTime now, TimeSpan elapsed, Rectangle bounds, RectangleState state)
+        public void UpdateAndDraw(D2DGraphics g, DateTime now, TimeSpan elapsed, Rectangle bounds, D2DBitmap image, RectangleState state)
         {
             // throw new NotImplementedException();
         }

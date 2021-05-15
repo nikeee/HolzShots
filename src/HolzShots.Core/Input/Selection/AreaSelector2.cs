@@ -29,8 +29,6 @@ namespace HolzShots.Input.Selection
         private SelectionState _state = new InitialState();
         private readonly MagnifierDecoration _magnifier = new();
 
-        private readonly IStateDecoration<RectangleState> _rectangleStateDecoration = new SelectionOutlineDecoration();
-
         private ISet<WindowRectangle>? availableWindowsForOutline = null;
 
         public AreaSelector2(HSSettings settingsContext)
@@ -237,8 +235,8 @@ namespace HolzShots.Input.Selection
             {
                 case InitialState initial:
                     {
-                        initial.EnsureDecorationInitialization(Device, g, now);
-                        initial.DrawDecorations(g, now, elapsed, _imageBounds);
+                        initial.EnsureDecorationInitialization(g, now);
+                        initial.DrawDecorations(g, now, elapsed, _imageBounds, _image);
                         break;
                     }
                 case RectangleState availableSelection:
@@ -269,7 +267,7 @@ namespace HolzShots.Input.Selection
                 default: Debug.Fail("Unhandled State"); break;
             }
 
-            _magnifier.UpdateAndDraw(g, now, elapsed, _imageBounds, _state);
+            _magnifier.UpdateAndDraw(g, now, elapsed, _imageBounds, _image, _state);
 #if DEBUG
             g.DrawTextCenter(_state.GetType().Name, D2DColor.White, SystemFonts.DefaultFont.Name, 36, ClientRectangle);
 #endif

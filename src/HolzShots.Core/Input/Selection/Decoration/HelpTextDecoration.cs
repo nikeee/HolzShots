@@ -30,7 +30,7 @@ namespace HolzShots.Input.Selection.Decoration
 
         public HelpTextDecoration(RectangleAnimation[] animations) => _animations = animations;
 
-        public static HelpTextDecoration ForContext(D2DDevice _, D2DGraphics g, DateTime now) => new(BuildAnimations(now, g));
+        public static HelpTextDecoration ForContext(D2DGraphics g, DateTime now) => new(BuildAnimations(now, g));
 
         private static RectangleAnimation[] BuildAnimations(DateTime now, D2DGraphics g)
         {
@@ -72,7 +72,7 @@ namespace HolzShots.Input.Selection.Decoration
             return res;
         }
 
-        public void UpdateAndDraw(D2DGraphics g, DateTime now, TimeSpan elapsed, Rectangle bounds, InitialState state)
+        public void UpdateAndDraw(D2DGraphics g, DateTime now, TimeSpan elapsed, Rectangle bounds, D2DBitmap image, InitialState state)
         {
             _firstUpdate ??= now;
 

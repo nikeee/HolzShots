@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Numerics;
 using HolzShots.Input.Selection.Animation;
@@ -8,13 +9,9 @@ namespace HolzShots.Input.Selection.Decoration
 {
     internal class MagnifierDecoration : IStateDecoration<SelectionState>
     {
-        // private static readonly D2DSize Margin = new(10, 5);
-        // private static readonly D2DColor BackgroundColor = new(0.2f, 1f, 1f, 1f);
-        // private static readonly D2DColor FontColor = new(1f, 0.9f, 0.9f, 0.9f);
-        // private static readonly TimeSpan FadeStart = TimeSpan.FromSeconds(5);
         private static readonly D2DColor OutlineColor = new(1f, 0.9f, 0.9f, 0.9f);
-        private static readonly TimeSpan FadeDuration = TimeSpan.FromMilliseconds(200);
-        private const float CircleDiameter = 100f;
+        private static readonly TimeSpan FadeDuration = TimeSpan.FromMilliseconds(150);
+        private const int CircleDiameter = 200;
 
         private bool _draw = false;
         private Vector2Animation? _ellipseAnimation;
@@ -26,7 +23,7 @@ namespace HolzShots.Input.Selection.Decoration
                 _ellipseAnimation = null;
         }
 
-        public void UpdateAndDraw(D2DGraphics g, DateTime now, TimeSpan elapsed, Rectangle bounds, SelectionState state)
+        public void UpdateAndDraw(D2DGraphics g, DateTime now, TimeSpan elapsed, Rectangle bounds, D2DBitmap image, SelectionState state)
         {
             if (!_draw)
                 return;
@@ -39,17 +36,47 @@ namespace HolzShots.Input.Selection.Decoration
 
             _ellipseAnimation.Update(now, elapsed);
 
-            var center = new Vector2(state.CursorPosition.X, state.CursorPosition.Y);
+            var cursorPos = state.CursorPosition;
 
-            var ellipse = new D2DEllipse(
-                center.X,
-                center.Y,
-                _ellipseAnimation.Current.X,
-                _ellipseAnimation.Current.Y
-            );
+            var center = new D2DPoint(cursorPos.X, cursorPos.Y);
+            var size = new D2DSize(_ellipseAnimation.Current.X, _ellipseAnimation.Current.Y);
+            var ellipse = new D2DEllipse(center, size);
 
-            g.FillEllipse(ellipse, D2DColor.WhiteSmoke);
-            g.DrawEllipse(ellipse, OutlineColor);
+            using (var ellipseGeometry = g.Device.CreateEllipseGeometry(center, size))
+            {
+                // TODO: This is bugg in corners of the screen. However, we don't care at the moment
+
+                g.PushLayer(ellipseGeometry);
+
+                var sourceRectangle = new Rectangle(cursorPos, new Size(CircleDiameter, CircleDiameter));
+                sourceRectangle.Offset(-CircleDiameter / 2, -CircleDiameter / 2);
+
+                var destinationRectangle = new Rectangle(
+                  cursorPos,
+                  new Size(CircleDiameter * 2, CircleDiameter * 2)
+                );
+                destinationRectangle.Offset(-CircleDiameter, -CircleDiameter);
+
+                g.DrawBitmap(
+                    image,
+                    destinationRectangle,
+                    sourceRectangle,
+                    interpolationMode: D2DBitmapInterpolationMode.NearestNeighbor
+                );
+
+                g.DrawRectangle(sourceRectangle, D2DColor.Red);
+                g.DrawRectangle(destinationRectangle, D2DColor.Blue);
+
+                g.PopLayer();
+            }
+
+            var prevAntiAlias = g.Antialias;
+            g.Antialias = true;
+
+            var percentageCompleted = _ellipseAnimation.Completed;
+            g.DrawEllipse(ellipse, new D2DColor(percentageCompleted, OutlineColor));
+
+            g.Antialias = prevAntiAlias;
 
         }
         public void Dispose() { }
