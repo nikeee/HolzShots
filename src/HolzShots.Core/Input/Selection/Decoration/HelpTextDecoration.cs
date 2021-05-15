@@ -14,7 +14,7 @@ namespace HolzShots.Input.Selection.Decoration
         private static readonly (string, float)[] HelpText = new[] {
             ("Left Mouse: Select area", FontSize),
             ("Right Mouse: Move selected area", FontSize),
-            // "Space Bar: Toggle magnifier", FontSize),
+            ("Space: Toggle magnifier", FontSize),
             ("Escape: Cancel", SmallFontSize),
         };
 
