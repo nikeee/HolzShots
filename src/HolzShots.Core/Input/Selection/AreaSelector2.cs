@@ -248,10 +248,8 @@ namespace HolzShots.Input.Selection
                             var rect = outlineAnimation.Current;
                             var selectionOutline = rect.AsD2DRect();
 
-                            // TODO: Animate
-                            // TODO: Make this pretty
-                            g.DrawRectangle(selectionOutline, D2DColor.CornflowerBlue, 1.0f);
-                            g.DrawTextCenter(initial.Title, D2DColor.CornflowerBlue, "Consolas", 14.0f, selectionOutline);
+                            g.DrawRectangle(selectionOutline, D2DColor.White, 1.0f);
+                            g.DrawTextCenter(initial.Title, D2DColor.WhiteSmoke, "Consolas", 14.0f, selectionOutline);
                         }
                         break;
                     }

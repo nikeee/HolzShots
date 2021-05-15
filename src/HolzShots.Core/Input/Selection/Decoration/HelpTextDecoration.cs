@@ -7,15 +7,16 @@ namespace HolzShots.Input.Selection.Decoration
 {
     internal class HelpTextDecoration : IStateDecoration<InitialState>
     {
-        private static readonly string[] HelpText = new[] {
-            "Left Mouse: Select area",
-            "Right Mouse: Move selected area",
-            // "Space Bar: Toggle magnifier",
-            "Escape: Cancel",
-        };
-
         private const string FontName = "Consolas";
         private const float FontSize = 24.0f;
+        private const float SmallFontSize = 14.0f;
+
+        private static readonly (string, float)[] HelpText = new[] {
+            ("Left Mouse: Select area", FontSize),
+            ("Right Mouse: Move selected area", FontSize),
+            // "Space Bar: Toggle magnifier", FontSize),
+            ("Escape: Cancel", SmallFontSize),
+        };
 
         private static readonly D2DSize Margin = new(10, 5);
         private static readonly D2DColor BackgroundColor = new(0.2f, 1f, 1f, 1f);
@@ -40,7 +41,8 @@ namespace HolzShots.Input.Selection.Decoration
 
             for (int i = 0; i < res.Length; ++i)
             {
-                var textSize = g.MeasureText(HelpText[i], FontName, FontSize, someRandomSize);
+                var (text, fontSize) = HelpText[i];
+                var textSize = g.MeasureText(text, FontName, fontSize, someRandomSize);
                 var destination = new Rectangle(
                     lastX,
                     lastY,
@@ -89,7 +91,7 @@ namespace HolzShots.Input.Selection.Decoration
             for (int i = 0; i < _animations.Length; ++i)
             {
                 var animation = _animations[i];
-                var text = HelpText[i];
+                var (text, helpSize) = HelpText[i];
 
                 animation.Update(now, elapsed);
                 var rect = animation.Current.AsD2DRect();
@@ -102,7 +104,7 @@ namespace HolzShots.Input.Selection.Decoration
                 );
 
                 g.FillRectangle(rect, new D2DColor(opacity * BackgroundColor.a, BackgroundColor));
-                g.DrawText(text, new D2DColor(opacity * FontColor.a, FontColor), FontName, FontSize, textLocation);
+                g.DrawText(text, new D2DColor(opacity * FontColor.a, FontColor), FontName, helpSize, textLocation);
             }
         }
         public void Dispose() => IsInitialized = false;
