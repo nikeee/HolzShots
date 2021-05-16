@@ -1,8 +1,8 @@
-Namespace ScreenshotRelated
+Namespace UI
     Friend Class BackgroundForm
         Inherits Form
 
-        Sub New(ByVal location As Point, ByVal size As Size)
+        Sub New(location As Point, size As Size)
             StartPosition = FormStartPosition.Manual
             FormBorderStyle = FormBorderStyle.None
             BackColor = Color.Black
