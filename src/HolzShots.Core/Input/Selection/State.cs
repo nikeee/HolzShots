@@ -8,7 +8,7 @@ using unvell.D2DLib;
 
 namespace HolzShots.Input.Selection
 {
-    internal abstract class SelectionState : IDisposable
+    abstract class SelectionState : IDisposable
     {
         public Point CursorPosition { get; protected set; }
 
@@ -18,13 +18,13 @@ namespace HolzShots.Input.Selection
         public abstract void Dispose();
     }
 
-    internal class InitialState : SelectionState
+    class InitialState : SelectionState
     {
         private WindowRectangle? _currentSelectedWindow;
         public RectangleAnimation? CurrentOutline { get; private set; }
         public string? Title { get; private set; }
 
-        internal IStateDecoration<InitialState>[] Decorations { get; private set; } = null!;
+        public IStateDecoration<InitialState>[] Decorations { get; private set; } = null!;
 
         public override void Draw(D2DGraphics g, DateTime now, TimeSpan elapsed, Rectangle bounds, D2DBitmap image)
         {
@@ -89,7 +89,7 @@ namespace HolzShots.Input.Selection
         }
     }
 
-    internal abstract class RectangleState : SelectionState
+    abstract class RectangleState : SelectionState
     {
         public Point UserSelectionStart { get; protected set; }
         public IStateDecoration<RectangleState>[] Decorations { get; private set; } = null!;
@@ -135,12 +135,12 @@ namespace HolzShots.Input.Selection
         }
     }
 
-    internal class ResizingRectangleState : RectangleState
+    class ResizingRectangleState : RectangleState
     {
         public ResizingRectangleState(Point userSelectionStart, Point cursorPosition) : base(userSelectionStart, cursorPosition) { }
     }
 
-    internal class MovingRectangleState : RectangleState
+    class MovingRectangleState : RectangleState
     {
         public MovingRectangleState(Point userSelectionStart, Point cursorPosition) : base(userSelectionStart, cursorPosition) { }
 
@@ -160,7 +160,7 @@ namespace HolzShots.Input.Selection
         }
     }
 
-    internal class FinalState : SelectionState
+    class FinalState : SelectionState
     {
         public Rectangle Result { get; }
         public FinalState(Rectangle result) => Result = result;

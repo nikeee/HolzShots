@@ -4,7 +4,7 @@ using System.Numerics;
 
 namespace HolzShots.Input.Selection.Animation
 {
-    public abstract class Animation
+    abstract class Animation
     {
         protected DateTime _start;
         protected bool _isRunning;
@@ -20,7 +20,7 @@ namespace HolzShots.Input.Selection.Animation
         }
     }
 
-    public class RectangleAnimation : Animation
+    class RectangleAnimation : Animation
     {
         public Rectangle Source { get; }
         public Rectangle Destination { get; }
@@ -52,7 +52,7 @@ namespace HolzShots.Input.Selection.Animation
         }
     }
 
-    public class Vector2Animation : Animation
+    class Vector2Animation : Animation
     {
         public Vector2 Source { get; }
         public Vector2 Destination { get; }

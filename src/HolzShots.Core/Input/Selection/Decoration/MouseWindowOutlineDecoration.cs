@@ -5,7 +5,7 @@ using unvell.D2DLib;
 
 namespace HolzShots.Input.Selection.Decoration
 {
-    internal class MouseWindowOutlineDecoration : IStateDecoration<InitialState>
+    class MouseWindowOutlineDecoration : IStateDecoration<InitialState>
     {
         private const string FontName = "Consolas";
         private const float FontSize = 14.0f;
