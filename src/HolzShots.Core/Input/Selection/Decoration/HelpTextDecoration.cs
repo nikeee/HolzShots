@@ -90,11 +90,11 @@ namespace HolzShots.Input.Selection.Decoration
                 var (text, helpSize) = HelpText[i];
 
                 animation.Update(now);
-                var rect = animation.Current.AsD2DRect();
+                var rect = animation.Current;
 
-                var textLocation = new Rectangle(
-                    animation.Destination.X + (int)Margin.width,
-                    animation.Destination.Y + (int)Margin.height,
+                var textLocation = new D2DRect(
+                    animation.Destination.X + Margin.width,
+                    animation.Destination.Y + Margin.height,
                     animation.Destination.Width,
                     animation.Destination.Height
                 );

@@ -14,6 +14,11 @@ namespace HolzShots.Input.Selection
     public static class Vector4Extensions
     {
         public static Rectangle ToRectangle(this Vector4 v) => new((int)v.X, (int)v.Y, (int)v.Z, (int)v.W);
+        public static D2DRect ToD2DRect(this Vector4 v) => new((int)v.X, (int)v.Y, (int)v.Z, (int)v.W);
         public static RectangleF ToRectangleF(this Vector4 v) => new(v.X, v.Y, v.Z, v.W);
+    }
+    public static class D2DRectExtensions
+    {
+        public static Vector4 AsVector4(this D2DRect v) => new(v.X, v.Y, v.Width, v.Height);
     }
 }

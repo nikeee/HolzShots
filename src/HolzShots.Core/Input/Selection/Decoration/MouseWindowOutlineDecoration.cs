@@ -16,7 +16,7 @@ namespace HolzShots.Input.Selection.Decoration
 
         public void UpdateAndDraw(D2DGraphics g, DateTime now, TimeSpan elapsed, Rectangle bounds, D2DBitmap image, InitialState state)
         {
-            var outlineAnimation = state.CurrentOutline;
+            var outlineAnimation = state.CurrentOutlineAnimation;
             if (outlineAnimation == null)
                 return;
 
@@ -25,10 +25,8 @@ namespace HolzShots.Input.Selection.Decoration
             outlineAnimation.Update(now);
 
             var rect = outlineAnimation.Current;
-            var selectionOutline = rect.AsD2DRect();
-
-            g.DrawRectangle(selectionOutline, OutlineColor, 1.0f);
-            g.DrawTextCenter(state.Title, FontColor, FontName, FontSize, selectionOutline);
+            g.DrawRectangle(rect, OutlineColor, 1.0f);
+            g.DrawTextCenter(state.Title, FontColor, FontName, FontSize, rect);
         }
 
         public void Dispose() { }

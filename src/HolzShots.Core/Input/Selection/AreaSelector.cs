@@ -267,7 +267,8 @@ namespace HolzShots.Input.Selection
             Debug.Assert(SelectionSemaphore.IsInAreaSelection);
             SelectionSemaphore.IsInAreaSelection = false;
 
-            _tcs.SetResult(outline.Destination);
+            Debug.Assert(outline.HasValue);
+            _tcs.SetResult(outline.Value);
             CloseInternal();
         }
         private void FinishSelection(FinalState state)

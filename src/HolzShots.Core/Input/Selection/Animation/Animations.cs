@@ -1,6 +1,7 @@
 using System;
 using System.Drawing;
 using System.Numerics;
+using unvell.D2DLib;
 
 namespace HolzShots.Input.Selection.Animation
 {
@@ -25,11 +26,11 @@ namespace HolzShots.Input.Selection.Animation
 
     class RectangleAnimation : BaseAnimation
     {
-        public Rectangle Source { get; }
-        public Rectangle Destination { get; }
-        public Rectangle Current { get; private set; }
+        public D2DRect Source { get; }
+        public D2DRect Destination { get; }
+        public D2DRect Current { get; private set; }
 
-        public RectangleAnimation(DateTime startTime, TimeSpan duration, Rectangle source, Rectangle destination)
+        public RectangleAnimation(DateTime startTime, TimeSpan duration, D2DRect source, D2DRect destination)
             : base(startTime, duration)
         {
             Source = source;
@@ -54,7 +55,7 @@ namespace HolzShots.Input.Selection.Animation
 
             var progress = (float)Elapsed.TotalMilliseconds / (float)Duration.TotalMilliseconds;
 
-            Current = EasingMath.EaseOutCubic(progress, Source, Destination);
+            Current = EasingMath.EaseOutCubic(progress, Source.AsVector4(), Destination.AsVector4()).ToD2DRect();
         }
     }
 
