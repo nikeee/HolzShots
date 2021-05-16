@@ -54,7 +54,9 @@ namespace HolzShots.Input.Selection
                         return true;
                 }
 
-                var title = WindowHelpers.GetWindowTitle(windowHandle);
+                var title = WindowHelpers.GetWindowTitle(windowHandle).Trim();
+                if (string.IsNullOrWhiteSpace(title))
+                    title = null;
 
                 result.Add(new WindowRectangle(windowHandle, r, title));
 
@@ -83,30 +85,8 @@ namespace HolzShots.Input.Selection
         }
     }
 
-    class WindowRectangle : IEquatable<WindowRectangle>
+    record WindowRectangle(IntPtr Handle, System.Drawing.Rectangle Rectangle, string? Title)
     {
-        public IntPtr Handle { get; }
-        public System.Drawing.Rectangle Rectangle { get; }
-        public string Title { get; }
-
-        public WindowRectangle(IntPtr handle, System.Drawing.Rectangle rectangle, string title)
-        {
-            Handle = handle;
-            Rectangle = rectangle;
-            Title = title;
-        }
-
-        public override string ToString() => $"{Title}: {Rectangle}";
-
         public override int GetHashCode() => Handle.GetHashCode();
-
-        public override bool Equals(object? obj)
-        {
-            if (obj == null || typeof(WindowRectangle) != obj.GetType())
-                return false;
-            return Equals((WindowRectangle)obj);
-        }
-
-        public bool Equals(WindowRectangle? other) => other?.Handle == Handle && other.Rectangle == Rectangle; // && other.Title == Title;
     }
 }
