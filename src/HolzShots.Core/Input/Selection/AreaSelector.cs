@@ -26,7 +26,7 @@ namespace HolzShots.Input.Selection
         private SelectionState _state = new InitialState();
         private readonly MagnifierDecoration _magnifier = new();
 
-        private ISet<WindowRectangle>? availableWindowsForOutline = null;
+        private IReadOnlyList<WindowRectangle>? availableWindowsForOutline = null; // List, because we need them ordered.
 
         public AreaSelector(HSSettings settingsContext)
         {
@@ -152,7 +152,7 @@ namespace HolzShots.Input.Selection
                                 // In this case, he propably wantet to select a window that was outlined (if there was one)
                                 // TODO: This is a hack, we need to make this more pretty (put this in the FinalState)
                                 var i = new InitialState();
-                                i.UpdateOutlinedWindow(availableWindowsForOutline, e.Location);
+                                i.SelectWindowBasedOnMouseMove(availableWindowsForOutline, e.Location);
                                 FinishSelectionByWindowOutlineClick(i);
                             }
                             break;
@@ -188,7 +188,7 @@ namespace HolzShots.Input.Selection
             {
                 case InitialState initial:
                     initial.UpdateCursorPosition(currentPos);
-                    initial.UpdateOutlinedWindow(availableWindowsForOutline, currentPos);
+                    initial.SelectWindowBasedOnMouseMove(availableWindowsForOutline, currentPos);
                     break;
                 case ResizingRectangleState resizing:
                     resizing.UpdateCursorPosition(currentPos);

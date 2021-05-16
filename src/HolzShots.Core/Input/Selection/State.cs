@@ -43,7 +43,7 @@ namespace HolzShots.Input.Selection
             };
         }
 
-        public void UpdateOutlinedWindow(ISet<WindowRectangle> windows, Point cursorPosition)
+        public void SelectWindowBasedOnMouseMove(IReadOnlyList<WindowRectangle> windows, Point cursorPosition)
         {
             if (windows == null)
             {

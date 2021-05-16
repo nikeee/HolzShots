@@ -8,9 +8,12 @@ namespace HolzShots.Input.Selection
 {
     class WindowFinder
     {
-        public static Task<ISet<WindowRectangle>> GetCurrentWindowRectanglesAsync(IntPtr excludedHandle, CancellationToken ct)
+        public static Task<IReadOnlyList<WindowRectangle>> GetCurrentWindowRectanglesAsync(IntPtr excludedHandle, CancellationToken ct)
         {
-            return Task.Run(() => GetCurrentWindowRectangles(excludedHandle), ct);
+            return Task.Run(
+                () => new List<WindowRectangle>(GetCurrentWindowRectangles(excludedHandle)) as IReadOnlyList<WindowRectangle>,
+                ct
+            );
         }
 
         public static ISet<WindowRectangle> GetCurrentWindowRectangles(IntPtr excludedHandle)
@@ -97,13 +100,13 @@ namespace HolzShots.Input.Selection
 
         public override int GetHashCode() => Handle.GetHashCode();
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (obj == null || typeof(WindowRectangle) != obj.GetType())
                 return false;
             return Equals((WindowRectangle)obj);
         }
 
-        public bool Equals(WindowRectangle other) => other.Handle == Handle && other.Rectangle == Rectangle; // && other.Title == Title;
+        public bool Equals(WindowRectangle? other) => other?.Handle == Handle && other.Rectangle == Rectangle; // && other.Title == Title;
     }
 }
