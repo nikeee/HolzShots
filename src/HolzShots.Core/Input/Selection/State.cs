@@ -43,9 +43,40 @@ namespace HolzShots.Input.Selection
             };
         }
 
+        public void SelectWindowWithOffset(IReadOnlyList<WindowRectangle>? windows, int offset)
+        {
+            if (windows == null || windows.Count == 0)
+            {
+                ResetWindowHighlight();
+                return;
+            }
+
+            var index = GetOffsetIndex(windows, _currentSelectedWindow, offset);
+            HighlightWindow(windows[index]);
+        }
+
+        /// <remarks>
+        /// - Wraps around the list end
+        /// - Returns 0 if the currentWindow element was not found in the list
+        /// </remarks>
+        public int GetOffsetIndex(IReadOnlyList<WindowRectangle> windows, WindowRectangle? currentWindow, int offset)
+        {
+            if (windows.Count == 0)
+                throw new ArgumentException("Window list was empty, need at least one element");
+
+            if (currentWindow == null)
+                return 0;
+
+            var prevIndex = windows.IndexOf(currentWindow);
+
+            return prevIndex == null
+                ? 0
+                : ((int)prevIndex + offset) % windows.Count;
+        }
+
         public void SelectWindowBasedOnMouseMove(IReadOnlyList<WindowRectangle>? windows, Point cursorPosition)
         {
-            if (windows == null)
+            if (windows == null || windows.Count == 0)
             {
                 ResetWindowHighlight();
                 return;
