@@ -66,9 +66,6 @@
     <Compile Update="Drawing\Tools\UI\ScaleWindow.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="UI\BackgroundForm.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Update="UI\MainWindow.vb" />
     <Compile Update="UI\MainWindow.Designer.vb">
       <DependentUpon>MainWindow.vb</DependentUpon>

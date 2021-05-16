@@ -86,7 +86,7 @@ Namespace Input.Actions
             Dim cursorPositonOnScreenshot As New Point(Cursor.Position.X - drawingRectangle.Location.X, Cursor.Position.Y - drawingRectangle.Location.Y)
 
 
-            Using bg As New UI.BackgroundForm(drawingRectangle.Location, drawingRectangle.Size) _
+            Using bg As New BackgroundForm(drawingRectangle.Location, drawingRectangle.Size) _
                 'New Point(rct.Left, rct.Top), New Size(rct.Right - rct.Left, rct.Bottom - rct.Top))
                 'Using bg As New FloatingWindow(nrct.X, nrct.Y, nrct.Width, nrct.Height)
                 Using bmpBlack As New Bitmap(drawingRectangle.Width, drawingRectangle.Height, PixelFormat.Format32bppPArgb)
