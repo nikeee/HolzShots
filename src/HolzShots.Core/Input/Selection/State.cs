@@ -58,7 +58,6 @@ namespace HolzShots.Input.Selection
 
             // TODO: Clean up this mess
 
-            var now = DateTime.Now;
 
             foreach (var candidate in windows)
             {
@@ -67,18 +66,7 @@ namespace HolzShots.Input.Selection
                     if (previousWindow == candidate)
                         return;
 
-                    _currentSelectedWindow = candidate;
-
-                    var source = previousOutline ?? candidate.Rectangle;
-
-                    Title = candidate.Title;
-                    CurrentOutline = candidate.Rectangle;
-                    CurrentOutlineAnimation = new RectangleAnimation(
-                        now,
-                        TimeSpan.FromMilliseconds(100),
-                        source,
-                        candidate.Rectangle
-                    );
+                    HighlightWindow(candidate);
                     return;
                 }
             }
@@ -86,6 +74,22 @@ namespace HolzShots.Input.Selection
             CurrentOutline = null;
             CurrentOutlineAnimation = null;
             Title = null;
+        }
+
+        private void HighlightWindow(WindowRectangle candidate)
+        {
+            var source = CurrentOutline ?? candidate.Rectangle;
+
+            _currentSelectedWindow = candidate;
+
+            Title = candidate.Title;
+            CurrentOutline = candidate.Rectangle;
+            CurrentOutlineAnimation = new RectangleAnimation(
+                DateTime.Now,
+                TimeSpan.FromMilliseconds(100),
+                source,
+                candidate.Rectangle
+            );
         }
 
         public override void Dispose()
