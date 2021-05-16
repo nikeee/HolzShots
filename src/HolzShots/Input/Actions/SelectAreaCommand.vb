@@ -1,4 +1,3 @@
-Imports HolzShots.ScreenshotRelated.Selection
 Imports HolzShots.Composition.Command
 Imports HolzShots.Threading
 Imports HolzShots.Drawing
@@ -15,13 +14,13 @@ Namespace Input.Actions
 
             ' TODO: Add proper assertion
             ' Debug.Assert(ManagedSettings.EnableAreaScreenshot)
-            Debug.Assert(Not AreaSelector.IsInAreaSelector)
+            Debug.Assert(Not SelectionSemaphore.IsInAreaSelection)
 
             If Not settingsContext.EnableHotkeysDuringFullscreen AndAlso HolzShots.Windows.Forms.EnvironmentEx.IsFullscreenAppRunning() Then Return
 
             ' TODO: Re-add proper if condition
-            'If ManagedSettings.EnableAreaScreenshot AndAlso Not AreaSelector.IsInAreaSelector Then
-            If Not AreaSelector.IsInAreaSelector Then
+            'If ManagedSettings.EnableAreaScreenshot AndAlso Not SelectionSemaphore.IsInAreaSelection Then
+            If Not SelectionSemaphore.IsInAreaSelection Then
                 Dim shot As Screenshot
                 Try
                     shot = Await CaptureSelection(settingsContext).ConfigureAwait(True)
@@ -40,9 +39,9 @@ Namespace Input.Actions
         Shared Async Function CaptureSelection(settingsContext As HSSettings) As Task(Of Screenshot)
             If settingsContext Is Nothing Then Throw New ArgumentNullException(NameOf(settingsContext))
 
-            Debug.Assert(Not AreaSelector.IsInAreaSelector)
+            Debug.Assert(Not SelectionSemaphore.IsInAreaSelection)
 
-            If AreaSelector.IsInAreaSelector Then Return Nothing
+            If SelectionSemaphore.IsInAreaSelection Then Return Nothing
 
             Using prio As New ProcessPriorityRequest()
                 Using screen = ScreenshotCreator.CaptureScreenshot(SystemInformation.VirtualScreen)

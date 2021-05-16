@@ -58,9 +58,12 @@ namespace HolzShots.Input.Selection
 
             Debug.Assert(_image == null);
             Debug.Assert(_tcs == null);
+            Debug.Assert(!SelectionSemaphore.IsInAreaSelection);
 
             if (_tcs != null)
                 return _tcs.Task;
+
+            SelectionSemaphore.IsInAreaSelection = true;
 
             _imageBounds = new Rectangle(0, 0, image.Width, image.Height);
             _image = Device.CreateBitmapFromGDIBitmap(image);
@@ -73,7 +76,6 @@ namespace HolzShots.Input.Selection
 
             Visible = true;
             Cursor = _cursor;
-
 
             return _tcs.Task;
         }
@@ -251,6 +253,9 @@ namespace HolzShots.Input.Selection
         private void CancelSelection()
         {
             Debug.Assert(_tcs != null);
+            Debug.Assert(SelectionSemaphore.IsInAreaSelection);
+            SelectionSemaphore.IsInAreaSelection = false;
+
             _tcs.SetCanceled();
             CloseInternal();
         }
@@ -264,6 +269,9 @@ namespace HolzShots.Input.Selection
             }
 
             Debug.Assert(_tcs != null);
+            Debug.Assert(SelectionSemaphore.IsInAreaSelection);
+            SelectionSemaphore.IsInAreaSelection = false;
+
             _tcs.SetResult(outline.Destination);
             CloseInternal();
         }

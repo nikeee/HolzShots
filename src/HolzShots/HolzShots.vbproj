@@ -66,9 +66,6 @@
     <Compile Update="Drawing\Tools\UI\ScaleWindow.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="ScreenshotRelated\Selection\AreaSelector.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Update="ScreenshotRelated\BackgroundForm.vb">
       <SubType>Form</SubType>
     </Compile>
