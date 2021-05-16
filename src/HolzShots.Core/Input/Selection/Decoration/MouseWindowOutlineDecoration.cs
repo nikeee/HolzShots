@@ -22,7 +22,7 @@ namespace HolzShots.Input.Selection.Decoration
 
             Debug.Assert(state.Title != null);
 
-            outlineAnimation.Update(now, elapsed);
+            outlineAnimation.Update(now);
 
             var rect = outlineAnimation.Current;
             var selectionOutline = rect.AsD2DRect();

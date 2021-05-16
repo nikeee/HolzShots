@@ -55,6 +55,8 @@ namespace HolzShots.Input.Selection
 
             // TODO: Clean up this mess
 
+            var now = DateTime.Now;
+
             foreach (var candidate in windows)
             {
                 if (candidate.Rectangle.Contains(cursorPosition))
@@ -68,11 +70,11 @@ namespace HolzShots.Input.Selection
 
                     Title = candidate.Title;
                     CurrentOutline = new RectangleAnimation(
+                        now,
                         TimeSpan.FromMilliseconds(100),
                         source,
                         candidate.Rectangle
                     );
-                    CurrentOutline.Start(DateTime.Now);
                     return;
                 }
             }

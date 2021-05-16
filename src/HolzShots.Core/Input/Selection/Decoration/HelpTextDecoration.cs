@@ -58,13 +58,13 @@ namespace HolzShots.Input.Selection.Decoration
                 );
 
                 var animation = new RectangleAnimation(
+                    now,
                     TimeSpan.FromMilliseconds(150 * i + 100),
                     start,
                     destination
                 );
 
                 res[i] = animation;
-                animation.Start(now);
 
                 lastY = destination.Y + destination.Height + 1;
             }
@@ -89,7 +89,7 @@ namespace HolzShots.Input.Selection.Decoration
                 var animation = _animations[i];
                 var (text, helpSize) = HelpText[i];
 
-                animation.Update(now, elapsed);
+                animation.Update(now);
                 var rect = animation.Current.AsD2DRect();
 
                 var textLocation = new Rectangle(

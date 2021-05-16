@@ -30,11 +30,10 @@ namespace HolzShots.Input.Selection.Decoration
 
             if (_ellipseAnimation == null)
             {
-                _ellipseAnimation = new Vector2Animation(FadeDuration, Vector2.Zero, new Vector2(CircleDiameter));
-                _ellipseAnimation.Start(now);
+                _ellipseAnimation = new Vector2Animation(now, FadeDuration, Vector2.Zero, new Vector2(CircleDiameter));
             }
 
-            _ellipseAnimation.Update(now, elapsed);
+            _ellipseAnimation.Update(now);
 
             var cursorPos = state.CursorPosition;
 
@@ -44,7 +43,7 @@ namespace HolzShots.Input.Selection.Decoration
 
             using (var ellipseGeometry = g.Device.CreateEllipseGeometry(center, size))
             {
-                // TODO: This is bugg in corners of the screen. However, we don't care at the moment
+                // TODO: This is bug in corners of the screen. However, we don't care at the moment
 
                 g.PushLayer(ellipseGeometry);
 

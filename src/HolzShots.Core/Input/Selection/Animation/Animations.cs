@@ -4,87 +4,98 @@ using System.Numerics;
 
 namespace HolzShots.Input.Selection.Animation
 {
-    abstract class Animation
+    abstract class BaseAnimation
     {
-        protected DateTime _start;
-        protected bool _isRunning;
+        public DateTime Start { get; }
+        public TimeSpan Duration { get; }
+        public TimeSpan Elapsed { get; private set;  }
+        public bool IsDone { get; private set; }
 
-        public void Start(DateTime startTime)
+        protected BaseAnimation(DateTime startTime, TimeSpan duration)
         {
-            _start = startTime;
-            _isRunning = true;
+            Start = startTime;
+            Duration = duration;
         }
-        public void Stop()
+        public virtual void Update(DateTime now)
         {
-            _isRunning = false;
+            Elapsed = now - Start;
+            IsDone = Elapsed > Duration;
         }
     }
 
-    class RectangleAnimation : Animation
+    class RectangleAnimation : BaseAnimation
     {
         public Rectangle Source { get; }
         public Rectangle Destination { get; }
         public Rectangle Current { get; private set; }
-        public TimeSpan Duration { get; }
 
-        public RectangleAnimation(TimeSpan duration, Rectangle source, Rectangle destination)
+        public RectangleAnimation(DateTime startTime, TimeSpan duration, Rectangle source, Rectangle destination)
+            : base(startTime, duration)
         {
-            Duration = duration;
             Source = source;
             Destination = destination;
         }
 
-        public void Update(DateTime now, TimeSpan _)
+        public override void Update(DateTime now)
         {
-            if (!_isRunning)
-                return;
-
-            var elapsed = now - _start;
-            if (elapsed > Duration)
+            if (IsDone)
             {
                 Current = Destination;
                 return;
             }
 
-            var percentageCompleted = (float)elapsed.TotalMilliseconds / (float)Duration.TotalMilliseconds;
+            base.Update(now);
 
-            Current = EasingMath.EaseOutCubic(percentageCompleted, Source, Destination);
+            if (Elapsed > Duration)
+            {
+                Current = Destination;
+                return;
+            }
+
+            var progress = (float)Elapsed.TotalMilliseconds / (float)Duration.TotalMilliseconds;
+
+            Current = EasingMath.EaseOutCubic(progress, Source, Destination);
         }
     }
 
-    class Vector2Animation : Animation
+    class Vector2Animation : BaseAnimation
     {
         public Vector2 Source { get; }
         public Vector2 Destination { get; }
         public Vector2 Current { get; private set; }
         public float Completed { get; private set; }
-        public TimeSpan Duration { get; }
 
         private readonly Func<float, Vector2, Vector2, Vector2> _timingFunction;
 
-        public Vector2Animation(TimeSpan duration, Vector2 source, Vector2 destination)
-            : this(duration, source, destination, EasingMath.EaseOutCubic) { }
-        public Vector2Animation(TimeSpan duration, Vector2 source, Vector2 destination, Func<float, Vector2, Vector2, Vector2> timingFunction)
+        public Vector2Animation(DateTime startTime, TimeSpan duration, Vector2 source, Vector2 destination)
+            : this(startTime, duration, source, destination, EasingMath.EaseOutCubic) { }
+        public Vector2Animation(DateTime startTime, TimeSpan duration, Vector2 source, Vector2 destination, Func<float, Vector2, Vector2, Vector2> timingFunction)
+            : base(startTime, duration)
         {
-            Duration = duration;
             Source = source;
             Destination = destination;
             _timingFunction = timingFunction ?? throw new ArgumentNullException(nameof(timingFunction));
         }
 
-        public void Update(DateTime now, TimeSpan _)
+        public override void Update(DateTime now)
         {
-            if (!_isRunning)
-                return;
-
-            var elapsed = now - _start;
-            if (elapsed > Duration)
+            if (IsDone)
             {
                 Current = Destination;
+                Completed = 1f;
                 return;
             }
 
-            var percentageCompleted = (float)elapsed.TotalMilliseconds / (float)Duration.TotalMilliseconds;
+            base.Update(now);
+
+            if (Elapsed > Duration)
+            {
+                Current = Destination;
+                Completed = 1f;
+                return;
+            }
+
+            var percentageCompleted = (float)Elapsed.TotalMilliseconds / (float)Duration.TotalMilliseconds;
 
             Completed = percentageCompleted;
             Current = _timingFunction(percentageCompleted, Source, Destination);
