@@ -82,6 +82,7 @@ namespace HolzShots.Input.Selection.Decoration
                 widthLabelRect.X - AxisDistance,
                 widthLabelRect.Y + AxisDistance * 2f
             );
+
             if (leftRulerLineEnd.X > leftRulerLineStart.X)
             {
                 g.DrawLine(leftRulerLineStart, leftRulerLineEnd, RulerColor);
@@ -100,6 +101,7 @@ namespace HolzShots.Input.Selection.Decoration
                 outline.X + outline.Width,
                 widthLabelRect.Y + AxisDistance * 2f
             );
+
             if (rightRulerLineEnd.X > rightRulerLineStart.X)
             {
                 g.DrawLine(rightRulerLineStart, rightRulerLineEnd, RulerColor);
@@ -132,18 +134,19 @@ namespace HolzShots.Input.Selection.Decoration
             {
                 heightLabelRect.Offset(-heightLabelSize.Width - AxisDistance, 0);
 
-                rulerOffset = new Vector2(-AxisDistance * 2f, 0);
+                rulerOffset = new Vector2(-AxisDistance * 2f * 2f, 0);
             }
 
 
-            var upperRulerLineStart = new Vector2(
-                rulerOffset.X * 2f + outline.X + AxisDistance * 2f,
-                rulerOffset.Y + outline.Y
+            var upperRulerLineStart = rulerOffset + new Vector2(
+                 outline.X + AxisDistance * 2f,
+                 outline.Y
             );
-            var upperRulerLineEnd = new Vector2(
-                rulerOffset.X * 2f + outline.X + AxisDistance * 2f,
-                rulerOffset.Y + heightLabelRect.Y - AxisDistance + 1f
+            var upperRulerLineEnd = rulerOffset + new Vector2(
+                outline.X + AxisDistance * 2f,
+                heightLabelRect.Y - AxisDistance + 1f
             );
+
             if (upperRulerLineEnd.Y > upperRulerLineStart.Y)
             {
                 g.DrawLine(upperRulerLineStart, upperRulerLineEnd, RulerColor);
@@ -154,14 +157,15 @@ namespace HolzShots.Input.Selection.Decoration
                 );
             }
 
-            var lowerRulerLineStart = new Vector2(
-                rulerOffset.X * 2f + outline.X + AxisDistance * 2f,
-                rulerOffset.Y + heightLabelRect.Y + heightLabelRect.Height + AxisDistance
+            var lowerRulerLineStart = rulerOffset + new Vector2(
+                outline.X + AxisDistance * 2f,
+                heightLabelRect.Y + heightLabelRect.Height + AxisDistance
             );
-            var lowerRulerLineEnd = new Vector2(
-                rulerOffset.X * 2f + outline.X + AxisDistance * 2f,
-                rulerOffset.Y + outline.Y + outline.Height
+            var lowerRulerLineEnd = rulerOffset + new Vector2(
+                outline.X + AxisDistance * 2f,
+                outline.Y + outline.Height
             );
+
             if (lowerRulerLineEnd.Y > lowerRulerLineStart.Y)
             {
                 g.DrawLine(lowerRulerLineStart, lowerRulerLineEnd, RulerColor);
