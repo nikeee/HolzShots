@@ -47,6 +47,16 @@ namespace HolzShots.Input.Selection
                 : (Rectangle?)null;
         }
 
+        public static string? GetWindowClass(IntPtr windowHandle)
+        {
+            var sb = new System.Text.StringBuilder();
+            var charsWritten = User32.GetClassName(windowHandle, sb, sb.Capacity);
+
+            return charsWritten == 0
+                ? null // Call to GetClassName failed (pretent it doesnt have a class name)
+                : sb.ToString();
+        }
+
         private static Rectangle? GetExtendedFrameBounds(IntPtr windowHandle)
         {
             var hResult = DwmApi.DwmGetWindowAttribute(windowHandle, DwmWindowAttribute.ExtendedFrameBounds, out Rect rect, Marshal.SizeOf(typeof(Rect)));

@@ -1,5 +1,6 @@
 using System;
 using System.Windows.Forms;
+using HolzShots.Input.Selection;
 using Microsoft.Win32;
 using StartupHelper;
 
@@ -43,12 +44,10 @@ namespace HolzShots.Windows.Forms
         {
             var foregroundWindowHandle = Native.User32.GetForegroundWindow();
 
-            var sb = new System.Text.StringBuilder();
-            var charsWritten = Native.User32.GetClassName(foregroundWindowHandle, sb, sb.Capacity);
-            if (charsWritten == 0)
+            var className = WindowHelpers.GetWindowClass(foregroundWindowHandle);
+            if (className == null)
                 return false; // Call to GetClassName failed. Just assume that there is no app running in fullscreen
 
-            var className = sb.ToString();
             if (className == "WorkerW")
                 return false;
 

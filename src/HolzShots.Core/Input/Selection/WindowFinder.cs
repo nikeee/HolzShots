@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using HolzShots.Native;
@@ -16,6 +17,12 @@ namespace HolzShots.Input.Selection
             );
         }
 
+        private static readonly ISet<string> _ignoredWindowClasses = new HashSet<string>()
+        {
+            "Shell_TrayWnd", // Task bar
+            "Shell_Secondary", // Task bar on second/third/... screen
+        };
+
         public static ISet<WindowRectangle> GetCurrentWindowRectangles(IntPtr excludedHandle)
         {
             var result = new HashSet<WindowRectangle>();
@@ -31,6 +38,10 @@ namespace HolzShots.Input.Selection
                 if (!WindowHelpers.IsWindowVisibleOnScreen(windowHandle))
                     return true;
 
+                var className = WindowHelpers.GetWindowClass(windowHandle);
+                if(className != null && _ignoredWindowClasses.Contains(className))
+                    return true;
+
                 var windowRectangle = WindowHelpers.GetWindowRectangle(windowHandle);
                 if (windowRectangle == null)
                     return true;
@@ -40,10 +51,7 @@ namespace HolzShots.Input.Selection
                     return true;
 
                 if (r.X == -32000 && r.Y == -32000)
-                {
-                    // There is a "hack" that hidden windows are put to this coordinate. We skip these.
-                    return true;
-                }
+                    return true; // There is a "hack" that hidden windows are put to this coordinate. We skip these.
 
                 foreach (var windowThatMayOverlayTheCurrentWindow in result)
                 {
@@ -57,6 +65,8 @@ namespace HolzShots.Input.Selection
                 var title = WindowHelpers.GetWindowTitle(windowHandle).Trim();
                 if (string.IsNullOrWhiteSpace(title))
                     title = null;
+
+                title = WindowHelpers.GetWindowClass(windowHandle);
 
                 result.Add(new WindowRectangle(windowHandle, r, title));
 

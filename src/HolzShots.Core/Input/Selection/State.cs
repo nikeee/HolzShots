@@ -52,6 +52,8 @@ namespace HolzShots.Input.Selection
             }
 
             var index = GetOffsetIndex(windows, _currentSelectedWindow, offset);
+            Debug.Assert(index >= 0);
+            Debug.Assert(index < windows.Count);
             HighlightWindow(windows[index]);
         }
 
@@ -69,9 +71,14 @@ namespace HolzShots.Input.Selection
 
             var prevIndex = windows.IndexOf(currentWindow);
 
-            return prevIndex < 0
+            var res = prevIndex < 0
                 ? 0
-                : ((int)prevIndex + offset) % windows.Count;
+                : (prevIndex + offset) % windows.Count;
+
+            while (res < 0)
+                res += windows.Count;
+
+            return res % windows.Count;
         }
 
         public void SelectWindowBasedOnMouseMove(IReadOnlyList<WindowRectangle>? windows, Point cursorPosition)
