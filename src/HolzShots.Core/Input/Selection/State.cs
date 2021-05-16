@@ -8,13 +8,14 @@ using unvell.D2DLib;
 
 namespace HolzShots.Input.Selection
 {
-    internal abstract class SelectionState
+    internal abstract class SelectionState : IDisposable
     {
         public Point CursorPosition { get; protected set; }
 
         public virtual void EnsureDecorationInitialization(D2DGraphics g, DateTime now) { }
         public abstract void Draw(D2DGraphics g, DateTime now, TimeSpan elapsed, Rectangle bounds, D2DBitmap image);
         public virtual void UpdateCursorPosition(Point newCursorPosition) => CursorPosition = newCursorPosition;
+        public abstract void Dispose();
     }
 
     internal class InitialState : SelectionState
@@ -79,6 +80,13 @@ namespace HolzShots.Input.Selection
             CurrentOutline = null;
             Title = null;
         }
+
+        public override void Dispose()
+        {
+            var ds = Decorations;
+            foreach (var d in ds)
+                d.Dispose();
+        }
     }
 
     internal abstract class RectangleState : SelectionState
@@ -119,6 +127,12 @@ namespace HolzShots.Input.Selection
             foreach (var d in Decorations)
                 d.UpdateAndDraw(g, now, elapsed, bounds, image, this);
         }
+        public override void Dispose()
+        {
+            var ds = Decorations;
+            foreach (var d in ds)
+                d.Dispose();
+        }
     }
 
     internal class ResizingRectangleState : RectangleState
@@ -155,5 +169,7 @@ namespace HolzShots.Input.Selection
         {
             // nothing to draw here
         }
+
+        public override void Dispose() { }
     }
 }
