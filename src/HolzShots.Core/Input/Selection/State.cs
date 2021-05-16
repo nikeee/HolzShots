@@ -59,7 +59,7 @@ namespace HolzShots.Input.Selection
         /// - Wraps around the list end
         /// - Returns 0 if the currentWindow element was not found in the list
         /// </remarks>
-        public int GetOffsetIndex(IReadOnlyList<WindowRectangle> windows, WindowRectangle? currentWindow, int offset)
+        private int GetOffsetIndex(IReadOnlyList<WindowRectangle> windows, WindowRectangle? currentWindow, int offset)
         {
             if (windows.Count == 0)
                 throw new ArgumentException("Window list was empty, need at least one element");
@@ -69,7 +69,7 @@ namespace HolzShots.Input.Selection
 
             var prevIndex = windows.IndexOf(currentWindow);
 
-            return prevIndex == null
+            return prevIndex < 0
                 ? 0
                 : ((int)prevIndex + offset) % windows.Count;
         }

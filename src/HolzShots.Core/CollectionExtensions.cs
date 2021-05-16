@@ -9,7 +9,7 @@ namespace HolzShots
     public static class CollectionExtensions
     {
         /// <remarks> IReadOnlyList doesn't have IndexOf() </remarks>
-        public static int? IndexOf<T>(this IReadOnlyList<T> readOnlyList, T element)
+        public static int IndexOf<T>(this IReadOnlyList<T> readOnlyList, T element)
         {
             if (readOnlyList is IList<T> list)
                 return list.IndexOf(element);
@@ -18,7 +18,7 @@ namespace HolzShots
                 if (EqualityComparer<T>.Default.Equals(element, readOnlyList[i]))
                     return i;
 
-            return null;
+            return -1;
         }
     }
 }

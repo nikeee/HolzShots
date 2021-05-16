@@ -20,13 +20,14 @@ namespace HolzShots.Input.Selection.Decoration
             if (outlineAnimation == null)
                 return;
 
-            Debug.Assert(state.Title != null);
-
             outlineAnimation.Update(now);
 
             var rect = outlineAnimation.Current;
             g.DrawRectangle(rect, OutlineColor, 1.0f);
-            g.DrawTextCenter(state.Title, FontColor, FontName, FontSize, rect);
+
+            var windowTitle = state.Title;
+            if (windowTitle != null)
+                g.DrawTextCenter(windowTitle, FontColor, FontName, FontSize, rect);
         }
 
         public void Dispose() { }

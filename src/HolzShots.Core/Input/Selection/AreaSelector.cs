@@ -210,6 +210,12 @@ namespace HolzShots.Input.Selection
                 case Keys.Space:
                     _magnifier.Toggle();
                     break;
+                case Keys.Tab when !e.Shift && _state is InitialState s:
+                    s.SelectWindowWithOffset(availableWindowsForOutline, 1);
+                    break;
+                case Keys.Tab when e.Shift && _state is InitialState s:
+                    s.SelectWindowWithOffset(availableWindowsForOutline, -1);
+                    break;
                 default: break;
             }
             base.OnKeyUp(e);
