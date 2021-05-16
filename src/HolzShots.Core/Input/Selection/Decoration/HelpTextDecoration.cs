@@ -59,7 +59,7 @@ namespace HolzShots.Input.Selection.Decoration
 
                 var animation = new RectangleAnimation(
                     now,
-                    TimeSpan.FromMilliseconds(150 * i + 100),
+                    TimeSpan.FromMilliseconds(175 * i + 75),
                     start,
                     destination
                 );
@@ -84,6 +84,9 @@ namespace HolzShots.Input.Selection.Decoration
             if (_fadeOutStarted != null)
                 opacity = EasingMath.EaseInSquare((float)(now - _fadeOutStarted.Value).TotalMilliseconds / (float)FadeDuration.TotalMilliseconds, 1, 0);
 
+            if (opacity <= 0)
+                return;
+
             for (int i = 0; i < _animations.Length; ++i)
             {
                 var animation = _animations[i];
@@ -99,8 +102,11 @@ namespace HolzShots.Input.Selection.Decoration
                     animation.Destination.Height
                 );
 
+                using var maskRectangle = g.Device.CreateRectangleGeometry(rect);
+                using var layer = g.PushLayer(maskRectangle);
                 g.FillRectangle(rect, new D2DColor(opacity * BackgroundColor.a, BackgroundColor));
                 g.DrawText(text, new D2DColor(opacity * FontColor.a, FontColor), FontName, helpSize, textLocation);
+                g.PopLayer();
             }
         }
         public void Dispose() { }
