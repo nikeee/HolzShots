@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using HolzShots.Input.Selection.Decoration;
-using unvell.D2DLib;
+using nud2dlib;
 
 namespace HolzShots.Input.Selection
 {

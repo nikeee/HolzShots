@@ -1,6 +1,7 @@
 using System;
 using System.Drawing;
-using unvell.D2DLib;
+using System.Numerics;
+using nud2dlib;
 
 namespace HolzShots.Input.Selection.Decoration
 {
@@ -64,47 +65,47 @@ namespace HolzShots.Input.Selection.Decoration
             var widthLabelSize = g.MeasureText(text, FontName, FontSize, placeSize);
 
             var widthLabelRect = new D2DRect(
-                outline.X + (outline.Width / 2f) - (widthLabelSize.width / 2f),
+                outline.X + (outline.Width / 2f) - (widthLabelSize.Width / 2f),
                 outline.Y,
-                widthLabelSize.width,
-                widthLabelSize.height
+                widthLabelSize.Width,
+                widthLabelSize.Height
             );
 
-            if (widthLabelRect.Y - widthLabelSize.height - AxisDistance >= 0f)
-                widthLabelRect.Offset(0, -widthLabelSize.height - AxisDistance);
+            if (widthLabelRect.Y - widthLabelSize.Height - AxisDistance >= 0f)
+                widthLabelRect.Offset(0, -widthLabelSize.Height - AxisDistance);
 
-            var leftRulerLineStart = new D2DPoint(
+            var leftRulerLineStart = new Vector2(
                 outline.X,
                 widthLabelRect.Y + AxisDistance * 2f
             );
-            var leftRulerLineEnd = new D2DPoint(
+            var leftRulerLineEnd = new Vector2(
                 widthLabelRect.X - AxisDistance,
                 widthLabelRect.Y + AxisDistance * 2f
             );
-            if (leftRulerLineEnd.x > leftRulerLineStart.x)
+            if (leftRulerLineEnd.X > leftRulerLineStart.X)
             {
                 g.DrawLine(leftRulerLineStart, leftRulerLineEnd, RulerColor);
                 g.DrawLine(
-                    new D2DPoint(leftRulerLineStart.x, leftRulerLineStart.y - 4f),
-                    new D2DPoint(leftRulerLineStart.x, leftRulerLineStart.y + 3f),
+                    new Vector2(leftRulerLineStart.X, leftRulerLineStart.Y - 4f),
+                    new Vector2(leftRulerLineStart.X, leftRulerLineStart.Y + 3f),
                     RulerColor
                 );
             }
 
-            var rightRulerLineStart = new D2DPoint(
+            var rightRulerLineStart = new Vector2(
                 widthLabelRect.X + widthLabelRect.Width + AxisDistance,
                 widthLabelRect.Y + AxisDistance * 2f
             );
-            var rightRulerLineEnd = new D2DPoint(
+            var rightRulerLineEnd = new Vector2(
                 outline.X + outline.Width,
                 widthLabelRect.Y + AxisDistance * 2f
             );
-            if (rightRulerLineEnd.x > rightRulerLineStart.x)
+            if (rightRulerLineEnd.X > rightRulerLineStart.X)
             {
                 g.DrawLine(rightRulerLineStart, rightRulerLineEnd, RulerColor);
                 g.DrawLine(
-                    new D2DPoint(rightRulerLineEnd.x + 1f, rightRulerLineEnd.y - 4f),
-                    new D2DPoint(rightRulerLineEnd.x + 1f, rightRulerLineEnd.y + 3f),
+                    new Vector2(rightRulerLineEnd.X + 1f, rightRulerLineEnd.Y - 4f),
+                    new Vector2(rightRulerLineEnd.X + 1f, rightRulerLineEnd.Y + 3f),
                     RulerColor
                 );
             }
@@ -121,52 +122,52 @@ namespace HolzShots.Input.Selection.Decoration
 
             var heightLabelRect = new D2DRect(
                 outline.X,
-                outline.Y + (outline.Height / 2f) - (heightLabelSize.height / 2f),
-                heightLabelSize.width,
-                heightLabelSize.height
+                outline.Y + (outline.Height / 2f) - (heightLabelSize.Height / 2f),
+                heightLabelSize.Width,
+                heightLabelSize.Height
             );
 
-            D2DPoint rulerOffset = D2DPoint.Zero;
-            if (heightLabelRect.X - heightLabelSize.width - AxisDistance >= 0f)
+            var rulerOffset = Vector2.Zero;
+            if (heightLabelRect.X - heightLabelSize.Width - AxisDistance >= 0f)
             {
-                heightLabelRect.Offset(-heightLabelSize.width - AxisDistance, 0);
+                heightLabelRect.Offset(-heightLabelSize.Width - AxisDistance, 0);
 
-                rulerOffset = new D2DPoint(-AxisDistance * 2f, 0);
+                rulerOffset = new Vector2(-AxisDistance * 2f, 0);
             }
 
 
-            var upperRulerLineStart = new D2DPoint(
-                rulerOffset.x * 2f + outline.X + AxisDistance * 2f,
-                rulerOffset.y + outline.Y
+            var upperRulerLineStart = new Vector2(
+                rulerOffset.X * 2f + outline.X + AxisDistance * 2f,
+                rulerOffset.Y + outline.Y
             );
-            var upperRulerLineEnd = new D2DPoint(
-                rulerOffset.x * 2f + outline.X + AxisDistance * 2f,
-                rulerOffset.y + heightLabelRect.Y - AxisDistance + 1f
+            var upperRulerLineEnd = new Vector2(
+                rulerOffset.X * 2f + outline.X + AxisDistance * 2f,
+                rulerOffset.Y + heightLabelRect.Y - AxisDistance + 1f
             );
-            if (upperRulerLineEnd.y > upperRulerLineStart.y)
+            if (upperRulerLineEnd.Y > upperRulerLineStart.Y)
             {
                 g.DrawLine(upperRulerLineStart, upperRulerLineEnd, RulerColor);
                 g.DrawLine(
-                    new D2DPoint(upperRulerLineStart.x - 4f, upperRulerLineStart.y),
-                    new D2DPoint(upperRulerLineStart.x + 3f, upperRulerLineStart.y),
+                    new Vector2(upperRulerLineStart.X - 4f, upperRulerLineStart.Y),
+                    new Vector2(upperRulerLineStart.X + 3f, upperRulerLineStart.Y),
                     RulerColor
                 );
             }
 
-            var lowerRulerLineStart = new D2DPoint(
-                rulerOffset.x * 2f + outline.X + AxisDistance * 2f,
-                rulerOffset.y + heightLabelRect.Y + heightLabelRect.Height + AxisDistance
+            var lowerRulerLineStart = new Vector2(
+                rulerOffset.X * 2f + outline.X + AxisDistance * 2f,
+                rulerOffset.Y + heightLabelRect.Y + heightLabelRect.Height + AxisDistance
             );
-            var lowerRulerLineEnd = new D2DPoint(
-                rulerOffset.x * 2f + outline.X + AxisDistance * 2f,
-                rulerOffset.y + outline.Y + outline.Height
+            var lowerRulerLineEnd = new Vector2(
+                rulerOffset.X * 2f + outline.X + AxisDistance * 2f,
+                rulerOffset.Y + outline.Y + outline.Height
             );
-            if (lowerRulerLineEnd.y > lowerRulerLineStart.y)
+            if (lowerRulerLineEnd.Y > lowerRulerLineStart.Y)
             {
                 g.DrawLine(lowerRulerLineStart, lowerRulerLineEnd, RulerColor);
                 g.DrawLine(
-                    new D2DPoint(lowerRulerLineEnd.x - 4f, lowerRulerLineEnd.y + 1f),
-                    new D2DPoint(lowerRulerLineEnd.x + 3f, lowerRulerLineEnd.y + 1f),
+                    new Vector2(lowerRulerLineEnd.X - 4f, lowerRulerLineEnd.Y + 1f),
+                    new Vector2(lowerRulerLineEnd.X + 3f, lowerRulerLineEnd.Y + 1f),
                     RulerColor
                 );
             }

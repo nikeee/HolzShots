@@ -1,9 +1,8 @@
 using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.Numerics;
 using HolzShots.Input.Selection.Animation;
-using unvell.D2DLib;
+using nud2dlib;
 
 namespace HolzShots.Input.Selection.Decoration
 {
@@ -37,8 +36,8 @@ namespace HolzShots.Input.Selection.Decoration
 
             var cursorPos = state.CursorPosition;
 
-            var center = new D2DPoint(cursorPos.X, cursorPos.Y);
-            var size = new D2DSize(_ellipseAnimation.Current.X, _ellipseAnimation.Current.Y);
+            var center = new Vector2(cursorPos.X, cursorPos.Y);
+            var size = new Vector2(_ellipseAnimation.Current.X, _ellipseAnimation.Current.Y);
             var ellipse = new D2DEllipse(center, size);
 
             using (var ellipseGeometry = g.Device.CreateEllipseGeometry(center, size))

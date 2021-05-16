@@ -1,8 +1,8 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
-using unvell.D2DLib;
-using unvell.D2DLib.WinForm;
+using nud2dlib;
+using nud2dlib.Windows.Forms;
 
 namespace HolzShots.Input.Selection
 {

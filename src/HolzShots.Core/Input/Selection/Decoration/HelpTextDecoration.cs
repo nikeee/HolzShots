@@ -1,7 +1,7 @@
 using System;
 using System.Drawing;
 using HolzShots.Input.Selection.Animation;
-using unvell.D2DLib;
+using nud2dlib;
 
 namespace HolzShots.Input.Selection.Decoration
 {
@@ -48,8 +48,8 @@ namespace HolzShots.Input.Selection.Decoration
                 var destination = new Rectangle(
                     lastX,
                     lastY,
-                    (int)(textSize.width + 2 * Margin.width),
-                    (int)(textSize.height + 2 * Margin.height)
+                    (int)(textSize.Width + 2 * Margin.Width),
+                    (int)(textSize.Height + 2 * Margin.Height)
                 );
 
                 var start = new Rectangle(
@@ -96,16 +96,16 @@ namespace HolzShots.Input.Selection.Decoration
                 var rect = animation.Current;
 
                 var textLocation = new D2DRect(
-                    animation.Destination.X + Margin.width,
-                    animation.Destination.Y + Margin.height,
+                    animation.Destination.X + Margin.Width,
+                    animation.Destination.Y + Margin.Height,
                     animation.Destination.Width,
                     animation.Destination.Height
                 );
 
                 using var maskRectangle = g.Device.CreateRectangleGeometry(rect);
                 using var layer = g.PushLayer(maskRectangle);
-                g.FillRectangle(rect, new D2DColor(opacity * BackgroundColor.a, BackgroundColor));
-                g.DrawText(text, new D2DColor(opacity * FontColor.a, FontColor), FontName, helpSize, textLocation);
+                g.FillRectangle(rect, new D2DColor(opacity * BackgroundColor.A, BackgroundColor));
+                g.DrawText(text, new D2DColor(opacity * FontColor.A, FontColor), FontName, helpSize, textLocation);
                 g.PopLayer();
             }
         }
