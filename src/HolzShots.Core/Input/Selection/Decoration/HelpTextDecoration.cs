@@ -1,5 +1,6 @@
 using System;
 using System.Drawing;
+using System.Linq;
 using HolzShots.Input.Selection.Animation;
 using nud2dlib;
 
@@ -11,12 +12,17 @@ namespace HolzShots.Input.Selection.Decoration
         private const float FontSize = 24.0f;
         private const float SmallFontSize = 14.0f;
 
-        private static readonly (string, float)[] HelpText = new[] {
+        private const int HelpTextsToDisplay = 3;
+
+        private static readonly (string, float)[] HelpTextCandidates = new[] {
             ("Left Mouse: Select area", FontSize),
             ("Right Mouse: Move selected area", FontSize),
             ("Space: Toggle magnifier", FontSize),
-            ("Escape: Cancel", SmallFontSize),
+            ("Tab: Cycle through windows", FontSize),
+            ("Return: Confirm current selection", FontSize),
+            ("Escape: Cancel", FontSize),
         };
+
 
         private static readonly D2DSize Margin = new(10, 5);
         private static readonly D2DColor BackgroundColor = new(0.2f, 1f, 1f, 1f);
@@ -24,17 +30,24 @@ namespace HolzShots.Input.Selection.Decoration
         private static readonly TimeSpan FadeStart = TimeSpan.FromSeconds(5);
         private static readonly TimeSpan FadeDuration = TimeSpan.FromSeconds(3);
 
-        private readonly RectangleAnimation[] _animations;
+        private readonly BoxedTextAnimation[] _animations;
         private DateTime? _firstUpdate = null;
         private DateTime? _fadeOutStarted = null;
 
-        public HelpTextDecoration(RectangleAnimation[] animations) => _animations = animations;
+        public HelpTextDecoration(BoxedTextAnimation[] animations) => _animations = animations;
 
         public static HelpTextDecoration ForContext(D2DGraphics g, DateTime now) => new(BuildAnimations(now, g));
 
-        private static RectangleAnimation[] BuildAnimations(DateTime now, D2DGraphics g)
+        private static BoxedTextAnimation[] BuildAnimations(DateTime now, D2DGraphics g)
         {
-            var res = new RectangleAnimation[HelpText.Length];
+            var res = new BoxedTextAnimation[HelpTextsToDisplay];
+
+            var random = new Random();
+            var randomHelpEntries = HelpTextCandidates
+                .OrderBy(_ => random.Next())
+                .Take(HelpTextsToDisplay)
+                .OrderByDescending(t => t.Item1.Length)
+                .ToArray();
 
             int lastX = 100;
             int lastY = 100;
@@ -43,7 +56,7 @@ namespace HolzShots.Input.Selection.Decoration
 
             for (int i = 0; i < res.Length; ++i)
             {
-                var (text, fontSize) = HelpText[i];
+                var (text, fontSize) = randomHelpEntries[i];
                 var textSize = g.MeasureText(text, FontName, fontSize, someRandomSize);
                 var destination = new Rectangle(
                     lastX,
@@ -57,11 +70,13 @@ namespace HolzShots.Input.Selection.Decoration
                     new Size(0, destination.Height)
                 );
 
-                var animation = new RectangleAnimation(
+                var animation = new BoxedTextAnimation(
                     now,
                     TimeSpan.FromMilliseconds(175 * i + 75),
                     start,
-                    destination
+                    destination,
+                    text,
+                    fontSize
                 );
 
                 res[i] = animation;
@@ -90,8 +105,6 @@ namespace HolzShots.Input.Selection.Decoration
             for (int i = 0; i < _animations.Length; ++i)
             {
                 var animation = _animations[i];
-                var (text, helpSize) = HelpText[i];
-
                 animation.Update(now);
                 var rect = animation.Current;
 
@@ -105,7 +118,7 @@ namespace HolzShots.Input.Selection.Decoration
                 using var maskRectangle = g.Device.CreateRectangleGeometry(rect);
                 using var layer = g.PushLayer(maskRectangle);
                 g.FillRectangle(rect, new D2DColor(opacity * BackgroundColor.A, BackgroundColor));
-                g.DrawText(text, new D2DColor(opacity * FontColor.A, FontColor), FontName, helpSize, textLocation);
+                g.DrawText(animation.Text, new D2DColor(opacity * FontColor.A, FontColor), FontName, animation.FontSize, textLocation);
                 g.PopLayer();
             }
         }

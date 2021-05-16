@@ -58,6 +58,18 @@ namespace HolzShots.Input.Selection.Animation
         }
     }
 
+    class BoxedTextAnimation : RectangleAnimation
+    {
+        public string Text { get; }
+        public float FontSize { get; }
+        public BoxedTextAnimation(DateTime startTime, TimeSpan duration, D2DRect source, D2DRect destination, string text, float fontSize)
+            : base(startTime, duration, source, destination)
+        {
+            Text = text ?? throw new ArgumentNullException(nameof(text));
+            FontSize = fontSize;
+        }
+    }
+
     class Vector2Animation : BaseAnimation
     {
         public Vector2 Source { get; }
