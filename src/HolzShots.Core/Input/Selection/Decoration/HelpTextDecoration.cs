@@ -66,7 +66,7 @@ namespace HolzShots.Input.Selection.Decoration
 
                 res[i] = animation;
 
-                lastY = destination.Y + destination.Height + 1;
+                lastY = destination.Y + destination.Height;
             }
 
             return res;
