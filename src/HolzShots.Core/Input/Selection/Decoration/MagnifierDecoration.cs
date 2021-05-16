@@ -30,7 +30,7 @@ namespace HolzShots.Input.Selection.Decoration
 
             if (_ellipseAnimation == null)
             {
-                _ellipseAnimation = new Vector2Animation(FadeDuration, Vector2.Zero, new Vector2(CircleDiameter));
+                _ellipseAnimation = new Vector2Animation(FadeDuration, Vector2.Zero, new Vector2(CircleDiameter), EasingMath.ElasticOut);
                 _ellipseAnimation.Start(now);
             }
 

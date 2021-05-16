@@ -4,7 +4,6 @@ using unvell.D2DLib;
 
 namespace HolzShots.Input.Selection.Decoration
 {
-    // TODO: Draw selection dimensions ("Consolas", 9pt)
     class SelectionOutlineDecoration : IStateDecoration<RectangleState>
     {
         private const string FontName = "Consolas";

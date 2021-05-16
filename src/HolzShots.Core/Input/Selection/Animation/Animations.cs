@@ -61,11 +61,16 @@ namespace HolzShots.Input.Selection.Animation
         public float Completed { get; private set; }
         public TimeSpan Duration { get; }
 
+        private readonly Func<float, Vector2, Vector2, Vector2> _timingFunction;
+
         public Vector2Animation(TimeSpan duration, Vector2 source, Vector2 destination)
+            : this(duration, source, destination, EasingMath.EaseOutCubic) { }
+        public Vector2Animation(TimeSpan duration, Vector2 source, Vector2 destination, Func<float, Vector2, Vector2, Vector2> timingFunction)
         {
             Duration = duration;
             Source = source;
             Destination = destination;
+            _timingFunction = timingFunction ?? throw new ArgumentNullException(nameof(timingFunction));
         }
 
         public void Update(DateTime now, TimeSpan _)
@@ -83,7 +88,7 @@ namespace HolzShots.Input.Selection.Animation
             var percentageCompleted = (float)elapsed.TotalMilliseconds / (float)Duration.TotalMilliseconds;
 
             Completed = percentageCompleted;
-            Current = EasingMath.EaseOutCubic(percentageCompleted, Source, Destination);
+            Current = _timingFunction(percentageCompleted, Source, Destination);
         }
     }
 }

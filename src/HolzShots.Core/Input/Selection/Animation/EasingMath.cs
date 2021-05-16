@@ -1,3 +1,4 @@
+using System;
 using System.Drawing;
 using System.Numerics;
 using System.Runtime.CompilerServices;
@@ -11,6 +12,8 @@ namespace HolzShots.Input.Selection.Animation
     /// </summary>
     static class EasingMath
     {
+        #region EaseOutSquare
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float EaseOutSquare(float amount, float source, float destination)
         {
@@ -37,6 +40,9 @@ namespace HolzShots.Input.Selection.Animation
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Rectangle EaseOutSquare(float amount, Rectangle source, Rectangle destination) => EaseOutSquare(amount, source.AsVector(), destination.AsVector()).ToRectangle();
+
+        #endregion
+        #region EaseOutCubic
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float EaseOutCubic(float amount, float source, float destination)
@@ -65,6 +71,9 @@ namespace HolzShots.Input.Selection.Animation
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Rectangle EaseOutCubic(float amount, Rectangle source, Rectangle destination) => EaseOutCubic(amount, source.AsVector(), destination.AsVector()).ToRectangle();
 
+        #endregion
+        #region EaseInSquare
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float EaseInSquare(float amount, float source, float destination) => Lerp(amount * amount, source, destination);
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -75,6 +84,9 @@ namespace HolzShots.Input.Selection.Animation
         public static Vector4 EaseInSquare(float amount, Vector4 source, Vector4 destination) => Lerp(amount * amount, source, destination);
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Rectangle EaseInSquare(float amount, Rectangle source, Rectangle destination) => Lerp(amount * amount, source.AsVector(), destination.AsVector()).ToRectangle();
+
+        #endregion
+        #region EaseInCubic
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float EaseInCubic(float amount, float source, float destination) => Lerp(amount * amount * amount, source, destination);
@@ -87,6 +99,8 @@ namespace HolzShots.Input.Selection.Animation
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Rectangle EaseInCubic(float amount, Rectangle source, Rectangle destination) => Lerp(amount * amount * amount, source.AsVector(), destination.AsVector()).ToRectangle();
 
+        #endregion
+        #region Lerp
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float Lerp(float amount, float source, float destination) => (destination - source) * amount + source;
@@ -98,5 +112,7 @@ namespace HolzShots.Input.Selection.Animation
         public static Vector4 Lerp(float amount, Vector4 source, Vector4 destination) => (destination - source) * amount + source;
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Rectangle Lerp(float amount, Rectangle source, Rectangle destination) => Lerp(amount, source.AsVector(), destination.AsVector()).ToRectangle();
+
+        #endregion
     }
 }
