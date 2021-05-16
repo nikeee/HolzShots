@@ -5,7 +5,7 @@ A lightweight screenshot utility that gets out of your way.
 - No bloat like DNS changers or video recording. If you want to do video, use a tool that does it properly (like [ScreenToGif](https://github.com/NickeManarin/ScreenToGif)).
 
 ## Requirements
-- Requires >= Windows 7 SP1; 64 Bit
+- Requires a supported Version of Windows 10; 64 Bit
 - An internet connection is probably a good idea
 
 ## Installation
