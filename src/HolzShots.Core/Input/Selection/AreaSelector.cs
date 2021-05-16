@@ -10,28 +10,25 @@ using unvell.D2DLib;
 
 namespace HolzShots.Input.Selection
 {
-    public partial class AreaSelector2 : AnimatedForm, IAreaSelector
+    public partial class AreaSelector : AnimatedForm, IAreaSelector
     {
-        private static readonly D2DColor _overlayColor = new(0.8f, D2DColor.Black);
-        private static readonly Cursor _cursor = new(Properties.Resources.CrossCursor.Handle);
-        private static readonly float[] _customDashStyle = new[] { 3f };
+        private static readonly D2DColor OverlayColor = D2DColor.Black;
+        private static readonly Cursor SelectionCursor = new(Properties.Resources.CrossCursor.Handle);
 
         private static TaskCompletionSource<Rectangle>? _tcs;
 
-        private readonly D2DBrush _blackOverlayBrush;
+        private readonly D2DBrush _dimmingOverlayBrush;
 
         private D2DBitmap _image;
         private D2DBitmapGraphics _dimmedImage;
         private D2DBitmap _background;
         private Rectangle _imageBounds;
-        private float _currentDashOffset = 0.0f;
-        private DateTime _selectionStarted;
         private SelectionState _state = new InitialState();
         private readonly MagnifierDecoration _magnifier = new();
 
         private ISet<WindowRectangle>? availableWindowsForOutline = null;
 
-        public AreaSelector2(HSSettings settingsContext)
+        public AreaSelector(HSSettings settingsContext)
         {
             BackColor = Color.Black;
 
@@ -47,7 +44,7 @@ namespace HolzShots.Input.Selection
             TopMost = true;
             DrawFPS = false;
 #endif
-            _blackOverlayBrush = Device.CreateSolidColorBrush(_overlayColor);
+            _dimmingOverlayBrush = Device.CreateSolidColorBrush(new D2DColor(settingsContext.AreaSelectorDimmingOpacity, OverlayColor));
         }
 
 
@@ -70,12 +67,10 @@ namespace HolzShots.Input.Selection
             _dimmedImage = CreateDimemdImage(image.Width, image.Height);
             _background = _dimmedImage.GetBitmap();
 
-            _selectionStarted = DateTime.Now;
-
             _tcs = new TaskCompletionSource<Rectangle>();
 
             Visible = true;
-            Cursor = _cursor;
+            Cursor = SelectionCursor;
 
             return _tcs.Task;
         }
@@ -85,7 +80,7 @@ namespace HolzShots.Input.Selection
             var res = Device.CreateBitmapGraphics(width, height);
             res.BeginRender();
             res.DrawBitmap(_image, _imageBounds);
-            res.FillRectangle(_imageBounds, _blackOverlayBrush);
+            res.FillRectangle(_imageBounds, _dimmingOverlayBrush);
             res.EndRender();
             return res;
         }
@@ -227,7 +222,7 @@ namespace HolzShots.Input.Selection
             if (_state is FinalState)
                 return;
 
-            Debug.Assert(_blackOverlayBrush != null);
+            Debug.Assert(_dimmingOverlayBrush != null);
 
             g.Antialias = false;
 
@@ -301,7 +296,7 @@ namespace HolzShots.Input.Selection
             // TODO: Maybe move this to some dispose method
             _image?.Dispose();
             _dimmedImage?.Dispose();
-            _blackOverlayBrush?.Dispose();
+            _dimmingOverlayBrush?.Dispose();
         }
     }
 }
