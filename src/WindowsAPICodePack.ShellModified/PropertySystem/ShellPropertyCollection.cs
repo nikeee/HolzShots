@@ -27,11 +27,8 @@ using MS.WindowsAPICodePack.Internal;
 using System;
 */
 
-using Microsoft.WindowsAPICodePack.Resources;
-using MS.WindowsAPICodePack.Internal;
 using System;
 using System.Collections.Generic;
-
 /* Unmerged change from project 'Shell (net452)'
 Before:
 using System.Runtime.InteropServices.ComTypes;
@@ -62,6 +59,8 @@ using System.Runtime.InteropServices.ComTypes;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.InteropServices;
+using Microsoft.WindowsAPICodePack.Resources;
+using MS.WindowsAPICodePack.Internal;
 
 namespace Microsoft.WindowsAPICodePack.Shell.PropertySystem
 {

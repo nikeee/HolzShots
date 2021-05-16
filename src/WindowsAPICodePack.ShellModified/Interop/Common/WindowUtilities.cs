@@ -21,8 +21,8 @@ After:
 using Microsoft.WindowsAPICodePack.Shell.Interop;
 */
 
-using Microsoft.WindowsAPICodePack.Taskbar;
 using System;
+using Microsoft.WindowsAPICodePack.Taskbar;
 
 /* Unmerged change from project 'Shell (net452)'
 Before:

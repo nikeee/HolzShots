@@ -1,9 +1,9 @@
 ﻿//Copyright (c) Microsoft Corporation.  All rights reserved.
 
-using MS.WindowsAPICodePack.Internal;
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using MS.WindowsAPICodePack.Internal;
 
 namespace Microsoft.WindowsAPICodePack.Shell
 {

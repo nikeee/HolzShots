@@ -1,10 +1,10 @@
 ﻿//Copyright (c) Microsoft Corporation.  All rights reserved.
 
+using System;
+using System.Runtime.InteropServices;
 using Microsoft.WindowsAPICodePack.Shell;
 using Microsoft.WindowsAPICodePack.Shell.PropertySystem;
 using MS.WindowsAPICodePack.Internal;
-using System;
-using System.Runtime.InteropServices;
 
 namespace Microsoft.WindowsAPICodePack.Taskbar
 {
@@ -116,7 +116,7 @@ namespace Microsoft.WindowsAPICodePack.Taskbar
         public static extern int SHGetPropertyStoreForWindow(
             IntPtr hwnd,
             ref Guid iid /*IID_IPropertyStore*/,
-            [Out(), MarshalAs(UnmanagedType.Interface)]out IPropertyStore propertyStore);
+            [Out(), MarshalAs(UnmanagedType.Interface)] out IPropertyStore propertyStore);
 
         [DllImport("shell32.dll")]
         internal static extern void GetCurrentProcessExplicitAppUserModelID(
