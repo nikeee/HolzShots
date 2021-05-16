@@ -12,8 +12,6 @@ namespace HolzShots.Input.Selection.Decoration
         private static readonly D2DColor LabelFontColor = new(1f, 0.9f, 0.9f, 0.9f);
         private static readonly D2DColor RulerColor = new(0.5f, LabelFontColor);
         private const float AxisDistance = 5f;
-        // private static readonly D2DColor LabelBackgroundColor = new(0.2f, 1f, 1f, 1f);
-        // private static readonly D2DSize LabelPadding = new(4f, 4f);
 
         private static readonly D2DColor OutlineColor = D2DColor.White;
         private static readonly float[] CustomDashStyle = new[] { 3f };
@@ -44,16 +42,27 @@ namespace HolzShots.Input.Selection.Decoration
 
             g.DrawRectangle(selectionOutline, selectionOutlinePen, 1.0f);
 
-            var placeSize = new D2DSize(1000, 1000);
-
-            //var widthLabelText = outline.Width.ToString() + "px";
-            // var widthLabelSize = g.MeasureText(widthLabelText, FontName, FontSize, placeSize);
-
-
-            #region Width Ruler
+            var heightLabelText = outline.Height.ToString() + "px";
+            var heightLabelRect = DrawHeightRuler(g, outline, heightLabelText);
 
             var widthLabelText = outline.Width.ToString() + "px";
-            var widthLabelSize = g.MeasureText(widthLabelText, FontName, FontSize, placeSize);
+            var widthLabelRect = DrawWidthRuler(g, outline, widthLabelText);
+
+            var prevAntiAliasing = g.Antialias;
+            g.Antialias = true;
+
+            g.DrawText(heightLabelText, LabelFontColor, FontName, FontSize, heightLabelRect);
+            g.DrawText(widthLabelText, LabelFontColor, FontName, FontSize, widthLabelRect);
+
+            g.Antialias = prevAntiAliasing;
+        }
+
+        /// <summary> This can be mate prettier (visual rendering appearance as well as the code itself). It works for now. </summary>
+        private D2DRect DrawWidthRuler(D2DGraphics g, D2DRect outline, string text)
+        {
+            var placeSize = new D2DSize(1000, 1000);
+
+            var widthLabelSize = g.MeasureText(text, FontName, FontSize, placeSize);
 
             var widthLabelRect = new D2DRect(
                 outline.X + (outline.Width / 2f) - (widthLabelSize.width / 2f),
@@ -67,13 +76,13 @@ namespace HolzShots.Input.Selection.Decoration
 
             var leftRulerLineStart = new D2DPoint(
                 outline.X,
-                widthLabelRect.Y + widthLabelRect.Height / 2f
+                widthLabelRect.Y + AxisDistance * 2f
             );
             var leftRulerLineEnd = new D2DPoint(
                 widthLabelRect.X - AxisDistance,
-                widthLabelRect.Y + widthLabelRect.Height / 2f
+                widthLabelRect.Y + AxisDistance * 2f
             );
-            if (leftRulerLineEnd.x - leftRulerLineStart.x > 0)
+            if (leftRulerLineEnd.x > leftRulerLineStart.x)
             {
                 g.DrawLine(leftRulerLineStart, leftRulerLineEnd, RulerColor);
                 g.DrawLine(
@@ -85,13 +94,13 @@ namespace HolzShots.Input.Selection.Decoration
 
             var rightRulerLineStart = new D2DPoint(
                 widthLabelRect.X + widthLabelRect.Width + AxisDistance,
-                widthLabelRect.Y + widthLabelRect.Height / 2f
+                widthLabelRect.Y + AxisDistance * 2f
             );
             var rightRulerLineEnd = new D2DPoint(
                 outline.X + outline.Width,
-                widthLabelRect.Y + widthLabelRect.Height / 2f
+                widthLabelRect.Y + AxisDistance * 2f
             );
-            if (rightRulerLineEnd.x - rightRulerLineStart.x > 0)
+            if (rightRulerLineEnd.x > rightRulerLineStart.x)
             {
                 g.DrawLine(rightRulerLineStart, rightRulerLineEnd, RulerColor);
                 g.DrawLine(
@@ -101,46 +110,71 @@ namespace HolzShots.Input.Selection.Decoration
                 );
             }
 
-            #endregion
+            return widthLabelRect;
+        }
 
-            var prevAntiAliasing = g.Antialias;
-            g.Antialias = true;
-            // g.PushTransform();
-            // g.RotateTransform(90f);
-            // g.FillRectangle(widthLabelRect, D2DColor.Green);
-            // g.DrawText(widthLabelText, LabelFontColor, FontName, FontSize, widthLabelRect);
-            // g.PopTransform();
+        /// <summary> This can be mate prettier (visual rendering appearance as well as the code itself). It works for now. </summary>
+        private D2DRect DrawHeightRuler(D2DGraphics g, D2DRect outline, string text)
+        {
+            var placeSize = new D2DSize(1000, 1000);
 
-            // g.FillRectangle(paddedHeightLabelRect, D2DColor.Green);
-            g.DrawText(widthLabelText, LabelFontColor, FontName, FontSize, widthLabelRect);
+            var heightLabelSize = g.MeasureText(text, FontName, FontSize, placeSize);
 
-            g.Antialias = prevAntiAliasing;
+            var heightLabelRect = new D2DRect(
+                outline.X,
+                outline.Y + (outline.Height / 2f) - (heightLabelSize.height / 2f),
+                heightLabelSize.width,
+                heightLabelSize.height
+            );
+
+            D2DPoint rulerOffset = D2DPoint.Zero;
+            if (heightLabelRect.X - heightLabelSize.width - AxisDistance >= 0f)
+            {
+                heightLabelRect.Offset(-heightLabelSize.width - AxisDistance, 0);
+
+                rulerOffset = new D2DPoint(-AxisDistance * 2f, 0);
+            }
+
+
+            var upperRulerLineStart = new D2DPoint(
+                rulerOffset.x * 2f + outline.X + AxisDistance * 2f,
+                rulerOffset.y + outline.Y
+            );
+            var upperRulerLineEnd = new D2DPoint(
+                rulerOffset.x * 2f + outline.X + AxisDistance * 2f,
+                rulerOffset.y + heightLabelRect.Y - AxisDistance + 1f
+            );
+            if (upperRulerLineEnd.y > upperRulerLineStart.y)
+            {
+                g.DrawLine(upperRulerLineStart, upperRulerLineEnd, RulerColor);
+                g.DrawLine(
+                    new D2DPoint(upperRulerLineStart.x - 4f, upperRulerLineStart.y),
+                    new D2DPoint(upperRulerLineStart.x + 3f, upperRulerLineStart.y),
+                    RulerColor
+                );
+            }
+
+            var lowerRulerLineStart = new D2DPoint(
+                rulerOffset.x * 2f + outline.X + AxisDistance * 2f,
+                rulerOffset.y + heightLabelRect.Y + heightLabelRect.Height + AxisDistance
+            );
+            var lowerRulerLineEnd = new D2DPoint(
+                rulerOffset.x * 2f + outline.X + AxisDistance * 2f,
+                rulerOffset.y + outline.Y + outline.Height
+            );
+            if (lowerRulerLineEnd.y > lowerRulerLineStart.y)
+            {
+                g.DrawLine(lowerRulerLineStart, lowerRulerLineEnd, RulerColor);
+                g.DrawLine(
+                    new D2DPoint(lowerRulerLineEnd.x - 4f, lowerRulerLineEnd.y + 1f),
+                    new D2DPoint(lowerRulerLineEnd.x + 3f, lowerRulerLineEnd.y + 1f),
+                    RulerColor
+                );
+            }
+
+            return heightLabelRect;
         }
 
         public void Dispose() { }
     }
-
-    /*
-    class Label
-    {
-        private string _text;
-        private string _fontName;
-        private float _fontSize;
-        private D2DColor _fontColor;
-        private D2DColor _backgroundColor;
-        public Label(string text, string fontName, float fontSize, D2DColor fontColor, D2DColor backgroundColor)
-        {
-            _text = text;
-            _fontName = fontName;
-            _fontSize = fontSize;
-            _fontColor = fontColor;
-            _backgroundColor = backgroundColor;
-        }
-        void Draw()
-        {
-            g.DrawText(widthLabelText, LabelFontColor, FontName, FontSize, widthLabelRect);
-            g.FillRectangle(widthLabelRect);
-        }
-    }
-    */
 }
