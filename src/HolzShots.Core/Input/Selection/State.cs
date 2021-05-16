@@ -43,37 +43,26 @@ namespace HolzShots.Input.Selection
             };
         }
 
-        public void SelectWindowBasedOnMouseMove(IReadOnlyList<WindowRectangle> windows, Point cursorPosition)
+        public void SelectWindowBasedOnMouseMove(IReadOnlyList<WindowRectangle>? windows, Point cursorPosition)
         {
             if (windows == null)
             {
-                CurrentOutline = null;
-                CurrentOutlineAnimation = null;
-                Title = null;
+                ResetWindowHighlight();
                 return;
             }
 
-            var previousOutline = CurrentOutline;
             var previousWindow = _currentSelectedWindow;
-
-            // TODO: Clean up this mess
-
-
             foreach (var candidate in windows)
             {
                 if (candidate.Rectangle.Contains(cursorPosition))
                 {
-                    if (previousWindow == candidate)
-                        return;
-
-                    HighlightWindow(candidate);
+                    if (previousWindow != candidate)
+                        HighlightWindow(candidate);
                     return;
                 }
             }
 
-            CurrentOutline = null;
-            CurrentOutlineAnimation = null;
-            Title = null;
+            ResetWindowHighlight();
         }
 
         private void HighlightWindow(WindowRectangle candidate)
@@ -90,6 +79,12 @@ namespace HolzShots.Input.Selection
                 source,
                 candidate.Rectangle
             );
+        }
+        private void ResetWindowHighlight()
+        {
+            CurrentOutline = null;
+            CurrentOutlineAnimation = null;
+            Title = null;
         }
 
         public override void Dispose()
