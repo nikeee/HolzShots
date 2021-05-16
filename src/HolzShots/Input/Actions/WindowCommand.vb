@@ -1,8 +1,8 @@
-Imports HolzShots.Composition.Command
-Imports HolzShots.Threading
-Imports HolzShots.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Imaging
+Imports HolzShots.Composition.Command
+Imports HolzShots.Drawing
+Imports HolzShots.Threading
 Imports HolzShots.Windows.Forms
 
 Namespace Input.Actions

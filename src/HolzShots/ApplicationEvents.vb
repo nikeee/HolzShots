@@ -1,14 +1,14 @@
 Imports System.Collections.ObjectModel
 Imports System.Globalization
 Imports System.IO
-Imports HolzShots.UI
-Imports HolzShots.IO
 Imports HolzShots.Composition
 Imports HolzShots.Input.Actions
+Imports HolzShots.IO
+Imports HolzShots.UI
+Imports HolzShots.Windows.Forms
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.WindowsAPICodePack.Shell
 Imports Microsoft.WindowsAPICodePack.Taskbar
-Imports HolzShots.Windows.Forms
 
 Namespace My
     Partial Friend Class MyApplication

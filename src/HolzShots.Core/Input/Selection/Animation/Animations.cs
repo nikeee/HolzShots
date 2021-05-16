@@ -1,5 +1,4 @@
 using System;
-using System.Drawing;
 using System.Numerics;
 using nud2dlib;
 
@@ -9,7 +8,7 @@ namespace HolzShots.Input.Selection.Animation
     {
         public DateTime Start { get; }
         public TimeSpan Duration { get; }
-        public TimeSpan Elapsed { get; private set;  }
+        public TimeSpan Elapsed { get; private set; }
         public bool IsDone { get; private set; }
 
         protected BaseAnimation(DateTime startTime, TimeSpan duration)

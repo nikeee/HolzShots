@@ -2,13 +2,13 @@ Imports System.Drawing.Drawing2D
 Imports System.Drawing.Printing
 Imports System.IO
 Imports System.Runtime.InteropServices
-Imports HolzShots.Net
-Imports HolzShots.UI.Controls
-Imports Microsoft.WindowsAPICodePack.Taskbar
 Imports HolzShots.Composition
 Imports HolzShots.Drawing
+Imports HolzShots.Net
+Imports HolzShots.UI.Controls
 Imports HolzShots.Windows.Forms
 Imports HolzShots.Windows.Net
+Imports Microsoft.WindowsAPICodePack.Taskbar
 
 Namespace UI
     Friend Class ShotEditor

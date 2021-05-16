@@ -1,7 +1,7 @@
+Imports HolzShots.Composition.Command
 Imports HolzShots.Input
 Imports HolzShots.Input.Actions
 Imports HolzShots.My
-Imports HolzShots.Composition.Command
 Imports HolzShots.Windows.Forms
 
 Namespace UI

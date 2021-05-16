@@ -1,9 +1,9 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Drawing;
 using System.Runtime.InteropServices;
 using HolzShots.Native;
-using System.Drawing;
 
 namespace HolzShots.Input.Selection
 {

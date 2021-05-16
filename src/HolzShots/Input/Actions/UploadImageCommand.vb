@@ -1,7 +1,7 @@
-Imports HolzShots.Composition.Command
 Imports System.Drawing.Imaging
-Imports HolzShots.Net
+Imports HolzShots.Composition.Command
 Imports HolzShots.Drawing
+Imports HolzShots.Net
 Imports HolzShots.Windows.Forms
 Imports HolzShots.Windows.Net
 

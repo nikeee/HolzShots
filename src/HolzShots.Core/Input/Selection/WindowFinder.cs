@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using HolzShots.Native;
@@ -39,7 +38,7 @@ namespace HolzShots.Input.Selection
                     return true;
 
                 var className = WindowHelpers.GetWindowClass(windowHandle);
-                if(className != null && _ignoredWindowClasses.Contains(className))
+                if (className != null && _ignoredWindowClasses.Contains(className))
                     return true;
 
                 var windowRectangle = WindowHelpers.GetWindowRectangle(windowHandle);

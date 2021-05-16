@@ -1,7 +1,7 @@
 Imports HolzShots.Composition.Command
-Imports HolzShots.Threading
 Imports HolzShots.Drawing
 Imports HolzShots.Input.Selection
+Imports HolzShots.Threading
 
 Namespace Input.Actions
     <Command("captureArea")>

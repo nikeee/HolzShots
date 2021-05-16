@@ -4,9 +4,9 @@ using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using HolzShots.Threading;
 using Forms.Transitions;
 using Forms.Transitions.TransitionTypes;
+using HolzShots.Threading;
 
 namespace HolzShots.Windows.Forms
 {
