@@ -1,4 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\Common.props" />
+
   <PropertyGroup>
     <RootNamespace>HolzShots.Tests</RootNamespace>
 
@@ -16,14 +19,6 @@
     <AssemblyTitle>HolzShots.Core.Tests</AssemblyTitle>
     <Product>HolzShots.Core.Tests</Product>
     <Description>HolzShots Core Component Tests</Description>
-
-    <LangVersion>latest</LangVersion>
-    <Nullable>enable</Nullable>
-    <DebugType>portable</DebugType>
-  </PropertyGroup>
-
-  <PropertyGroup Condition=" '$(CI)' == 'True' ">
-    <DefineConstants>$(DefineConstants);CI_BUILD</DefineConstants>
   </PropertyGroup>
 
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

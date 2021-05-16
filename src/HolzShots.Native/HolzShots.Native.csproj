@@ -1,11 +1,3 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-
-    <LangVersion>latest</LangVersion>
-    <Nullable>enable</Nullable>
-    <DebugType>portable</DebugType>
-  </PropertyGroup>
-
+  <Import Project="..\Common.props" />
 </Project>

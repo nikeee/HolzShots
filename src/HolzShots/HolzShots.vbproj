@@ -1,14 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+  <Import Project="..\Common.props" />
+
   <PropertyGroup>
     <StartupObject>HolzShots.My.MyApplication</StartupObject>
 
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net5.0-windows</TargetFramework>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <UseWindowsForms>true</UseWindowsForms>
-
-    <LangVersion>latest</LangVersion>
 
     <MyType>WindowsForms</MyType>
 
@@ -21,7 +20,6 @@
     <AssemblyTitle>HolzShots</AssemblyTitle>
     <Product>HolzShots</Product>
     <Description>A screenshot utility</Description>
-    <Copyright>Niklas Mollenhauer - GPL-3.0</Copyright>
 
     <Prefer32Bit>true</Prefer32Bit>
 
@@ -47,10 +45,6 @@
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <DefineDebug>false</DefineDebug>
     <DefineTrace>false</DefineTrace>
-  </PropertyGroup>
-
-  <PropertyGroup Condition=" '$(CI)' == 'True' ">
-    <DefineConstants>$(DefineConstants),CI_BUILD=True</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
