@@ -65,8 +65,6 @@ namespace HolzShots.Input.Selection
                 if (string.IsNullOrWhiteSpace(title))
                     title = null;
 
-                title = WindowHelpers.GetWindowClass(windowHandle);
-
                 result.Add(new WindowRectangle(windowHandle, r, title));
 
                 // As we capture a window, we also want its client rectangle:
