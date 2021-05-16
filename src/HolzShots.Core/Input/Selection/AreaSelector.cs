@@ -153,7 +153,7 @@ namespace HolzShots.Input.Selection
                                 // TODO: This is a hack, we need to make this more pretty (put this in the FinalState)
                                 var i = new InitialState();
                                 i.SelectWindowBasedOnMouseMove(availableWindowsForOutline, e.Location);
-                                FinishSelectionByWindowOutlineClick(i);
+                                FinishSelectionByWindowOutlineClickOrKeyboardInput(i);
                             }
                             break;
                         case FinalState _: Debug.Fail("Unhandled State"); break; // Not possible
@@ -216,6 +216,10 @@ namespace HolzShots.Input.Selection
                 case Keys.Tab when e.Shift && _state is InitialState s:
                     s.SelectWindowWithOffset(availableWindowsForOutline, -1);
                     break;
+                case Keys.Return when _state is InitialState s && s.CurrentOutline != null:
+                    // The user has a window highlighted and pressed enter -> we just take the window outline as a result.
+                    FinishSelectionByWindowOutlineClickOrKeyboardInput(s);
+                    return;
                 default: break;
             }
             base.OnKeyUp(e);
@@ -260,7 +264,7 @@ namespace HolzShots.Input.Selection
             _tcs.SetCanceled();
             CloseInternal();
         }
-        private void FinishSelectionByWindowOutlineClick(InitialState state)
+        private void FinishSelectionByWindowOutlineClickOrKeyboardInput(InitialState state)
         {
             var outline = state.CurrentOutline;
             if (outline == null)
