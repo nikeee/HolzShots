@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 using System.Windows.Forms;
 using HolzShots.Input.Selection;
 using Microsoft.Win32;
@@ -13,7 +14,7 @@ namespace HolzShots.Windows.Forms
         public static bool IsTenOrHigher => Environment.OSVersion.Version.Major >= 10;
 
         private static Lazy<StartupManager> _currentStartupManager = new(() => new StartupManager(
-            System.Reflection.Assembly.GetEntryAssembly()!.Location,
+            ExecutablePath,
             LibraryInformation.Name,
             RegistrationScope.Local,
             false,
@@ -22,6 +23,20 @@ namespace HolzShots.Windows.Forms
         ));
 
         public static StartupManager CurrentStartupManager => _currentStartupManager.Value;
+
+        // https://github.com/dotnet/runtime/issues/13051#issuecomment-510267727
+        private static string _executablePath = null!;
+        private static string ExecutablePath => _executablePath ??= GetExecutablePath();
+
+        private static string GetExecutablePath()
+        {
+            var sb = new StringBuilder(10000);
+            var res = Kernel32.GetModuleFileName(IntPtr.Zero, sb, sb.Capacity);
+            if (res == 0)
+                return System.Diagnostics.Process.GetCurrentProcess()?.MainModule?.FileName ?? System.Reflection.Assembly.GetEntryAssembly()!.Location;
+            return sb.ToString();
+        }
+
 
         public static bool AppsUseLightTheme()
         {
