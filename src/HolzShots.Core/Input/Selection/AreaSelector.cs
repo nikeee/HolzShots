@@ -290,6 +290,9 @@ namespace HolzShots.Input.Selection
             }
 
             Debug.Assert(_tcs != null);
+            Debug.Assert(SelectionSemaphore.IsInAreaSelection);
+            SelectionSemaphore.IsInAreaSelection = false;
+
             _tcs.SetResult(state.Result);
             CloseInternal();
         }
