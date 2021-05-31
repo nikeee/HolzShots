@@ -88,7 +88,7 @@ namespace HolzShots.Windows.Forms
                 // Maybe we want to remove the "do you want to turn it off now" feature off
             }
         }
-        public static void ErrorSavingImage(Exception ex, IWin32Window parent)
+        public static void ErrorSavingImage(Exception ex, IWin32Window? parent = null)
         {
             Show(parent, GenericErrorTitle, "There was an error saving your image.", ex.Message, TaskDialogIcon.Error, TaskDialogButton.OK);
         }

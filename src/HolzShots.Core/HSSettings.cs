@@ -253,6 +253,8 @@ namespace HolzShots
         OpenEditor,
         [EnumMember(Value = "upload")]
         Upload,
+        [EnumMember(Value = "saveAs")]
+        SaveAs,
         [EnumMember(Value = "copyImage")]
         Copy,
         [EnumMember(Value = "none")]

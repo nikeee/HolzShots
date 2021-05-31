@@ -1,5 +1,6 @@
 Imports System.Runtime.InteropServices
 Imports HolzShots.Composition.Command
+Imports HolzShots.Drawing
 Imports HolzShots.IO
 Imports HolzShots.Net
 Imports HolzShots.UI
@@ -42,10 +43,43 @@ Namespace Input.Actions
                             OrElse TypeOf ex Is ArgumentNullException
                         NotificationManager.CopyImageFailed(ex)
                     End Try
+
+                Case CaptureHandlingAction.SaveAs
+                    PromptSaveAs(screenshot, settingsContext)
                 Case CaptureHandlingAction.None ' Intentionally do nothing
                 Case Else ' Intentionally do nothing
             End Select
         End Function
+
+        Private Shared Sub PromptSaveAs(screenshot As Screenshot, settingsContext As HSSettings)
+            ' TODO: Move this
+            Using sfd As New SaveFileDialog()
+                sfd.Filter = $"{Localization.PngImage}|*.png|{Localization.JpgImage}|*.jpg"
+                sfd.DefaultExt = ".png"
+                sfd.CheckPathExists = True
+                sfd.Title = Localization.ChooseDestinationFileName
+                Dim res = sfd.ShowDialog()
+                If res <> DialogResult.OK Then Return
+
+                Dim f = sfd.FileName
+                If String.IsNullOrWhiteSpace(f) Then Return
+
+                Dim format = ImageFormatInformation.GetImageFormatFromFileName(f)
+                Debug.Assert(format IsNot Nothing)
+
+                Try
+                    Using fileStream = System.IO.File.OpenWrite(f)
+                        screenshot.Image.SaveExtended(fileStream, format)
+                    End Using
+
+                Catch ex As System.IO.PathTooLongException
+                    NotificationManager.PathIsTooLong(f)
+                Catch ex As Exception
+                    NotificationManager.ErrorSavingImage(ex)
+                End Try
+
+            End Using
+        End Sub
 
         Public MustOverride Function Invoke(parameters As IReadOnlyDictionary(Of String, String), settingsContext As HSSettings) As Task Implements ICommand(Of HSSettings).Invoke
 
