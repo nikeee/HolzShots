@@ -13,7 +13,6 @@ namespace HolzShots.Input.Selection
     public partial class AreaSelector : AnimatedForm, IAreaSelector
     {
         private static readonly D2DColor OverlayColor = D2DColor.Black;
-        private static readonly Cursor SelectionCursor = new(Properties.Resources.CrossCursor.Handle);
 
         private static TaskCompletionSource<Rectangle>? _tcs;
 
@@ -33,6 +32,7 @@ namespace HolzShots.Input.Selection
             BackColor = Color.Black;
 
             DrawFPS = true;
+            Cursor = new(Properties.Resources.CrossCursor.Handle);
             // DesktopLocation = new Point(0, 0);
 
             var cts = new CancellationTokenSource();
@@ -70,7 +70,6 @@ namespace HolzShots.Input.Selection
             _tcs = new TaskCompletionSource<Rectangle>();
 
             Visible = true;
-            Cursor = SelectionCursor;
 
             return _tcs.Task;
         }
