@@ -21,7 +21,7 @@ namespace HolzShots
             var field = typeof(TU).GetField(fieldName, bindFlags);
             return field == null
                 ? default
-                : (TField)field.GetValue(instance);
+                : (TField?)field.GetValue(instance);
         }
 
         internal static void SetInstanceField<TU, TField>(TU instance, string fieldName, TField value)

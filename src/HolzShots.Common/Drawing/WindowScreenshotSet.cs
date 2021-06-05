@@ -21,7 +21,7 @@ namespace HolzShots.Drawing
 
         #region Equals/operators
 
-        public override bool Equals(object obj) => obj is WindowScreenshotSet w && w == this;
+        public override bool Equals(object? obj) => obj is WindowScreenshotSet w && w == this;
         public bool Equals(WindowScreenshotSet other) => other == this;
         public override int GetHashCode() => Result.GetHashCode();
         public static bool operator ==(WindowScreenshotSet left, WindowScreenshotSet right)

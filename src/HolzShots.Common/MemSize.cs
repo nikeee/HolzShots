@@ -110,7 +110,7 @@ namespace HolzShots
         public static bool operator ==(MemSize a, MemSize b) => a.ByteCount == b.ByteCount;
         public static bool operator !=(MemSize a, MemSize b) => a.ByteCount != b.ByteCount;
 
-        public override bool Equals(object obj) => obj is MemSize mem && mem == this;
+        public override bool Equals(object? obj) => obj is MemSize mem && mem == this;
         public bool Equals(MemSize other) => other.ByteCount == ByteCount;
 
         public override int GetHashCode() => ByteCount.GetHashCode();

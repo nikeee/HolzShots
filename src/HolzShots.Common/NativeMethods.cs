@@ -116,7 +116,7 @@ namespace HolzShots
 
             public override int GetHashCode() => HashCode.Combine(LeftWidth, RightWidth, TopHeight, BottomHeight);
 
-            public override bool Equals(object obj) => obj is Margin other && Equals(other);
+            public override bool Equals(object? obj) => obj is Margin other && Equals(other);
 
             public bool Equals(Margin margin)
             {

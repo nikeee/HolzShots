@@ -1,3 +1,4 @@
+using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
 
@@ -26,10 +27,14 @@ namespace HolzShots.Native
         }
 
         public static implicit operator Rectangle(Rect rct) => Rectangle.FromLTRB(rct.Left, rct.Top, rct.Right, rct.Bottom);
-        public static implicit operator Rect(Rectangle rectangle) => new Rect(rectangle.Left, rectangle.Top, rectangle.Right, rectangle.Bottom);
+        public static implicit operator Rect(Rectangle rectangle) => new(rectangle.Left, rectangle.Top, rectangle.Right, rectangle.Bottom);
 
 
-        public static bool operator ==(Rect left, Rect right) => left.Left == right.Left && left.Right == right.Right && left.Top == right.Top && left.Bottom == right.Bottom;
+        public static bool operator ==(Rect left, Rect right) => left.Equals(right);
         public static bool operator !=(Rect left, Rect right) => !(left == right);
+
+        public override bool Equals(object? obj) => obj is not null && obj is Rect r && Equals(r);
+        public bool Equals(Rect obj) => Left == obj.Left && Top == obj.Top && Right == obj.Right && Bottom == obj.Bottom;
+        public override int GetHashCode() => HashCode.Combine(Left, Top, Right, Bottom);
     }
 }

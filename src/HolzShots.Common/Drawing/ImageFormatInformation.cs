@@ -75,7 +75,6 @@ namespace HolzShots.Drawing
         }
         public static string GetSuggestedFileName(ExtensionAndMimeType extensionAndMimeType)
         {
-            Debug.Assert(extensionAndMimeType != null);
             Debug.Assert(extensionAndMimeType.FileExtension != null);
             Debug.Assert(extensionAndMimeType.MimeType != null);
 
@@ -95,7 +94,7 @@ namespace HolzShots.Drawing
             MimeType = mimeType ?? throw new ArgumentNullException(nameof(mimeType));
         }
 
-        public override bool Equals(object obj) => obj is ExtensionAndMimeType other && Equals(other);
+        public override bool Equals(object? obj) => obj is ExtensionAndMimeType other && Equals(other);
         public bool Equals(ExtensionAndMimeType other) => other.FileExtension == FileExtension && other.MimeType == MimeType;
 
         public override int GetHashCode() => HashCode.Combine(MimeType, FileExtension);
