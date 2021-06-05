@@ -130,10 +130,15 @@ namespace HolzShots.Net.Custom
 
         public override string Evaluate(ResponseParser responseParser, string content)
         {
-            if (PatternIndex < 0 || PatternIndex >= responseParser.ParsedRegexPatterns.Count)
+            var parsedPatterns = responseParser.ParsedRegexPatterns;
+            if (parsedPatterns is null)
+                throw new UnableToFillTemplateException("No pattern to match");
+
+
+            if (PatternIndex < 0 || PatternIndex >= parsedPatterns.Count)
                 throw new UnableToFillTemplateException($"Reference to non-existent entry in regex pattern list: {PatternIndex}");
 
-            var pattern = responseParser.ParsedRegexPatterns[PatternIndex];
+            var pattern = parsedPatterns[PatternIndex];
 
             var matches = pattern.Matches(content);
             if (matches.Count > 0)
