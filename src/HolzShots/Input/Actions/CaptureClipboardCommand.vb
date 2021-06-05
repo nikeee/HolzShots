@@ -1,5 +1,5 @@
-Imports System.Threading.Tasks
 Imports HolzShots.Composition.Command
+Imports HolzShots.Windows.Forms
 
 Namespace Input.Actions
     <Command("captureClipboard")>
@@ -23,7 +23,7 @@ Namespace Input.Actions
             Catch ex As Exception When _
                             TypeOf ex Is Runtime.InteropServices.ExternalException _
                             OrElse TypeOf ex Is System.Threading.ThreadStateException
-                Interop.HumanInterop.RetrievingImageFromClipboardFailed(ex)
+                NotificationManager.RetrievingImageFromClipboardFailed(ex)
                 Return Nothing
             End Try
         End Function

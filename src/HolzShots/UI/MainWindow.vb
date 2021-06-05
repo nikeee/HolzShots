@@ -1,8 +1,7 @@
+Imports HolzShots.Composition.Command
 Imports HolzShots.Input
 Imports HolzShots.Input.Actions
-Imports HolzShots.Interop
 Imports HolzShots.My
-Imports HolzShots.Composition.Command
 Imports HolzShots.Windows.Forms
 
 Namespace UI
@@ -59,7 +58,7 @@ Namespace UI
             If DateTime.Now - _applicationStarted > TimeSpan.FromSeconds(2) Then
                 ' If _settingsUpdates is 0, the function was invoke on application startup
                 ' We only want to show this message when the user edits this file
-                HumanInterop.SettingsUpdated()
+                NotificationManager.SettingsUpdated()
             End If
 
             Dim parsedBindings = newSettings.KeyBindings.Select(AddressOf CommandManager.GetHotkeyActionFromKeyBinding).ToArray()
@@ -70,7 +69,7 @@ Namespace UI
                 _actionContainer.Refresh()
             Catch ex As AggregateException
                 Dim registrationExceptions = ex.InnerExceptions.OfType(Of HotkeyRegistrationException)
-                HumanInterop.ErrorRegisteringHotkeys(registrationExceptions)
+                NotificationManager.ErrorRegisteringHotkeys(registrationExceptions)
             End Try
 
         End Sub

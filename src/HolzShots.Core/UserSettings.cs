@@ -6,7 +6,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-using HolzShots.Composition;
 using HolzShots.IO;
 
 namespace HolzShots

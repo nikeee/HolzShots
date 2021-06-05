@@ -7,7 +7,7 @@ namespace HolzShots
     /// Supports creating instances from specific sizes and notations (decimal prefix vs binary prefix).
     /// Also has some operators (+/-/==/!=).
     /// </summary>
-    public struct MemSize : IEquatable<MemSize>, IComparable<MemSize>
+    public readonly struct MemSize : IEquatable<MemSize>, IComparable<MemSize>
     {
         /// <summary>Represents the size 0 bytes.</summary>
         public static MemSize Zero => default;

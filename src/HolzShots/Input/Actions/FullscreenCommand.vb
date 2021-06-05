@@ -1,10 +1,6 @@
-Imports System.Threading.Tasks
-Imports HolzShots.ScreenshotRelated
 Imports HolzShots.Composition.Command
-Imports HolzShots.Threading
-Imports HolzShots.UI
-Imports System.Drawing.Drawing2D
 Imports HolzShots.Drawing
+Imports HolzShots.Threading
 
 Namespace Input.Actions
     <Command("captureEntireScreen")>

@@ -17,7 +17,7 @@ Namespace Drawing.Tools
             Get
                 Return InternalBeginCoords
             End Get
-            Set(ByVal value As Point)
+            Set(value As Point)
                 If value <> InternalBeginCoords Then
                     InternalBeginCoords = value
                     _arrowFirstpoint = New Vector2(value.X, value.Y)
@@ -29,7 +29,7 @@ Namespace Drawing.Tools
             Get
                 Return InternalEndCoords
             End Get
-            Set(ByVal value As Point)
+            Set(value As Point)
                 If value <> InternalEndCoords Then
                     InternalEndCoords = value
                     _arrowSecondpoint = New Vector2(value.X, value.Y)
@@ -41,7 +41,7 @@ Namespace Drawing.Tools
         Public Overrides ReadOnly Property ToolType As PaintPanel.ShotEditorTool = PaintPanel.ShotEditorTool.Arrow
         Public Overrides ReadOnly Property Cursor As Cursor = TheCursor
 
-        Public Overrides Sub RenderFinalImage(ByRef rawImage As Image, ByVal sender As PaintPanel)
+        Public Overrides Sub RenderFinalImage(ByRef rawImage As Image, sender As PaintPanel)
             If _arrowFirstpoint <> Vector2.Zero AndAlso _arrowSecondpoint <> Vector2.Zero Then
                 Using g = Graphics.FromImage(rawImage)
                     g.SmoothingMode = SmoothingMode.AntiAlias
@@ -65,7 +65,7 @@ Namespace Drawing.Tools
             _arrowSecondpoint = New Vector2(EndCoords.X, EndCoords.Y)
             If _arrowFirstpoint <> Vector2.Zero AndAlso _arrowSecondpoint <> Vector2.Zero Then
                 If _arrowFirstpoint <> _arrowSecondpoint Then
-                    _arrowBtwn2 = Vector2Ex.FromTwoVectors(_arrowFirstpoint, _arrowSecondpoint)
+                    _arrowBtwn2 = _arrowSecondpoint - _arrowFirstpoint
                     Dim btwn = Vector2.Normalize(_arrowBtwn2) * _arrowBtwn2.Length / 5
                     Dim c = btwn.Rotate(ArrowRotationconstant) + _arrowFirstpoint
                     Dim d = btwn.Rotate(-ArrowRotationconstant) + _arrowFirstpoint
@@ -91,10 +91,6 @@ Namespace Drawing.Tools
     End Class
 
     Module Vector2Ex
-        Public Function FromTwoVectors(p1 As Vector2, p2 As Vector2) As Vector2
-            Return New Vector2(p2.X - p1.X, p2.Y - p1.Y)
-        End Function
-
         <Extension>
         Public Function Rotate(vector As Vector2, angle As Single) As Vector2
             Return New Vector2(CSng(Math.Cos(angle) * vector.X - Math.Sin(angle) * vector.Y), CSng(Math.Sin(angle) * vector.X + Math.Cos(angle) * vector.Y))

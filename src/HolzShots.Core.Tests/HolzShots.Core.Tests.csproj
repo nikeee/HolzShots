@@ -1,4 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\Common.props" />
+
   <PropertyGroup>
     <RootNamespace>HolzShots.Tests</RootNamespace>
 
@@ -16,14 +19,6 @@
     <AssemblyTitle>HolzShots.Core.Tests</AssemblyTitle>
     <Product>HolzShots.Core.Tests</Product>
     <Description>HolzShots Core Component Tests</Description>
-
-    <LangVersion>latest</LangVersion>
-    <Nullable>enable</Nullable>
-    <DebugType>portable</DebugType>
-  </PropertyGroup>
-
-  <PropertyGroup Condition=" '$(CI)' == 'True' ">
-    <DefineConstants>$(DefineConstants);CI_BUILD</DefineConstants>
   </PropertyGroup>
 
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
@@ -41,7 +36,7 @@
   <ItemGroup>
     <Reference Include="System.ComponentModel.Composition" />
 
-    <PackageReference Include="Microsoft.NETCore.Platforms" Version="3.1.2" />
+    <PackageReference Include="Microsoft.NETCore.Platforms" Version="5.0.0" />
     <PackageReference Include="NETStandard.Library" Version="2.0.3" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
     <PackageReference Include="MSTest.TestAdapter" Version="2.1.2" />
@@ -51,11 +46,7 @@
     <PackageReference Include="xunit.runner.console" Version="2.4.1" PrivateAssets="all" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3" PrivateAssets="all" />
 
-    <PackageReference Include="Microsoft.CodeQuality.Analyzers" Version="3.3.0" PrivateAssets="all" />
-    <!--
-    <PackageReference Include="System.Runtime.Analyzers" Version="1.2.0-beta2" />
-    <PackageReference Include="System.Runtime.InteropServices.Analyzers" Version="1.2.0-beta2" />
-    -->
+    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="5.0.3" />
 
     <PackageReference Include="Semver" Version="2.0.6" />
     <PackageReference Include="System.Collections" Version="4.3.0" />

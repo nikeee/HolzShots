@@ -1,5 +1,5 @@
-Imports HolzShots.Interop.LocalDisk
 Imports HolzShots.Composition.Command
+Imports HolzShots.IO
 
 Namespace Input.Actions
     <Command("openImages")>
@@ -10,7 +10,7 @@ Namespace Input.Actions
             If parameters Is Nothing Then Throw New ArgumentNullException(NameOf(parameters))
             If settingsContext Is Nothing Then Throw New ArgumentNullException(NameOf(settingsContext))
 
-            ScreenshotDumper.OpenPictureDumpFolder(settingsContext)
+            ScreenshotAggregator.OpenPictureSaveDirectory(settingsContext)
             Return Task.CompletedTask
         End Function
     End Class

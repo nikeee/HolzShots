@@ -17,17 +17,17 @@ Namespace Drawing.Tools.UI
             End Get
         End Property
 
-        Friend Sub New(ByVal img As Image)
+        Friend Sub New(img As Image)
             _img = img
             InitializeComponent()
         End Sub
 
-        Private Sub ScaleWindowLoad(ByVal sender As Object, ByVal e As EventArgs) Handles MyBase.Load
+        Private Sub ScaleWindowLoad(sender As Object, e As EventArgs) Handles MyBase.Load
             HeightBox.Text = "100"
             WidthBox.Text = "100"
         End Sub
 
-        Private Sub PixelCheckedChanged(ByVal sender As Object, ByVal e As EventArgs) Handles Pixel.CheckedChanged
+        Private Sub PixelCheckedChanged(sender As Object, e As EventArgs) Handles Pixel.CheckedChanged
             If Pixel.Checked Then
                 CurrentScaleUnit = ScaleUnit.Pixel
                 WidthBox.Text = _img.Width.ToString
@@ -48,7 +48,7 @@ Namespace Drawing.Tools.UI
             Pixel
         End Enum
 
-        Private Sub HeightBoxValueChanged(ByVal sender As Object, ByVal e As EventArgs) Handles HeightBox.TextChanged
+        Private Sub HeightBoxValueChanged(sender As Object, e As EventArgs) Handles HeightBox.TextChanged
             If KeepAspectRatio.Checked AndAlso HeightBox.Focused AndAlso WidthBox.IntValue > 0 Then
                 If CurrentScaleUnit = ScaleUnit.Pixel Then
                     Dim a As Double = _img.Width / _img.Height
@@ -61,7 +61,7 @@ Namespace Drawing.Tools.UI
             End If
         End Sub
 
-        Private Sub WidthBoxValueChanged(ByVal sender As Object, ByVal e As EventArgs) Handles WidthBox.TextChanged
+        Private Sub WidthBoxValueChanged(sender As Object, e As EventArgs) Handles WidthBox.TextChanged
             If KeepAspectRatio.Checked AndAlso WidthBox.Focused AndAlso HeightBox.IntValue > 0 Then
                 If CurrentScaleUnit = ScaleUnit.Pixel Then
                     Dim a As Double = _img.Width / _img.Height

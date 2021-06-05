@@ -1,9 +1,9 @@
 ﻿//Copyright (c) Microsoft Corporation.  All rights reserved.
 
-using Microsoft.WindowsAPICodePack.Resources;
 using System;
 using System.Globalization;
 using System.Text;
+using Microsoft.WindowsAPICodePack.Resources;
 
 namespace MS.WindowsAPICodePack.Internal
 {

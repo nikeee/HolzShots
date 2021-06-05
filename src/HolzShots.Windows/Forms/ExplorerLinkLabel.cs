@@ -10,8 +10,8 @@ namespace HolzShots.Windows.Forms
     /// </summary>
     public class ExplorerLinkLabel : Label
     {
-        private Font _defaultFont;
-        private Font _hoverFont;
+        private Font? _defaultFont;
+        private Font? _hoverFont;
 
         public ExplorerLinkLabel() : base()
         {
@@ -30,13 +30,13 @@ namespace HolzShots.Windows.Forms
         {
             base.OnMouseEnter(e);
             ForeColor = SystemColors.Highlight;
-            Font = _hoverFont;
+            Font = _hoverFont!;
         }
         protected override void OnMouseLeave(EventArgs e)
         {
             base.OnMouseLeave(e);
             ForeColor = SystemColors.HotTrack;
-            Font = _defaultFont;
+            Font = _defaultFont!;
         }
     }
 }

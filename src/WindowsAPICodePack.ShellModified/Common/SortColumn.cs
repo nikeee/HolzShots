@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 
-using Microsoft.WindowsAPICodePack.Shell.PropertySystem;
 using System.Runtime.InteropServices;
+using Microsoft.WindowsAPICodePack.Shell.PropertySystem;
 
 namespace Microsoft.WindowsAPICodePack.Shell
 {

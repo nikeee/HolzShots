@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Windows.Forms;
 using System.Windows.Forms.Layout;
 
@@ -23,7 +24,9 @@ namespace HolzShots.Windows.Forms.Controls
 
             public override bool Layout(object container, LayoutEventArgs layoutEventArgs)
             {
-                StackPanel stackPanel = container as StackPanel;
+                Debug.Assert(container is StackPanel);
+
+                StackPanel stackPanel = (container as StackPanel)!;
                 if (stackPanel == null)
                     return false;
 

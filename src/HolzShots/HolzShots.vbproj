@@ -1,14 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+  <Import Project="..\Common.props" />
+
   <PropertyGroup>
     <StartupObject>HolzShots.My.MyApplication</StartupObject>
 
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net5.0-windows</TargetFramework>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <UseWindowsForms>true</UseWindowsForms>
-
-    <LangVersion>latest</LangVersion>
 
     <MyType>WindowsForms</MyType>
 
@@ -21,11 +20,15 @@
     <AssemblyTitle>HolzShots</AssemblyTitle>
     <Product>HolzShots</Product>
     <Description>A screenshot utility</Description>
-    <Copyright>Niklas Mollenhauer - GPL-3.0</Copyright>
+
+    <Prefer32Bit>true</Prefer32Bit>
+
+    <NoWarn>42353,42354,42355</NoWarn>
+    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
+    <DefineConstants>_MYTYPE="Custom",_MYAPPLICATIONTYPE="WindowsForms"</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup>
-    <!-- VB Config -->
     <OptionExplicit>On</OptionExplicit>
     <OptionCompare>Binary</OptionCompare>
     <OptionStrict>On</OptionStrict>
@@ -35,34 +38,13 @@
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <DebugType>portable</DebugType>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\$(Configuration)\</OutputPath>
-
-    <NoWarn>42353,42354,42355</NoWarn>
-    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <DefineConstants>_MYTYPE="Custom",_MYAPPLICATIONTYPE="WindowsForms"</DefineConstants>
-    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
-    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <DebugType>None</DebugType>
     <DefineDebug>false</DefineDebug>
     <DefineTrace>false</DefineTrace>
-    <OutputPath>bin\$(Configuration)\</OutputPath>
-
-    <NoWarn>42353,42354,42355</NoWarn>
-    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <DefineConstants>_MYTYPE="Custom",_MYAPPLICATIONTYPE="WindowsForms"</DefineConstants>
-    <Prefer32Bit>true</Prefer32Bit>
-  </PropertyGroup>
-
-  <PropertyGroup Condition=" '$(CI)' == 'True' ">
-    <DefineConstants>$(DefineConstants),CI_BUILD=True</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
@@ -72,19 +54,10 @@
     <Compile Update="UI\Controls\PaintPanel.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Update="UI\Controls\NumericTextBox.vb">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Update="Drawing\Tools\UI\ScaleWindow.Designer.vb">
       <DependentUpon>ScaleWindow.vb</DependentUpon>
     </Compile>
     <Compile Update="Drawing\Tools\UI\ScaleWindow.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="ScreenshotRelated\Selection\AreaSelector.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="ScreenshotRelated\BackgroundForm.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="UI\MainWindow.vb" />
@@ -168,7 +141,6 @@
 
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="System.Windows.Forms" />
 
     <ProjectReference Include="..\HolzShots.Common\HolzShots.Common.csproj" />
     <ProjectReference Include="..\HolzShots.Core\HolzShots.Core.csproj" />
@@ -176,20 +148,16 @@
     <ProjectReference Include="..\HolzShots.Native\HolzShots.Native.csproj" />
     <ProjectReference Include="..\WindowsAPICodePack.ShellModified\WindowsAPICodePack.ShellModified.csproj" />
 
-    <PackageReference Include="Microsoft.CodeQuality.Analyzers" Version="3.3.0" />
-    <!--
-    <PackageReference Include="System.Runtime.Analyzers" Version="1.2.0-beta2" />
-    <PackageReference Include="System.Runtime.InteropServices.Analyzers" Version="1.2.0-beta2" />
-    -->
+    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="5.0.3" />
 
-    <PackageReference Include="Microsoft.Bcl.HashCode" Version="1.1.0" />
+    <PackageReference Include="Microsoft.Bcl.HashCode" Version="1.1.1" />
     <PackageReference Include="Semver" Version="2.0.6" />
     <PackageReference Include="StartupHelper" Version="1.0.3.4" />
     <PackageReference Include="System.Buffers" Version="4.5.1" />
-    <PackageReference Include="System.Collections.Immutable" Version="1.7.1" />
+    <PackageReference Include="System.Collections.Immutable" Version="5.0.0" />
     <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
     <PackageReference Include="System.Runtime" Version="4.3.1" />
-    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.7.1" />
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="5.0.0" />
     <PackageReference Include="System.Runtime.Extensions" Version="4.3.1" />
     <PackageReference Include="System.Runtime.InteropServices" Version="4.3.0" />
     <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />

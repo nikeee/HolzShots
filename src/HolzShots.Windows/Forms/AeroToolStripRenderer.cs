@@ -18,7 +18,7 @@ namespace HolzShots.Windows.Forms
     /// <remarks>Perhaps surprisingly, this does not need to be disposable.</remarks>
     public class AeroToolStripRenderer : ToolStripSystemRenderer
     {
-        private VisualStyleRenderer _renderer;
+        private VisualStyleRenderer _renderer = null!;
 
         public AeroToolStripRenderer(ToolBarTheme theme) => Theme = theme;
 
@@ -104,10 +104,10 @@ namespace HolzShots.Windows.Forms
 
         private Padding GetThemeMargins(IDeviceContext dc, MarginType marginType)
         {
-            Native.Margin margins = new Native.Margin();
+            var margins = new Native.Margin();
             try
             {
-                IntPtr hDc = dc.GetHdc();
+                var hDc = dc.GetHdc();
                 if (0 == Native.UxTheme.GetThemeMargins(_renderer.Handle, hDc, _renderer.Part, _renderer.State, (int)marginType, IntPtr.Zero, ref margins))
                     return new Padding(margins.cxLeftWidth, margins.cyTopHeight, margins.cxRightWidth, margins.cyBottomheight);
                 return Padding.Empty;

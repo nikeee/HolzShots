@@ -34,33 +34,35 @@
 	*/
 
 	"key.bindings": [
-	  {
-		"enabled": true,
-		"keys": "F8",
-		"command": "captureArea"
-	  },
-	  {
-		"enabled": true,
-		"keys": "F10",
-		"command": {
-			"name": "captureEntireScreen",
-			"overrides": {
-				// You can override global settings on a command-basis
-				// For example, you could choose to upload the image straight to your default image hoster:
+		{
+			"enabled": true,
+			"keys": "F8",
+			"command": "captureArea"
+		},
+		{
+			"enabled": true,
+			"keys": "F10",
+			"command": {
+				"name": "captureEntireScreen",
+				"overrides": {
+					// You can override global settings on a command-basis
+					// For example, you could choose to upload the image straight to your default image hoster:
 
-				// "capture.actionAfterCapture": "upload",
+					// "capture.actionAfterCapture": "upload",
 
-				// Or, you can copy the image to your clipboard (to send it via WhatsApp etc.):
-				// "capture.actionAfterCapture": "copyImage",
+					// Or, you can copy the image to your clipboard (to send it via WhatsApp etc.):
+					// "capture.actionAfterCapture": "copyImage",
 
-				// You can even change the path the image will be saved (or even if it will be saved when using this shortcut)
+					// You can even change the path the image will be saved (or even if it will be saved when using this shortcut)
+				}
 			}
+		},
+		{
+			"enabled": false,
+			// List of available keys, combine them using "+":
+			// https://docs.microsoft.com/en-us/dotnet/api/system.windows.forms.keys?view=net-5.0
+			"keys": "Shift+F9",
+			"command": "captureWindow"
 		}
-	  },
-	  {
-		"enabled": false,
-		"keys": "F9",
-		"command": "captureWindow"
-	  }
 	]
-  }
+}

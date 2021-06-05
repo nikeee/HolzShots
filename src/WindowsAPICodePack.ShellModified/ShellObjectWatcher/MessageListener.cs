@@ -1,10 +1,10 @@
-﻿using Microsoft.WindowsAPICodePack.Shell.Interop;
-using Microsoft.WindowsAPICodePack.Resources;
-using MS.WindowsAPICodePack.Internal;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Threading;
+using Microsoft.WindowsAPICodePack.Resources;
+using Microsoft.WindowsAPICodePack.Shell.Interop;
+using MS.WindowsAPICodePack.Internal;
 
 namespace Microsoft.WindowsAPICodePack.Shell
 {
@@ -147,7 +147,7 @@ namespace Microsoft.WindowsAPICodePack.Shell
                     }
                     break;
                 case (uint)WindowMessage.Destroy:
-                        _running = false;
+                    _running = false;
                     break;
                 default:
                     MessageListener listener;

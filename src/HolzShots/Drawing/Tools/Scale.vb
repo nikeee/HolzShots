@@ -8,13 +8,13 @@ Namespace Drawing.Tools
         Public Overrides ReadOnly Property Cursor As Cursor = Cursors.Arrow
         Public Overrides ReadOnly Property ToolType As PaintPanel.ShotEditorTool = PaintPanel.ShotEditorTool.Scale
 
-        Public Overrides Sub RenderFinalImage(ByRef rawImage As Image, ByVal sender As PaintPanel)
+        Public Overrides Sub RenderFinalImage(ByRef rawImage As Image, sender As PaintPanel)
 
             Using s As New ScaleWindow(rawImage)
 
                 If s.ShowDialog(sender) = DialogResult.OK Then
-                    Dim widh As Double = s.WidthBoxV
-                    Dim hei As Double = s.HeightBoxV
+                    Dim widh = s.WidthBoxV
+                    Dim hei = s.HeightBoxV
 
                     Dim unit As ScaleWindow.ScaleUnit = s.CurrentScaleUnit
 
@@ -24,7 +24,6 @@ Namespace Drawing.Tools
 
                     Dim newCursorWidth As Integer = My.Resources.windowsCursorMedium.Width
                     Dim newCursorHeight As Integer = My.Resources.windowsCursorMedium.Height
-
 
                     If unit = ScaleWindow.ScaleUnit.Percent Then
                         newWidth = CInt(rawImage.Width * (widh / 100))
@@ -48,8 +47,6 @@ Namespace Drawing.Tools
 
                     rawImage = newRawImage
                     sender.RawBox.Image = newRawImage
-                    GC.Collect()
-
                 Else
                     sender.CurrentTool = PaintPanel.ShotEditorTool.None
                 End If

@@ -37,9 +37,46 @@ namespace HolzShots.Native
         [DllImport(DllName)]
         private static extern bool FlashWindowEx(in FlashWindowInfo pwfi);
 
+        /// <summary>
+        /// Callback EnumWindowsCallback should return true to continue enumerating or false to stop.
+        /// Refs:
+        /// http://pinvoke.net/default.aspx/user32.EnumWindows
+        /// https://docs.microsoft.com/en-us/previous-versions/windows/desktop/legacy/ms633498(v=vs.85)
+        /// </summary>
+        [DllImport(DllName)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool EnumWindows(EnumWindowsCallback enumWindowFunction, IntPtr lParam);
+
+        /// <summary>
+        /// Callback EnumWindowsCallback should return true to continue enumerating or false to stop.
+        /// Refs:
+        /// http://pinvoke.net/default.aspx/user32.EnumWindows
+        /// https://docs.microsoft.com/en-us/previous-versions/windows/desktop/legacy/ms633498(v=vs.85)
+        /// </summary>
+        public delegate bool EnumWindowsCallback(IntPtr windowHandle, int lParam);
+
+        [DllImport(DllName)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool IsWindowVisible(IntPtr windowHandle);
+
+        [DllImport(DllName)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool GetClientRect(IntPtr hWnd, out Rect lpRect);
+
+        [DllImport(DllName, ExactSpelling = true, SetLastError = true)]
+        public static extern int MapWindowPoints(IntPtr hWndFrom, IntPtr hWndTo, [In, Out] ref Rect rect, [MarshalAs(UnmanagedType.U4)] int cPoints);
+
+        [DllImport(DllName)]
+        static extern bool IsZoomed(IntPtr hWnd);
+
+        [DllImport(DllName, SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool GetWindowInfo(IntPtr hwnd, ref WindowInfo pwi);
+
         #region Window Position
 
         [DllImport(DllName)]
+        [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool GetWindowRect(IntPtr hWnd, out Rect lpRect);
 
         [DllImport(DllName)]
@@ -109,6 +146,9 @@ namespace HolzShots.Native
 
         [DllImport(DllName)]
         public static extern IntPtr GetWindowDC(IntPtr window);
+
+        #endregion
+        #region DC / DesktopWindow
 
         [DllImport(DllName)]
         public static extern IntPtr GetDesktopWindow();

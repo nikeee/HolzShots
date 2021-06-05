@@ -27,9 +27,9 @@ using Microsoft.WindowsAPICodePack.Shell;
 using Microsoft.WindowsAPICodePack.Shell.Interop;
 */
 
-using Microsoft.WindowsAPICodePack.Shell;
 using System;
 using System.Runtime.InteropServices;
+using Microsoft.WindowsAPICodePack.Shell;
 
 namespace Microsoft.WindowsAPICodePack.Taskbar
 {

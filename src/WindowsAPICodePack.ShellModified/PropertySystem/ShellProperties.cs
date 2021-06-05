@@ -45,10 +45,10 @@ using System.Runtime.InteropServices;
 using MS.WindowsAPICodePack.InteropServices.ComTypes;
 */
 
-using Microsoft.WindowsAPICodePack.Resources;
-using MS.WindowsAPICodePack.Internal;
 using System;
 using System.Runtime.InteropServices;
+using Microsoft.WindowsAPICodePack.Resources;
+using MS.WindowsAPICodePack.Internal;
 
 namespace Microsoft.WindowsAPICodePack.Shell.PropertySystem
 {

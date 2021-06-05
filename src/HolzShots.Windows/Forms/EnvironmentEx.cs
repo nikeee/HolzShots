@@ -1,5 +1,7 @@
 using System;
+using System.Text;
 using System.Windows.Forms;
+using HolzShots.Input.Selection;
 using Microsoft.Win32;
 using StartupHelper;
 
@@ -11,16 +13,30 @@ namespace HolzShots.Windows.Forms
         public static bool IsSevenOrHigher => (Environment.OSVersion.Version.Major == 6 && Environment.OSVersion.Version.Minor >= 1) || Environment.OSVersion.Version.Major > 6;
         public static bool IsTenOrHigher => Environment.OSVersion.Version.Major >= 10;
 
-        private static StartupManager _currentStartupManager;
-        public static StartupManager CurrentStartupManager => _currentStartupManager ?? (_currentStartupManager =
-            new StartupManager(
-                System.Reflection.Assembly.GetEntryAssembly().Location,
-                LibraryInformation.Name,
-                RegistrationScope.Local,
-                false,
-                StartupProviders.Registry,
-                CommandLine.AutorunParamter
-            ));
+        private static Lazy<StartupManager> _currentStartupManager = new(() => new StartupManager(
+            ExecutablePath,
+            LibraryInformation.Name,
+            RegistrationScope.Local,
+            false,
+            StartupProviders.Registry,
+            CommandLine.AutorunParamter
+        ));
+
+        public static StartupManager CurrentStartupManager => _currentStartupManager.Value;
+
+        // https://github.com/dotnet/runtime/issues/13051#issuecomment-510267727
+        private static string _executablePath = null!;
+        private static string ExecutablePath => _executablePath ??= GetExecutablePath();
+
+        private static string GetExecutablePath()
+        {
+            var sb = new StringBuilder(10000);
+            var res = Kernel32.GetModuleFileName(IntPtr.Zero, sb, sb.Capacity);
+            if (res == 0)
+                return System.Diagnostics.Process.GetCurrentProcess()?.MainModule?.FileName ?? System.Reflection.Assembly.GetEntryAssembly()!.Location;
+            return sb.ToString();
+        }
+
 
         public static bool AppsUseLightTheme()
         {
@@ -28,7 +44,12 @@ namespace HolzShots.Windows.Forms
                 return false;
 
             var key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize");
-            return (int)key.GetValue("AppsUseLightTheme", 1) != 0;
+            if (key == null)
+                return true;
+
+            var value = key.GetValue("AppsUseLightTheme", 1);
+
+            return value is null || (int)value != 0;
         }
 
         /// <summary> It's a function instead of a property to singal that this call might be expensive (it involves a p/invoke) </summary>
@@ -38,12 +59,10 @@ namespace HolzShots.Windows.Forms
         {
             var foregroundWindowHandle = Native.User32.GetForegroundWindow();
 
-            var sb = new System.Text.StringBuilder();
-            var charsWritten = Native.User32.GetClassName(foregroundWindowHandle, sb, sb.Capacity);
-            if (charsWritten == 0)
+            var className = WindowHelpers.GetWindowClass(foregroundWindowHandle);
+            if (className == null)
                 return false; // Call to GetClassName failed. Just assume that there is no app running in fullscreen
 
-            var className = sb.ToString();
             if (className == "WorkerW")
                 return false;
 
@@ -57,18 +76,13 @@ namespace HolzShots.Windows.Forms
         }
 
 
-        private static ToolStripRenderer _rendererInstance = null;
-        public static ToolStripRenderer GetToolStripRendererForCurrentTheme()
-        {
-            if (_rendererInstance != null)
-                return _rendererInstance;
+        private static Lazy<ToolStripRenderer> _rendererInstance = new(() =>
+            AppsUseLightTheme()
+                ? new HolzShotsToolStripRenderer()
+                : new AeroToolStripRenderer(ToolBarTheme.Toolbar)
+        );
 
-            var newTheme = AppsUseLightTheme()
-                    ? (ToolStripRenderer)new HolzShotsToolStripRenderer()
-                    : new AeroToolStripRenderer(ToolBarTheme.Toolbar);
-
-            return _rendererInstance = newTheme;
-        }
+        public static ToolStripRenderer GetToolStripRendererForCurrentTheme() => _rendererInstance.Value;
 
         /// <summary> TODO: Move this somewhere else </summary>
         public static string ShortenViaEllipsisIfNeeded(string value, int maxLength)

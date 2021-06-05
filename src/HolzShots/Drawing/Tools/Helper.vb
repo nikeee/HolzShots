@@ -1,7 +1,7 @@
 Namespace Drawing.Tools
     Friend Module Helpers
 
-        Public Function CreateThumbnail(ByVal bmp As Bitmap) As Bitmap
+        Public Function CreateThumbnail(bmp As Bitmap) As Bitmap
             'r = w/h
             'h = w/r
             'w = h*r

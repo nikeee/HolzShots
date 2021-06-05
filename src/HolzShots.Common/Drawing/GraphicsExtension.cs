@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using System.Drawing;
 using HolzShots.NativeTypes;
 
@@ -17,11 +16,8 @@ namespace HolzShots.Drawing
                 throw new ArgumentException(nameof(points));
             if (bmp == null)
                 throw new ArgumentNullException(nameof(bmp));
-            if (pen == null)
+            if (pen == null || pen.Handle == IntPtr.Zero)
                 throw new ArgumentNullException(nameof(pen));
-
-            Debug.Assert(pen != null);
-            Debug.Assert(pen?.Handle != IntPtr.Zero);
 
             var hdc = g.GetHdc();
             var hBmp = bmp.GetHbitmap();

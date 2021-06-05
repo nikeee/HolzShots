@@ -1,11 +1,11 @@
 ﻿//Copyright (c) Microsoft Corporation.  All rights reserved.
 
-using Microsoft.WindowsAPICodePack.Resources;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
+using Microsoft.WindowsAPICodePack.Resources;
 
 namespace Microsoft.WindowsAPICodePack.Shell
 {

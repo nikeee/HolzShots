@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using System.Text;
 using System.Windows.Forms;
 
@@ -31,7 +30,7 @@ namespace HolzShots.Windows.Forms
 
     public static class AboutDialog
     {
-        public static void ShowDialog(System.Drawing.Bitmap icon, string version)
+        public static void Show(System.Drawing.Bitmap icon, string version)
         {
             var page = new TaskDialogPage()
             {
@@ -39,7 +38,7 @@ namespace HolzShots.Windows.Forms
                 Icon = new TaskDialogIcon(icon),
                 Caption = "About HolzShots",
                 Heading = "HolzShots",
-                Text = $"Open Source, GPL-3.0 licensed screenshot utility.\n",
+                Text = $"Open Source, GPL-3.0 licensed screenshot utility that gets out of your way.\n",
                 /*
                    <a href="website">Website</a>
                    <a href="issues">Report Issue</a>
@@ -48,7 +47,7 @@ namespace HolzShots.Windows.Forms
                 AllowCancel = false,
                 Expander = new TaskDialogExpander()
                 {
-                    Text = "About graphics used:\n" + GetGraphicsText(),
+                    Text = "Images/Icons used:\n" + GetGraphicsText(),
                 },
                 Footnote = new TaskDialogFootnote()
                 {

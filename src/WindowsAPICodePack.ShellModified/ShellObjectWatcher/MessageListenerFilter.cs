@@ -25,9 +25,7 @@ After:
 using Microsoft.WindowsAPICodePack.Shell.Resources;
 using MS.Collections.Internal;
 */
-using Microsoft.WindowsAPICodePack.Resources;
 using System;
-
 /* Unmerged change from project 'Shell (net452)'
 Before:
 using System.Text;
@@ -68,6 +66,7 @@ using System.Threading;
 */
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.WindowsAPICodePack.Resources;
 
 namespace Microsoft.WindowsAPICodePack.Shell
 {

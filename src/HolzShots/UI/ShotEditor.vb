@@ -2,12 +2,13 @@ Imports System.Drawing.Drawing2D
 Imports System.Drawing.Printing
 Imports System.IO
 Imports System.Runtime.InteropServices
-Imports HolzShots.Interop
-Imports HolzShots.Net
-Imports HolzShots.UI.Controls
-Imports Microsoft.WindowsAPICodePack.Taskbar
 Imports HolzShots.Composition
 Imports HolzShots.Drawing
+Imports HolzShots.Net
+Imports HolzShots.UI.Controls
+Imports HolzShots.Windows.Forms
+Imports HolzShots.Windows.Net
+Imports Microsoft.WindowsAPICodePack.Taskbar
 
 Namespace UI
     Friend Class ShotEditor
@@ -280,7 +281,7 @@ Namespace UI
                     TypeOf ex Is ExternalException _
                     OrElse TypeOf ex Is System.Threading.ThreadStateException _
                     OrElse TypeOf ex Is ArgumentNullException
-                HumanInterop.CopyImageFailed(ex)
+                NotificationManager.CopyImageFailed(ex)
             End Try
         End Sub
 
@@ -288,7 +289,7 @@ Namespace UI
 
 #Region "Filesystem"
 
-        Private Sub SaveImage(ByVal fileName As String)
+        Private Sub SaveImage(fileName As String)
             If String.IsNullOrEmpty(fileName) Then Throw New ArgumentNullException(NameOf(fileName))
             Try
                 Dim bmp = ThePanel.CombinedImage()
@@ -306,9 +307,9 @@ Namespace UI
                 End If
 
             Catch ex As PathTooLongException
-                HumanInterop.PathIsTooLong(fileName, Me)
+                NotificationManager.PathIsTooLong(fileName, Me)
             Catch ex As Exception
-                HumanInterop.ErrorSavingImage(ex, Me)
+                NotificationManager.ErrorSavingImage(ex, Me)
             End Try
         End Sub
 
@@ -729,9 +730,9 @@ Namespace UI
                 Debug.Assert(result IsNot Nothing)
                 UploadHelper.InvokeUploadFinishedUi(result, _settingsContext)
             Catch ex As UploadCanceledException
-                HumanInterop.ShowOperationCanceled()
+                NotificationManager.ShowOperationCanceled()
             Catch ex As UploadException
-                HumanInterop.UploadFailed(ex)
+                NotificationManager.UploadFailed(ex)
                 Return
             End Try
             HandleAfterUpload()
@@ -777,9 +778,9 @@ Namespace UI
                 Debug.Assert(result IsNot Nothing)
                 UploadHelper.InvokeUploadFinishedUi(result, _settingsContext)
             Catch ex As UploadCanceledException
-                HumanInterop.ShowOperationCanceled()
+                NotificationManager.ShowOperationCanceled()
             Catch ex As UploadException
-                HumanInterop.UploadFailed(ex)
+                NotificationManager.UploadFailed(ex)
                 Return
             Finally
                 HandleAfterUpload()

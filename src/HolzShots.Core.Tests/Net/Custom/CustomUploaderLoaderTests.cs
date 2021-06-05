@@ -12,7 +12,7 @@ namespace HolzShots.Core.Tests.Net.Custom
             var parseResult = CustomUploader.TryParse(content, out var result);
             Assert.True(parseResult);
             Assert.NotNull(result);
-            Assert.NotNull(result.UploaderInfo);
+            Assert.NotNull(result!.UploaderInfo);
             Assert.NotNull(result.UploaderInfo.Meta);
             Assert.NotNull(result.UploaderInfo.Uploader);
             Assert.NotNull(result.UploaderInfo.SchemaVersion);
