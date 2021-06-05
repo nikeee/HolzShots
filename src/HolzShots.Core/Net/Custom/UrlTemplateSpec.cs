@@ -26,7 +26,7 @@ namespace HolzShots.Net.Custom
 
             var nodes = ImmutableList.CreateBuilder<TemplateSyntaxNode>();
 
-            int i = 0;
+            var i = 0;
             while (i < value.Length)
             {
                 var currentChar = value[i];
@@ -79,7 +79,7 @@ namespace HolzShots.Net.Custom
             while (index < value.Length && currentChar != ExpressionBoundary && currentChar != ExpressionParameterBoundary)
                 currentChar = value[++index];
 
-            return value.Slice(start, index - start).ToString().ToLowerInvariant();
+            return value[start..index].ToString().ToLowerInvariant();
         }
     }
 
@@ -109,11 +109,11 @@ namespace HolzShots.Net.Custom
             while (index < value.Length && currentChar != ExpressionBoundary)
                 currentChar = value[++index];
 
-            var contents = value.Slice(start, index - start).ToString();
+            var contents = value[start..index].ToString();
 
             var parameters = contents.Split(':');
 
-            int patternIndex = 0;
+            var patternIndex = 0;
             string? groupName = null;
             int? matchIndex = null;
             if (parameters.Length >= 1)
@@ -176,7 +176,7 @@ namespace HolzShots.Net.Custom
             while (index < value.Length && currentChar != ExpressionBoundary)
                 currentChar = value[++index];
 
-            var jsonPath = value.Slice(start, index - start).ToString();
+            var jsonPath = value[start..index].ToString();
             Debug.Assert(jsonPath != null && jsonPath.Length > 0);
 
             ++index; // Consume $
@@ -220,7 +220,7 @@ namespace HolzShots.Net.Custom
                 ++index;
                 currentChar = value[index];
             }
-            return new TextSyntaxNode(value.Slice(start, index - start).ToString());
+            return new TextSyntaxNode(value[start..index].ToString());
         }
 
         public override string Evaluate(ResponseParser responseParser, string content) => Text;
