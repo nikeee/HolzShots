@@ -17,43 +17,48 @@ namespace HolzShots.Input.Selection
         private static TaskCompletionSource<Rectangle>? _tcs;
 
         private readonly D2DBrush _dimmingOverlayBrush;
+        private readonly D2DBitmap _image;
+        private readonly Rectangle _imageBounds;
+        private readonly D2DBitmapGraphics _dimmedImage;
+        private readonly D2DBitmap _background;
 
-        private D2DBitmap _image;
-        private D2DBitmapGraphics _dimmedImage;
-        private D2DBitmap _background;
-        private Rectangle _imageBounds;
-        private SelectionState _state = new InitialState();
+        /// <summary> List, because we need them ordered. </summary>
+        private IReadOnlyList<WindowRectangle>? _availableWindowsForOutline = System.Collections.Immutable.ImmutableList<WindowRectangle>.Empty;
         private readonly MagnifierDecoration _magnifier = new();
 
-        private IReadOnlyList<WindowRectangle>? availableWindowsForOutline = null; // List, because we need them ordered.
+        private SelectionState _state = new InitialState();
 
-        public AreaSelector(HSSettings settingsContext)
-        {
-            BackColor = Color.Black;
-
-            DrawFPS = true;
-            Cursor = new(Properties.Resources.CrossCursor.Handle);
-            // DesktopLocation = new Point(0, 0);
-
-            var cts = new CancellationTokenSource();
-            cts.CancelAfter(5000);
-            WindowFinder.GetCurrentWindowRectanglesAsync(Handle, cts.Token).ContinueWith(t => availableWindowsForOutline = t.Result);
-
-            Bounds = SystemInformation.VirtualScreen;
-#if !DEBUG
-            TopMost = true;
-            DrawFPS = false;
-#endif
-            _dimmingOverlayBrush = Device.CreateSolidColorBrush(new D2DColor(settingsContext.AreaSelectorDimmingOpacity, OverlayColor));
-        }
-
-
-        public Task<Rectangle> PromptSelectionAsync(Bitmap image)
+        private AreaSelector(Bitmap image, HSSettings settingsContext)
         {
             if (image == null)
                 throw new ArgumentNullException(nameof(image));
 
-            Debug.Assert(_image == null);
+            BackColor = Color.Black;
+            Cursor = new(Properties.Resources.CrossCursor.Handle);
+            Bounds = SystemInformation.VirtualScreen;
+
+#if RELEASE
+            TopMost = true;
+            DrawFPS = false;
+#else
+            DrawFPS = true;
+#endif
+
+            var windowEnumerationTask = new CancellationTokenSource();
+            windowEnumerationTask.CancelAfter(5000);
+            WindowFinder.GetCurrentWindowRectanglesAsync(Handle, windowEnumerationTask.Token).ContinueWith(t => _availableWindowsForOutline = t.Result);
+
+            _dimmingOverlayBrush = Device.CreateSolidColorBrush(new D2DColor(settingsContext.AreaSelectorDimmingOpacity, OverlayColor));
+            _image = Device.CreateBitmapFromGDIBitmap(image);
+            _imageBounds = new Rectangle(0, 0, image.Width, image.Height);
+            _dimmedImage = CreateDimemdImage(image.Width, image.Height);
+            _background = _dimmedImage.GetBitmap();
+        }
+
+        public static AreaSelector Create(Bitmap image, HSSettings settingsContext) => new(image, settingsContext);
+
+        public Task<Rectangle> PromptSelectionAsync()
+        {
             Debug.Assert(_tcs == null);
             Debug.Assert(!SelectionSemaphore.IsInAreaSelection);
 
@@ -62,12 +67,8 @@ namespace HolzShots.Input.Selection
 
             SelectionSemaphore.IsInAreaSelection = true;
 
-            _imageBounds = new Rectangle(0, 0, image.Width, image.Height);
-            _image = Device.CreateBitmapFromGDIBitmap(image);
-            _dimmedImage = CreateDimemdImage(image.Width, image.Height);
-            _background = _dimmedImage.GetBitmap();
-
             _tcs = new TaskCompletionSource<Rectangle>();
+
 
             Visible = true;
 
@@ -151,7 +152,7 @@ namespace HolzShots.Input.Selection
                                 // In this case, he propably wantet to select a window that was outlined (if there was one)
                                 // TODO: This is a hack, we need to make this more pretty (put this in the FinalState)
                                 var i = new InitialState();
-                                i.SelectWindowBasedOnMouseMove(availableWindowsForOutline, e.Location);
+                                i.SelectWindowBasedOnMouseMove(_availableWindowsForOutline, e.Location);
                                 FinishSelectionByWindowOutlineClickOrKeyboardInput(i);
                             }
                             break;
@@ -187,7 +188,7 @@ namespace HolzShots.Input.Selection
             {
                 case InitialState initial:
                     initial.UpdateCursorPosition(currentPos);
-                    initial.SelectWindowBasedOnMouseMove(availableWindowsForOutline, currentPos);
+                    initial.SelectWindowBasedOnMouseMove(_availableWindowsForOutline, currentPos);
                     break;
                 case ResizingRectangleState resizing:
                     resizing.UpdateCursorPosition(currentPos);
@@ -210,10 +211,10 @@ namespace HolzShots.Input.Selection
                     _magnifier.Toggle();
                     break;
                 case Keys.Tab when !e.Shift && _state is InitialState s:
-                    s.SelectWindowWithOffset(availableWindowsForOutline, 1);
+                    s.SelectWindowWithOffset(_availableWindowsForOutline, 1);
                     break;
                 case Keys.Tab when e.Shift && _state is InitialState s:
-                    s.SelectWindowWithOffset(availableWindowsForOutline, -1);
+                    s.SelectWindowWithOffset(_availableWindowsForOutline, -1);
                     break;
                 case Keys.Return when _state is InitialState s && s.CurrentOutline != null:
                     // The user has a window highlighted and pressed enter -> we just take the window outline as a result.

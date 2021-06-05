@@ -45,8 +45,8 @@ Namespace Input.Actions
 
             Using prio As New ProcessPriorityRequest()
                 Using screen = ScreenshotCreator.CaptureScreenshot(SystemInformation.VirtualScreen)
-                    Using selector As New AreaSelector(settingsContext)
-                        Dim selectedArea = Await selector.PromptSelectionAsync(screen).ConfigureAwait(True)
+                    Using selector = AreaSelector.Create(screen, settingsContext)
+                        Dim selectedArea = Await selector.PromptSelectionAsync().ConfigureAwait(True)
 
                         Debug.Assert(selectedArea.Width > 0)
                         Debug.Assert(selectedArea.Height > 0)

@@ -42,9 +42,11 @@ namespace HolzShots.Composition
                     using (var reader = File.OpenText(jsonFile))
                     {
                         var jsonStr = await reader.ReadToEndAsync().ConfigureAwait(false);
+
+                        // TODO: Catch parsing errors
                         var uploader = JsonConvert.DeserializeObject<CustomUploaderSpec>(jsonStr, JsonConfig.JsonSettings);
 
-                        // TODO: Aggregate errors of invalid files
+                        // TODO: Aggregate errors of invalid files (and display them to the user)
                         Debug.Assert(uploader != null);
 
                         if (CustomUploader.TryLoad(uploader, out var loadedUploader))
