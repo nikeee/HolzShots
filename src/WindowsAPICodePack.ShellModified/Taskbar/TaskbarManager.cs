@@ -1,4 +1,4 @@
-﻿//Copyright (c) Microsoft Corporation.  All rights reserved.
+//Copyright (c) Microsoft Corporation.  All rights reserved.
 
 using System;
 using System.Diagnostics;
@@ -16,7 +16,7 @@ namespace Microsoft.WindowsAPICodePack.Taskbar
         private TaskbarManager() => CoreHelpers.ThrowIfNotWin7();
 
         // Best practice recommends defining a private object to lock on
-        private static readonly object _syncLock = new object();
+        private static readonly object _syncLock = new();
 
         private static TaskbarManager _instance;
         /// <summary>
@@ -146,9 +146,7 @@ namespace Microsoft.WindowsAPICodePack.Taskbar
             set
             {
                 if (string.IsNullOrEmpty(value))
-                {
-                    throw new ArgumentNullException("value");
-                }
+                    throw new ArgumentNullException(nameof(value));
 
                 SetCurrentProcessAppId(value);
                 ApplicationIdSetProcessWide = true;
@@ -204,8 +202,7 @@ namespace Microsoft.WindowsAPICodePack.Taskbar
         /// <returns>The app id or null if no app id has been defined.</returns>
         private string GetCurrentProcessAppId()
         {
-            var appId = string.Empty;
-            TaskbarNativeMethods.GetCurrentProcessExplicitAppUserModelID(out appId);
+            TaskbarNativeMethods.GetCurrentProcessExplicitAppUserModelID(out var appId);
             return appId;
         }
 

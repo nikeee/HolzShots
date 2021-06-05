@@ -1,4 +1,4 @@
-﻿//Copyright (c) Microsoft Corporation.  All rights reserved.
+//Copyright (c) Microsoft Corporation.  All rights reserved.
 
 using System;
 using System.Diagnostics;
@@ -70,7 +70,7 @@ namespace Microsoft.WindowsAPICodePack.Shell.PropertySystem
                 }
 
                 GetImageReference();
-                var index = (imageReferenceIconIndex.HasValue ? imageReferenceIconIndex.Value : -1);
+                var index = (imageReferenceIconIndex ?? -1);
 
                 return new IconReference(imageReferencePath, index);
             }
@@ -318,7 +318,7 @@ namespace Microsoft.WindowsAPICodePack.Shell.PropertySystem
 
                 if (!AllowSetTruncatedValue && (int)result == ShellNativeMethods.InPlaceStringTruncated)
                 {
-                    throw new ArgumentOutOfRangeException("propVar", LocalizedMessages.ShellPropertyValueTruncated);
+                    throw new ArgumentOutOfRangeException(nameof(propVar), LocalizedMessages.ShellPropertyValueTruncated);
                 }
 
                 if (!CoreErrorHelper.Succeeded(result))

@@ -22,7 +22,7 @@ namespace HolzShots
     public class SettingsManager<T> : IDisposable, INotifyPropertyChanged
         where T : new()
     {
-        private static readonly JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings()
+        private static readonly JsonSerializerSettings _jsonSerializerSettings = new()
         {
             ContractResolver = new NonPublicPropertiesResolver(),
             Formatting = Formatting.Indented,
