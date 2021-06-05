@@ -104,14 +104,12 @@ namespace HolzShots
                 // TODO: Make this use some async overload of File.ReadAllText as soon as we're on .NET Core
                 // https://stackoverflow.com/questions/13167934
 
-                using (var reader = File.OpenText(path))
-                {
-                    // No check for File.Exists because we'll get an exception anyways and avoid race conditions
-                    var settingsContent = await reader.ReadToEndAsync().ConfigureAwait(false);
-                    var newSettings = JsonConvert.DeserializeObject<T>(settingsContent, _jsonSerializerSettings);
+                using var reader = File.OpenText(path);
+                // No check for File.Exists because we'll get an exception anyways and avoid race conditions
+                var settingsContent = await reader.ReadToEndAsync().ConfigureAwait(false);
+                var newSettings = JsonConvert.DeserializeObject<T>(settingsContent, _jsonSerializerSettings);
 
-                    return (true, newSettings);
-                }
+                return (true, newSettings);
             }
             catch
             {
