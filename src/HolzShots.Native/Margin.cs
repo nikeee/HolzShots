@@ -1,3 +1,4 @@
+using System;
 using System.Runtime.InteropServices;
 
 namespace HolzShots.Native
@@ -28,8 +29,15 @@ namespace HolzShots.Native
             cyBottomheight = bottomHeight;
         }
 
-        public static bool operator ==(Margin left, Margin right) => left.cxLeftWidth == right.cxLeftWidth && left.cxRightWidth == right.cxRightWidth && left.cyTopHeight == right.cyTopHeight && left.cyBottomheight == right.cyBottomheight;
+        public static bool operator ==(Margin left, Margin right) => left.Equals(right);
         public static bool operator !=(Margin left, Margin right) => !(left == right);
+        public override bool Equals(object? obj) => obj is not null && obj is Margin m && Equals(m);
+        public bool Equals(Margin obj) =>
+            cxLeftWidth == obj.cxLeftWidth
+            && cxRightWidth == obj.cxRightWidth
+            && cyBottomheight == obj.cyBottomheight
+            && cyTopHeight == obj.cyTopHeight;
+        public override int GetHashCode() => HashCode.Combine(cxLeftWidth, cxRightWidth, cyBottomheight, cyTopHeight);
 
         /*
         public static implicit operator System.Windows.Forms.Padding(Margin mrg)
