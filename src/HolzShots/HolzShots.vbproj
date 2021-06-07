@@ -11,7 +11,7 @@
 
     <MyType>WindowsForms</MyType>
 
-    <ApplicationIcon>editcut.ico</ApplicationIcon>
+    <ApplicationIcon>HolzShots.ico</ApplicationIcon>
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationVersion>2.0.0</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
@@ -128,7 +128,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="editcut.ico" />
+    <Content Include="HolzShots.ico" />
     <Content Include="Resources\*.png" />
   </ItemGroup>
 

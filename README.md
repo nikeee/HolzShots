@@ -1,4 +1,4 @@
-# ![Logo](src/HolzShots/Resources/editcutSmall.png) HolzShots ![CI](https://github.com/nikeee/HolzShots/workflows/CI/badge.svg) ![Chocolatey Version](https://img.shields.io/chocolatey/v/holzshots)
+# ![Logo](src/HolzShots/Resources/Logo-32x32.png) HolzShots ![CI](https://github.com/nikeee/HolzShots/workflows/CI/badge.svg) ![Chocolatey Version](https://img.shields.io/chocolatey/v/holzshots)
 A lightweight screenshot utility that gets out of your way.
 - No settings UI – configurable via JSON, like VSCode.
 - Upload to you own services via config files – like ShareX – but keep them updated – like user scripts.

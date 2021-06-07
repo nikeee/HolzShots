@@ -155,7 +155,7 @@ Namespace UI
         End Sub
 
         Private Shared Sub ShowFirstStartExperience()
-            Using icon = My.Resources.editcutBig
+            Using icon = My.Resources.Logo64x64
                 Dim action = FirstStartDialog.ShowDialog(icon)
                 Select Case action
                     Case FirstStartAction.OpenPlugins
@@ -181,7 +181,7 @@ Namespace UI
         End Sub
         Private Shared Sub OpenAbout() Handles AboutToolStripMenuItem.Click
             AboutForm.Instance.Show()
-            ' Using icon = My.Resources.editcutBig
+            ' Using icon = My.Resources.Logo64x64
             '     AboutDialog.ShowDialog(icon, "2.0.0")
             ' End Using
         End Sub
