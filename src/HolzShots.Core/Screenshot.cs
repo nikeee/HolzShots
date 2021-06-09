@@ -12,10 +12,10 @@ namespace HolzShots
         public string? WindowTitle { get; }
         public Point CursorPosition { get; }
         public ScreenshotSource Source { get; }
-        public Image Image { get; }
+        public Bitmap Image { get; }
         public Size Size { get; }
 
-        private Screenshot(Image image, DateTime timestamp, Point cursorPosition, ScreenshotSource source, string? processName, string? windowTitle)
+        private Screenshot(Bitmap image, DateTime timestamp, Point cursorPosition, ScreenshotSource source, string? processName, string? windowTitle)
         {
             Image = image ?? throw new ArgumentNullException(nameof(image));
             Size = image.Size;
@@ -33,7 +33,7 @@ namespace HolzShots
         /// TODO: Should we clone this?
         /// </summary>
         public static Screenshot FromWindow(WindowScreenshotSet set) => new(
-            (set.Result.Clone() as Image)!,
+            (set.Result.Clone() as Bitmap)!,
             DateTime.Now,
             set.CursorPosition,
             ScreenshotSource.Window,
@@ -41,7 +41,7 @@ namespace HolzShots
             set.WindowTitle
         );
 
-        public static Screenshot FromImage(Image image, Point cursorPosition, ScreenshotSource source) => new(image, DateTime.Now, cursorPosition, source, null, null);
+        public static Screenshot FromImage(Bitmap image, Point cursorPosition, ScreenshotSource source) => new(image, DateTime.Now, cursorPosition, source, null, null);
         public static Screenshot FromImported(Bitmap image) => new(image, DateTime.Now, Point.Empty, ScreenshotSource.Unknown, null, null);
 
         // public Image GetBitmapCopy() => _image.CloneDeep();

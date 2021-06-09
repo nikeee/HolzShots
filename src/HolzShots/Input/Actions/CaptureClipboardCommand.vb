@@ -17,9 +17,13 @@ Namespace Input.Actions
             Await ProcessCapturing(shot, settingsContext).ConfigureAwait(True)
         End Function
 
-        Private Shared Function GetClipboardImage() As Image
+        Private Shared Function GetClipboardImage() As Bitmap
             Try
-                Return Clipboard.GetImage()
+                If Not Clipboard.ContainsImage() Then
+                    Return Nothing
+                End If
+
+                Return CType(Clipboard.GetImage(), Bitmap)
             Catch ex As Exception When _
                             TypeOf ex Is Runtime.InteropServices.ExternalException _
                             OrElse TypeOf ex Is System.Threading.ThreadStateException
