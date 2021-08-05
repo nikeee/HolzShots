@@ -124,6 +124,10 @@ Namespace UI
 
             If saveSettings Then Global.HolzShots.My.Settings.Save()
             If openFirstStartExperience Then ShowFirstStartExperience()
+
+            ' Just here to force the JIT to load some dependencies that the AreaSelector uses (so the first invocation isnt slow)
+            ' Ref: https://stackoverflow.com/a/3747473
+            Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(GetType(Selection.AreaSelector).TypeHandle)
         End Sub
 
 #End Region
