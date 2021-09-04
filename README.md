@@ -2,7 +2,7 @@
 A lightweight screenshot utility that gets out of your way.
 - No settings UI – configurable via JSON, like VSCode.
 - Upload to you own services via config files – like ShareX – but keep them updated – like user scripts.
-- No bloat like DNS changers or video recording. If you want to do video, use a tool that does it properly (like [ScreenToGif](https://github.com/NickeManarin/ScreenToGif)).
+- No bloat like DNS changers or video recording. If you want to do video, use a tool that does it properly (like [ScreenToGif](https://github.com/NickeManarin/ScreenToGif) or [OBS](https://obsproject.com/)).
 
 ## Requirements
 - Requires a supported Version of Windows 10; 64 Bit
