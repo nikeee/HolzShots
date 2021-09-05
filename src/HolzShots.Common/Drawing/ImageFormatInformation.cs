@@ -13,16 +13,16 @@ namespace HolzShots.Drawing
         private const string DefaultUploadFileNameWithoutExtension = LibraryInformation.Name;
         private const string JpegMimeType = "image/jpeg";
 
-        private static readonly IReadOnlyDictionary<ImageFormat, ExtensionAndMimeType> _imageFormats = new Dictionary<ImageFormat, ExtensionAndMimeType>()
+        private static readonly IReadOnlyDictionary<ImageFormat, FormatDefinition> _imageFormats = new Dictionary<ImageFormat, FormatDefinition>()
         {
-            [ImageFormat.Png] = new ExtensionAndMimeType(".png", "image/png"),
-            [ImageFormat.Jpeg] = new ExtensionAndMimeType(".jpg", JpegMimeType),
-            [ImageFormat.Gif] = new ExtensionAndMimeType(".gif", "image/gif"),
-            [ImageFormat.Bmp] = new ExtensionAndMimeType(".bmp", "image/bmp"),
-            [ImageFormat.Tiff] = new ExtensionAndMimeType(".tiff", "image/tiff"),
+            [ImageFormat.Png] = new FormatDefinition(".png", "image/png"),
+            [ImageFormat.Jpeg] = new FormatDefinition(".jpg", JpegMimeType),
+            [ImageFormat.Gif] = new FormatDefinition(".gif", "image/gif"),
+            [ImageFormat.Bmp] = new FormatDefinition(".bmp", "image/bmp"),
+            [ImageFormat.Tiff] = new FormatDefinition(".tiff", "image/tiff"),
         };
 
-        public static ExtensionAndMimeType GetExtensionAndMimeType(this ImageFormat format)
+        public static FormatDefinition GetExtensionAndMimeType(this ImageFormat format)
         {
             if (format == null)
                 throw new ArgumentNullException(nameof(format));
@@ -73,7 +73,7 @@ namespace HolzShots.Drawing
             var ext = GetExtensionAndMimeType(format);
             return GetSuggestedFileName(ext);
         }
-        public static string GetSuggestedFileName(ExtensionAndMimeType extensionAndMimeType)
+        public static string GetSuggestedFileName(FormatDefinition extensionAndMimeType)
         {
             Debug.Assert(extensionAndMimeType.FileExtension != null);
             Debug.Assert(extensionAndMimeType.MimeType != null);
@@ -82,23 +82,5 @@ namespace HolzShots.Drawing
         }
     }
 
-    /// <summary> TODO: Maybe find better name </summary>
-    /// TODO: Use a record as soon as we can. This looks bulky.
-    public readonly struct ExtensionAndMimeType : IEquatable<ExtensionAndMimeType>
-    {
-        public string FileExtension { get; }
-        public string MimeType { get; }
-        public ExtensionAndMimeType(string fileExtension, string mimeType)
-        {
-            FileExtension = fileExtension ?? throw new ArgumentNullException(nameof(fileExtension));
-            MimeType = mimeType ?? throw new ArgumentNullException(nameof(mimeType));
-        }
-
-        public override bool Equals(object? obj) => obj is ExtensionAndMimeType other && Equals(other);
-        public bool Equals(ExtensionAndMimeType other) => other.FileExtension == FileExtension && other.MimeType == MimeType;
-
-        public override int GetHashCode() => HashCode.Combine(MimeType, FileExtension);
-        public static bool operator ==(ExtensionAndMimeType left, ExtensionAndMimeType right) => left.Equals(right);
-        public static bool operator !=(ExtensionAndMimeType left, ExtensionAndMimeType right) => !(left == right);
-    }
+    public record FormatDefinition(string FileExtension, string MimeType);
 }

@@ -208,14 +208,7 @@ namespace HolzShots
     }
 
 
-    // TODO: When we're on C# 9, we may want to use a data class / record for this.
-    public class KeyBinding
-    {
-        // TODO: Fix visibility
-        public bool Enabled { get; set; } = false;
-        public Hotkey Keys { get; set; } = null!;
-        public CommandDeclaration Command { get; set; } = null!;
-    }
+    public record KeyBinding(Hotkey Keys, CommandDeclaration Command, bool Enabled = false);
 
     /// <summary>
     /// TODO: Some custom converter that converts a command that does not have any parameters to a plain string.
