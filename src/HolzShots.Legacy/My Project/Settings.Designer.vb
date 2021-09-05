@@ -209,30 +209,6 @@ Namespace My
                 Me("BlurFactor") = value
             End Set
         End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
-        Public Property UserTasksInitialized() As Boolean
-            Get
-                Return CType(Me("UserTasksInitialized"),Boolean)
-            End Get
-            Set
-                Me("UserTasksInitialized") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
-        Public Property IsFirstRun() As Boolean
-            Get
-                Return CType(Me("IsFirstRun"),Boolean)
-            End Get
-            Set
-                Me("IsFirstRun") = value
-            End Set
-        End Property
     End Class
 End Namespace
 
