@@ -13,7 +13,7 @@ using HolzShots.Input;
 using HolzShots.Input.Actions;
 using HolzShots.Windows.Forms;
 
-namespace HolzShots.New
+namespace HolzShots
 {
     public partial class MainForm : Form
     {

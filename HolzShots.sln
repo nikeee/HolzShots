@@ -2,10 +2,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31612.314
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "HolzShots", "src\HolzShots\HolzShots.vbproj", "{42A62086-E16E-4CBD-95DE-E7866CF015AB}"
-	ProjectSection(ProjectDependencies) = postProject
-		{56ABB0F5-9C8B-4BC9-9D16-BC9598657B5D} = {56ABB0F5-9C8B-4BC9-9D16-BC9598657B5D}
-	EndProjectSection
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "HolzShots.Legacy", "src\HolzShots.Legacy\HolzShots.Legacy.vbproj", "{42A62086-E16E-4CBD-95DE-E7866CF015AB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HolzShots.Common", "src\HolzShots.Common\HolzShots.Common.csproj", "{3AADC160-9020-4F59-A2F0-7941752C047E}"
 EndProject
@@ -19,7 +16,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HolzShots.Windows", "src\Ho
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WindowsAPICodePack.ShellModified", "src\WindowsAPICodePack.ShellModified\WindowsAPICodePack.ShellModified.csproj", "{0AB75D76-BDB7-4A9F-ADAC-E15D2F591948}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HolzShots.New", "src\HolzShots.New\HolzShots.New.csproj", "{C55EB76E-2F7A-4473-A2C1-D6D56160A83C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HolzShots", "src\HolzShots\HolzShots.csproj", "{C55EB76E-2F7A-4473-A2C1-D6D56160A83C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

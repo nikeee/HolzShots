@@ -29,13 +29,13 @@ namespace HolzShots.Input.Actions
             switch (settingsContext.ActionAfterCapture)
             {
                 case CaptureHandlingAction.OpenEditor:
-                    var shower = new ShotEditor(screenshot, New.HolzShotsApplication.Instance.Uploaders, settingsContext);
+                    var shower = new ShotEditor(screenshot, HolzShotsApplication.Instance.Uploaders, settingsContext);
                     shower.Show();
                     return;
                 case CaptureHandlingAction.Upload:
                     try
                     {
-                        var result = await UploadDispatcher.InitiateUploadToDefaultUploader(screenshot.Image, settingsContext, New.HolzShotsApplication.Instance.Uploaders, null, null).ConfigureAwait(true);
+                        var result = await UploadDispatcher.InitiateUploadToDefaultUploader(screenshot.Image, settingsContext, HolzShotsApplication.Instance.Uploaders, null, null).ConfigureAwait(true);
                         UploadHelper.InvokeUploadFinishedUI(result, settingsContext);
                     }
                     catch (UploadCanceledException ex)

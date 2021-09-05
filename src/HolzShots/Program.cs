@@ -1,7 +1,7 @@
 using System;
 using SingleInstanceCore;
 
-namespace HolzShots.New
+namespace HolzShots
 {
     static class Program
     {

@@ -7,7 +7,7 @@ using HolzShots.IO;
 using Microsoft.WindowsAPICodePack.Taskbar;
 using Microsoft.WindowsAPICodePack.Shell;
 
-namespace HolzShots.New
+namespace HolzShots
 {
     static class JumpLists
     {

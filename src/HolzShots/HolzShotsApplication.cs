@@ -6,7 +6,7 @@ using HolzShots.IO;
 using HolzShots.Windows.Forms;
 using SingleInstanceCore;
 
-namespace HolzShots.New
+namespace HolzShots
 {
     public class HolzShotsApplication : ISingleInstance
     {

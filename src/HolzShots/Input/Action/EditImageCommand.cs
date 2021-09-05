@@ -28,7 +28,7 @@ namespace HolzShots.Input.Actions
 
             var bmp = new Bitmap(fileName);
             var shot = Screenshot.FromImported(bmp);
-            var editor = new UI.ShotEditor(shot, New.HolzShotsApplication.Instance.Uploaders, settingsContext);
+            var editor = new UI.ShotEditor(shot, HolzShotsApplication.Instance.Uploaders, settingsContext);
             editor.Disposed += (s, e) => bmp.Dispose();
             editor.Show();
 
