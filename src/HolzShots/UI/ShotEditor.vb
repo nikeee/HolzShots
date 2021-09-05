@@ -11,7 +11,7 @@ Imports HolzShots.Windows.Net
 Imports Microsoft.WindowsAPICodePack.Taskbar
 
 Namespace UI
-    Friend Class ShotEditor
+    Public Class ShotEditor
         Inherits System.Windows.Forms.Form
         Implements IDisposable
 
@@ -20,6 +20,7 @@ Namespace UI
         Private ReadOnly _defaultUploader As UploaderEntry ' ?
         Private ReadOnly _settingsContext As HSSettings
         Private ReadOnly _screenshot As Screenshot
+        Private ReadOnly _uploaders As UploaderManager
 
 #Region "Win7/8-Thumbnails"
 
@@ -34,15 +35,15 @@ Namespace UI
                 Dim uploadTooltip As String = String.Empty
                 If _defaultUploader?.Metadata IsNot Nothing Then
                     uploadTooltip = UploadToHoster.ToolTipText.Remove(UploadToHoster.ToolTipText.IndexOf(" (", StringComparison.Ordinal))
-                    uploadTooltip = String.Format(Global.HolzShots.My.Application.TheCulture, uploadTooltip, _defaultUploader.Metadata.Name)
+                    uploadTooltip = String.Format(CurrentCulture, uploadTooltip, _defaultUploader.Metadata.Name)
                 End If
 
-                _uploadThumbnailButton = New ThumbnailToolBarButton(Icon.FromHandle(HolzShots.My.Resources.uploadMedium.GetHicon()), uploadTooltip)
+                _uploadThumbnailButton = New ThumbnailToolBarButton(Icon.FromHandle(My.Resources.uploadMedium.GetHicon()), uploadTooltip)
                 AddHandler _uploadThumbnailButton.Click, Sub() UploadCurrentImageToDefaultProvider()
                 _uploadThumbnailButton.Enabled = _defaultUploader?.Metadata IsNot Nothing
 
-                _saveThumbnailButton = New ThumbnailToolBarButton(Icon.FromHandle(HolzShots.My.Resources.saveMedium.GetHicon()), "Save image")
-                _copyThumbnailButton = New ThumbnailToolBarButton(Icon.FromHandle(HolzShots.My.Resources.clipboardMedium.GetHicon()), "Copy image")
+                _saveThumbnailButton = New ThumbnailToolBarButton(Icon.FromHandle(My.Resources.saveMedium.GetHicon()), "Save image")
+                _copyThumbnailButton = New ThumbnailToolBarButton(Icon.FromHandle(My.Resources.clipboardMedium.GetHicon()), "Copy image")
 
                 AddHandler _saveThumbnailButton.Click, Sub() SaveImage()
                 AddHandler _copyThumbnailButton.Click, Sub() CopyImage()
@@ -55,13 +56,15 @@ Namespace UI
 
 #Region "Ctors"
 
-        Public Sub New(screenshot As Screenshot, settingsContext As HSSettings)
+        Public Sub New(screenshot As Screenshot, uploaders As UploaderManager, settingsContext As HSSettings)
             Debug.Assert(screenshot IsNot Nothing)
             Debug.Assert(screenshot.Image IsNot Nothing)
+            Debug.Assert(uploaders IsNot Nothing)
             Debug.Assert(settingsContext IsNot Nothing)
 
             _settingsContext = settingsContext
             _screenshot = screenshot
+            _uploaders = uploaders
 
             InitializeComponent()
 
@@ -72,13 +75,13 @@ Namespace UI
                 Text = settingsContext.ShotEditorTitle
             End If
 
-            _defaultUploader = UploadDispatcher.GetImageServiceForSettingsContext(settingsContext, HolzShots.My.Application.Uploaders)
+            _defaultUploader = UploadDispatcher.GetImageServiceForSettingsContext(settingsContext, _uploaders)
 
             SuspendLayout()
 
             InitializeThumbnailToolbar()
 
-            If Not settingsContext.EnableHotkeysDuringFullscreen AndAlso HolzShots.Windows.Forms.EnvironmentEx.IsFullscreenAppRunning() Then
+            If Not settingsContext.EnableHotkeysDuringFullscreen AndAlso EnvironmentEx.IsFullscreenAppRunning() Then
                 WindowState = FormWindowState.Minimized
             ElseIf screenshot.Size = SystemInformation.VirtualScreen.Size Then
                 WindowState = FormWindowState.Maximized
@@ -123,7 +126,7 @@ Namespace UI
             UploadToHoster.Enabled = _defaultUploader?.Metadata IsNot Nothing
             UploadToHoster.ToolTipText = If(
                             _defaultUploader?.Metadata IsNot Nothing,
-                            String.Format(Global.HolzShots.My.Application.TheCulture, UploadToHoster.ToolTipText, _defaultUploader?.Metadata.Name),
+                            String.Format(CurrentCulture, UploadToHoster.ToolTipText, _defaultUploader?.Metadata.Name),
                             String.Empty
                         )
 
@@ -162,9 +165,9 @@ Namespace UI
 
             UploadToHoster.DropDown.ImageScalingSize = New Size(16, 16)
             UploadToHoster.DropDown.AutoSize = True
-            If HolzShots.My.Application.Uploaders.Loaded Then
+            If _uploaders.Loaded Then
                 UploadToHoster.DropDown.Renderer = HolzShots.Windows.Forms.EnvironmentEx.GetToolStripRendererForCurrentTheme()
-                Dim pls = HolzShots.My.Application.Uploaders.GetUploaderNames()
+                Dim pls = _uploaders.GetUploaderNames()
                 For Each uploaderName In pls
                     Dim item As ToolStripItem = UploadToHoster.DropDown.Items.Add(String.Format(Localization.UploadTo, uploaderName))
                     item.Tag = uploaderName
@@ -714,7 +717,7 @@ Namespace UI
             If String.IsNullOrWhiteSpace(tag) Then Return
 
             ' Dirty :>
-            Dim info = HolzShots.My.Application.Uploaders.GetUploaderByName(tag)
+            Dim info = _uploaders.GetUploaderByName(tag)
 
             Debug.Assert(Not String.IsNullOrEmpty(tag))
             Debug.Assert(info IsNot Nothing)
@@ -728,7 +731,7 @@ Namespace UI
             Try
                 Dim result = Await UploadDispatcher.InitiateUpload(image, _settingsContext, info.Uploader, Nothing, progressReporter).ConfigureAwait(True)
                 Debug.Assert(result IsNot Nothing)
-                UploadHelper.InvokeUploadFinishedUi(result, _settingsContext)
+                UploadHelper.InvokeUploadFinishedUI(result, _settingsContext)
             Catch ex As UploadCanceledException
                 NotificationManager.ShowOperationCanceled()
             Catch ex As UploadException
@@ -774,9 +777,9 @@ Namespace UI
             Dim progressReporter = UploadHelper.GetUploadReporterForCurrentSettingsContext(_settingsContext, Me)
 
             Try
-                Dim result = Await UploadDispatcher.InitiateUploadToDefaultUploader(ThePanel.CombinedImage, _settingsContext, My.Application.Uploaders, Nothing, progressReporter).ConfigureAwait(True)
+                Dim result = Await UploadDispatcher.InitiateUploadToDefaultUploader(ThePanel.CombinedImage, _settingsContext, _uploaders, Nothing, progressReporter).ConfigureAwait(True)
                 Debug.Assert(result IsNot Nothing)
-                UploadHelper.InvokeUploadFinishedUi(result, _settingsContext)
+                UploadHelper.InvokeUploadFinishedUI(result, _settingsContext)
             Catch ex As UploadCanceledException
                 NotificationManager.ShowOperationCanceled()
             Catch ex As UploadException

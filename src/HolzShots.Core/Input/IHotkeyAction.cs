@@ -7,6 +7,6 @@ namespace HolzShots.Input
         bool Enabled { get; }
         Hotkey Hotkey { get; }
 
-        Task Invoke(object sender, HotkeyPressedEventArgs e);
+        Task Invoke(object? sender, HotkeyPressedEventArgs e);
     }
 }

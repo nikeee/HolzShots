@@ -80,7 +80,7 @@ namespace HolzShots.Native
         public static extern bool GetWindowRect(IntPtr hWnd, out Rect lpRect);
 
         [DllImport(DllName)]
-        public static extern bool GetWindowPlacement(IntPtr hWnd, ref WindowPlacement lpwndpl);
+        public static extern bool GetWindowPlacement(IntPtr hWnd, out WindowPlacement lpwndpl);
 
         [DllImport(DllName, CharSet = CharSet.Auto)]
         public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndAfter, int x, int y, int width, int height, int flags);

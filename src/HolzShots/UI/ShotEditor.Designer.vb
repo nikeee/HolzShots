@@ -3,7 +3,7 @@ Imports HolzShots.UI.Controls
 Namespace UI
 
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-    Partial Friend Class ShotEditor
+    Partial Public Class ShotEditor
         Inherits System.Windows.Forms.Form
         'Inherits HolzShots.UI.Forms.Aero.GlassForm
 
