@@ -71,6 +71,8 @@ namespace HolzShots
             if (JumpLists.AreSupported)
                 JumpLists.RegisterTasks();
 
+            RegisterCommands();
+
             await ProcessCommandLineArguments(args).ConfigureAwait(true);
 
             var saveSettings = false;
@@ -218,17 +220,18 @@ namespace HolzShots
         {
             await CommandManager.Dispatch<UploadImageCommand>(UserSettings.Current).ConfigureAwait(true);
         }
-
         private async void OpenImage(object sender, EventArgs e)
         {
             await CommandManager.Dispatch<EditImageCommand>(UserSettings.Current).ConfigureAwait(true);
         }
-
         private async void SelectArea(object sender, EventArgs e)
         {
             await CommandManager.Dispatch<SelectAreaCommand>(UserSettings.Current).ConfigureAwait(true);
         }
-
+        private async void OpenSettingsJson(object sender, EventArgs e)
+        {
+            await CommandManager.Dispatch<OpenSettingsJsonCommand>(UserSettings.Current).ConfigureAwait(true);
+        }
         private void OpenPlugins(object? sender, EventArgs e)
         {
             Debug.Assert(_application.Uploaders.Loaded);
@@ -241,7 +244,6 @@ namespace HolzShots
             var form = new PluginForm(pluginsModel);
             form.Show();
         }
-
         private void StartWithWindows(object sender, EventArgs e)
         {
             if (EnvironmentEx.CurrentStartupManager.IsRegistered)
@@ -251,12 +253,6 @@ namespace HolzShots
 
             StartWithWindowsToolStripMenuItem.Checked = EnvironmentEx.CurrentStartupManager.IsRegistered;
         }
-
-        private async void OpenSettingsJson(object sender, EventArgs e)
-        {
-            await CommandManager.Dispatch<OpenSettingsJsonCommand>(UserSettings.Current).ConfigureAwait(true);
-        }
-
         private async void TriggerTrayIconDoubleClickCommand(object sender, EventArgs e)
         {
             var commandToRun = UserSettings.Current.TrayIconDoubleClickCommand;
@@ -266,7 +262,6 @@ namespace HolzShots
             if (CommandManager.IsRegisteredCommand(commandToRun.CommandName))
                 await CommandManager.Dispatch(commandToRun, UserSettings.Current).ConfigureAwait(true); // Can throw exceptions and silently kill the application
         }
-
         private void OpenAbout(object sender, EventArgs e)
         {
             AboutForm.Instance.Show();
