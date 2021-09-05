@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 namespace HolzShots.Input
 {
     public abstract class KeyboardHook : IDisposable

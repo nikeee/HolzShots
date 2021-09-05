@@ -1,6 +1,3 @@
-
-using System;
-
 namespace HolzShots.Net
 {
     public readonly struct Speed<T> : IEquatable<Speed<T>> where T : struct

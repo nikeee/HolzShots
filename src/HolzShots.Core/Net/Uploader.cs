@@ -1,8 +1,3 @@
-using System;
-using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
-
 namespace HolzShots.Net
 {
     public abstract class Uploader

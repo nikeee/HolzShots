@@ -1,8 +1,6 @@
-using System;
 using System.ComponentModel;
 using System.Configuration;
 using System.Text;
-using System.Windows.Forms;
 
 namespace HolzShots.Input
 {

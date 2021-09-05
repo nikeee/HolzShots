@@ -1,5 +1,3 @@
-using System;
-
 namespace HolzShots.Input
 {
     [Serializable]

@@ -1,6 +1,3 @@
-using System;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using HolzShots.Native;
 
 namespace HolzShots.Windows.Forms

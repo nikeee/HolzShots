@@ -1,11 +1,9 @@
-using System;
 using System.Diagnostics;
 using System.Windows.Forms;
-using HolzShots.Windows.Forms;
-using System.IO;
 using HolzShots.IO;
-using Microsoft.WindowsAPICodePack.Taskbar;
+using HolzShots.Windows.Forms;
 using Microsoft.WindowsAPICodePack.Shell;
+using Microsoft.WindowsAPICodePack.Taskbar;
 
 namespace HolzShots
 {

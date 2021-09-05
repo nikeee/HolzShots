@@ -1,5 +1,3 @@
-using System;
-
 namespace HolzShots.Net
 {
     public interface IUploadProgressReporter : IDisposable

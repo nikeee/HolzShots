@@ -1,10 +1,7 @@
 #nullable enable
-using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Threading;
-using System.Threading.Tasks;
 using HolzShots.Drawing;
 
 namespace HolzShots.Net

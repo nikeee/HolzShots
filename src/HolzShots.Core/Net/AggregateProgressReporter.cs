@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 namespace HolzShots.Net
 {
     public sealed class AggregateProgressReporter : IUploadProgressReporter

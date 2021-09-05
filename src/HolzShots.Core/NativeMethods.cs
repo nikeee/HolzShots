@@ -1,6 +1,4 @@
-using System;
 using System.Runtime.InteropServices;
-using System.Windows.Forms;
 using HolzShots.Input;
 
 namespace HolzShots

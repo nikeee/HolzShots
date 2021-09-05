@@ -1,6 +1,4 @@
-using System;
 using System.Drawing;
-using System.Linq;
 using HolzShots.Input.Selection.Animation;
 using nud2dlib;
 

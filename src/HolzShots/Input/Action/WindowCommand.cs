@@ -1,15 +1,12 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Threading.Tasks;
+using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.Windows.Forms;
 using HolzShots.Composition.Command;
 using HolzShots.Drawing;
 using HolzShots.Threading;
 using HolzShots.Windows.Forms;
-using System.Windows.Forms;
-using System.Drawing;
 
 namespace HolzShots.Input.Actions
 {

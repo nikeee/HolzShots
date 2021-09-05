@@ -1,4 +1,3 @@
-using System;
 using System.Globalization;
 
 namespace HolzShots.IO.Naming

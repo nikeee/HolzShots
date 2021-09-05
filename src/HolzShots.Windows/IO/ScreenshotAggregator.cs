@@ -1,8 +1,6 @@
-using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.IO;
 using HolzShots.Drawing;
 using HolzShots.IO.Naming;
 using HolzShots.Windows.Forms;

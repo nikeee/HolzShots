@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using HolzShots.Composition;
 using HolzShots.IO;

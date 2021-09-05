@@ -1,9 +1,6 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Threading.Tasks;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
 using HolzShots.Composition.Command;
 using HolzShots.Drawing;
 using HolzShots.IO;
@@ -11,7 +8,6 @@ using HolzShots.Net;
 using HolzShots.UI;
 using HolzShots.Windows.Forms;
 using HolzShots.Windows.Net;
-using System.Windows.Forms;
 
 namespace HolzShots.Input.Actions
 {

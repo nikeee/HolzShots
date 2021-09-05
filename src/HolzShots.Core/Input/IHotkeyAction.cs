@@ -1,5 +1,3 @@
-using System.Threading.Tasks;
-
 namespace HolzShots.Input
 {
     public interface IHotkeyAction

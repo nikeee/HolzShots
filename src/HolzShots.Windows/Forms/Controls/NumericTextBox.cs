@@ -1,5 +1,4 @@
 using System.Globalization;
-using System.Windows.Forms;
 
 namespace HolzShots.Windows.Forms.Controls
 {

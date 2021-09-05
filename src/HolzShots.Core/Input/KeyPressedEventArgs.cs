@@ -1,6 +1,3 @@
-using System;
-using System.Windows.Forms;
-
 namespace HolzShots.Input
 {
     /// <summary>Event Args for the event that is fired after the hotkey has been pressed.</summary>

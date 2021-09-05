@@ -1,8 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using HolzShots.Composition.Command;
 using System.Drawing;
+using HolzShots.Composition.Command;
 
 namespace HolzShots.Input.Actions
 {
