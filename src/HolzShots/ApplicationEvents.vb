@@ -46,13 +46,13 @@ Namespace My
             If TaskbarManager.IsPlatformSupported Then AddTasks()
         End Sub
 
-        Private Sub MyApplicationStartupNextInstance(ByVal sender As Object, ByVal e As StartupNextInstanceEventArgs) Handles Me.StartupNextInstance
+        Private Sub MyApplicationStartupNextInstance(sender As Object, e As StartupNextInstanceEventArgs) Handles Me.StartupNextInstance
             If e.CommandLine.Count > 0 Then
                 ProcessCommandLineArguments(e.CommandLine)
             End If
         End Sub
 
-        Private Sub MyApplication_UnhandledException(ByVal sender As Object, ByVal e As UnhandledExceptionEventArgs) Handles Me.UnhandledException
+        Private Sub MyApplication_UnhandledException(sender As Object, e As UnhandledExceptionEventArgs) Handles Me.UnhandledException
             Trace.WriteLine("Got exception: " + e.Exception.Message)
 
             e.ExitApplication = True
