@@ -10,7 +10,7 @@
 
     <AssemblyTitle>HolzShots</AssemblyTitle>
     <Product>HolzShots</Product>
-    <Description>A screenshot utility</Description>
+    <Description>A lightweight screenshot utility that gets out of your way.</Description>
 
   </PropertyGroup>
 

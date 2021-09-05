@@ -19,7 +19,7 @@
     <docsUrl>https://holzshots.net</docsUrl>
     <bugTrackerUrl>https://github.com/nikeee/HolzShots/issues</bugTrackerUrl>
     <tags>holzshots screenshot screen shot tool screenshot-utility</tags>
-    <summary>A screenshot utility.</summary>
+    <summary>A lightweight screenshot utility that gets out of your way.</summary>
     <description>A screenshot utility for Windows.</description>
   </metadata>
   <files>
