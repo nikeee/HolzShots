@@ -16,7 +16,7 @@ namespace HolzShots.Windows.Forms
         {
             if (float.IsNaN(unitIntervalValue))
                 unitIntervalValue = 0.0f;
-            unitIntervalValue = MathEx.Clamp(unitIntervalValue, 0.0f, 1.0f);
+            unitIntervalValue = Math.Clamp(unitIntervalValue, 0.0f, 1.0f);
 
             var percentage = (ulong)(unitIntervalValue * 100);
             SetProgressValue(percentage, 100);

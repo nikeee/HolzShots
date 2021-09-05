@@ -159,7 +159,7 @@ namespace HolzShots
         public float AreaSelectorDimmingOpacity
         {
             get => _areaSelectorDimmingOpacity;
-            private set => _areaSelectorDimmingOpacity = MathEx.Clamp(value, 0.0f, 1.0f);
+            private set => _areaSelectorDimmingOpacity = Math.Clamp(value, 0.0f, 1.0f);
         }
         private float _areaSelectorDimmingOpacity = 0.8f;
 
@@ -233,7 +233,7 @@ namespace HolzShots
         public IReadOnlyDictionary<string, string> Parameters { get; set; } = ImmutableDictionary<string, string>.Empty;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [JsonProperty("overrides")]
         public IReadOnlyDictionary<string, dynamic> Overrides { get; set; } = ImmutableDictionary<string, dynamic>.Empty;

@@ -197,7 +197,7 @@ Namespace UI
         Private Sub LoadArrow()
             ArrowColorviewer.Color = My.Settings.ArrowColor
             ThePanel.ArrowColor = ArrowColorviewer.Color
-            ArrowWidthSlider.Value = MathEx.Clamp(My.Settings.ArrowWidth, ArrowWidthSlider.Minimum, ArrowWidthSlider.Maximum)
+            ArrowWidthSlider.Value = Math.Clamp(My.Settings.ArrowWidth, ArrowWidthSlider.Minimum, ArrowWidthSlider.Maximum)
             ArrowWidthSliderScroll()
         End Sub
 
