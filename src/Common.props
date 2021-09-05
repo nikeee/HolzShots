@@ -18,6 +18,9 @@
     <DebugType>portable</DebugType>
     <ErrorReport>none</ErrorReport>
 
+    <MinimumPlatformVersion>10.0.17763.0</MinimumPlatformVersion>
+    <RepositoryUrl>https://github.com/nikeee/HolzShots</RepositoryUrl>
+
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(CI)' == 'True' ">
