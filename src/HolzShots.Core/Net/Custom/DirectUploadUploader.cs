@@ -1,5 +1,4 @@
 using System;
-using System.Composition;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -12,7 +11,7 @@ using HolzShots.Composition;
 
 namespace HolzShots.Net.Custom
 {
-    [Export(typeof(Uploader))]
+    [System.Composition.Export(typeof(Uploader))]
     [UploadPlugin("DirectUpload.net", "Niklas Mollenhauer", "1.0.0", "Uploader plugin for DirectUpload.net", "nikeee@outlook.com", "https://holz.nu", "https://github.com/nikeee/HolzShots")]
     public class DirectUploadUploader : Uploader
     {

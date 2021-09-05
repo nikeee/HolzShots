@@ -1,9 +1,8 @@
 using System;
-using System.Composition;
 
 namespace HolzShots.Composition
 {
-    [MetadataAttribute]
+    [System.Composition.MetadataAttribute]
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
     public class UploadPluginAttribute : PluginAttribute
     {
