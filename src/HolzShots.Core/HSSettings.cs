@@ -163,6 +163,18 @@ namespace HolzShots
         }
         private float _areaSelectorDimmingOpacity = 0.8f;
 
+        [SettingsDoc(
+            "Seconds to wait before invoking the capture. Must be >=0.",
+            Default = "0.0"
+        )]
+        [JsonProperty("capture.delayInSeconds")]
+        public float CaptureDelay
+        {
+            get => _captureDelay;
+            private set => _captureDelay = MathF.Max(0.0f, value);
+        }
+        private float _captureDelay = 0.0f;
+
         #endregion
         #region tray.*
 

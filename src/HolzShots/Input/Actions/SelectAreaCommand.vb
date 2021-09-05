@@ -8,7 +8,7 @@ Namespace Input.Actions
     Public Class SelectAreaCommand
         Inherits CapturingCommand
 
-        Public Overrides Async Function Invoke(parameters As IReadOnlyDictionary(Of String, String), settingsContext As HSSettings) As Task
+        Protected Overrides Async Function InvokeInternal(parameters As IReadOnlyDictionary(Of String, String), settingsContext As HSSettings) As Task
             If parameters Is Nothing Then Throw New ArgumentNullException(NameOf(parameters))
             If settingsContext Is Nothing Then Throw New ArgumentNullException(NameOf(settingsContext))
 

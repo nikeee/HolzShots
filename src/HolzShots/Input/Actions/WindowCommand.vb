@@ -11,7 +11,7 @@ Namespace Input.Actions
     Public Class WindowCommand
         Inherits CapturingCommand
 
-        Public Overrides Async Function Invoke(parameters As IReadOnlyDictionary(Of String, String), settingsContext As HSSettings) As Task
+        Protected Overrides Async Function InvokeInternal(parameters As IReadOnlyDictionary(Of String, String), settingsContext As HSSettings) As Task
             ' TODO: Add proper assertion
             ' Debug.Assert(ManagedSettings.EnableWindowScreenshot)
 

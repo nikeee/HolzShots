@@ -150,6 +150,13 @@
 			"default": 0.8
 		},
 
+		"capture.delayInSeconds": {
+			"description": "Seconds to wait before invoking the capture. Must be >=0.",
+			"type":"number",
+			"inclusiveMinimum": 0,
+			"default": 0
+		},
+
 		"tray.doubleClickCommand": {
 			"description": "The command to execute when the tray icon is double-clicked.",
 			"$ref": "#/definitions/command",

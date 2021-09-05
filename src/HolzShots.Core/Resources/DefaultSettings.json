@@ -54,6 +54,9 @@
 					// "capture.actionAfterCapture": "copyImage",
 
 					// You can even change the path the image will be saved (or even if it will be saved when using this shortcut)
+
+					// If you want to have a delay before capturing the image, you can do this, too:
+					// "capture.delayInSeconds": 10.0
 				}
 			}
 		},

@@ -81,7 +81,17 @@ Namespace Input.Actions
             End Using
         End Sub
 
-        Public MustOverride Function Invoke(parameters As IReadOnlyDictionary(Of String, String), settingsContext As HSSettings) As Task Implements ICommand(Of HSSettings).Invoke
+        Public Async Function Invoke(parameters As IReadOnlyDictionary(Of String, String), settingsContext As HSSettings) As Task Implements ICommand(Of HSSettings).Invoke
+            If settingsContext Is Nothing Then Throw New ArgumentNullException(NameOf(settingsContext))
+
+            If settingsContext.CaptureDelay > 0 Then
+                Await Task.Delay(TimeSpan.FromSeconds(settingsContext.CaptureDelay))
+            End If
+
+            Await InvokeInternal(parameters, settingsContext)
+        End Function
+
+        Protected MustOverride Function InvokeInternal(parameters As IReadOnlyDictionary(Of String, String), settingsContext As HSSettings) As Task
 
     End Class
 End Namespace
