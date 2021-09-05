@@ -7,7 +7,7 @@ namespace HolzShots
         public const string Name = "HolzShots";
         public const string PublisherName = "Niklas Mollenhauer";
 
-        public const string License = "GPL-3.0";
+        public const string License = "AGPL-3.0";
 
         // 1.0.0-beta.2+deadbeef
         // These info is filled by build script

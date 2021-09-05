@@ -36,9 +36,9 @@ namespace HolzShots.Windows.Forms
             this.VersionLabel = new System.Windows.Forms.Label();
             this.SendFeedbackLink = new HolzShots.Windows.Forms.ExplorerLinkLabel();
             this.SuspendLayout();
-            // 
+            //
             // ApplicationTitleLabel
-            // 
+            //
             this.ApplicationTitleLabel.AutoSize = true;
             this.ApplicationTitleLabel.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ApplicationTitleLabel.Location = new System.Drawing.Point(12, 9);
@@ -46,19 +46,19 @@ namespace HolzShots.Windows.Forms
             this.ApplicationTitleLabel.Size = new System.Drawing.Size(163, 45);
             this.ApplicationTitleLabel.TabIndex = 58;
             this.ApplicationTitleLabel.Text = "HolzShots";
-            // 
+            //
             // TimestampLabel
-            // 
+            //
             this.TimestampLabel.AutoSize = true;
             this.TimestampLabel.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.TimestampLabel.Location = new System.Drawing.Point(17, 54);
             this.TimestampLabel.Name = "TimestampLabel";
             this.TimestampLabel.Size = new System.Drawing.Size(281, 15);
             this.TimestampLabel.TabIndex = 59;
-            this.TimestampLabel.Text = "Open Source, GPL-3.0 Licensed Screenshot Software";
-            // 
+            this.TimestampLabel.Text = "Open Source, AGPL-3.0 Licensed Screenshot Software";
+            //
             // HolzShotsLinkLabel
-            // 
+            //
             this.HolzShotsLinkLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.HolzShotsLinkLabel.AutoSize = true;
             this.HolzShotsLinkLabel.BackColor = System.Drawing.Color.Transparent;
@@ -70,9 +70,9 @@ namespace HolzShots.Windows.Forms
             this.HolzShotsLinkLabel.TabStop = true;
             this.HolzShotsLinkLabel.Text = "holzshots.net";
             this.HolzShotsLinkLabel.Click += new System.EventHandler(this.HolzShotsLinkLabel_LinkClicked);
-            // 
+            //
             // LicenseLabel
-            // 
+            //
             this.LicenseLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.LicenseLabel.AutoSize = true;
             this.LicenseLabel.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -83,9 +83,9 @@ namespace HolzShots.Windows.Forms
             this.LicenseLabel.TabStop = true;
             this.LicenseLabel.Text = "License";
             this.LicenseLabel.Click += new System.EventHandler(this.LicenseLabel_LinkClicked);
-            // 
+            //
             // ShowGfxResourcesLinklabel
-            // 
+            //
             this.ShowGfxResourcesLinklabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.ShowGfxResourcesLinklabel.AutoSize = true;
             this.ShowGfxResourcesLinklabel.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -96,9 +96,9 @@ namespace HolzShots.Windows.Forms
             this.ShowGfxResourcesLinklabel.TabStop = true;
             this.ShowGfxResourcesLinklabel.Text = "Graphics";
             this.ShowGfxResourcesLinklabel.Click += new System.EventHandler(this.ShowGfxResourcesLinklabel_LinkClicked);
-            // 
+            //
             // VersionLabel
-            // 
+            //
             this.VersionLabel.AutoSize = true;
             this.VersionLabel.BackColor = System.Drawing.Color.Transparent;
             this.VersionLabel.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -108,9 +108,9 @@ namespace HolzShots.Windows.Forms
             this.VersionLabel.Size = new System.Drawing.Size(105, 15);
             this.VersionLabel.TabIndex = 63;
             this.VersionLabel.Text = "0.9.8.7 (11.08.2013)";
-            // 
+            //
             // SendFeedbackLink
-            // 
+            //
             this.SendFeedbackLink.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.SendFeedbackLink.AutoSize = true;
             this.SendFeedbackLink.BackColor = System.Drawing.Color.Transparent;
@@ -122,9 +122,9 @@ namespace HolzShots.Windows.Forms
             this.SendFeedbackLink.TabStop = true;
             this.SendFeedbackLink.Text = "Send Feedback";
             this.SendFeedbackLink.Click += new System.EventHandler(this.SendFeedbackLink_LinkClicked);
-            // 
+            //
             // AboutForm
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;

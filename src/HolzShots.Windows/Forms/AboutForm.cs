@@ -38,7 +38,7 @@ namespace HolzShots.Windows.Forms
                 Icon = new TaskDialogIcon(icon),
                 Caption = "About HolzShots",
                 Heading = "HolzShots",
-                Text = $"Open Source, GPL-3.0 licensed screenshot utility that gets out of your way.\n",
+                Text = $"Open Source, AGPL-3.0 licensed screenshot utility that gets out of your way.\n",
                 /*
                    <a href="website">Website</a>
                    <a href="issues">Report Issue</a>
