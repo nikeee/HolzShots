@@ -3,8 +3,6 @@
   <Import Project="..\Common.props" />
 
   <PropertyGroup>
-    <StartupObject></StartupObject>
-
     <OutputType>Library</OutputType>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
 
@@ -14,8 +12,6 @@
 
     <AssemblyTitle>HolzShots</AssemblyTitle>
     <Product>HolzShots</Product>
-
-    <Prefer32Bit>true</Prefer32Bit>
 
     <NoWarn>42353,42354,42355</NoWarn>
     <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>

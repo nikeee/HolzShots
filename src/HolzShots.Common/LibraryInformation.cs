@@ -4,10 +4,7 @@ namespace HolzShots
 {
     public static class LibraryInformation
     {
-        public const string Name = "HolzShots";
-        public const string PublisherName = "Niklas Mollenhauer";
-
-        public const string License = "AGPL-3.0";
+        public const string Name = ThisAssembly.Project.RootNamespace;
 
         // 1.0.0-beta.2+deadbeef
         // These info is filled by build script
@@ -22,13 +19,11 @@ namespace HolzShots
 #endif
         public const string SemanticVersion = VersionFormal + ReleaseSuffix + CommitsSinceTag + CommitId;
 
-        public const string SiteUrl = "https://holzshots.net";
-        public const string SourceUrl = "https://github.com/nikeee/HolzShots";
+        public const string SiteUrl = ThisAssembly.Constants.Website;
+        public const string SourceUrl = ThisAssembly.Metadata.RepositoryUrl;
 
         public const string IssuesUrl = SourceUrl + "/issues";
         public const string LicenseUrl = SourceUrl + "/blob/master/LICENSE";
         public const string FullVersionString = SemanticVersion;
-
-        public const string Copyright = PublisherName + " - " + License;
     }
 }

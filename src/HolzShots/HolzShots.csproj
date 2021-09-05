@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <PackageReference Include="SingleInstanceCore" Version="2.2.0" />
+    <PackageReference Include="ThisAssembly" Version="1.0.8" />
 
     <ProjectReference Include="..\HolzShots.Legacy\HolzShots.Legacy.vbproj" />
     <ProjectReference Include="..\HolzShots.Windows\HolzShots.Windows.csproj" />

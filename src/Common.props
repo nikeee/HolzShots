@@ -8,7 +8,7 @@
     <Version>2.0.0</Version>
 
     <Authors>Niklas Mollenhauer</Authors>
-    <Copyright>Niklas Mollenhauer AGPL-3.0</Copyright>
+    <Copyright>Niklas Mollenhauer - AGPL-3.0</Copyright>
     <PackageLicenseExpression>AGPL-3.0</PackageLicenseExpression>
 
     <PackageProjectUrl>https://holzshots.net</PackageProjectUrl>
@@ -29,6 +29,7 @@
 
   <ItemGroup>
     <Constant Include="SpdxLicense" Value="AGPL-3.0" />
+    <Constant Include="Website" Value="https://holzshots.net" />
   </ItemGroup>
 
 </Project>
