@@ -1,0 +1,57 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\Common.props" />
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <Prefer32Bit>true</Prefer32Bit>
+
+    <AssemblyTitle>HolzShots</AssemblyTitle>
+    <Product>HolzShots</Product>
+    <Description>A screenshot utility</Description>
+
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="HolzShots.ico" />
+    <Content Include="Resources\*.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="SingleInstanceCore" Version="2.2.0" />
+
+    <ProjectReference Include="..\HolzShots.Legacy\HolzShots.Legacy.vbproj" />
+    <ProjectReference Include="..\HolzShots.Windows\HolzShots.Windows.csproj" />
+    <ProjectReference Include="..\WindowsAPICodePack.ShellModified\WindowsAPICodePack.ShellModified.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+</Project>

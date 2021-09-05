@@ -28,7 +28,7 @@ namespace HolzShots.Composition.Command
             _currentSettingsGetter = currentSettingsGetter ?? throw new ArgumentNullException(nameof(currentSettingsGetter));
         }
 
-        public Task Invoke(object sender, HotkeyPressedEventArgs e)
+        public Task Invoke(object? sender, HotkeyPressedEventArgs e)
         {
             return _parentManager.Dispatch(_commandToDispatch, _currentSettingsGetter());
         }
