@@ -36,9 +36,9 @@ namespace HolzShots.Windows.Forms
             {
                 AllowMinimize = true,
                 Icon = new TaskDialogIcon(icon),
-                Caption = "About HolzShots",
-                Heading = "HolzShots",
-                Text = $"Open Source, AGPL-3.0 licensed screenshot utility that gets out of your way.\n",
+                Caption = "About " + LibraryInformation.Name,
+                Heading = LibraryInformation.Name,
+                Text = $"Open Source, {ThisAssembly.Constants.SpdxLicense} licensed screenshot utility that gets out of your way.\n",
                 /*
                    <a href="website">Website</a>
                    <a href="issues">Report Issue</a>

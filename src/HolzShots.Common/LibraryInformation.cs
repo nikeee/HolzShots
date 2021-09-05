@@ -24,6 +24,5 @@ namespace HolzShots
 
         public const string IssuesUrl = SourceUrl + "/issues";
         public const string LicenseUrl = SourceUrl + "/blob/master/LICENSE";
-        public const string FullVersionString = SemanticVersion;
     }
 }
