@@ -4,23 +4,23 @@
 
 Usage of `Hotkey` primitives:
 ```csharp
-var keyboardHook = KeyboardHookSelector.CreateHookForCurrentPlatform(someForm);
+var hook = KeyboardHookSelector.CreateHookForCurrentPlatform(someForm);
 // someForm can be anything that implements ISynchronizeInvoke
 
 var hk = new Hotkey(Input.Keyboard.ModifierKeys.Shift, Keys.F8);
 hk.KeyPressed += (hook, h) => Console.WriteLine($"Hotkey pressed: {h}");
 
-_keyboardHook.RegisterHotkey(hk);
+hook.RegisterHotkey(hk);
 
 var hk2 = Hotkey.Parse("Shift+F9");
 hk2.KeyPressed += (hook, h) => Console.WriteLine($"Hotkey pressed: {h}");
 
-_keyboardHook.RegisterHotkey(hk2);
+hook.RegisterHotkey(hk2);
 
 // Clean up:
-_keyboardHook.UnregisterHotkey(hk2);
+hook.UnregisterHotkey(hk2);
 
-_keyboardHook.UnregisterAllHotkeys();
+hook.UnregisterAllHotkeys();
 ```
 
 The `Hotkey` class can be serialized to Windows Forms Settings as well as re-instantiated using `Hotkey.Parse(hk.ToString())`.
