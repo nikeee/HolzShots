@@ -37,7 +37,7 @@ namespace HolzShots.Input.Actions
                     if (shot == null)
                         throw new TaskCanceledException();
                 }
-                catch (TaskCanceledException cancelled)
+                catch (TaskCanceledException)
                 {
                     Debug.WriteLine("Area Selection cancelled");
                     return;

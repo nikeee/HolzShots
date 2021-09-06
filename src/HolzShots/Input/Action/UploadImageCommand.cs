@@ -39,7 +39,7 @@ namespace HolzShots.Input.Actions
                 var result = await UploadDispatcher.InitiateUploadToDefaultUploader(bmp, settingsContext, HolzShotsApplication.Instance.Uploaders, format, null).ConfigureAwait(true);
                 UploadHelper.InvokeUploadFinishedUI(result, settingsContext);
             }
-            catch (UploadCanceledException ex)
+            catch (UploadCanceledException)
             {
                 NotificationManager.ShowOperationCanceled();
             }
