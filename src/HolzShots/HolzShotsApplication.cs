@@ -64,6 +64,45 @@ namespace HolzShots
             CommandManager.RegisterCommand(new EditImageCommand());
         }
 
+        internal async Task ProcessCommandLineArguments(string[] args)
+        {
+#if DEBUG
+            System.Diagnostics.Trace.WriteLine($"Processing: {string.Join(", ", args)}");
+#endif
+            // TODO: Proper command line parsing, GH#60
+            for (int i = 0; i <= args.Length - 1; i++)
+            {
+                switch (args[i])
+                {
+                    case CommandLine.FullscreenScreenshotCliCommand:
+                        await CommandManager.Dispatch<FullscreenCommand>(UserSettings.Current).ConfigureAwait(true);
+                        break;
+                    case CommandLine.AreaSelectorCliCommand:
+                        await CommandManager.Dispatch<SelectAreaCommand>(UserSettings.Current).ConfigureAwait(true);
+                        break;
+                    case CommandLine.UploadImageCliCommand:
+                        {
+                            // TODO: Maybe we can support overriding settings from the command line, too
+                            var parameters = new Dictionary<string, string>();
+                            if (i < args.Length - 1)
+                                parameters[FileDependentCommand.FileNameParameter] = args[i + 1];
+
+                            await CommandManager.Dispatch<UploadImageCommand>(UserSettings.Current, parameters).ConfigureAwait(true);
+                            break;
+                        }
+                    case CommandLine.OpenImageCliCommand:
+                        {
+                            // TODO: Maybe we can support overriding settings from the command line, too
+                            var parameters = new Dictionary<string, string>();
+                            if (i < args.Length - 1)
+                                parameters[FileDependentCommand.FileNameParameter] = args[i + 1];
+
+                            await CommandManager.Dispatch<EditImageCommand>(UserSettings.Current, parameters).ConfigureAwait(true);
+                            break;
+                        }
+                }
+            }
+        }
 
 
         public void Run()
@@ -75,7 +114,7 @@ namespace HolzShots
         }
 
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-        public void OnInstanceInvoked(string[] args) => _form.ProcessCommandLineArguments(args); // Not awaiting this Task, swallowing exceptions
+        public void OnInstanceInvoked(string[] args) => ProcessCommandLineArguments(args); // Not awaiting this Task, swallowing exceptions
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
     }
 }

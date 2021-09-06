@@ -66,7 +66,7 @@ namespace HolzShots
             if (JumpLists.AreSupported)
                 JumpLists.RegisterTasks();
 
-            await ProcessCommandLineArguments(args).ConfigureAwait(true);
+            await _application.ProcessCommandLineArguments(args).ConfigureAwait(true);
 
             var saveSettings = false;
             var openFirstStartExperience = false;
@@ -152,46 +152,6 @@ namespace HolzShots
 
                 // As the form was somehow attemted to close, we should make sure that it is at least _now_ closed
                 EnsureInvisibility();
-            }
-        }
-
-        internal async Task ProcessCommandLineArguments(string[] args)
-        {
-#if DEBUG
-            System.Diagnostics.Trace.WriteLine($"Processing: {string.Join(", ", args)}");
-#endif
-            // TODO: Proper command line parsing, GH#60
-            for (int i = 0; i <= args.Length - 1; i++)
-            {
-                switch (args[i])
-                {
-                    case CommandLine.FullscreenScreenshotCliCommand:
-                        await _application.CommandManager.Dispatch<FullscreenCommand>(UserSettings.Current).ConfigureAwait(true);
-                        break;
-                    case CommandLine.AreaSelectorCliCommand:
-                        await _application.CommandManager.Dispatch<SelectAreaCommand>(UserSettings.Current).ConfigureAwait(true);
-                        break;
-                    case CommandLine.UploadImageCliCommand:
-                        {
-                            // TODO: Maybe we can support overriding settings from the command line, too
-                            var parameters = new Dictionary<string, string>();
-                            if (i < args.Length - 1)
-                                parameters[FileDependentCommand.FileNameParameter] = args[i + 1];
-
-                            await _application.CommandManager.Dispatch<UploadImageCommand>(UserSettings.Current, parameters).ConfigureAwait(true);
-                            break;
-                        }
-                    case CommandLine.OpenImageCliCommand:
-                        {
-                            // TODO: Maybe we can support overriding settings from the command line, too
-                            var parameters = new Dictionary<string, string>();
-                            if (i < args.Length - 1)
-                                parameters[FileDependentCommand.FileNameParameter] = args[i + 1];
-
-                            await _application.CommandManager.Dispatch<EditImageCommand>(UserSettings.Current, parameters).ConfigureAwait(true);
-                            break;
-                        }
-                }
             }
         }
 
