@@ -1,7 +1,7 @@
 using System.ComponentModel;
 using System.Diagnostics;
 
-namespace HolzShots.Input
+namespace HolzShots.Input.Keyboard
 {
     public static class KeyboardHookSelector
     {

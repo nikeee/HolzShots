@@ -1,8 +1,9 @@
+using System.Windows.Forms;
 using System.ComponentModel;
 using System.Configuration;
 using System.Text;
 
-namespace HolzShots.Input
+namespace HolzShots.Input.Keyboard
 {
     [Serializable]
     [SettingsSerializeAs(SettingsSerializeAs.String)]

@@ -1,4 +1,6 @@
-namespace HolzShots.Input
+using System.Windows.Forms;
+
+namespace HolzShots.Input.Keyboard
 {
     /// <summary>Event Args for the event that is fired after the hotkey has been pressed.</summary>
     public class KeyPressedEventArgs : EventArgs

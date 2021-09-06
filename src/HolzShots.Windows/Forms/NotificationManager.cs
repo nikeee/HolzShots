@@ -1,6 +1,6 @@
 using System.Diagnostics;
 using HolzShots.Composition;
-using HolzShots.Input;
+using HolzShots.Input.Keyboard;
 using HolzShots.Net;
 
 namespace HolzShots.Windows.Forms

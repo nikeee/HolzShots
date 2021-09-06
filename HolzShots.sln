@@ -18,6 +18,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WindowsAPICodePack.ShellMod
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HolzShots", "src\HolzShots\HolzShots.csproj", "{C55EB76E-2F7A-4473-A2C1-D6D56160A83C}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HolzShots.Input.Keyboard", "src\HolzShots.Input.Keyboard\HolzShots.Input.Keyboard.csproj", "{ACBCE641-F752-4119-9833-3C283968B8D2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,6 +58,10 @@ Global
 		{C55EB76E-2F7A-4473-A2C1-D6D56160A83C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C55EB76E-2F7A-4473-A2C1-D6D56160A83C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C55EB76E-2F7A-4473-A2C1-D6D56160A83C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACBCE641-F752-4119-9833-3C283968B8D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACBCE641-F752-4119-9833-3C283968B8D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACBCE641-F752-4119-9833-3C283968B8D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACBCE641-F752-4119-9833-3C283968B8D2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,5 +1,5 @@
 using System.Diagnostics;
-using HolzShots.Input;
+using HolzShots.Input.Keyboard;
 
 namespace HolzShots.Composition.Command
 {

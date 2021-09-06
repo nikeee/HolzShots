@@ -1,6 +1,6 @@
 using System.Diagnostics;
 
-namespace HolzShots.Input
+namespace HolzShots.Input.Keyboard
 {
     /// <summary>Event Args for the event that is fired after the hotkey has been pressed.</summary>
     public class HotkeyPressedEventArgs : EventArgs

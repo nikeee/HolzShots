@@ -2,7 +2,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 
-namespace HolzShots.Input
+namespace HolzShots.Input.Keyboard
 {
     public class HotkeyTypeConverter : TypeConverter
     {

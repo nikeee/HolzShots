@@ -1,7 +1,7 @@
 using System.Runtime.InteropServices;
-using HolzShots.Input;
+using System.Windows.Forms;
 
-namespace HolzShots
+namespace HolzShots.Input.Keyboard
 {
     internal static class NativeMethods
     {

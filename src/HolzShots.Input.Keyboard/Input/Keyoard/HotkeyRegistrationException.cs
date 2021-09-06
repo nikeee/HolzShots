@@ -1,4 +1,4 @@
-namespace HolzShots.Input
+namespace HolzShots.Input.Keyboard
 {
     [Serializable]
     public class HotkeyRegistrationException : Exception

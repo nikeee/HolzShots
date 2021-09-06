@@ -2,7 +2,7 @@ using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Reflection;
 using System.Runtime.Serialization;
-using HolzShots.Input;
+using HolzShots.Input.Keyboard;
 using HolzShots.IO;
 using Newtonsoft.Json;
 

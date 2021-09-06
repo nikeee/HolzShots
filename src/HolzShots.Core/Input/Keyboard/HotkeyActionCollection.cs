@@ -1,6 +1,6 @@
 using System.Collections.Immutable;
 
-namespace HolzShots.Input
+namespace HolzShots.Input.Keyboard
 {
     public abstract class HotkeyActionCollection
     {

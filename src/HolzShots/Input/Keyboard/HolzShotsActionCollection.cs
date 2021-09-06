@@ -1,6 +1,6 @@
 using System.Diagnostics;
 
-namespace HolzShots.Input
+namespace HolzShots.Input.Keyboard
 {
     public class HolzShotsActionCollection : HotkeyActionCollection, IDisposable
     {
@@ -15,7 +15,7 @@ namespace HolzShots.Input
             Debug.Assert(Hook != null);
             Debug.Assert(_lockObj != null);
 
-            List<Exception> exeptions = new List<Exception>(Count);
+            var exeptions = new List<Exception>(Count);
             lock (_lockObj)
             {
                 Hook.UnregisterAllHotkeys();

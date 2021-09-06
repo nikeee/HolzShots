@@ -3,7 +3,7 @@
 using System.Data;
 using System.Diagnostics;
 using System.Windows.Forms;
-using HolzShots.Input;
+using HolzShots.Input.Keyboard;
 using HolzShots.Input.Actions;
 using HolzShots.Windows.Forms;
 

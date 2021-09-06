@@ -1,4 +1,4 @@
-namespace HolzShots.Input
+namespace HolzShots.Input.Keyboard
 {
 
     /// <summary>The enumeration of possible modifiers.</summary>
