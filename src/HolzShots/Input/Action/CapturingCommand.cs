@@ -34,7 +34,7 @@ namespace HolzShots.Input.Actions
                         var result = await UploadDispatcher.InitiateUploadToDefaultUploader(screenshot.Image, settingsContext, HolzShotsApplication.Instance.Uploaders, null, null).ConfigureAwait(true);
                         UploadHelper.InvokeUploadFinishedUI(result, settingsContext);
                     }
-                    catch (UploadCanceledException ex)
+                    catch (UploadCanceledException)
                     {
                         NotificationManager.ShowOperationCanceled();
                     }
@@ -93,7 +93,7 @@ namespace HolzShots.Input.Actions
                         screenshot.Image.SaveExtended(fileStream, format);
                     }
                 }
-                catch (PathTooLongException ex)
+                catch (PathTooLongException)
                 {
                     NotificationManager.PathIsTooLong(f);
                 }
