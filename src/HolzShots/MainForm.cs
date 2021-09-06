@@ -3,8 +3,6 @@
 using System.Data;
 using System.Diagnostics;
 using System.Windows.Forms;
-using System.Windows.Input;
-using HolzShots.Composition.Command;
 using HolzShots.Input;
 using HolzShots.Input.Actions;
 using HolzShots.Windows.Forms;
@@ -203,15 +201,9 @@ namespace HolzShots
             if (_application.CommandManager.IsRegisteredCommand(commandToRun.CommandName))
                 await _application.CommandManager.Dispatch(commandToRun, UserSettings.Current).ConfigureAwait(true); // Can throw exceptions and silently kill the application
         }
-        private void OpenAbout(object sender, EventArgs e)
-        {
-            AboutForm.Instance.Show();
-        }
 
-        private void OpenFeedbackAndIssues(object sender, EventArgs e)
-        {
-            IO.HolzShotsPaths.OpenLink(LibraryInformation.IssuesUrl);
-        }
+        private void OpenAbout(object sender, EventArgs e) => AboutForm.Instance.Show();
+        private void OpenFeedbackAndIssues(object sender, EventArgs e) => IO.HolzShotsPaths.OpenLink(LibraryInformation.IssuesUrl);
 
         private void ExitApplication(object sender, EventArgs e)
         {
