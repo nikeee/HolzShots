@@ -54,7 +54,7 @@ namespace HolzShots.Composition.Command
 
         private ICommand<TSettings>? GetCommand(string name)
         {
-            Debug.Assert(IsRegisteredCommand(name));
+            Debug.Assert(IsRegisteredCommand(name), $"Command must be registered: {name ?? "<null>"}");
             return Actions.TryGetValue(name.ToLowerInvariant(), out var command)
                 ? command
                 : null;

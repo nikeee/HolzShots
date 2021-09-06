@@ -14,10 +14,9 @@ namespace HolzShots
     public partial class MainForm : Form
     {
         public DateTime ApplicationStarted { get; private set; }
-        public CommandManager<HSSettings> CommandManager { get; private set; } = null!;
 
-        private HolzShotsActionCollection _actionContainer = null!;
         private readonly HolzShotsApplication _application;
+        private HolzShotsActionCollection _actionContainer = null!;
         private KeyboardHook _keyboardHook = null!;
         private bool _forceClose = false;
 
@@ -48,7 +47,7 @@ namespace HolzShots
 
             await UserSettings.Load(this).ConfigureAwait(true); // We're dealing with UI code here, we want to keep the context
 
-            CommandManager = new CommandManager<HSSettings>(UserSettings.Manager);
+            _application.InitializeCommands(UserSettings.Manager);
             ApplicationStarted = DateTime.Now;
 
             // TODO: Check if we need this:
@@ -66,8 +65,6 @@ namespace HolzShots
 
             if (JumpLists.AreSupported)
                 JumpLists.RegisterTasks();
-
-            RegisterCommands();
 
             await ProcessCommandLineArguments(args).ConfigureAwait(true);
 
@@ -103,7 +100,7 @@ namespace HolzShots
                 // We only want to show this message when the user edits this file
                 NotificationManager.SettingsUpdated();
 
-            var parsedBindings = newSettings.KeyBindings.Select(CommandManager.GetHotkeyActionFromKeyBinding).ToArray();
+            var parsedBindings = newSettings.KeyBindings.Select(_application.CommandManager.GetHotkeyActionFromKeyBinding).ToArray();
 
             _actionContainer = new HolzShotsActionCollection(_keyboardHook, parsedBindings);
 
@@ -118,18 +115,6 @@ namespace HolzShots
             }
         }
 
-        private void RegisterCommands()
-        {
-            // TODO: This looks like it could be integrated in our plugin system
-            CommandManager.RegisterCommand(new SelectAreaCommand());
-            CommandManager.RegisterCommand(new FullscreenCommand());
-            CommandManager.RegisterCommand(new CaptureClipboardCommand());
-            CommandManager.RegisterCommand(new WindowCommand());
-            CommandManager.RegisterCommand(new OpenImagesFolderCommand());
-            CommandManager.RegisterCommand(new OpenSettingsJsonCommand());
-            CommandManager.RegisterCommand(new UploadImageCommand());
-            CommandManager.RegisterCommand(new EditImageCommand());
-        }
 
         private void ShowFirstStartExperience()
         {
@@ -142,7 +127,7 @@ namespace HolzShots
                     OpenPlugins(null, new EventArgs());
                     return;
                 case FirstStartAction.OpenSettings:
-                    CommandManager.Dispatch<OpenSettingsJsonCommand>(UserSettings.Current);
+                    _application.CommandManager.Dispatch<OpenSettingsJsonCommand>(UserSettings.Current);
                     return;
                 case FirstStartAction.None: return; // Intentionally left empty
                 default:
@@ -181,10 +166,10 @@ namespace HolzShots
                 switch (args[i])
                 {
                     case CommandLine.FullscreenScreenshotCliCommand:
-                        await CommandManager.Dispatch<FullscreenCommand>(UserSettings.Current).ConfigureAwait(true);
+                        await _application.CommandManager.Dispatch<FullscreenCommand>(UserSettings.Current).ConfigureAwait(true);
                         break;
                     case CommandLine.AreaSelectorCliCommand:
-                        await CommandManager.Dispatch<SelectAreaCommand>(UserSettings.Current).ConfigureAwait(true);
+                        await _application.CommandManager.Dispatch<SelectAreaCommand>(UserSettings.Current).ConfigureAwait(true);
                         break;
                     case CommandLine.UploadImageCliCommand:
                         {
@@ -193,7 +178,7 @@ namespace HolzShots
                             if (i < args.Length - 1)
                                 parameters[FileDependentCommand.FileNameParameter] = args[i + 1];
 
-                            await CommandManager.Dispatch<UploadImageCommand>(UserSettings.Current, parameters).ConfigureAwait(true);
+                            await _application.CommandManager.Dispatch<UploadImageCommand>(UserSettings.Current, parameters).ConfigureAwait(true);
                             break;
                         }
                     case CommandLine.OpenImageCliCommand:
@@ -203,7 +188,7 @@ namespace HolzShots
                             if (i < args.Length - 1)
                                 parameters[FileDependentCommand.FileNameParameter] = args[i + 1];
 
-                            await CommandManager.Dispatch<EditImageCommand>(UserSettings.Current, parameters).ConfigureAwait(true);
+                            await _application.CommandManager.Dispatch<EditImageCommand>(UserSettings.Current, parameters).ConfigureAwait(true);
                             break;
                         }
                 }
@@ -214,19 +199,19 @@ namespace HolzShots
 
         private async void UploadImage(object sender, EventArgs e)
         {
-            await CommandManager.Dispatch<UploadImageCommand>(UserSettings.Current).ConfigureAwait(true);
+            await _application.CommandManager.Dispatch<UploadImageCommand>(UserSettings.Current).ConfigureAwait(true);
         }
         private async void OpenImage(object sender, EventArgs e)
         {
-            await CommandManager.Dispatch<EditImageCommand>(UserSettings.Current).ConfigureAwait(true);
+            await _application.CommandManager.Dispatch<EditImageCommand>(UserSettings.Current).ConfigureAwait(true);
         }
         private async void SelectArea(object sender, EventArgs e)
         {
-            await CommandManager.Dispatch<SelectAreaCommand>(UserSettings.Current).ConfigureAwait(true);
+            await _application.CommandManager.Dispatch<SelectAreaCommand>(UserSettings.Current).ConfigureAwait(true);
         }
         private async void OpenSettingsJson(object sender, EventArgs e)
         {
-            await CommandManager.Dispatch<OpenSettingsJsonCommand>(UserSettings.Current).ConfigureAwait(true);
+            await _application.CommandManager.Dispatch<OpenSettingsJsonCommand>(UserSettings.Current).ConfigureAwait(true);
         }
         private void OpenPlugins(object? sender, EventArgs e)
         {
@@ -255,8 +240,8 @@ namespace HolzShots
             if (commandToRun is null)
                 return;
 
-            if (CommandManager.IsRegisteredCommand(commandToRun.CommandName))
-                await CommandManager.Dispatch(commandToRun, UserSettings.Current).ConfigureAwait(true); // Can throw exceptions and silently kill the application
+            if (_application.CommandManager.IsRegisteredCommand(commandToRun.CommandName))
+                await _application.CommandManager.Dispatch(commandToRun, UserSettings.Current).ConfigureAwait(true); // Can throw exceptions and silently kill the application
         }
         private void OpenAbout(object sender, EventArgs e)
         {
