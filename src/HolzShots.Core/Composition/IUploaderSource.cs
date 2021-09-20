@@ -14,22 +14,5 @@ namespace HolzShots.Composition
         Task Load();
     }
 
-    // TODO: Refactor to record
-    public class UploaderEntry : IEquatable<UploaderEntry>
-    {
-        public IPluginMetadata Metadata { get; }
-        public Uploader Uploader { get; }
-
-        public UploaderEntry(IPluginMetadata metadata, Uploader uploader)
-        {
-            Metadata = metadata ?? throw new ArgumentNullException(nameof(IPluginMetadata));
-            Uploader = uploader ?? throw new ArgumentNullException(nameof(uploader));
-        }
-
-        public override int GetHashCode() => HashCode.Combine(Metadata, Uploader);
-        public static bool operator ==(UploaderEntry? left, UploaderEntry? right) => left is null ? right is null : left.Equals(right);
-        public static bool operator !=(UploaderEntry? left, UploaderEntry? right) => !(left == right);
-        public override bool Equals(object? obj) => obj is UploaderEntry other && Equals(other);
-        public bool Equals(UploaderEntry? other) => !(other is null) && other.Metadata.Equals(Metadata) && other.Uploader.Equals(Uploader);
-    }
+    public record UploaderEntry(IPluginMetadata Metadata, Uploader Uploader);
 }

@@ -9,22 +9,8 @@ using Semver;
 
 namespace HolzShots.Net.Custom
 {
-    // TODO: Refactor this to use records
-
     [Serializable]
-    public class CustomUploaderSpec
-    {
-        public SemVersion SchemaVersion { get; }
-        public UploaderMeta Meta { get; }
-        public UploaderConfig Uploader { get; }
-
-        public CustomUploaderSpec(SemVersion schemaVersion, UploaderMeta meta, UploaderConfig uploader)
-        {
-            SchemaVersion = schemaVersion;
-            Meta = meta;
-            Uploader = uploader;
-        }
-    }
+    public record CustomUploaderSpec(SemVersion SchemaVersion, UploaderMeta Meta, UploaderConfig Uploader);
 
     [Serializable]
     public class UploaderMeta : IPluginMetadata
