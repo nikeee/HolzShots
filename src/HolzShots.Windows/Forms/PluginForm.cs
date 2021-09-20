@@ -1,4 +1,7 @@
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Windows.Forms;
 using HolzShots.Composition;
 using HolzShots.IO;
 using HolzShots.Windows.Forms.Controls;
@@ -35,15 +38,5 @@ namespace HolzShots.Windows.Forms
         }
     }
 
-    public class PluginFormModel
-    {
-        public IReadOnlyList<IPluginMetadata> Plugins { get; }
-        public string PluginDirectory { get; }
-
-        public PluginFormModel(IReadOnlyList<IPluginMetadata> plugins, string pluginDirectory)
-        {
-            Plugins = plugins ?? throw new ArgumentNullException(nameof(plugins));
-            PluginDirectory = pluginDirectory ?? throw new ArgumentNullException(nameof(pluginDirectory));
-        }
-    }
+    public record PluginFormModel(IReadOnlyList<IPluginMetadata> Plugins, string PluginDirectory);
 }
