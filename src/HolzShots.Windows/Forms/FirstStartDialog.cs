@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Windows.Forms;
 
 namespace HolzShots.Windows.Forms
 {

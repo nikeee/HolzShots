@@ -1,3 +1,5 @@
+using System.Threading.Tasks;
+
 namespace HolzShots.Input.Keyboard
 {
     public interface IHotkeyAction

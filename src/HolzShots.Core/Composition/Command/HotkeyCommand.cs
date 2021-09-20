@@ -1,4 +1,6 @@
+using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using HolzShots.Input.Keyboard;
 
 namespace HolzShots.Composition.Command

@@ -1,4 +1,6 @@
-#nullable enable
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using HolzShots.Net;
 
 namespace HolzShots.Composition
@@ -12,6 +14,7 @@ namespace HolzShots.Composition
         Task Load();
     }
 
+    // TODO: Refactor to record
     public class UploaderEntry : IEquatable<UploaderEntry>
     {
         public IPluginMetadata Metadata { get; }

@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using HolzShots.Net;
 
 namespace HolzShots.Windows.Forms

@@ -1,4 +1,4 @@
-﻿
+
 /* Unmerged change from project 'Shell (net452)'
 Before:
 using System;

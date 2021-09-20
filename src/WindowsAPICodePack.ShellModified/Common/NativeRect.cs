@@ -1,4 +1,4 @@
-﻿using System.Runtime.InteropServices;
+using System.Runtime.InteropServices;
 using Microsoft.WindowsAPICodePack.Shell.Interop;
 
 namespace Microsoft.WindowsAPICodePack.Shell

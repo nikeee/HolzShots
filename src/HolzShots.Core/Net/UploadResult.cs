@@ -1,5 +1,8 @@
+using System;
+
 namespace HolzShots.Net
 {
+    // TODO: Use record
     public class UploadResult
     {
         public string Url { get; }

@@ -1,7 +1,9 @@
+using System;
 using System.Drawing;
 
 namespace HolzShots.Drawing
 {
+    // TODO: Refactor to record
     public struct WindowScreenshotSet : IDisposable, IEquatable<WindowScreenshotSet>
     {
         public Image Result { get; }

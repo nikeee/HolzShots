@@ -1,3 +1,6 @@
+using System;
+using System.Windows.Forms;
+
 namespace HolzShots.Windows.Forms
 {
     public partial class FlyoutForm : Form

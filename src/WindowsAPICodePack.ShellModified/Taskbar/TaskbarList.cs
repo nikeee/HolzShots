@@ -1,4 +1,4 @@
-﻿
+
 namespace Microsoft.WindowsAPICodePack.Taskbar
 {
     /// <summary>

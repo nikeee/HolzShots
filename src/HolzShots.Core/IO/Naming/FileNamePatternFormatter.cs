@@ -1,3 +1,4 @@
+using System;
 using System.Drawing.Imaging;
 using HolzShots.Drawing;
 

@@ -1,7 +1,10 @@
+using System;
 using Semver;
 
 namespace HolzShots.Composition
 {
+    // TODO: Refactor to records
+
     [System.ComponentModel.Composition.MetadataAttribute]
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
     public class PluginAttribute : Attribute, ICompileTimePluginMetadata

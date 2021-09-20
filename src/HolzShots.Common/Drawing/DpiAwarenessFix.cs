@@ -1,3 +1,5 @@
+using System;
+
 namespace HolzShots.Drawing
 {
     public static class DpiAwarenessFix

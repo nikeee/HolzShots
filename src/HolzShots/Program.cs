@@ -1,3 +1,4 @@
+using System;
 using SingleInstanceCore;
 
 namespace HolzShots

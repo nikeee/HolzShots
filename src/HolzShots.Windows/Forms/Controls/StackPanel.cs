@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Windows.Forms;
 using System.Windows.Forms.Layout;
 
 namespace HolzShots.Windows.Forms.Controls

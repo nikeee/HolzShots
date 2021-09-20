@@ -1,4 +1,8 @@
+using System;
 using System.ComponentModel;
+using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using HolzShots.Threading;
 
 namespace HolzShots.IO

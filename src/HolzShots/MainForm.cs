@@ -6,6 +6,10 @@ using System.Windows.Forms;
 using HolzShots.Input.Keyboard;
 using HolzShots.Input.Actions;
 using HolzShots.Windows.Forms;
+using System;
+using System.Threading.Tasks;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace HolzShots
 {

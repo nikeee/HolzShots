@@ -1,3 +1,6 @@
+using System.IO;
+using System.Threading.Tasks;
+
 namespace HolzShots.IO
 {
     public static class DirectoryEx

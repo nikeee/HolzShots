@@ -1,3 +1,5 @@
+using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace HolzShots.Input.Actions
@@ -14,16 +16,14 @@ namespace HolzShots.Input.Actions
             return AllowedExtensions.Contains(ext);
         }
 
-        protected static string ShowFileSelector(string title)
+        protected static string? ShowFileSelector(string title)
         {
-            using (OpenFileDialog ofd = new OpenFileDialog())
-            {
-                ofd.Title = title;
-                ofd.Filter = $"{UI.Localization.DialogFilterImages}|*.bmp;*.jpg;*.jpeg;*.png;*.gif;*.tif;*.tiff";
-                ofd.Multiselect = false;
-                var res = ofd.ShowDialog();
-                return res == DialogResult.OK && File.Exists(ofd.FileName) ? ofd.FileName : null;
-            }
+            using OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Title = title;
+            ofd.Filter = $"{UI.Localization.DialogFilterImages}|*.bmp;*.jpg;*.jpeg;*.png;*.gif;*.tif;*.tiff";
+            ofd.Multiselect = false;
+            var res = ofd.ShowDialog();
+            return res == DialogResult.OK && File.Exists(ofd.FileName) ? ofd.FileName : null;
         }
     }
 }

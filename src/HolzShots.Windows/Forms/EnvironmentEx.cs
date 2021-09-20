@@ -1,4 +1,6 @@
+using System;
 using System.Text;
+using System.Windows.Forms;
 using HolzShots.Input.Selection;
 using Microsoft.Win32;
 using StartupHelper;

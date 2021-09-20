@@ -1,7 +1,10 @@
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using HolzShots.Composition.Command;
 using HolzShots.Drawing;
@@ -31,15 +34,11 @@ namespace HolzShots.Input.Actions
         private static Screenshot CaptureWindow(IntPtr windowHandle, bool includeMargin = true)
         {
             if (Native.User32.IsIconic(windowHandle))
-                return null/* TODO Change to default(_) if this is not a reference type */;
+                return default;
 
             using (ProcessPriorityRequest prio = new ProcessPriorityRequest())
-            {
-                using (var shotSet = GetShotSet(windowHandle, includeMargin))
-                {
-                    return Screenshot.FromWindow(shotSet);
-                }
-            }
+            using (var shotSet = GetShotSet(windowHandle, includeMargin))
+                return Screenshot.FromWindow(shotSet);
         }
 
         private static WindowScreenshotSet GetShotSet(IntPtr windowHandle, bool includeMargin)

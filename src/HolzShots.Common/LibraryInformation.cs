@@ -1,3 +1,5 @@
+using System;
+
 namespace HolzShots
 {
     public static class LibraryInformation

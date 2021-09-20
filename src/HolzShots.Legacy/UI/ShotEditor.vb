@@ -1,5 +1,6 @@
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Printing
+Imports System.IO
 Imports System.Runtime.InteropServices
 Imports HolzShots.Composition
 Imports HolzShots.Drawing

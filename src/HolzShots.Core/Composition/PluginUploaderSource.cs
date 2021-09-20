@@ -1,11 +1,12 @@
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using HolzShots.Net;
 
 namespace HolzShots.Composition
 {
     public class PluginUploaderSource : PluginManager<Uploader>, IUploaderSource
     {
-
         public PluginUploaderSource(string pluginDirectory)
             : base(pluginDirectory)
         { }

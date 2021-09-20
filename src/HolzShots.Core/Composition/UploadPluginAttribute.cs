@@ -1,3 +1,5 @@
+using System;
+
 namespace HolzShots.Composition
 {
     [System.Composition.MetadataAttribute]

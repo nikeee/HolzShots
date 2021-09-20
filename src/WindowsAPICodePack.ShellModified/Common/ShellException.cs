@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Runtime.InteropServices;
 using Microsoft.WindowsAPICodePack.Resources;
 using MS.WindowsAPICodePack.Internal;

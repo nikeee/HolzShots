@@ -1,6 +1,11 @@
+using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using System.Net.Http;
 using System.Net.Http.Handlers;
+using System.Threading;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 namespace HolzShots.Net.Custom

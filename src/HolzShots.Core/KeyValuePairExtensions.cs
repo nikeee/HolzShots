@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace HolzShots.Net.Custom
 {
     static class KeyValuePairExtensions

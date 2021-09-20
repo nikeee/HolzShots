@@ -1,4 +1,4 @@
-﻿
+
 namespace HolzShots
 {
     partial class MainForm
