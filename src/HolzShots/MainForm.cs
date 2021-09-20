@@ -24,6 +24,8 @@ namespace HolzShots
 
             InitializeComponent();
             EnsureInvisibility();
+
+            Text = "HolzShots";
             TrayIcon.ContextMenuStrip = trayMenu;
             trayMenu.Renderer = EnvironmentEx.GetToolStripRendererForCurrentTheme();
         }
@@ -37,6 +39,8 @@ namespace HolzShots
 
         async Task InitializeWithAvailableWindowHandle()
         {
+            EnsureInvisibility();
+
             EnvironmentEx.CurrentStartupManager.FixWorkingDirectory();
 
             Drawing.DpiAwarenessFix.SetDpiAwareness();
