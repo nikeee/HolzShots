@@ -32,6 +32,7 @@ namespace HolzShots
             Text = "HolzShots";
             TrayIcon.ContextMenuStrip = trayMenu;
             trayMenu.Renderer = EnvironmentEx.GetToolStripRendererForCurrentTheme();
+            EnsureInvisibility();
         }
 
         private void EnsureInvisibility()
@@ -142,6 +143,7 @@ namespace HolzShots
             }
         }
 
+        protected override void OnShown(EventArgs e) => EnsureInvisibility();
 
         protected override void OnLoad(EventArgs e) => InitializeWithAvailableWindowHandle();
 
