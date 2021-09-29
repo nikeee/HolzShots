@@ -23,6 +23,7 @@
     <PackageReference Include="SingleInstanceCore" Version="2.2.0" />
     <PackageReference Include="ThisAssembly" Version="1.0.8" />
 
+    <ProjectReference Include="..\HolzShots.Capture.Video\HolzShots.Capture.Video.csproj" />
     <ProjectReference Include="..\HolzShots.Legacy\HolzShots.Legacy.vbproj" />
     <ProjectReference Include="..\HolzShots.Windows\HolzShots.Windows.csproj" />
     <ProjectReference Include="..\WindowsAPICodePack.ShellModified\WindowsAPICodePack.ShellModified.csproj" />

@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\Common.props" />
+
+  <PropertyGroup>
+
+    <UseWindowsForms>true</UseWindowsForms>
+
+    <AssemblyTitle>HolzShots.Capture.Video</AssemblyTitle>
+    <Product>HolzShots.Capture.Video</Product>
+    <Description>HolzShots Video Capture Components</Description>
+
+  </PropertyGroup>
+
+  <ItemGroup>
+
+    <ProjectReference Include="..\HolzShots.Native\HolzShots.Native.csproj" />
+
+    <PackageReference Include="System.Net.Http" Version="4.3.4" />
+
+  </ItemGroup>
+
+</Project>
