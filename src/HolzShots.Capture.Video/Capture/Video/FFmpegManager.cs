@@ -4,10 +4,11 @@ using System.Linq;
 using System.IO;
 using System.Text;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace HolzShots.Capture.Video
 {
-    public class FFmpegManager
+    public static class FFmpegManager
     {
         const string FFmpegExecutable = "ffmpeg.exe";
 
@@ -40,5 +41,41 @@ namespace HolzShots.Capture.Video
             Debug.Assert(File.Exists(downloadedFFmpeg));
             return downloadedFFmpeg;
         }
+
+        public static bool HasDownloadedFFmpeg()
+        {
+            var downloadedFFmpeg = Path.Combine(FFmpegAppDataPath, FFmpegExecutable);
+            return File.Exists(downloadedFFmpeg);
+        }
+    }
+
+    static class FFmpegManagerUi
+    {
+        public static async Task<string> EnsureAvailableFFmpeg(HSSettings settingsContext)
+        {
+            if (!Properties.Settings.Default.FFmpegConfigured)
+            {
+                // TODO: Ask the user for config
+            }
+            /*
+            var source = Properties.Settings.Default.FFmpegSource;
+            var path = FFmpegManager.GetAbsoluteFFmpegPath(source == FFmpegSource.Path);
+            if (path == null)
+            {
+                // TODO: Ask for download
+
+                // If the user declines, return false/null
+            }
+            */
+            var path = FFmpegManager.GetAbsoluteFFmpegPath(true);
+
+            return path!;
+        }
+    }
+
+    public enum FFmpegSource
+    {
+        Path,
+        Download,
     }
 }
