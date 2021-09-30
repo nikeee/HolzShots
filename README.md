@@ -2,7 +2,7 @@
 A lightweight screenshot utility that gets out of your way.
 - No settings UI – configurable via JSON, like VSCode.
 - Upload to you own services via config files – like ShareX – but keep them updated – like user scripts.
-- No bloat like DNS changers, hash computation or video recording. If you want to do video, use a tool that does it properly (like [ScreenToGif](https://github.com/NickeManarin/ScreenToGif) or [OBS](https://obsproject.com/)).
+- No bloat like DNS changers, hash computation or video recording. If you want to do video, use a tool that does it properly[^1].
 
 ## Requirements
 - Requires a supported Version of Windows 10; 64 Bit
@@ -29,3 +29,5 @@ holzshots open-image [optional image path]
 holzshots upload-image [optional image path]
 ```
 Feel free to integrate this into your tooling!
+
+[^1]: Like [ScreenToGif](https://github.com/NickeManarin/ScreenToGif) or [OBS](https://obsproject.com)
