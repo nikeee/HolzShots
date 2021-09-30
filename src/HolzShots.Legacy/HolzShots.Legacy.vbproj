@@ -1,17 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <Import Project="..\Common.props" />
+  <Import Project="..\Common.csproj" />
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <UseWindowsForms>true</UseWindowsForms>
 
-    <MapFileExtensions>true</MapFileExtensions>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <BootstrapperEnabled>false</BootstrapperEnabled>
-
-    <AssemblyTitle>HolzShots</AssemblyTitle>
-    <Product>HolzShots</Product>
+    <AssemblyTitle>HolzShots.Legacy</AssemblyTitle>
+    <Product>HolzShots.Legacy</Product>
 
     <NoWarn>42353,42354,42355</NoWarn>
     <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
@@ -25,16 +21,6 @@
     <OptionInfer>On</OptionInfer>
 
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
-  </PropertyGroup>
-
-  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <DefineDebug>true</DefineDebug>
-    <DefineTrace>true</DefineTrace>
-  </PropertyGroup>
-
-  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <DefineDebug>false</DefineDebug>
-    <DefineTrace>false</DefineTrace>
   </PropertyGroup>
 
   <ItemGroup>
