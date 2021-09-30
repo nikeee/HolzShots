@@ -5,7 +5,6 @@
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <UseWindowsForms>true</UseWindowsForms>
-    <Prefer32Bit>true</Prefer32Bit>
 
     <AssemblyTitle>HolzShots.Legacy</AssemblyTitle>
     <Product>HolzShots.Legacy</Product>
@@ -22,16 +21,6 @@
     <OptionInfer>On</OptionInfer>
 
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
-  </PropertyGroup>
-
-  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <DefineDebug>true</DefineDebug>
-    <DefineTrace>true</DefineTrace>
-  </PropertyGroup>
-
-  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <DefineDebug>false</DefineDebug>
-    <DefineTrace>false</DefineTrace>
   </PropertyGroup>
 
   <ItemGroup>
