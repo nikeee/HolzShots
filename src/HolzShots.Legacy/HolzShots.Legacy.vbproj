@@ -4,14 +4,11 @@
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <UseWindowsForms>true</UseWindowsForms>
+    <Prefer32Bit>true</Prefer32Bit>
 
-    <MapFileExtensions>true</MapFileExtensions>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <BootstrapperEnabled>false</BootstrapperEnabled>
-
-    <AssemblyTitle>HolzShots</AssemblyTitle>
-    <Product>HolzShots</Product>
+    <AssemblyTitle>HolzShots.Legacy</AssemblyTitle>
+    <Product>HolzShots.Legacy</Product>
 
     <NoWarn>42353,42354,42355</NoWarn>
     <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
