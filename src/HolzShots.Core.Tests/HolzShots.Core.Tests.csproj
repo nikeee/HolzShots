@@ -36,7 +36,7 @@
   <ItemGroup>
     <Reference Include="System.ComponentModel.Composition" />
 
-    <PackageReference Include="Microsoft.NETCore.Platforms" Version="5.0.2" />
+    <PackageReference Include="Microsoft.NETCore.Platforms" Version="6.0.0-rc.1.21451.13" />
     <PackageReference Include="NETStandard.Library" Version="2.0.3" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
     <PackageReference Include="MSTest.TestAdapter" Version="2.2.7" />
