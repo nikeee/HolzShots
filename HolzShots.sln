@@ -4,7 +4,7 @@ VisualStudioVersion = 17.0.31612.314
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "HolzShots.Legacy", "src\HolzShots.Legacy\HolzShots.Legacy.vbproj", "{42A62086-E16E-4CBD-95DE-E7866CF015AB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HolzShots.Common", "src\HolzShots.Common\HolzShots.Common.props", "{3AADC160-9020-4F59-A2F0-7941752C047E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HolzShots.Common", "src\HolzShots.Common\HolzShots.Common.csproj", "{3AADC160-9020-4F59-A2F0-7941752C047E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HolzShots.Core", "src\HolzShots.Core\HolzShots.Core.csproj", "{4F1B3465-2915-4E00-BB15-FC1808B01CD6}"
 EndProject
