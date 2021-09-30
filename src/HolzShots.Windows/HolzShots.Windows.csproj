@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <Import Project="..\Common.csproj" />
+  <Import Project="..\Common.props" />
 
   <PropertyGroup>
 
@@ -20,7 +20,7 @@
     <PackageReference Include="TaskScheduler" Version="2.9.1" />
 
     <ProjectReference Include="..\HolzShots.Core\HolzShots.Core.csproj" />
-    <ProjectReference Include="..\HolzShots.Common\HolzShots.Common.csproj" />
+    <ProjectReference Include="..\HolzShots.Common\HolzShots.Common.props" />
     <ProjectReference Include="..\HolzShots.Native\HolzShots.Native.csproj" />
   </ItemGroup>
 
