@@ -22,10 +22,10 @@ namespace HolzShots
         #region save.*
 
         [SettingsDoc(
-            "When enabled, every screenshot captured with HolzShots will be saved at the location specified under the setting \"save.path\".",
+            "When enabled, every screenshot captured with HolzShots will be saved at the location specified under the setting \"save.image.path\".",
             Default = "true"
         )]
-        [JsonProperty("save.enable")]
+        [JsonProperty("save.image.enable")]
         public bool SaveImagesToLocalDisk { get; private set; } = true;
 
         /// <summary> Note: Use <see cref="ExpandedSavePath" /> internally when actually saving something. </summary>
@@ -33,7 +33,7 @@ namespace HolzShots
             "The path where screenshots will be saved.\n" +
             "Feel free to use environment variables like %USERPROFILE%, %ONEDRIVE% or %TMP%."
         )]
-        [JsonProperty("save.path")]
+        [JsonProperty("save.image.path")]
         public string SavePath { get; private set; } = HolzShotsPaths.DefaultScreenshotSavePath;
 
         /// <remarks> Use this instead of <see cref="SavePath" /> when actually saving a file. </remarks>
@@ -43,7 +43,7 @@ namespace HolzShots
         /// <summary>
         /// TODO: Docs for available patterns
         /// </summary>
-        [JsonProperty("save.pattern")]
+        [JsonProperty("save.image.pattern")]
         public string SaveFileNamePattern { get; private set; } = "Screenshot-<Date>";
 
         [SettingsDoc(
@@ -52,7 +52,7 @@ namespace HolzShots
             "Saving it as a PNG is better suited for pictures of programs.\n" +
             "If JPG is used, there may be a loss in quality. PNG does not reduce the image quality, but uses more space when photos are saved."
         )]
-        [JsonProperty("save.autoDetectBestImageFormat")]
+        [JsonProperty("save.image.autoDetectBestImageFormat")]
         public bool EnableSmartFormatForSaving { get; private set; } = false;
 
         #endregion
@@ -123,7 +123,7 @@ namespace HolzShots
             "If JPG is used, there may be a loss in quality. PNG does not reduce the image quality, but uses more space when photos are saved and therefore takes longer to upload.",
             Default = "false"
         )]
-        [JsonProperty("upload.autoDetectBestImageFormat")]
+        [JsonProperty("upload.image.autoDetectBestImageFormat")]
         public bool EnableSmartFormatForUpload { get; private set; } = false;
 
         [SettingsDoc(
@@ -148,8 +148,8 @@ namespace HolzShots
             "    none: Do nothing (this would only trigger saving the image to disk if this is enabled)",
             Default = "openEditor"
         )]
-        [JsonProperty("capture.actionAfterCapture")]
-        public CaptureHandlingAction ActionAfterCapture { get; private set; } = CaptureHandlingAction.OpenEditor;
+        [JsonProperty("capture.image.actionAfterCapture")]
+        public ImageCaptureHandlingAction ActionAfterImageCapture { get; private set; } = ImageCaptureHandlingAction.OpenEditor;
 
         [SettingsDoc(
             "Opacity of the dimming effect when selection a region to capture. Must be between 0.0 and 1.0.",
@@ -252,7 +252,7 @@ namespace HolzShots
     }
 
     [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-    public enum CaptureHandlingAction
+    public enum ImageCaptureHandlingAction
     {
         [EnumMember(Value = "openEditor")]
         OpenEditor,

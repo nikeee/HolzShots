@@ -7,13 +7,15 @@
 
 	"definitions": {
 
+		"commandName": {
+			"description": "The name of the command",
+			"type": "string",
+			"minLength": 1
+		},
 		"commandObject": {
 			"type": "object",
 			"properties": {
-				"name": {
-					"description": "The name of the command",
-					"type": "string"
-				},
+				"name": { "$ref": "#/definitions/commandObject" },
 				"params": {
 					"type": "object"
 				}
@@ -23,10 +25,7 @@
 		"command": {
 			"oneOf": [
 				{ "$ref": "#/definitions/commandObject" },
-				{
-					"type": "string",
-					"minLength": 1
-				}
+				{ "$ref": "#/definitions/commandName" }
 			]
 		},
 
@@ -124,7 +123,7 @@
 			"default": "true"
 		},
 
-		"upload.autoDetectBestImageFormat": {
+		"upload.image.autoDetectBestImageFormat": {
 			"description": "When enabled, HolzShots decides whether a screenshot should be uploaded as a JPEG or a PNG.\nSome screenshots are better uploaded as JPGs, for example if they consist of a large photo.\nUploading it as a PNG is better suited for pictures of programs. If JPG is used, there may be a loss in quality. PNG does not reduce the image quality, but uses more space when photos are saved and therefore takes longer to upload.",
 			"type": "boolean",
 			"default": "false"

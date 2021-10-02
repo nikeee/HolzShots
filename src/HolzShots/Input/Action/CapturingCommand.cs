@@ -26,13 +26,13 @@ namespace HolzShots.Input.Actions
 
             ScreenshotAggregator.HandleScreenshot(screenshot, settingsContext);
 
-            switch (settingsContext.ActionAfterCapture)
+            switch (settingsContext.ActionAfterImageCapture)
             {
-                case CaptureHandlingAction.OpenEditor:
+                case ImageCaptureHandlingAction.OpenEditor:
                     var shower = new ShotEditor(screenshot, HolzShotsApplication.Instance.Uploaders, settingsContext);
                     shower.Show();
                     return;
-                case CaptureHandlingAction.Upload:
+                case ImageCaptureHandlingAction.Upload:
                     try
                     {
                         var result = await UploadDispatcher.InitiateUploadToDefaultUploader(screenshot.Image, settingsContext, HolzShotsApplication.Instance.Uploaders, null, null).ConfigureAwait(true);
@@ -47,7 +47,7 @@ namespace HolzShots.Input.Actions
                         NotificationManager.UploadFailed(ex);
                     }
                     return;
-                case CaptureHandlingAction.Copy:
+                case ImageCaptureHandlingAction.Copy:
                     try
                     {
                         Clipboard.SetImage(screenshot.Image);
@@ -60,10 +60,10 @@ namespace HolzShots.Input.Actions
                         NotificationManager.CopyImageFailed(ex);
                     }
                     return;
-                case CaptureHandlingAction.SaveAs:
+                case ImageCaptureHandlingAction.SaveAs:
                     PromptSaveAs(screenshot, settingsContext);
                     return;
-                case CaptureHandlingAction.None:
+                case ImageCaptureHandlingAction.None:
                     return; // Intentionally do nothing
                 default:
                     return;
