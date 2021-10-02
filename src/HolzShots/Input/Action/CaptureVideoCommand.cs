@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
@@ -41,7 +40,7 @@ namespace HolzShots.Input.Actions
                 var ffmpegPathToPrefix = System.IO.Path.GetDirectoryName(ffmpegPath!)!;
                 Debug.Assert(ffmpegPathToPrefix != null);
 
-                using var environmentPrevix = new PrefixEnvironmentVariable(ffmpegPathToPrefix);
+                using var environmentPrevix = new HolzShots.IO.PrefixEnvironmentVariable(ffmpegPathToPrefix);
 
                 _ = recorder.Invoke(selection, @"C:\Temp\loltest.mp4", _currentRecordingCts.Token, settingsContext);
 
@@ -54,46 +53,5 @@ namespace HolzShots.Input.Actions
                 _currentRecordingCts = null;
             }
         }
-    }
-
-    class PrefixEnvironmentVariable : IDisposable
-    {
-        private readonly string? _previousValue;
-        private readonly string _envVar;
-
-        public PrefixEnvironmentVariable(string pathToPrefix, string variableName = "PATH")
-        {
-            _envVar = variableName;
-            _previousValue = Environment.GetEnvironmentVariable(variableName);
-
-            var nextValue = $"{pathToPrefix};{_previousValue ?? string.Empty}";
-            Environment.SetEnvironmentVariable(variableName, nextValue);
-        }
-
-        #region IDisposable
-
-        private bool disposedValue;
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposedValue)
-            {
-                Environment.SetEnvironmentVariable(_envVar, _previousValue);
-                disposedValue = true;
-            }
-        }
-
-        ~PrefixEnvironmentVariable()
-        {
-            Dispose(disposing: false);
-        }
-
-        public void Dispose()
-        {
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
-        }
-
-        #endregion
     }
 }
