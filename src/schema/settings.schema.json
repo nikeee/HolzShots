@@ -165,6 +165,12 @@
 			"default": 0
 		},
 
+		"capture.cursor": {
+			"description": "Capture the mouse cursor.\n\nWhen recording videos and you want to have a cursor visible, make sure you set this option to \"true\" in the command overrides.",
+			"type": "boolean",
+			"default": false
+		},
+
 		"tray.doubleClickCommand": {
 			"description": "The command to execute when the tray icon is double-clicked.",
 			"$ref": "#/definitions/command",
