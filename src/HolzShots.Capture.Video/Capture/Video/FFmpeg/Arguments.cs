@@ -15,9 +15,9 @@ namespace HolzShots.Capture.Video.FFmpeg
     {
         public string Text => $"-show_region {(Value ? 1 : 0)}";
     }
-    /// <summary> Not supported by gdigrab mode and therefore unsued for now. </summary>
-    record CaptureCursorArgument(bool Value) : IArgument
+    /// <summary> Only supported in gdigrab mode (needs different option for other capture modes) </summary>
+    record DrawMouseArgument(bool Value) : IArgument
     {
-        public string Text => $"-capture_cursor {(Value ? 1 : 0)}";
+        public string Text => $"-draw_mouse {(Value ? 1 : 0)}";
     }
 }
