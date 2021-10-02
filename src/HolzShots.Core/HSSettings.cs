@@ -196,7 +196,6 @@ namespace HolzShots
         }
         private float _captureDelay = 0.0f;
 
-        /*
         [SettingsDoc(
             "Capture the mouse cursor.\n\n" +
             "When recording videos and you want to have a cursor visible, make sure you set this option to \"true\" in the command overrides.",
@@ -204,7 +203,6 @@ namespace HolzShots
         )]
         [JsonProperty("capture.cursor")]
         public bool CaptureCursor { get; private set; } = false;
-        */
 
         #endregion
         #region tray.*

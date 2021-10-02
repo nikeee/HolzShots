@@ -39,7 +39,7 @@ namespace HolzShots.Capture.Video
                     .WithArgument(new ShowRegionArgument(true))
 
                     // Turning off cursor capturing is not supported on gdigrab
-                    .WithArgument(new DrawMouseArgument(false)) // settingsContext.CaptureCursor
+                    .WithArgument(new DrawMouseArgument(settingsContext.CaptureCursor))
                 )
                 .OutputToFile(targetFile)
                 .CancellableThrough(cancellationToken);
