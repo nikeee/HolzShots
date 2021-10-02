@@ -32,7 +32,7 @@ namespace HolzShots.Capture.Video
                 false,
                 options => options
                     .ForceFormat(format)
-                    .WithFramerate(30)
+                    .WithFramerate(30) // TODO: Make this configurable; a different setting seems buggy for now
                     .WithArgument(new OffsetArgument(rectangleOnScreenToCapture.X, 'x'))
                     .WithArgument(new OffsetArgument(rectangleOnScreenToCapture.Y, 'y'))
                     .WithArgument(new VideoSizeArgument(rectangleOnScreenToCapture.Width, rectangleOnScreenToCapture.Height))

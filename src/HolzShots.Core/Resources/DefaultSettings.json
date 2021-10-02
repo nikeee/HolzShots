@@ -22,7 +22,6 @@
 	"upload.actionAfterUpload": "flyout",
 
 	"capture.image.actionAfterCapture": "openEditor",
-	"capture.cursor": false,
 
 	"tray.doubleClickCommand": "openSettingsJson",
 

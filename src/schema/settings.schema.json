@@ -101,12 +101,6 @@
 			"default": "mp4"
 		},
 
-		"video.framesPerSecond": {
-			"description": "Frame rate (FPS) for screen recordings.",
-			"$ref": "#/definitions/frameRate",
-			"default": 30
-		},
-
 		"editor.closeAfterUpload": {
 			"description": "Close the shot editor once the upload button is clicked.",
 			"type": "boolean",

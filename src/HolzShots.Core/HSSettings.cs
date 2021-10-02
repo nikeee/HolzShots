@@ -69,12 +69,15 @@ namespace HolzShots
         [JsonProperty("video.format")]
         public VideoCaptureFormat VideoFormat { get; private set; } = VideoCaptureFormat.Mp4;
 
+        /*
+        // TODO: This is pretty buggy right now; We should take a look how to fix this.
         [SettingsDoc(
             "Frame rate (FPS) for screen recordings.",
             Default = "30"
         )]
         [JsonProperty("video.framesPerSecond")]
         public int VideoFrameRate { get; private set; } = 30;
+        */
 
         #endregion
         #region editor.*
