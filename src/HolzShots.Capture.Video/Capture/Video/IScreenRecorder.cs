@@ -32,12 +32,14 @@ namespace HolzShots.Capture.Video
                 false,
                 options => options
                     .ForceFormat(format)
-                    .WithFramerate(30) // TODO: Make this configurable
+                    .WithFramerate(settingsContext.VideoFrameRate)
                     .WithArgument(new OffsetArgument(rectangleOnScreenToCapture.X, 'x'))
                     .WithArgument(new OffsetArgument(rectangleOnScreenToCapture.Y, 'y'))
                     .WithArgument(new VideoSizeArgument(rectangleOnScreenToCapture.Width, rectangleOnScreenToCapture.Height))
                     .WithArgument(new ShowRegionArgument(true))
-                    //  .WithArgument(new CaptureCursorArgument(settingsContext.CaptureCursor))
+
+                    // Turning off cursor capturing is not supported on gdigrab
+                    // .WithArgument(new CaptureCursorArgument(settingsContext.CaptureCursor))
                 )
                 .OutputToFile(targetFile)
                 .CancellableThrough(cancellationToken);

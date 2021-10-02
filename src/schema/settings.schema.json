@@ -57,6 +57,11 @@
 		},
 		"videoFormat": {
 			"enum": [ "mp4", "webm", "gif" ]
+		},
+		"frameRate": {
+			"type": "integer",
+			"minimum": 1,
+			"exclusiveMaximum": 300
 		}
 	},
 
@@ -94,6 +99,12 @@
 			"description": "File format that recorded screen captures will be saved as.",
 			"$ref": "#/definitions/videoFormat",
 			"default": "mp4"
+		},
+
+		"video.framesPerSecond": {
+			"description": "Frame rate (FPS) for screen recordings.",
+			"$ref": "#/definitions/frameRate",
+			"default": 30
 		},
 
 		"editor.closeAfterUpload": {
