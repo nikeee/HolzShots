@@ -27,17 +27,20 @@ namespace HolzShots.Capture.Video
             // var format = formats.FirstOrDefault(e => e.Name == "dshow");
             var format = formats.First(e => e.Name == "gdigrab");
 
-            var ffmpegInstance = FFMpegArguments.FromFileInput("desktop", false, options => options
-                                .ForceFormat(format)
-                                .WithFramerate(30) // TODO: Make this configurable
-                                .WithArgument(new OffsetArgument(rectangleOnScreenToCapture.X, 'x'))
-                                .WithArgument(new OffsetArgument(rectangleOnScreenToCapture.Y, 'y'))
-                                .WithArgument(new VideoSizeArgument(rectangleOnScreenToCapture.Width, rectangleOnScreenToCapture.Height))
-                                .WithArgument(new ShowRegionArgument(true))
-                            ).OutputToFile(targetFile);
-
-            ffmpegInstance.CancellableThrough(cancellationToken);
-            // ffmpegInstance.CancellableThrough(out var lol);
+            var ffmpegInstance = FFMpegArguments.FromFileInput(
+                "desktop",
+                false,
+                options => options
+                    .ForceFormat(format)
+                    .WithFramerate(30) // TODO: Make this configurable
+                    .WithArgument(new OffsetArgument(rectangleOnScreenToCapture.X, 'x'))
+                    .WithArgument(new OffsetArgument(rectangleOnScreenToCapture.Y, 'y'))
+                    .WithArgument(new VideoSizeArgument(rectangleOnScreenToCapture.Width, rectangleOnScreenToCapture.Height))
+                    .WithArgument(new ShowRegionArgument(true))
+                    //  .WithArgument(new CaptureCursorArgument(settingsContext.CaptureCursor))
+                )
+                .OutputToFile(targetFile)
+                .CancellableThrough(cancellationToken);
 
             await ffmpegInstance.ProcessAsynchronously();
 

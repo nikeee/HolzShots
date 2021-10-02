@@ -22,7 +22,6 @@
 	"upload.actionAfterUpload": "flyout",
 
 	"capture.image.actionAfterCapture": "openEditor",
-	"capture.cursor": false,
 
 	"tray.doubleClickCommand": "openSettingsJson",
 
@@ -69,8 +68,6 @@
 			"command": {
 				"name": "captureVideo",
 				"overrides": {
-					"capture.cursor": true
-
 					// If oyu want to save the video as a gif, you can override the video format:
 					// "video.format": "gif",
 				}
