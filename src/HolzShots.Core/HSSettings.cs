@@ -19,26 +19,30 @@ namespace HolzShots
         public string Version { get; } = "1.0.0";
 
         #endregion
-        #region image.save.*
+        #region save.*
 
         [SettingsDoc(
-            "When enabled, every screenshot captured with HolzShots will be saved at the location specified under the setting \"save.image.path\".",
+            "When enabled, every screenshot and screen recording captured with HolzShots will be saved at the location specified under the setting \"save.path\".",
             Default = "true"
         )]
-        [JsonProperty("image.save.enabled")]
-        public bool SaveImagesToLocalDisk { get; private set; } = true;
+        [JsonProperty("save.enabled")]
+        public bool SaveToLocalDisk { get; private set; } = true;
 
         /// <summary> Note: Use <see cref="ExpandedSavePath" /> internally when actually saving something. </summary>
         [SettingsDoc(
-            "The path where screenshots will be saved.\n" +
-            "Feel free to use environment variables like %USERPROFILE%, %ONEDRIVE% or %TMP%."
+            "The path where screenshots and screen recordings will be saved.\n" +
+            "Feel free to use environment variables like %USERPROFILE%, %ONEDRIVE% or %TMP%.\n\n" +
+            "If you want to save videos to a different path, override this setting in the respective command."
         )]
-        [JsonProperty("image.save.path")]
+        [JsonProperty("save.path")]
         public string SavePath { get; private set; } = HolzShotsPaths.DefaultScreenshotSavePath;
 
         /// <remarks> Use this instead of <see cref="SavePath" /> when actually saving a file. </remarks>
         [JsonIgnore]
         public string ExpandedSavePath => Environment.ExpandEnvironmentVariables(SavePath);
+
+        #endregion
+        #region image.save.*
 
         /// <summary>
         /// TODO: Docs for available patterns
@@ -54,6 +58,16 @@ namespace HolzShots
         )]
         [JsonProperty("image.save.autoDetectBestImageFormat")]
         public bool EnableSmartFormatForSaving { get; private set; } = false;
+
+        #endregion
+        #region video.*
+
+        [SettingsDoc(
+            "File format that recorded screen captures will be saved as.",
+            Default = "mp4"
+        )]
+        [JsonProperty("video.format")]
+        public VideoCaptureFormat VideoFormat { get; private set; } = VideoCaptureFormat.Mp4;
 
         #endregion
         #region editor.*
@@ -264,6 +278,17 @@ namespace HolzShots
         Copy,
         [EnumMember(Value = "none")]
         None,
+    }
+
+    [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    public enum VideoCaptureFormat
+    {
+        [EnumMember(Value = "mp4")]
+        Mp4,
+        [EnumMember(Value = "webm")]
+        Webm,
+        [EnumMember(Value = "gif")]
+        Gif,
     }
 
     [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]

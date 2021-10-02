@@ -42,7 +42,7 @@ namespace HolzShots.IO
         public static void HandleScreenshot(Screenshot shot, HSSettings settingsContext)
         {
             //  If Not settingsContext.SaveImagesToLocalDisk OrElse Not CheckSavePath(settingsContext) Then Return
-            if (!settingsContext.SaveImagesToLocalDisk)
+            if (!settingsContext.SaveToLocalDisk)
                 return;
 
             var ensuredDestinationDirectory = GetAndEnsureDestinationDirectory(settingsContext);

@@ -6,11 +6,13 @@
 	// If you are using VSCode or a similar editor, you can always press "Ctrl+Space" to get more hints.
 	// There is more to configure! Also, you can comment in here!
 
-	"image.save.enabled": true,
+	"save.enabled": true,
+	"save.path": "DEFAULT_SAVE_PATH", // Feel free to use environment variables like %USERPROFILE%, %ONEDRIVE% or %TMP%.
 
-	"image.save.path": "DEFAULT_SAVE_PATH", // Feel free to use environment variables like %USERPROFILE%, %ONEDRIVE% or %TMP%.
 	"image.save.pattern": "Screenshot-<Date>",
 	"image.save.autoDetectBestImageFormat": false,
+
+	"video.format": "mp4",
 
 	"editor.closeAfterSave": false,
 
@@ -44,16 +46,6 @@
 			"enabled": true,
 			"keys": "F9",
 			"command": {
-				"name": "captureVideo",
-				"overrides": {
-					"capture.cursor": true
-				}
-			}
-		},
-		{
-			"enabled": true,
-			"keys": "F10",
-			"command": {
 				"name": "captureEntireScreen",
 				"overrides": {
 					// You can override global settings on a command-basis
@@ -68,6 +60,19 @@
 
 					// If you want to have a delay before capturing the image, you can do this, too:
 					// "capture.delayInSeconds": 10.0
+				}
+			}
+		},
+		{
+			"enabled": true,
+			"keys": "F10",
+			"command": {
+				"name": "captureVideo",
+				"overrides": {
+					"capture.cursor": true
+
+					// If oyu want to save the video as a gif, you can override the video format:
+					// "video.format": "gif",
 				}
 			}
 		},

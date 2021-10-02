@@ -54,6 +54,9 @@
 		},
 		"captureHandlingAction": {
 			"enum": [ "openEditor", "upload", "copyImage", "none" ]
+		},
+		"videoFormat": {
+			"enum": [ "mp4", "webm", "gif" ]
 		}
 	},
 
@@ -64,14 +67,14 @@
 			"const": "1.0.0"
 		},
 
-		"image.save.enabled": {
-			"description": "When enabled, every screenshot captured with HolzShots will be saved at the location specified under the setting \"save.path\".",
+		"save.enabled": {
+			"description": "When enabled, every screenshot and screen recording captured with HolzShots will be saved at the location specified under the setting \"save.path\".",
 			"type": "boolean",
 			"default": true
 		},
 
-		"image.save.path": {
-			"description": "The path where screenshots will be saved.\nFeel free to use environment variables like %USERPROFILE%, %ONEDRIVE% or %TMP%.",
+		"save.path": {
+			"description": "The path where screenshots and screen recordings will be saved.\nFeel free to use environment variables like %USERPROFILE%, %ONEDRIVE% or %TMP%.\n\nIf you want to save videos to a different path, override this setting in the respective command.",
 			"type": "string"
 		},
 
@@ -85,6 +88,12 @@
 			"description": "When enabled, HolzShots decides whether a screenshot should be saved as a JPEG or a PNG.\nSome screenshots are better saved as JPGs, for example if they consist of a large photo.\nSaving it as a PNG is better suited for pictures of programs.\nIf JPG is used, there may be a loss in quality. PNG does not reduce the image quality, but uses more space when photos are saved.",
 			"type": "boolean",
 			"default": "false"
+		},
+
+		"video.format": {
+			"description": "File format that recorded screen captures will be saved as.",
+			"$ref": "#/definitions/videoFormat",
+			"default": "mp4"
 		},
 
 		"editor.closeAfterUpload": {
