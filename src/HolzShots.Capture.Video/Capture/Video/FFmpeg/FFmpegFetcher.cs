@@ -6,7 +6,7 @@ using System.IO.Compression;
 using System.Text.Json.Serialization;
 using System.Collections.Generic;
 
-namespace HolzShots.Capture.Video
+namespace HolzShots.Capture.Video.FFmpeg
 {
     public class FFmpegFetcher
     {

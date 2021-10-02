@@ -6,7 +6,7 @@ using System.Text;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
-namespace HolzShots.Capture.Video
+namespace HolzShots.Capture.Video.FFmpeg
 {
     public static class FFmpegManager
     {

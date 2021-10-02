@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -13,25 +12,16 @@ namespace HolzShots.Capture.Video
 {
     public interface IScreenRecorder : IDisposable
     {
-        Task<ScreenRecordingResult> Invoke(Rectangle rectangleOnScreenToCapture, string targetFile, CancellationToken ct, HSSettings settingsContext);
+        Task<ScreenRecordingResult> Invoke(Rectangle rectangleOnScreenToCapture, string targetFile, CancellationToken cancellationToken, HSSettings settingsContext);
     }
 
+    /// <summary>
+    /// This recorder assumes that ffmpeg is in the current PATH and the version that should be used gets the highest priority.
+    /// </summary>
     public class WindowsScreenRecorder : IScreenRecorder
     {
-        public async Task<ScreenRecordingResult> Invoke(Rectangle rectangleOnScreenToCapture, string targetFile, CancellationToken ct, HSSettings settingsContext)
+        public async Task<ScreenRecordingResult> Invoke(Rectangle rectangleOnScreenToCapture, string targetFile, CancellationToken cancellationToken, HSSettings settingsContext)
         {
-            // TODO: Do this before invocation of the area selector
-            // var path = await FFmpegManagerUi.EnsureAvailableFFmpeg(settingsContext);
-            // GlobalFFOptions.Configure(options => options.BinaryFolder = FFmpegManager.FFmpegAppDataPath);
-
-            /*
-            GlobalFFOptions.Configure(new FFOptions
-            {
-                BinaryFolder = FFmpegManager.FFmpegAppDataPath,
-                // TemporaryFilesFolder = System.IO.Path.GetTempPath(),
-            });
-            */
-
             var formats = FFMpeg.GetContainerFormats();
 
             // var format = formats.FirstOrDefault(e => e.Name == "dshow");
@@ -46,7 +36,7 @@ namespace HolzShots.Capture.Video
                                 .WithArgument(new ShowRegionArgument(true))
                             ).OutputToFile(targetFile);
 
-            ffmpegInstance.CancellableThrough(ct);
+            ffmpegInstance.CancellableThrough(cancellationToken);
             // ffmpegInstance.CancellableThrough(out var lol);
 
             await ffmpegInstance.ProcessAsynchronously();
@@ -58,26 +48,4 @@ namespace HolzShots.Capture.Video
     }
 
     public record ScreenRecordingResult();
-
-    /// <summary> Actually it's some kind of a factory, but I don't like that word. </summary>
-    public class ScreenRecorderSelector
-    {
-        public static IScreenRecorder CreateScreenRecorderForCurrentPlatform()
-        {
-            switch (Environment.OSVersion.Platform)
-            {
-                case PlatformID.Win32S:
-                case PlatformID.Win32Windows:
-                case PlatformID.Win32NT:
-                case PlatformID.WinCE:
-                    return new WindowsScreenRecorder();
-                case PlatformID.Unix:
-                case PlatformID.MacOSX:
-                case PlatformID.Xbox:
-                default:
-                    Debug.Fail($"Unhandled platform: {Environment.OSVersion.Platform}");
-                    throw new NotSupportedException();
-            }
-        }
-    }
 }
