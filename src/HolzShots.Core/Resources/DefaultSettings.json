@@ -6,11 +6,11 @@
 	// If you are using VSCode or a similar editor, you can always press "Ctrl+Space" to get more hints.
 	// There is more to configure! Also, you can comment in here!
 
-	"save.image.enable": true,
+	"image.save.enabled": true,
 
-	"save.image.path": "DEFAULT_SAVE_PATH", // Feel free to use environment variables like %USERPROFILE%, %ONEDRIVE% or %TMP%.
-	"save.image.pattern": "Screenshot-<Date>",
-	"save.image.autoDetectBestImageFormat": false,
+	"image.save.path": "DEFAULT_SAVE_PATH", // Feel free to use environment variables like %USERPROFILE%, %ONEDRIVE% or %TMP%.
+	"image.save.pattern": "Screenshot-<Date>",
+	"image.save.autoDetectBestImageFormat": false,
 
 	"editor.closeAfterSave": false,
 
@@ -20,6 +20,7 @@
 	"upload.actionAfterUpload": "flyout",
 
 	"capture.image.actionAfterCapture": "openEditor",
+	"capture.cursor": false,
 
 	"tray.doubleClickCommand": "openSettingsJson",
 
@@ -42,7 +43,12 @@
 		{
 			"enabled": true,
 			"keys": "F9",
-			"command": "captureVideo"
+			"command": {
+				"name": "captureVideo",
+				"overrides": {
+					"capture.cursor": true
+				}
+			}
 		},
 		{
 			"enabled": true,

@@ -19,13 +19,13 @@ namespace HolzShots
         public string Version { get; } = "1.0.0";
 
         #endregion
-        #region save.*
+        #region image.save.*
 
         [SettingsDoc(
             "When enabled, every screenshot captured with HolzShots will be saved at the location specified under the setting \"save.image.path\".",
             Default = "true"
         )]
-        [JsonProperty("save.image.enable")]
+        [JsonProperty("image.save.enabled")]
         public bool SaveImagesToLocalDisk { get; private set; } = true;
 
         /// <summary> Note: Use <see cref="ExpandedSavePath" /> internally when actually saving something. </summary>
@@ -33,7 +33,7 @@ namespace HolzShots
             "The path where screenshots will be saved.\n" +
             "Feel free to use environment variables like %USERPROFILE%, %ONEDRIVE% or %TMP%."
         )]
-        [JsonProperty("save.image.path")]
+        [JsonProperty("image.save.path")]
         public string SavePath { get; private set; } = HolzShotsPaths.DefaultScreenshotSavePath;
 
         /// <remarks> Use this instead of <see cref="SavePath" /> when actually saving a file. </remarks>
@@ -43,7 +43,7 @@ namespace HolzShots
         /// <summary>
         /// TODO: Docs for available patterns
         /// </summary>
-        [JsonProperty("save.image.pattern")]
+        [JsonProperty("image.save.pattern")]
         public string SaveFileNamePattern { get; private set; } = "Screenshot-<Date>";
 
         [SettingsDoc(
@@ -52,7 +52,7 @@ namespace HolzShots
             "Saving it as a PNG is better suited for pictures of programs.\n" +
             "If JPG is used, there may be a loss in quality. PNG does not reduce the image quality, but uses more space when photos are saved."
         )]
-        [JsonProperty("save.image.autoDetectBestImageFormat")]
+        [JsonProperty("image.save.autoDetectBestImageFormat")]
         public bool EnableSmartFormatForSaving { get; private set; } = false;
 
         #endregion

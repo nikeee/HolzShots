@@ -64,24 +64,24 @@
 			"const": "1.0.0"
 		},
 
-		"save.enable": {
+		"image.save.enabled": {
 			"description": "When enabled, every screenshot captured with HolzShots will be saved at the location specified under the setting \"save.path\".",
 			"type": "boolean",
 			"default": true
 		},
 
-		"save.path": {
+		"image.save.path": {
 			"description": "The path where screenshots will be saved.\nFeel free to use environment variables like %USERPROFILE%, %ONEDRIVE% or %TMP%.",
 			"type": "string"
 		},
 
-		"save.pattern": {
+		"image.save.pattern": {
 			"description": "TODO",
 			"type": "string",
 			"default": "Screenshot-<Date>"
 		},
 
-		"save.autoDetectBestImageFormat": {
+		"image.save.autoDetectBestImageFormat": {
 			"description": "When enabled, HolzShots decides whether a screenshot should be saved as a JPEG or a PNG.\nSome screenshots are better saved as JPGs, for example if they consist of a large photo.\nSaving it as a PNG is better suited for pictures of programs.\nIf JPG is used, there may be a loss in quality. PNG does not reduce the image quality, but uses more space when photos are saved.",
 			"type": "boolean",
 			"default": "false"
@@ -135,7 +135,7 @@
 			"default": "directupload.net"
 		},
 
-		"capture.actionAfterCapture": {
+		"capture.image.actionAfterCapture": {
 			"description": "What to do after an image got captured. Possible options are:\nopenEditor: Open the shot editor with the captured image\nupload: Upload the image to the specified default image service\nnone: Do nothing (this would only trigger saving the image to disk if this is enabled)",
 			"$ref": "#/definitions/captureHandlingAction",
 			"default": "openEditor"
