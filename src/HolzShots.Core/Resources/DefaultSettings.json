@@ -41,6 +41,11 @@
 		},
 		{
 			"enabled": true,
+			"keys": "F9",
+			"command": "captureVideo"
+		},
+		{
+			"enabled": true,
 			"keys": "F10",
 			"command": {
 				"name": "captureEntireScreen",
@@ -64,7 +69,7 @@
 			"enabled": false,
 			// List of available keys, combine them using "+":
 			// https://docs.microsoft.com/en-us/dotnet/api/system.windows.forms.keys?view=net-5.0
-			"keys": "Shift+F9",
+			"keys": "Shift+F8",
 			"command": "captureWindow"
 		}
 	]

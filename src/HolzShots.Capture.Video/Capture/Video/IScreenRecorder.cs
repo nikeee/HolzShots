@@ -21,12 +21,9 @@ namespace HolzShots.Capture.Video
         public async Task<ScreenRecordingResult> Invoke(Rectangle rectangleOnScreenToCapture, string targetFile, CancellationToken ct, HSSettings settingsContext)
         {
             // TODO: Do this before invocation of the area selector
-            var path = await FFmpegManagerUi.EnsureAvailableFFmpeg(settingsContext);
-            if (path == null)
-            {
-                System.Windows.Forms.MessageBox.Show("No FFmpeg available :("); // TODO: Make properly
-                throw new TaskCanceledException();
-            }
+            // var path = await FFmpegManagerUi.EnsureAvailableFFmpeg(settingsContext);
+            // GlobalFFOptions.Configure(options => options.BinaryFolder = FFmpegManager.FFmpegAppDataPath);
+
             /*
             GlobalFFOptions.Configure(new FFOptions
             {
@@ -51,6 +48,7 @@ namespace HolzShots.Capture.Video
 
             ffmpegInstance.CancellableThrough(ct);
             // ffmpegInstance.CancellableThrough(out var lol);
+
             await ffmpegInstance.ProcessAsynchronously();
 
             return new ScreenRecordingResult();

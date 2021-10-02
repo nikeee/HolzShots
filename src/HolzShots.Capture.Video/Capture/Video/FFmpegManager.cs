@@ -49,7 +49,7 @@ namespace HolzShots.Capture.Video
         }
     }
 
-    static class FFmpegManagerUi
+    public static class FFmpegManagerUi
     {
         public static async Task<string> EnsureAvailableFFmpeg(HSSettings settingsContext)
         {
@@ -57,6 +57,7 @@ namespace HolzShots.Capture.Video
             {
                 // TODO: Ask the user for config
             }
+
             /*
             var source = Properties.Settings.Default.FFmpegSource;
             var path = FFmpegManager.GetAbsoluteFFmpegPath(source == FFmpegSource.Path);
