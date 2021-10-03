@@ -109,12 +109,9 @@ namespace HolzShots.Input.Actions
 
             try
             {
-                var ffmpegPath = await FFmpegManagerUi.EnsureAvailableFFmpeg(settingsContext);
+                var ffmpegPath = FFmpegManagerUi.EnsureAvailableFFmpegAndPotentiallyStartSetup(settingsContext);
                 if (ffmpegPath == null)
-                {
-                    MessageBox.Show("No FFmpeg available :("); // TODO: Make properly
-                    return null; // Nope, the user did not select anything. Abort.
-                }
+                    return null; // We don't have ffmpeg available and the user didn't do anything to fix this. We act like it was aborted.
 
                 using var selectionBackground = Drawing.ScreenshotCreator.CaptureScreenshot(SystemInformation.VirtualScreen);
                 using var selector = Selection.AreaSelector.Create(selectionBackground, settingsContext);

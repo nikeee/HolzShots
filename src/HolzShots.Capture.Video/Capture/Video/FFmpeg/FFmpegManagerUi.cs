@@ -9,27 +9,28 @@ namespace HolzShots.Capture.Video.FFmpeg
 {
     public static class FFmpegManagerUi
     {
-        public static async Task<string> EnsureAvailableFFmpeg(HSSettings settingsContext)
+        public static string? EnsureAvailableFFmpegAndPotentiallyStartSetup(HSSettings settingsContext)
         {
             var path = FFmpegManager.GetAbsoluteFFmpegPath(true);
             if (path != null)
-            {
-                var setupResult = StartGuidedSetupDialog();
-                switch (setupResult)
-                {
-                    case AfterSetupAction.QuitApplication:
-                        // TODO: HolzShotsApplication.Instance.Terminate();
-                        break;
-                    case AfterSetupAction.AbortCurrentAction:
-                        break;
-                    case AfterSetupAction.Coninue:
-                        break;
-                    default:
-                        break;
-                }
-            }
+                return path;
 
-            return path!;
+            var setupResult = StartGuidedSetupDialog();
+            switch (setupResult)
+            {
+                case AfterSetupAction.QuitApplication:
+                    // TODO: HolzShotsApplication.Instance.Terminate();
+                    return null;
+                case AfterSetupAction.AbortCurrentAction:
+                    return null;
+                case AfterSetupAction.Coninue:
+                    path = FFmpegManager.GetAbsoluteFFmpegPath(true);
+                    Debug.Assert(path != null);
+                    return path;
+                default:
+                    Debug.Fail("Unhandled AfterSetupAction: " + setupResult);
+                    throw new ArgumentException("Unhandled AfterSetupAction: " + setupResult);
+            }
         }
 
         static AfterSetupAction StartGuidedSetupDialog()
