@@ -51,18 +51,17 @@ namespace HolzShots.Net
                     await uploader.InvokeSettingsAsync(SettingsInvocationContexts.OnUse).ConfigureAwait(true);
                 }
 
-                using (var ui = new UploadUI(image, uploader, format, progressReporter))
+                using var payload = new ImageUploadPayload(image, format);
+                using var ui = new UploadUI(payload, uploader, progressReporter);
+                try
                 {
-                    try
-                    {
-                        ui.ShowUI();
+                    ui.ShowUI();
 
-                        return await ui.InvokeUploadAsync().ConfigureAwait(true);
-                    }
-                    finally
-                    {
-                        ui.HideUI();
-                    }
+                    return await ui.InvokeUploadAsync().ConfigureAwait(true);
+                }
+                finally
+                {
+                    ui.HideUI();
                 }
             }
             catch (OperationCanceledException c)
