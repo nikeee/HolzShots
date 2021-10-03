@@ -11,7 +11,7 @@ namespace HolzShots.Net
     public static class UploadDispatcher
     {
         /// <summary> Catch the UploadException! </summary>
-        public static Task<UploadResult> InitiateUploadToDefaultUploader(Image image, HSSettings settingsContext, UploaderManager uploaderManager, ImageFormat? format, IUploadProgressReporter? progressReporter)
+        public static Task<UploadResult> InitiateUploadToDefaultUploader(Image image, HSSettings settingsContext, UploaderManager uploaderManager, ImageFormat? format, ITransferProgressReporter? progressReporter)
         {
             Debug.Assert(image != null);
             Debug.Assert(settingsContext != null);
@@ -29,7 +29,7 @@ namespace HolzShots.Net
         }
 
         /// <summary> Catch the UploadException! </summary>
-        public static async Task<UploadResult> InitiateUpload(Image image, HSSettings settingsContext, Uploader uploader, ImageFormat? format, IUploadProgressReporter? progressReporter)
+        public static async Task<UploadResult> InitiateUpload(Image image, HSSettings settingsContext, Uploader uploader, ImageFormat? format, ITransferProgressReporter? progressReporter)
         {
             if (image == null)
                 throw new ArgumentNullException(nameof(image));

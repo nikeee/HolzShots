@@ -9,9 +9,9 @@ namespace HolzShots.Windows.Net
 {
     public static class UploadHelper
     {
-        public static IUploadProgressReporter GetUploadReporterForCurrentSettingsContext(HSSettings settingsContext, IWin32Window parentWindow)
+        public static ITransferProgressReporter GetUploadReporterForCurrentSettingsContext(HSSettings settingsContext, IWin32Window parentWindow)
         {
-            var reporters = new List<IUploadProgressReporter>(4);
+            var reporters = new List<ITransferProgressReporter>(4);
 #if DEBUG
             reporters.Add(new ConsoleProgressReporter());
 #endif

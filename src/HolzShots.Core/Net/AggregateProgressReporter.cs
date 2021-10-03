@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 namespace HolzShots.Net
 {
-    public sealed class AggregateProgressReporter : IUploadProgressReporter
+    public sealed class AggregateProgressReporter : ITransferProgressReporter
     {
-        private readonly IReadOnlyCollection<IUploadProgressReporter> _reporters;
-        public AggregateProgressReporter(IReadOnlyCollection<IUploadProgressReporter> reporters)
+        private readonly IReadOnlyCollection<ITransferProgressReporter> _reporters;
+        public AggregateProgressReporter(IReadOnlyCollection<ITransferProgressReporter> reporters)
         {
             _reporters = reporters ?? throw new ArgumentNullException(nameof(reporters));
         }
@@ -23,7 +23,7 @@ namespace HolzShots.Net
                 reporter.ShowProgress();
         }
 
-        public void UpdateProgress(UploadProgress progress, Speed<MemSize> speed)
+        public void UpdateProgress(TransferProgress progress, Speed<MemSize> speed)
         {
             foreach (var reporter in _reporters)
                 reporter.UpdateProgress(progress, speed);

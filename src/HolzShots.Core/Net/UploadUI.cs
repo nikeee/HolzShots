@@ -14,11 +14,11 @@ namespace HolzShots.Net
         private readonly Image _image;
         private readonly Uploader _uploader;
         private readonly ImageFormat _format;
-        private readonly IUploadProgressReporter? _progressReporter;
+        private readonly ITransferProgressReporter? _progressReporter;
 
         private readonly SpeedCalculatorProgress _speedCalculator = new SpeedCalculatorProgress();
 
-        public UploadUI(Image image, Uploader uploader, ImageFormat format, IUploadProgressReporter? progressReporter)
+        public UploadUI(Image image, Uploader uploader, ImageFormat format, ITransferProgressReporter? progressReporter)
         {
             _image = image.CloneGifBug(format) ?? throw new ArgumentNullException(nameof(image));
             _format = format ?? throw new ArgumentNullException(nameof(format));
@@ -64,7 +64,7 @@ namespace HolzShots.Net
 
         public void ShowUI() => _progressReporter?.ShowProgress();
         public void HideUI() => _progressReporter?.CloseProgress();
-        private void ProgressChanged(object? sender, UploadProgress progress) => _progressReporter?.UpdateProgress(progress, _speedCalculator.CurrentSpeed);
+        private void ProgressChanged(object? sender, TransferProgress progress) => _progressReporter?.UpdateProgress(progress, _speedCalculator.CurrentSpeed);
 
         public void Dispose()
         {
