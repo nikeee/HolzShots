@@ -16,6 +16,7 @@
 
     <ProjectReference Include="..\HolzShots.Native\HolzShots.Native.csproj" />
     <ProjectReference Include="..\HolzShots.Core\HolzShots.Core.csproj" />
+    <ProjectReference Include="..\HolzShots.Windows\HolzShots.Windows.csproj" />
 
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
     <PackageReference Include="FFMpegCore" Version="4.5.0" />

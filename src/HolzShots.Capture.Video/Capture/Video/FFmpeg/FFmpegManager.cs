@@ -53,10 +53,12 @@ namespace HolzShots.Capture.Video.FFmpeg
     {
         public static async Task<string> EnsureAvailableFFmpeg(HSSettings settingsContext)
         {
+            /*
             if (!Properties.Settings.Default.FFmpegConfigured)
             {
                 // TODO: Ask the user for config
             }
+            */
 
             /*
             var source = Properties.Settings.Default.FFmpegSource;
