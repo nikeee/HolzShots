@@ -67,7 +67,7 @@ namespace HolzShots.Input.Actions
             await InvokeAfterCaptureAction(recording, settingsContext);
         }
 
-        async Task InvokeAfterCaptureAction(ScreenRecording recording, HSSettings settingsContext)
+        static async Task InvokeAfterCaptureAction(ScreenRecording recording, HSSettings settingsContext)
         {
             switch (settingsContext.ActionAfterVideoCapture)
             {
