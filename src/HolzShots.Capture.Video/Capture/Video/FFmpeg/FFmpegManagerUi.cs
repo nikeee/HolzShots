@@ -83,12 +83,6 @@ namespace HolzShots.Capture.Video.FFmpeg
             Coninue,
         }
 
-
-        private static void DownloadButton_Click(object? sender, System.EventArgs e)
-        {
-            throw new System.NotImplementedException();
-        }
-
         static TaskDialogPage GetInitialPage(TaskDialogButton downloadButton, TaskDialogButton manualDownload) => new()
         {
             Icon = TaskDialogIcon.Information,
