@@ -17,6 +17,8 @@ namespace HolzShots.Net
 
     public record ImageUploadPayload : IUploadPayload
     {
+        private const string DefaultUploadFileNameWithoutExtension = LibraryInformation.Name;
+
         public string MimeType { get; init; }
         public string Extension { get; init; }
 
@@ -35,14 +37,7 @@ namespace HolzShots.Net
         }
 
         public Stream GetStream() => _image.GetImageStream(_format);
-
-        public string GetSuggestedFileName()
-        {
-            Debug.Assert(Extension != null);
-            Debug.Assert(MimeType != null);
-
-            return ImageFormatInformation.DefaultUploadFileNameWithoutExtension + Extension;
-        }
+        public string GetSuggestedFileName() => DefaultUploadFileNameWithoutExtension + Extension;
 
         public void Dispose() => _image.Dispose();
     }

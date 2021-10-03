@@ -9,7 +9,6 @@ namespace HolzShots.Drawing
 {
     public static class ImageFormatInformation
     {
-        public const string DefaultUploadFileNameWithoutExtension = LibraryInformation.Name;
         private const string JpegMimeType = "image/jpeg";
 
         private static readonly IReadOnlyDictionary<ImageFormat, FormatDefinition> _imageFormats = new Dictionary<ImageFormat, FormatDefinition>()

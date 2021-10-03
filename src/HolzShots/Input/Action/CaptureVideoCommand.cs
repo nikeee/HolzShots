@@ -9,6 +9,8 @@ using HolzShots.Capture.Video;
 using HolzShots.Capture.Video.FFmpeg;
 using HolzShots.Composition.Command;
 using HolzShots.Windows.Forms;
+using HolzShots.Net;
+using HolzShots.Windows.Net;
 
 namespace HolzShots.Input.Actions
 {
@@ -62,11 +64,30 @@ namespace HolzShots.Input.Actions
                 recording = recording with { FilePath = fullTargetFilePath };
             }
 
+            await InvokeAfterCaptureAction(recording, settingsContext);
+        }
 
+        async Task InvokeAfterCaptureAction(ScreenRecording recording, HSSettings settingsContext)
+        {
             switch (settingsContext.ActionAfterVideoCapture)
             {
                 case VideoCaptureHandlingAction.Upload:
-                    return; // TODO
+                    try
+                    {
+                        var payload = new VideoUploadPayload(recording);
+
+                        var result = await UploadDispatcher.InitiateUploadToDefaultUploader(payload, settingsContext, HolzShotsApplication.Instance.Uploaders, null).ConfigureAwait(true);
+                        UploadHelper.InvokeUploadFinishedUI(result, settingsContext);
+                    }
+                    catch (UploadCanceledException)
+                    {
+                        NotificationManager.ShowOperationCanceled();
+                    }
+                    catch (UploadException ex)
+                    {
+                        NotificationManager.UploadFailed(ex);
+                    }
+                    return;
                 case VideoCaptureHandlingAction.CopyFile:
                     {
                         var success = ClipboardEx.SetFiles(recording.FilePath);
@@ -99,6 +120,7 @@ namespace HolzShots.Input.Actions
                     return;
                 case VideoCaptureHandlingAction.None: return;
                 default: throw new ArgumentException("Unhandled VideoCaptureHandlingAction: " + settingsContext.ActionAfterVideoCapture);
+
             }
         }
 
@@ -128,8 +150,8 @@ namespace HolzShots.Input.Actions
                 var tempRecordingDir = Path.Combine(Path.GetTempPath(), "hs-" + Path.GetRandomFileName());
                 Directory.CreateDirectory(tempRecordingDir);
 
-                var extension = GetFileExtensionForVideoFormat(settingsContext.VideoOutputFormat);
-                var targetFile = Path.Combine(tempRecordingDir, "HS." + extension);
+                var extension = VideoUploadPayload.GetExtensionForVideoFormat(settingsContext.VideoOutputFormat);
+                var targetFile = Path.Combine(tempRecordingDir, "HS" + extension);
 
                 var recording = await recorder.Invoke(selection, targetFile, settingsContext, _currentRecordingCts.Token);
 
@@ -156,13 +178,6 @@ namespace HolzShots.Input.Actions
             }
         }
 
-        private static string GetFileExtensionForVideoFormat(VideoCaptureFormat format) => format switch
-        {
-            VideoCaptureFormat.Gif => "gif",
-            VideoCaptureFormat.Mp4 => "mp4",
-            VideoCaptureFormat.Webm => "webm",
-            _ => throw new ArgumentException("Unhandled VideoCaptureFormat" + format),
-        };
 
         public static bool IsScreenRecorderRunning() => _currentRecordingCts != null;
         public static void StopCurrentScreenRecorder(bool throwAwayResult)
@@ -170,5 +185,46 @@ namespace HolzShots.Input.Actions
             _throwAwayResult = throwAwayResult;
             _currentRecordingCts?.Cancel();
         }
+    }
+
+    public record VideoUploadPayload : IUploadPayload
+    {
+        private const string DefaultUploadFileNameWithoutExtension = LibraryInformation.Name;
+
+        public string MimeType { get; init; }
+        public string Extension { get; init; }
+
+        private readonly ScreenRecording _recording;
+        public VideoUploadPayload(ScreenRecording recording)
+        {
+            _recording = recording ?? throw new ArgumentNullException(nameof(recording));
+            MimeType = GetMimeTypeForVideoFormat(recording.Format);
+            Extension = GetExtensionForVideoFormat(recording.Format);
+        }
+
+        public Stream GetStream() => File.OpenRead(_recording.FilePath);
+        public string GetSuggestedFileName() => DefaultUploadFileNameWithoutExtension + Extension;
+
+        public void Dispose()
+        {
+            // We don't dispose anything here
+            // The file recoded will either stay in the temp dir and will be deleted on next boot
+            // ...or it will be saved in the respective folder, so deletion would be against the user's will
+        }
+
+        static string GetMimeTypeForVideoFormat(VideoCaptureFormat format) => format switch
+        {
+            VideoCaptureFormat.Gif => "image/gif",
+            VideoCaptureFormat.Mp4 => "video/mp4",
+            VideoCaptureFormat.Webm => "video/webm",
+            _ => throw new ArgumentException("Unhaned VideoCaptureFormat: " + format),
+        };
+        public static string GetExtensionForVideoFormat(VideoCaptureFormat format) => format switch
+        {
+            VideoCaptureFormat.Gif => ".gif",
+            VideoCaptureFormat.Mp4 => ".mp4",
+            VideoCaptureFormat.Webm => ".webm",
+            _ => throw new ArgumentException("Unhaned VideoCaptureFormat: " + format),
+        };
     }
 }
