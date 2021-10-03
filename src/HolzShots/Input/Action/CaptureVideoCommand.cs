@@ -50,9 +50,6 @@ namespace HolzShots.Input.Actions
                 var extension = GetFileExtensionForVideoFormat(settingsContext.VideoOutputFormat);
                 var targetFile = Path.Combine(tempRecordingDir, "HS." + extension);
 
-                // TODO: Add UI and trigger cancellation manually
-                _currentRecordingCts.CancelAfter(5000);
-
                 var recording = await recorder.Invoke(selection, targetFile, settingsContext, _currentRecordingCts.Token);
 
                 if (_throwAwayResult)
@@ -81,7 +78,12 @@ namespace HolzShots.Input.Actions
         public async Task Invoke(IReadOnlyDictionary<string, string> parameters, HSSettings settingsContext)
         {
             if (IsScreenRecorderRunning())
-                return; // We only allow one recorder and use the CTS as a global indicator if a recorder is running
+            {
+                // We allow only one instance running. If the user invokes this task another time, he likely wanted to stop recording.
+                // TODO: Add UI and trigger cancellation manually via mouse
+                StopCurrentScreenRecorder(false);
+                return;
+            }
 
             var recording = await PerformScreenRecording(settingsContext);
             if (recording == null)
