@@ -20,7 +20,7 @@ namespace HolzShots.Capture.Video.FFmpeg
                     case AfterSetupAction.QuitApplication:
                         // TODO: HolzShotsApplication.Instance.Terminate();
                         break;
-                    case AfterSetupAction.AbortRecording:
+                    case AfterSetupAction.AbortCurrentAction:
                         break;
                     case AfterSetupAction.Coninue:
                         break;
@@ -69,13 +69,18 @@ namespace HolzShots.Capture.Video.FFmpeg
             if (answer == TaskDialogButton.OK)
             {
                 // The user clicked "Cancel" and then OK (or an error ocurred)
-                return AfterSetupAction.AbortRecording;
+                return AfterSetupAction.AbortCurrentAction;
             }
+
+            if (answer == TaskDialogButton.Cancel)
+            {
+                // The user closed the dialog via "X"
+                return AfterSetupAction.AbortCurrentAction;
+            }
+
 
             if (answer == quit)
                 return AfterSetupAction.QuitApplication;
-
-            // TODO: Handle download errors
 
             return AfterSetupAction.Coninue;
         }
@@ -83,7 +88,7 @@ namespace HolzShots.Capture.Video.FFmpeg
         enum AfterSetupAction
         {
             QuitApplication,
-            AbortRecording,
+            AbortCurrentAction,
             Coninue,
         }
 
@@ -116,7 +121,9 @@ namespace HolzShots.Capture.Video.FFmpeg
             Caption = "HolzShots is missing FFmpeg :(",
             Heading = "Could not find FFmpeg",
             Text = "You chose to do nothing, so the screen recording will now abort.",
-            Buttons = new TaskDialogButtonCollection() { TaskDialogButton.OK },
+            Buttons = new TaskDialogButtonCollection() {
+                TaskDialogButton.OK, // This must be "OK" because OK will abort the screen recording
+            },
             DefaultButton = TaskDialogButton.OK,
         };
 
@@ -159,7 +166,7 @@ namespace HolzShots.Capture.Video.FFmpeg
                 Buttons = new TaskDialogButtonCollection() {
                     cancelDownloadButton,
                 },
-                // DefaultButton = TaskDialogButton.Yes,
+                // DefaultButton = None,
                 Expander = new TaskDialogExpander()
                 {
                     Text = "Initializing...",
@@ -202,14 +209,19 @@ namespace HolzShots.Capture.Video.FFmpeg
 
                 downloadPage.Expander.Text = "Done!";
 
-                var finished = GetDownloadFinishedPage();
-                downloadPage.Navigate(finished);
+                // Cross-check if downloading ffmpeg fixed the problem
+                var path = FFmpegManager.GetAbsoluteFFmpegPath(true);
+                if (path == null)
+                    downloadPage.Navigate(CreateDownloadFailedPage("The download was successful, but it did not fix the issue."));
+                else
+                    downloadPage.Navigate(CreateDownloadFinishedPage());
+
             };
 
             return downloadPage;
         }
 
-        static TaskDialogPage GetDownloadFinishedPage() => new()
+        static TaskDialogPage CreateDownloadFinishedPage() => new()
         {
             AllowMinimize = true,
             Caption = "FFmpeg missing",
@@ -228,7 +240,7 @@ namespace HolzShots.Capture.Video.FFmpeg
             Heading = "Something went wrong",
             Text = $"We tried our best, but somehow it did not work out. Try installing FFmpeg manually or to restart HolzShots.\nHere's some information on the error:\n\n{message}\n\nThe screen recording that you tried to do will now abort.\n\n",
             Buttons = new TaskDialogButtonCollection() {
-                TaskDialogButton.OK,
+                TaskDialogButton.OK, // This must be "OK" because OK will abort the screen recording
             },
             DefaultButton = TaskDialogButton.OK,
         };
