@@ -48,37 +48,4 @@ namespace HolzShots.Capture.Video.FFmpeg
             return File.Exists(downloadedFFmpeg);
         }
     }
-
-    public static class FFmpegManagerUi
-    {
-        public static async Task<string> EnsureAvailableFFmpeg(HSSettings settingsContext)
-        {
-            /*
-            if (!Properties.Settings.Default.FFmpegConfigured)
-            {
-                // TODO: Ask the user for config
-            }
-            */
-
-            /*
-            var source = Properties.Settings.Default.FFmpegSource;
-            var path = FFmpegManager.GetAbsoluteFFmpegPath(source == FFmpegSource.Path);
-            if (path == null)
-            {
-                // TODO: Ask for download
-
-                // If the user declines, return false/null
-            }
-            */
-            var path = FFmpegManager.GetAbsoluteFFmpegPath(true);
-
-            return path!;
-        }
-    }
-
-    public enum FFmpegSource
-    {
-        Path,
-        Download,
-    }
 }

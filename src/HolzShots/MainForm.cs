@@ -46,6 +46,9 @@ namespace HolzShots
         {
             EnsureInvisibility();
 
+            // This call is used to ensure that the working directory is the same as the directory of the .exe file
+            // The Startupmanager needs this.
+            // We also need this because we ship ffmpeg right out of the box, so we can assume that "ffmpeg.exe" just points to the version next to the executable
             EnvironmentEx.CurrentStartupManager.FixWorkingDirectory();
 
             Drawing.DpiAwarenessFix.SetDpiAwareness();
