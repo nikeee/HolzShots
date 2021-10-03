@@ -12,7 +12,7 @@ using HolzShots.Windows.Forms;
 
 namespace HolzShots.Input.Actions
 {
-    [Command("captureVideo")]
+    [Command("startOrStopVideoCapture")]
     public class CaptureVideoCommand : ICommand<HSSettings>
     {
         private static CancellationTokenSource? _currentRecordingCts = null;
