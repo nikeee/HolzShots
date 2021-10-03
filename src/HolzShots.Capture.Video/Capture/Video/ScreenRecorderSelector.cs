@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 
 namespace HolzShots.Capture.Video
@@ -14,7 +14,7 @@ namespace HolzShots.Capture.Video
                 case PlatformID.Win32Windows:
                 case PlatformID.Win32NT:
                 case PlatformID.WinCE:
-                    return new WindowsScreenRecorder();
+                    return new WindowsFFmpegScreenRecorder();
                 case PlatformID.Unix:
                 case PlatformID.MacOSX:
                 case PlatformID.Xbox:

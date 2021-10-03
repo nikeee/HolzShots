@@ -1,3 +1,5 @@
+using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
@@ -13,6 +15,7 @@ namespace HolzShots.Input.Actions
     public class CaptureVideoCommand : ICommand<HSSettings>
     {
         private static CancellationTokenSource? _currentRecordingCts = null;
+        private static bool _throwAwayResult = false;
 
         public async Task Invoke(IReadOnlyDictionary<string, string> parameters, HSSettings settingsContext)
         {
@@ -20,6 +23,7 @@ namespace HolzShots.Input.Actions
                 return; // We only allow one recorder and use the CTS as a global indicator if a recorder is running
 
             _currentRecordingCts = new CancellationTokenSource();
+            _throwAwayResult = false;
 
             try
             {
@@ -37,21 +41,62 @@ namespace HolzShots.Input.Actions
 
                 var recorder = ScreenRecorderSelector.CreateScreenRecorderForCurrentPlatform();
 
-                var ffmpegPathToPrefix = System.IO.Path.GetDirectoryName(ffmpegPath!)!;
+                var ffmpegPathToPrefix = Path.GetDirectoryName(ffmpegPath!)!;
                 Debug.Assert(ffmpegPathToPrefix != null);
 
-                using var environmentPrevix = new HolzShots.IO.PrefixEnvironmentVariable(ffmpegPathToPrefix);
+                using var environmentPrevix = new IO.PrefixEnvironmentVariable(ffmpegPathToPrefix);
 
-                _ = recorder.Invoke(selection, @"C:\Temp\loltest.mp4", _currentRecordingCts.Token, settingsContext);
+                var tempRecordingDir = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName() + "-hs");
+                Directory.CreateDirectory(tempRecordingDir);
 
-                await Task.Delay(5000);
+                var extension = GetFileExtensionForVideoFormat(settingsContext.VideoOutputFormat);
+                var targetFile = Path.Combine(tempRecordingDir, "HS." + extension);
 
-                _currentRecordingCts.Cancel();
+                // TODO: Add UI and trigger cancellation manually
+                _currentRecordingCts.CancelAfter(5000);
+
+                var recording = await recorder.Invoke(selection, targetFile, settingsContext, _currentRecordingCts.Token);
+
+                if (_throwAwayResult)
+                {
+                    // The user cancelled the video recording
+
+                    if (File.Exists(targetFile))
+                    {
+                        try
+                        {
+                            File.Delete(targetFile);
+                        }
+                        catch
+                        {
+                            // Not _that_ important to handle this because it's in a temp dir and willb e gone on reboot anyway
+                        }
+                    }
+                    return;
+                }
+
+                // TODO: Process video
             }
             finally
             {
                 _currentRecordingCts = null;
+                _throwAwayResult = false;
             }
+        }
+
+        private static string GetFileExtensionForVideoFormat(VideoCaptureFormat format) => format switch
+        {
+            VideoCaptureFormat.Gif => "gif",
+            VideoCaptureFormat.Mp4 => "mp4",
+            VideoCaptureFormat.Webm => "webm",
+            _ => throw new ArgumentException("Unhandled VideoCaptureFormat" + format),
+        };
+
+        public static bool IsScreenRecorderRunning() => _currentRecordingCts != null;
+        public static void StopCurrentScreenRecorder(bool throwAwayResult)
+        {
+            _throwAwayResult = throwAwayResult;
+            _currentRecordingCts?.Cancel();
         }
     }
 }

@@ -67,7 +67,7 @@ namespace HolzShots
             Default = "mp4"
         )]
         [JsonProperty("video.format")]
-        public VideoCaptureFormat VideoFormat { get; private set; } = VideoCaptureFormat.Mp4;
+        public VideoCaptureFormat VideoOutputFormat { get; private set; } = VideoCaptureFormat.Mp4;
 
         /*
         // TODO: This is pretty buggy right now; We should take a look how to fix this.
