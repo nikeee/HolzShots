@@ -1,12 +1,7 @@
-#nullable enable
 using System;
 using System.Diagnostics;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using HolzShots.Drawing;
 
 namespace HolzShots.Net
 {
@@ -16,7 +11,7 @@ namespace HolzShots.Net
         private readonly Uploader _uploader;
         private readonly ITransferProgressReporter? _progressReporter;
 
-        private readonly SpeedCalculatorProgress _speedCalculator = new SpeedCalculatorProgress();
+        private readonly SpeedCalculatorProgress _speedCalculator = new();
 
         public UploadUI(IUploadPayload payload, Uploader uploader, ITransferProgressReporter? progressReporter)
         {
