@@ -218,7 +218,7 @@ namespace HolzShots
         private void OpenAbout(object sender, EventArgs e) => AboutForm.Instance.Show();
         private void OpenFeedbackAndIssues(object sender, EventArgs e) => IO.HolzShotsPaths.OpenLink(LibraryInformation.IssuesUrl);
 
-        private void ExitApplication(object sender, EventArgs e)
+        private void ExitApplication(object? sender, EventArgs e)
         {
             _forceClose = true;
 
@@ -245,6 +245,8 @@ namespace HolzShots
                 Application.Exit();
             }
         }
+
+        public void Terminate() => ExitApplication(null, new EventArgs());
 
         #endregion
     }
