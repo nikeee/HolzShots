@@ -11,6 +11,7 @@ namespace HolzShots.Capture.Video.FFmpeg
     {
         const string FFmpegExecutable = "ffmpeg.exe";
 
+        /// <summary> Path where a downloaded version of FFmpeg will be saved. </summary>
         public static string FFmpegAppDataPath { get; } = Path.Combine(IO.HolzShotsPaths.AppDataDirectory, "ffmpeg");
 
         // TODO: Ask the user if he wants to use the FFmpeg on the PATH if it is present

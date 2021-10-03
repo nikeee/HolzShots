@@ -1,5 +1,9 @@
 using System.Windows.Forms;
 using System.Threading.Tasks;
+using System;
+using HolzShots.Net;
+using System.Diagnostics;
+using System.Threading;
 
 namespace HolzShots.Capture.Video.FFmpeg
 {
@@ -50,15 +54,15 @@ namespace HolzShots.Capture.Video.FFmpeg
                 AllowCloseDialog = false,
             };
 
-            var initialPage = GetInitialPage(downloadButton, manualDownload);
+            var initialPage = CreateInitialPage(downloadButton, manualDownload);
 
-            var manualSetupPage = GetManualSetupPage(quit);
+            var manualSetupPage = CreateManualSetupPage(quit);
             manualDownload.Click += (s, e) => initialPage.Navigate(manualSetupPage);
 
-            var noActionPage = GetnoActionPage();
+            var noActionPage = CreateNoActionPage();
             doNothing.Click += (s, e) => initialPage.Navigate(noActionPage);
 
-            var downloadPage = GetDownloadPage();
+            var downloadPage = CreatetDownloadPage();
             downloadButton.Click += (s, e) => initialPage.Navigate(downloadPage);
 
             var answer = TaskDialog.ShowDialog(initialPage);
@@ -83,7 +87,7 @@ namespace HolzShots.Capture.Video.FFmpeg
             Coninue,
         }
 
-        static TaskDialogPage GetInitialPage(TaskDialogButton downloadButton, TaskDialogButton manualDownload) => new()
+        static TaskDialogPage CreateInitialPage(TaskDialogButton downloadButton, TaskDialogButton manualDownload) => new()
         {
             Icon = TaskDialogIcon.Information,
             AllowMinimize = true,
@@ -105,7 +109,7 @@ namespace HolzShots.Capture.Video.FFmpeg
             DefaultButton = downloadButton,
         };
 
-        static TaskDialogPage GetnoActionPage() => new()
+        static TaskDialogPage CreateNoActionPage() => new()
         {
             Icon = TaskDialogIcon.Information,
             AllowMinimize = true,
@@ -116,7 +120,7 @@ namespace HolzShots.Capture.Video.FFmpeg
             DefaultButton = TaskDialogButton.OK,
         };
 
-        static TaskDialogPage GetManualSetupPage(TaskDialogButton quitButton) => new()
+        static TaskDialogPage CreateManualSetupPage(TaskDialogButton quitButton) => new()
         {
             Icon = TaskDialogIcon.Information,
             AllowMinimize = true,
@@ -129,14 +133,21 @@ namespace HolzShots.Capture.Video.FFmpeg
             DefaultButton = quitButton,
         };
 
-        static TaskDialogPage GetDownloadPage()
+        static TaskDialogPage CreatetDownloadPage()
         {
+            var downloadCancellationSource = new CancellationTokenSource();
+
             var downloadProgressBar = new TaskDialogProgressBar()
             {
                 Minimum = 0,
                 Maximum = 100,
                 State = TaskDialogProgressBarState.Marquee,
             };
+            var cancelDownloadButton = new TaskDialogButton()
+            {
+                Text = "Cancel Download",
+            };
+            cancelDownloadButton.Click += (s, e) => downloadCancellationSource.Cancel();
 
             var downloadPage = new TaskDialogPage()
             {
@@ -146,9 +157,9 @@ namespace HolzShots.Capture.Video.FFmpeg
                 Text = "We're shifting some bits around to get you ready.",
                 ProgressBar = downloadProgressBar,
                 Buttons = new TaskDialogButtonCollection() {
-                    TaskDialogButton.Yes,
+                    cancelDownloadButton,
                 },
-                DefaultButton = TaskDialogButton.Yes,
+                // DefaultButton = TaskDialogButton.Yes,
                 Expander = new TaskDialogExpander()
                 {
                     Text = "Initializing...",
@@ -159,13 +170,37 @@ namespace HolzShots.Capture.Video.FFmpeg
 
             downloadPage.Created += async (o, e) =>
             {
-                downloadPage.Expander.Text = "Starting download...";
-                // TODO: Fetch FFmpeg
-                await Task.Delay(5000);
+                downloadPage.Expander.Text = "Fetching info...";
 
-                downloadProgressBar.State = TaskDialogProgressBarState.Normal;
-                downloadProgressBar.Value = 50;
-                await Task.Delay(5000);
+                var url = await FFmpegFetcher.GetUrlOfLatestBinary();
+                if (url == null)
+                {
+                    downloadPage.Navigate(CreateDownloadFailedPage("Unable to get link to FFmpeg download"));
+                    return;
+                }
+
+                var progress = new DialogTransferProgress(downloadPage);
+
+                downloadPage.Expander.Text = "Downloading...";
+                try
+                {
+                    await FFmpegFetcher.LoadAndUnzipToDirectory(FFmpegManager.FFmpegAppDataPath, url, progress, downloadCancellationSource.Token);
+                }
+                catch (TaskCanceledException)
+                {
+                    // Well, it's actually not an error, but we're too lazy for a separate doaloge for this
+                    downloadPage.Navigate(CreateDownloadFailedPage("You cancelled the download."));
+                    return;
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("Failed to download FFmpeg.");
+                    Debug.WriteLine(ex);
+                    downloadPage.Navigate(CreateDownloadFailedPage(ex.Message));
+                    return;
+                }
+
+                downloadPage.Expander.Text = "Done!";
 
                 var finished = GetDownloadFinishedPage();
                 downloadPage.Navigate(finished);
@@ -186,16 +221,57 @@ namespace HolzShots.Capture.Video.FFmpeg
             DefaultButton = TaskDialogButton.Continue,
         };
 
-        static TaskDialogPage GetDownloadFailedPage() => new()
+        static TaskDialogPage CreateDownloadFailedPage(string message) => new()
         {
             AllowMinimize = true,
             Caption = "FFmpeg missing",
             Heading = "Something went wrong",
-            Text = "We tried our best, but somehow it did not work out.\n\nThe screen recording that you tried to do will now abort.\n\nTry installing FFmpeg manually or to restart HolzShots.",
+            Text = $"We tried our best, but somehow it did not work out. Try installing FFmpeg manually or to restart HolzShots.\nHere's some information on the error:\n\n{message}\n\nThe screen recording that you tried to do will now abort.\n\n",
             Buttons = new TaskDialogButtonCollection() {
                 TaskDialogButton.OK,
             },
             DefaultButton = TaskDialogButton.OK,
         };
     }
+
+
+    public class DialogTransferProgress : Progress<TransferProgress>
+    {
+        private readonly TaskDialogPage _dialogPage;
+        public DialogTransferProgress(TaskDialogPage dialogPage)
+        {
+            _dialogPage = dialogPage;
+
+            var pBar = dialogPage.ProgressBar;
+            Debug.Assert(pBar != null);
+
+            pBar.Minimum = 0;
+            pBar.Maximum = 100;
+        }
+
+        protected override void OnReport(TransferProgress value)
+        {
+            var pBar = _dialogPage.ProgressBar;
+            Debug.Assert(pBar != null);
+
+            switch (value.State)
+            {
+                case UploadState.NotStarted:
+                    pBar.State = TaskDialogProgressBarState.Marquee;
+                    break;
+                case UploadState.Processing:
+                    pBar.State = TaskDialogProgressBarState.Normal;
+                    pBar.Value = unchecked((int)value.ProgressPercentage);
+                    return;
+                case UploadState.Paused:
+                    pBar.State = TaskDialogProgressBarState.Paused;
+                    pBar.Value = unchecked((int)value.ProgressPercentage);
+                    break;
+                case UploadState.Finished:
+                default:
+                    return;
+            }
+        }
+    }
+
 }
