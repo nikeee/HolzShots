@@ -52,6 +52,10 @@ namespace HolzShots.Net
         public void HideUI() => _progressReporter?.CloseProgress();
         private void ProgressChanged(object? sender, TransferProgress progress) => _progressReporter?.UpdateProgress(progress, _speedCalculator.CurrentSpeed);
 
-        public void Dispose() => _progressReporter?.Dispose();
+        public void Dispose()
+        {
+            _payload.Dispose();
+            _progressReporter?.Dispose();
+        }
     }
 }
