@@ -19,7 +19,7 @@ namespace HolzShots.Capture.Video
 
             // Capture important parameters beforehand, as they may randomly change during recording (this shouldn't happen, but we never know)
             var captureCursor = settingsContext.CaptureCursor;
-            const int FPS = 30; // TODO: Make this configurable; a different setting seems buggy for now
+            var fps = settingsContext.VideoFrameRate;
             var outputFormat = settingsContext.VideoOutputFormat;
 
             var ffmpegFormat = formats.First(e => e.Name == "gdigrab");
@@ -29,7 +29,7 @@ namespace HolzShots.Capture.Video
                 false,
                 options => options
                     .ForceFormat(ffmpegFormat)
-                    .WithFramerate(FPS)
+                    .WithFramerate(fps)
                     .WithArgument(new OffsetArgument(rectangleOnScreenToCapture.X, 'x'))
                     .WithArgument(new OffsetArgument(rectangleOnScreenToCapture.Y, 'y'))
                     .WithArgument(new VideoSizeArgument(rectangleOnScreenToCapture.Width, rectangleOnScreenToCapture.Height))
@@ -49,7 +49,7 @@ namespace HolzShots.Capture.Video
 
             var endTime = DateTime.Now;
 
-            return new ScreenRecording(startTime, endTime, rectangleOnScreenToCapture, captureCursor, FPS, outputFormat, targetFile);
+            return new ScreenRecording(startTime, endTime, rectangleOnScreenToCapture, captureCursor, fps, outputFormat, targetFile);
         }
 
         public void Dispose()

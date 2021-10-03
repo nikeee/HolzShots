@@ -64,7 +64,7 @@
 		"frameRate": {
 			"type": "integer",
 			"minimum": 1,
-			"exclusiveMaximum": 300
+			"exclusiveMaximum": 30
 		}
 	},
 
@@ -102,6 +102,12 @@
 			"description": "File format that recorded screen captures will be saved as.",
 			"$ref": "#/definitions/videoFormat",
 			"default": "mp4"
+		},
+
+		"video.framesPerSecond": {
+			"description": "Frame rate (FPS) for screen recordings. Min: 1; Max: 30",
+			"$ref": "#/definitions/frameRate",
+			"default": 30
 		},
 
 		"editor.closeAfterUpload": {

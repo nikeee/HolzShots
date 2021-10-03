@@ -69,15 +69,18 @@ namespace HolzShots
         [JsonProperty("video.format")]
         public VideoCaptureFormat VideoOutputFormat { get; private set; } = VideoCaptureFormat.Mp4;
 
-        /*
-        // TODO: This is pretty buggy right now; We should take a look how to fix this.
+        // TODO: This is pretty buggy right now. FPS > 30 seem to result in a glitchy video.
         [SettingsDoc(
-            "Frame rate (FPS) for screen recordings.",
+            "Frame rate (FPS) for screen recordings. Min: 1; Max: 30",
             Default = "30"
         )]
         [JsonProperty("video.framesPerSecond")]
-        public int VideoFrameRate { get; private set; } = 30;
-        */
+        public int VideoFrameRate
+        {
+            get => _videoFrameRate;
+            private set => _videoFrameRate = Math.Clamp(value, 1, 30);
+        }
+        private int _videoFrameRate = 30;
 
         #endregion
         #region editor.*
