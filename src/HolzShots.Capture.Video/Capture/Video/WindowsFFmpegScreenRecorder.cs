@@ -34,8 +34,6 @@ namespace HolzShots.Capture.Video
                     .WithArgument(new OffsetArgument(rectangleOnScreenToCapture.Y, 'y'))
                     .WithArgument(new VideoSizeArgument(rectangleOnScreenToCapture.Width, rectangleOnScreenToCapture.Height))
                     .WithArgument(new ShowRegionArgument(true))
-
-                    // Turning off cursor capturing is not supported on gdigrab
                     .WithArgument(new DrawMouseArgument(captureCursor))
                 )
                 .OutputToFile(targetFile)
