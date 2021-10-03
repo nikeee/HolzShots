@@ -169,11 +169,26 @@ namespace HolzShots
             "What to do after an image got captured. Possible options are:\n" +
             "    openEditor: Open the shot editor with the captured image\n" +
             "    upload: Upload the image to the specified default image service\n" +
+            "    saveAs: Show a dialog and choose where you want to save the image\n" +
+            "    copy: Copy the image data to clipboard; useful for pasting the image to popular messengers etc.\n" +
             "    none: Do nothing (this would only trigger saving the image to disk if this is enabled)",
             Default = "openEditor"
         )]
         [JsonProperty("capture.image.actionAfterCapture")]
         public ImageCaptureHandlingAction ActionAfterImageCapture { get; private set; } = ImageCaptureHandlingAction.OpenEditor;
+
+        [SettingsDoc(
+            "What to do after capturing a screen recording. Possible options are:\n" +
+            "    upload: Upload the image to the specified default service\n" +
+            "    copyFile: Copy the file to the clipboard; useful for pasting the video to popular messengers etc.\n" +
+            "    copyFilePath: Copy the path to file to the clipboard.\n" +
+            "    showInExplorer: Opens an explorer window in the path of the saved video.\n" +
+            "    openInDefaultApp: Opens the video in the default application for that file type.\n" +
+            "    none: Do nothing (this would only trigger saving the video to disk if this is enabled)",
+            Default = "showInExplorer"
+        )]
+        [JsonProperty("capture.video.actionAfterCapture")]
+        public VideoCaptureHandlingAction ActionAfterVideoCapture { get; private set; } = VideoCaptureHandlingAction.ShowInExplorer;
 
         [SettingsDoc(
             "Opacity of the dimming effect when selection a region to capture. Must be between 0.0 and 1.0.",
@@ -294,6 +309,23 @@ namespace HolzShots
         SaveAs,
         [EnumMember(Value = "copyImage")]
         Copy,
+        [EnumMember(Value = "none")]
+        None,
+    }
+
+    [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    public enum VideoCaptureHandlingAction
+    {
+        [EnumMember(Value = "upload")]
+        Upload,
+        [EnumMember(Value = "copyFile")]
+        CopyFile,
+        [EnumMember(Value = "copyFilePath")]
+        CopyFilePath,
+        [EnumMember(Value = "showInExplorer")]
+        ShowInExplorer,
+        [EnumMember(Value = "openInDefaultApp")]
+        OpenInDefaultApp,
         [EnumMember(Value = "none")]
         None,
     }

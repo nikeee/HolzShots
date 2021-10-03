@@ -52,8 +52,11 @@
 		"uploadHandlingAction": {
 			"enum": [ "flyout", "copyLink", "none" ]
 		},
-		"captureHandlingAction": {
+		"imageCaptureHandlingAction": {
 			"enum": [ "openEditor", "upload", "copyImage", "none" ]
+		},
+		"videoCaptureHandlingAction": {
+			"enum": [ "upload", "copyFile", "copyFilePath", "showInExplorer", "openInDefaultApp", "none" ]
 		},
 		"videoFormat": {
 			"enum": [ "mp4", "webm", "gif" ]
@@ -150,9 +153,15 @@
 		},
 
 		"capture.image.actionAfterCapture": {
-			"description": "What to do after an image got captured. Possible options are:\nopenEditor: Open the shot editor with the captured image\nupload: Upload the image to the specified default image service\nnone: Do nothing (this would only trigger saving the image to disk if this is enabled)",
-			"$ref": "#/definitions/captureHandlingAction",
+			"description": "What to do after an image got captured. Possible options are:\nopenEditor: Open the shot editor with the captured image\nupload: Upload the image to the specified default image service\nsaveAs: Show a dialog and choose where you want to save the image\ncopy: Copy the image data to clipboard; useful for pasting the image to popular messengers etc.\nnone: Do nothing (this would only trigger saving the image to disk if this is enabled)",
+			"$ref": "#/definitions/imageCaptureHandlingAction",
 			"default": "openEditor"
+		},
+
+		"capture.video.actionAfterCapture": {
+			"description": "What to do after capturing a screen recording. Possible options are:\nupload: Upload the image to the specified default service\ncopyFile: Copy the file to the clipboard; useful for pasting the video to popular messengers etc.\ncopyFilePath: Copy the path to file to the clipboard.\nshowInExplorer: Opens an explorer window in the path of the saved video.\nopenInDefaultApp: Opens the video in the default application for that file type.\nnone: Do nothing (this would only trigger saving the video to disk if this is enabled)",
+			"$ref": "#/definitions/videoCaptureHandlingAction",
+			"default": "showInExplorer"
 		},
 
 		"capture.selection.dimmingOpacity": {

@@ -17,7 +17,6 @@ namespace HolzShots.Input.Actions
         private static CancellationTokenSource? _currentRecordingCts = null;
         private static bool _throwAwayResult = false;
 
-
         private async Task<ScreenRecording?> PerformScreenRecording(HSSettings settingsContext)
         {
             _currentRecordingCts = new CancellationTokenSource();
@@ -86,6 +85,17 @@ namespace HolzShots.Input.Actions
             var recording = await PerformScreenRecording(settingsContext);
             if (recording == null)
                 return; // User likely cancelled recording
+
+
+            // Every actionAfterCapture depends on the file in some way
+            // Sometimes, it will be saved to a specified path
+            // In that case, we want to first move the file to the target destination and then perform the action with that new path
+            // Otherwise, we use the file in the temp dir
+
+            if (settingsContext.SaveToLocalDisk)
+            {
+
+            }
 
             // TODO: Process video
             // IO.HolzShotsPaths.OpenSelectedFileInExplorer(recording.FilePath);
