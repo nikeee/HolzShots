@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using System.Diagnostics;
 using System.Drawing;
@@ -10,14 +9,25 @@ namespace HolzShots.Net
 {
     public static class UploadDispatcher
     {
+        // TODO: maybe refactor this, so the payload gets created somewhere else
         /// <summary> Catch the UploadException! </summary>
-        public static Task<UploadResult> InitiateUploadToDefaultUploader(Image image, HSSettings settingsContext, UploaderManager uploaderManager, ImageFormat? format, ITransferProgressReporter? progressReporter)
+        public static async Task<UploadResult> InitiateUploadToDefaultUploader(Image image, HSSettings settingsContext, UploaderManager uploaderManager, ImageFormat? format, ITransferProgressReporter? progressReporter)
         {
             Debug.Assert(image != null);
             Debug.Assert(settingsContext != null);
             Debug.Assert(uploaderManager != null);
 
-            var service = GetImageServiceForSettingsContext(settingsContext, uploaderManager);
+            format ??= GetImageFormat(image, settingsContext);
+            using var payload = new ImageUploadPayload(image, format);
+            return await InitiateUploadToDefaultUploader(payload, settingsContext, uploaderManager, progressReporter);
+        }
+        public static Task<UploadResult> InitiateUploadToDefaultUploader(IUploadPayload payload, HSSettings settingsContext, UploaderManager uploaderManager, ITransferProgressReporter? progressReporter)
+        {
+            Debug.Assert(payload != null);
+            Debug.Assert(settingsContext != null);
+            Debug.Assert(uploaderManager != null);
+
+            var service = GetUploadServiceForSettingsContext(settingsContext, uploaderManager);
             Debug.Assert(!(service is null));
             Debug.Assert(service.Metadata != null);
             Debug.Assert(service.Uploader != null);
@@ -25,20 +35,27 @@ namespace HolzShots.Net
             if (service?.Metadata == null || service?.Uploader == null)
                 throw new UploadException("Unable to find an uploader for the current settings context");
 
-            return InitiateUpload(image, settingsContext, service.Uploader, format, progressReporter);
+            return InitiateUpload(payload, settingsContext, service.Uploader, progressReporter);
         }
 
+
+        // TODO: maybe refactor this, so the payload gets created somewhere else
         /// <summary> Catch the UploadException! </summary>
         public static async Task<UploadResult> InitiateUpload(Image image, HSSettings settingsContext, Uploader uploader, ImageFormat? format, ITransferProgressReporter? progressReporter)
         {
-            if (image == null)
-                throw new ArgumentNullException(nameof(image));
+            format ??= GetImageFormat(image, settingsContext);
+            using var payload = new ImageUploadPayload(image, format);
+            return await InitiateUpload(payload, settingsContext, uploader, progressReporter);
+        }
+
+        public static async Task<UploadResult> InitiateUpload(IUploadPayload payload, HSSettings settingsContext, Uploader uploader, ITransferProgressReporter? progressReporter)
+        {
+            if (payload == null)
+                throw new ArgumentNullException(nameof(payload));
             if (settingsContext == null)
                 throw new ArgumentNullException(nameof(settingsContext));
             if (uploader == null)
                 throw new ArgumentNullException(nameof(uploader));
-
-            format ??= GetImageFormat(image, settingsContext);
 
             try
             {
@@ -51,7 +68,6 @@ namespace HolzShots.Net
                     await uploader.InvokeSettingsAsync(SettingsInvocationContexts.OnUse).ConfigureAwait(true);
                 }
 
-                using var payload = new ImageUploadPayload(image, format);
                 using var ui = new UploadUI(payload, uploader, progressReporter);
                 try
                 {
@@ -78,7 +94,7 @@ namespace HolzShots.Net
             }
         }
 
-        public static UploaderEntry? GetImageServiceForSettingsContext(HSSettings context, UploaderManager uploaderManager)
+        public static UploaderEntry? GetUploadServiceForSettingsContext(HSSettings context, UploaderManager uploaderManager)
         {
             Debug.Assert(context != null);
             Debug.Assert(uploaderManager != null);
