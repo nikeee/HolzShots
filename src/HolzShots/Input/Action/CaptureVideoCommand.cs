@@ -77,6 +77,8 @@ namespace HolzShots.Input.Actions
 
         public async Task Invoke(IReadOnlyDictionary<string, string> parameters, HSSettings settingsContext)
         {
+            // TODO: If it is the first time the user invokes this command, we want to tell him that he can stop recording by pressing the same button again
+
             if (IsScreenRecorderRunning())
             {
                 // We allow only one instance running. If the user invokes this task another time, he likely wanted to stop recording.
