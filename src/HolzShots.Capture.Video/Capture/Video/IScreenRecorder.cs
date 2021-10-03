@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -20,5 +18,8 @@ namespace HolzShots.Capture.Video
         int FramesPerSecond,
         VideoCaptureFormat Format,
         string FilePath
-    );
+    )
+    {
+        public TimeSpan Duration => EndTime - StartTime;
+    }
 }

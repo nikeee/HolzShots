@@ -17,11 +17,9 @@ namespace HolzShots.Input.Actions
         private static CancellationTokenSource? _currentRecordingCts = null;
         private static bool _throwAwayResult = false;
 
-        public async Task Invoke(IReadOnlyDictionary<string, string> parameters, HSSettings settingsContext)
-        {
-            if (_currentRecordingCts != null)
-                return; // We only allow one recorder and use the CTS as a global indicator if a recorder is running
 
+        private async Task<ScreenRecording?> PerformScreenRecording(HSSettings settingsContext)
+        {
             _currentRecordingCts = new CancellationTokenSource();
             _throwAwayResult = false;
 
@@ -31,7 +29,7 @@ namespace HolzShots.Input.Actions
                 if (ffmpegPath == null)
                 {
                     MessageBox.Show("No FFmpeg available :("); // TODO: Make properly
-                    return; // Nope, the user did not select anything. Abort.
+                    return null; // Nope, the user did not select anything. Abort.
                 }
 
                 using var selectionBackground = Drawing.ScreenshotCreator.CaptureScreenshot(SystemInformation.VirtualScreen);
@@ -46,7 +44,7 @@ namespace HolzShots.Input.Actions
 
                 using var environmentPrevix = new IO.PrefixEnvironmentVariable(ffmpegPathToPrefix);
 
-                var tempRecordingDir = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName() + "-hs");
+                var tempRecordingDir = Path.Combine(Path.GetTempPath(), "hs-" + Path.GetRandomFileName());
                 Directory.CreateDirectory(tempRecordingDir);
 
                 var extension = GetFileExtensionForVideoFormat(settingsContext.VideoOutputFormat);
@@ -60,28 +58,37 @@ namespace HolzShots.Input.Actions
                 if (_throwAwayResult)
                 {
                     // The user cancelled the video recording
-
-                    if (File.Exists(targetFile))
+                    try
                     {
-                        try
-                        {
+                        if (File.Exists(targetFile))
                             File.Delete(targetFile);
-                        }
-                        catch
-                        {
-                            // Not _that_ important to handle this because it's in a temp dir and willb e gone on reboot anyway
-                        }
                     }
-                    return;
+                    catch
+                    {
+                        // Not _that_ important to handle this because it's in a temp dir and willb e gone on reboot anyway
+                    }
+                    return null;
                 }
-
-                // TODO: Process video
+                return recording;
             }
             finally
             {
                 _currentRecordingCts = null;
                 _throwAwayResult = false;
             }
+        }
+
+        public async Task Invoke(IReadOnlyDictionary<string, string> parameters, HSSettings settingsContext)
+        {
+            if (IsScreenRecorderRunning())
+                return; // We only allow one recorder and use the CTS as a global indicator if a recorder is running
+
+            var recording = await PerformScreenRecording(settingsContext);
+            if (recording == null)
+                return; // User likely cancelled recording
+
+            // TODO: Process video
+            // IO.HolzShotsPaths.OpenSelectedFileInExplorer(recording.FilePath);
         }
 
         private static string GetFileExtensionForVideoFormat(VideoCaptureFormat format) => format switch
