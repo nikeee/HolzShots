@@ -4,39 +4,15 @@ using System.Net.Http.Handlers;
 
 namespace HolzShots.Net
 {
-    public readonly struct UploadProgress : IEquatable<UploadProgress>
+    public record UploadProgress(MemSize Current, MemSize Total, UploadState State)
     {
-        public MemSize Current { get; }
-        public MemSize Total { get; }
         public uint ProgressPercentage => Total.ByteCount == 0 ? 100 : (uint)((float)Current.ByteCount / Total.ByteCount * 100);
-        public UploadState State { get; }
 
-        public UploadProgress(MemSize current, MemSize target, UploadState state)
+        public static UploadProgress FromHttpProgressEventArgs(HttpProgressEventArgs args)
         {
-            Current = current;
-            Total = target;
-            State = state;
+            Debug.Assert(args != null);
+            return new UploadProgress(new MemSize(args.BytesTransferred), new MemSize(args.TotalBytes ?? args.BytesTransferred), UploadState.Processing);
         }
-
-        internal UploadProgress(HttpProgressEventArgs eventArgs)
-        {
-            Debug.Assert(eventArgs != null);
-            Current = new MemSize(eventArgs.BytesTransferred);
-            Total = new MemSize(eventArgs.TotalBytes ?? eventArgs.BytesTransferred);
-            State = UploadState.Processing;
-        }
-
-        public override bool Equals(object? obj) => obj is UploadProgress other && other == this;
-        public bool Equals(UploadProgress other) => other == this;
-
-        public override int GetHashCode() => HashCode.Combine(State, Current, Total);
-
-        public static bool operator ==(UploadProgress left, UploadProgress right)
-        {
-            return left.State == right.State && left.Current == right.Current && left.Total == right.Total;
-        }
-
-        public static bool operator !=(UploadProgress left, UploadProgress right) => !(left == right);
     }
 
     public enum UploadState

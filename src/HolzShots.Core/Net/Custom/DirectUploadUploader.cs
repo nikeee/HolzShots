@@ -29,7 +29,7 @@ namespace HolzShots.Net.Custom
             using (var progressHandler = new ProgressMessageHandler(new HttpClientHandler()))
             using (var cl = new HttpClient(progressHandler))
             {
-                progressHandler.HttpSendProgress += (s, e) => progress.Report(new UploadProgress(e));
+                progressHandler.HttpSendProgress += (s, e) => progress.Report(UploadProgress.FromHttpProgressEventArgs(e));
                 cl.DefaultRequestHeaders.UserAgent.ParseAdd(SuggestedUserAgent);
                 using (var content = new MultipartFormDataContent())
                 {
