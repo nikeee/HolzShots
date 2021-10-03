@@ -10,56 +10,79 @@ namespace HolzShots.Capture.Video.FFmpeg
             var path = FFmpegManager.GetAbsoluteFFmpegPath(true);
             if (path != null)
             {
-                var quit = new TaskDialogButton("Quit HolzShots");
-
-                var downloadButton = new TaskDialogCommandLinkButton()
+                var setupResult = StartGuidedSetupDialog();
+                switch (setupResult)
                 {
-                    Text = "Download automatically",
-                    AllowCloseDialog = false,
-                };
-
-                var manualDownload = new TaskDialogCommandLinkButton()
-                {
-                    Text = "Set up manually",
-                    AllowCloseDialog = false,
-                };
-
-                var cancel = new TaskDialogCommandLinkButton()
-                {
-                    Text = "Cancel",
-                    AllowCloseDialog = false,
-                };
-
-                var initialPage = GetInitialPage(downloadButton, manualDownload);
-
-                var manualSetupPage = GetManualSetupPage(quit);
-                manualDownload.Click += (s, e) => initialPage.Navigate(manualSetupPage);
-
-                var errorPage = GetErrorPage();
-                cancel.Click += (s, e) => initialPage.Navigate(errorPage);
-
-                var downloadPage = GetDownloadPage();
-                downloadButton.Click += (s, e) => initialPage.Navigate(downloadPage);
-
-                var answer = TaskDialog.ShowDialog(initialPage);
-                if (answer == TaskDialogButton.OK)
-                {
-                    // The user clicked "Cancel" and then OK
-                    return null; // TODO: Proper cancellation
+                    case AfterSetupAction.QuitApplication:
+                        // TODO: HolzShotsApplication.Instance.Terminate();
+                        break;
+                    case AfterSetupAction.AbortRecording:
+                        break;
+                    case AfterSetupAction.Coninue:
+                        break;
+                    default:
+                        break;
                 }
-                if (answer == downloadButton)
-                {
-                    // TODO: fetch ffmpeg with download progress
-                    return "";
-                }
-                if (answer == quit)
-                {
-
-                }
-
             }
+
             return path!;
         }
+
+        static AfterSetupAction StartGuidedSetupDialog()
+        {
+            var quit = new TaskDialogButton("Quit HolzShots");
+
+            var downloadButton = new TaskDialogCommandLinkButton()
+            {
+                Text = "Download automatically",
+                AllowCloseDialog = false,
+            };
+
+            var manualDownload = new TaskDialogCommandLinkButton()
+            {
+                Text = "Set up manually",
+                AllowCloseDialog = false,
+            };
+
+            var doNothing = new TaskDialogCommandLinkButton()
+            {
+                Text = "Cancel",
+                AllowCloseDialog = false,
+            };
+
+            var initialPage = GetInitialPage(downloadButton, manualDownload);
+
+            var manualSetupPage = GetManualSetupPage(quit);
+            manualDownload.Click += (s, e) => initialPage.Navigate(manualSetupPage);
+
+            var noActionPage = GetnoActionPage();
+            doNothing.Click += (s, e) => initialPage.Navigate(noActionPage);
+
+            var downloadPage = GetDownloadPage();
+            downloadButton.Click += (s, e) => initialPage.Navigate(downloadPage);
+
+            var answer = TaskDialog.ShowDialog(initialPage);
+            if (answer == TaskDialogButton.OK)
+            {
+                // The user clicked "Cancel" and then OK (or an error ocurred)
+                return AfterSetupAction.AbortRecording;
+            }
+
+            if (answer == quit)
+                return AfterSetupAction.QuitApplication;
+
+            // TODO: Handle download errors
+
+            return AfterSetupAction.Coninue;
+        }
+
+        enum AfterSetupAction
+        {
+            QuitApplication,
+            AbortRecording,
+            Coninue,
+        }
+
 
         private static void DownloadButton_Click(object? sender, System.EventArgs e)
         {
@@ -88,7 +111,7 @@ namespace HolzShots.Capture.Video.FFmpeg
             DefaultButton = downloadButton,
         };
 
-        static TaskDialogPage GetErrorPage() => new()
+        static TaskDialogPage GetnoActionPage() => new()
         {
             Icon = TaskDialogIcon.Information,
             AllowMinimize = true,
@@ -167,6 +190,18 @@ namespace HolzShots.Capture.Video.FFmpeg
                 TaskDialogButton.Continue,
             },
             DefaultButton = TaskDialogButton.Continue,
+        };
+
+        static TaskDialogPage GetDownloadFailedPage() => new()
+        {
+            AllowMinimize = true,
+            Caption = "FFmpeg missing",
+            Heading = "Something went wrong",
+            Text = "We tried our best, but somehow it did not work out.\n\nThe screen recording that you tried to do will now abort.\n\nTry installing FFmpeg manually or to restart HolzShots.",
+            Buttons = new TaskDialogButtonCollection() {
+                TaskDialogButton.OK,
+            },
+            DefaultButton = TaskDialogButton.OK,
         };
     }
 }
