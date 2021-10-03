@@ -180,6 +180,10 @@ namespace HolzShots
         {
             await _application.CommandManager.Dispatch<SelectAreaCommand>(UserSettings.Current).ConfigureAwait(true);
         }
+        private async void StartScreenRecording(object sender, EventArgs e)
+        {
+            await _application.CommandManager.Dispatch<CaptureVideoCommand>(UserSettings.Current).ConfigureAwait(true);
+        }
         private async void OpenSettingsJson(object sender, EventArgs e)
         {
             await _application.CommandManager.Dispatch<OpenSettingsJsonCommand>(UserSettings.Current).ConfigureAwait(true);
