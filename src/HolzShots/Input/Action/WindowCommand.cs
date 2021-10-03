@@ -36,9 +36,9 @@ namespace HolzShots.Input.Actions
             if (Native.User32.IsIconic(windowHandle))
                 return default;
 
-            using (ProcessPriorityRequest prio = new ProcessPriorityRequest())
-            using (var shotSet = GetShotSet(windowHandle, includeMargin))
-                return Screenshot.FromWindow(shotSet);
+            using var prio = new ProcessPriorityRequest();
+            using var shotSet = GetShotSet(windowHandle, includeMargin);
+            return Screenshot.FromWindow(shotSet);
         }
 
         private static WindowScreenshotSet GetShotSet(IntPtr windowHandle, bool includeMargin)
