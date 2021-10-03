@@ -4,7 +4,6 @@ using System.Linq;
 using System.IO;
 using System.Text;
 using System.Diagnostics;
-using System.Threading.Tasks;
 
 namespace HolzShots.Capture.Video.FFmpeg
 {
@@ -27,6 +26,10 @@ namespace HolzShots.Capture.Video.FFmpeg
         /// <param name="allowPathEnvVar">If true, will be preferred if present</param>
         public static string GetAbsoluteFFmpegPath(bool allowPathEnvVar)
         {
+            // We may ship with ffmpeg out of the box, so just return that if that is available
+            if (File.Exists(FFmpegExecutable))
+                return Path.GetFullPath(FFmpegExecutable);
+
             if (allowPathEnvVar)
             {
                 var ffmpegInPath = GetFFmpegAbsolutePathFromEnvVar();
