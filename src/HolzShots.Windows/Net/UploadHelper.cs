@@ -35,13 +35,15 @@ namespace HolzShots.Windows.Net
                     (new UploadResultForm(result, settingsContext)).Show();
                     break;
                 case UploadHandlingAction.CopyToClipboard:
-                    if (ClipboardEx.SetText(result.Url))
                     {
-                        NotificationManager.ShowCopyConfirmation(result.Url);
-                    }
-                    else if (settingsContext.ShowCopyConfirmation)
-                    {
-                        NotificationManager.CopyingFailed(result.Url);
+                        var success = ClipboardEx.SetText(result.Url);
+                        if (settingsContext.ShowCopyConfirmation)
+                        {
+                            if (success)
+                                NotificationManager.ShowCopyConfirmation(result.Url);
+                            else
+                                NotificationManager.CopyingFailed(result.Url);
+                        }
                     }
                     break;
                 case UploadHandlingAction.None:

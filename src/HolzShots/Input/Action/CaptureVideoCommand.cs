@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using HolzShots.Capture.Video;
 using HolzShots.Capture.Video.FFmpeg;
 using HolzShots.Composition.Command;
+using HolzShots.Windows.Forms;
 
 namespace HolzShots.Input.Actions
 {
@@ -94,11 +95,65 @@ namespace HolzShots.Input.Actions
 
             if (settingsContext.SaveToLocalDisk)
             {
+                // TODO: Support file patterns like with screenshots
+                // TODO: Unify screenshot and video recording saving stuff
 
+                // This is a temporary solution to get an MVP working
+
+                var destDir = settingsContext.ExpandedSavePath;
+                if (!Directory.Exists(destDir))
+                    IO.HolzShotsPaths.EnsureDirectory(destDir);
+
+
+                var timestamp = recording.StartTime.ToString(System.Globalization.DateTimeFormatInfo.InvariantInfo.SortableDateTimePattern);
+                var targetFileName = timestamp.Replace(':', '-') + "-" + Path.GetFileName(recording.FilePath);
+
+                var fullTargetFilePath = Path.Combine(destDir, targetFileName);
+
+                File.Move(recording.FilePath, fullTargetFilePath);
+
+                recording = recording with { FilePath = fullTargetFilePath };
             }
 
-            // TODO: Process video
-            // IO.HolzShotsPaths.OpenSelectedFileInExplorer(recording.FilePath);
+
+
+            switch (settingsContext.ActionAfterVideoCapture)
+            {
+                case VideoCaptureHandlingAction.Upload:
+                    return; // TODO
+                case VideoCaptureHandlingAction.CopyFile:
+                    {
+                        var success = ClipboardEx.SetFiles(recording.FilePath);
+                        if (settingsContext.ShowCopyConfirmation)
+                        {
+                            if (success)
+                                NotificationManager.ShowFileCopyConfirmation();
+                            else
+                                NotificationManager.CopyingFileFailed();
+                        }
+                    }
+                    break;
+                case VideoCaptureHandlingAction.CopyFilePath:
+                    {
+                        var success = ClipboardEx.SetText(recording.FilePath);
+                        if (settingsContext.ShowCopyConfirmation)
+                        {
+                            if (success)
+                                NotificationManager.ShowFilePathCopyConfirmation();
+                            else
+                                NotificationManager.CopyingFilePathFailed();
+                        }
+                    }
+                    break;
+                case VideoCaptureHandlingAction.ShowInExplorer:
+                    IO.HolzShotsPaths.OpenSelectedFileInExplorer(recording.FilePath);
+                    return;
+                case VideoCaptureHandlingAction.OpenInDefaultApp:
+                    Process.Start(recording.FilePath);
+                    return;
+                case VideoCaptureHandlingAction.None: return;
+                default: throw new ArgumentException("Unhandled VideoCaptureHandlingAction: " + settingsContext.ActionAfterVideoCapture);
+            }
         }
 
         private static string GetFileExtensionForVideoFormat(VideoCaptureFormat format) => format switch
