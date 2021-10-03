@@ -37,11 +37,11 @@ namespace HolzShots.Net
     }
 
 #if DEBUG
-    public sealed class ConsoleProgressReporter : IUploadProgressReporter
+    public sealed class ConsoleProgressReporter : ITransferProgressReporter
     {
         public void CloseProgress() { }
         public void ShowProgress() { }
-        public void UpdateProgress(UploadProgress progress, Speed<MemSize> speed)
+        public void UpdateProgress(TransferProgress progress, Speed<MemSize> speed)
         {
             Console.WriteLine($"{progress.State}; {progress.Current}/{progress.Total} ({progress.ProgressPercentage}%) with {speed.ItemsPerSecond}");
         }
