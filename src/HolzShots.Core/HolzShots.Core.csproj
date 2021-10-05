@@ -25,15 +25,12 @@
     <ProjectReference Include="..\HolzShots.Common\HolzShots.Common.csproj" />
     <ProjectReference Include="..\HolzShots.Input.Keyboard\HolzShots.Input.Keyboard.csproj" />
 
-    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="5.0.3" />
-
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Semver" Version="2.0.6" />
     <PackageReference Include="nud2dlib-x64" Version="2.0.0" />
     <PackageReference Include="System.Composition" Version="5.0.1" />
     <PackageReference Include="System.ComponentModel.Composition" Version="5.0.0" />
     <PackageReference Include="System.Net.Http.Formatting.Extension" Version="5.2.3" />
-    <PackageReference Include="ThisAssembly" Version="1.0.8" />
   </ItemGroup>
 
   <ItemGroup>
