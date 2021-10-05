@@ -8,7 +8,7 @@ namespace HolzShots.Capture.Video.FFmpeg
     /// <summary> Ref: https://stackoverflow.com/a/46497896 </summary>
     public static class StreamExtensions
     {
-        public static async Task CopyToAsync(this Stream source, Stream destination, int bufferSize, IProgress<long> progress = null, CancellationToken cancellationToken = default)
+        public static async Task CopyToAsync(this Stream source, Stream destination, int bufferSize, IProgress<long>? progress = default, CancellationToken? cancellationToken = default)
         {
             if (source == null)
                 throw new ArgumentNullException(nameof(source));
