@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Net.Http;
 using System.IO;
 using System.Threading.Tasks;
@@ -10,10 +10,11 @@ namespace HolzShots.Capture.Video.FFmpeg
     /// <summary> Ref: https://stackoverflow.com/a/46497896 </summary>
     public static class HttpClientExtensions
     {
-        public static async Task DownloadAsync(this HttpClient client, string requestUri, Stream destination, IProgress<TransferProgress>? progress = default, CancellationToken? cancellationToken = default)
+        public static async Task DownloadAsync(this HttpClient client, string requestUri, Stream destination, IProgress<TransferProgress>? progress = default, CancellationToken cancellationToken = default)
         {
             // Get the http headers first to examine the content length
             using var response = await client.GetAsync(requestUri, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
+
             var contentLength = response.Content.Headers.ContentLength;
 
             using var download = await response.Content.ReadAsStreamAsync(cancellationToken);

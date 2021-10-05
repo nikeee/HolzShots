@@ -40,7 +40,7 @@ namespace HolzShots.Drawing
         /// <summary>Retrieves the Encoder Information for a given MimeType</summary>
         /// <param name="mimeType">String: Mimetype</param>
         /// <returns>ImageCodecInfo: Mime info or null if not found</returns>
-        private static ImageCodecInfo GetEncoderInfo(string mimeType) => ImageCodecInfo.GetImageEncoders().FirstOrDefault(e => e.MimeType == mimeType);
+        private static ImageCodecInfo? GetEncoderInfo(string mimeType) => ImageCodecInfo.GetImageEncoders().FirstOrDefault(e => e.MimeType == mimeType);
 
         /// <summary>Save an Image as a Jpeg with a given compression</summary>
         /// <param name="image">Image to save</param>
