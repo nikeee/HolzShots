@@ -7,20 +7,29 @@ namespace HolzShots.IO
         /// <summary> Same as System.IO.File.Move, but appends (2) etc when the file already exists. </summary>
         public static void MoveAndRenameInsteadOfOverwrite(string sourceFileName, string destFileName)
         {
+            var newDestFileName = GetUnusedFileNameFromCandidate(destFileName);
+            File.Move(sourceFileName, newDestFileName);
+        }
+
+        /// <summary>Gets a file name that is not in use by appending (2) etc when the file name already exists. </summary>
+        public static string GetUnusedFileNameFromCandidate(string fileName)
+        {
             // This entire code contains race conditions that may fail under extreme circumstances.
             // But we're living with this and do not implement atomic operations.
-            if (!File.Exists(destFileName))
-            {
-                File.Move(sourceFileName, destFileName);
-                return;
-            }
+            if (!File.Exists(fileName))
+                return fileName;
+
 
             int copyCounter = 1;
-            while (File.Exists(DeriveFileNameWithCounter(destFileName, copyCounter)))
+            string unusedFileName;
+            do
+            {
+                unusedFileName = DeriveFileNameWithCounter(fileName, copyCounter);
                 ++copyCounter;
+            }
+            while (File.Exists(unusedFileName));
 
-            var newDestFileName = DeriveFileNameWithCounter(destFileName, copyCounter);
-            File.Move(sourceFileName, newDestFileName);
+            return unusedFileName;
         }
 
         public static string DeriveFileNameWithCounter(string fileName, int counter)
