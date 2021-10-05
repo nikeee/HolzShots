@@ -50,7 +50,7 @@ namespace HolzShots
             "            You can use string formats that .NET supports: https://docs.microsoft.com/en-us/dotnet/api/system.datetime.tostring\n" +
             "            For example, you can use <date:s>\n" +
             "\n" +
-            "    <size:width>, <size:height>: The width or the height of the image.\n"
+            "    <size:width>, <size:height>: The width or the height of the image."
         )]
         [JsonProperty("image.save.pattern")]
         public string SaveImageFileNamePattern { get; private set; } = "Screenshot-<Date>";
@@ -73,7 +73,7 @@ namespace HolzShots
             "            You can use string formats that .NET supports: https://docs.microsoft.com/en-us/dotnet/api/system.datetime.tostring\n" +
             "            For example, you can use <date:s>\n" +
             "\n" +
-            "    <size:width>, <size:height>: The width or the height of the video.\n"
+            "    <size:width>, <size:height>: The width or the height of the video."
         )]
         [JsonProperty("video.save.pattern")]
         public string SaveVideoFileNamePattern { get; private set; } = "Recording-<Date>";
