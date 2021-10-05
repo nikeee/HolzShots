@@ -131,7 +131,7 @@ namespace HolzShots.Input.Actions
 
             try
             {
-                var ffmpegPath = FFmpegManagerUi.EnsureAvailableFFmpegAndPotentiallyStartSetup(settingsContext);
+                var ffmpegPath = EnsureAvailableFFmpegAndPotentiallyStartSetup(settingsContext);
                 if (ffmpegPath == null)
                     return null; // We don't have ffmpeg available and the user didn't do anything to fix this. We act like it was aborted.
 
@@ -178,6 +178,30 @@ namespace HolzShots.Input.Actions
             }
         }
 
+
+        public static string? EnsureAvailableFFmpegAndPotentiallyStartSetup(HSSettings settingsContext)
+        {
+            var path = FFmpegManager.GetAbsoluteFFmpegPath(true);
+            if (path != null)
+                return path;
+
+            var setupResult = FFmpegManagerUi.StartGuidedSetupDialog();
+            switch (setupResult)
+            {
+                case AfterSetupAction.QuitApplication:
+                    HolzShotsApplication.Instance.Terminate();
+                    return null;
+                case AfterSetupAction.AbortCurrentAction:
+                    return null;
+                case AfterSetupAction.Coninue:
+                    path = FFmpegManager.GetAbsoluteFFmpegPath(true);
+                    Debug.Assert(path != null);
+                    return path;
+                default:
+                    Debug.Fail("Unhandled AfterSetupAction: " + setupResult);
+                    throw new ArgumentException("Unhandled AfterSetupAction: " + setupResult);
+            }
+        }
 
         public static bool IsScreenRecorderRunning() => _currentRecordingCts != null;
         public static void StopCurrentScreenRecorder(bool throwAwayResult)

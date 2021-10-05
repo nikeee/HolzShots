@@ -9,31 +9,7 @@ namespace HolzShots.Capture.Video.FFmpeg
 {
     public static class FFmpegManagerUi
     {
-        public static string? EnsureAvailableFFmpegAndPotentiallyStartSetup(HSSettings settingsContext)
-        {
-            var path = FFmpegManager.GetAbsoluteFFmpegPath(true);
-            if (path != null)
-                return path;
-
-            var setupResult = StartGuidedSetupDialog();
-            switch (setupResult)
-            {
-                case AfterSetupAction.QuitApplication:
-                    // TODO: HolzShotsApplication.Instance.Terminate();
-                    return null;
-                case AfterSetupAction.AbortCurrentAction:
-                    return null;
-                case AfterSetupAction.Coninue:
-                    path = FFmpegManager.GetAbsoluteFFmpegPath(true);
-                    Debug.Assert(path != null);
-                    return path;
-                default:
-                    Debug.Fail("Unhandled AfterSetupAction: " + setupResult);
-                    throw new ArgumentException("Unhandled AfterSetupAction: " + setupResult);
-            }
-        }
-
-        static AfterSetupAction StartGuidedSetupDialog()
+        public static AfterSetupAction StartGuidedSetupDialog()
         {
             var quit = new TaskDialogButton("Quit HolzShots");
 
@@ -86,12 +62,6 @@ namespace HolzShots.Capture.Video.FFmpeg
             return AfterSetupAction.Coninue;
         }
 
-        enum AfterSetupAction
-        {
-            QuitApplication,
-            AbortCurrentAction,
-            Coninue,
-        }
 
         static TaskDialogPage CreateInitialPage(TaskDialogButton downloadButton, TaskDialogButton manualDownload) => new()
         {
@@ -245,6 +215,13 @@ namespace HolzShots.Capture.Video.FFmpeg
             },
             DefaultButton = TaskDialogButton.OK,
         };
+    }
+
+    public enum AfterSetupAction
+    {
+        QuitApplication,
+        AbortCurrentAction,
+        Coninue,
     }
 
 
