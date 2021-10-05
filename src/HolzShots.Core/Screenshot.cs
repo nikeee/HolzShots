@@ -1,7 +1,9 @@
 using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Imaging;
 using HolzShots.Drawing;
+using HolzShots.IO.Naming;
 
 namespace HolzShots
 {
@@ -43,6 +45,8 @@ namespace HolzShots
 
         public static Screenshot FromImage(Bitmap image, Point cursorPosition, ScreenshotSource source) => new(image, DateTime.Now, cursorPosition, source, null, null);
         public static Screenshot FromImported(Bitmap image) => new(image, DateTime.Now, Point.Empty, ScreenshotSource.Unknown, null, null);
+
+        public FileMetadata GetFileMetadata(ImageFormat format) => new(Timestamp, Image.EstimateFileSize(format), Size);
 
         // public Image GetBitmapCopy() => _image.CloneDeep();
 

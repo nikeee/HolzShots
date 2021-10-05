@@ -72,13 +72,13 @@ namespace HolzShots.IO
             }
 
             var pattern = settingsContext.SaveFileNamePattern;
-
+            var patternData = shot.GetFileMetadata(format);
 
             string name;
-
             try
             {
-                name = FileNamePatternFormatter.GetFileNameFromPattern(shot, format, pattern);
+
+                name = FileNamePatternFormatter.GetFileNameFromPattern(patternData, pattern);
             }
             catch (PatternSyntaxException)
             {

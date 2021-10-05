@@ -12,7 +12,7 @@ namespace HolzShots.IO.Naming
         private static readonly Dictionary<string, Func<string, PatternItem>> _availablePatterns = new Dictionary<string, Func<string, PatternItem>>
         {
             ["text"] = str => new TextPatternItem(str),
-            ["image"] = str => new ImagePatternItem(str),
+            ["size"] = str => new SizePatternItem(str),
             ["date"] = str => new DatePatternItem(str),
         };
 

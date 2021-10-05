@@ -2,9 +2,9 @@ using System;
 
 namespace HolzShots.IO.Naming
 {
-    class ImagePatternItem : PatternItem
+    class SizePatternItem : PatternItem
     {
-        public ImagePatternItem(string propertyName)
+        public SizePatternItem(string propertyName)
             : base(propertyName)
         {
             if (propertyName == null)
@@ -27,7 +27,7 @@ namespace HolzShots.IO.Naming
         }
 
         public ImageInfoType InfoType { get; }
-        public override string Keyword => "Image";
+        public override string Keyword => "size";
         public override string TextRepresentation => $"<{Keyword}:{PropertyName}>";
         public override bool IsValid => InfoType != ImageInfoType.Invalid;
 
