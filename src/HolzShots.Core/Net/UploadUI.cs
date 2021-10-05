@@ -1,27 +1,21 @@
-#nullable enable
 using System;
 using System.Diagnostics;
-using System.Drawing;
-using System.Drawing.Imaging;
 using System.Threading;
 using System.Threading.Tasks;
-using HolzShots.Drawing;
 
 namespace HolzShots.Net
 {
     public sealed class UploadUI : IDisposable
     {
-        private readonly Image _image;
+        private readonly IUploadPayload _payload;
         private readonly Uploader _uploader;
-        private readonly ImageFormat _format;
-        private readonly IUploadProgressReporter? _progressReporter;
+        private readonly ITransferProgressReporter? _progressReporter;
 
-        private readonly SpeedCalculatorProgress _speedCalculator = new SpeedCalculatorProgress();
+        private readonly SpeedCalculatorProgress _speedCalculator = new();
 
-        public UploadUI(Image image, Uploader uploader, ImageFormat format, IUploadProgressReporter? progressReporter)
+        public UploadUI(IUploadPayload payload, Uploader uploader, ITransferProgressReporter? progressReporter)
         {
-            _image = image.CloneGifBug(format) ?? throw new ArgumentNullException(nameof(image));
-            _format = format ?? throw new ArgumentNullException(nameof(format));
+            _payload = payload ?? throw new ArgumentNullException(nameof(payload));
             _uploader = uploader ?? throw new ArgumentNullException(nameof(uploader));
             _progressReporter = progressReporter;
         }
@@ -30,45 +24,37 @@ namespace HolzShots.Net
         {
             Debug.Assert(!_speedCalculator.HasStarted);
 
-            using (var imageStream = _image.GetImageStream(_format))
+            using var payloadStream = _payload.GetStream();
+            Debug.Assert(payloadStream != null);
+
+            var cts = new CancellationTokenSource();
+
+            var speed = _speedCalculator;
+
+            if (_progressReporter != null)
+                speed.ProgressChanged += ProgressChanged;
+
+            speed.Start();
+
+            try
             {
-                Debug.Assert(imageStream != null);
-
-                var metadata = _format.GetExtensionAndMimeType();
-                Debug.Assert(!string.IsNullOrWhiteSpace(metadata.MimeType));
-                Debug.Assert(!string.IsNullOrWhiteSpace(metadata.FileExtension));
-
-                var suggestedFileName = ImageFormatInformation.GetSuggestedFileName(metadata);
-
-                var cts = new CancellationTokenSource();
-
-                var speed = _speedCalculator;
-
+                return await _uploader.InvokeAsync(payloadStream, _payload.GetSuggestedFileName(), _payload.MimeType, speed, cts.Token).ConfigureAwait(false);
+            }
+            finally
+            {
+                speed.Stop();
                 if (_progressReporter != null)
-                    speed.ProgressChanged += ProgressChanged;
-
-                speed.Start();
-
-                try
-                {
-                    return await _uploader.InvokeAsync(imageStream, suggestedFileName, metadata.MimeType, speed, cts.Token).ConfigureAwait(false);
-                }
-                finally
-                {
-                    speed.Stop();
-                    if (_progressReporter != null)
-                        speed.ProgressChanged -= ProgressChanged;
-                }
+                    speed.ProgressChanged -= ProgressChanged;
             }
         }
 
         public void ShowUI() => _progressReporter?.ShowProgress();
         public void HideUI() => _progressReporter?.CloseProgress();
-        private void ProgressChanged(object? sender, UploadProgress progress) => _progressReporter?.UpdateProgress(progress, _speedCalculator.CurrentSpeed);
+        private void ProgressChanged(object? sender, TransferProgress progress) => _progressReporter?.UpdateProgress(progress, _speedCalculator.CurrentSpeed);
 
         public void Dispose()
         {
-            _image.Dispose();
+            _payload.Dispose();
             _progressReporter?.Dispose();
         }
     }

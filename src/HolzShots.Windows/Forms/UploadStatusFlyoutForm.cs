@@ -7,7 +7,7 @@ using HolzShots.Threading;
 
 namespace HolzShots.Windows.Forms
 {
-    public partial class UploadStatusFlyoutForm : NoFocusedFlyoutForm, IUploadProgressReporter
+    public partial class UploadStatusFlyoutForm : NoFocusedFlyoutForm, ITransferProgressReporter
     {
         private readonly FlyoutAnimator _animator;
         public UploadStatusFlyoutForm()
@@ -55,7 +55,7 @@ namespace HolzShots.Windows.Forms
             stuffUploadedBar.InvokeIfNeeded(() => stuffUploadedBar.Value = (int)value);
         }
 
-        public void UpdateProgress(UploadProgress progress, Speed<MemSize> speed)
+        public void UpdateProgress(TransferProgress progress, Speed<MemSize> speed)
         {
             switch (progress.State)
             {

@@ -20,6 +20,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HolzShots", "src\HolzShots\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HolzShots.Input.Keyboard", "src\HolzShots.Input.Keyboard\HolzShots.Input.Keyboard.csproj", "{ACBCE641-F752-4119-9833-3C283968B8D2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HolzShots.Capture.Video", "src\HolzShots.Capture.Video\HolzShots.Capture.Video.csproj", "{2B266857-F1EF-4098-BE33-AD8AEE50AC4B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -62,6 +64,10 @@ Global
 		{ACBCE641-F752-4119-9833-3C283968B8D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ACBCE641-F752-4119-9833-3C283968B8D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ACBCE641-F752-4119-9833-3C283968B8D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B266857-F1EF-4098-BE33-AD8AEE50AC4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B266857-F1EF-4098-BE33-AD8AEE50AC4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B266857-F1EF-4098-BE33-AD8AEE50AC4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B266857-F1EF-4098-BE33-AD8AEE50AC4B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

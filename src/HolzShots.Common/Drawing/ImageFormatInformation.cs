@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -10,7 +9,6 @@ namespace HolzShots.Drawing
 {
     public static class ImageFormatInformation
     {
-        private const string DefaultUploadFileNameWithoutExtension = LibraryInformation.Name;
         private const string JpegMimeType = "image/jpeg";
 
         private static readonly IReadOnlyDictionary<ImageFormat, FormatDefinition> _imageFormats = new Dictionary<ImageFormat, FormatDefinition>()
@@ -42,7 +40,7 @@ namespace HolzShots.Drawing
         /// <summary>Retrieves the Encoder Information for a given MimeType</summary>
         /// <param name="mimeType">String: Mimetype</param>
         /// <returns>ImageCodecInfo: Mime info or null if not found</returns>
-        private static ImageCodecInfo GetEncoderInfo(string mimeType) => ImageCodecInfo.GetImageEncoders().FirstOrDefault(e => e.MimeType == mimeType);
+        private static ImageCodecInfo? GetEncoderInfo(string mimeType) => ImageCodecInfo.GetImageEncoders().FirstOrDefault(e => e.MimeType == mimeType);
 
         /// <summary>Save an Image as a Jpeg with a given compression</summary>
         /// <param name="image">Image to save</param>
@@ -62,23 +60,6 @@ namespace HolzShots.Drawing
 
             var encoderInfo = GetEncoderInfo(JpegMimeType);
             image.Save(destination, encoderInfo, encodeParameters);
-        }
-
-
-        public static string GetSuggestedFileName(ImageFormat format)
-        {
-            if (format == null)
-                throw new ArgumentNullException(nameof(format));
-
-            var ext = GetExtensionAndMimeType(format);
-            return GetSuggestedFileName(ext);
-        }
-        public static string GetSuggestedFileName(FormatDefinition extensionAndMimeType)
-        {
-            Debug.Assert(extensionAndMimeType.FileExtension != null);
-            Debug.Assert(extensionAndMimeType.MimeType != null);
-
-            return DefaultUploadFileNameWithoutExtension + extensionAndMimeType.FileExtension;
         }
     }
 

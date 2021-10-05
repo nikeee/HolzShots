@@ -75,7 +75,7 @@ Namespace UI
                 Text = settingsContext.ShotEditorTitle
             End If
 
-            _defaultUploader = UploadDispatcher.GetImageServiceForSettingsContext(settingsContext, _uploaders)
+            _defaultUploader = UploadDispatcher.GetUploadServiceForSettingsContext(settingsContext, _uploaders)
 
             SuspendLayout()
 

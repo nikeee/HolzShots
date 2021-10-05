@@ -6,11 +6,14 @@
 	// If you are using VSCode or a similar editor, you can always press "Ctrl+Space" to get more hints.
 	// There is more to configure! Also, you can comment in here!
 
-	"save.enable": true,
-
+	"save.enabled": true,
 	"save.path": "DEFAULT_SAVE_PATH", // Feel free to use environment variables like %USERPROFILE%, %ONEDRIVE% or %TMP%.
-	"save.pattern": "Screenshot-<Date>",
-	"save.autoDetectBestImageFormat": false,
+
+	"image.save.pattern": "Screenshot-<Date>",
+	"image.save.autoDetectBestImageFormat": false,
+
+	"video.format": "mp4",
+	"video.save.pattern": "Recording-<Date>",
 
 	"editor.closeAfterSave": false,
 
@@ -19,7 +22,7 @@
 	"upload.service": "DEFAULT_UPLOAD_SERVICE",
 	"upload.actionAfterUpload": "flyout",
 
-	"capture.actionAfterCapture": "openEditor",
+	"capture.image.actionAfterCapture": "openEditor",
 
 	"tray.doubleClickCommand": "openSettingsJson",
 
@@ -41,7 +44,7 @@
 		},
 		{
 			"enabled": true,
-			"keys": "F10",
+			"keys": "F9",
 			"command": {
 				"name": "captureEntireScreen",
 				"overrides": {
@@ -61,10 +64,23 @@
 			}
 		},
 		{
+			"enabled": true,
+			"keys": "F10",
+			"command": {
+				"name": "startOrStopVideoCapture",
+				"overrides": {
+					"capture.cursor": true
+
+					// If oyu want to save the video as a gif, you can override the video format:
+					// "video.format": "gif",
+				}
+			}
+		},
+		{
 			"enabled": false,
 			// List of available keys, combine them using "+":
 			// https://docs.microsoft.com/en-us/dotnet/api/system.windows.forms.keys?view=net-5.0
-			"keys": "Shift+F9",
+			"keys": "Shift+F8",
 			"command": "captureWindow"
 		}
 	]

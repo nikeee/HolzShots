@@ -3,7 +3,7 @@ namespace HolzShots.IO.Naming
 {
     class TextPatternItem : PatternItem
     {
-        public override string Keyword => "Text";
+        public override string Keyword => "text";
 
         public TextPatternItem(string propertyName)
             : base(propertyName)

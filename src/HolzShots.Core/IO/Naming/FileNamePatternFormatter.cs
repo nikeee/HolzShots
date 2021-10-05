@@ -1,17 +1,11 @@
 using System;
-using System.Drawing.Imaging;
-using HolzShots.Drawing;
 
 namespace HolzShots.IO.Naming
 {
     public static class FileNamePatternFormatter
     {
-        public static string GetFileNameFromPattern(Screenshot screenshot, ImageFormat format, string pattern)
+        public static string GetFileNameFromPattern(FileMetadata info, string pattern)
         {
-            if (screenshot == null)
-                throw new ArgumentNullException(nameof(screenshot));
-            if (format == null)
-                throw new ArgumentNullException(nameof(format));
             if (pattern == null)
                 throw new ArgumentNullException(nameof(pattern));
 
@@ -19,9 +13,6 @@ namespace HolzShots.IO.Naming
             if (parsedPattern.IsEmpty)
                 throw new PatternSyntaxException();
 
-            var fileSize = screenshot.Image.EstimateFileSize(format);
-
-            var info = new FileMetadata(screenshot.Timestamp, fileSize, screenshot.Size);
             return parsedPattern.FormatMetadata(info);
         }
     }

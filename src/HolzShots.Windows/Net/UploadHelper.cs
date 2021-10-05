@@ -9,9 +9,9 @@ namespace HolzShots.Windows.Net
 {
     public static class UploadHelper
     {
-        public static IUploadProgressReporter GetUploadReporterForCurrentSettingsContext(HSSettings settingsContext, IWin32Window parentWindow)
+        public static ITransferProgressReporter GetUploadReporterForCurrentSettingsContext(HSSettings settingsContext, IWin32Window parentWindow)
         {
-            var reporters = new List<IUploadProgressReporter>(4);
+            var reporters = new List<ITransferProgressReporter>(4);
 #if DEBUG
             reporters.Add(new ConsoleProgressReporter());
 #endif
@@ -35,13 +35,15 @@ namespace HolzShots.Windows.Net
                     (new UploadResultForm(result, settingsContext)).Show();
                     break;
                 case UploadHandlingAction.CopyToClipboard:
-                    if (ClipboardEx.SetText(result.Url))
                     {
-                        NotificationManager.ShowCopyConfirmation(result.Url);
-                    }
-                    else if (settingsContext.ShowCopyConfirmation)
-                    {
-                        NotificationManager.CopyingFailed(result.Url);
+                        var success = ClipboardEx.SetText(result.Url);
+                        if (settingsContext.ShowCopyConfirmation)
+                        {
+                            if (success)
+                                NotificationManager.ShowCopyConfirmation(result.Url);
+                            else
+                                NotificationManager.CopyingFailed(result.Url);
+                        }
                     }
                     break;
                 case UploadHandlingAction.None:

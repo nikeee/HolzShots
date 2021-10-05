@@ -47,6 +47,8 @@ namespace HolzShots
 
         #endregion
 
+        // TODO: Use static interface members for Parse and TryParse
+
         public static MemSize Parse(string value)
         {
             if (!TryParse(value, out var res)) // Cheap implementation

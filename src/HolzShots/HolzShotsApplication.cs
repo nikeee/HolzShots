@@ -64,6 +64,7 @@ namespace HolzShots
             CommandManager.RegisterCommand(new OpenSettingsJsonCommand());
             CommandManager.RegisterCommand(new UploadImageCommand());
             CommandManager.RegisterCommand(new EditImageCommand());
+            CommandManager.RegisterCommand(new CaptureVideoCommand());
         }
 
         internal async Task ProcessCommandLineArguments(string[] args)
@@ -114,6 +115,8 @@ namespace HolzShots
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(_form = new MainForm(this));
         }
+
+        public void Terminate() => _form.Terminate();
 
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
         public void OnInstanceInvoked(string[] args) => ProcessCommandLineArguments(args); // Not awaiting this Task, swallowing exceptions

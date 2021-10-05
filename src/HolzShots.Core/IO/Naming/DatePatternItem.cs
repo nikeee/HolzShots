@@ -9,7 +9,7 @@ namespace HolzShots.IO.Naming
             : base(propertyName)
         { }
 
-        public override string Keyword => "Date";
+        public override string Keyword => "date";
         public override string TextRepresentation => string.IsNullOrWhiteSpace(PropertyName) ? $"<{Keyword}:ISO>" : $"<{Keyword}:{PropertyName}>";
         public override bool IsValid
         {

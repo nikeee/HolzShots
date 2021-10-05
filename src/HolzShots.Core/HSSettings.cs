@@ -22,16 +22,17 @@ namespace HolzShots
         #region save.*
 
         [SettingsDoc(
-            "When enabled, every screenshot captured with HolzShots will be saved at the location specified under the setting \"save.path\".",
+            "When enabled, every screenshot and screen recording captured with HolzShots will be saved at the location specified under the setting \"save.path\".",
             Default = "true"
         )]
-        [JsonProperty("save.enable")]
-        public bool SaveImagesToLocalDisk { get; private set; } = true;
+        [JsonProperty("save.enabled")]
+        public bool SaveToLocalDisk { get; private set; } = true;
 
         /// <summary> Note: Use <see cref="ExpandedSavePath" /> internally when actually saving something. </summary>
         [SettingsDoc(
-            "The path where screenshots will be saved.\n" +
-            "Feel free to use environment variables like %USERPROFILE%, %ONEDRIVE% or %TMP%."
+            "The path where screenshots and screen recordings will be saved.\n" +
+            "Feel free to use environment variables like %USERPROFILE%, %ONEDRIVE% or %TMP%.\n\n" +
+            "If you want to save videos to a different path, override this setting in the respective command."
         )]
         [JsonProperty("save.path")]
         public string SavePath { get; private set; } = HolzShotsPaths.DefaultScreenshotSavePath;
@@ -40,11 +41,19 @@ namespace HolzShots
         [JsonIgnore]
         public string ExpandedSavePath => Environment.ExpandEnvironmentVariables(SavePath);
 
-        /// <summary>
-        /// TODO: Docs for available patterns
-        /// </summary>
-        [JsonProperty("save.pattern")]
-        public string SaveFileNamePattern { get; private set; } = "Screenshot-<Date>";
+        #endregion
+        #region image.save.*
+
+        [SettingsDoc(
+            "The pattern to use for saving images to the local disk. You can use several placeholders:\n" +
+            "    <date>: The date when the screenshot was created. Defaults to ISO 8601 (sortable) timestamps.\n" +
+            "            You can use string formats that .NET supports: https://docs.microsoft.com/en-us/dotnet/api/system.datetime.tostring\n" +
+            "            For example, you can use <date:s>\n" +
+            "\n" +
+            "    <size:width>, <size:height>: The width or the height of the image."
+        )]
+        [JsonProperty("image.save.pattern")]
+        public string SaveImageFileNamePattern { get; private set; } = "Screenshot-<Date>";
 
         [SettingsDoc(
             "When enabled, HolzShots decides whether a screenshot should be saved as a JPEG or a PNG.\n" +
@@ -52,8 +61,42 @@ namespace HolzShots
             "Saving it as a PNG is better suited for pictures of programs.\n" +
             "If JPG is used, there may be a loss in quality. PNG does not reduce the image quality, but uses more space when photos are saved."
         )]
-        [JsonProperty("save.autoDetectBestImageFormat")]
+        [JsonProperty("image.save.autoDetectBestImageFormat")]
         public bool EnableSmartFormatForSaving { get; private set; } = false;
+
+        #endregion
+        #region video.*
+
+        [SettingsDoc(
+            "The pattern to use for saving videos to the local disk. You can use several placeholders:\n" +
+            "    <date>: The date when the video recording was started. Defaults to ISO 8601 (sortable) timestamps.\n" +
+            "            You can use string formats that .NET supports: https://docs.microsoft.com/en-us/dotnet/api/system.datetime.tostring\n" +
+            "            For example, you can use <date:s>\n" +
+            "\n" +
+            "    <size:width>, <size:height>: The width or the height of the video."
+        )]
+        [JsonProperty("video.save.pattern")]
+        public string SaveVideoFileNamePattern { get; private set; } = "Recording-<Date>";
+
+        [SettingsDoc(
+            "File format that recorded screen captures will be saved as.",
+            Default = "mp4"
+        )]
+        [JsonProperty("video.format")]
+        public VideoCaptureFormat VideoOutputFormat { get; private set; } = VideoCaptureFormat.Mp4;
+
+        // TODO: This is pretty buggy right now. FPS > 30 seem to result in a glitchy video.
+        [SettingsDoc(
+            "Frame rate (FPS) for screen recordings. Min: 1; Max: 30",
+            Default = "30"
+        )]
+        [JsonProperty("video.framesPerSecond")]
+        public int VideoFrameRate
+        {
+            get => _videoFrameRate;
+            private set => _videoFrameRate = Math.Clamp(value, 1, 30);
+        }
+        private int _videoFrameRate = 30;
 
         #endregion
         #region editor.*
@@ -123,7 +166,7 @@ namespace HolzShots
             "If JPG is used, there may be a loss in quality. PNG does not reduce the image quality, but uses more space when photos are saved and therefore takes longer to upload.",
             Default = "false"
         )]
-        [JsonProperty("upload.autoDetectBestImageFormat")]
+        [JsonProperty("upload.image.autoDetectBestImageFormat")]
         public bool EnableSmartFormatForUpload { get; private set; } = false;
 
         [SettingsDoc(
@@ -145,11 +188,26 @@ namespace HolzShots
             "What to do after an image got captured. Possible options are:\n" +
             "    openEditor: Open the shot editor with the captured image\n" +
             "    upload: Upload the image to the specified default image service\n" +
+            "    saveAs: Show a dialog and choose where you want to save the image\n" +
+            "    copy: Copy the image data to clipboard; useful for pasting the image to popular messengers etc.\n" +
             "    none: Do nothing (this would only trigger saving the image to disk if this is enabled)",
             Default = "openEditor"
         )]
-        [JsonProperty("capture.actionAfterCapture")]
-        public CaptureHandlingAction ActionAfterCapture { get; private set; } = CaptureHandlingAction.OpenEditor;
+        [JsonProperty("capture.image.actionAfterCapture")]
+        public ImageCaptureHandlingAction ActionAfterImageCapture { get; private set; } = ImageCaptureHandlingAction.OpenEditor;
+
+        [SettingsDoc(
+            "What to do after capturing a screen recording. Possible options are:\n" +
+            "    upload: Upload the image to the specified default service\n" +
+            "    copyFile: Copy the file to the clipboard; useful for pasting the video to popular messengers etc.\n" +
+            "    copyFilePath: Copy the path to file to the clipboard.\n" +
+            "    showInExplorer: Opens an explorer window in the path of the saved video.\n" +
+            "    openInDefaultApp: Opens the video in the default application for that file type.\n" +
+            "    none: Do nothing (this would only trigger saving the video to disk if this is enabled)",
+            Default = "showInExplorer"
+        )]
+        [JsonProperty("capture.video.actionAfterCapture")]
+        public VideoCaptureHandlingAction ActionAfterVideoCapture { get; private set; } = VideoCaptureHandlingAction.ShowInExplorer;
 
         [SettingsDoc(
             "Opacity of the dimming effect when selection a region to capture. Must be between 0.0 and 1.0.",
@@ -174,6 +232,14 @@ namespace HolzShots
             private set => _captureDelay = MathF.Max(0.0f, value);
         }
         private float _captureDelay = 0.0f;
+
+        [SettingsDoc(
+            "Capture the mouse cursor.\n\n" +
+            "When recording videos and you want to have a cursor visible, make sure you set this option to \"true\" in the command overrides.",
+            Default = "false"
+        )]
+        [JsonProperty("capture.cursor")]
+        public bool CaptureCursor { get; private set; } = false;
 
         #endregion
         #region tray.*
@@ -252,7 +318,7 @@ namespace HolzShots
     }
 
     [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-    public enum CaptureHandlingAction
+    public enum ImageCaptureHandlingAction
     {
         [EnumMember(Value = "openEditor")]
         OpenEditor,
@@ -264,6 +330,34 @@ namespace HolzShots
         Copy,
         [EnumMember(Value = "none")]
         None,
+    }
+
+    [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    public enum VideoCaptureHandlingAction
+    {
+        [EnumMember(Value = "upload")]
+        Upload,
+        [EnumMember(Value = "copyFile")]
+        CopyFile,
+        [EnumMember(Value = "copyFilePath")]
+        CopyFilePath,
+        [EnumMember(Value = "showInExplorer")]
+        ShowInExplorer,
+        [EnumMember(Value = "openInDefaultApp")]
+        OpenInDefaultApp,
+        [EnumMember(Value = "none")]
+        None,
+    }
+
+    [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    public enum VideoCaptureFormat
+    {
+        [EnumMember(Value = "mp4")]
+        Mp4,
+        [EnumMember(Value = "webm")]
+        Webm,
+        [EnumMember(Value = "gif")]
+        Gif,
     }
 
     [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]

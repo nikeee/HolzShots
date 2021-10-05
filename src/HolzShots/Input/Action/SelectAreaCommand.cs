@@ -61,25 +61,21 @@ namespace HolzShots.Input.Actions
                 return null;
 
             using (ProcessPriorityRequest prio = new ProcessPriorityRequest())
+            using (var screen = ScreenshotCreator.CaptureScreenshot(SystemInformation.VirtualScreen))
+            using (var selector = AreaSelector.Create(screen, settingsContext))
             {
-                using (var screen = ScreenshotCreator.CaptureScreenshot(SystemInformation.VirtualScreen))
-                {
-                    using (var selector = AreaSelector.Create(screen, settingsContext))
-                    {
-                        var selectedArea = await selector.PromptSelectionAsync().ConfigureAwait(true);
+                var selectedArea = await selector.PromptSelectionAsync().ConfigureAwait(true);
 
-                        Debug.Assert(selectedArea.Width > 0);
-                        Debug.Assert(selectedArea.Height > 0);
+                Debug.Assert(selectedArea.Width > 0);
+                Debug.Assert(selectedArea.Height > 0);
 
-                        var selectedImage = new Bitmap(selectedArea.Width, selectedArea.Height);
+                var selectedImage = new Bitmap(selectedArea.Width, selectedArea.Height);
 
-                        using var g = Graphics.FromImage(selectedImage);
+                using var g = Graphics.FromImage(selectedImage);
 
-                        g.DrawImage(screen, new Rectangle(0, 0, selectedArea.Width, selectedArea.Height), selectedArea, GraphicsUnit.Pixel);
+                g.DrawImage(screen, new Rectangle(0, 0, selectedArea.Width, selectedArea.Height), selectedArea, GraphicsUnit.Pixel);
 
-                        return Screenshot.FromImage(selectedImage, Cursor.Position, ScreenshotSource.Selected);
-                    }
-                }
+                return Screenshot.FromImage(selectedImage, Cursor.Position, ScreenshotSource.Selected);
             }
         }
     }

@@ -42,7 +42,7 @@ namespace HolzShots.IO
         public static void HandleScreenshot(Screenshot shot, HSSettings settingsContext)
         {
             //  If Not settingsContext.SaveImagesToLocalDisk OrElse Not CheckSavePath(settingsContext) Then Return
-            if (!settingsContext.SaveImagesToLocalDisk)
+            if (!settingsContext.SaveToLocalDisk)
                 return;
 
             var ensuredDestinationDirectory = GetAndEnsureDestinationDirectory(settingsContext);
@@ -60,7 +60,7 @@ namespace HolzShots.IO
             Debug.Assert(shot.Image.GetType() == typeof(Bitmap));
 
             var screenshotImage = shot.Image.GetType() == typeof(Bitmap)
-                ? (Bitmap)shot.Image
+                ? shot.Image
                 : new Bitmap(shot.Image);
 
             if (settingsContext.EnableSmartFormatForSaving && ImageFormatAnalyser.IsOptimizable(screenshotImage))
@@ -71,14 +71,14 @@ namespace HolzShots.IO
                 Debug.Assert(!string.IsNullOrWhiteSpace(extensionAndMimeType.FileExtension));
             }
 
-            var pattern = settingsContext.SaveFileNamePattern;
-
+            var pattern = settingsContext.SaveImageFileNamePattern;
+            var patternData = shot.GetFileMetadata(format);
 
             string name;
-
             try
             {
-                name = FileNamePatternFormatter.GetFileNameFromPattern(shot, format, pattern);
+
+                name = FileNamePatternFormatter.GetFileNameFromPattern(patternData, pattern);
             }
             catch (PatternSyntaxException)
             {
@@ -89,7 +89,9 @@ namespace HolzShots.IO
             var fileName = Path.ChangeExtension(name, extensionAndMimeType.FileExtension);
             var path = GetAbsolutePath(ensuredDestinationDirectory, fileName);
 
-            screenshotImage.Save(path, format);
+            var freePath = FileEx.GetUnusedFileNameFromCandidate(path);
+
+            screenshotImage.Save(freePath, format);
 
             _lastFileName = path;
         }

@@ -8,7 +8,7 @@ namespace HolzShots.IO
     {
         private static readonly string SystemAppDataDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
         private static readonly string UserPicturesDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
-        private static readonly string AppDataDirectory = Path.Combine(SystemAppDataDirectory, LibraryInformation.Name);
+       public static string AppDataDirectory { get; }= Path.Combine(SystemAppDataDirectory, LibraryInformation.Name);
 
         public const string CustomUploadersFilePattern = "*.json";
 
@@ -17,7 +17,6 @@ namespace HolzShots.IO
         public static string PluginDirectory { get; } = Path.Combine(AppDataDirectory, "Plugin");
         public static string CustomUploadersDirectory { get; } = PluginDirectory;
         public static string UserSettingsFilePath { get; } = Path.Combine(AppDataDirectory, "settings.json");
-
         public static string DefaultScreenshotSavePath { get; } = Path.Combine(UserPicturesDirectory, LibraryInformation.Name);
 
         /// <summary>

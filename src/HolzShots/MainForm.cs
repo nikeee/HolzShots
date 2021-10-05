@@ -46,6 +46,9 @@ namespace HolzShots
         {
             EnsureInvisibility();
 
+            // This call is used to ensure that the working directory is the same as the directory of the .exe file
+            // The Startupmanager needs this.
+            // We also need this because we ship ffmpeg right out of the box, so we can assume that "ffmpeg.exe" just points to the version next to the executable
             EnvironmentEx.CurrentStartupManager.FixWorkingDirectory();
 
             Drawing.DpiAwarenessFix.SetDpiAwareness();
@@ -177,6 +180,10 @@ namespace HolzShots
         {
             await _application.CommandManager.Dispatch<SelectAreaCommand>(UserSettings.Current).ConfigureAwait(true);
         }
+        private async void StartScreenRecording(object sender, EventArgs e)
+        {
+            await _application.CommandManager.Dispatch<CaptureVideoCommand>(UserSettings.Current).ConfigureAwait(true);
+        }
         private async void OpenSettingsJson(object sender, EventArgs e)
         {
             await _application.CommandManager.Dispatch<OpenSettingsJsonCommand>(UserSettings.Current).ConfigureAwait(true);
@@ -215,7 +222,7 @@ namespace HolzShots
         private void OpenAbout(object sender, EventArgs e) => AboutForm.Instance.Show();
         private void OpenFeedbackAndIssues(object sender, EventArgs e) => IO.HolzShotsPaths.OpenLink(LibraryInformation.IssuesUrl);
 
-        private void ExitApplication(object sender, EventArgs e)
+        private void ExitApplication(object? sender, EventArgs e)
         {
             _forceClose = true;
 
@@ -242,6 +249,8 @@ namespace HolzShots
                 Application.Exit();
             }
         }
+
+        public void Terminate() => ExitApplication(null, new EventArgs());
 
         #endregion
     }

@@ -17,7 +17,7 @@ namespace HolzShots.Net.Custom
     {
         private const string ServiceName = "DirectUpload.net";
 
-        public override async Task<UploadResult> InvokeAsync(Stream data, string suggestedFileName, string mimeType, IProgress<UploadProgress> progress, CancellationToken cancellationToken)
+        public override async Task<UploadResult> InvokeAsync(Stream data, string suggestedFileName, string mimeType, IProgress<TransferProgress> progress, CancellationToken cancellationToken)
         {
             Debug.Assert(data != null);
             Debug.Assert(!string.IsNullOrEmpty(suggestedFileName));
@@ -29,7 +29,7 @@ namespace HolzShots.Net.Custom
             using (var progressHandler = new ProgressMessageHandler(new HttpClientHandler()))
             using (var cl = new HttpClient(progressHandler))
             {
-                progressHandler.HttpSendProgress += (s, e) => progress.Report(new UploadProgress(e));
+                progressHandler.HttpSendProgress += (s, e) => progress.Report(TransferProgress.FromHttpProgressEventArgs(e));
                 cl.DefaultRequestHeaders.UserAgent.ParseAdd(SuggestedUserAgent);
                 using (var content = new MultipartFormDataContent())
                 {

@@ -20,7 +20,7 @@ namespace HolzShots.Net
         public virtual SettingsInvocationContexts GetSupportedSettingsInvocations() => SettingsInvocationContexts.None;
 
         // TODO Return null if no action needed?
-        public abstract Task<UploadResult> InvokeAsync(Stream data, string suggestedFileName, string mimeType, IProgress<UploadProgress> progress, CancellationToken cancellationToken);
+        public abstract Task<UploadResult> InvokeAsync(Stream data, string suggestedFileName, string mimeType, IProgress<TransferProgress> progress, CancellationToken cancellationToken);
 
         public static bool HasEqualName(string a, string b) => a.Trim().Equals(b.Trim(), StringComparison.OrdinalIgnoreCase);
     }

@@ -4,7 +4,7 @@ using System.Diagnostics;
 namespace HolzShots.Net
 {
     // May move to other namespace?
-    public class SpeedCalculatorProgress : Progress<UploadProgress>
+    public class SpeedCalculatorProgress : Progress<TransferProgress>
     {
         private readonly object _lockObj = new object();
 
@@ -37,7 +37,7 @@ namespace HolzShots.Net
             }
         }
 
-        protected override void OnReport(UploadProgress value)
+        protected override void OnReport(TransferProgress value)
         {
             base.OnReport(value);
 

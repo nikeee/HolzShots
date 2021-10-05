@@ -20,7 +20,7 @@ namespace HolzShots.Net.Custom
             UploaderInfo = customData ?? throw new ArgumentNullException(nameof(customData));
         }
 
-        public async override Task<UploadResult> InvokeAsync(Stream data, string suggestedFileName, string mimeType, IProgress<UploadProgress> progress, CancellationToken cancellationToken)
+        public async override Task<UploadResult> InvokeAsync(Stream data, string suggestedFileName, string mimeType, IProgress<TransferProgress> progress, CancellationToken cancellationToken)
         {
             if (data == null)
                 throw new ArgumentNullException(nameof(data));
@@ -47,7 +47,7 @@ namespace HolzShots.Net.Custom
             using (var progressHandler = new ProgressMessageHandler(new HttpClientHandler()))
             using (var cl = new HttpClient(progressHandler))
             {
-                progressHandler.HttpSendProgress += (s, e) => progress.Report(new UploadProgress(e));
+                progressHandler.HttpSendProgress += (s, e) => progress.Report(TransferProgress.FromHttpProgressEventArgs(e));
 
                 // Add the user-agent first, so the user can override it
                 cl.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", SuggestedUserAgent);

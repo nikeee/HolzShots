@@ -5,7 +5,7 @@ using HolzShots.Net;
 
 namespace HolzShots.Windows.Forms
 {
-    public sealed class TaskbarItemProgressReporter : IUploadProgressReporter
+    public sealed class TaskbarItemProgressReporter : ITransferProgressReporter
     {
         private readonly bool _hasValidHandle;
         private readonly TaskbarProgressManager _progressManager;
@@ -23,7 +23,7 @@ namespace HolzShots.Windows.Forms
             if (_hasValidHandle)
                 _currentManagers.Add(_progressManager);
         }
-        public void UpdateProgress(UploadProgress progress, Speed<MemSize> speed)
+        public void UpdateProgress(TransferProgress progress, Speed<MemSize> speed)
         {
             if (!_hasValidHandle)
                 return;
