@@ -47,7 +47,10 @@ namespace HolzShots.Capture.Video
 
             var endTime = DateTime.Now;
 
-            return new ScreenRecording(startTime, endTime, rectangleOnScreenToCapture, captureCursor, fps, outputFormat, targetFile);
+            var fileInfo = new System.IO.FileInfo(targetFile);
+            var fileSize = new MemSize(fileInfo.Length);
+
+            return new ScreenRecording(startTime, endTime, rectangleOnScreenToCapture, captureCursor, fps, outputFormat, targetFile, fileSize);
         }
 
         public void Dispose()
