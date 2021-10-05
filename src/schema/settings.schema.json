@@ -87,17 +87,21 @@
 		},
 
 		"image.save.pattern": {
-			"description": "TODO",
+			"description": "The pattern to use for saving images to the local disk. You can use several placeholders:\n    <date>: The date when the screenshot was created. Defaults to ISO 8601 (sortable) timestamps.\n            You can use string formats that .NET supports: https://docs.microsoft.com/en-us/dotnet/api/system.datetime.tostring\n            For example, you can use <date:s>\n\n    <size:width>, <size:height>: The width or the height of the image.",
 			"type": "string",
 			"default": "Screenshot-<Date>"
 		},
-
 		"image.save.autoDetectBestImageFormat": {
 			"description": "When enabled, HolzShots decides whether a screenshot should be saved as a JPEG or a PNG.\nSome screenshots are better saved as JPGs, for example if they consist of a large photo.\nSaving it as a PNG is better suited for pictures of programs.\nIf JPG is used, there may be a loss in quality. PNG does not reduce the image quality, but uses more space when photos are saved.",
 			"type": "boolean",
 			"default": "false"
 		},
 
+		"video.save.pattern": {
+			"description": "The pattern to use for saving videos to the local disk. You can use several placeholders:\n    <date>: The date when the video recording was started. Defaults to ISO 8601 (sortable) timestamps.\n            You can use string formats that .NET supports: https://docs.microsoft.com/en-us/dotnet/api/system.datetime.tostring\n            For example, you can use <date:s>\n\n    <size:width>, <size:height>: The width or the height of the video.",
+			"type": "string",
+			"default": "Recording-<Date>"
+		},
 		"video.format": {
 			"description": "File format that recorded screen captures will be saved as.",
 			"$ref": "#/definitions/videoFormat",

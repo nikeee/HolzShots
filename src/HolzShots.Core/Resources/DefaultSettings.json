@@ -13,6 +13,7 @@
 	"image.save.autoDetectBestImageFormat": false,
 
 	"video.format": "mp4",
+	"video.save.pattern": "Recording-<Date>",
 
 	"editor.closeAfterSave": false,
 

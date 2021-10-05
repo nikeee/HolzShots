@@ -11,6 +11,7 @@ using HolzShots.Composition.Command;
 using HolzShots.Windows.Forms;
 using HolzShots.Net;
 using HolzShots.Windows.Net;
+using HolzShots.IO.Naming;
 
 namespace HolzShots.Input.Actions
 {
@@ -44,20 +45,20 @@ namespace HolzShots.Input.Actions
 
             if (settingsContext.SaveToLocalDisk)
             {
-                // TODO: Support file patterns like with screenshots
-                // TODO: Unify screenshot and video recording saving stuff
-
-                // This is a temporary solution to get an MVP working
-
                 var destDir = settingsContext.ExpandedSavePath;
                 if (!Directory.Exists(destDir))
                     IO.HolzShotsPaths.EnsureDirectory(destDir);
 
+                var extensionWithDot = Path.GetExtension(recording.FilePath);
 
-                var timestamp = recording.StartTime.ToString(System.Globalization.DateTimeFormatInfo.InvariantInfo.SortableDateTimePattern);
-                var targetFileName = timestamp.Replace(':', '-') + "-" + Path.GetFileName(recording.FilePath);
+                var targetFileName = FileNamePatternFormatter.GetFileNameFromPattern(
+                    recording.GetMetadata(),
+                    settingsContext.SaveVideoFileNamePattern
+                );
 
-                var fullTargetFilePath = Path.Combine(destDir, targetFileName);
+                var fullTargetFilePath = Path.Combine(destDir, targetFileName + extensionWithDot);
+
+                // TODO: Check if the target file already exists and append (2) if needed
 
                 File.Move(recording.FilePath, fullTargetFilePath);
 
@@ -124,7 +125,7 @@ namespace HolzShots.Input.Actions
             }
         }
 
-        private async Task<ScreenRecording?> PerformScreenRecording(HSSettings settingsContext)
+        private static async Task<ScreenRecording?> PerformScreenRecording(HSSettings settingsContext)
         {
             _currentRecordingCts = new CancellationTokenSource();
             _throwAwayResult = false;

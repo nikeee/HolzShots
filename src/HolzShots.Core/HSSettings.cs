@@ -44,11 +44,16 @@ namespace HolzShots
         #endregion
         #region image.save.*
 
-        /// <summary>
-        /// TODO: Docs for available patterns
-        /// </summary>
+        [SettingsDoc(
+            "The pattern to use for saving images to the local disk. You can use several placeholders:\n" +
+            "    <date>: The date when the screenshot was created. Defaults to ISO 8601 (sortable) timestamps.\n" +
+            "            You can use string formats that .NET supports: https://docs.microsoft.com/en-us/dotnet/api/system.datetime.tostring\n" +
+            "            For example, you can use <date:s>\n" +
+            "\n" +
+            "    <size:width>, <size:height>: The width or the height of the image.\n"
+        )]
         [JsonProperty("image.save.pattern")]
-        public string SaveFileNamePattern { get; private set; } = "Screenshot-<Date>";
+        public string SaveImageFileNamePattern { get; private set; } = "Screenshot-<Date>";
 
         [SettingsDoc(
             "When enabled, HolzShots decides whether a screenshot should be saved as a JPEG or a PNG.\n" +
@@ -61,6 +66,17 @@ namespace HolzShots
 
         #endregion
         #region video.*
+
+        [SettingsDoc(
+            "The pattern to use for saving videos to the local disk. You can use several placeholders:\n" +
+            "    <date>: The date when the video recording was started. Defaults to ISO 8601 (sortable) timestamps.\n" +
+            "            You can use string formats that .NET supports: https://docs.microsoft.com/en-us/dotnet/api/system.datetime.tostring\n" +
+            "            For example, you can use <date:s>\n" +
+            "\n" +
+            "    <size:width>, <size:height>: The width or the height of the video.\n"
+        )]
+        [JsonProperty("video.save.pattern")]
+        public string SaveVideoFileNamePattern { get; private set; } = "Recording-<Date>";
 
         [SettingsDoc(
             "File format that recorded screen captures will be saved as.",

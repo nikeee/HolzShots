@@ -71,7 +71,7 @@ namespace HolzShots.IO
                 Debug.Assert(!string.IsNullOrWhiteSpace(extensionAndMimeType.FileExtension));
             }
 
-            var pattern = settingsContext.SaveFileNamePattern;
+            var pattern = settingsContext.SaveImageFileNamePattern;
             var patternData = shot.GetFileMetadata(format);
 
             string name;
