@@ -11,6 +11,7 @@ using HolzShots.Composition.Command;
 using HolzShots.Windows.Forms;
 using HolzShots.Net;
 using HolzShots.Windows.Net;
+using HolzShots.IO;
 using HolzShots.IO.Naming;
 
 namespace HolzShots.Input.Actions
@@ -58,9 +59,7 @@ namespace HolzShots.Input.Actions
 
                 var fullTargetFilePath = Path.Combine(destDir, targetFileName + extensionWithDot);
 
-                // TODO: Check if the target file already exists and append (2) if needed
-
-                File.Move(recording.FilePath, fullTargetFilePath);
+                FileEx.MoveAndRenameInsteadOfOverwrite(recording.FilePath, fullTargetFilePath);
 
                 recording = recording with { FilePath = fullTargetFilePath };
             }

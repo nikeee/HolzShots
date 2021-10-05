@@ -1,23 +1,19 @@
-using System;
 using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HolzShots.IO
 {
     public static class FileEx
     {
         /// <summary> Same as System.IO.File.Move, but appends (2) etc when the file already exists. </summary>
-        private static void MoveAndRenameInsteadOfOverwrite(string sourceFileName, string destFileName)
+        public static void MoveAndRenameInsteadOfOverwrite(string sourceFileName, string destFileName)
         {
+            // This entire code contains race conditions that may fail under extreme circumstances.
+            // But we're living with this and do not implement atomic operations.
             if (!File.Exists(destFileName))
             {
                 File.Move(sourceFileName, destFileName);
                 return;
             }
-
 
             int copyCounter = 1;
             while (File.Exists(DeriveFileNameWithCounter(destFileName, copyCounter)))
