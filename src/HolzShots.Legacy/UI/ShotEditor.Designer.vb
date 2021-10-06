@@ -18,7 +18,7 @@ Namespace UI
             Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(ShotEditor))
             Me.ShareStrip = New System.Windows.Forms.ToolStrip()
             Me.UploadToHoster = New System.Windows.Forms.ToolStripSplitButton()
-            Me.save_btn = New System.Windows.Forms.ToolStripButton()
+            Me.SaveButton = New System.Windows.Forms.ToolStripButton()
             Me.PrintingDocument = New System.Drawing.Printing.PrintDocument()
             Me.PrinterDialog = New System.Windows.Forms.PrintDialog()
             Me.EditStrip = New System.Windows.Forms.ToolStrip()
@@ -52,17 +52,17 @@ Namespace UI
             Me.GlassLabel2 = New System.Windows.Forms.Label()
             Me.GlassLabel3 = New System.Windows.Forms.Label()
             Me.Pinsel_Width_Zensursula = New System.Windows.Forms.Label()
-            Me.Zensursula_Viewer = New HolzShots.Windows.Forms.ColorSelector()
+            Me.ZensursulaColorSelector = New HolzShots.Windows.Forms.ColorSelector()
             Me.ZensursulaBar = New System.Windows.Forms.TrackBar()
             Me.MarkerSettingsPanel = New System.Windows.Forms.Panel()
             Me.GlassLabel4 = New System.Windows.Forms.Label()
             Me.GlassLabel1 = New System.Windows.Forms.Label()
             Me.Pinsel_Width_Marker = New System.Windows.Forms.Label()
-            Me.Marker_Viewer = New HolzShots.Windows.Forms.ColorSelector()
+            Me.MarkerColorSelector = New HolzShots.Windows.Forms.ColorSelector()
             Me.MarkerBar = New System.Windows.Forms.TrackBar()
             Me.EraserSettingsPanel = New System.Windows.Forms.Panel()
             Me.GlassLabel5 = New System.Windows.Forms.Label()
-            Me.Eraser_Diameter = New System.Windows.Forms.Label()
+            Me.EraserDiameterLabel = New System.Windows.Forms.Label()
             Me.EraserBar = New System.Windows.Forms.TrackBar()
             Me.EllipseSettingsPanel = New System.Windows.Forms.Panel()
             Me.EllipseOrRectangleBox = New System.Windows.Forms.PictureBox()
@@ -71,7 +71,7 @@ Namespace UI
             Me.GlassLabel8 = New System.Windows.Forms.Label()
             Me.GlassLabel7 = New System.Windows.Forms.Label()
             Me.Ellipse_Width = New System.Windows.Forms.Label()
-            Me.Ellipse_Viewer = New HolzShots.Windows.Forms.ColorSelector()
+            Me.EllipseColorSelector = New HolzShots.Windows.Forms.ColorSelector()
             Me.EllipseBar = New System.Windows.Forms.TrackBar()
             Me.BrightenSettingsPanel = New System.Windows.Forms.Panel()
             Me.BigColorViewer1 = New HolzShots.Windows.Forms.ColorView()
@@ -98,7 +98,7 @@ Namespace UI
             Me.CopyToClipboard = New System.Windows.Forms.ToolStripButton()
             Me.Print = New System.Windows.Forms.ToolStripButton()
             Me.ThePanel = New HolzShots.UI.Controls.PaintPanel()
-            Me.autoCloseShotEditor = New System.Windows.Forms.CheckBox()
+            Me.AutoCloseShotEditor = New System.Windows.Forms.CheckBox()
             Me.ShareStrip.SuspendLayout()
             Me.EditStrip.SuspendLayout()
             Me.CensorSettingsPanel.SuspendLayout()
@@ -131,7 +131,7 @@ Namespace UI
             Me.ShareStrip.GripMargin = New System.Windows.Forms.Padding(0)
             Me.ShareStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
             Me.ShareStrip.ImageScalingSize = New System.Drawing.Size(32, 32)
-            Me.ShareStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.UploadToHoster, Me.save_btn})
+            Me.ShareStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.UploadToHoster, Me.SaveButton})
             Me.ShareStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow
             Me.ShareStrip.Location = New System.Drawing.Point(5, 4)
             Me.ShareStrip.Name = "ShareStrip"
@@ -154,23 +154,23 @@ Namespace UI
             Me.UploadToHoster.Size = New System.Drawing.Size(52, 36)
             Me.UploadToHoster.Text = "Upload to {0} (Strg+Q)"
             '
-            'save_btn
+            'SaveButton
             '
-            Me.save_btn.BackColor = System.Drawing.Color.Transparent
-            Me.save_btn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-            Me.save_btn.Image = Global.HolzShots.My.Resources.Resources.saveMedium
-            Me.save_btn.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
-            Me.save_btn.ImageTransparentColor = System.Drawing.Color.Magenta
-            Me.save_btn.Margin = New System.Windows.Forms.Padding(5)
-            Me.save_btn.Name = "save_btn"
-            Me.save_btn.Size = New System.Drawing.Size(36, 36)
-            Me.save_btn.Text = "Save (Ctrl+Shift+S)"
+            Me.SaveButton.BackColor = System.Drawing.Color.Transparent
+            Me.SaveButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.SaveButton.Image = Global.HolzShots.My.Resources.Resources.saveMedium
+            Me.SaveButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
+            Me.SaveButton.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.SaveButton.Margin = New System.Windows.Forms.Padding(5)
+            Me.SaveButton.Name = "SaveButton"
+            Me.SaveButton.Size = New System.Drawing.Size(36, 36)
+            Me.SaveButton.Text = "Save (Ctrl+Shift+S)"
             '
-            'DruckTeil
+            'PrintingDocument
             '
             Me.PrintingDocument.DocumentName = "Screenshot"
             '
-            'DruckDialog
+            'PrinterDialog
             '
             Me.PrinterDialog.UseEXDialog = True
             '
@@ -443,7 +443,7 @@ Namespace UI
             Me.CensorSettingsPanel.Controls.Add(Me.GlassLabel2)
             Me.CensorSettingsPanel.Controls.Add(Me.GlassLabel3)
             Me.CensorSettingsPanel.Controls.Add(Me.Pinsel_Width_Zensursula)
-            Me.CensorSettingsPanel.Controls.Add(Me.Zensursula_Viewer)
+            Me.CensorSettingsPanel.Controls.Add(Me.ZensursulaColorSelector)
             Me.CensorSettingsPanel.Controls.Add(Me.ZensursulaBar)
             Me.CensorSettingsPanel.Location = New System.Drawing.Point(481, 0)
             Me.CensorSettingsPanel.Name = "CensorSettingsPanel"
@@ -456,16 +456,16 @@ Namespace UI
             Me.GlassLabel2.AutoSize = True
             Me.GlassLabel2.Location = New System.Drawing.Point(49, 52)
             Me.GlassLabel2.Name = "GlassLabel2"
-            Me.GlassLabel2.Size = New System.Drawing.Size(39, 13)
+            Me.GlassLabel2.Size = New System.Drawing.Size(39, 15)
             Me.GlassLabel2.TabIndex = 26
             Me.GlassLabel2.Text = "Color:"
             '
             'GlassLabel3
             '
             Me.GlassLabel3.AutoSize = True
-            Me.GlassLabel3.Location = New System.Drawing.Point(18, 11)
+            Me.GlassLabel3.Location = New System.Drawing.Point(46, 11)
             Me.GlassLabel3.Name = "GlassLabel3"
-            Me.GlassLabel3.Size = New System.Drawing.Size(70, 13)
+            Me.GlassLabel3.Size = New System.Drawing.Size(42, 15)
             Me.GlassLabel3.TabIndex = 22
             Me.GlassLabel3.Text = "Width:"
             '
@@ -474,18 +474,18 @@ Namespace UI
             Me.Pinsel_Width_Zensursula.AutoSize = True
             Me.Pinsel_Width_Zensursula.Location = New System.Drawing.Point(187, 11)
             Me.Pinsel_Width_Zensursula.Name = "Pinsel_Width_Zensursula"
-            Me.Pinsel_Width_Zensursula.Size = New System.Drawing.Size(13, 13)
+            Me.Pinsel_Width_Zensursula.Size = New System.Drawing.Size(13, 15)
             Me.Pinsel_Width_Zensursula.TabIndex = 21
             Me.Pinsel_Width_Zensursula.Text = "a"
             '
-            'Zensursula_Viewer
+            'ZensursulaColorSelector
             '
-            Me.Zensursula_Viewer.Color = System.Drawing.Color.Black
-            Me.Zensursula_Viewer.Cursor = System.Windows.Forms.Cursors.Hand
-            Me.Zensursula_Viewer.Location = New System.Drawing.Point(93, 50)
-            Me.Zensursula_Viewer.Name = "Zensursula_Viewer"
-            Me.Zensursula_Viewer.Size = New System.Drawing.Size(20, 20)
-            Me.Zensursula_Viewer.TabIndex = 19
+            Me.ZensursulaColorSelector.Color = System.Drawing.Color.Black
+            Me.ZensursulaColorSelector.Cursor = System.Windows.Forms.Cursors.Hand
+            Me.ZensursulaColorSelector.Location = New System.Drawing.Point(93, 50)
+            Me.ZensursulaColorSelector.Name = "ZensursulaColorSelector"
+            Me.ZensursulaColorSelector.Size = New System.Drawing.Size(20, 20)
+            Me.ZensursulaColorSelector.TabIndex = 19
             '
             'ZensursulaBar
             '
@@ -504,9 +504,9 @@ Namespace UI
             Me.MarkerSettingsPanel.Controls.Add(Me.GlassLabel4)
             Me.MarkerSettingsPanel.Controls.Add(Me.GlassLabel1)
             Me.MarkerSettingsPanel.Controls.Add(Me.Pinsel_Width_Marker)
-            Me.MarkerSettingsPanel.Controls.Add(Me.Marker_Viewer)
+            Me.MarkerSettingsPanel.Controls.Add(Me.MarkerColorSelector)
             Me.MarkerSettingsPanel.Controls.Add(Me.MarkerBar)
-            Me.MarkerSettingsPanel.Location = New System.Drawing.Point(427, 236)
+            Me.MarkerSettingsPanel.Location = New System.Drawing.Point(193, 98)
             Me.MarkerSettingsPanel.Name = "MarkerSettingsPanel"
             Me.MarkerSettingsPanel.Size = New System.Drawing.Size(273, 82)
             Me.MarkerSettingsPanel.TabIndex = 20
@@ -517,16 +517,16 @@ Namespace UI
             Me.GlassLabel4.AutoSize = True
             Me.GlassLabel4.Location = New System.Drawing.Point(42, 51)
             Me.GlassLabel4.Name = "GlassLabel4"
-            Me.GlassLabel4.Size = New System.Drawing.Size(39, 13)
+            Me.GlassLabel4.Size = New System.Drawing.Size(39, 15)
             Me.GlassLabel4.TabIndex = 26
             Me.GlassLabel4.Text = "Color:"
             '
             'GlassLabel1
             '
             Me.GlassLabel1.AutoSize = True
-            Me.GlassLabel1.Location = New System.Drawing.Point(11, 11)
+            Me.GlassLabel1.Location = New System.Drawing.Point(39, 11)
             Me.GlassLabel1.Name = "GlassLabel1"
-            Me.GlassLabel1.Size = New System.Drawing.Size(70, 13)
+            Me.GlassLabel1.Size = New System.Drawing.Size(42, 15)
             Me.GlassLabel1.TabIndex = 23
             Me.GlassLabel1.Text = "Width:"
             '
@@ -535,18 +535,18 @@ Namespace UI
             Me.Pinsel_Width_Marker.AutoSize = True
             Me.Pinsel_Width_Marker.Location = New System.Drawing.Point(193, 11)
             Me.Pinsel_Width_Marker.Name = "Pinsel_Width_Marker"
-            Me.Pinsel_Width_Marker.Size = New System.Drawing.Size(13, 13)
+            Me.Pinsel_Width_Marker.Size = New System.Drawing.Size(13, 15)
             Me.Pinsel_Width_Marker.TabIndex = 20
             Me.Pinsel_Width_Marker.Text = "a"
             '
-            'Marker_Viewer
+            'MarkerColorSelector
             '
-            Me.Marker_Viewer.Color = System.Drawing.Color.Black
-            Me.Marker_Viewer.Cursor = System.Windows.Forms.Cursors.Hand
-            Me.Marker_Viewer.Location = New System.Drawing.Point(93, 50)
-            Me.Marker_Viewer.Name = "Marker_Viewer"
-            Me.Marker_Viewer.Size = New System.Drawing.Size(20, 20)
-            Me.Marker_Viewer.TabIndex = 19
+            Me.MarkerColorSelector.Color = System.Drawing.Color.Black
+            Me.MarkerColorSelector.Cursor = System.Windows.Forms.Cursors.Hand
+            Me.MarkerColorSelector.Location = New System.Drawing.Point(93, 50)
+            Me.MarkerColorSelector.Name = "MarkerColorSelector"
+            Me.MarkerColorSelector.Size = New System.Drawing.Size(20, 20)
+            Me.MarkerColorSelector.TabIndex = 19
             '
             'MarkerBar
             '
@@ -563,9 +563,9 @@ Namespace UI
             '
             Me.EraserSettingsPanel.BackColor = System.Drawing.SystemColors.Control
             Me.EraserSettingsPanel.Controls.Add(Me.GlassLabel5)
-            Me.EraserSettingsPanel.Controls.Add(Me.Eraser_Diameter)
+            Me.EraserSettingsPanel.Controls.Add(Me.EraserDiameterLabel)
             Me.EraserSettingsPanel.Controls.Add(Me.EraserBar)
-            Me.EraserSettingsPanel.Location = New System.Drawing.Point(525, 176)
+            Me.EraserSettingsPanel.Location = New System.Drawing.Point(472, 98)
             Me.EraserSettingsPanel.Name = "EraserSettingsPanel"
             Me.EraserSettingsPanel.Size = New System.Drawing.Size(273, 82)
             Me.EraserSettingsPanel.TabIndex = 21
@@ -574,20 +574,20 @@ Namespace UI
             'GlassLabel5
             '
             Me.GlassLabel5.AutoSize = True
-            Me.GlassLabel5.Location = New System.Drawing.Point(4, 1)
+            Me.GlassLabel5.Location = New System.Drawing.Point(19, 36)
             Me.GlassLabel5.Name = "GlassLabel5"
-            Me.GlassLabel5.Size = New System.Drawing.Size(105, 13)
+            Me.GlassLabel5.Size = New System.Drawing.Size(58, 15)
             Me.GlassLabel5.TabIndex = 24
             Me.GlassLabel5.Text = "Diameter:"
             '
-            'Eraser_Diameter
+            'EraserDiameterLabel
             '
-            Me.Eraser_Diameter.AutoSize = True
-            Me.Eraser_Diameter.Location = New System.Drawing.Point(184, 34)
-            Me.Eraser_Diameter.Name = "Eraser_Diameter"
-            Me.Eraser_Diameter.Size = New System.Drawing.Size(13, 13)
-            Me.Eraser_Diameter.TabIndex = 21
-            Me.Eraser_Diameter.Text = "a"
+            Me.EraserDiameterLabel.AutoSize = True
+            Me.EraserDiameterLabel.Location = New System.Drawing.Point(184, 34)
+            Me.EraserDiameterLabel.Name = "EraserDiameterLabel"
+            Me.EraserDiameterLabel.Size = New System.Drawing.Size(13, 15)
+            Me.EraserDiameterLabel.TabIndex = 21
+            Me.EraserDiameterLabel.Text = "a"
             '
             'EraserBar
             '
@@ -609,9 +609,9 @@ Namespace UI
             Me.EllipseSettingsPanel.Controls.Add(Me.GlassLabel8)
             Me.EllipseSettingsPanel.Controls.Add(Me.GlassLabel7)
             Me.EllipseSettingsPanel.Controls.Add(Me.Ellipse_Width)
-            Me.EllipseSettingsPanel.Controls.Add(Me.Ellipse_Viewer)
+            Me.EllipseSettingsPanel.Controls.Add(Me.EllipseColorSelector)
             Me.EllipseSettingsPanel.Controls.Add(Me.EllipseBar)
-            Me.EllipseSettingsPanel.Location = New System.Drawing.Point(275, 306)
+            Me.EllipseSettingsPanel.Location = New System.Drawing.Point(193, 186)
             Me.EllipseSettingsPanel.Name = "EllipseSettingsPanel"
             Me.EllipseSettingsPanel.Size = New System.Drawing.Size(273, 82)
             Me.EllipseSettingsPanel.TabIndex = 21
@@ -630,7 +630,7 @@ Namespace UI
             Me.GlassLabel12.AutoSize = True
             Me.GlassLabel12.Location = New System.Drawing.Point(119, 50)
             Me.GlassLabel12.Name = "GlassLabel12"
-            Me.GlassLabel12.Size = New System.Drawing.Size(46, 13)
+            Me.GlassLabel12.Size = New System.Drawing.Size(41, 15)
             Me.GlassLabel12.TabIndex = 27
             Me.GlassLabel12.Text = "Mode:"
             '
@@ -646,18 +646,18 @@ Namespace UI
             'GlassLabel8
             '
             Me.GlassLabel8.AutoSize = True
-            Me.GlassLabel8.Location = New System.Drawing.Point(41, 50)
+            Me.GlassLabel8.Location = New System.Drawing.Point(42, 50)
             Me.GlassLabel8.Name = "GlassLabel8"
-            Me.GlassLabel8.Size = New System.Drawing.Size(39, 13)
+            Me.GlassLabel8.Size = New System.Drawing.Size(39, 15)
             Me.GlassLabel8.TabIndex = 25
             Me.GlassLabel8.Text = "Color:"
             '
             'GlassLabel7
             '
             Me.GlassLabel7.AutoSize = True
-            Me.GlassLabel7.Location = New System.Drawing.Point(11, 15)
+            Me.GlassLabel7.Location = New System.Drawing.Point(41, 10)
             Me.GlassLabel7.Name = "GlassLabel7"
-            Me.GlassLabel7.Size = New System.Drawing.Size(69, 13)
+            Me.GlassLabel7.Size = New System.Drawing.Size(42, 15)
             Me.GlassLabel7.TabIndex = 24
             Me.GlassLabel7.Text = "Width:"
             '
@@ -666,18 +666,18 @@ Namespace UI
             Me.Ellipse_Width.AutoSize = True
             Me.Ellipse_Width.Location = New System.Drawing.Point(193, 15)
             Me.Ellipse_Width.Name = "Ellipse_Width"
-            Me.Ellipse_Width.Size = New System.Drawing.Size(13, 13)
+            Me.Ellipse_Width.Size = New System.Drawing.Size(13, 15)
             Me.Ellipse_Width.TabIndex = 22
             Me.Ellipse_Width.Text = "a"
             '
-            'Ellipse_Viewer
+            'EllipseColorSelector
             '
-            Me.Ellipse_Viewer.Color = System.Drawing.Color.Black
-            Me.Ellipse_Viewer.Cursor = System.Windows.Forms.Cursors.Hand
-            Me.Ellipse_Viewer.Location = New System.Drawing.Point(87, 50)
-            Me.Ellipse_Viewer.Name = "Ellipse_Viewer"
-            Me.Ellipse_Viewer.Size = New System.Drawing.Size(20, 20)
-            Me.Ellipse_Viewer.TabIndex = 19
+            Me.EllipseColorSelector.Color = System.Drawing.Color.Black
+            Me.EllipseColorSelector.Cursor = System.Windows.Forms.Cursors.Hand
+            Me.EllipseColorSelector.Location = New System.Drawing.Point(87, 50)
+            Me.EllipseColorSelector.Name = "EllipseColorSelector"
+            Me.EllipseColorSelector.Size = New System.Drawing.Size(20, 20)
+            Me.EllipseColorSelector.TabIndex = 19
             '
             'EllipseBar
             '
@@ -697,7 +697,7 @@ Namespace UI
             Me.BrightenSettingsPanel.Controls.Add(Me.BlackWhiteTracker)
             Me.BrightenSettingsPanel.Controls.Add(Me.GlassLabel9)
             Me.BrightenSettingsPanel.Controls.Add(Me.GlassLabel6)
-            Me.BrightenSettingsPanel.Location = New System.Drawing.Point(486, 125)
+            Me.BrightenSettingsPanel.Location = New System.Drawing.Point(193, 274)
             Me.BrightenSettingsPanel.Name = "BrightenSettingsPanel"
             Me.BrightenSettingsPanel.Size = New System.Drawing.Size(273, 82)
             Me.BrightenSettingsPanel.TabIndex = 26
@@ -727,16 +727,16 @@ Namespace UI
             Me.GlassLabel9.AutoSize = True
             Me.GlassLabel9.Location = New System.Drawing.Point(201, 12)
             Me.GlassLabel9.Name = "GlassLabel9"
-            Me.GlassLabel9.Size = New System.Drawing.Size(57, 13)
+            Me.GlassLabel9.Size = New System.Drawing.Size(52, 15)
             Me.GlassLabel9.TabIndex = 26
             Me.GlassLabel9.Text = "Brighten"
             '
             'GlassLabel6
             '
             Me.GlassLabel6.AutoSize = True
-            Me.GlassLabel6.Location = New System.Drawing.Point(3, 12)
+            Me.GlassLabel6.Location = New System.Drawing.Point(31, 12)
             Me.GlassLabel6.Name = "GlassLabel6"
-            Me.GlassLabel6.Size = New System.Drawing.Size(64, 13)
+            Me.GlassLabel6.Size = New System.Drawing.Size(44, 15)
             Me.GlassLabel6.TabIndex = 25
             Me.GlassLabel6.Text = "Darken"
             '
@@ -748,7 +748,7 @@ Namespace UI
             Me.ArrowSettingsPanel.Controls.Add(Me.ArrowWidthLabel)
             Me.ArrowSettingsPanel.Controls.Add(Me.GlassLabel10)
             Me.ArrowSettingsPanel.Controls.Add(Me.ArrowColorviewer)
-            Me.ArrowSettingsPanel.Location = New System.Drawing.Point(397, 394)
+            Me.ArrowSettingsPanel.Location = New System.Drawing.Point(193, 362)
             Me.ArrowSettingsPanel.Name = "ArrowSettingsPanel"
             Me.ArrowSettingsPanel.Size = New System.Drawing.Size(273, 82)
             Me.ArrowSettingsPanel.TabIndex = 26
@@ -757,7 +757,6 @@ Namespace UI
             'ArrowWidthSlider
             '
             Me.ArrowWidthSlider.Location = New System.Drawing.Point(84, 3)
-            Me.ArrowWidthSlider.Minimum = 0
             Me.ArrowWidthSlider.Maximum = 100
             Me.ArrowWidthSlider.Name = "ArrowWidthSlider"
             Me.ArrowWidthSlider.Size = New System.Drawing.Size(112, 45)
@@ -768,9 +767,9 @@ Namespace UI
             'GlassLabel11
             '
             Me.GlassLabel11.AutoSize = True
-            Me.GlassLabel11.Location = New System.Drawing.Point(11, 10)
+            Me.GlassLabel11.Location = New System.Drawing.Point(46, 10)
             Me.GlassLabel11.Name = "GlassLabel11"
-            Me.GlassLabel11.Size = New System.Drawing.Size(70, 13)
+            Me.GlassLabel11.Size = New System.Drawing.Size(42, 15)
             Me.GlassLabel11.TabIndex = 28
             Me.GlassLabel11.Text = "Width:"
             '
@@ -779,16 +778,16 @@ Namespace UI
             Me.ArrowWidthLabel.AutoSize = True
             Me.ArrowWidthLabel.Location = New System.Drawing.Point(202, 3)
             Me.ArrowWidthLabel.Name = "ArrowWidthLabel"
-            Me.ArrowWidthLabel.Size = New System.Drawing.Size(13, 13)
+            Me.ArrowWidthLabel.Size = New System.Drawing.Size(13, 15)
             Me.ArrowWidthLabel.TabIndex = 27
             Me.ArrowWidthLabel.Text = "a"
             '
             'GlassLabel10
             '
             Me.GlassLabel10.AutoSize = True
-            Me.GlassLabel10.Location = New System.Drawing.Point(42, 50)
+            Me.GlassLabel10.Location = New System.Drawing.Point(44, 50)
             Me.GlassLabel10.Name = "GlassLabel10"
-            Me.GlassLabel10.Size = New System.Drawing.Size(39, 13)
+            Me.GlassLabel10.Size = New System.Drawing.Size(39, 15)
             Me.GlassLabel10.TabIndex = 25
             Me.GlassLabel10.Text = "Color:"
             '
@@ -806,7 +805,7 @@ Namespace UI
             Me.BlurSettingsPanel.BackColor = System.Drawing.SystemColors.Control
             Me.BlurSettingsPanel.Controls.Add(Me.GlassLabel14)
             Me.BlurSettingsPanel.Controls.Add(Me.BlurnessBar)
-            Me.BlurSettingsPanel.Location = New System.Drawing.Point(394, 346)
+            Me.BlurSettingsPanel.Location = New System.Drawing.Point(193, 450)
             Me.BlurSettingsPanel.Name = "BlurSettingsPanel"
             Me.BlurSettingsPanel.Size = New System.Drawing.Size(273, 82)
             Me.BlurSettingsPanel.TabIndex = 27
@@ -815,9 +814,9 @@ Namespace UI
             'GlassLabel14
             '
             Me.GlassLabel14.AutoSize = True
-            Me.GlassLabel14.Location = New System.Drawing.Point(30, 22)
+            Me.GlassLabel14.Location = New System.Drawing.Point(19, 17)
             Me.GlassLabel14.Name = "GlassLabel14"
-            Me.GlassLabel14.Size = New System.Drawing.Size(42, 13)
+            Me.GlassLabel14.Size = New System.Drawing.Size(58, 15)
             Me.GlassLabel14.TabIndex = 22
             Me.GlassLabel14.Text = "Diameter:"
             '
@@ -959,33 +958,34 @@ Namespace UI
             Me.ThePanel.EllipseColor = System.Drawing.Color.Empty
             Me.ThePanel.EllipseWidth = 0
             Me.ThePanel.EraserDiameter = 0
-            Me.ThePanel.Location = New System.Drawing.Point(0, 85)
+            Me.ThePanel.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
+            Me.ThePanel.Location = New System.Drawing.Point(0, 98)
             Me.ThePanel.Margin = New System.Windows.Forms.Padding(0)
             Me.ThePanel.MarkerColor = System.Drawing.Color.Empty
             Me.ThePanel.MarkerWidth = 0
             Me.ThePanel.Name = "ThePanel"
-            Me.ThePanel.Size = New System.Drawing.Size(759, 503)
+            Me.ThePanel.Size = New System.Drawing.Size(759, 490)
             Me.ThePanel.TabIndex = 12
             Me.ThePanel.ZensursulaColor = System.Drawing.Color.Empty
             Me.ThePanel.ZensursulaWidth = 0
             '
-            'autoCloseShotEditor
+            'AutoCloseShotEditor
             '
-            Me.autoCloseShotEditor.AutoSize = True
-            Me.autoCloseShotEditor.FlatStyle = System.Windows.Forms.FlatStyle.System
-            Me.autoCloseShotEditor.Location = New System.Drawing.Point(148, 9)
-            Me.autoCloseShotEditor.Name = "autoCloseShotEditor"
-            Me.autoCloseShotEditor.Size = New System.Drawing.Size(208, 18)
-            Me.autoCloseShotEditor.TabIndex = 32
-            Me.autoCloseShotEditor.Text = "Close ShotEditor when uploading"
-            Me.autoCloseShotEditor.UseVisualStyleBackColor = True
+            Me.AutoCloseShotEditor.AutoSize = True
+            Me.AutoCloseShotEditor.FlatStyle = System.Windows.Forms.FlatStyle.System
+            Me.AutoCloseShotEditor.Location = New System.Drawing.Point(148, 9)
+            Me.AutoCloseShotEditor.Name = "AutoCloseShotEditor"
+            Me.AutoCloseShotEditor.Size = New System.Drawing.Size(208, 20)
+            Me.AutoCloseShotEditor.TabIndex = 32
+            Me.AutoCloseShotEditor.Text = "Close ShotEditor when uploading"
+            Me.AutoCloseShotEditor.UseVisualStyleBackColor = True
             '
             'ShotEditor
             '
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
             Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(245, Byte), Integer), CType(CType(246, Byte), Integer), CType(CType(247, Byte), Integer))
             Me.ClientSize = New System.Drawing.Size(759, 613)
-            Me.Controls.Add(Me.autoCloseShotEditor)
+            Me.Controls.Add(Me.AutoCloseShotEditor)
             Me.Controls.Add(Me.ThePanel)
             Me.Controls.Add(Me.EditStrip)
             Me.Controls.Add(Me.CopyPrintToolStrip)
@@ -999,7 +999,7 @@ Namespace UI
             Me.Controls.Add(Me.CensorSettingsPanel)
             Me.Controls.Add(Me.ShareStrip)
             Me.Controls.Add(Me.BottomToolStrip)
-            Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+            Me.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
             Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
             Me.MinimumSize = New System.Drawing.Size(775, 200)
             Me.Name = "ShotEditor"
@@ -1043,7 +1043,7 @@ Namespace UI
 
         End Sub
         Friend WithEvents ShareStrip As System.Windows.Forms.ToolStrip
-        Friend WithEvents save_btn As System.Windows.Forms.ToolStripButton
+        Friend WithEvents SaveButton As System.Windows.Forms.ToolStripButton
         Friend WithEvents PrintingDocument As System.Drawing.Printing.PrintDocument
         Friend WithEvents PrinterDialog As System.Windows.Forms.PrintDialog
         Friend WithEvents EditStrip As System.Windows.Forms.ToolStrip
@@ -1073,18 +1073,18 @@ Namespace UI
         Friend WithEvents KreisToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Friend WithEvents CensorSettingsPanel As System.Windows.Forms.Panel
         Friend WithEvents ZensursulaBar As System.Windows.Forms.TrackBar
-        Friend WithEvents Zensursula_Viewer As HolzShots.Windows.Forms.ColorSelector
+        Friend WithEvents ZensursulaColorSelector As HolzShots.Windows.Forms.ColorSelector
         Friend WithEvents MarkerSettingsPanel As System.Windows.Forms.Panel
-        Friend WithEvents Marker_Viewer As HolzShots.Windows.Forms.ColorSelector
+        Friend WithEvents MarkerColorSelector As HolzShots.Windows.Forms.ColorSelector
         Friend WithEvents MarkerBar As System.Windows.Forms.TrackBar
         Friend WithEvents EraserSettingsPanel As System.Windows.Forms.Panel
         Friend WithEvents EraserBar As System.Windows.Forms.TrackBar
         Friend WithEvents EllipseSettingsPanel As System.Windows.Forms.Panel
-        Friend WithEvents Ellipse_Viewer As HolzShots.Windows.Forms.ColorSelector
+        Friend WithEvents EllipseColorSelector As HolzShots.Windows.Forms.ColorSelector
         Friend WithEvents EllipseBar As System.Windows.Forms.TrackBar
         Friend WithEvents Pinsel_Width_Zensursula As System.Windows.Forms.Label
         Friend WithEvents Pinsel_Width_Marker As System.Windows.Forms.Label
-        Friend WithEvents Eraser_Diameter As System.Windows.Forms.Label
+        Friend WithEvents EraserDiameterLabel As System.Windows.Forms.Label
         Friend WithEvents Ellipse_Width As System.Windows.Forms.Label
         Friend WithEvents GlassLabel2 As System.Windows.Forms.Label
         Friend WithEvents GlassLabel3 As System.Windows.Forms.Label
@@ -1124,6 +1124,6 @@ Namespace UI
         Friend WithEvents CopyPrintToolStrip As System.Windows.Forms.ToolStrip
         Friend WithEvents CopyToClipboard As System.Windows.Forms.ToolStripButton
         Friend WithEvents Print As System.Windows.Forms.ToolStripButton
-        Friend WithEvents autoCloseShotEditor As System.Windows.Forms.CheckBox
+        Friend WithEvents AutoCloseShotEditor As System.Windows.Forms.CheckBox
     End Class
 End Namespace
