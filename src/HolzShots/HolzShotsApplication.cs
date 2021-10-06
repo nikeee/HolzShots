@@ -113,7 +113,8 @@ namespace HolzShots
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(_form = new MainForm(this));
+            _form = new MainForm(this);
+            Application.Run(_form);
         }
 
         public void Terminate() => _form.Terminate();

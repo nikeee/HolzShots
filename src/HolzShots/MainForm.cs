@@ -27,8 +27,7 @@ namespace HolzShots
             _application = application ?? throw new ArgumentNullException(nameof(application));
 
             InitializeComponent();
-            EnsureInvisibility();
-
+            
             Text = "HolzShots";
             TrayIcon.ContextMenuStrip = trayMenu;
             trayMenu.Renderer = EnvironmentEx.GetToolStripRendererForCurrentTheme();
@@ -44,7 +43,9 @@ namespace HolzShots
 
         async Task InitializeWithAvailableWindowHandle()
         {
-            EnsureInvisibility();
+            // Quite some hack for making the main window invisible: https://stackoverflow.com/a/189045
+            // SetVisibleCore did not work for us :(
+            BeginInvoke(() => EnsureInvisibility());
 
             // This call is used to ensure that the working directory is the same as the directory of the .exe file
             // The Startupmanager needs this.
