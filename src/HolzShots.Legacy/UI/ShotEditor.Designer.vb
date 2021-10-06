@@ -456,16 +456,16 @@ Namespace UI
             Me.GlassLabel2.AutoSize = True
             Me.GlassLabel2.Location = New System.Drawing.Point(49, 52)
             Me.GlassLabel2.Name = "GlassLabel2"
-            Me.GlassLabel2.Size = New System.Drawing.Size(38, 13)
+            Me.GlassLabel2.Size = New System.Drawing.Size(39, 15)
             Me.GlassLabel2.TabIndex = 26
             Me.GlassLabel2.Text = "Color:"
             '
             'GlassLabel3
             '
             Me.GlassLabel3.AutoSize = True
-            Me.GlassLabel3.Location = New System.Drawing.Point(18, 11)
+            Me.GlassLabel3.Location = New System.Drawing.Point(46, 11)
             Me.GlassLabel3.Name = "GlassLabel3"
-            Me.GlassLabel3.Size = New System.Drawing.Size(42, 13)
+            Me.GlassLabel3.Size = New System.Drawing.Size(42, 15)
             Me.GlassLabel3.TabIndex = 22
             Me.GlassLabel3.Text = "Width:"
             '
@@ -474,7 +474,7 @@ Namespace UI
             Me.Pinsel_Width_Zensursula.AutoSize = True
             Me.Pinsel_Width_Zensursula.Location = New System.Drawing.Point(187, 11)
             Me.Pinsel_Width_Zensursula.Name = "Pinsel_Width_Zensursula"
-            Me.Pinsel_Width_Zensursula.Size = New System.Drawing.Size(13, 13)
+            Me.Pinsel_Width_Zensursula.Size = New System.Drawing.Size(13, 15)
             Me.Pinsel_Width_Zensursula.TabIndex = 21
             Me.Pinsel_Width_Zensursula.Text = "a"
             '
@@ -506,7 +506,7 @@ Namespace UI
             Me.MarkerSettingsPanel.Controls.Add(Me.Pinsel_Width_Marker)
             Me.MarkerSettingsPanel.Controls.Add(Me.MarkerColorSelector)
             Me.MarkerSettingsPanel.Controls.Add(Me.MarkerBar)
-            Me.MarkerSettingsPanel.Location = New System.Drawing.Point(427, 236)
+            Me.MarkerSettingsPanel.Location = New System.Drawing.Point(193, 98)
             Me.MarkerSettingsPanel.Name = "MarkerSettingsPanel"
             Me.MarkerSettingsPanel.Size = New System.Drawing.Size(273, 82)
             Me.MarkerSettingsPanel.TabIndex = 20
@@ -517,16 +517,16 @@ Namespace UI
             Me.GlassLabel4.AutoSize = True
             Me.GlassLabel4.Location = New System.Drawing.Point(42, 51)
             Me.GlassLabel4.Name = "GlassLabel4"
-            Me.GlassLabel4.Size = New System.Drawing.Size(38, 13)
+            Me.GlassLabel4.Size = New System.Drawing.Size(39, 15)
             Me.GlassLabel4.TabIndex = 26
             Me.GlassLabel4.Text = "Color:"
             '
             'GlassLabel1
             '
             Me.GlassLabel1.AutoSize = True
-            Me.GlassLabel1.Location = New System.Drawing.Point(11, 11)
+            Me.GlassLabel1.Location = New System.Drawing.Point(39, 11)
             Me.GlassLabel1.Name = "GlassLabel1"
-            Me.GlassLabel1.Size = New System.Drawing.Size(42, 13)
+            Me.GlassLabel1.Size = New System.Drawing.Size(42, 15)
             Me.GlassLabel1.TabIndex = 23
             Me.GlassLabel1.Text = "Width:"
             '
@@ -535,7 +535,7 @@ Namespace UI
             Me.Pinsel_Width_Marker.AutoSize = True
             Me.Pinsel_Width_Marker.Location = New System.Drawing.Point(193, 11)
             Me.Pinsel_Width_Marker.Name = "Pinsel_Width_Marker"
-            Me.Pinsel_Width_Marker.Size = New System.Drawing.Size(13, 13)
+            Me.Pinsel_Width_Marker.Size = New System.Drawing.Size(13, 15)
             Me.Pinsel_Width_Marker.TabIndex = 20
             Me.Pinsel_Width_Marker.Text = "a"
             '
@@ -565,7 +565,7 @@ Namespace UI
             Me.EraserSettingsPanel.Controls.Add(Me.GlassLabel5)
             Me.EraserSettingsPanel.Controls.Add(Me.EraserDiameterLabel)
             Me.EraserSettingsPanel.Controls.Add(Me.EraserBar)
-            Me.EraserSettingsPanel.Location = New System.Drawing.Point(525, 176)
+            Me.EraserSettingsPanel.Location = New System.Drawing.Point(472, 98)
             Me.EraserSettingsPanel.Name = "EraserSettingsPanel"
             Me.EraserSettingsPanel.Size = New System.Drawing.Size(273, 82)
             Me.EraserSettingsPanel.TabIndex = 21
@@ -574,9 +574,9 @@ Namespace UI
             'GlassLabel5
             '
             Me.GlassLabel5.AutoSize = True
-            Me.GlassLabel5.Location = New System.Drawing.Point(4, 1)
+            Me.GlassLabel5.Location = New System.Drawing.Point(19, 36)
             Me.GlassLabel5.Name = "GlassLabel5"
-            Me.GlassLabel5.Size = New System.Drawing.Size(56, 13)
+            Me.GlassLabel5.Size = New System.Drawing.Size(58, 15)
             Me.GlassLabel5.TabIndex = 24
             Me.GlassLabel5.Text = "Diameter:"
             '
@@ -585,7 +585,7 @@ Namespace UI
             Me.EraserDiameterLabel.AutoSize = True
             Me.EraserDiameterLabel.Location = New System.Drawing.Point(184, 34)
             Me.EraserDiameterLabel.Name = "EraserDiameterLabel"
-            Me.EraserDiameterLabel.Size = New System.Drawing.Size(13, 13)
+            Me.EraserDiameterLabel.Size = New System.Drawing.Size(13, 15)
             Me.EraserDiameterLabel.TabIndex = 21
             Me.EraserDiameterLabel.Text = "a"
             '
@@ -611,7 +611,7 @@ Namespace UI
             Me.EllipseSettingsPanel.Controls.Add(Me.Ellipse_Width)
             Me.EllipseSettingsPanel.Controls.Add(Me.EllipseColorSelector)
             Me.EllipseSettingsPanel.Controls.Add(Me.EllipseBar)
-            Me.EllipseSettingsPanel.Location = New System.Drawing.Point(275, 306)
+            Me.EllipseSettingsPanel.Location = New System.Drawing.Point(193, 186)
             Me.EllipseSettingsPanel.Name = "EllipseSettingsPanel"
             Me.EllipseSettingsPanel.Size = New System.Drawing.Size(273, 82)
             Me.EllipseSettingsPanel.TabIndex = 21
@@ -630,7 +630,7 @@ Namespace UI
             Me.GlassLabel12.AutoSize = True
             Me.GlassLabel12.Location = New System.Drawing.Point(119, 50)
             Me.GlassLabel12.Name = "GlassLabel12"
-            Me.GlassLabel12.Size = New System.Drawing.Size(40, 13)
+            Me.GlassLabel12.Size = New System.Drawing.Size(41, 15)
             Me.GlassLabel12.TabIndex = 27
             Me.GlassLabel12.Text = "Mode:"
             '
@@ -646,18 +646,18 @@ Namespace UI
             'GlassLabel8
             '
             Me.GlassLabel8.AutoSize = True
-            Me.GlassLabel8.Location = New System.Drawing.Point(41, 50)
+            Me.GlassLabel8.Location = New System.Drawing.Point(42, 50)
             Me.GlassLabel8.Name = "GlassLabel8"
-            Me.GlassLabel8.Size = New System.Drawing.Size(38, 13)
+            Me.GlassLabel8.Size = New System.Drawing.Size(39, 15)
             Me.GlassLabel8.TabIndex = 25
             Me.GlassLabel8.Text = "Color:"
             '
             'GlassLabel7
             '
             Me.GlassLabel7.AutoSize = True
-            Me.GlassLabel7.Location = New System.Drawing.Point(11, 15)
+            Me.GlassLabel7.Location = New System.Drawing.Point(41, 10)
             Me.GlassLabel7.Name = "GlassLabel7"
-            Me.GlassLabel7.Size = New System.Drawing.Size(42, 13)
+            Me.GlassLabel7.Size = New System.Drawing.Size(42, 15)
             Me.GlassLabel7.TabIndex = 24
             Me.GlassLabel7.Text = "Width:"
             '
@@ -666,7 +666,7 @@ Namespace UI
             Me.Ellipse_Width.AutoSize = True
             Me.Ellipse_Width.Location = New System.Drawing.Point(193, 15)
             Me.Ellipse_Width.Name = "Ellipse_Width"
-            Me.Ellipse_Width.Size = New System.Drawing.Size(13, 13)
+            Me.Ellipse_Width.Size = New System.Drawing.Size(13, 15)
             Me.Ellipse_Width.TabIndex = 22
             Me.Ellipse_Width.Text = "a"
             '
@@ -697,7 +697,7 @@ Namespace UI
             Me.BrightenSettingsPanel.Controls.Add(Me.BlackWhiteTracker)
             Me.BrightenSettingsPanel.Controls.Add(Me.GlassLabel9)
             Me.BrightenSettingsPanel.Controls.Add(Me.GlassLabel6)
-            Me.BrightenSettingsPanel.Location = New System.Drawing.Point(486, 125)
+            Me.BrightenSettingsPanel.Location = New System.Drawing.Point(193, 274)
             Me.BrightenSettingsPanel.Name = "BrightenSettingsPanel"
             Me.BrightenSettingsPanel.Size = New System.Drawing.Size(273, 82)
             Me.BrightenSettingsPanel.TabIndex = 26
@@ -727,16 +727,16 @@ Namespace UI
             Me.GlassLabel9.AutoSize = True
             Me.GlassLabel9.Location = New System.Drawing.Point(201, 12)
             Me.GlassLabel9.Name = "GlassLabel9"
-            Me.GlassLabel9.Size = New System.Drawing.Size(51, 13)
+            Me.GlassLabel9.Size = New System.Drawing.Size(52, 15)
             Me.GlassLabel9.TabIndex = 26
             Me.GlassLabel9.Text = "Brighten"
             '
             'GlassLabel6
             '
             Me.GlassLabel6.AutoSize = True
-            Me.GlassLabel6.Location = New System.Drawing.Point(3, 12)
+            Me.GlassLabel6.Location = New System.Drawing.Point(31, 12)
             Me.GlassLabel6.Name = "GlassLabel6"
-            Me.GlassLabel6.Size = New System.Drawing.Size(44, 13)
+            Me.GlassLabel6.Size = New System.Drawing.Size(44, 15)
             Me.GlassLabel6.TabIndex = 25
             Me.GlassLabel6.Text = "Darken"
             '
@@ -748,7 +748,7 @@ Namespace UI
             Me.ArrowSettingsPanel.Controls.Add(Me.ArrowWidthLabel)
             Me.ArrowSettingsPanel.Controls.Add(Me.GlassLabel10)
             Me.ArrowSettingsPanel.Controls.Add(Me.ArrowColorviewer)
-            Me.ArrowSettingsPanel.Location = New System.Drawing.Point(397, 394)
+            Me.ArrowSettingsPanel.Location = New System.Drawing.Point(193, 362)
             Me.ArrowSettingsPanel.Name = "ArrowSettingsPanel"
             Me.ArrowSettingsPanel.Size = New System.Drawing.Size(273, 82)
             Me.ArrowSettingsPanel.TabIndex = 26
@@ -767,9 +767,9 @@ Namespace UI
             'GlassLabel11
             '
             Me.GlassLabel11.AutoSize = True
-            Me.GlassLabel11.Location = New System.Drawing.Point(11, 10)
+            Me.GlassLabel11.Location = New System.Drawing.Point(46, 10)
             Me.GlassLabel11.Name = "GlassLabel11"
-            Me.GlassLabel11.Size = New System.Drawing.Size(42, 13)
+            Me.GlassLabel11.Size = New System.Drawing.Size(42, 15)
             Me.GlassLabel11.TabIndex = 28
             Me.GlassLabel11.Text = "Width:"
             '
@@ -778,16 +778,16 @@ Namespace UI
             Me.ArrowWidthLabel.AutoSize = True
             Me.ArrowWidthLabel.Location = New System.Drawing.Point(202, 3)
             Me.ArrowWidthLabel.Name = "ArrowWidthLabel"
-            Me.ArrowWidthLabel.Size = New System.Drawing.Size(13, 13)
+            Me.ArrowWidthLabel.Size = New System.Drawing.Size(13, 15)
             Me.ArrowWidthLabel.TabIndex = 27
             Me.ArrowWidthLabel.Text = "a"
             '
             'GlassLabel10
             '
             Me.GlassLabel10.AutoSize = True
-            Me.GlassLabel10.Location = New System.Drawing.Point(42, 50)
+            Me.GlassLabel10.Location = New System.Drawing.Point(44, 50)
             Me.GlassLabel10.Name = "GlassLabel10"
-            Me.GlassLabel10.Size = New System.Drawing.Size(38, 13)
+            Me.GlassLabel10.Size = New System.Drawing.Size(39, 15)
             Me.GlassLabel10.TabIndex = 25
             Me.GlassLabel10.Text = "Color:"
             '
@@ -805,7 +805,7 @@ Namespace UI
             Me.BlurSettingsPanel.BackColor = System.Drawing.SystemColors.Control
             Me.BlurSettingsPanel.Controls.Add(Me.GlassLabel14)
             Me.BlurSettingsPanel.Controls.Add(Me.BlurnessBar)
-            Me.BlurSettingsPanel.Location = New System.Drawing.Point(394, 346)
+            Me.BlurSettingsPanel.Location = New System.Drawing.Point(193, 450)
             Me.BlurSettingsPanel.Name = "BlurSettingsPanel"
             Me.BlurSettingsPanel.Size = New System.Drawing.Size(273, 82)
             Me.BlurSettingsPanel.TabIndex = 27
@@ -814,9 +814,9 @@ Namespace UI
             'GlassLabel14
             '
             Me.GlassLabel14.AutoSize = True
-            Me.GlassLabel14.Location = New System.Drawing.Point(30, 22)
+            Me.GlassLabel14.Location = New System.Drawing.Point(19, 17)
             Me.GlassLabel14.Name = "GlassLabel14"
-            Me.GlassLabel14.Size = New System.Drawing.Size(56, 13)
+            Me.GlassLabel14.Size = New System.Drawing.Size(58, 15)
             Me.GlassLabel14.TabIndex = 22
             Me.GlassLabel14.Text = "Diameter:"
             '
@@ -975,7 +975,7 @@ Namespace UI
             Me.AutoCloseShotEditor.FlatStyle = System.Windows.Forms.FlatStyle.System
             Me.AutoCloseShotEditor.Location = New System.Drawing.Point(148, 9)
             Me.AutoCloseShotEditor.Name = "AutoCloseShotEditor"
-            Me.AutoCloseShotEditor.Size = New System.Drawing.Size(207, 18)
+            Me.AutoCloseShotEditor.Size = New System.Drawing.Size(208, 20)
             Me.AutoCloseShotEditor.TabIndex = 32
             Me.AutoCloseShotEditor.Text = "Close ShotEditor when uploading"
             Me.AutoCloseShotEditor.UseVisualStyleBackColor = True
