@@ -79,6 +79,12 @@ namespace HolzShots
         public string SaveVideoFileNamePattern { get; private set; } = "Recording-<Date>";
 
         [SettingsDoc(
+            "The pixel format for videos to use. Look up FFmpeg's pix_fmt parameter for valid values. Leave unconfigured if you don't know what this means."
+        )]
+        [JsonProperty("video.save.pixelFormat")]
+        public string? VideoPixelFormat { get; private set; } = null;
+
+        [SettingsDoc(
             "File format that recorded screen captures will be saved as.",
             Default = "mp4"
         )]
