@@ -68,8 +68,8 @@ Namespace UI
 
             InitializeComponent()
 
-            autoCloseShotEditor.Checked = settingsContext.CloseAfterUpload
-            autoCloseShotEditor.Enabled = False ' We only support reading that setting for now
+            AutoCloseShotEditor.Checked = settingsContext.CloseAfterUpload
+            AutoCloseShotEditor.Enabled = False ' We only support reading that setting for now
 
             If settingsContext.ShotEditorTitle IsNot Nothing Then
                 Text = settingsContext.ShotEditorTitle
@@ -186,14 +186,14 @@ Namespace UI
         End Sub
 
         Private Sub LoadZensursula()
-            Zensursula_Viewer.Color = HolzShots.My.Settings.ZensursulaColor
+            ZensursulaColorSelector.Color = HolzShots.My.Settings.ZensursulaColor
             If HolzShots.My.Settings.ZensursulaWidth > 100 OrElse HolzShots.My.Settings.ZensursulaWidth <= 0 Then
                 HolzShots.My.Settings.ZensursulaWidth = 20
                 HolzShots.My.Settings.Save()
             End If
             ZensursulaBar.Value = HolzShots.My.Settings.ZensursulaWidth
             Pinsel_Width_Zensursula.Text = $"{ZensursulaBar.Value}px"
-            ThePanel.ZensursulaColor = Zensursula_Viewer.Color
+            ThePanel.ZensursulaColor = ZensursulaColorSelector.Color
             ThePanel.ZensursulaWidth = ZensursulaBar.Value
         End Sub
 
@@ -205,19 +205,19 @@ Namespace UI
         End Sub
 
         Private Sub LoadMarker()
-            Marker_Viewer.Color = HolzShots.My.Settings.MarkerColor
+            MarkerColorSelector.Color = HolzShots.My.Settings.MarkerColor
             If HolzShots.My.Settings.MarkerWidth > 100 OrElse HolzShots.My.Settings.MarkerWidth <= 0 Then
                 HolzShots.My.Settings.MarkerWidth = 20
                 HolzShots.My.Settings.Save()
             End If
             MarkerBar.Value = HolzShots.My.Settings.MarkerWidth
             Pinsel_Width_Marker.Text = $"{MarkerBar.Value}px"
-            ThePanel.MarkerColor = Marker_Viewer.Color
+            ThePanel.MarkerColor = MarkerColorSelector.Color
             ThePanel.MarkerWidth = MarkerBar.Value
         End Sub
 
         Private Sub LoadEllipse()
-            Ellipse_Viewer.Color = HolzShots.My.Settings.EllipseColor
+            EllipseColorSelector.Color = HolzShots.My.Settings.EllipseColor
             If HolzShots.My.Settings.EllipseWidth > 100 OrElse HolzShots.My.Settings.EllipseWidth <= 0 Then
                 HolzShots.My.Settings.EllipseWidth = 20
                 HolzShots.My.Settings.Save()
@@ -226,7 +226,7 @@ Namespace UI
             EllipseOrRectangle.Value = If(ThePanel.UseBoxInsteadOfCirlce, 1, 0)
             EllipseBar.Value = HolzShots.My.Settings.EllipseWidth
             Ellipse_Width.Text = $"{EllipseBar.Value}px"
-            ThePanel.EllipseColor = Ellipse_Viewer.Color
+            ThePanel.EllipseColor = EllipseColorSelector.Color
             ThePanel.EllipseWidth = EllipseBar.Value
             'Ellips_style.UseCompatibleTextRendering = True
         End Sub
@@ -237,7 +237,7 @@ Namespace UI
                 HolzShots.My.Settings.Save()
             End If
             EraserBar.Value = HolzShots.My.Settings.EraserDiameter
-            Eraser_Diameter.Text = $"{ EraserBar.Value}px"
+            EraserDiameterLabel.Text = $"{ EraserBar.Value}px"
             ThePanel.EraserDiameter = EraserBar.Value
         End Sub
 
@@ -261,7 +261,7 @@ Namespace UI
 
 #Region "Image Actions"
 
-        Private Sub SaveImage() Handles save_btn.Click
+        Private Sub SaveImage() Handles SaveButton.Click
             Using sfd As New SaveFileDialog()
                 sfd.Filter = $"{Localization.PngImage}|*.png|{Localization.JpgImage}|*.jpg"
                 sfd.DefaultExt = ".png"
@@ -333,15 +333,15 @@ Namespace UI
 #Region "Updater"
 
         Private Sub UpdateSettings() Handles MyBase.FormClosing
-            HolzShots.My.Settings.ZensursulaColor = Zensursula_Viewer.Color
+            HolzShots.My.Settings.ZensursulaColor = ZensursulaColorSelector.Color
             HolzShots.My.Settings.ZensursulaWidth = ZensursulaBar.Value
 
-            HolzShots.My.Settings.MarkerColor = Marker_Viewer.Color
+            HolzShots.My.Settings.MarkerColor = MarkerColorSelector.Color
             HolzShots.My.Settings.MarkerWidth = MarkerBar.Value
 
             HolzShots.My.Settings.EraserDiameter = EraserBar.Value
 
-            HolzShots.My.Settings.EllipseColor = Ellipse_Viewer.Color
+            HolzShots.My.Settings.EllipseColor = EllipseColorSelector.Color
             HolzShots.My.Settings.EllipseWidth = EllipseBar.Value
 
             HolzShots.My.Settings.BrightenColor = BigColorViewer1.Color
@@ -606,7 +606,7 @@ Namespace UI
             UploadToHoster.PerformButtonClick()
         End Sub
         Private Sub SaveToolStripMenuItemClick() Handles SaveToolStripMenuItem.Click
-            save_btn.PerformClick()
+            SaveButton.PerformClick()
         End Sub
         Private Sub ClipboardToolStripMenuItemClick() Handles ClipboardToolStripMenuItem.Click
             CopyToClipboard.PerformClick()
@@ -627,7 +627,7 @@ Namespace UI
             ThePanel.ZensursulaWidth = ZensursulaBar.Value
         End Sub
 
-        Private Sub ZensursulaViewerColorChanged(sender As Object, c As Color) Handles Zensursula_Viewer.ColorChanged
+        Private Sub ZensursulaViewerColorChanged(sender As Object, c As Color) Handles ZensursulaColorSelector.ColorChanged
             ThePanel.ZensursulaColor = c
         End Sub
 
@@ -636,12 +636,12 @@ Namespace UI
             ThePanel.MarkerWidth = MarkerBar.Value
         End Sub
 
-        Private Sub MarkerViewerColorChanged(sender As Object, c As Color) Handles Marker_Viewer.ColorChanged
+        Private Sub MarkerViewerColorChanged(sender As Object, c As Color) Handles MarkerColorSelector.ColorChanged
             ThePanel.MarkerColor = c
         End Sub
 
         Private Sub EraserBarScroll() Handles EraserBar.ValueChanged
-            Eraser_Diameter.Text = $"{EraserBar.Value}px"
+            EraserDiameterLabel.Text = $"{EraserBar.Value}px"
             ThePanel.EraserDiameter = EraserBar.Value
         End Sub
 
@@ -650,7 +650,7 @@ Namespace UI
             ThePanel.EllipseWidth = EllipseBar.Value
         End Sub
 
-        Private Sub EllipseViewerColorChanged(sender As Object, c As Color) Handles Ellipse_Viewer.ColorChanged
+        Private Sub EllipseViewerColorChanged(sender As Object, c As Color) Handles EllipseColorSelector.ColorChanged
             ThePanel.EllipseColor = c
         End Sub
 
