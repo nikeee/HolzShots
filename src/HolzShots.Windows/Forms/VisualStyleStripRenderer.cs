@@ -125,17 +125,25 @@ namespace HolzShots.Windows.Forms
             if (item.IsOnDropDown)
             {
                 if (item.Enabled)
-                    return hot ? (int)MenuPopupItemState.Hover : (int)MenuPopupItemState.Normal;
-                return hot ? (int)MenuPopupItemState.DisabledHover : (int)MenuPopupItemState.Disabled;
+                    return hot
+                            ? (int)MenuPopupItemState.Hover
+                            : (int)MenuPopupItemState.Normal;
+                return hot
+                        ? (int)MenuPopupItemState.DisabledHover
+                        : (int)MenuPopupItemState.Disabled;
             }
-            else
-            {
-                if (item.Pressed)
-                    return item.Enabled ? (int)MenuBarItemState.Pushed : (int)MenuBarItemState.DisabledPushed;
-                if (item.Enabled)
-                    return hot ? (int)MenuBarItemState.Hover : (int)MenuBarItemState.Normal;
-                return hot ? (int)MenuBarItemState.DisabledHover : (int)MenuBarItemState.Disabled;
-            }
+
+            if (item.Pressed)
+                return item.Enabled
+                    ? (int)MenuBarItemState.Pushed
+                    : (int)MenuBarItemState.DisabledPushed;
+            if (item.Enabled)
+                return hot
+                    ? (int)MenuBarItemState.Hover
+                    : (int)MenuBarItemState.Normal;
+            return hot
+                ? (int)MenuBarItemState.DisabledHover
+                : (int)MenuBarItemState.Disabled;
         }
 
         public ToolBarTheme Theme { get; set; }
@@ -143,7 +151,8 @@ namespace HolzShots.Windows.Forms
         private string RebarClass => SubclassPrefix + "Rebar";
         private string ToolbarClass => SubclassPrefix + "ToolBar";
         private string MenuClass => SubclassPrefix + "Menu";
-        private string SubclassPrefix => Theme switch {
+        private string SubclassPrefix => Theme switch
+        {
             ToolBarTheme.MediaToolbar => "Media::",
             ToolBarTheme.CommunicationsToolbar => "Communications::",
             ToolBarTheme.BrowserTabBar => "BrowserTabBar::",
@@ -207,11 +216,11 @@ namespace HolzShots.Windows.Forms
                 _renderer.SetParameters(MenuClass, (int)MenuPart.PopupBorders, 0);
                 if (e.ToolStrip.IsDropDown)
                 {
-                    Region oldClip = e.Graphics.Clip;
+                    var oldClip = e.Graphics.Clip;
 
                     // Tool strip borders are rendered *after* the content, for some reason.
                     // So we have to exclude the inside of the popup otherwise we'll draw over it.
-                    Rectangle insideRect = e.ToolStrip.ClientRectangle;
+                    var insideRect = e.ToolStrip.ClientRectangle;
                     insideRect.Inflate(-1, -1);
                     e.Graphics.ExcludeClip(insideRect);
 
@@ -337,7 +346,7 @@ namespace HolzShots.Windows.Forms
 
             if (EnsureRenderer())
             {
-                ToolStripSplitButton sb = (ToolStripSplitButton)e.Item;
+                var sb = (ToolStripSplitButton)e.Item;
                 base.OnRenderSplitButtonBackground(e);
 
                 // It doesn't matter what colour of arrow we tell it to draw. OnRenderArrow will compute it from the item anyway.
@@ -408,7 +417,13 @@ namespace HolzShots.Windows.Forms
             if (e.ToolStrip.IsDropDown && EnsureRenderer())
             {
                 _renderer.SetParameters(MenuClass, (int)MenuPart.PopupSeparator, 0);
-                Rectangle rect = new Rectangle(e.ToolStrip.DisplayRectangle.Left, 0, e.ToolStrip.DisplayRectangle.Width, e.Item.Height);
+
+                var rect = new Rectangle(
+                    e.ToolStrip.DisplayRectangle.Left,
+                    0,
+                    e.ToolStrip.DisplayRectangle.Width,
+                    e.Item.Height
+                );
                 _renderer.DrawBackground(e.Graphics, rect, rect);
             }
             else
@@ -482,16 +497,7 @@ namespace HolzShots.Windows.Forms
                 base.OnRenderOverflowButtonBackground(e);
         }
 
-        public bool IsSupported
-        {
-            get
-            {
-                if (!VisualStyleRenderer.IsSupported)
-                    return false;
-
-                // Needs a more robust check. It seems mono supports very different style sets.
-                return VisualStyleRenderer.IsElementDefined(VisualStyleElement.CreateElement("Menu", (int)MenuPart.BarBackground, (int)MenuBarState.Active));
-            }
-        }
+        public static bool IsSupported => VisualStyleRenderer.IsSupported
+                                            && VisualStyleRenderer.IsElementDefined(VisualStyleElement.CreateElement("Menu", (int)MenuPart.BarBackground, (int)MenuBarState.Active));
     }
 }
