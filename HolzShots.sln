@@ -14,13 +14,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HolzShots.Native", "src\Hol
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HolzShots.Windows", "src\HolzShots.Windows\HolzShots.Windows.csproj", "{FE4E3471-9137-4A49-A230-26C90B14A9F2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WindowsAPICodePack.ShellModified", "src\WindowsAPICodePack.ShellModified\WindowsAPICodePack.ShellModified.csproj", "{0AB75D76-BDB7-4A9F-ADAC-E15D2F591948}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HolzShots", "src\HolzShots\HolzShots.csproj", "{C55EB76E-2F7A-4473-A2C1-D6D56160A83C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HolzShots.Input.Keyboard", "src\HolzShots.Input.Keyboard\HolzShots.Input.Keyboard.csproj", "{ACBCE641-F752-4119-9833-3C283968B8D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HolzShots.Capture.Video", "src\HolzShots.Capture.Video\HolzShots.Capture.Video.csproj", "{2B266857-F1EF-4098-BE33-AD8AEE50AC4B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HolzShots.Capture.Video", "src\HolzShots.Capture.Video\HolzShots.Capture.Video.csproj", "{2B266857-F1EF-4098-BE33-AD8AEE50AC4B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -52,10 +50,6 @@ Global
 		{FE4E3471-9137-4A49-A230-26C90B14A9F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE4E3471-9137-4A49-A230-26C90B14A9F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE4E3471-9137-4A49-A230-26C90B14A9F2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0AB75D76-BDB7-4A9F-ADAC-E15D2F591948}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0AB75D76-BDB7-4A9F-ADAC-E15D2F591948}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0AB75D76-BDB7-4A9F-ADAC-E15D2F591948}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0AB75D76-BDB7-4A9F-ADAC-E15D2F591948}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C55EB76E-2F7A-4473-A2C1-D6D56160A83C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C55EB76E-2F7A-4473-A2C1-D6D56160A83C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C55EB76E-2F7A-4473-A2C1-D6D56160A83C}.Release|Any CPU.ActiveCfg = Release|Any CPU
