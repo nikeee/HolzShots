@@ -138,7 +138,7 @@ namespace HolzShots.Input.Actions
                 using var selectionBackground = Drawing.ScreenshotCreator.CaptureScreenshot(SystemInformation.VirtualScreen);
                 using var selector = Selection.AreaSelector.Create(selectionBackground, settingsContext);
 
-                var selection = await selector.PromptSelectionAsync();
+                var (selectedArea, windowInfo) = await selector.PromptSelectionAsync();
 
                 var recorder = ScreenRecorderSelector.CreateScreenRecorderForCurrentPlatform();
 
@@ -153,7 +153,7 @@ namespace HolzShots.Input.Actions
                 var extension = VideoUploadPayload.GetExtensionForVideoFormat(settingsContext.VideoOutputFormat);
                 var targetFile = Path.Combine(tempRecordingDir, "HS" + extension);
 
-                var recording = await recorder.Invoke(selection, targetFile, settingsContext, _currentRecordingCts.Token);
+                var recording = await recorder.Invoke(selectedArea, targetFile, settingsContext, _currentRecordingCts.Token);
 
                 if (_throwAwayResult)
                 {

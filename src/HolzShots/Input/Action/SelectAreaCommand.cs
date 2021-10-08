@@ -60,23 +60,22 @@ namespace HolzShots.Input.Actions
             if (SelectionSemaphore.IsInAreaSelection)
                 return null;
 
-            using (ProcessPriorityRequest prio = new ProcessPriorityRequest())
-            using (var screen = ScreenshotCreator.CaptureScreenshot(SystemInformation.VirtualScreen))
-            using (var selector = AreaSelector.Create(screen, settingsContext))
-            {
-                var selectedArea = await selector.PromptSelectionAsync().ConfigureAwait(true);
+            using var prio = new ProcessPriorityRequest();
+            using var screen = ScreenshotCreator.CaptureScreenshot(SystemInformation.VirtualScreen);
+            using var selector = AreaSelector.Create(screen, settingsContext);
 
-                Debug.Assert(selectedArea.Width > 0);
-                Debug.Assert(selectedArea.Height > 0);
+            var (selectedArea, selectedWindowHandle) = await selector.PromptSelectionAsync().ConfigureAwait(true);
 
-                var selectedImage = new Bitmap(selectedArea.Width, selectedArea.Height);
+            Debug.Assert(selectedArea.Width > 0);
+            Debug.Assert(selectedArea.Height > 0);
 
-                using var g = Graphics.FromImage(selectedImage);
+            var selectedImage = new Bitmap(selectedArea.Width, selectedArea.Height);
 
-                g.DrawImage(screen, new Rectangle(0, 0, selectedArea.Width, selectedArea.Height), selectedArea, GraphicsUnit.Pixel);
+            using var g = Graphics.FromImage(selectedImage);
 
-                return Screenshot.FromImage(selectedImage, Cursor.Position, ScreenshotSource.Selected);
-            }
+            g.DrawImage(screen, new Rectangle(0, 0, selectedArea.Width, selectedArea.Height), selectedArea, GraphicsUnit.Pixel);
+
+            return Screenshot.FromImage(selectedImage, Cursor.Position, ScreenshotSource.Selected);
         }
     }
 }

@@ -14,7 +14,7 @@ namespace HolzShots.Input.Selection
     {
         private static readonly D2DColor OverlayColor = D2DColor.Black;
 
-        private static TaskCompletionSource<Rectangle>? _tcs;
+        private static TaskCompletionSource<SelectionResult>? _tcs;
 
         private readonly D2DBrush _dimmingOverlayBrush;
         private readonly D2DBitmap _image;
@@ -57,7 +57,7 @@ namespace HolzShots.Input.Selection
 
         public static AreaSelector Create(Bitmap image, HSSettings settingsContext) => new(image, settingsContext);
 
-        public Task<Rectangle> PromptSelectionAsync()
+        public Task<SelectionResult> PromptSelectionAsync()
         {
             Debug.Assert(_tcs == null);
             Debug.Assert(!SelectionSemaphore.IsInAreaSelection);
@@ -67,7 +67,7 @@ namespace HolzShots.Input.Selection
 
             SelectionSemaphore.IsInAreaSelection = true;
 
-            _tcs = new TaskCompletionSource<Rectangle>();
+            _tcs = new TaskCompletionSource<SelectionResult>();
 
 
             Visible = true;
@@ -278,7 +278,7 @@ namespace HolzShots.Input.Selection
             SelectionSemaphore.IsInAreaSelection = false;
 
             Debug.Assert(outline.HasValue);
-            _tcs.SetResult(outline.Value);
+            _tcs.SetResult(new SelectionResult(outline.Value, state.SelectedWindowInformation));
             CloseInternal();
         }
         private void FinishSelection(FinalState state)
@@ -293,7 +293,7 @@ namespace HolzShots.Input.Selection
             Debug.Assert(SelectionSemaphore.IsInAreaSelection);
             SelectionSemaphore.IsInAreaSelection = false;
 
-            _tcs.SetResult(state.Result);
+            _tcs.SetResult(new SelectionResult(state.Result));
             CloseInternal();
         }
 
