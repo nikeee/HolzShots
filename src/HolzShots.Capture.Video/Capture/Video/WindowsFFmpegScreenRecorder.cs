@@ -75,7 +75,7 @@ namespace HolzShots.Capture.Video
                     .WithArgument(new OffsetArgument(rectangleOnScreenToCapture.X, 'x'))
                     .WithArgument(new OffsetArgument(rectangleOnScreenToCapture.Y, 'y'))
                     .WithArgument(new VideoSizeArgument(rectangleOnScreenToCapture.Width, rectangleOnScreenToCapture.Height))
-                    .WithArgument(new ShowRegionArgument(true))
+                    .WithArgument(new ShowRegionArgument(false))
                     .WithArgument(new DrawMouseArgument(captureCursor));
                 })
                 .OutputToFile(targetFile, true, options =>
@@ -90,6 +90,10 @@ namespace HolzShots.Capture.Video
                 .CancellableThrough(cancellationToken);
 
             var startTime = DateTime.Now;
+
+            using var recordedRegionIndicator = new UI.RecordingFrame(rectangleOnScreenToCapture); //(new(7, 1, 300, 400));
+            recordedRegionIndicator.Show();
+            recordedRegionIndicator.StartIndicating(cancellationToken);
 
             // Somehow, ProcessAsynchronously does not throw a TaskCanceledException when it was cancelled. It just returns.
             var res = await ffmpegInstance.ProcessAsynchronously(false);
