@@ -1,7 +1,7 @@
 using System;
 using System.Drawing;
 using System.Threading.Tasks;
-using HolzShots.Input.Selection;
+using System.Windows.Forms;
 
 namespace HolzShots.Input
 {
@@ -15,7 +15,7 @@ namespace HolzShots.Input
         WindowRectangle? SelectedWindowInfo = null
     );
 
-    public record WindowRectangle(IntPtr Handle, Rectangle Rectangle, string? Title)
+    public record WindowRectangle(IntPtr Handle, Rectangle Rectangle, string? Title) : IWin32Window
     {
         public override int GetHashCode() => Handle.GetHashCode();
     }

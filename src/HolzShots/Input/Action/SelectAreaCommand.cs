@@ -64,7 +64,7 @@ namespace HolzShots.Input.Actions
             using var screen = ScreenshotCreator.CaptureScreenshot(SystemInformation.VirtualScreen);
             using var selector = AreaSelector.Create(screen, settingsContext);
 
-            var (selectedArea, selectedWindowHandle) = await selector.PromptSelectionAsync().ConfigureAwait(true);
+            var (selectedArea, _) = await selector.PromptSelectionAsync().ConfigureAwait(true);
 
             Debug.Assert(selectedArea.Width > 0);
             Debug.Assert(selectedArea.Height > 0);
