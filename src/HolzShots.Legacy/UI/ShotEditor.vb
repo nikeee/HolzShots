@@ -130,7 +130,7 @@ Namespace UI
                             String.Empty
                         )
 
-            Dim renderer = HolzShots.Windows.Forms.EnvironmentEx.GetToolStripRendererForCurrentTheme()
+            Dim renderer = HolzShots.Windows.Forms.EnvironmentEx.ToolStripRendererForCurrentTheme()
             ShareStrip.Renderer = renderer
             ToolStrip1.Renderer = renderer
             EditStrip.Renderer = renderer
@@ -166,7 +166,7 @@ Namespace UI
             UploadToHoster.DropDown.ImageScalingSize = New Size(16, 16)
             UploadToHoster.DropDown.AutoSize = True
             If _uploaders.Loaded Then
-                UploadToHoster.DropDown.Renderer = HolzShots.Windows.Forms.EnvironmentEx.GetToolStripRendererForCurrentTheme()
+                UploadToHoster.DropDown.Renderer = HolzShots.Windows.Forms.EnvironmentEx.ToolStripRendererForCurrentTheme()
                 Dim pls = _uploaders.GetUploaderNames()
                 For Each uploaderName In pls
                     Dim item As ToolStripItem = UploadToHoster.DropDown.Items.Add(String.Format(Localization.UploadTo, uploaderName))

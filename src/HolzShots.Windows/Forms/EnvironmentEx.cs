@@ -75,14 +75,7 @@ namespace HolzShots.Windows.Forms
                 && Screen.PrimaryScreen.Bounds.Width == fgWindowRect.Right;
         }
 
-
-        private static readonly Lazy<ToolStripRenderer> _rendererInstance = new(() =>
-            AppsUseLightTheme()
-                ? new HolzShotsToolStripRenderer()
-                : new VisualStyleStripRenderer(ToolBarTheme.Toolbar)
-        );
-
-        public static ToolStripRenderer GetToolStripRendererForCurrentTheme() => _rendererInstance.Value;
+        public static ToolStripRenderer ToolStripRendererForCurrentTheme { get; } = new VisualStyleStripRenderer(ToolBarTheme.Toolbar);
 
         /// <summary> TODO: Move this somewhere else </summary>
         public static string ShortenViaEllipsisIfNeeded(string value, int maxLength)

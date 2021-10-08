@@ -30,7 +30,7 @@ namespace HolzShots
             
             Text = "HolzShots";
             TrayIcon.ContextMenuStrip = trayMenu;
-            trayMenu.Renderer = EnvironmentEx.GetToolStripRendererForCurrentTheme();
+            trayMenu.Renderer = EnvironmentEx.ToolStripRendererForCurrentTheme;
             EnsureInvisibility();
         }
 
