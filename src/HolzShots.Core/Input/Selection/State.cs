@@ -21,8 +21,9 @@ namespace HolzShots.Input.Selection
     class InitialState : SelectionState
     {
         private WindowRectangle? _currentSelectedWindow;
+        public WindowRectangle? SelectedWindowInformation => _currentSelectedWindow;
 
-        public Rectangle? CurrentOutline { get; private set; }
+        public Rectangle? CurrentOutline => _currentSelectedWindow?.Rectangle;
         public RectangleAnimation? CurrentOutlineAnimation { get; private set; }
         public string? Title { get; private set; }
 
@@ -110,7 +111,6 @@ namespace HolzShots.Input.Selection
             _currentSelectedWindow = candidate;
 
             Title = candidate.Title;
-            CurrentOutline = candidate.Rectangle;
             CurrentOutlineAnimation = new RectangleAnimation(
                 DateTime.Now,
                 TimeSpan.FromMilliseconds(100),
@@ -120,7 +120,7 @@ namespace HolzShots.Input.Selection
         }
         private void ResetWindowHighlight()
         {
-            CurrentOutline = null;
+            _currentSelectedWindow = null;
             CurrentOutlineAnimation = null;
             Title = null;
         }

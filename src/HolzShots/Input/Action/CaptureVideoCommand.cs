@@ -138,7 +138,7 @@ namespace HolzShots.Input.Actions
                 using var selectionBackground = Drawing.ScreenshotCreator.CaptureScreenshot(SystemInformation.VirtualScreen);
                 using var selector = Selection.AreaSelector.Create(selectionBackground, settingsContext);
 
-                var selection = await selector.PromptSelectionAsync();
+                var (selectedArea, windowInfo) = await selector.PromptSelectionAsync();
 
                 var recorder = ScreenRecorderSelector.CreateScreenRecorderForCurrentPlatform();
 
@@ -153,7 +153,19 @@ namespace HolzShots.Input.Actions
                 var extension = VideoUploadPayload.GetExtensionForVideoFormat(settingsContext.VideoOutputFormat);
                 var targetFile = Path.Combine(tempRecordingDir, "HS" + extension);
 
-                var recording = await recorder.Invoke(selection, targetFile, settingsContext, _currentRecordingCts.Token);
+                if (windowInfo != null)
+                {
+                    // See GH#78
+                    // The number 500 is just a guess. If it fails, it isn't such a problem and won't cause any harm
+                    // As soon as we've got our own recording frame, we can be more precise on when to invoke the SetForegroundWindow
+                    _ = Task.Delay(500).ContinueWith(t =>
+                    {
+                        Debug.WriteLine($"Set FG window to {windowInfo.Title ?? "<no title>"}");
+                        Native.User32.SetForegroundWindow(windowInfo.Handle);
+                    });
+                }
+
+                var recording = await recorder.Invoke(selectedArea, targetFile, settingsContext, _currentRecordingCts.Token);
 
                 if (_throwAwayResult)
                 {

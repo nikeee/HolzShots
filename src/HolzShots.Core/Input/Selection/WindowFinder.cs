@@ -91,9 +91,4 @@ namespace HolzShots.Input.Selection
             return result;
         }
     }
-
-    record WindowRectangle(IntPtr Handle, System.Drawing.Rectangle Rectangle, string? Title)
-    {
-        public override int GetHashCode() => Handle.GetHashCode();
-    }
 }
