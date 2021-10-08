@@ -15,7 +15,7 @@ using System.IO;
 
 namespace HolzShots.Input.Actions
 {
-    public abstract class CapturingCommand : ICommand<HSSettings>
+    public abstract class ImageCapturingCommand : ICommand<HSSettings>
     {
         protected static async Task ProcessCapturing(Screenshot screenshot, HSSettings settingsContext)
         {

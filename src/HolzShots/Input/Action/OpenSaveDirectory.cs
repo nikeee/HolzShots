@@ -6,8 +6,8 @@ using HolzShots.IO;
 
 namespace HolzShots.Input.Actions
 {
-    [Command("openImages")]
-    public class OpenImagesFolderCommand : ICommand<HSSettings>
+    [Command("openSaveDirectory")]
+    public class OpenSaveDirectory : ICommand<HSSettings>
     {
         public Task Invoke(IReadOnlyDictionary<string, string> parameters, HSSettings settingsContext)
         {

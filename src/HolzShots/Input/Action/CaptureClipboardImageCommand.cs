@@ -8,8 +8,8 @@ using HolzShots.Windows.Forms;
 
 namespace HolzShots.Input.Actions
 {
-    [Command("captureClipboard")]
-    public class CaptureClipboardCommand : CapturingCommand
+    [Command("captureClipboardImage")]
+    public class CaptureClipboardImageCommand : ImageCapturingCommand
     {
         protected override async Task InvokeInternal(IReadOnlyDictionary<string, string> parameters, HSSettings settingsContext)
         {

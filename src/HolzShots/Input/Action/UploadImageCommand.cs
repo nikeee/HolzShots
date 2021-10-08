@@ -12,7 +12,7 @@ using HolzShots.Windows.Net;
 namespace HolzShots.Input.Actions
 {
     [Command("uploadImage")]
-    public class UploadImageCommand : FileDependentCommand, ICommand<HSSettings>
+    public class UploadImageCommand : ImageFileDependentCommand, ICommand<HSSettings>
     {
         private const string UploadImage = "Select Image to Upload";
 

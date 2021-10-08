@@ -14,7 +14,7 @@ using HolzShots.Windows.Forms;
 namespace HolzShots.Input.Actions
 {
     [Command("captureWindow")]
-    public class WindowCommand : CapturingCommand
+    public class CaptureWindowCommand : ImageCapturingCommand
     {
         protected override async Task InvokeInternal(IReadOnlyDictionary<string, string> parameters, HSSettings settingsContext)
         {

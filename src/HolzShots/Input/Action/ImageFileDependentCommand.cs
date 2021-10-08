@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace HolzShots.Input.Actions
 {
-    public abstract class FileDependentCommand
+    public abstract class ImageFileDependentCommand
     {
         private static readonly string[] AllowedExtensions = new[] { ".bmp", ".jpg", ".jpeg", ".png", ".tif", ".tiff" };
 
@@ -18,7 +18,7 @@ namespace HolzShots.Input.Actions
 
         protected static string? ShowFileSelector(string title)
         {
-            using OpenFileDialog ofd = new OpenFileDialog();
+            using var ofd = new OpenFileDialog();
             ofd.Title = title;
             ofd.Filter = $"{UI.Localization.DialogFilterImages}|*.bmp;*.jpg;*.jpeg;*.png;*.gif;*.tif;*.tiff";
             ofd.Multiselect = false;

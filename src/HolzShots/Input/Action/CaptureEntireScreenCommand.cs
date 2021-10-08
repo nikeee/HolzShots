@@ -9,7 +9,7 @@ using HolzShots.Threading;
 namespace HolzShots.Input.Actions
 {
     [Command("captureEntireScreen")]
-    public class FullscreenCommand : CapturingCommand
+    public class CaptureEntireScreenCommand : ImageCapturingCommand
     {
         protected override async Task InvokeInternal(IReadOnlyDictionary<string, string> parameters, HSSettings settingsContext)
         {

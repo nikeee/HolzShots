@@ -12,7 +12,7 @@ using HolzShots.Threading;
 namespace HolzShots.Input.Actions
 {
     [Command("captureArea")]
-    public class SelectAreaCommand : CapturingCommand
+    public class CaptureSelectedAreaCommand : ImageCapturingCommand
     {
         protected override async Task InvokeInternal(IReadOnlyDictionary<string, string> parameters, HSSettings settingsContext)
         {

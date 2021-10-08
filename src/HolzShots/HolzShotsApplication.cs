@@ -56,15 +56,15 @@ namespace HolzShots
         {
             CommandManager = new CommandManager<HSSettings>(UserSettings.Manager);
             // TODO: This looks like it could be integrated in our plugin system
-            CommandManager.RegisterCommand(new SelectAreaCommand());
-            CommandManager.RegisterCommand(new FullscreenCommand());
-            CommandManager.RegisterCommand(new CaptureClipboardCommand());
-            CommandManager.RegisterCommand(new WindowCommand());
-            CommandManager.RegisterCommand(new OpenImagesFolderCommand());
+            CommandManager.RegisterCommand(new CaptureSelectedAreaCommand());
+            CommandManager.RegisterCommand(new CaptureEntireScreenCommand());
+            CommandManager.RegisterCommand(new CaptureClipboardImageCommand());
+            CommandManager.RegisterCommand(new CaptureWindowCommand());
+            CommandManager.RegisterCommand(new OpenSaveDirectory());
             CommandManager.RegisterCommand(new OpenSettingsJsonCommand());
             CommandManager.RegisterCommand(new UploadImageCommand());
             CommandManager.RegisterCommand(new EditImageCommand());
-            CommandManager.RegisterCommand(new CaptureVideoCommand());
+            CommandManager.RegisterCommand(new StartOrStopVideoCommand());
         }
 
         internal async Task ProcessCommandLineArguments(string[] args)
@@ -78,17 +78,17 @@ namespace HolzShots
                 switch (args[i])
                 {
                     case CommandLine.FullscreenScreenshotCliCommand:
-                        await CommandManager.Dispatch<FullscreenCommand>(UserSettings.Current).ConfigureAwait(true);
+                        await CommandManager.Dispatch<CaptureEntireScreenCommand>(UserSettings.Current).ConfigureAwait(true);
                         break;
                     case CommandLine.AreaSelectorCliCommand:
-                        await CommandManager.Dispatch<SelectAreaCommand>(UserSettings.Current).ConfigureAwait(true);
+                        await CommandManager.Dispatch<CaptureSelectedAreaCommand>(UserSettings.Current).ConfigureAwait(true);
                         break;
                     case CommandLine.UploadImageCliCommand:
                         {
                             // TODO: Maybe we can support overriding settings from the command line, too
                             var parameters = new Dictionary<string, string>();
                             if (i < args.Length - 1)
-                                parameters[FileDependentCommand.FileNameParameter] = args[i + 1];
+                                parameters[ImageFileDependentCommand.FileNameParameter] = args[i + 1];
 
                             await CommandManager.Dispatch<UploadImageCommand>(UserSettings.Current, parameters).ConfigureAwait(true);
                             break;
@@ -98,7 +98,7 @@ namespace HolzShots
                             // TODO: Maybe we can support overriding settings from the command line, too
                             var parameters = new Dictionary<string, string>();
                             if (i < args.Length - 1)
-                                parameters[FileDependentCommand.FileNameParameter] = args[i + 1];
+                                parameters[ImageFileDependentCommand.FileNameParameter] = args[i + 1];
 
                             await CommandManager.Dispatch<EditImageCommand>(UserSettings.Current, parameters).ConfigureAwait(true);
                             break;

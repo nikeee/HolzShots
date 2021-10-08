@@ -7,7 +7,7 @@ using System;
 namespace HolzShots.Input.Actions
 {
     [Command("editImage")]
-    public class EditImageCommand : FileDependentCommand, ICommand<HSSettings>
+    public class EditImageCommand : ImageFileDependentCommand, ICommand<HSSettings>
     {
         private const string OpenInShotEditor = "Open Image in ShotEditor";
 

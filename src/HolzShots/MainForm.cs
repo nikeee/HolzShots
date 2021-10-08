@@ -179,11 +179,11 @@ namespace HolzShots
         }
         private async void SelectArea(object sender, EventArgs e)
         {
-            await _application.CommandManager.Dispatch<SelectAreaCommand>(UserSettings.Current).ConfigureAwait(true);
+            await _application.CommandManager.Dispatch<CaptureSelectedAreaCommand>(UserSettings.Current).ConfigureAwait(true);
         }
         private async void StartScreenRecording(object sender, EventArgs e)
         {
-            await _application.CommandManager.Dispatch<CaptureVideoCommand>(UserSettings.Current).ConfigureAwait(true);
+            await _application.CommandManager.Dispatch<StartOrStopVideoCommand>(UserSettings.Current).ConfigureAwait(true);
         }
         private async void OpenSettingsJson(object sender, EventArgs e)
         {
