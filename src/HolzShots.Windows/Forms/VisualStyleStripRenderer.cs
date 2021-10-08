@@ -16,11 +16,11 @@ namespace HolzShots.Windows.Forms
 
     /// <summary>Renders a toolstrip using the UxTheme API via VisualStyleRenderer and a specific style.</summary>
     /// <remarks>Perhaps surprisingly, this does not need to be disposable.</remarks>
-    public class AeroToolStripRenderer : ToolStripSystemRenderer
+    public class VisualStyleStripRenderer : ToolStripSystemRenderer
     {
         private VisualStyleRenderer _renderer = null!;
 
-        public AeroToolStripRenderer(ToolBarTheme theme) => Theme = theme;
+        public VisualStyleStripRenderer(ToolBarTheme theme) => Theme = theme;
 
         // See http://msdn2.microsoft.com/en-us/library/bb773210.aspx - "Parts and States"
         // Only menu-related parts/states are needed here, VisualStyleRenderer handles most of the rest.
@@ -143,20 +143,13 @@ namespace HolzShots.Windows.Forms
         private string RebarClass => SubclassPrefix + "Rebar";
         private string ToolbarClass => SubclassPrefix + "ToolBar";
         private string MenuClass => SubclassPrefix + "Menu";
-        private string SubclassPrefix
-        {
-            get
-            {
-                switch (Theme)
-                {
-                    case ToolBarTheme.MediaToolbar: return "Media::";
-                    case ToolBarTheme.CommunicationsToolbar: return "Communications::";
-                    case ToolBarTheme.BrowserTabBar: return "BrowserTabBar::";
-                    case ToolBarTheme.HelpBar: return "Help::";
-                    default: return string.Empty;
-                }
-            }
-        }
+        private string SubclassPrefix => Theme switch {
+            ToolBarTheme.MediaToolbar => "Media::",
+            ToolBarTheme.CommunicationsToolbar => "Communications::",
+            ToolBarTheme.BrowserTabBar => "BrowserTabBar::",
+            ToolBarTheme.HelpBar => "Help::",
+            _ => string.Empty,
+        };
 
         private VisualStyleElement Subclass(VisualStyleElement element)
         {
@@ -275,8 +268,7 @@ namespace HolzShots.Windows.Forms
 
             if (EnsureRenderer())
             {
-                // Draw the background using Rebar & RP_BACKGROUND (or, if that is not available, fall back to
-                // Rebar.Band.Normal)
+                // Draw the background using Rebar & RP_BACKGROUND (or, if that is not available, fall back to Rebar.Band.Normal)
                 if (VisualStyleRenderer.IsElementDefined(VisualStyleElement.CreateElement(RebarClass, RebarBackground, 0)))
                     _renderer.SetParameters(RebarClass, RebarBackground, 0);
                 else

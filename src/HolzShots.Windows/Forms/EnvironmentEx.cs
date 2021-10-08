@@ -79,7 +79,7 @@ namespace HolzShots.Windows.Forms
         private static readonly Lazy<ToolStripRenderer> _rendererInstance = new(() =>
             AppsUseLightTheme()
                 ? new HolzShotsToolStripRenderer()
-                : new AeroToolStripRenderer(ToolBarTheme.Toolbar)
+                : new VisualStyleStripRenderer(ToolBarTheme.Toolbar)
         );
 
         public static ToolStripRenderer GetToolStripRendererForCurrentTheme() => _rendererInstance.Value;
