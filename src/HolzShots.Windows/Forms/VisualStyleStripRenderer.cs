@@ -125,16 +125,16 @@ namespace HolzShots.Windows.Forms
             if (item.IsOnDropDown)
             {
                 if (item.Enabled)
-                    return hot ? Convert.ToInt32(MenuPopupItemState.Hover) : Convert.ToInt32(MenuPopupItemState.Normal);
-                return hot ? Convert.ToInt32(MenuPopupItemState.DisabledHover) : Convert.ToInt32(MenuPopupItemState.Disabled);
+                    return hot ? (int)MenuPopupItemState.Hover : (int)MenuPopupItemState.Normal;
+                return hot ? (int)MenuPopupItemState.DisabledHover : (int)MenuPopupItemState.Disabled;
             }
             else
             {
                 if (item.Pressed)
-                    return item.Enabled ? Convert.ToInt32(MenuBarItemState.Pushed) : Convert.ToInt32(MenuBarItemState.DisabledPushed);
+                    return item.Enabled ? (int)MenuBarItemState.Pushed : (int)MenuBarItemState.DisabledPushed;
                 if (item.Enabled)
-                    return hot ? Convert.ToInt32(MenuBarItemState.Hover) : Convert.ToInt32(MenuBarItemState.Normal);
-                return hot ? Convert.ToInt32(MenuBarItemState.DisabledHover) : Convert.ToInt32(MenuBarItemState.Disabled);
+                    return hot ? (int)MenuBarItemState.Hover : (int)MenuBarItemState.Normal;
+                return hot ? (int)MenuBarItemState.DisabledHover : (int)MenuBarItemState.Disabled;
             }
         }
 
@@ -204,7 +204,7 @@ namespace HolzShots.Windows.Forms
 
             if (EnsureRenderer())
             {
-                _renderer.SetParameters(MenuClass, Convert.ToInt32(MenuPart.PopupBorders), 0);
+                _renderer.SetParameters(MenuClass, (int)MenuPart.PopupBorders, 0);
                 if (e.ToolStrip.IsDropDown)
                 {
                     Region oldClip = e.Graphics.Clip;
@@ -251,7 +251,7 @@ namespace HolzShots.Windows.Forms
 
             if (EnsureRenderer())
             {
-                int partID = e.Item.IsOnDropDown ? Convert.ToInt32(MenuPart.PopupItem) : Convert.ToInt32(MenuPart.BarItem);
+                int partID = e.Item.IsOnDropDown ? (int)MenuPart.PopupItem : (int)MenuPart.BarItem;
                 _renderer.SetParameters(MenuClass, partID, GetItemState(e.Item));
 
                 Rectangle bgRect = GetBackgroundRectangle(e.Item);
@@ -294,7 +294,7 @@ namespace HolzShots.Windows.Forms
             if (EnsureRenderer())
             {
                 if (e.ToolStrip.IsDropDown)
-                    _renderer.SetParameters(MenuClass, Convert.ToInt32(MenuPart.PopupBackground), 0);
+                    _renderer.SetParameters(MenuClass, (int)MenuPart.PopupBackground, 0);
                 else
                 {
                     // It's a MenuStrip or a ToolStrip. If it's contained inside a larger panel, it should have a
@@ -349,7 +349,7 @@ namespace HolzShots.Windows.Forms
 
         private Color GetItemTextColor(ToolStripItem item)
         {
-            int partId = item.IsOnDropDown ? Convert.ToInt32(MenuPart.PopupItem) : Convert.ToInt32(MenuPart.BarItem);
+            int partId = item.IsOnDropDown ? (int)MenuPart.PopupItem : (int)MenuPart.BarItem;
             _renderer.SetParameters(MenuClass, partId, GetItemState(item));
             return _renderer.GetColor(ColorProperty.TextColor);
         }
@@ -374,7 +374,7 @@ namespace HolzShots.Windows.Forms
             {
                 if (e.ToolStrip.IsDropDown)
                 {
-                    _renderer.SetParameters(MenuClass, Convert.ToInt32(MenuPart.PopupGutter), 0);
+                    _renderer.SetParameters(MenuClass, (int)MenuPart.PopupGutter, 0);
                     // The AffectedBounds is usually too small, way too small to look right. Instead of using that,
                     // use the AffectedBounds but with the right width. Then narrow the rectangle to the correct edge
                     // based on whether or not it's RTL. (It doesn't need to be narrowed to an edge in LTR mode, but let's
@@ -407,7 +407,7 @@ namespace HolzShots.Windows.Forms
 
             if (e.ToolStrip.IsDropDown && EnsureRenderer())
             {
-                _renderer.SetParameters(MenuClass, Convert.ToInt32(MenuPart.PopupSeparator), 0);
+                _renderer.SetParameters(MenuClass, (int)MenuPart.PopupSeparator, 0);
                 Rectangle rect = new Rectangle(e.ToolStrip.DisplayRectangle.Left, 0, e.ToolStrip.DisplayRectangle.Width, e.Item.Height);
                 _renderer.DrawBackground(e.Graphics, rect, rect);
             }
@@ -429,7 +429,7 @@ namespace HolzShots.Windows.Forms
                 if (e.Item.RightToLeft == RightToLeft.Yes)
                     bgRect = new Rectangle(e.ToolStrip.ClientSize.Width - bgRect.X - bgRect.Width, bgRect.Y, bgRect.Width, bgRect.Height);
 
-                _renderer.SetParameters(MenuClass, Convert.ToInt32(MenuPart.PopupCheckBackground), e.Item.Enabled ? Convert.ToInt32(MenuPopupCheckBackgroundState.Normal) : Convert.ToInt32(MenuPopupCheckBackgroundState.Disabled));
+                _renderer.SetParameters(MenuClass, (int)MenuPart.PopupCheckBackground, e.Item.Enabled ? (int)MenuPopupCheckBackgroundState.Normal : (int)MenuPopupCheckBackgroundState.Disabled);
                 _renderer.DrawBackground(e.Graphics, bgRect);
 
                 Rectangle checkRect = e.ImageRectangle;
@@ -437,7 +437,7 @@ namespace HolzShots.Windows.Forms
                 checkRect.Y = bgRect.Y + bgRect.Height / 2 - checkRect.Height / 2;
 
                 // I don't think ToolStrip even supports radio box items, so no need to render them.
-                _renderer.SetParameters(MenuClass, Convert.ToInt32(MenuPart.PopupCheck), e.Item.Enabled ? Convert.ToInt32(MenuPopupCheckState.CheckmarkNormal) : Convert.ToInt32(MenuPopupCheckState.CheckmarkDisabled));
+                _renderer.SetParameters(MenuClass, (int)MenuPart.PopupCheck, e.Item.Enabled ? (int)MenuPopupCheckState.CheckmarkNormal : (int)MenuPopupCheckState.CheckmarkDisabled);
 
                 _renderer.DrawBackground(e.Graphics, checkRect);
             }
@@ -490,7 +490,7 @@ namespace HolzShots.Windows.Forms
                     return false;
 
                 // Needs a more robust check. It seems mono supports very different style sets.
-                return VisualStyleRenderer.IsElementDefined(VisualStyleElement.CreateElement("Menu", Convert.ToInt32(MenuPart.BarBackground), Convert.ToInt32(MenuBarState.Active)));
+                return VisualStyleRenderer.IsElementDefined(VisualStyleElement.CreateElement("Menu", (int)MenuPart.BarBackground, (int)MenuBarState.Active));
             }
         }
     }
