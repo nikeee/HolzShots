@@ -157,7 +157,7 @@ Namespace UI.Controls
                         Using g As Graphics = Graphics.FromImage(bmp)
                             g.SmoothingMode = SmoothingMode.AntiAlias
                             g.CompositingQuality = CompositingQuality.HighQuality
-                            g.DrawImage(HolzShots.My.Resources.windowsCursorMedium, Screenshot.CursorPosition)
+                            g.DrawImage(HolzShots.My.Resources.windowsCursorMedium, Screenshot.CursorPosition.OnImage)
                         End Using
                     End If
                     Return bmp

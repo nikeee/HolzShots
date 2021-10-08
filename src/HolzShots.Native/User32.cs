@@ -147,6 +147,12 @@ namespace HolzShots.Native
         [DllImport(DllName)]
         public static extern IntPtr GetWindowDC(IntPtr window);
 
+        [DllImport(DllName)]
+        public static extern bool GetCursorInfo(ref CursorInfo pci);
+
+        [DllImport(DllName)]
+        public static extern bool DrawIcon(IntPtr hDC, int x, int y, IntPtr iconHandle);
+
         #endregion
         #region DC / DesktopWindow
 
@@ -157,6 +163,23 @@ namespace HolzShots.Native
 
         #region Types
 
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct CursorInfo {
+            public int cbSize;
+            public readonly CursorFlags flags;
+            public readonly IntPtr cursorHandle;
+
+            // This is actually a point, but we assume ABI compatibility and no padding because we're LayoutKind.Sequential
+            public readonly int screenPosX;
+            public readonly int screenPosY;
+        }
+
+        [Flags]
+        public enum CursorFlags : int
+        {
+            Showing = 0x00000001,
+        }
 
         [StructLayout(LayoutKind.Sequential)]
         public readonly struct FlashWindowInfo

@@ -135,53 +135,56 @@ namespace HolzShots.Input.Actions
                 if (ffmpegPath == null)
                     return null; // We don't have ffmpeg available and the user didn't do anything to fix this. We act like it was aborted.
 
-                using var selectionBackground = Drawing.ScreenshotCreator.CaptureScreenshot(SystemInformation.VirtualScreen);
-                using var selector = Selection.AreaSelector.Create(selectionBackground, settingsContext);
-
-                var (selectedArea, windowInfo) = await selector.PromptSelectionAsync();
-
-                var recorder = ScreenRecorderSelector.CreateScreenRecorderForCurrentPlatform();
-
-                var ffmpegPathToPrefix = Path.GetDirectoryName(ffmpegPath!)!;
-                Debug.Assert(ffmpegPathToPrefix != null);
-
-                using var environmentPrevix = new IO.PrefixEnvironmentVariable(ffmpegPathToPrefix);
-
-                var tempRecordingDir = Path.Combine(Path.GetTempPath(), "hs-" + Path.GetRandomFileName());
-                Directory.CreateDirectory(tempRecordingDir);
-
-                var extension = VideoUploadPayload.GetExtensionForVideoFormat(settingsContext.VideoOutputFormat);
-                var targetFile = Path.Combine(tempRecordingDir, "HS" + extension);
-
-                if (windowInfo != null)
+                var (selectionBackground, _) = Drawing.ScreenshotCreator.CaptureScreenshot(SystemInformation.VirtualScreen, settingsContext.CaptureCursor);
+                using (selectionBackground)
                 {
-                    // See GH#78
-                    // The number 500 is just a guess. If it fails, it isn't such a problem and won't cause any harm
-                    // As soon as we've got our own recording frame, we can be more precise on when to invoke the SetForegroundWindow
-                    _ = Task.Delay(500).ContinueWith(t =>
-                    {
-                        Debug.WriteLine($"Set FG window to {windowInfo.Title ?? "<no title>"}");
-                        Native.User32.SetForegroundWindow(windowInfo.Handle);
-                    });
-                }
+                    using var selector = Selection.AreaSelector.Create(selectionBackground, settingsContext);
 
-                var recording = await recorder.Invoke(selectedArea, targetFile, settingsContext, _currentRecordingCts.Token);
+                    var (selectedArea, windowInfo) = await selector.PromptSelectionAsync();
 
-                if (_throwAwayResult)
-                {
-                    // The user cancelled the video recording
-                    try
+                    var recorder = ScreenRecorderSelector.CreateScreenRecorderForCurrentPlatform();
+
+                    var ffmpegPathToPrefix = Path.GetDirectoryName(ffmpegPath!)!;
+                    Debug.Assert(ffmpegPathToPrefix != null);
+
+                    using var environmentPrevix = new PrefixEnvironmentVariable(ffmpegPathToPrefix);
+
+                    var tempRecordingDir = Path.Combine(Path.GetTempPath(), "hs-" + Path.GetRandomFileName());
+                    Directory.CreateDirectory(tempRecordingDir);
+
+                    var extension = VideoUploadPayload.GetExtensionForVideoFormat(settingsContext.VideoOutputFormat);
+                    var targetFile = Path.Combine(tempRecordingDir, "HS" + extension);
+
+                    if (windowInfo != null)
                     {
-                        if (File.Exists(targetFile))
-                            File.Delete(targetFile);
+                        // See GH#78
+                        // The number 500 is just a guess. If it fails, it isn't such a problem and won't cause any harm
+                        // As soon as we've got our own recording frame, we can be more precise on when to invoke the SetForegroundWindow
+                        _ = Task.Delay(500).ContinueWith(t =>
+                        {
+                            Debug.WriteLine($"Set FG window to {windowInfo.Title ?? "<no title>"}");
+                            Native.User32.SetForegroundWindow(windowInfo.Handle);
+                        });
                     }
-                    catch
+
+                    var recording = await recorder.Invoke(selectedArea, targetFile, settingsContext, _currentRecordingCts.Token);
+
+                    if (_throwAwayResult)
                     {
-                        // Not _that_ important to handle this because it's in a temp dir and willb e gone on reboot anyway
+                        // The user cancelled the video recording
+                        try
+                        {
+                            if (File.Exists(targetFile))
+                                File.Delete(targetFile);
+                        }
+                        catch
+                        {
+                            // Not _that_ important to handle this because it's in a temp dir and willb e gone on reboot anyway
+                        }
+                        return null;
                     }
-                    return null;
+                    return recording;
                 }
-                return recording;
             }
             finally
             {

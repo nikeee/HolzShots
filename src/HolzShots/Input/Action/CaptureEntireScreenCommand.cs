@@ -19,16 +19,16 @@ namespace HolzShots.Input.Actions
             // TODO: Re-add proper if condition
             // If ManagedSettings.EnableFullscreenScreenshot Then
 
-            var shot = CaptureFullScreen();
+            var shot = CaptureFullScreen(settingsContext);
             Debug.Assert(shot != null);
             await ProcessCapturing(shot, settingsContext).ConfigureAwait(true);
         }
 
-        public static Screenshot CaptureFullScreen()
+        public static Screenshot CaptureFullScreen(HSSettings settingsContext)
         {
             using var prio = new ProcessPriorityRequest();
-            var screen = ScreenshotCreator.CaptureScreenshot(SystemInformation.VirtualScreen);
-            return Screenshot.FromImage(screen, Cursor.Position, ScreenshotSource.Fullscreen);
+            var (screen, cursorPosition) = ScreenshotCreator.CaptureScreenshot(SystemInformation.VirtualScreen, settingsContext.CaptureCursor);
+            return Screenshot.FromImage(screen, cursorPosition, ScreenshotSource.Fullscreen);
         }
     }
 }

@@ -22,7 +22,7 @@ namespace HolzShots.Input.Actions
             if (image == null)
                 return;
 
-            var shot = Screenshot.FromImage(image, Cursor.Position, ScreenshotSource.Clipboard);
+            var shot = Screenshot.FromImage(image, null, ScreenshotSource.Clipboard);
             await ProcessCapturing(shot, settingsContext).ConfigureAwait(true);
         }
 

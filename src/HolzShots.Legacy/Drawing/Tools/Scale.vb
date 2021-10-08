@@ -20,7 +20,10 @@ Namespace Drawing.Tools
 
                     Dim newWidth As Integer
                     Dim newheight As Integer
-                    Dim newCursorCoods As Point = sender.Screenshot.CursorPosition
+
+                    ' This is wrong and may fail if there was no cursor position
+                    ' We ignore this for now, since we're not caring about legacy stuff
+                    Dim newCursorCoods As Point = sender.Screenshot.CursorPosition.OnImage
 
                     Dim newCursorWidth As Integer = My.Resources.windowsCursorMedium.Width
                     Dim newCursorHeight As Integer = My.Resources.windowsCursorMedium.Height

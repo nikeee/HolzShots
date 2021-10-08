@@ -27,27 +27,28 @@ namespace HolzShots.Input.Actions
 
             Native.User32.GetWindowPlacement(h, out Native.User32.WindowPlacement info);
 
-            var shot = CaptureWindow(h);
-            await ProcessCapturing(shot, settingsContext).ConfigureAwait(true);
+            var shot = CaptureWindow(h, settingsContext);
+            if (shot != null)
+                await ProcessCapturing(shot, settingsContext).ConfigureAwait(true);
         }
 
-        private static Screenshot CaptureWindow(IntPtr windowHandle, bool includeMargin = true)
+        private static Screenshot? CaptureWindow(IntPtr windowHandle, HSSettings settingsContext, bool includeMargin = true)
         {
             if (Native.User32.IsIconic(windowHandle))
                 return default;
 
             using var prio = new ProcessPriorityRequest();
-            using var shotSet = GetShotSet(windowHandle, includeMargin);
+            using var shotSet = GetShotSet(windowHandle, includeMargin, settingsContext);
             return Screenshot.FromWindow(shotSet);
         }
 
-        private static WindowScreenshotSet GetShotSet(IntPtr windowHandle, bool includeMargin)
+        private static WindowScreenshotSet GetShotSet(IntPtr windowHandle, bool includeMargin, HSSettings settingsContext)
         {
             // TODO: Refactor methods to WindowScreenshotSet?
-            if (HolzShots.Windows.Forms.EnvironmentEx.IsAeroEnabled())
+            if (EnvironmentEx.IsAeroEnabled())
                 return DoAeroOn(windowHandle, includeMargin, false);
-            else if (HolzShots.Windows.Forms.EnvironmentEx.IsVistaOrHigher)
-                return DoAeroOff(windowHandle);
+            else if (EnvironmentEx.IsVistaOrHigher)
+                return DoAeroOff(windowHandle, settingsContext);
             else
             {
                 Debugger.Break(); // wait, you prick!
@@ -88,70 +89,72 @@ namespace HolzShots.Input.Actions
             if (drawingRectangle.Size.Height < 0 || drawingRectangle.Size.Width < 0)
                 return default;
 
-            var cursorPositonOnScreenshot = new Point(Cursor.Position.X - drawingRectangle.Location.X, Cursor.Position.Y - drawingRectangle.Location.Y);
+            var cursorPosition = GetCurrentCursorCoordinates(drawingRectangle);
 
+            using var bg = new BackgroundForm(drawingRectangle.Location, drawingRectangle.Size);
 
-            using (BackgroundForm bg = new BackgroundForm(drawingRectangle.Location, drawingRectangle.Size))
+            // New Point(rct.Left, rct.Top), New Size(rct.Right - rct.Left, rct.Bottom - rct.Top))
+            // Using bg As New FloatingWindow(nrct.X, nrct.Y, nrct.Width, nrct.Height)
+            var bmpBlack = new Bitmap(drawingRectangle.Width, drawingRectangle.Height, PixelFormat.Format32bppPArgb);
+            using var bmpWhite = new Bitmap(drawingRectangle.Width, drawingRectangle.Height, PixelFormat.Format32bppPArgb);
+
+            bg.Visible = true;
+
+            WindowRedraw.StopRedraw(wndHandle);
+
+            Native.User32.SetForegroundWindowEx(bg.Handle);
+            Native.User32.SetForegroundWindowEx(wndHandle);
+
+            using (var ga = Graphics.FromImage(bmpBlack))
             {
-                // New Point(rct.Left, rct.Top), New Size(rct.Right - rct.Left, rct.Bottom - rct.Top))
-                // Using bg As New FloatingWindow(nrct.X, nrct.Y, nrct.Width, nrct.Height)
-                using (Bitmap bmpBlack = new Bitmap(drawingRectangle.Width, drawingRectangle.Height, PixelFormat.Format32bppPArgb))
-                {
-                    using (Bitmap bmpWhite = new Bitmap(drawingRectangle.Width, drawingRectangle.Height, PixelFormat.Format32bppPArgb))
-                    {
-                        bg.Visible = true;
-
-                        WindowRedraw.StopRedraw(wndHandle);
-
-                        Native.User32.SetForegroundWindowEx(bg.Handle);
-                        Native.User32.SetForegroundWindowEx(wndHandle);
-
-                        using (var ga = Graphics.FromImage(bmpBlack))
-                        {
-                            ga.CompositingQuality = CompositingQuality.HighQuality;
-                            ga.CopyFromScreen(drawingRectangle.X, drawingRectangle.Y, 0, 0, bg.Size);
-                        }
-
-                        bg.BackColor = Color.White;
-                        bg.Refresh();
-
-                        using (var ga = Graphics.FromImage(bmpWhite))
-                        {
-                            ga.CopyFromScreen(drawingRectangle.X, drawingRectangle.Y, 0, 0, bg.Size);
-                        }
-
-                        WindowRedraw.StartRedraw(wndHandle);
-
-                        bg.Visible = false;
-
-                        var result = new Bitmap(bmpWhite.Width, bmpWhite.Height);
-                        Computation.ComputeAlphaChannel(bmpWhite, bmpBlack, ref result);
-
-                        // Old method:
-                        // ScreenshotMethodsHelper.ComputeAlphaChannel(bmpWhite, bmpBlack)
-
-                        var windowTitle = WindowInformation.GetWindowTitle(wndHandle);
-                        var processName = WindowInformation.GetProcessNameOfWindow(wndHandle);
-
-                        return new WindowScreenshotSet(result, cursorPositonOnScreenshot, windowTitle, processName);
-                    }
-                }
+                ga.CompositingQuality = CompositingQuality.HighQuality;
+                ga.CopyFromScreen(drawingRectangle.X, drawingRectangle.Y, 0, 0, bg.Size);
             }
-        }
 
-        private static WindowScreenshotSet DoAeroOff(IntPtr wndHandle)
-        {
-            Native.User32.GetWindowRect(wndHandle, out Native.Rect nativeRectangle);
-            Rectangle drawingRectangle = nativeRectangle;
+            bg.BackColor = Color.White;
+            bg.Refresh();
 
-            var cursorPositonOnScreenshot = new Point(Cursor.Position.X - drawingRectangle.Location.X, Cursor.Position.Y - drawingRectangle.Location.Y);
+            using (var ga = Graphics.FromImage(bmpWhite))
+            {
+                ga.CopyFromScreen(drawingRectangle.X, drawingRectangle.Y, 0, 0, bg.Size);
+            }
 
-            var bmp = ScreenshotCreator.CaptureScreenshot(drawingRectangle);
+            WindowRedraw.StartRedraw(wndHandle);
+
+            bg.Visible = false;
+
+            var result = new Bitmap(bmpWhite.Width, bmpWhite.Height);
+            Computation.ComputeAlphaChannel(bmpWhite, bmpBlack, ref result);
+
+            // Old method:
+            // ScreenshotMethodsHelper.ComputeAlphaChannel(bmpWhite, bmpBlack)
 
             var windowTitle = WindowInformation.GetWindowTitle(wndHandle);
             var processName = WindowInformation.GetProcessNameOfWindow(wndHandle);
 
-            return new WindowScreenshotSet(bmp, cursorPositonOnScreenshot, windowTitle, processName);
+            return new WindowScreenshotSet(result, cursorPosition, windowTitle, processName);
+        }
+
+        private static WindowScreenshotSet DoAeroOff(IntPtr wndHandle, HSSettings settingsContext)
+        {
+            Native.User32.GetWindowRect(wndHandle, out Native.Rect nativeRectangle);
+            Rectangle drawingRectangle = nativeRectangle;
+
+            var (bmp, cursorPosition) = ScreenshotCreator.CaptureScreenshot(drawingRectangle, settingsContext.CaptureCursor);
+
+            var windowTitle = WindowInformation.GetWindowTitle(wndHandle);
+            var processName = WindowInformation.GetProcessNameOfWindow(wndHandle);
+
+            return new WindowScreenshotSet(bmp, cursorPosition, windowTitle, processName);
+        }
+
+        static CursorPosition GetCurrentCursorCoordinates(Rectangle referenceRectangle)
+        {
+            var positionOnScreen = Cursor.Position;
+            return new(
+                positionOnScreen,
+                new Point(positionOnScreen.X - referenceRectangle.Location.X, positionOnScreen.Y - referenceRectangle.Location.Y)
+            );
         }
     }
 }

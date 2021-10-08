@@ -61,7 +61,7 @@ namespace HolzShots.Input.Actions
                 return null;
 
             using var prio = new ProcessPriorityRequest();
-            using var screen = ScreenshotCreator.CaptureScreenshot(SystemInformation.VirtualScreen);
+            var (screen, cursorPosition) = ScreenshotCreator.CaptureScreenshot(SystemInformation.VirtualScreen, settingsContext.CaptureCursor);
             using var selector = AreaSelector.Create(screen, settingsContext);
 
             var (selectedArea, _) = await selector.PromptSelectionAsync().ConfigureAwait(true);
@@ -71,11 +71,15 @@ namespace HolzShots.Input.Actions
 
             var selectedImage = new Bitmap(selectedArea.Width, selectedArea.Height);
 
+            var cursorPositionOnSelectedImage = cursorPosition == null
+                ? null
+                : cursorPosition with { OnImage = new Point(cursorPosition.OnImage.X - selectedArea.X, cursorPosition.OnImage.Y - selectedArea.Y) };
+
             using var g = Graphics.FromImage(selectedImage);
 
             g.DrawImage(screen, new Rectangle(0, 0, selectedArea.Width, selectedArea.Height), selectedArea, GraphicsUnit.Pixel);
 
-            return Screenshot.FromImage(selectedImage, Cursor.Position, ScreenshotSource.Selected);
+            return Screenshot.FromImage(selectedImage, cursorPosition, ScreenshotSource.Selected);
         }
     }
 }

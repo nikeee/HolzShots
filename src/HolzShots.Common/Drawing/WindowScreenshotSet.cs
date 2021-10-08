@@ -6,10 +6,10 @@ namespace HolzShots.Drawing
     public struct WindowScreenshotSet : IDisposable, IEquatable<WindowScreenshotSet>
     {
         public Image Result { get; }
-        public Point CursorPosition { get; }
+        public CursorPosition? CursorPosition { get; }
         public string ProcessName { get; }
         public string WindowTitle { get; }
-        public WindowScreenshotSet(Image result, Point cursorPosition, string processName, string windowTitle)
+        public WindowScreenshotSet(Image result, CursorPosition? cursorPosition, string processName, string windowTitle)
         {
             Result = result ?? throw new ArgumentNullException(nameof(result));
             CursorPosition = cursorPosition;

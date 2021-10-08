@@ -12,12 +12,12 @@ namespace HolzShots
         public DateTime Timestamp { get; }
         public string? ProcessName { get; }
         public string? WindowTitle { get; }
-        public Point CursorPosition { get; }
+        public CursorPosition? CursorPosition { get; }
         public ScreenshotSource Source { get; }
         public Bitmap Image { get; }
         public Size Size { get; }
 
-        private Screenshot(Bitmap image, DateTime timestamp, Point cursorPosition, ScreenshotSource source, string? processName, string? windowTitle)
+        private Screenshot(Bitmap image, DateTime timestamp, CursorPosition? cursorPosition, ScreenshotSource source, string? processName, string? windowTitle)
         {
             Image = image ?? throw new ArgumentNullException(nameof(image));
             Size = image.Size;
@@ -43,8 +43,8 @@ namespace HolzShots
             set.WindowTitle
         );
 
-        public static Screenshot FromImage(Bitmap image, Point cursorPosition, ScreenshotSource source) => new(image, DateTime.Now, cursorPosition, source, null, null);
-        public static Screenshot FromImported(Bitmap image) => new(image, DateTime.Now, Point.Empty, ScreenshotSource.Unknown, null, null);
+        public static Screenshot FromImage(Bitmap image, CursorPosition? cursorPosition, ScreenshotSource source) => new(image, DateTime.Now, cursorPosition, source, null, null);
+        public static Screenshot FromImported(Bitmap image) => new(image, DateTime.Now, null, ScreenshotSource.Unknown, null, null);
 
         public FileMetadata GetFileMetadata(ImageFormat format) => new(Timestamp, Image.EstimateFileSize(format), Size);
 
