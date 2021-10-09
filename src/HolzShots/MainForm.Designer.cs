@@ -39,6 +39,7 @@ namespace HolzShots
             this.UploadImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.OpenImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SelectAreaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.StartScreenRecordingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.StartWithWindowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.PluginsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -46,7 +47,6 @@ namespace HolzShots
             this.ToolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.ExitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TrayIcon = new System.Windows.Forms.NotifyIcon(this.components);
-            this.StartScreenRecordingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.trayMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -67,7 +67,7 @@ namespace HolzShots
             this.ExitToolStripMenuItem});
             this.trayMenu.Name = "trayMenu";
             this.trayMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.trayMenu.Size = new System.Drawing.Size(194, 242);
+            this.trayMenu.Size = new System.Drawing.Size(223, 242);
             // 
             // ExtrasToolStripMenuItem
             // 
@@ -75,7 +75,7 @@ namespace HolzShots
             this.AboutToolStripMenuItem,
             this.FeedbackAndIssuesToolStripMenuItem});
             this.ExtrasToolStripMenuItem.Name = "ExtrasToolStripMenuItem";
-            this.ExtrasToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.ExtrasToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
             this.ExtrasToolStripMenuItem.Text = "Extras";
             // 
             // AboutToolStripMenuItem
@@ -95,64 +95,71 @@ namespace HolzShots
             // ToolStripSeparator2
             // 
             this.ToolStripSeparator2.Name = "ToolStripSeparator2";
-            this.ToolStripSeparator2.Size = new System.Drawing.Size(190, 6);
+            this.ToolStripSeparator2.Size = new System.Drawing.Size(219, 6);
             // 
             // UploadImageToolStripMenuItem
             // 
             this.UploadImageToolStripMenuItem.Name = "UploadImageToolStripMenuItem";
-            this.UploadImageToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.UploadImageToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
             this.UploadImageToolStripMenuItem.Text = "Upload Image";
             this.UploadImageToolStripMenuItem.Click += new System.EventHandler(this.UploadImage);
             // 
             // OpenImageToolStripMenuItem
             // 
             this.OpenImageToolStripMenuItem.Name = "OpenImageToolStripMenuItem";
-            this.OpenImageToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.OpenImageToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
             this.OpenImageToolStripMenuItem.Text = "Open Image";
             this.OpenImageToolStripMenuItem.Click += new System.EventHandler(this.OpenImage);
             // 
             // SelectAreaToolStripMenuItem
             // 
             this.SelectAreaToolStripMenuItem.Name = "SelectAreaToolStripMenuItem";
-            this.SelectAreaToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.SelectAreaToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
             this.SelectAreaToolStripMenuItem.Text = "Select Area";
             this.SelectAreaToolStripMenuItem.Click += new System.EventHandler(this.SelectArea);
+            // 
+            // StartScreenRecordingToolStripMenuItem
+            // 
+            this.StartScreenRecordingToolStripMenuItem.Name = "StartScreenRecordingToolStripMenuItem";
+            this.StartScreenRecordingToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
+            this.StartScreenRecordingToolStripMenuItem.Text = "Start/Stop Screen Recording";
+            this.StartScreenRecordingToolStripMenuItem.Click += new System.EventHandler(this.StartScreenRecording);
             // 
             // ToolStripSeparator3
             // 
             this.ToolStripSeparator3.Name = "ToolStripSeparator3";
-            this.ToolStripSeparator3.Size = new System.Drawing.Size(190, 6);
+            this.ToolStripSeparator3.Size = new System.Drawing.Size(219, 6);
             // 
             // StartWithWindowsToolStripMenuItem
             // 
             this.StartWithWindowsToolStripMenuItem.Name = "StartWithWindowsToolStripMenuItem";
-            this.StartWithWindowsToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.StartWithWindowsToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
             this.StartWithWindowsToolStripMenuItem.Text = "Start with Windows";
             this.StartWithWindowsToolStripMenuItem.Click += new System.EventHandler(this.StartWithWindows);
             // 
             // PluginsToolStripMenuItem
             // 
             this.PluginsToolStripMenuItem.Name = "PluginsToolStripMenuItem";
-            this.PluginsToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.PluginsToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
             this.PluginsToolStripMenuItem.Text = "Plugins";
             this.PluginsToolStripMenuItem.Click += new System.EventHandler(this.OpenPlugins);
             // 
             // OpenSettingsjsonToolStripMenuItem
             // 
             this.OpenSettingsjsonToolStripMenuItem.Name = "OpenSettingsjsonToolStripMenuItem";
-            this.OpenSettingsjsonToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.OpenSettingsjsonToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
             this.OpenSettingsjsonToolStripMenuItem.Text = "Open settings.json";
             this.OpenSettingsjsonToolStripMenuItem.Click += new System.EventHandler(this.OpenSettingsJson);
             // 
             // ToolStripSeparator1
             // 
             this.ToolStripSeparator1.Name = "ToolStripSeparator1";
-            this.ToolStripSeparator1.Size = new System.Drawing.Size(190, 6);
+            this.ToolStripSeparator1.Size = new System.Drawing.Size(219, 6);
             // 
             // ExitToolStripMenuItem
             // 
             this.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem";
-            this.ExitToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.ExitToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
             this.ExitToolStripMenuItem.Text = "Exit";
             this.ExitToolStripMenuItem.Click += new System.EventHandler(this.ExitApplication);
             // 
@@ -162,13 +169,6 @@ namespace HolzShots
             this.TrayIcon.Text = "HolzShots";
             this.TrayIcon.Visible = true;
             this.TrayIcon.DoubleClick += new System.EventHandler(this.TriggerTrayIconDoubleClickCommand);
-            // 
-            // StartScreenRecordingToolStripMenuItem
-            // 
-            this.StartScreenRecordingToolStripMenuItem.Name = "StartScreenRecordingToolStripMenuItem";
-            this.StartScreenRecordingToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
-            this.StartScreenRecordingToolStripMenuItem.Text = "Start Screen Recording";
-            this.StartScreenRecordingToolStripMenuItem.Click += new System.EventHandler(this.StartScreenRecording);
             // 
             // MainForm
             // 
