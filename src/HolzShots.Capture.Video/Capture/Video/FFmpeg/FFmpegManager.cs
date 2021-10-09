@@ -16,12 +16,16 @@ namespace HolzShots.Capture.Video.FFmpeg
             var sb = new StringBuilder(Shlwapi.MAX_PATH);
             sb.Append(FFmpegExecutable);
             var res = Shlwapi.PathFindOnPath(sb, null);
-            return res && File.Exists(sb.ToString()) ? sb.ToString() : null;
+
+            var p = sb.ToString();
+            return res && File.Exists(p)
+                    ? p
+                    : null;
         }
 
 
         /// <param name="allowPathEnvVar">If true, will be preferred if present</param>
-        public static string GetAbsoluteFFmpegPath(bool allowPathEnvVar)
+        public static string? GetAbsoluteFFmpegPath(bool allowPathEnvVar)
         {
             // We may ship with ffmpeg out of the box, so just return that if that is available
             if (File.Exists(FFmpegExecutable))
@@ -38,14 +42,7 @@ namespace HolzShots.Capture.Video.FFmpeg
             }
 
             var downloadedFFmpeg = Path.Combine(FFmpegAppDataPath, FFmpegExecutable);
-            Debug.Assert(File.Exists(downloadedFFmpeg));
-            return downloadedFFmpeg;
-        }
-
-        public static bool HasDownloadedFFmpeg()
-        {
-            var downloadedFFmpeg = Path.Combine(FFmpegAppDataPath, FFmpegExecutable);
-            return File.Exists(downloadedFFmpeg);
+            return File.Exists(downloadedFFmpeg) ? downloadedFFmpeg : null;
         }
     }
 }
