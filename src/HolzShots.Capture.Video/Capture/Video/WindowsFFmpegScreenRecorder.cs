@@ -92,9 +92,9 @@ namespace HolzShots.Capture.Video
             var startTime = DateTime.Now;
 
             using var recordedRegionIndicator = new UI.RecordingFrame(rectangleOnScreenToCapture); //(new(7, 1, 300, 400));
+
             recordedRegionIndicator.Show();
             recordedRegionIndicator.StartIndicating(cancellationToken);
-
             // Somehow, ProcessAsynchronously does not throw a TaskCanceledException when it was cancelled. It just returns.
             var res = await ffmpegInstance.ProcessAsynchronously(false);
             System.Diagnostics.Debug.WriteLine($"ffmpegInstance res: {res}");

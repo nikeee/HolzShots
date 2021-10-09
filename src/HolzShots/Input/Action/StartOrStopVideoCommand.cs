@@ -13,6 +13,7 @@ using HolzShots.Net;
 using HolzShots.Windows.Net;
 using HolzShots.IO;
 using HolzShots.IO.Naming;
+using HolzShots.Capture.Video.UI;
 
 namespace HolzShots.Input.Actions
 {
@@ -166,6 +167,9 @@ namespace HolzShots.Input.Actions
                             Native.User32.SetForegroundWindow(windowInfo.Handle);
                         });
                     }
+
+                    using var recordingControls = new RecordingControls(selectedArea, _currentRecordingCts);
+                    recordingControls.Show();
 
                     var recording = await recorder.Invoke(selectedArea, targetFile, settingsContext, _currentRecordingCts.Token);
 
