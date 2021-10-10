@@ -3,7 +3,6 @@ using System.Drawing;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using FFMpegCore;
 using HolzShots.Capture.Video.FFmpeg;
 
 namespace HolzShots.Capture.Video
@@ -13,16 +12,15 @@ namespace HolzShots.Capture.Video
     /// </summary>
     public class WindowsFFmpegScreenRecorder : IScreenRecorder
     {
+        private readonly string _ffmpegPath;
+        public WindowsFFmpegScreenRecorder(string ffmpegPath) => _ffmpegPath = ffmpegPath ?? throw new ArgumentNullException(nameof(ffmpegPath));
+
         public async Task<ScreenRecording> Invoke(Rectangle rectangleOnScreenToCapture, string targetFile, HSSettings settingsContext, CancellationToken cancellationToken)
         {
-            var formats = FFMpeg.GetContainerFormats();
-
             // Capture important parameters beforehand, as they may randomly change during recording (this shouldn't happen, but we never know)
             var captureCursor = settingsContext.CaptureCursor;
             var fps = settingsContext.VideoFrameRate;
             var outputFormat = settingsContext.VideoOutputFormat;
-
-            var ffmpegFormat = formats.First(e => e.Name == "gdigrab");
 
             var pixelFormat = settingsContext.VideoPixelFormat;
             if (pixelFormat == null)
@@ -64,30 +62,7 @@ namespace HolzShots.Capture.Video
                 }
             }
 
-            var ffmpegInstance = FFMpegArguments.FromFileInput(
-                "desktop",
-                false,
-                options =>
-                {
-                    options
-                    .ForceFormat(ffmpegFormat)
-                    .WithFramerate(fps)
-                    .WithArgument(new OffsetArgument(rectangleOnScreenToCapture.X, 'x'))
-                    .WithArgument(new OffsetArgument(rectangleOnScreenToCapture.Y, 'y'))
-                    .WithArgument(new VideoSizeArgument(rectangleOnScreenToCapture.Width, rectangleOnScreenToCapture.Height))
-                    .WithArgument(new ShowRegionArgument(false))
-                    .WithArgument(new DrawMouseArgument(captureCursor));
-                })
-                .OutputToFile(targetFile, true, options =>
-                {
-                    options
-                    .WithFastStart()
-                    .WithVideoCodec("libx264");
-
-                    if (pixelFormat != null)
-                        options.ForcePixelFormat(pixelFormat.Trim().ToLowerInvariant());
-                })
-                .CancellableThrough(cancellationToken);
+            var args = new FFmpegGdiGrabArguments(rectangleOnScreenToCapture, fps, captureCursor, pixelFormat, targetFile);
 
             var startTime = DateTime.Now;
 
@@ -95,8 +70,12 @@ namespace HolzShots.Capture.Video
 
             recordedRegionIndicator.Show();
             recordedRegionIndicator.StartIndicating(cancellationToken);
-            // Somehow, ProcessAsynchronously does not throw a TaskCanceledException when it was cancelled. It just returns.
-            var res = await ffmpegInstance.ProcessAsynchronously(false);
+
+            // When the cancellationToken is cancelled, no exception is thrown; instead, it just returns
+            var ffmpeg = new FFmpegWrapper(_ffmpegPath);
+
+            var res = await ffmpeg.Start(args, cancellationToken);
+
             System.Diagnostics.Debug.WriteLine($"ffmpegInstance res: {res}");
 
             var endTime = DateTime.Now;

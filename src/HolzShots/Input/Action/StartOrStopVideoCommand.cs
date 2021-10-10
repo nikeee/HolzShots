@@ -132,7 +132,7 @@ namespace HolzShots.Input.Actions
 
             try
             {
-                var ffmpegPath = EnsureAvailableFFmpegAndPotentiallyStartSetup(settingsContext);
+                var ffmpegPath = EnsureAvailableFFmpegAndPotentiallyStartSetup();
                 if (ffmpegPath == null)
                     return null; // We don't have ffmpeg available and the user didn't do anything to fix this. We act like it was aborted.
 
@@ -143,12 +143,7 @@ namespace HolzShots.Input.Actions
 
                     var (selectedArea, windowInfo) = await selector.PromptSelectionAsync();
 
-                    var recorder = ScreenRecorderSelector.CreateScreenRecorderForCurrentPlatform();
-
-                    var ffmpegPathToPrefix = Path.GetDirectoryName(ffmpegPath!)!;
-                    Debug.Assert(ffmpegPathToPrefix != null);
-
-                    using var environmentPrevix = new PrefixEnvironmentVariable(ffmpegPathToPrefix);
+                    var recorder = ScreenRecorderSelector.CreateScreenRecorderForCurrentPlatform(ffmpegPath);
 
                     var tempRecordingDir = Path.Combine(Path.GetTempPath(), "hs-" + Path.GetRandomFileName());
                     Directory.CreateDirectory(tempRecordingDir);
@@ -197,8 +192,7 @@ namespace HolzShots.Input.Actions
             }
         }
 
-
-        public static string? EnsureAvailableFFmpegAndPotentiallyStartSetup(HSSettings settingsContext)
+        public static string? EnsureAvailableFFmpegAndPotentiallyStartSetup()
         {
             var path = FFmpegManager.GetAbsoluteFFmpegPath(true);
             if (path != null)
