@@ -23,7 +23,7 @@ If you pass command-line parameters, they'll invoke actions on the running insta
 
 Currently, these are supported:
 ```cmd
-holzshots captureArea
+holzshots capture-area
 holzshots capture-full
 
 holzshots open-image [optional image path]
