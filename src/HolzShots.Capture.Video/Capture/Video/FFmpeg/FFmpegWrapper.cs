@@ -9,9 +9,9 @@ namespace HolzShots.Capture.Video.FFmpeg
     internal class FFmpegWrapper : IDisposable
     {
 #if DEBUG
-        private const bool ShowFFMpegWindow = true;
+        private const bool ShowFFmpegWindow = true;
 #else
-        private const bool ShowFFMpegWindow = false;
+        private const bool ShowFFmpegWindow = false;
 #endif
 
         private readonly string _executablePath;
@@ -36,7 +36,7 @@ namespace HolzShots.Capture.Video.FFmpeg
                 RedirectStandardOutput = false,
                 RedirectStandardInput = true,
                 WindowStyle = ProcessWindowStyle.Minimized,
-                CreateNoWindow = !ShowFFMpegWindow,
+                CreateNoWindow = !ShowFFmpegWindow,
             };
 
 #if DEBUG
