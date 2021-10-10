@@ -27,7 +27,7 @@ namespace HolzShots
             _application = application ?? throw new ArgumentNullException(nameof(application));
 
             InitializeComponent();
-            
+
             Text = "HolzShots";
             TrayIcon.ContextMenuStrip = trayMenu;
             trayMenu.Renderer = EnvironmentEx.ToolStripRendererForCurrentTheme;
@@ -189,6 +189,11 @@ namespace HolzShots
         {
             await _application.CommandManager.Dispatch<OpenSettingsJsonCommand>(UserSettings.Current).ConfigureAwait(true);
         }
+        private async void UpdateCustomUploaders(object sender, EventArgs e)
+        {
+            await _application.CommandManager.Dispatch<UpdateUploaderSpecsCommand>(UserSettings.Current).ConfigureAwait(true);
+        }
+
         private void OpenPlugins(object? sender, EventArgs e)
         {
             Debug.Assert(_application.Uploaders.Loaded);

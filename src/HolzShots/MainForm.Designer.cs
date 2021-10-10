@@ -47,6 +47,7 @@ namespace HolzShots
             this.ToolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.ExitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TrayIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.UpdateCustomUploadersToolStipMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.trayMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -73,7 +74,8 @@ namespace HolzShots
             // 
             this.ExtrasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.AboutToolStripMenuItem,
-            this.FeedbackAndIssuesToolStripMenuItem});
+            this.FeedbackAndIssuesToolStripMenuItem,
+            this.UpdateCustomUploadersToolStipMenuItem});
             this.ExtrasToolStripMenuItem.Name = "ExtrasToolStripMenuItem";
             this.ExtrasToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
             this.ExtrasToolStripMenuItem.Text = "Extras";
@@ -81,14 +83,14 @@ namespace HolzShots
             // AboutToolStripMenuItem
             // 
             this.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem";
-            this.AboutToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.AboutToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
             this.AboutToolStripMenuItem.Text = "About";
             this.AboutToolStripMenuItem.Click += new System.EventHandler(this.OpenAbout);
             // 
             // FeedbackAndIssuesToolStripMenuItem
             // 
             this.FeedbackAndIssuesToolStripMenuItem.Name = "FeedbackAndIssuesToolStripMenuItem";
-            this.FeedbackAndIssuesToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.FeedbackAndIssuesToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
             this.FeedbackAndIssuesToolStripMenuItem.Text = "Feedback and Issues";
             this.FeedbackAndIssuesToolStripMenuItem.Click += new System.EventHandler(this.OpenFeedbackAndIssues);
             // 
@@ -170,6 +172,13 @@ namespace HolzShots
             this.TrayIcon.Visible = true;
             this.TrayIcon.DoubleClick += new System.EventHandler(this.TriggerTrayIconDoubleClickCommand);
             // 
+            // UpdateCustomUploadersToolStipMenuItem
+            // 
+            this.UpdateCustomUploadersToolStipMenuItem.Name = "UpdateCustomUploadersToolStipMenuItem";
+            this.UpdateCustomUploadersToolStipMenuItem.Size = new System.Drawing.Size(213, 22);
+            this.UpdateCustomUploadersToolStipMenuItem.Text = "Update Custom Uploaders";
+            this.UpdateCustomUploadersToolStipMenuItem.Click += new System.EventHandler(this.UpdateCustomUploaders);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -202,6 +211,7 @@ namespace HolzShots
         internal System.Windows.Forms.ToolStripMenuItem ExitToolStripMenuItem;
         internal System.Windows.Forms.NotifyIcon TrayIcon;
         private System.Windows.Forms.ToolStripMenuItem StartScreenRecordingToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem UpdateCustomUploadersToolStipMenuItem;
     }
 }
 

@@ -42,7 +42,7 @@ namespace HolzShots.Capture.Video.FFmpeg
             var downloadPage = CreatetDownloadPage();
             downloadButton.Click += (s, e) => initialPage.Navigate(downloadPage);
 
-            var answer = TaskDialog.ShowDialog(initialPage);
+            var answer = TaskDialog.ShowDialog(initialPage, TaskDialogStartupLocation.CenterScreen);
             if (answer == TaskDialogButton.OK)
             {
                 // The user clicked "Cancel" and then OK (or an error ocurred)

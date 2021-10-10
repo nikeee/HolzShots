@@ -111,8 +111,16 @@ namespace HolzShots.Net.Custom
                 result = null;
                 return false;
             }
-            var info = JsonConvert.DeserializeObject<CustomUploaderSpec>(value, JsonConfig.JsonSettings);
-            return TryLoad(info, out result);
+            try
+            {
+                var info = JsonConvert.DeserializeObject<CustomUploaderSpec>(value, JsonConfig.JsonSettings);
+                return TryLoad(info, out result);
+            }
+            catch (JsonReaderException)
+            {
+                result = null;
+                return false;
+            }
         }
 
         public static bool TryLoad(CustomUploaderSpec? value, [MaybeNullWhen(false)][NotNullWhen(true)] out CustomUploader? result)
