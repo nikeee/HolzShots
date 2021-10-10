@@ -44,9 +44,9 @@ namespace HolzShots.Capture.Video.FFmpeg
             Debug.WriteLine($"With arguments: {commandLineArgs}");
 #endif
 
-            _process.Start();
-
             cancellationToken.Register(() => _process.StandardInput.WriteLine("q"));
+
+            _process.Start();
 
 #pragma warning disable CA2016 // Forward the 'CancellationToken' parameter to methods
 
