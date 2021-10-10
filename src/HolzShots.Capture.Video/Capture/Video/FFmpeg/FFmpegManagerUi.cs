@@ -72,7 +72,7 @@ namespace HolzShots.Capture.Video.FFmpeg
             Text = "FFmpeg is an awesome tool that HolzShots needs to do screen recording, and it seems like it's not installed.\n\nDo you want HolzShots to automatically download and set up FFmpeg from ffbinaries.com?",
             Expander = new TaskDialogExpander()
             {
-                Text = "Automatic setup does not interfere with existing installations. It does not require administrative privileges. FFmpeg will be saved to %APPDATA%\\HolzShots\\ffmpeg",
+                Text = "Automatic setup does not interfere with existing installations. It does not require administrative privileges. FFmpeg will be saved to %APPDATA%\\HolzShots\\ffmpeg. It will NOT be added to your PATH.",
                 CollapsedButtonText = "Show nerd info about automatic setup",
                 Position = TaskDialogExpanderPosition.AfterFootnote,
             },
