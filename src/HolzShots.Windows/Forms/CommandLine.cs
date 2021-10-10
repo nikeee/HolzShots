@@ -13,6 +13,6 @@ namespace HolzShots.Windows.Forms
         // "open-image" opens a file open dialog so the user can choose a file
         // They might be part of a shell integration (which used different params before GH#36)
         public const string OpenImageCliCommand = "open-image";
-        public const string UploadImageCliCommand = "upload-image";
+        public const string UploadFileCliCommand = "upload-file";
     }
 }

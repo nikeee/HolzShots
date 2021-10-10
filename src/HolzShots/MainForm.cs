@@ -169,9 +169,9 @@ namespace HolzShots
 
         #region Tray Menu Event Handlers
 
-        private async void UploadImage(object sender, EventArgs e)
+        private async void UploadFile(object sender, EventArgs e)
         {
-            await _application.CommandManager.Dispatch<UploadImageCommand>(UserSettings.Current).ConfigureAwait(true);
+            await _application.CommandManager.Dispatch<UploadFileCommand>(UserSettings.Current).ConfigureAwait(true);
         }
         private async void OpenImage(object sender, EventArgs e)
         {

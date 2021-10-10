@@ -62,7 +62,7 @@ namespace HolzShots
             CommandManager.RegisterCommand(new CaptureWindowCommand());
             CommandManager.RegisterCommand(new OpenSaveDirectory());
             CommandManager.RegisterCommand(new OpenSettingsJsonCommand());
-            CommandManager.RegisterCommand(new UploadImageCommand());
+            CommandManager.RegisterCommand(new UploadFileCommand());
             CommandManager.RegisterCommand(new EditImageCommand());
             CommandManager.RegisterCommand(new StartOrStopVideoCommand());
             CommandManager.RegisterCommand(new UpdateUploaderSpecsCommand());
@@ -84,14 +84,14 @@ namespace HolzShots
                     case CommandLine.AreaSelectorCliCommand:
                         await CommandManager.Dispatch<CaptureSelectedAreaCommand>(UserSettings.Current).ConfigureAwait(true);
                         break;
-                    case CommandLine.UploadImageCliCommand:
+                    case CommandLine.UploadFileCliCommand:
                         {
                             // TODO: Maybe we can support overriding settings from the command line, too
                             var parameters = new Dictionary<string, string>();
                             if (i < args.Length - 1)
                                 parameters[ImageFileDependentCommand.FileNameParameter] = args[i + 1];
 
-                            await CommandManager.Dispatch<UploadImageCommand>(UserSettings.Current, parameters).ConfigureAwait(true);
+                            await CommandManager.Dispatch<UploadFileCommand>(UserSettings.Current, parameters).ConfigureAwait(true);
                             break;
                         }
                     case CommandLine.OpenImageCliCommand:

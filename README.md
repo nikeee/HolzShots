@@ -27,7 +27,7 @@ holzshots capture-area
 holzshots capture-full
 
 holzshots open-image [optional image path]
-holzshots upload-image [optional image path]
+holzshots upload-file [optional file path]
 ```
 Feel free to integrate this into your tooling!
 

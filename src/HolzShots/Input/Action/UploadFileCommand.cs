@@ -11,10 +11,11 @@ using HolzShots.Windows.Net;
 
 namespace HolzShots.Input.Actions
 {
-    [Command("uploadImage")]
-    public class UploadImageCommand : ImageFileDependentCommand, ICommand<HSSettings>
+    /// <summary> TODO: Support other formats than images </summary>
+    [Command("uploadFile")]
+    public class UploadFileCommand : ImageFileDependentCommand, ICommand<HSSettings>
     {
-        private const string UploadImage = "Select Image to Upload";
+        private const string UploadFile = "Select File to Upload";
 
         public async Task Invoke(IReadOnlyDictionary<string, string> parameters, HSSettings settingsContext)
         {
@@ -23,7 +24,7 @@ namespace HolzShots.Input.Actions
             if (settingsContext == null)
                 throw new ArgumentNullException(nameof(settingsContext));
 
-            var fileName = parameters.Count != 1 || !parameters.ContainsKey(FileNameParameter) ? ShowFileSelector(UploadImage) : parameters[FileNameParameter];
+            var fileName = parameters.Count != 1 || !parameters.ContainsKey(FileNameParameter) ? ShowFileSelector(UploadFile) : parameters[FileNameParameter];
 
             if (fileName == null)
                 return; // We did not get a valid file name (user cancelled or something else was strange)

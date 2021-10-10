@@ -104,7 +104,7 @@ namespace HolzShots
             this.UploadImageToolStripMenuItem.Name = "UploadImageToolStripMenuItem";
             this.UploadImageToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
             this.UploadImageToolStripMenuItem.Text = "Upload Image";
-            this.UploadImageToolStripMenuItem.Click += new System.EventHandler(this.UploadImage);
+            this.UploadImageToolStripMenuItem.Click += new System.EventHandler(this.UploadFile);
             // 
             // OpenImageToolStripMenuItem
             // 
