@@ -1,20 +1,23 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using HolzShots.Composition;
 
 namespace HolzShots.Net.Custom
 {
     public class CustomUploaderSpecUpdater
     {
-        public static async Task<UploaderSpecUpdateResult> FetchUpdates(IReadOnlyList<(string filePath, CustomUploaderSpec spec)> uploaders, CancellationToken cancellationToken)
+        public static async Task<UploaderSpecUpdateResult> FetchUpdates(IReadOnlyList<(string filePath, CustomUploaderSpec spec)> uploaders, CancellationToken cancellationToken = default)
         {
             int noUpdateUrl = 0;
             int emptyResponse = 0;
             int invalidResponse = 0;
+            int noUpdateAvailable = 0;
             var availableUpdates = new List<SpecUpdate>();
 
             foreach (var uploader in uploaders)
@@ -30,6 +33,8 @@ namespace HolzShots.Net.Custom
                 }
 
                 using var client = new HttpClient();
+
+                // TODO: Maybe add a user-agent, so the server knows it's HS requesting
                 var newSpecCandidate = await client.GetStringAsync(updateUrl, cancellationToken);
                 if (newSpecCandidate == null)
                 {
@@ -37,9 +42,19 @@ namespace HolzShots.Net.Custom
                     continue;
                 }
 
-                if (CustomUploader.TryParse(newSpecCandidate, out var parsedSpec))
+                if (CustomUploader.TryParse(newSpecCandidate, out var parsedUploader))
                 {
-                    availableUpdates.Add(new SpecUpdate(filePath, spec, parsedSpec.UploaderInfo, newSpecCandidate));
+                    var newSpec = parsedUploader.UploaderInfo;
+                    if(newSpec != null)
+                    {
+                        if(newSpec.Meta.Version > spec.Meta.Version)
+                        {
+                            availableUpdates.Add(new SpecUpdate(filePath, spec, newSpec, newSpecCandidate));
+                        } else
+                        {
+                            noUpdateAvailable++;
+                        }
+                    }
                 }
                 else
                 {
@@ -47,12 +62,20 @@ namespace HolzShots.Net.Custom
                 }
             }
 
-            return new UploaderSpecUpdateResult(noUpdateUrl, emptyResponse, invalidResponse, availableUpdates);
+            return new UploaderSpecUpdateResult(noUpdateUrl, emptyResponse, invalidResponse, noUpdateAvailable, availableUpdates);
         }
 
-        public async Task ApplyUpdate(SpecUpdate update)
+        public Task ApplyUpdate(SpecUpdate update, CancellationToken cancellationToken)
         {
-            // TODO
+            return File.WriteAllTextAsync(update.JsonFilePath, update.NewContents, cancellationToken);
+        }
+
+        public async Task ApplyUpdates(CustomUploaderSource uploaderSpecSource, IReadOnlyList<SpecUpdate> updates, CancellationToken cancellationToken)
+        {
+            foreach (var update in updates)
+                await ApplyUpdate(update, cancellationToken);
+
+            await uploaderSpecSource.Load();
         }
     }
 
@@ -60,6 +83,7 @@ namespace HolzShots.Net.Custom
         int NoUpdateUrl,
         int EmptyResponse,
         int InvalidResponse,
+        int NoUpdateAvailable,
         IReadOnlyList<SpecUpdate> AvailableUpdates
     );
     public record SpecUpdate(
