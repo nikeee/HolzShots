@@ -12,7 +12,6 @@ namespace HolzShots.Net.Custom
 {
     public class CustomUploader : Uploader
     {
-        private const string SupportedSchema = "0.2.0";
         public CustomUploaderSpec UploaderInfo { get; }
 
         protected CustomUploader(CustomUploaderSpec? customData)
@@ -105,18 +104,26 @@ namespace HolzShots.Net.Custom
             }
         }
 
-        public static bool TryParse(string value, [MaybeNullWhen(false)] out CustomUploader? result)
+        public static bool TryParse(string value, [MaybeNullWhen(false)][NotNullWhen(true)] out CustomUploader? result)
         {
             if (string.IsNullOrWhiteSpace(value))
             {
                 result = null;
                 return false;
             }
-            var info = JsonConvert.DeserializeObject<CustomUploaderSpec>(value, JsonConfig.JsonSettings);
-            return TryLoad(info, out result);
+            try
+            {
+                var info = JsonConvert.DeserializeObject<CustomUploaderSpec>(value, JsonConfig.JsonSettings);
+                return TryLoad(info, out result);
+            }
+            catch (JsonReaderException)
+            {
+                result = null;
+                return false;
+            }
         }
 
-        public static bool TryLoad(CustomUploaderSpec? value, [MaybeNullWhen(false)] out CustomUploader? result)
+        public static bool TryLoad(CustomUploaderSpec? value, [MaybeNullWhen(false)][NotNullWhen(true)] out CustomUploader? result)
         {
             try
             {

@@ -13,68 +13,31 @@ namespace HolzShots.Net.Custom
     public record CustomUploaderSpec(SemVersion SchemaVersion, UploaderMeta Meta, UploaderConfig Uploader);
 
     [Serializable]
-    public class UploaderMeta : IPluginMetadata
-    {
-        public SemVersion Version { get; }
-        public string Name { get; }
-        public string License { get; }
-
-        public string Author { get; }
-        public string? Contact { get; } = null;
-        public string? BugsUrl { get; } = null;
-        public string? UpdateUrl { get; } = null;
-        public string? Website { get; } = null;
-        public string? Description { get; } = null;
-
-        public UploaderMeta(SemVersion version, string name, string author, string license, string? contact, string? bugsUrl, string? updateUrl, string? website, string? description)
-        {
-            Version = version;
-            Name = name;
-            Author = author;
-            License = license;
-            Contact = contact;
-            BugsUrl = bugsUrl;
-            UpdateUrl = updateUrl;
-            Website = website;
-            Description = description;
-        }
-    }
+    public record UploaderMeta(
+        SemVersion Version,
+        string Name,
+        string License,
+        string Author,
+        string? Contact = null,
+        string? BugsUrl = null,
+        string? UpdateUrl = null,
+        string? Website = null,
+        string? Description = null
+    ) : IPluginMetadata;
 
     [Serializable]
-    public class UploaderConfig
+    public record UploaderConfig(
+        string FileFormName,
+        string RequestUrl,
+        ResponseParser ResponseParser,
+        string FileName,
+        IReadOnlyDictionary<string, string>? Headers = null,
+        IReadOnlyDictionary<string, string>? PostParams = null,
+        long? MaxFileSize = null,
+        string Method = "POST"
+    )
     {
-        private static readonly string[] ValidMethods = { "POST", "PUT" };
-        public string FileFormName { get; }
-        public string RequestUrl { get; }
-        public ResponseParser ResponseParser { get; }
-
-        public string Method { get; } = "POST";
-        public IReadOnlyDictionary<string, string>? Headers { get; } = null;
-        public IReadOnlyDictionary<string, string>? PostParams { get; } = null;
-        public long? MaxFileSize { get; } = null;
-        public string FileName { get; } = null!;
-
-        public UploaderConfig(
-            string fileFormName,
-            string requestUrl,
-            ResponseParser responseParser,
-            string method,
-            IReadOnlyDictionary<string, string>? headers,
-            IReadOnlyDictionary<string, string>? postParams,
-            long? maxFileSize,
-            string fileName
-        )
-        {
-            FileFormName = fileFormName;
-            RequestUrl = requestUrl;
-            ResponseParser = responseParser;
-            Method = method;
-            Headers = headers;
-            PostParams = postParams;
-            MaxFileSize = maxFileSize;
-            FileName = fileName;
-        }
-
+        // private static readonly string[] ValidMethods = { "POST", "PUT" };
         public string GetEffectiveFileName(string fallback) => FileName ?? fallback;
     }
 

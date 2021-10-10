@@ -65,6 +65,7 @@ namespace HolzShots
             CommandManager.RegisterCommand(new UploadImageCommand());
             CommandManager.RegisterCommand(new EditImageCommand());
             CommandManager.RegisterCommand(new StartOrStopVideoCommand());
+            CommandManager.RegisterCommand(new UpdateUploaderSpecsCommand());
         }
 
         internal async Task ProcessCommandLineArguments(string[] args)

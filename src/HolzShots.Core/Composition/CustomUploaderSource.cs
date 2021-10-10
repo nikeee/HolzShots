@@ -16,6 +16,7 @@ namespace HolzShots.Composition
     {
         private readonly string _customUploadersDirectory;
         private IReadOnlyDictionary<UploaderMeta, CustomUploader> _customUploaders = ImmutableDictionary<UploaderMeta, CustomUploader>.Empty;
+        private IReadOnlyDictionary<string, CustomUploaderSpec> _uploadersFiles = ImmutableDictionary<string, CustomUploaderSpec>.Empty;
 
         public bool Loaded { get; private set; }
 
@@ -26,16 +27,16 @@ namespace HolzShots.Composition
             _customUploadersDirectory = customUploadersDirectory;
         }
 
+        /// <summary> Can also be safely called for reloads. </summary>
         public async Task Load()
         {
-            Debug.Assert(!Loaded);
-
             try
             {
                 HolzShotsPaths.EnsureDirectory(_customUploadersDirectory);
                 // var res = new Dictionary<UploaderMeta, CustomUploader>();
 
                 var res = ImmutableDictionary.CreateBuilder<UploaderMeta, CustomUploader>();
+                var files = ImmutableDictionary.CreateBuilder<string, CustomUploaderSpec>();
 
                 foreach (var jsonFile in Directory.EnumerateFiles(_customUploadersDirectory, HolzShotsPaths.CustomUploadersFilePattern))
                 {
@@ -52,9 +53,11 @@ namespace HolzShots.Composition
                     {
                         Debug.Assert(loadedUploader != null);
                         res.Add(uploader.Meta, loadedUploader);
+                        files.Add(jsonFile, uploader);
                     }
                 }
 
+                _uploadersFiles = files.ToImmutable();
                 _customUploaders = res.ToImmutable();
             }
             catch (FileNotFoundException)
@@ -88,6 +91,6 @@ namespace HolzShots.Composition
         }
         public IReadOnlyList<string> GetUploaderNames() => GetMetadata().Select(i => i.Name).ToList();
         public IReadOnlyList<IPluginMetadata> GetMetadata() => _customUploaders.Select(kv => kv.Key).ToList();
+        public IReadOnlyList<(string filePath, CustomUploaderSpec spec)> GetCustomUploaderSpecs() => _uploadersFiles.Select(x => (x.Key, x.Value)).ToList();
     }
-
 }
