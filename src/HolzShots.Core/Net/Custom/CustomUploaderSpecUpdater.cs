@@ -19,6 +19,7 @@ namespace HolzShots.Net.Custom
             int invalidResponse = 0;
             int noUpdateAvailable = 0;
             var availableUpdates = new List<SpecUpdate>();
+            var errors = new List<Exception>();
 
             foreach (var uploader in uploaders)
             {
@@ -35,22 +36,37 @@ namespace HolzShots.Net.Custom
                 using var client = new HttpClient();
 
                 // TODO: Maybe add a user-agent, so the server knows it's HS requesting
-                var newSpecCandidate = await client.GetStringAsync(updateUrl, cancellationToken);
-                if (newSpecCandidate == null)
+                string newSpecCandidate;
+                try
                 {
-                    ++emptyResponse;
+                    newSpecCandidate = await client.GetStringAsync(updateUrl, cancellationToken);
+                    if (newSpecCandidate == null)
+                    {
+                        ++emptyResponse;
+                        continue;
+                    }
+
+                }
+                catch (OperationCanceledException ex)
+                {
+                    throw;
+                }
+                catch (Exception ex)
+                {
+                    errors.Add(ex);
                     continue;
                 }
 
                 if (CustomUploader.TryParse(newSpecCandidate, out var parsedUploader))
                 {
                     var newSpec = parsedUploader.UploaderInfo;
-                    if(newSpec != null)
+                    if (newSpec != null)
                     {
-                        if(newSpec.Meta.Version > spec.Meta.Version)
+                        if (newSpec.Meta.Version > spec.Meta.Version)
                         {
                             availableUpdates.Add(new SpecUpdate(filePath, spec, newSpec, newSpecCandidate));
-                        } else
+                        }
+                        else
                         {
                             noUpdateAvailable++;
                         }
@@ -62,15 +78,15 @@ namespace HolzShots.Net.Custom
                 }
             }
 
-            return new UploaderSpecUpdateResult(noUpdateUrl, emptyResponse, invalidResponse, noUpdateAvailable, availableUpdates);
+            return new UploaderSpecUpdateResult(noUpdateUrl, emptyResponse, invalidResponse, noUpdateAvailable, availableUpdates, errors);
         }
 
-        public Task ApplyUpdate(SpecUpdate update, CancellationToken cancellationToken)
+        public static Task ApplyUpdate(SpecUpdate update, CancellationToken cancellationToken)
         {
             return File.WriteAllTextAsync(update.JsonFilePath, update.NewContents, cancellationToken);
         }
 
-        public async Task ApplyUpdates(CustomUploaderSource uploaderSpecSource, IReadOnlyList<SpecUpdate> updates, CancellationToken cancellationToken)
+        public static async Task ApplyUpdates(CustomUploaderSource uploaderSpecSource, IReadOnlyList<SpecUpdate> updates, CancellationToken cancellationToken)
         {
             foreach (var update in updates)
                 await ApplyUpdate(update, cancellationToken);
@@ -84,7 +100,8 @@ namespace HolzShots.Net.Custom
         int EmptyResponse,
         int InvalidResponse,
         int NoUpdateAvailable,
-        IReadOnlyList<SpecUpdate> AvailableUpdates
+        IReadOnlyList<SpecUpdate> AvailableUpdates,
+        IReadOnlyList<Exception> Errors
     );
     public record SpecUpdate(
         string JsonFilePath,
