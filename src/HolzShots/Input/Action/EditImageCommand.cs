@@ -1,8 +1,6 @@
 using System.Drawing;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using HolzShots.Composition.Command;
-using System;
 
 namespace HolzShots.Input.Actions
 {

@@ -1,10 +1,9 @@
-using System;
 
 namespace HolzShots.Native
 {
     /// <summary>
     /// Enum that contians common window styles.
-    /// 
+    ///
     /// https://www.autohotkey.com/docs/misc/Styles.htm
     /// (we primarily use tree view styles)
     ///

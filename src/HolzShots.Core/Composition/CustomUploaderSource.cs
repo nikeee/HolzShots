@@ -7,8 +7,6 @@ using HolzShots.Net;
 using HolzShots.Net.Custom;
 using Newtonsoft.Json;
 using System.Linq;
-using System;
-using System.Threading.Tasks;
 
 namespace HolzShots.Composition
 {

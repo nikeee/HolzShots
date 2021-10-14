@@ -2,7 +2,6 @@ using System.Windows.Forms;
 using System.ComponentModel;
 using System.Configuration;
 using System.Text;
-using System;
 
 namespace HolzShots.Input.Keyboard
 {

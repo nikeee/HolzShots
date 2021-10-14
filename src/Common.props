@@ -38,6 +38,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Using Include="System" />
+    <Using Include="System.Threading" />
+    <Using Include="System.Threading.Tasks" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Constant Include="SpdxLicense" Value="AGPL-3.0" />
     <Constant Include="Website" Value="https://holzshots.net" />
   </ItemGroup>

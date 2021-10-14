@@ -1,13 +1,10 @@
-using System;
 using System.Net.Http;
 using System.IO;
 using System.Text.Json;
-using System.Threading.Tasks;
 using System.IO.Compression;
 using System.Text.Json.Serialization;
 using System.Collections.Generic;
 using HolzShots.Net;
-using System.Threading;
 
 namespace HolzShots.Capture.Video.FFmpeg
 {

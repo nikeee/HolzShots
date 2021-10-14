@@ -1,7 +1,4 @@
-using System;
 using System.Drawing;
-using System.Threading;
-using System.Threading.Tasks;
 using HolzShots.IO.Naming;
 
 namespace HolzShots.Capture.Video

@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
-using System.Threading.Tasks;
 using HolzShots.Composition.Command;
 using HolzShots.Drawing;
 using HolzShots.Net;

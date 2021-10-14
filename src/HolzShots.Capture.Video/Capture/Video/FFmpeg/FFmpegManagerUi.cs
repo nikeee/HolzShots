@@ -1,9 +1,6 @@
 using System.Windows.Forms;
-using System.Threading.Tasks;
-using System;
 using HolzShots.Net;
 using System.Diagnostics;
-using System.Threading;
 
 namespace HolzShots.Capture.Video.FFmpeg
 {

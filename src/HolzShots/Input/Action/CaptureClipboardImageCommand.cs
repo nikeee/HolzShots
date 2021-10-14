@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using HolzShots.Composition.Command;
 using HolzShots.Windows.Forms;
