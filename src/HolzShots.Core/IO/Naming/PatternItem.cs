@@ -9,12 +9,12 @@ namespace HolzShots.IO.Naming
         public const char TokenEndChar = '>';
         public const char PropertySeparatorChar = ':';
 
-        public string PropertyName { get; }
+        public string? PropertyName { get; }
         public abstract string Keyword { get; }
         public abstract string TextRepresentation { get; }
         public abstract bool IsValid { get; }
 
-        public PatternItem(string propertyName) => PropertyName = propertyName;
+        public PatternItem(string? propertyName) => PropertyName = propertyName;
 
         public abstract string FormatMetadata(FileMetadata metadata);
 

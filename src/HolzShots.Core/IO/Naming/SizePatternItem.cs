@@ -3,45 +3,30 @@ namespace HolzShots.IO.Naming
 {
     class SizePatternItem : PatternItem
     {
-        public SizePatternItem(string propertyName)
+        public SizePatternItem(string? propertyName)
             : base(propertyName)
         {
-            if (propertyName == null)
+            InfoType = propertyName?.ToLowerInvariant() switch
             {
-                InfoType = ImageInfoType.Invalid;
-                return;
-            }
-            switch (propertyName.ToLowerInvariant())
-            {
-                case "width":
-                    InfoType = ImageInfoType.Width;
-                    break;
-                case "height":
-                    InfoType = ImageInfoType.Height;
-                    break;
-                default:
-                    InfoType = ImageInfoType.Invalid;
-                    break;
-            }
+                "width" => ImageInfoType.Width,
+                "height" => ImageInfoType.Height,
+                _ => ImageInfoType.Invalid,
+            };
         }
 
         public ImageInfoType InfoType { get; }
         public override string Keyword => "size";
-        public override string TextRepresentation => $"<{Keyword}:{PropertyName}>";
         public override bool IsValid => InfoType != ImageInfoType.Invalid;
+        public override string TextRepresentation => IsValid
+                ? $"<{Keyword}:{PropertyName}>"
+                : $"<{Keyword}>";
 
-        public override string FormatMetadata(FileMetadata metadata)
+        public override string FormatMetadata(FileMetadata metadata) => InfoType switch
         {
-            switch (InfoType)
-            {
-                case ImageInfoType.Width:
-                    return metadata.Dimensions.Width.ToString();
-                case ImageInfoType.Height:
-                    return metadata.Dimensions.Height.ToString();
-                default:
-                    throw new InvalidOperationException();
-            }
-        }
+            ImageInfoType.Width => metadata.Dimensions.Width.ToString(),
+            ImageInfoType.Height => metadata.Dimensions.Height.ToString(),
+            _ => throw new InvalidOperationException(),
+        };
 
         public enum ImageInfoType
         {

@@ -8,7 +8,7 @@ namespace HolzShots.IO.Naming
     {
         public IReadOnlyList<PatternItem> Tokens { get; }
 
-        private static readonly Dictionary<string, Func<string, PatternItem>> _availablePatterns = new Dictionary<string, Func<string, PatternItem>>
+        private static readonly Dictionary<string, Func<string?, PatternItem>> _availablePatterns = new()
         {
             ["text"] = str => new TextPatternItem(str),
             ["size"] = str => new SizePatternItem(str),

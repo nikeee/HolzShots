@@ -4,33 +4,13 @@ namespace HolzShots.IO.Naming
 {
     class DatePatternItem : PatternItem
     {
-        public DatePatternItem(string propertyName)
-            : base(propertyName)
-        { }
+        public DatePatternItem(string? propertyName) : base(propertyName) { }
 
         public override string Keyword => "date";
         public override string TextRepresentation => string.IsNullOrWhiteSpace(PropertyName) ? $"<{Keyword}:ISO>" : $"<{Keyword}:{PropertyName}>";
-        public override bool IsValid
-        {
-            get
-            {
-                if (string.IsNullOrWhiteSpace(PropertyName) || PropertyName.ToUpperInvariant() == "ISO")
-                {
-                    return true;
-                }
-
-                // Dem solution
-                try
-                {
-                    DateTime.Now.ToString(PropertyName);
-                }
-                catch (FormatException)
-                {
-                    return false;
-                }
-                return true;
-            }
-        }
+        public override bool IsValid => string.IsNullOrWhiteSpace(PropertyName)
+                                        || PropertyName.ToUpperInvariant() == "ISO"
+                                        || IsValidDateFormat(PropertyName);
 
         public override string FormatMetadata(FileMetadata metadata)
         {
@@ -49,6 +29,20 @@ namespace HolzShots.IO.Naming
                 return metadata.Timestamp.ToString(DateTimeFormatInfo.InvariantInfo.SortableDateTimePattern);
             }
             return metadata.Timestamp.ToString(PropertyName);
+        }
+
+        private static bool IsValidDateFormat(string candidate)
+        {
+            // Dem solution
+            try
+            {
+                DateTime.Now.ToString(candidate);
+                return true;
+            }
+            catch (FormatException)
+            {
+                return false;
+            }
         }
     }
 }
