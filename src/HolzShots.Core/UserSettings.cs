@@ -25,12 +25,14 @@ namespace HolzShots
             if (File.Exists(HolzShotsPaths.UserSettingsFilePath))
                 return;
 
-            using (var fs = File.OpenWrite(HolzShotsPaths.UserSettingsFilePath))
-            {
-                var defaultSettingsStr = await CreateDefaultSettingsJson().ConfigureAwait(false);
-                var defaultSettings = Encoding.UTF8.GetBytes(defaultSettingsStr);
-                await fs.WriteAsync(defaultSettings, 0, defaultSettings.Length).ConfigureAwait(false);
-            }
+            var settingsDirectory = Path.GetDirectoryName(HolzShotsPaths.UserSettingsFilePath);
+            if(!Directory.Exists(settingsDirectory))
+                Directory.CreateDirectory(settingsDirectory!);
+
+            using var fs = File.OpenWrite(HolzShotsPaths.UserSettingsFilePath);
+            var defaultSettingsStr = await CreateDefaultSettingsJson().ConfigureAwait(false);
+            var defaultSettings = Encoding.UTF8.GetBytes(defaultSettingsStr);
+            await fs.WriteAsync(defaultSettings, 0, defaultSettings.Length).ConfigureAwait(false);
         }
 
         public static void OpenSettingsInDefaultEditor() => HolzShotsPaths.OpenFileInDefaultApplication(HolzShotsPaths.UserSettingsFilePath);
