@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 using HolzShots.IO;
+using System;
 
 namespace HolzShots
 {
@@ -25,14 +26,12 @@ namespace HolzShots
             if (File.Exists(HolzShotsPaths.UserSettingsFilePath))
                 return;
 
-            var settingsDirectory = Path.GetDirectoryName(HolzShotsPaths.UserSettingsFilePath);
-            if(!Directory.Exists(settingsDirectory))
-                Directory.CreateDirectory(settingsDirectory!);
+            HolzShotsPaths.EnsureAppDataDirectories();
 
             using var fs = File.OpenWrite(HolzShotsPaths.UserSettingsFilePath);
             var defaultSettingsStr = await CreateDefaultSettingsJson().ConfigureAwait(false);
             var defaultSettings = Encoding.UTF8.GetBytes(defaultSettingsStr);
-            await fs.WriteAsync(defaultSettings, 0, defaultSettings.Length).ConfigureAwait(false);
+            await fs.WriteAsync(defaultSettings).ConfigureAwait(false);
         }
 
         public static void OpenSettingsInDefaultEditor() => HolzShotsPaths.OpenFileInDefaultApplication(HolzShotsPaths.UserSettingsFilePath);

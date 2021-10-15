@@ -7,7 +7,7 @@ namespace HolzShots.IO
     {
         private static readonly string SystemAppDataDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
         private static readonly string UserPicturesDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
-       public static string AppDataDirectory { get; }= Path.Combine(SystemAppDataDirectory, LibraryInformation.Name);
+        public static string AppDataDirectory { get; } = Path.Combine(SystemAppDataDirectory, LibraryInformation.Name);
 
         public const string CustomUploadersFilePattern = "*.json";
 
@@ -28,6 +28,15 @@ namespace HolzShots.IO
         {
             Debug.Assert(directory != null);
             DirectoryEx.EnsureDirectory(directory);
+        }
+
+        public static void EnsureAppDataDirectories()
+        {
+            if (!Directory.Exists(AppDataDirectory))
+            {
+                Directory.CreateDirectory(AppDataDirectory);
+                Directory.CreateDirectory(PluginDirectory);
+            }
         }
 
         public static void OpenLink(string url)
