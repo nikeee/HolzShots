@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <Import Project="..\Common.props" />
 
@@ -9,6 +9,7 @@
     <Prefer32Bit>true</Prefer32Bit>
 
     <AssemblyTitle>HolzShots</AssemblyTitle>
+    <ApplicationIcon>HolzShots.ico</ApplicationIcon>
     <Product>HolzShots</Product>
     <Description>A lightweight screenshot utility that gets out of your way.</Description>
 
