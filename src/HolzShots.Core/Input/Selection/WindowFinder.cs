@@ -5,10 +5,10 @@ namespace HolzShots.Input.Selection
 {
     class WindowFinder
     {
-        public static Task<IReadOnlyList<WindowRectangle>> GetCurrentWindowRectanglesAsync(IntPtr excludedHandle, CancellationToken ct)
+        public static Task<IReadOnlyList<WindowRectangle>> GetCurrentWindowRectanglesAsync(IntPtr excludedHandle, bool allowEntireScreen, CancellationToken ct)
         {
             return Task.Run(
-                () => new List<WindowRectangle>(GetCurrentWindowRectangles(excludedHandle)) as IReadOnlyList<WindowRectangle>,
+                () => new List<WindowRectangle>(GetCurrentWindowRectangles(excludedHandle, allowEntireScreen)) as IReadOnlyList<WindowRectangle>,
                 ct
             );
         }
@@ -19,9 +19,11 @@ namespace HolzShots.Input.Selection
             "Shell_Secondary", // Task bar on second/third/... screen
         };
 
-        public static ISet<WindowRectangle> GetCurrentWindowRectangles(IntPtr excludedHandle)
+        public static ISet<WindowRectangle> GetCurrentWindowRectangles(IntPtr excludedHandle, bool allowEntireScreen)
         {
             var result = new HashSet<WindowRectangle>();
+
+            var forbittenSize = System.Windows.Forms.SystemInformation.VirtualScreen.Size;
 
             bool ProcessWindowHandle(IntPtr windowHandle, int _)
             {
@@ -61,6 +63,16 @@ namespace HolzShots.Input.Selection
                 var title = WindowHelpers.GetWindowTitle(windowHandle).Trim();
                 if (string.IsNullOrWhiteSpace(title))
                     title = null;
+
+                if (!allowEntireScreen)
+                {
+                    // In some cases, we want to disallow selecting the entire screen (probably by accident),
+                    // because it would make it hard for the user to cancel it (for example, it may be hard for screen recording, when the user selects the entire screen)
+                    if (title == null && className == "WorkerW")
+                        return true; // This is the window that spans the entire screen
+                    if (windowRectangle.HasValue && windowRectangle.Value.Size == forbittenSize)
+                        return true;
+                }
 
                 result.Add(new WindowRectangle(windowHandle, r, title));
 

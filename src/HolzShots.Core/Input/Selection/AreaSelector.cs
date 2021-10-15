@@ -25,7 +25,7 @@ namespace HolzShots.Input.Selection
 
         private SelectionState _state = new InitialState();
 
-        private AreaSelector(Bitmap image, HSSettings settingsContext)
+        private AreaSelector(Bitmap image, bool allowEntireScreen, HSSettings settingsContext)
         {
             if (image == null)
                 throw new ArgumentNullException(nameof(image));
@@ -43,7 +43,7 @@ namespace HolzShots.Input.Selection
 
             var windowEnumerationTask = new CancellationTokenSource();
             windowEnumerationTask.CancelAfter(5000);
-            WindowFinder.GetCurrentWindowRectanglesAsync(Handle, windowEnumerationTask.Token).ContinueWith(t => _availableWindowsForOutline = t.Result);
+            WindowFinder.GetCurrentWindowRectanglesAsync(Handle, allowEntireScreen, windowEnumerationTask.Token).ContinueWith(t => _availableWindowsForOutline = t.Result);
 
             _dimmingOverlayBrush = Device.CreateSolidColorBrush(new D2DColor(settingsContext.AreaSelectorDimmingOpacity, OverlayColor));
             _image = Device.CreateBitmapFromGDIBitmap(image);
@@ -52,7 +52,7 @@ namespace HolzShots.Input.Selection
             _background = _dimmedImage.GetBitmap();
         }
 
-        public static AreaSelector Create(Bitmap image, HSSettings settingsContext) => new(image, settingsContext);
+        public static AreaSelector Create(Bitmap image, bool allowEntireScreen, HSSettings settingsContext) => new(image, allowEntireScreen, settingsContext);
 
         public Task<SelectionResult> PromptSelectionAsync()
         {
@@ -65,7 +65,6 @@ namespace HolzShots.Input.Selection
             SelectionSemaphore.IsInAreaSelection = true;
 
             _tcs = new TaskCompletionSource<SelectionResult>();
-
 
             Visible = true;
 

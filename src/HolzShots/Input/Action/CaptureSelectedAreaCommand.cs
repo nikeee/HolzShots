@@ -60,7 +60,7 @@ namespace HolzShots.Input.Actions
 
             using var prio = new ProcessPriorityRequest();
             var (screen, cursorPosition) = ScreenshotCreator.CaptureScreenshot(SystemInformation.VirtualScreen, settingsContext.CaptureCursor);
-            using var selector = AreaSelector.Create(screen, settingsContext);
+            using var selector = AreaSelector.Create(screen, true, settingsContext);
 
             var (selectedArea, _) = await selector.PromptSelectionAsync().ConfigureAwait(true);
 

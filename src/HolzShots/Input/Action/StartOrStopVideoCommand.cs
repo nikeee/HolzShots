@@ -136,7 +136,7 @@ namespace HolzShots.Input.Actions
                 var (selectionBackground, _) = Drawing.ScreenshotCreator.CaptureScreenshot(SystemInformation.VirtualScreen, settingsContext.CaptureCursor);
                 using (selectionBackground)
                 {
-                    using var selector = Selection.AreaSelector.Create(selectionBackground, settingsContext);
+                    using var selector = Selection.AreaSelector.Create(selectionBackground, false, settingsContext);
 
                     var (selectedArea, windowInfo) = await selector.PromptSelectionAsync();
 
