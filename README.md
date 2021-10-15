@@ -1,9 +1,9 @@
 # ![Logo](src/HolzShots/Resources/Logo-32x32.png) HolzShots ![CI](https://github.com/nikeee/HolzShots/workflows/CI/badge.svg) ![Chocolatey Version](https://img.shields.io/chocolatey/v/holzshots)
 A lightweight screen capturing utility that gets out of your way.
-- No settings UI – configurable via JSON, like VSCode.
+- No dedicated, cluttered settings UI – use your favorite JSON editor, like VSCode.
 - Upload to you own services via config files – like ShareX – but keep them updated – like user scripts.
 - No bloat like a DNS changer, hash validation or an FTP client. Just screenshots and screen recordings.
-- Tries to cover 80% of use cases - if you need more features for some tasks, try other tools[^1].
+- Tries to cover 80% of use cases - if you need more features for some tasks, try other tools for that use case[^1].
 
 ## Requirements
 - Requires a supported Version of Windows 10; 64 Bit
