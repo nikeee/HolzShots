@@ -25,6 +25,11 @@ namespace HolzShots.Windows.Forms
             const string title = "About Graphics";
             MessageBox.Show(this, AboutDialog.GetGraphicsText(), title);
         }
+
+        private void AboutForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            _instance = new Lazy<AboutForm>(() => new AboutForm());
+        }
     }
 
     public static class AboutDialog
