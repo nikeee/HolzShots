@@ -39,9 +39,9 @@ namespace HolzShots.Windows.Net
                         if (settingsContext.ShowCopyConfirmation)
                         {
                             if (success)
-                                NotificationManager.ShowCopyConfirmation(result.Url);
+                                HolzShots.Forms.ToastNotifications.ShowCopyConfirmation(result.Url);
                             else
-                                HolzShots.Forms.ToastNotifications.CopyingFailed(result.Url);
+                                HolzShots.Forms.ToastNotifications.ShowCopyingFailed(result.Url);
                         }
                     }
                     break;

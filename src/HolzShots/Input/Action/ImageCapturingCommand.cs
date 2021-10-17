@@ -38,7 +38,7 @@ namespace HolzShots.Input.Actions
                     }
                     catch (UploadCanceledException)
                     {
-                        NotificationManager.ShowOperationCanceled();
+                        Forms.ToastNotifications.ShowOperationCanceled();
                     }
                     catch (UploadException ex)
                     {
@@ -49,7 +49,7 @@ namespace HolzShots.Input.Actions
                     try
                     {
                         Clipboard.SetImage(screenshot.Image);
-                        NotificationManager.ShowImageCopiedConfirmation();
+                        Forms.ToastNotifications.ShowImageCopiedConfirmation();
                     }
                     catch (Exception ex) when (ex is ExternalException
                            || ex is System.Threading.ThreadStateException

@@ -733,7 +733,7 @@ Namespace UI
                 Debug.Assert(result IsNot Nothing)
                 UploadHelper.InvokeUploadFinishedUI(result, _settingsContext)
             Catch ex As UploadCanceledException
-                NotificationManager.ShowOperationCanceled()
+                Forms.ToastNotifications.ShowOperationCanceled()
             Catch ex As UploadException
                 Dim ignored = NotificationManager.UploadFailed(ex) ' VB doesn't support await in catch clauses
                 Return
@@ -781,7 +781,7 @@ Namespace UI
                 Debug.Assert(result IsNot Nothing)
                 UploadHelper.InvokeUploadFinishedUI(result, _settingsContext)
             Catch ex As UploadCanceledException
-                NotificationManager.ShowOperationCanceled()
+                Forms.ToastNotifications.ShowOperationCanceled()
             Catch ex As UploadException
                 Dim ignored = NotificationManager.UploadFailed(ex) ' VB doesn't support await in catch clauses
                 Return

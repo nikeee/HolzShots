@@ -79,7 +79,7 @@ namespace HolzShots.Input.Actions
                     }
                     catch (UploadCanceledException)
                     {
-                        NotificationManager.ShowOperationCanceled();
+                        Forms.ToastNotifications.ShowOperationCanceled();
                     }
                     catch (UploadException ex)
                     {
@@ -92,9 +92,9 @@ namespace HolzShots.Input.Actions
                         if (settingsContext.ShowCopyConfirmation)
                         {
                             if (success)
-                                NotificationManager.ShowFileCopyConfirmation();
+                                Forms.ToastNotifications.ShowFileCopyConfirmation();
                             else
-                                NotificationManager.CopyingFileFailed();
+                                Forms.ToastNotifications.ShowCopyingFileFailed();
                         }
                     }
                     break;
@@ -104,9 +104,9 @@ namespace HolzShots.Input.Actions
                         if (settingsContext.ShowCopyConfirmation)
                         {
                             if (success)
-                                NotificationManager.ShowFilePathCopyConfirmation();
+                                Forms.ToastNotifications.ShowFilePathCopyConfirmation();
                             else
-                                NotificationManager.CopyingFilePathFailed();
+                                Forms.ToastNotifications.ShowCopyingFilePathFailed();
                         }
                     }
                     break;

@@ -43,7 +43,7 @@ namespace HolzShots.Input.Actions
             }
             catch (UploadCanceledException)
             {
-                NotificationManager.ShowOperationCanceled();
+                Forms.ToastNotifications.ShowOperationCanceled();
             }
             catch (UploadException ex)
             {
