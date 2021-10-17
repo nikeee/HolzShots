@@ -30,5 +30,28 @@ public static class ToastNotifications
     public static void ShowImageCopiedConfirmation() => ShowShortNotification("Image copied!", "The image has been copied to your clipboard.");
     public static void ShowOperationCanceled() => ShowShortNotification("Canceled", "You canceled the task.");
 
+#if false
+    public static void ShowUploadResult(UploadResult result, HSSettings settingsContext)
+    {
+        // TODO: Hero Image: https://stackoverflow.com/questions/46689877
+#if DEBUG
+        var toastDuration = TimeSpan.FromMinutes(1); // TODO: Make this configurable
+#else
+        var toastDuration = TimeSpan.FromHours(1); // TODO: Make this configurable
+#endif
+        // TODO: Support settingsContext.AutoCloseLinkViewer
+
+        new ToastContentBuilder()
+            .AddArgument("url", result.Url)
+            .AddText("File has been uploaded!", AdaptiveTextStyle.Header)
+            .AddText("What do you want to copy?", AdaptiveTextStyle.HeaderSubtle)
+            .AddButton(new ToastButton("Markdown", "copyMarkdown"))
+            .AddButton(new ToastButton("HTML", "copyHtml"))
+            .AddButton(new ToastButton("Link", "copyLink"))
+            .Show(toast =>
+            {
+                toast.ExpirationTime = DateTime.Now + toastDuration;
+            });
     }
+#endif
 }

@@ -31,6 +31,7 @@ namespace HolzShots.Windows.Net
             switch (settingsContext.ActionAfterUpload)
             {
                 case UploadHandlingAction.Flyout:
+                    // HolzShots.Forms.ToastNotifications.ShowUploadResult(result, settingsContext);
                     (new UploadResultForm(result, settingsContext)).Show();
                     break;
                 case UploadHandlingAction.CopyToClipboard:
