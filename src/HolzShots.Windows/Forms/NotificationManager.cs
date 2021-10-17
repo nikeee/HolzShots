@@ -70,10 +70,6 @@ namespace HolzShots.Windows.Forms
 
             Show("Error Uploading Image", string.Empty, result.Message, TaskDialogIcon.Error, TaskDialogButton.OK);
         }
-        public static void CopyingFailed(string text)
-        {
-            NotifierFlyout.ShowNotification("Could not copy link :(", $"We could not copy the link to your image to your clipboard.");
-        }
         public static void ShowCopyConfirmation(string text) => NotifierFlyout.ShowNotification("Link copied!", "The link has been copied to your clipboard.");
         public static void ShowFileCopyConfirmation() => NotifierFlyout.ShowNotification("File copied!", "The file has been copied to your clipboard.");
         public static void CopyingFileFailed()

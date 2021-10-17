@@ -41,7 +41,7 @@ namespace HolzShots.Windows.Net
                             if (success)
                                 NotificationManager.ShowCopyConfirmation(result.Url);
                             else
-                                NotificationManager.CopyingFailed(result.Url);
+                                HolzShots.Forms.ToastNotifications.CopyingFailed(result.Url);
                         }
                     }
                     break;
