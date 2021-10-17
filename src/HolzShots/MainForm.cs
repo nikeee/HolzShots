@@ -75,6 +75,19 @@ namespace HolzShots
             if (JumpLists.AreSupported)
                 JumpLists.RegisterTasks();
 
+            // We require Windows 10 anyways, but at least we don't want to crash wen calling this API.
+            if (EnvironmentEx.NotificationToastsSupported)
+            {
+                Microsoft.Toolkit.Uwp.Notifications.ToastNotificationManagerCompat.OnActivated += toastArgs =>
+                {
+                    BeginInvoke(() =>
+                    {
+                        // TODO: Show the corresponding content
+                        // MessageBox.Show("Toast activated. Args: " + toastArgs.Argument);
+                    });
+                };
+            }
+
             await _application.ProcessCommandLineArguments(args).ConfigureAwait(true);
 
             var saveSettings = false;

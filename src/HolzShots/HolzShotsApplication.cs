@@ -115,6 +115,9 @@ namespace HolzShots
             Application.SetCompatibleTextRenderingDefault(false);
             _form = new MainForm(this);
             Application.Run(_form);
+
+            if (EnvironmentEx.NotificationToastsSupported)
+                Microsoft.Toolkit.Uwp.Notifications.ToastNotificationManagerCompat.Uninstall();
         }
 
         public void Terminate() => _form.Terminate();

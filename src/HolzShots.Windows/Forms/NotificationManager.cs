@@ -6,6 +6,7 @@ using HolzShots.Composition;
 using HolzShots.Input.Keyboard;
 using HolzShots.Net;
 using HolzShots.Net.Custom;
+using Microsoft.Toolkit.Uwp.Notifications;
 
 namespace HolzShots.Windows.Forms
 {
@@ -167,6 +168,16 @@ namespace HolzShots.Windows.Forms
                 TaskDialogIcon.Error,
                 TaskDialogButton.OK
             );
+        }
+
+        public static void Test()
+        {
+            var a = new ToastContentBuilder();
+            a.AddArgument("action", "viewConversation")
+             .AddArgument("conversationId", 9813)
+             .AddText("Andrew sent you a picture")
+             .AddText("Check this out, The Enchantments in Washington!")
+             .Show();
         }
     }
 }
