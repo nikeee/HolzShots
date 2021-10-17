@@ -5,7 +5,7 @@ namespace HolzShots.Windows.Forms
 {
     public partial class AboutForm : Form
     {
-        private static Lazy<AboutForm> _instance = new Lazy<AboutForm>(() => new AboutForm());
+        private static Lazy<AboutForm> _instance = new(() => new AboutForm());
         public static AboutForm Instance => _instance.Value;
 
         public AboutForm()
