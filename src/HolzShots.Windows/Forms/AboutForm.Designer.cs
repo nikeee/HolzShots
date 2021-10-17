@@ -146,6 +146,7 @@ namespace HolzShots.Windows.Forms
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "About";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.AboutForm_FormClosed);
             this.ResumeLayout(false);
             this.PerformLayout();
 
