@@ -40,64 +40,60 @@ namespace HolzShots.Net.Custom
 
             var uplInfo = UploaderInfo.Uploader;
 
-            using (var progressHandler = new ProgressMessageHandler(new HttpClientHandler()))
-            using (var cl = new HttpClient(progressHandler))
+            using var progressHandler = new ProgressMessageHandler(new HttpClientHandler());
+            using var cl = new HttpClient(progressHandler);
+            progressHandler.HttpSendProgress += (s, e) => progress.Report(TransferProgress.FromHttpProgressEventArgs(e));
+
+            // Add the user-agent first, so the user can override it
+            cl.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", SuggestedUserAgent);
+
+            if (uplInfo.Headers != null)
             {
-                progressHandler.HttpSendProgress += (s, e) => progress.Report(TransferProgress.FromHttpProgressEventArgs(e));
+                foreach (var (header, value) in uplInfo.Headers)
+                    cl.DefaultRequestHeaders.TryAddWithoutValidation(header, value);
+            }
 
-                // Add the user-agent first, so the user can override it
-                cl.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", SuggestedUserAgent);
+            var responseParser = uplInfo.ResponseParser;
+            using var content = new MultipartFormDataContent();
+            var postParams = uplInfo.PostParams;
+            if (postParams is not null)
+            {
+                foreach (var (name, value) in postParams)
+                    content.Add(new StringContent(value), name);
+            }
 
-                if (uplInfo.Headers != null)
-                {
-                    foreach (var (header, value) in uplInfo.Headers)
-                        cl.DefaultRequestHeaders.TryAddWithoutValidation(header, value);
-                }
+            var fname = uplInfo.GetEffectiveFileName(suggestedFileName);
 
-                var responseParser = uplInfo.ResponseParser;
-                using (var content = new MultipartFormDataContent())
-                {
-                    var postParams = uplInfo.PostParams;
-                    if (postParams is not null)
-                    {
-                        foreach (var (name, value) in postParams)
-                            content.Add(new StringContent(value), name);
-                    }
+            Debug.Assert(!string.IsNullOrWhiteSpace(uplInfo.FileFormName));
+            Debug.Assert(!string.IsNullOrWhiteSpace(fname));
 
-                    var fname = uplInfo.GetEffectiveFileName(suggestedFileName);
+            content.Add(new StreamContent(data), uplInfo.FileFormName, fname);
 
-                    Debug.Assert(!string.IsNullOrWhiteSpace(uplInfo.FileFormName));
-                    Debug.Assert(!string.IsNullOrWhiteSpace(fname));
+            Debug.Assert(!string.IsNullOrWhiteSpace(uplInfo.RequestUrl));
 
-                    content.Add(new StreamContent(data), uplInfo.FileFormName, fname);
+            var res = await cl.PostAsync(uplInfo.RequestUrl, content, cancellationToken).ConfigureAwait(false);
 
-                    Debug.Assert(!string.IsNullOrWhiteSpace(uplInfo.RequestUrl));
+            if (!res.IsSuccessStatusCode)
+                throw new UploadException($"The servers of {UploaderInfo.Meta.Name} responded with the error {res.StatusCode}: \"{res.ReasonPhrase}\".");
 
-                    var res = await cl.PostAsync(uplInfo.RequestUrl, content, cancellationToken).ConfigureAwait(false);
+            var resStr = await res.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-                    if (!res.IsSuccessStatusCode)
-                        throw new UploadException($"The servers of {UploaderInfo.Meta.Name} responded with the error {res.StatusCode}: \"{res.ReasonPhrase}\".");
+            var urlTemplateSpec = responseParser.UrlTemplateSpec;
 
-                    var resStr = await res.Content.ReadAsStringAsync().ConfigureAwait(false);
+            // As the URL template is optional, we just take the entire response if it is not there
+            if (urlTemplateSpec == null)
+                return new UploadResult(this, resStr, DateTime.Now);
 
-                    var urlTemplateSpec = responseParser.UrlTemplateSpec;
+            try
+            {
+                var imageUrl = urlTemplateSpec.Evaluate(resStr);
+                Debug.Assert(!string.IsNullOrWhiteSpace(imageUrl));
 
-                    // As the URL template is optional, we just take the entire response if it is not there
-                    if (urlTemplateSpec == null)
-                        return new UploadResult(this, resStr, DateTime.Now);
-
-                    try
-                    {
-                        var imageUrl = urlTemplateSpec.Evaluate(resStr);
-                        Debug.Assert(!string.IsNullOrWhiteSpace(imageUrl));
-
-                        return new UploadResult(this, imageUrl, DateTime.Now);
-                    }
-                    catch (UnableToFillTemplateException e)
-                    {
-                        throw new UploadException(e.Message, e);
-                    }
-                }
+                return new UploadResult(this, imageUrl, DateTime.Now);
+            }
+            catch (UnableToFillTemplateException e)
+            {
+                throw new UploadException(e.Message, e);
             }
         }
 
