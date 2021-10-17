@@ -84,11 +84,11 @@ namespace HolzShots
         public string? VideoPixelFormat { get; private set; } = null;
 
         [SettingsDoc(
-            "File format that recorded screen captures will be saved as.",
+            "File format that recorded screen captures will be saved as. Use \"ask\" to select the format before the recording.",
             Default = "mp4"
         )]
         [JsonProperty("video.format")]
-        public VideoCaptureFormat VideoOutputFormat { get; private set; } = VideoCaptureFormat.Mp4;
+        public VideoCaptureFormat VideoOutputFormat { get; private set; } = VideoCaptureFormat.Mp4; // Not changing default to "ask" before GH#110
 
         // TODO: This is pretty buggy right now. FPS > 30 seem to result in a glitchy video.
         [SettingsDoc(
@@ -354,6 +354,7 @@ namespace HolzShots
         None,
     }
 
+    /// <remarks> When adding new entries to this enum, consider adding it in the <see cref="HolzShots.Input.VideoCaptureFormatSelection.PromptFormat" /> of <see cref="HolzShots.Input.VideoCaptureFormatSelection" />. </remarks>
     [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum VideoCaptureFormat
     {
@@ -363,6 +364,8 @@ namespace HolzShots
         Webm,
         [EnumMember(Value = "gif")]
         Gif,
+        [EnumMember(Value = "ask")]
+        AskBeforeRecording,
     }
 
     [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]

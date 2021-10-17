@@ -12,12 +12,11 @@ namespace HolzShots.Capture.Video
         private readonly string _ffmpegPath;
         public WindowsFFmpegScreenRecorder(string ffmpegPath) => _ffmpegPath = ffmpegPath ?? throw new ArgumentNullException(nameof(ffmpegPath));
 
-        public async Task<ScreenRecording> Invoke(Rectangle rectangleOnScreenToCapture, string targetFile, HSSettings settingsContext, CancellationToken cancellationToken)
+        public async Task<ScreenRecording> Invoke(Rectangle rectangleOnScreenToCapture, string targetFile, VideoCaptureFormat outputFormat, HSSettings settingsContext, CancellationToken cancellationToken)
         {
             // Capture important parameters beforehand, as they may randomly change during recording (this shouldn't happen, but we never know)
             var captureCursor = settingsContext.CaptureCursor;
             var fps = settingsContext.VideoFrameRate;
-            var outputFormat = settingsContext.VideoOutputFormat;
 
             var pixelFormat = settingsContext.VideoPixelFormat;
             if (pixelFormat == null)

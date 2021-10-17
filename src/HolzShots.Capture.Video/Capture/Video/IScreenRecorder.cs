@@ -5,7 +5,7 @@ namespace HolzShots.Capture.Video
 {
     public interface IScreenRecorder : IDisposable
     {
-        Task<ScreenRecording> Invoke(Rectangle rectangleOnScreenToCapture, string targetFile, HSSettings settingsContext, CancellationToken cancellationToken);
+        Task<ScreenRecording> Invoke(Rectangle rectangleOnScreenToCapture, string targetFile, VideoCaptureFormat outputFormat, HSSettings settingsContext, CancellationToken cancellationToken);
     }
 
     public record ScreenRecording(

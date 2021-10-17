@@ -133,6 +133,19 @@ namespace HolzShots.Input.Actions
                 if (ffmpegPath == null)
                     return null; // We don't have ffmpeg available and the user didn't do anything to fix this. We act like it was aborted.
 
+
+                var effectiveFormat = settingsContext.VideoOutputFormat;
+                if (effectiveFormat == VideoCaptureFormat.AskBeforeRecording)
+                {
+                    var formatToUse = VideoCaptureFormatSelection.PromptFormat();
+                    if (formatToUse == null)
+                        return null; //Use clicked "cancel"
+                    effectiveFormat = formatToUse.Value;
+
+                    // TODO: It would be better to rewrite the settings context here, so other code can just work with that.
+                    // For that to work, we should refactor HSSettings to be a record
+                }
+
                 var (selectionBackground, _) = Drawing.ScreenshotCreator.CaptureScreenshot(SystemInformation.VirtualScreen, settingsContext.CaptureCursor);
                 using (selectionBackground)
                 {
@@ -145,7 +158,7 @@ namespace HolzShots.Input.Actions
                     var tempRecordingDir = Path.Combine(Path.GetTempPath(), "hs-" + Path.GetRandomFileName());
                     Directory.CreateDirectory(tempRecordingDir);
 
-                    var extension = VideoUploadPayload.GetExtensionForVideoFormat(settingsContext.VideoOutputFormat);
+                    var extension = VideoUploadPayload.GetExtensionForVideoFormat(effectiveFormat);
                     var targetFile = Path.Combine(tempRecordingDir, "HS" + extension);
 
                     if (windowInfo != null)
@@ -163,7 +176,7 @@ namespace HolzShots.Input.Actions
                     using var recordingControls = new RecordingControls(selectedArea, _currentRecordingCts);
                     recordingControls.Show();
 
-                    var recording = await recorder.Invoke(selectedArea, targetFile, settingsContext, _currentRecordingCts.Token);
+                    var recording = await recorder.Invoke(selectedArea, targetFile, effectiveFormat, settingsContext, _currentRecordingCts.Token);
 
                     if (_throwAwayResult)
                     {
