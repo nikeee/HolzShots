@@ -120,7 +120,7 @@ namespace HolzShots
             if (DateTime.Now - ApplicationStarted > TimeSpan.FromSeconds(2))
                 // If _settingsUpdates is 0, the function was invoke on application startup
                 // We only want to show this message when the user edits this file
-                NotificationManager.SettingsUpdated();
+                Forms.ToastNotifications.ShowSettingsUpdated();
 
             var parsedBindings = newSettings.KeyBindings.Select(_application.CommandManager.GetHotkeyActionFromKeyBinding).ToArray();
 

@@ -48,8 +48,6 @@ namespace HolzShots.Windows.Forms
             NotifierFlyout.ShowNotification("Plugins not loaded", $"We could not load the plugins. Here's the error message:\n{message}");
         }
 
-        public static void SettingsUpdated() => NotifierFlyout.ShowNotification("Settings Updated", $"HolzShots has detected and loaded new settings.");
-
         public static async Task UploadFailed(UploadException result)
         {
             if (result.InnerException is UnableToFillTemplateException templateException)
@@ -168,16 +166,6 @@ namespace HolzShots.Windows.Forms
                 TaskDialogIcon.Error,
                 TaskDialogButton.OK
             );
-        }
-
-        public static void Test()
-        {
-            var a = new ToastContentBuilder();
-            a.AddArgument("action", "viewConversation")
-             .AddArgument("conversationId", 9813)
-             .AddText("Andrew sent you a picture")
-             .AddText("Check this out, The Enchantments in Washington!")
-             .Show();
         }
     }
 }

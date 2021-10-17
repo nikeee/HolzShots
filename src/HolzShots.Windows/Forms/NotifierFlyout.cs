@@ -3,6 +3,7 @@ using HolzShots.Native;
 
 namespace HolzShots.Windows.Forms
 {
+    [Obsolete("Use ToastNotifications instead")]
     public partial class NotifierFlyout : NoFocusedFlyoutForm
     {
         private readonly FlyoutAnimator _animator;
@@ -62,8 +63,8 @@ namespace HolzShots.Windows.Forms
         public static Task ShowNotification(string title, string body) => ShowNotification(title, body, TimeSpan.FromSeconds(3));
         public static async Task ShowNotification(string title, string body, TimeSpan timeout)
         {
-            using (var notifierWindow = new NotifierFlyout(title, body, timeout))
-                await notifierWindow.ShowNotification();
+            using var notifierWindow = new NotifierFlyout(title, body, timeout);
+            await notifierWindow.ShowNotification();
         }
     }
 
