@@ -62,16 +62,19 @@ namespace HolzShots.Windows.Forms
             if (className == null)
                 return false; // Call to GetClassName failed. Just assume that there is no app running in fullscreen
 
-            if (className == "WorkerW")
+            // Ignore the desktop as well as the task bar (see GH#111)
+            if (className == "WorkerW" || className == "Shell_TrayWnd")
                 return false;
 
-            if (!Native.User32.GetWindowRect(foregroundWindowHandle, out var fgWindowRect))
+            if (!Native.User32.GetWindowRect(foregroundWindowHandle, out var windowNativeRect))
                 return false; // Call to GetWindowRect failed. Just assume that there is no app running in fullscreen
+
+            System.Drawing.Rectangle windowBounds = windowNativeRect;
 
             // This is pretty unreliable. But it works at least a little bit.
             // It doesn't work if the application is running full screen on a different monitor (or over all monitors).
-            return Screen.PrimaryScreen.Bounds.Height == fgWindowRect.Bottom
-                && Screen.PrimaryScreen.Bounds.Width == fgWindowRect.Right;
+            return Screen.PrimaryScreen.Bounds.Height == windowBounds.Height
+                && Screen.PrimaryScreen.Bounds.Width == windowBounds.Width;
         }
 
         public static ToolStripRenderer ToolStripRendererForCurrentTheme { get; } = new VisualStyleStripRenderer(ToolBarTheme.Toolbar);
