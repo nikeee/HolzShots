@@ -28,7 +28,7 @@ namespace HolzShots
         public T CurrentSettings { get; private set; } = new T();
         public string SettingsFilePath { get; }
 
-        private static readonly TimeSpan _pollingInterval = TimeSpan.FromSeconds(1);
+        private static readonly TimeSpan _pollingInterval = TimeSpan.FromSeconds(3);
 
         private readonly ISynchronizeInvoke? _synchronizingObject;
         private readonly PollingFileWatcher _watcher;
