@@ -13,8 +13,17 @@ namespace HolzShots
     {
         #region meta
 
+        [SettingsDoc(
+            "Schema URL to get some auto completion in some editors.",
+            Overridable = false
+        )]
         [JsonProperty("$schema")]
         public string SchemaUrl { get; } = "https://holzshots.net/schema/settings.json";
+
+        [SettingsDoc(
+            "version of the settings file.",
+            Overridable = false
+        )]
         public string Version { get; } = "1.0.0";
 
         #endregion
@@ -22,7 +31,8 @@ namespace HolzShots
 
         [SettingsDoc(
             "When enabled, every screenshot and screen recording captured with HolzShots will be saved at the location specified under the setting \"save.path\".",
-            Default = "true"
+            Default = "true",
+            Overridable = true
         )]
         [JsonProperty("save.enabled")]
         public bool SaveToLocalDisk { get; private set; } = true;
@@ -31,7 +41,8 @@ namespace HolzShots
         [SettingsDoc(
             "The path where screenshots and screen recordings will be saved.\n" +
             "Feel free to use environment variables like %USERPROFILE%, %ONEDRIVE% or %TMP%.\n\n" +
-            "If you want to save videos to a different path, override this setting in the respective command."
+            "If you want to save videos to a different path, override this setting in the respective command.",
+            Overridable = true
         )]
         [JsonProperty("save.path")]
         public string SavePath { get; private set; } = HolzShotsPaths.DefaultScreenshotSavePath;
@@ -49,7 +60,8 @@ namespace HolzShots
             "            You can use string formats that .NET supports: https://docs.microsoft.com/en-us/dotnet/api/system.datetime.tostring\n" +
             "            For example, you can use <date:s>\n" +
             "\n" +
-            "    <size:width>, <size:height>: The width or the height of the image."
+            "    <size:width>, <size:height>: The width or the height of the image.",
+            Overridable = true
         )]
         [JsonProperty("image.save.pattern")]
         public string SaveImageFileNamePattern { get; private set; } = "Screenshot-<Date>";
@@ -58,7 +70,8 @@ namespace HolzShots
             "When enabled, HolzShots decides whether a screenshot should be saved as a JPEG or a PNG.\n" +
             "Some screenshots are better saved as JPGs, for example if they consist of a large photo.\n" +
             "Saving it as a PNG is better suited for pictures of programs.\n" +
-            "If JPG is used, there may be a loss in quality. PNG does not reduce the image quality, but uses more space when photos are saved."
+            "If JPG is used, there may be a loss in quality. PNG does not reduce the image quality, but uses more space when photos are saved.",
+            Overridable = true
         )]
         [JsonProperty("image.save.autoDetectBestImageFormat")]
         public bool EnableSmartFormatForSaving { get; private set; } = false;
@@ -72,20 +85,23 @@ namespace HolzShots
             "            You can use string formats that .NET supports: https://docs.microsoft.com/en-us/dotnet/api/system.datetime.tostring\n" +
             "            For example, you can use <date:s>\n" +
             "\n" +
-            "    <size:width>, <size:height>: The width or the height of the video."
+            "    <size:width>, <size:height>: The width or the height of the video.",
+            Overridable = true
         )]
         [JsonProperty("video.save.pattern")]
         public string SaveVideoFileNamePattern { get; private set; } = "Recording-<Date>";
 
         [SettingsDoc(
-            "The pixel format for videos to use. Look up FFmpeg's pix_fmt parameter for valid values. Leave unconfigured if you don't know what this means."
+            "The pixel format for videos to use. Look up FFmpeg's pix_fmt parameter for valid values. Leave unconfigured if you don't know what this means.",
+            Overridable = true
         )]
         [JsonProperty("video.save.pixelFormat")]
         public string? VideoPixelFormat { get; private set; } = null;
 
         [SettingsDoc(
             "File format that recorded screen captures will be saved as. Use \"ask\" to select the format before the recording.",
-            Default = "mp4"
+            Default = "mp4",
+            Overridable = true
         )]
         [JsonProperty("video.format")]
         public VideoCaptureFormat VideoOutputFormat { get; private set; } = VideoCaptureFormat.Mp4; // Not changing default to "ask" before GH#110
@@ -93,7 +109,8 @@ namespace HolzShots
         // TODO: This is pretty buggy right now. FPS > 30 seem to result in a glitchy video.
         [SettingsDoc(
             "Frame rate (FPS) for screen recordings. Min: 1; Max: 30",
-            Default = "30"
+            Default = "30",
+            Overridable = true
         )]
         [JsonProperty("video.framesPerSecond")]
         public int VideoFrameRate
@@ -108,21 +125,24 @@ namespace HolzShots
 
         [SettingsDoc(
             "Close the shot editor once the upload button is clicked.",
-            Default = "false"
+            Default = "false",
+            Overridable = true
         )]
         [JsonProperty("editor.closeAfterUpload")]
         public bool CloseAfterUpload { get; private set; } = false;
 
         [SettingsDoc(
             "Close the shot editor once the image was saved.",
-            Default = "false"
+            Default = "false",
+            Overridable = true
         )]
         [JsonProperty("editor.closeAfterSave")]
         public bool CloseAfterSave { get; private set; } = false;
 
         [SettingsDoc(
             "The window title of the shot editor. Feel free to override the title on your key bindings.",
-            Default = "Shot Editor"
+            Default = "Shot Editor",
+            Overridable = true
         )]
         [JsonProperty("editor.title")]
         public string ShotEditorTitle { get; private set; } = "Shot Editor";
@@ -132,7 +152,8 @@ namespace HolzShots
 
         [SettingsDoc(
             "When set to true, HolzShots will show a progress flyout during upload.",
-            Default = "true"
+            Default = "true",
+            Overridable = true
         )]
         [JsonProperty("upload.showProgress")]
         public bool ShowUploadProgress { get; private set; } = true;
@@ -142,21 +163,24 @@ namespace HolzShots
             "    flyout: A popup-window in the corner that shows some options for copying the link\n" +
             "    copy: Copy the link to the clipboard\n" +
             "    none: Do nothing",
-            Default = "flyout"
+            Default = "flyout",
+            Overridable = true
         )]
         [JsonProperty("upload.actionAfterUpload")]
         public UploadHandlingAction ActionAfterUpload { get; private set; } = UploadHandlingAction.Flyout;
 
         [SettingsDoc(
             "Show a confirmation message as soon as the URL was copied and \"upload.actionAfterUpload\" is set to \"copy\".",
-            Default = "true"
+            Default = "true",
+            Overridable = true
         )]
         [JsonProperty("upload.actionAfterUpload.copy.showConfirmation")]
         public bool ShowCopyConfirmation { get; private set; } = true;
 
         [SettingsDoc(
             "Automatically close the flyout containing the URL to the image as soon as some button is pressed and \"upload.actionAfterUpload\" is set to \"flyout\".",
-            Default = "true"
+            Default = "true",
+            Overridable = true
         )]
         [JsonProperty("upload.actionAfterUpload.flyout.closeOnCopy")]
         public bool AutoCloseLinkViewer { get; private set; } = true;
@@ -169,14 +193,16 @@ namespace HolzShots
             "Some screenshots are better uploaded as JPGs, for example if they consist of a large photo.\n" +
             "Uploading it as a PNG is better suited for pictures of programs.\n" +
             "If JPG is used, there may be a loss in quality. PNG does not reduce the image quality, but uses more space when photos are saved and therefore takes longer to upload.",
-            Default = "false"
+            Default = "false",
+            Overridable = true
         )]
         [JsonProperty("upload.image.autoDetectBestImageFormat")]
         public bool EnableSmartFormatForUpload { get; private set; } = false;
 
         [SettingsDoc(
             "Name of the service HolzShots is goind to upload the image.",
-            Default = "directupload.net"
+            Default = "directupload.net",
+            Overridable = true
         )]
         [JsonProperty("upload.service")]
         public string TargetImageHoster { get; private set; } = "directupload.net";
@@ -196,7 +222,8 @@ namespace HolzShots
             "    saveAs: Show a dialog and choose where you want to save the image\n" +
             "    copy: Copy the image data to clipboard; useful for pasting the image to popular messengers etc.\n" +
             "    none: Do nothing (this would only trigger saving the image to disk if this is enabled)",
-            Default = "openEditor"
+            Default = "openEditor",
+            Overridable = true
         )]
         [JsonProperty("capture.image.actionAfterCapture")]
         public ImageCaptureHandlingAction ActionAfterImageCapture { get; private set; } = ImageCaptureHandlingAction.OpenEditor;
@@ -209,14 +236,16 @@ namespace HolzShots
             "    showInExplorer: Opens an explorer window in the path of the saved video.\n" +
             "    openInDefaultApp: Opens the video in the default application for that file type.\n" +
             "    none: Do nothing (this would only trigger saving the video to disk if this is enabled)",
-            Default = "showInExplorer"
+            Default = "showInExplorer",
+            Overridable = true
         )]
         [JsonProperty("capture.video.actionAfterCapture")]
         public VideoCaptureHandlingAction ActionAfterVideoCapture { get; private set; } = VideoCaptureHandlingAction.ShowInExplorer;
 
         [SettingsDoc(
             "Opacity of the dimming effect when selection a region to capture. Must be between 0.0 and 1.0.",
-            Default = "0.8"
+            Default = "0.8",
+            Overridable = true
         )]
         [JsonProperty("capture.selection.dimmingOpacity")]
         public float AreaSelectorDimmingOpacity
@@ -228,7 +257,8 @@ namespace HolzShots
 
         [SettingsDoc(
             "Seconds to wait before invoking the capture. Must be >=0.",
-            Default = "0.0"
+            Default = "0.0",
+            Overridable = true
         )]
         [JsonProperty("capture.delayInSeconds")]
         public float CaptureDelay
@@ -241,7 +271,8 @@ namespace HolzShots
         [SettingsDoc(
             "Capture the mouse cursor.\n\n" +
             "When recording videos and you want to have a cursor visible, make sure you set this option to \"true\" in the command overrides.",
-            Default = "false"
+            Default = "false",
+            Overridable = true
         )]
         [JsonProperty("capture.cursor")]
         public bool CaptureCursor { get; private set; } = false;
@@ -251,7 +282,8 @@ namespace HolzShots
 
         [SettingsDoc(
             "The command to execute when the tray icon is double-clicked.",
-            Default = "null"
+            Default = "null",
+            Overridable = false
         )]
         [JsonProperty("tray.doubleClickCommand")]
         [field: LeaveUntouchedInObjectDeepCopy] // Support for this doesn't make any sense
@@ -262,14 +294,16 @@ namespace HolzShots
 
         [SettingsDoc(
             "Enable or disable hotkeys when a full screen application is running.",
-            Default = "true"
+            Default = "true",
+            Overridable = true // TODO: Check if we check this on hotkey invocation with the appropriate settings context
         )]
         [JsonProperty("key.enabledDuringFullscreen")]
         public bool EnableHotkeysDuringFullscreen { get; private set; } = true;
 
         // TODO: Fix visibility
         [SettingsDoc(
-            "List of commands that get triggered by hotkeys."
+            "List of commands that get triggered by hotkeys.",
+            Overridable = false
         )]
         [JsonProperty("key.bindings")]
         [field: LeaveUntouchedInObjectDeepCopy] // Support for this doesn't make any sense
@@ -371,9 +405,10 @@ namespace HolzShots
     [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
     class SettingsDocAttribute : Attribute
     {
+        public string Description { get; }
+        public bool Overridable { get; init; } = false;
         public string? Default { get; set; }
         public string? DisplayName { get; set; }
-        public string Description { get; }
         public SettingsDocAttribute(string description) => Description = description ?? throw new ArgumentNullException(nameof(description));
     }
 

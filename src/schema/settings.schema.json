@@ -2,9 +2,6 @@
 	"$schema": "https://json-schema.org/draft/2019-09/schema",
 	"$id": "https://holzshots.net/schema/settings.json",
 
-	"title": "HolzShots Settings",
-	"type": "object",
-
 	"definitions": {
 
 		"commandName": {
@@ -30,7 +27,7 @@
 					"type": "object"
 				},
 				"overrides": {
-					"$ref": "#"
+					"$ref": "#/definitions/overridableSettings"
 				}
 			},
 			"required": [ "name" ]
@@ -78,152 +75,170 @@
 			"type": "integer",
 			"minimum": 1,
 			"exclusiveMaximum": 30
+		},
+
+		"nonOverridableSettings": {
+			"type": "object",
+
+			"$schema": {
+				"description": "Schema URL to get some auto completion in some editors.",
+				"type": "string",
+				"const": "https://holzshots.net/schema/settings.json"
+			},
+
+			"version": {
+				"description": "Version of settings file.",
+				"type": "string",
+				"const": "1.0.0"
+			},
+
+			"tray.doubleClickCommand": {
+				"description": "The command to execute when the tray icon is double-clicked.",
+				"$ref": "#/definitions/command",
+				"default": null
+			},
+
+			"key.bindings": {
+				"description": "List of key bindings that trigger commands.",
+				"type": "array",
+				"items": { "$ref": "#/definitions/keyBinding" }
+			}
+		},
+
+		"overridableSettings": {
+			"type": "object",
+
+			"save.enabled": {
+				"description": "When enabled, every screenshot and screen recording captured with HolzShots will be saved at the location specified under the setting \"save.path\".",
+				"type": "boolean",
+				"default": true
+			},
+
+			"save.path": {
+				"description": "The path where screenshots and screen recordings will be saved.\nFeel free to use environment variables like %USERPROFILE%, %ONEDRIVE% or %TMP%.\n\nIf you want to save videos to a different path, override this setting in the respective command.",
+				"type": "string"
+			},
+
+			"image.save.pattern": {
+				"description": "The pattern to use for saving images to the local disk. You can use several placeholders:\n    <date>: The date when the screenshot was created. Defaults to ISO 8601 (sortable) timestamps.\n            You can use string formats that .NET supports: https://docs.microsoft.com/en-us/dotnet/api/system.datetime.tostring\n            For example, you can use <date:s>\n\n    <size:width>, <size:height>: The width or the height of the image.",
+				"type": "string",
+				"default": "Screenshot-<Date>"
+			},
+			"image.save.autoDetectBestImageFormat": {
+				"description": "When enabled, HolzShots decides whether a screenshot should be saved as a JPEG or a PNG.\nSome screenshots are better saved as JPGs, for example if they consist of a large photo.\nSaving it as a PNG is better suited for pictures of programs.\nIf JPG is used, there may be a loss in quality. PNG does not reduce the image quality, but uses more space when photos are saved.",
+				"type": "boolean",
+				"default": "false"
+			},
+
+			"video.save.pattern": {
+				"description": "The pattern to use for saving videos to the local disk. You can use several placeholders:\n    <date>: The date when the video recording was started. Defaults to ISO 8601 (sortable) timestamps.\n            You can use string formats that .NET supports: https://docs.microsoft.com/en-us/dotnet/api/system.datetime.tostring\n            For example, you can use <date:s>\n\n    <size:width>, <size:height>: The width or the height of the video.",
+				"type": "string",
+				"default": "Recording-<Date>"
+			},
+			"video.format": {
+				"description": "File format that recorded screen captures will be saved as.",
+				"$ref": "#/definitions/videoFormat",
+				"default": "mp4"
+			},
+
+			"video.framesPerSecond": {
+				"description": "Frame rate (FPS) for screen recordings. Min: 1; Max: 30",
+				"$ref": "#/definitions/frameRate",
+				"default": 30
+			},
+
+			"editor.closeAfterUpload": {
+				"description": "Close the shot editor once the upload button is clicked.",
+				"type": "boolean",
+				"default": "false"
+			},
+
+			"editor.closeAfterSave": {
+				"description": "Close the shot editor once the image was saved.",
+				"type": "boolean",
+				"default": "false"
+			},
+
+			"upload.showProgress": {
+				"description": "When set to true, HolzShots will show a progress flyout during upload.",
+				"type": "boolean",
+				"default": "true"
+			},
+
+			"upload.actionAfterUpload": {
+				"description": "What will be done with the link that you get from your upload. Possible options are:\nflyout: A popup-window in the corner that shows some options for copying the link\ncopy: Copy the link to the clipboard\nnone: Do nothing",
+				"$ref": "#/definitions/uploadHandlingAction",
+				"default": "flyout"
+			},
+
+			"upload.actionAfterUpload.copy.showConfirmation": {
+				"description": "Show a confirmation message as soon as the URL was copied and \"upload.actionAfterUpload\" is set to \"copy\".",
+				"type": "boolean",
+				"default": "true"
+			},
+
+			"upload.actionAfterUpload.flyout.closeOnCopy": {
+				"description": "Automatically close the flyout containing the URL to the image as soon as some button is pressed and \"upload.actionAfterUpload\" is set to \"flyout\".",
+				"type": "boolean",
+				"default": "true"
+			},
+
+			"upload.image.autoDetectBestImageFormat": {
+				"description": "When enabled, HolzShots decides whether a screenshot should be uploaded as a JPEG or a PNG.\nSome screenshots are better uploaded as JPGs, for example if they consist of a large photo.\nUploading it as a PNG is better suited for pictures of programs. If JPG is used, there may be a loss in quality. PNG does not reduce the image quality, but uses more space when photos are saved and therefore takes longer to upload.",
+				"type": "boolean",
+				"default": "false"
+			},
+
+			"upload.service": {
+				"description": "Name of the service HolzShots is goind to upload the image.",
+				"type": "string",
+				"default": "directupload.net"
+			},
+
+			"capture.image.actionAfterCapture": {
+				"description": "What to do after an image got captured. Possible options are:\nopenEditor: Open the shot editor with the captured image\nupload: Upload the image to the specified default image service\nsaveAs: Show a dialog and choose where you want to save the image\ncopy: Copy the image data to clipboard; useful for pasting the image to popular messengers etc.\nnone: Do nothing (this would only trigger saving the image to disk if this is enabled)",
+				"$ref": "#/definitions/imageCaptureHandlingAction",
+				"default": "openEditor"
+			},
+
+			"capture.video.actionAfterCapture": {
+				"description": "What to do after capturing a screen recording. Possible options are:\nupload: Upload the image to the specified default service\ncopyFile: Copy the file to the clipboard; useful for pasting the video to popular messengers etc.\ncopyFilePath: Copy the path to file to the clipboard.\nshowInExplorer: Opens an explorer window in the path of the saved video.\nopenInDefaultApp: Opens the video in the default application for that file type.\nnone: Do nothing (this would only trigger saving the video to disk if this is enabled)",
+				"$ref": "#/definitions/videoCaptureHandlingAction",
+				"default": "showInExplorer"
+			},
+
+			"capture.selection.dimmingOpacity": {
+				"description": "Opacity of the dimming effect when selection a region to capture. Must be between 0.0 and 1.0.",
+				"type":"number",
+				"inclusiveMinimum": 0,
+				"inclusiveMaximum": 1,
+				"default": 0.8
+			},
+
+			"capture.delayInSeconds": {
+				"description": "Seconds to wait before invoking the capture. Must be >=0.",
+				"type":"number",
+				"inclusiveMinimum": 0,
+				"default": 0
+			},
+
+			"capture.cursor": {
+				"description": "Capture the mouse cursor.\n\nWhen recording videos and you want to have a cursor visible, make sure you set this option to \"true\" in the command overrides.",
+				"type": "boolean",
+				"default": false
+			},
+
+			"key.enabledDuringFullscreen": {
+				"description": "Enable or disable hotkeys when a full screen application is running.",
+				"type": "boolean",
+				"default": false
+			}
 		}
 	},
 
-	"properties": {
-		"version": {
-			"description": "Version of settings file",
-			"type": "string",
-			"const": "1.0.0"
-		},
-
-		"save.enabled": {
-			"description": "When enabled, every screenshot and screen recording captured with HolzShots will be saved at the location specified under the setting \"save.path\".",
-			"type": "boolean",
-			"default": true
-		},
-
-		"save.path": {
-			"description": "The path where screenshots and screen recordings will be saved.\nFeel free to use environment variables like %USERPROFILE%, %ONEDRIVE% or %TMP%.\n\nIf you want to save videos to a different path, override this setting in the respective command.",
-			"type": "string"
-		},
-
-		"image.save.pattern": {
-			"description": "The pattern to use for saving images to the local disk. You can use several placeholders:\n    <date>: The date when the screenshot was created. Defaults to ISO 8601 (sortable) timestamps.\n            You can use string formats that .NET supports: https://docs.microsoft.com/en-us/dotnet/api/system.datetime.tostring\n            For example, you can use <date:s>\n\n    <size:width>, <size:height>: The width or the height of the image.",
-			"type": "string",
-			"default": "Screenshot-<Date>"
-		},
-		"image.save.autoDetectBestImageFormat": {
-			"description": "When enabled, HolzShots decides whether a screenshot should be saved as a JPEG or a PNG.\nSome screenshots are better saved as JPGs, for example if they consist of a large photo.\nSaving it as a PNG is better suited for pictures of programs.\nIf JPG is used, there may be a loss in quality. PNG does not reduce the image quality, but uses more space when photos are saved.",
-			"type": "boolean",
-			"default": "false"
-		},
-
-		"video.save.pattern": {
-			"description": "The pattern to use for saving videos to the local disk. You can use several placeholders:\n    <date>: The date when the video recording was started. Defaults to ISO 8601 (sortable) timestamps.\n            You can use string formats that .NET supports: https://docs.microsoft.com/en-us/dotnet/api/system.datetime.tostring\n            For example, you can use <date:s>\n\n    <size:width>, <size:height>: The width or the height of the video.",
-			"type": "string",
-			"default": "Recording-<Date>"
-		},
-		"video.format": {
-			"description": "File format that recorded screen captures will be saved as.",
-			"$ref": "#/definitions/videoFormat",
-			"default": "mp4"
-		},
-
-		"video.framesPerSecond": {
-			"description": "Frame rate (FPS) for screen recordings. Min: 1; Max: 30",
-			"$ref": "#/definitions/frameRate",
-			"default": 30
-		},
-
-		"editor.closeAfterUpload": {
-			"description": "Close the shot editor once the upload button is clicked.",
-			"type": "boolean",
-			"default": "false"
-		},
-
-		"editor.closeAfterSave": {
-			"description": "Close the shot editor once the image was saved.",
-			"type": "boolean",
-			"default": "false"
-		},
-
-		"upload.showProgress": {
-			"description": "When set to true, HolzShots will show a progress flyout during upload.",
-			"type": "boolean",
-			"default": "true"
-		},
-
-		"upload.actionAfterUpload": {
-			"description": "What will be done with the link that you get from your upload. Possible options are:\nflyout: A popup-window in the corner that shows some options for copying the link\ncopy: Copy the link to the clipboard\nnone: Do nothing",
-			"$ref": "#/definitions/uploadHandlingAction",
-			"default": "flyout"
-		},
-
-		"upload.actionAfterUpload.copy.showConfirmation": {
-			"description": "Show a confirmation message as soon as the URL was copied and \"upload.actionAfterUpload\" is set to \"copy\".",
-			"type": "boolean",
-			"default": "true"
-		},
-
-		"upload.actionAfterUpload.flyout.closeOnCopy": {
-			"description": "Automatically close the flyout containing the URL to the image as soon as some button is pressed and \"upload.actionAfterUpload\" is set to \"flyout\".",
-			"type": "boolean",
-			"default": "true"
-		},
-
-		"upload.image.autoDetectBestImageFormat": {
-			"description": "When enabled, HolzShots decides whether a screenshot should be uploaded as a JPEG or a PNG.\nSome screenshots are better uploaded as JPGs, for example if they consist of a large photo.\nUploading it as a PNG is better suited for pictures of programs. If JPG is used, there may be a loss in quality. PNG does not reduce the image quality, but uses more space when photos are saved and therefore takes longer to upload.",
-			"type": "boolean",
-			"default": "false"
-		},
-
-		"upload.service": {
-			"description": "Name of the service HolzShots is goind to upload the image.",
-			"type": "string",
-			"default": "directupload.net"
-		},
-
-		"capture.image.actionAfterCapture": {
-			"description": "What to do after an image got captured. Possible options are:\nopenEditor: Open the shot editor with the captured image\nupload: Upload the image to the specified default image service\nsaveAs: Show a dialog and choose where you want to save the image\ncopy: Copy the image data to clipboard; useful for pasting the image to popular messengers etc.\nnone: Do nothing (this would only trigger saving the image to disk if this is enabled)",
-			"$ref": "#/definitions/imageCaptureHandlingAction",
-			"default": "openEditor"
-		},
-
-		"capture.video.actionAfterCapture": {
-			"description": "What to do after capturing a screen recording. Possible options are:\nupload: Upload the image to the specified default service\ncopyFile: Copy the file to the clipboard; useful for pasting the video to popular messengers etc.\ncopyFilePath: Copy the path to file to the clipboard.\nshowInExplorer: Opens an explorer window in the path of the saved video.\nopenInDefaultApp: Opens the video in the default application for that file type.\nnone: Do nothing (this would only trigger saving the video to disk if this is enabled)",
-			"$ref": "#/definitions/videoCaptureHandlingAction",
-			"default": "showInExplorer"
-		},
-
-		"capture.selection.dimmingOpacity": {
-			"description": "Opacity of the dimming effect when selection a region to capture. Must be between 0.0 and 1.0.",
-			"type":"number",
-			"inclusiveMinimum": 0,
-			"inclusiveMaximum": 1,
-			"default": 0.8
-		},
-
-		"capture.delayInSeconds": {
-			"description": "Seconds to wait before invoking the capture. Must be >=0.",
-			"type":"number",
-			"inclusiveMinimum": 0,
-			"default": 0
-		},
-
-		"capture.cursor": {
-			"description": "Capture the mouse cursor.\n\nWhen recording videos and you want to have a cursor visible, make sure you set this option to \"true\" in the command overrides.",
-			"type": "boolean",
-			"default": false
-		},
-
-		"tray.doubleClickCommand": {
-			"description": "The command to execute when the tray icon is double-clicked.",
-			"$ref": "#/definitions/command",
-			"default": null
-		},
-
-		"key.enabledDuringFullscreen": {
-			"description": "Enable or disable hotkeys when a full screen application is running.",
-			"type": "boolean",
-			"default": false
-		},
-
-		"key.bindings": {
-			"description": "List of key bindings that trigger commands.",
-			"type": "array",
-			"items": { "$ref": "#/definitions/keyBinding" }
-		}
-	}
+	"title": "HolzShots Settings",
+	"allOf": [
+		{ "$ref": "#/definitions/nonOverridableSettings" },
+		{ "$ref": "#/definitions/overridableSettings" }
+	]
 }
