@@ -12,7 +12,7 @@ namespace HolzShots
         public const string CommitsSinceTag = "%COMMITS-SINCE-TAG%"; // .2
         public const string CommitId = "%COMMIT-ID%"; // +deadbeef
 #if RELEASE && CI_BUILD
-        public static readonly DateTime VersionDate = DateTime.ParseExact("%BUILD-DATE%", "MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture);
+        public static readonly DateTime VersionDate = DateTime.ParseExact(ThisAssembly.Constants.BuildDate, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
 #else
         public static readonly DateTime VersionDate = DateTime.Now;
 #endif
