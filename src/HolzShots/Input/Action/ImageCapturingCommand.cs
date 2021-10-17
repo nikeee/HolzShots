@@ -42,7 +42,7 @@ namespace HolzShots.Input.Actions
                     }
                     catch (UploadException ex)
                     {
-                        NotificationManager.UploadFailed(ex);
+                        await NotificationManager.UploadFailed(ex);
                     }
                     return;
                 case ImageCaptureHandlingAction.Copy:

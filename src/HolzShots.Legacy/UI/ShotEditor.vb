@@ -735,7 +735,7 @@ Namespace UI
             Catch ex As UploadCanceledException
                 NotificationManager.ShowOperationCanceled()
             Catch ex As UploadException
-                NotificationManager.UploadFailed(ex)
+                Dim ignored = NotificationManager.UploadFailed(ex) ' VB doesn't support await in catch clauses
                 Return
             End Try
             HandleAfterUpload()
@@ -783,7 +783,7 @@ Namespace UI
             Catch ex As UploadCanceledException
                 NotificationManager.ShowOperationCanceled()
             Catch ex As UploadException
-                NotificationManager.UploadFailed(ex)
+                Dim ignored = NotificationManager.UploadFailed(ex) ' VB doesn't support await in catch clauses
                 Return
             Finally
                 HandleAfterUpload()

@@ -42,6 +42,7 @@ namespace HolzShots.Net.Custom
 
             using var progressHandler = new ProgressMessageHandler(new HttpClientHandler());
             using var cl = new HttpClient(progressHandler);
+
             progressHandler.HttpSendProgress += (s, e) => progress.Report(TransferProgress.FromHttpProgressEventArgs(e));
 
             // Add the user-agent first, so the user can override it
@@ -55,6 +56,7 @@ namespace HolzShots.Net.Custom
 
             var responseParser = uplInfo.ResponseParser;
             using var content = new MultipartFormDataContent();
+
             var postParams = uplInfo.PostParams;
             if (postParams is not null)
             {

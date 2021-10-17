@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using HolzShots.Composition;
 using HolzShots.Input.Keyboard;
 using HolzShots.Net;
+using HolzShots.Net.Custom;
 
 namespace HolzShots.Windows.Forms
 {
@@ -48,8 +49,26 @@ namespace HolzShots.Windows.Forms
 
         public static void SettingsUpdated() => NotifierFlyout.ShowNotification("Settings Updated", $"HolzShots has detected and loaded new settings.");
 
-        public static void UploadFailed(UploadException result)
+        public static async Task UploadFailed(UploadException result)
         {
+            if (result.InnerException is UnableToFillTemplateException templateException)
+            {
+                var tempFile = System.IO.Path.GetTempFileName();
+
+                await System.IO.File.WriteAllTextAsync(tempFile, templateException.ServerResponse);
+
+                var page = new TaskDialogPage()
+                {
+                    Text = $"The provided \"urlTemplate\" didn't work. It raised the following error:\n\n{templateException.Message}\n\nWe've saved the server's response to this file, so you can investigate the issue:\n\n${tempFile}",
+                    Footnote = new TaskDialogFootnote()
+                    {
+                        Text = "Pro tip: You can press Ctrl+C while having this dialog focused to copy its contents.",
+                    },
+                };
+                TaskDialog.ShowDialog(page);
+                return;
+            }
+
             Show("Error Uploading Image", string.Empty, result.Message, TaskDialogIcon.Error, TaskDialogButton.OK);
         }
         public static void CopyingFailed(string text)

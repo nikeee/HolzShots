@@ -130,11 +130,11 @@ namespace HolzShots.Net.Custom
         {
             var parsedPatterns = responseParser.ParsedRegexPatterns;
             if (parsedPatterns is null)
-                throw new UnableToFillTemplateException("No pattern to match");
+                throw new UnableToFillTemplateException(content, "No pattern to match.");
 
 
             if (PatternIndex < 0 || PatternIndex >= parsedPatterns.Count)
-                throw new UnableToFillTemplateException($"Reference to non-existent entry in regex pattern list: {PatternIndex}");
+                throw new UnableToFillTemplateException(content, $"Reference to non-existent entry in regex pattern list: {PatternIndex}.");
 
             var pattern = parsedPatterns[PatternIndex];
 
@@ -142,9 +142,9 @@ namespace HolzShots.Net.Custom
             if (matches.Count > 0)
             {
                 if (MatchIndex != null && MatchIndex >= matches.Count)
-                    throw new UnableToFillTemplateException($"Index of match ({MatchIndex}) exceeds the number of matches ({matches.Count})");
+                    throw new UnableToFillTemplateException(content, $"Index of match ({MatchIndex}) exceeds the number of matches ({matches.Count}).");
 
-                var matchIndex = MatchIndex.HasValue ? (int)MatchIndex : 0;
+                var matchIndex = MatchIndex ?? 0;
                 var match = matches[matchIndex];
 
                 // If the match does not contain GroupName, no exception is thrown. Instead, we get an "empty" group.
@@ -153,13 +153,13 @@ namespace HolzShots.Net.Custom
                     ? match.Value
                     : match.Groups[GroupName].Value;
             }
-            throw new UnableToFillTemplateException("The pattern did not match");
+            throw new UnableToFillTemplateException(content, "The pattern did not match.");
         }
     }
 
     class JsonSyntaxNode : ExpressionSyntaxNode
     {
-        public const string NodeKind = "regex";
+        public const string NodeKind = "jsonpath";
 
         string JsonPath { get; }
         private JsonSyntaxNode(string jsonPath)
@@ -196,7 +196,7 @@ namespace HolzShots.Net.Custom
             }
             catch (JsonReaderException ex)
             {
-                throw new UnableToFillTemplateException("Invalid JSON response", ex);
+                throw new UnableToFillTemplateException(content, "Invalid JSON response", ex);
             }
 
             Debug.Assert(contentJson != null);
@@ -204,7 +204,7 @@ namespace HolzShots.Net.Custom
 
             var result = contentJson.SelectToken(JsonPath);
             if (result == null)
-                throw new UnableToFillTemplateException($"Could not select JSON path: {JsonPath}");
+                throw new UnableToFillTemplateException(content, $"Could not select JSON path: {JsonPath}");
             return result.ToString();
         }
     }
@@ -231,7 +231,8 @@ namespace HolzShots.Net.Custom
 
     public class UnableToFillTemplateException : Exception
     {
-        public UnableToFillTemplateException(string message) : base(message) { }
-        public UnableToFillTemplateException(string message, Exception innerException) : base(message, innerException) { }
+        public string ServerResponse { get; }
+        public UnableToFillTemplateException(string serverResponse, string message) : base(message) { }
+        public UnableToFillTemplateException(string serverResponse, string message, Exception innerException) : base(message, innerException) { }
     }
 }
