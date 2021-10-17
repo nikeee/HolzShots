@@ -3,7 +3,8 @@
   <PropertyGroup>
 
     <RootNamespace>HolzShots</RootNamespace>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <!-- <TargetFramework>net6.0-windows</TargetFramework> -->
+    <TargetFramework>net6.0-windows10.0.19041.0</TargetFramework>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
 
     <Version>2.0.0-preview.1</Version>
