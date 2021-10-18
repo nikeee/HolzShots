@@ -16,9 +16,9 @@ public static class ToastNotifications
             .AddText(subHeader, AdaptiveTextStyle.HeaderSubtle)
             .Show(toast => toast.ExpirationTime = DateTime.Now.AddSeconds(1));
 
+    public static void ShowSettingsUpdated() => ShowShortNotification("Settings Updated", "HolzShots has detected and loaded new settings.");
     /// <remarks> Only show this notification when the action was triggered by some uplaod result action, not if it weas triggered by the user directly. </remarks>
-    public static void ShowSettingsUpdated() => ShowShortNotification("Could not copy link :(", "We could not copy the link to your image to your clipboard.");
-    public static void ShowCopyingFailed(string url) => ShowShortNotification("Settings Updated", "HolzShots has detected and loaded new settings.");
+    public static void ShowCopyingFailed(string url) => ShowShortNotification("Could not copy link :(", "We could not copy the link to your image to your clipboard.");
     public static void ShowCopyConfirmation(string text) => ShowShortNotification("Link copied!", "The link has been copied to your clipboard.");
     /// <remarks> Only show this notification when the action was triggered by some uplaod result action, not if it weas triggered by the user directly. </remarks>
     public static void ShowFileCopyConfirmation() => ShowShortNotification("File copied!", "The file has been copied to your clipboard.");
