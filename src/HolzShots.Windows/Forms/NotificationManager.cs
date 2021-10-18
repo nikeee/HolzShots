@@ -1,12 +1,9 @@
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
-using HolzShots.Composition;
 using HolzShots.Input.Keyboard;
 using HolzShots.Net;
 using HolzShots.Net.Custom;
-using Microsoft.Toolkit.Uwp.Notifications;
 
 namespace HolzShots.Windows.Forms
 {
@@ -26,7 +23,6 @@ namespace HolzShots.Windows.Forms
         {
             Show(GenericErrorTitle, "Missing permissions", "We need administrative permissions to change stuff in the explorer context menu.", TaskDialogIcon.Error, TaskDialogButton.OK);
         }
-
         public static void UnauthorizedAccessExceptionDirectory(string directory)
         {
             Show(GenericErrorTitle, "Access to folder denied", $"We tried to access the folder\n{directory}\nbut the access was denied.", TaskDialogIcon.Error, TaskDialogButton.OK);
@@ -39,13 +35,6 @@ namespace HolzShots.Windows.Forms
                 TaskDialogIcon.Error,
                 TaskDialogButton.OK
             );
-        }
-
-        public static void PluginLoadingFailed(PluginLoadingFailedException ex)
-        {
-            Debug.Assert(ex != null);
-            var message = ex.InnerException?.Message ?? "No Message Provided";
-            NotifierFlyout.ShowNotification("Plugins not loaded", $"We could not load the plugins. Here's the error message:\n{message}");
         }
 
         public static async Task UploadFailed(UploadException result)

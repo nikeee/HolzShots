@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ namespace HolzShots.Forms;
 
 public static class ToastNotifications
 {
+    // TODO: Fallback for non-windows-10-flyouts
     private static void ShowShortNotification(string header, string subHeader) => new ToastContentBuilder()
             .SetToastDuration(ToastDuration.Short)
             .AddText(header, AdaptiveTextStyle.Header)
@@ -29,6 +31,12 @@ public static class ToastNotifications
     /// <remarks> Only show this notification when the action was triggered by some uplaod result action, not if it weas triggered by the user directly. </remarks>
     public static void ShowImageCopiedConfirmation() => ShowShortNotification("Image copied!", "The image has been copied to your clipboard.");
     public static void ShowOperationCanceled() => ShowShortNotification("Canceled", "You canceled the task.");
+    public static void ShowPluginLoadingFailed(Composition.PluginLoadingFailedException ex)
+    {
+        Debug.Assert(ex != null);
+        var message = ex.InnerException?.Message ?? "No Message Provided";
+        ShowShortNotification("Plugins not loaded", $"We could not load the plugins. Here's the error message:\n{message}");
+    }
 
 #if false
     public static void ShowUploadResult(UploadResult result, HSSettings settingsContext)

@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using HolzShots.Composition;
 using HolzShots.Composition.Command;
+using HolzShots.Forms;
 using HolzShots.Input.Actions;
 using HolzShots.IO;
 using HolzShots.Windows.Forms;
@@ -46,7 +47,7 @@ namespace HolzShots
             }
             catch (PluginLoadingFailedException ex)
             {
-                NotificationManager.PluginLoadingFailed(ex);
+                ToastNotifications.ShowPluginLoadingFailed(ex);
                 Debugger.Break();
             }
         }
