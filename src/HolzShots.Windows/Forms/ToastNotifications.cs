@@ -63,3 +63,8 @@ public static class ToastNotifications
     }
 #endif
 }
+
+class UploadProgressNotification
+{
+
+}
