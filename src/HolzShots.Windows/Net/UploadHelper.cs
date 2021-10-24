@@ -14,8 +14,12 @@ namespace HolzShots.Windows.Net
 #if DEBUG
             reporters.Add(new ConsoleProgressReporter());
 #endif
+            /*
             if (settingsContext.ShowUploadProgress)
                 reporters.Add(new UploadStatusFlyoutForm());
+            */
+            reporters.Add(new HolzShots.Forms.UploadProgressNotification());
+
 
             if (parentWindow.GetHandle() != IntPtr.Zero)
                 reporters.Add(new TaskbarItemProgressReporter(parentWindow.Handle));

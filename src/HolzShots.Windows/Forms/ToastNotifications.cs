@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using HolzShots.Net;
 using Microsoft.Toolkit.Uwp.Notifications;
+using Windows.UI.Notifications;
 
 namespace HolzShots.Forms;
 
@@ -64,7 +65,86 @@ public static class ToastNotifications
 #endif
 }
 
-class UploadProgressNotification
+/// <summary>
+/// Based on: https://docs.microsoft.com/en-us/windows/apps/design/shell/tiles-and-notifications/toast-progress-bar?tabs=builder-syntax
+/// </summary>
+class UploadProgressNotification : ITransferProgressReporter
 {
+    private const string _group = "holzshots-upload";
+    private readonly string _tag = new Guid().ToString();
+    private readonly ToastNotifierCompat _toastNofitifier = ToastNotificationManagerCompat.CreateToastNotifier();
 
+    uint _numnberOfUpdates = 1;
+    ToastNotification? _toastNotification = null;
+
+    public void CloseProgress()
+    {
+        if (_toastNotification != null)
+        {
+            // ToastNotificationManager.History.Remove(_tag);
+            // _toastNotification.ExpirationTime = DateTime.Now.AddSeconds(-10);
+            _toastNofitifier.Hide(_toastNotification);
+        }
+    }
+
+    public void Dispose()
+    {
+        CloseProgress();
+    }
+
+    public void ShowProgress()
+    {
+        var data = new NotificationData
+        {
+            SequenceNumber = _numnberOfUpdates++,
+        };
+        data.Values["progressValue"] = "0";
+        data.Values["progressValueString"] = "Not yet started";
+        data.Values["progressStatus"] = "Initializing...";
+
+        // Construct the toast content with data bound fields
+        new ToastContentBuilder()
+            .AddText("Uploading file...")
+            .AddAudio(null, silent: true)
+            .AddVisualChild(new AdaptiveProgressBar()
+            {
+                Value = new BindableProgressBarValue("progressValue"),
+                ValueStringOverride = new BindableString("progressValueString"),
+                Status = new BindableString("progressStatus")
+            })
+            .Show(toast =>
+            {
+                toast.Tag = _tag;
+                toast.Group = _group;
+                _toastNotification = toast;
+                toast.Dismissed += (a, b) => _toastNotification = null;
+            });
+    }
+
+    public void UpdateProgress(TransferProgress progress, Speed<MemSize> speed)
+    {
+        var data = new NotificationData
+        {
+            SequenceNumber = _numnberOfUpdates++,
+        };
+
+        var progressValue = (progress.ProgressPercentage / 100f).ToString();
+        Debug.WriteLine($"progressValue: {progressValue}");
+        Debug.WriteLine($"ProgressPercentage: {progress.ProgressPercentage}");
+
+        data.Values["progressValue"] = progressValue;
+        data.Values["progressValueString"] = speed.ToString();
+        data.Values["progressStatus"] = GetDisplayStatusFromUploadState(progress, speed);
+
+        _toastNofitifier.Update(data, _tag, _group);
+    }
+
+    private static string GetDisplayStatusFromUploadState(TransferProgress progress, Speed<MemSize> speed) => progress.State switch
+    {
+        UploadState.NotStarted => "Starting Upload...",
+        UploadState.Processing => $"{progress.Current}/{progress.Total}",
+        UploadState.Paused => "Paused",
+        UploadState.Finished => "Waiting for server reply...",
+        _ => throw new ArgumentException(),
+    };
 }
