@@ -1,5 +1,5 @@
 {
-	// Feel free to use comments in your uploader definition
+	// This is an example uploader definition for directupload.net - feel free to copy it and modify it for your needs!
 
 	// Leave these here, they are needed for HolzShots to get things working
 	"$schema": "https://holzshots.net/schema/uploader.json",
@@ -8,11 +8,13 @@
 	"meta": {
 		// Version, name and author of this uploader
 		"version": "1.0.0", // Use Semver here (like in a package.json)
-		"name": "DirectUpload.net",
+		"name": "DirectUpload.net", // The name that will be used in your settings.json
 		"author": "nikeee",
-		"license": "MIT" // SPDX license identifier
+		"license": "MIT", // SPDX license identifier
 
-		// You can also specify URLs to fetch updates to this definition, just like with userscripts
+		"website": "https://holzshots.net"
+
+		// You can also specify URLs to fetch updates to this definition, just like with user scripts
 		// Just press Ctrl+Space to get a list of available fields
 	},
 

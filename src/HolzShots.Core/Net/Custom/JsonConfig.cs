@@ -4,7 +4,7 @@ using Newtonsoft.Json.Serialization;
 
 namespace HolzShots.Net.Custom
 {
-    class JsonConfig
+    static class JsonConfig
     {
         internal static JsonSerializerSettings JsonSettings { get; } = new JsonSerializerSettings
         {
