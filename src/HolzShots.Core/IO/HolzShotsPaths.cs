@@ -15,6 +15,7 @@ namespace HolzShots.IO
 
         public static string PluginDirectory { get; } = Path.Combine(AppDataDirectory, "Plugin");
         public static string CustomUploadersDirectory { get; } = PluginDirectory;
+        public static string DemoCustomUploaderPath { get; } = Path.Combine(CustomUploadersDirectory, "DirectUpload.net.hs.json");
         public static string UserSettingsFilePath { get; } = Path.Combine(AppDataDirectory, "settings.json");
         public static string DefaultScreenshotSavePath { get; } = Path.Combine(UserPicturesDirectory, LibraryInformation.Name);
 
@@ -30,13 +31,16 @@ namespace HolzShots.IO
             DirectoryEx.EnsureDirectory(directory);
         }
 
-        public static void EnsureAppDataDirectories()
+        /// <returns>If some directory was created</returns>
+        public static bool EnsureAppDataDirectories()
         {
             if (!Directory.Exists(AppDataDirectory))
             {
                 Directory.CreateDirectory(AppDataDirectory);
                 Directory.CreateDirectory(PluginDirectory);
+                return true;
             }
+            return false;
         }
 
         public static void OpenLink(string url)

@@ -5,7 +5,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 using HolzShots.IO;
-using System;
 
 namespace HolzShots
 {
@@ -21,12 +20,20 @@ namespace HolzShots
             await Manager.InitializeSettings().ConfigureAwait(false);
         }
 
+        /// <returns>true if the default stuff was created.</returns>
         public static async Task CreateUserSettingsIfNotPresent()
         {
             if (File.Exists(HolzShotsPaths.UserSettingsFilePath))
                 return;
 
-            HolzShotsPaths.EnsureAppDataDirectories();
+            var createdAppData = HolzShotsPaths.EnsureAppDataDirectories();
+            if (!createdAppData)
+            {
+                // Since the appdata (and the plugins dir) was just created, there is no demo uploader. So we need to place it there.
+                // It's also referenced in the default settings, so it should better be there
+                var contents = await HolzShotsResources.ReadResourceAsString("HolzShots.Resources.DirectUpload.net.hs.json");
+                await File.WriteAllTextAsync(HolzShotsPaths.DemoCustomUploaderPath, contents);
+            }
 
             using var fs = File.OpenWrite(HolzShotsPaths.UserSettingsFilePath);
             var defaultSettingsStr = await CreateDefaultSettingsJson().ConfigureAwait(false);
@@ -41,17 +48,11 @@ namespace HolzShots
         private async static Task<string> CreateDefaultSettingsJson()
         {
             // TODO: Make this prettier
-
-            var asm = System.Reflection.Assembly.GetExecutingAssembly();
-            using (var defaultSettingsTemplateStream = asm.GetManifestResourceStream("HolzShots.Resources.DefaultSettings.json"))
-            using (var sr = new StreamReader(defaultSettingsTemplateStream!))
-            {
-                var defaultSettings = await sr.ReadToEndAsync().ConfigureAwait(false);
-                defaultSettings = defaultSettings
-                    .Replace("DEFAULT_SAVE_PATH", HolzShotsPaths.DefaultScreenshotSavePath.Replace(@"\", @"\\"))
-                    .Replace("DEFAULT_UPLOAD_SERVICE", "directupload.net");
-                return defaultSettings;
-            }
+            var defaultSettings = await HolzShotsResources.ReadResourceAsString("HolzShots.Resources.DefaultSettings.json");
+            defaultSettings = defaultSettings
+                .Replace("DEFAULT_SAVE_PATH", HolzShotsPaths.DefaultScreenshotSavePath.Replace(@"\", @"\\"))
+                .Replace("DEFAULT_UPLOAD_SERVICE", "directupload.net");
+            return defaultSettings;
         }
     }
 

@@ -1,7 +1,4 @@
 {
-	// This file needs to be kept in sync with the one that's actually written to disk on first-time startup
-
-
 	// This is an example uploader definition for directupload.net - feel free to copy it and modify it for your needs!
 
 	// Leave these here, they are needed for HolzShots to get things working
