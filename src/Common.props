@@ -48,7 +48,7 @@
     <Constant Include="SpdxLicense" Value="AGPL-3.0" />
     <Constant Include="Website" Value="https://holzshots.net" />
 
-    <!-- TODO: fil lthis constant in CI -->
+    <!-- TODO: fill this constant in CI -->
     <Constant Include="BuildDate" Value="2021-10-30" />
   </ItemGroup>
 
