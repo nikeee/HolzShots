@@ -29,8 +29,8 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Semver" Version="2.0.6" />
     <PackageReference Include="nud2dlib-x64" Version="2.0.0" />
-    <PackageReference Include="System.Composition" Version="5.0.1" />
-    <PackageReference Include="System.ComponentModel.Composition" Version="5.0.0" />
+    <PackageReference Include="System.Composition" Version="6.0.0" />
+    <PackageReference Include="System.ComponentModel.Composition" Version="6.0.0" />
     <PackageReference Include="System.Net.Http.Formatting.Extension" Version="5.2.3" />
   </ItemGroup>
 
