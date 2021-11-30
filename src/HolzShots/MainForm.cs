@@ -50,8 +50,6 @@ namespace HolzShots
             // We also need this because we ship ffmpeg right out of the box, so we can assume that "ffmpeg.exe" just points to the version next to the executable
             EnvironmentEx.CurrentStartupManager.FixWorkingDirectory();
 
-            Drawing.DpiAwarenessFix.SetDpiAwareness();
-
             _keyboardHook = KeyboardHookSelector.CreateHookForCurrentPlatform(this);
 
             await UserSettings.Load(this).ConfigureAwait(true); // We're dealing with UI code here, we want to keep the context
