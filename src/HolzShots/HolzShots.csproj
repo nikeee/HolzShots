@@ -12,6 +12,7 @@
     <ApplicationIcon>HolzShots.ico</ApplicationIcon>
     <Product>HolzShots</Product>
     <Description>A lightweight screenshot utility that gets out of your way.</Description>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
 
   </PropertyGroup>
 
