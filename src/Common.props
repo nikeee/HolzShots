@@ -6,7 +6,7 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
 
-    <Version>2.0.0-preview.1</Version>
+    <Version>2.0.0-preview.2</Version>
 
     <Authors>Niklas Mollenhauer</Authors>
     <Copyright>Niklas Mollenhauer - AGPL-3.0</Copyright>
