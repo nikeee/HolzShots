@@ -9,11 +9,11 @@ namespace HolzShots.Windows.Forms
         private static readonly IReadOnlyList<Func<Color, string>> _formats = new List<Func<Color, string>>()
         {
             c => $"rgb({c.R}, {c.G}, {c.B})",
-            c => $"#{c.R:X2}{c.G:X2}{c.B:X2}",
-            c => $"{c.R:X2}{c.G:X2}{c.B:X2}",
+            c => $"#{c.R:x2}{c.G:x2}{c.B:x2}",
+            c => $"{c.R:x2}{c.G:x2}{c.B:x2}",
             c => $"R:{c.R} G:{c.G} B:{c.B}",
             c => $"{c.R}, {c.G}, {c.B}",
-            c => $"rgba({c.R}, {c.G}, {c.B}, {(float)c.A / 255:0.###})",
+            c => $"rgba({c.R}, {c.G}, {c.B}, {c.A / 255f:0.###})",
         };
 
         public CopyColorForm(Color color, Point invocationOrigin, int indexUnderMouse = 1)
