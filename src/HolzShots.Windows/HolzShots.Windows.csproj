@@ -17,7 +17,7 @@
 
     <PackageReference Include="Forms.Transitions" Version="2.0.0" />
     <PackageReference Include="StartupHelper" Version="1.0.3.4" />
-    <PackageReference Include="TaskScheduler" Version="2.9.2" />
+    <PackageReference Include="TaskScheduler" Version="2.10.1" />
 
     <ProjectReference Include="..\HolzShots.Core\HolzShots.Core.csproj" />
     <ProjectReference Include="..\HolzShots.Common\HolzShots.Common.csproj" />

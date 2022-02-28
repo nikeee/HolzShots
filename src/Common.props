@@ -49,7 +49,7 @@
     <Constant Include="Website" Value="https://holzshots.net" />
 
     <!-- TODO: fill this constant in CI -->
-    <Constant Include="BuildDate" Value="2021-10-30" />
+    <Constant Include="BuildDate" Value="2022-02-28" />
   </ItemGroup>
 
   <ItemGroup>
