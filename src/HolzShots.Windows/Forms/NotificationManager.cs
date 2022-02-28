@@ -59,7 +59,7 @@ namespace HolzShots.Windows.Forms
 
                 var page = new TaskDialogPage()
                 {
-                    Text = $"The provided \"urlTemplate\" didn't work. It raised the following error:\n\n{templateException.Message}\n\nWe've saved the server's response to this file, so you can investigate the issue:\n\n${tempFile}",
+                    Text = $"The provided \"urlTemplate\" didn't work. It raised the following error:\n\n{templateException.Message}\n\nWe've saved the server's response to this file, so you can investigate the issue:\n\n{tempFile}",
                     Footnote = new TaskDialogFootnote()
                     {
                         Text = "Pro tip: You can press Ctrl+C while having this dialog focused to copy its contents.",
