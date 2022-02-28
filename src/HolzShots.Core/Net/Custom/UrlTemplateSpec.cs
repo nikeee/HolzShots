@@ -232,7 +232,10 @@ namespace HolzShots.Net.Custom
     public class UnableToFillTemplateException : Exception
     {
         public string ServerResponse { get; }
-        public UnableToFillTemplateException(string serverResponse, string message) : base(message) { }
-        public UnableToFillTemplateException(string serverResponse, string message, Exception innerException) : base(message, innerException) { }
+        public UnableToFillTemplateException(string serverResponse, string message) : this(serverResponse, message, null) { }
+        public UnableToFillTemplateException(string serverResponse, string message, Exception? innerException) : base(message, innerException)
+        {
+            ServerResponse = serverResponse;
+        }
     }
 }
