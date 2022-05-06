@@ -7,6 +7,7 @@ using Newtonsoft.Json.Linq;
 
 namespace HolzShots.Net.Custom
 {
+    // TODO: Proper escaping mechanism for tokens. We should probably rewrite this parser
     public class UrlTemplateSpec
     {
         private readonly IReadOnlyList<TemplateSyntaxNode> _nodes;
@@ -30,7 +31,7 @@ namespace HolzShots.Net.Custom
                 var currentChar = value[i];
                 switch (currentChar)
                 {
-                    case '$':
+                    case '<':
                         ++i;
 
                         var nodeKind = ExpressionSyntaxNode.ReadExpressionNodeKind(value, ref i);
@@ -39,7 +40,9 @@ namespace HolzShots.Net.Custom
                             case RegExSyntaxNode.NodeKind:
                                 nodes.Add(RegExSyntaxNode.Parse(value, ref i));
                                 break;
-                                // case JsonPathSyntaxNode.NodeKind:
+                            case JsonSyntaxNode.NodeKind:
+                                nodes.Add(JsonSyntaxNode.Parse(value, ref i));
+                                break;
                         }
                         break;
                     default:
@@ -61,20 +64,23 @@ namespace HolzShots.Net.Custom
 
     abstract class TemplateSyntaxNode
     {
-        protected const char ExpressionBoundary = '$';
+        // '<' and '>' are not allowed in URLs, giving us the opportinity to use them as tokens for easier parsing
+        protected const char ExpressionStartBoundary = '<';
+        protected const char ExpressionEndBoundary = '>';
 
         public abstract string Evaluate(ResponseParser responseParser, string content);
     }
 
     abstract class ExpressionSyntaxNode : TemplateSyntaxNode
     {
+        // TODO: Support escaping
         protected const char ExpressionParameterBoundary = ':';
 
         public static string ReadExpressionNodeKind(ReadOnlySpan<char> value, ref int index)
         {
             var start = index;
             var currentChar = value[index];
-            while (index < value.Length && currentChar != ExpressionBoundary && currentChar != ExpressionParameterBoundary)
+            while (index < value.Length && currentChar != ExpressionStartBoundary && currentChar != ExpressionParameterBoundary)
                 currentChar = value[++index];
 
             return value[start..index].ToString().ToLowerInvariant();
@@ -104,7 +110,7 @@ namespace HolzShots.Net.Custom
 
             var start = index;
             var currentChar = value[index];
-            while (index < value.Length && currentChar != ExpressionBoundary)
+            while (index < value.Length && currentChar != ExpressionEndBoundary)
                 currentChar = value[++index];
 
             var contents = value[start..index].ToString();
@@ -162,10 +168,7 @@ namespace HolzShots.Net.Custom
         public const string NodeKind = "jsonpath";
 
         string JsonPath { get; }
-        private JsonSyntaxNode(string jsonPath)
-        {
-            JsonPath = jsonPath;
-        }
+        private JsonSyntaxNode(string jsonPath) => JsonPath = jsonPath;
 
         public static JsonSyntaxNode Parse(ReadOnlySpan<char> value, ref int index)
         {
@@ -176,13 +179,13 @@ namespace HolzShots.Net.Custom
 
             var start = index;
             var currentChar = value[index];
-            while (index < value.Length && currentChar != ExpressionBoundary)
+            while (index < value.Length && currentChar != ExpressionEndBoundary)
                 currentChar = value[++index];
 
             var jsonPath = value[start..index].ToString();
             Debug.Assert(jsonPath != null && jsonPath.Length > 0);
 
-            ++index; // Consume $
+            ++index; // Consume >
 
             return new JsonSyntaxNode(jsonPath);
         }
@@ -217,12 +220,13 @@ namespace HolzShots.Net.Custom
         public static TextSyntaxNode Parse(ReadOnlySpan<char> value, ref int index)
         {
             var start = index;
-            var currentChar = value[index];
-            while (index < value.Length && currentChar != ExpressionBoundary)
+            for(; index < value.Length; ++index)
             {
-                ++index;
-                currentChar = value[index];
+                var currentChar = value[index];
+                if (currentChar == ExpressionStartBoundary)
+                    break;
             }
+
             return new TextSyntaxNode(value[start..index].ToString());
         }
 
