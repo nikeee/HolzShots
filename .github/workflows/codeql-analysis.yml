@@ -6,6 +6,7 @@ on:
     branches: [master]
   schedule:
     - cron: '0 12 * * 5'
+  push: []
 
 jobs:
   analyze:
@@ -26,7 +27,7 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: '6.0.6.0.103'
+        dotnet-version: '6.0.103'
 
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v2
