@@ -13,7 +13,6 @@
 
   <ItemGroup>
     <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
-    <PackageReference Include="ThisAssembly" Version="1.0.9" />
 
     <ProjectReference Include="..\HolzShots.Native\HolzShots.Native.csproj" />
 
