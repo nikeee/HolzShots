@@ -99,7 +99,13 @@ namespace HolzShots.Net.Custom
             }
         }
 
-        public static bool TryParse(string value, [MaybeNullWhen(false)][NotNullWhen(true)] out CustomUploader? result)
+#pragma warning disable CS8767 // Nullability of reference types in type of parameter doesn't match implicitly implemented member (possibly because of nullability attributes).
+        public static bool TryParse(
+            [NotNullWhen(true)] string? value,
+            IFormatProvider? provider,
+            [MaybeNullWhen(false)][NotNullWhen(true)] out CustomUploader? result
+        )
+#pragma warning restore CS8767 // Nullability of reference types in type of parameter doesn't match implicitly implemented member (possibly because of nullability attributes).
         {
             if (string.IsNullOrWhiteSpace(value))
             {
@@ -108,12 +114,14 @@ namespace HolzShots.Net.Custom
             }
             try
             {
-                var info = JsonConvert.DeserializeObject<CustomUploaderSpec>(value, JsonConfig.JsonSettings);
-                return TryLoad(info, out result);
+                if (CustomUploaderSpec.TryParse(value, provider, out var info))
+                    return TryLoad(info, out result);
+                result = default;
+                return false;
             }
             catch (JsonReaderException)
             {
-                result = null;
+                result = default;
                 return false;
             }
         }
@@ -127,7 +135,7 @@ namespace HolzShots.Net.Custom
             }
             catch
             {
-                result = null;
+                result = default;
                 return false;
             }
         }

@@ -9,7 +9,7 @@ namespace HolzShots.Core.Tests.Net.Custom
         [FileStringContentData("Files/DirectUpload.net.hs.json")]
         public void ValidateTest(string content)
         {
-            var parseResult = CustomUploader.TryParse(content, out var result);
+            var parseResult = CustomUploader.TryParse(content, null, out var result);
             Assert.True(parseResult);
             Assert.NotNull(result);
             Assert.NotNull(result!.UploaderInfo);

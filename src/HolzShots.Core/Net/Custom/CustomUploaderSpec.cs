@@ -1,15 +1,57 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
 using HolzShots.Composition;
+using Newtonsoft.Json;
 using Semver;
 
 namespace HolzShots.Net.Custom
 {
     [Serializable]
-    public record CustomUploaderSpec(SemVersion SchemaVersion, UploaderMeta Meta, UploaderConfig Uploader);
+    public record CustomUploaderSpec(SemVersion SchemaVersion, UploaderMeta Meta, UploaderConfig Uploader) : IParsable<CustomUploaderSpec>
+    {
+        public static CustomUploaderSpec Parse(string value, IFormatProvider? provider)
+        {
+            try
+            {
+                var res = JsonConvert.DeserializeObject<CustomUploaderSpec>(value, JsonConfig.JsonSettings);
+                return res ?? throw new FormatException("Unable to parse JSON value, result was null");
+            }
+            catch (JsonReaderException ex)
+            {
+                throw new FormatException("Unable to parse JSON value", ex);
+            }
+        }
+
+#pragma warning disable CS8767 // Nullability of reference types in type of parameter doesn't match implicitly implemented member (possibly because of nullability attributes).
+        public static bool TryParse(
+            [NotNullWhen(true)] string? value,
+            IFormatProvider? provider,
+            [MaybeNullWhen(false)][NotNullWhen(true)] out CustomUploaderSpec? result
+        )
+#pragma warning restore CS8767 // Nullability of reference types in type of parameter doesn't match implicitly implemented member (possibly because of nullability attributes).
+        {
+            if (value == null)
+            {
+                result = default;
+                return false;
+            }
+
+            try
+            {
+                result = Parse(value, provider);
+                return true;
+            }
+            catch (FormatException)
+            {
+                result = default;
+                return false;
+            }
+        }
+    }
 
     [Serializable]
     public record UploaderMeta(

@@ -52,7 +52,7 @@ namespace HolzShots.Net.Custom
                     continue;
                 }
 
-                if (CustomUploader.TryParse(newSpecCandidate, out var parsedUploader))
+                if (CustomUploader.TryParse(newSpecCandidate, null, out var parsedUploader))
                 {
                     var newSpec = parsedUploader.UploaderInfo;
                     if (newSpec != null)
