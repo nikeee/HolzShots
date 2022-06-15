@@ -28,7 +28,10 @@ jobs:
         # dotnet version --dry-run -f src/Common.props --build-meta { git rev-parse --short HEAD }
 
     - name: Compile Solution
-      run: dotnet build -c $env:CONFIGURATION --self-contained
+      run: dotnet build -c $env:CONFIGURATION
+
+    - name: Compile Main Application
+      run: dotnet build -c $env:CONFIGURATION src\HolzShots\HolzShots.csproj
 
     - name: Run Tests
       run: dotnet test -c $env:CONFIGURATION --no-build src\HolzShots.Core.Tests\HolzShots.Core.Tests.csproj
