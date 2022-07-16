@@ -27,11 +27,11 @@
     <ProjectReference Include="..\HolzShots.Input.Keyboard\HolzShots.Input.Keyboard.csproj" />
 
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="Semver" Version="2.0.6" />
+    <PackageReference Include="Semver" Version="2.2.0" />
     <PackageReference Include="nud2dlib-x64" Version="2.0.0" />
-    <PackageReference Include="System.Composition" Version="6.0.0" />
-    <PackageReference Include="System.ComponentModel.Composition" Version="6.0.0" />
-    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
+    <PackageReference Include="System.Composition" Version="7.0.0-preview.6.22324.4" />
+    <PackageReference Include="System.ComponentModel.Composition" Version="7.0.0-preview.6.22324.4 " />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.9" />
   </ItemGroup>
 
   <ItemGroup>

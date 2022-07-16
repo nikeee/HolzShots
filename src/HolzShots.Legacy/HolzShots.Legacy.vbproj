@@ -110,7 +110,7 @@
     <ProjectReference Include="..\HolzShots.Windows\HolzShots.Windows.csproj" />
     <ProjectReference Include="..\HolzShots.Native\HolzShots.Native.csproj" />
 
-    <PackageReference Include="Semver" Version="2.0.6" />
+    <PackageReference Include="Semver" Version="2.2.0" />
     <PackageReference Include="HolzShots.WindowsAPICodePack.ShellModified" Version="2.0.0" />
   </ItemGroup>
 </Project>

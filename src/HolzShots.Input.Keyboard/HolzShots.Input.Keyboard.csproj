@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Collections.Immutable" Version="6.0.0" />
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
+    <PackageReference Include="System.Collections.Immutable" Version="7.0.0-preview.6.22324.4" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="7.0.0-preview.6.22324.4" />
   </ItemGroup>
 
 </Project>
