@@ -6,7 +6,6 @@
     <OutputType>WinExe</OutputType>
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
-    <Prefer32Bit>true</Prefer32Bit>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
 
     <AssemblyTitle>HolzShots</AssemblyTitle>
