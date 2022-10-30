@@ -21,7 +21,7 @@ namespace HolzShots.Net.Custom
             }
             else
             {
-                if (!(value is SemVersion))
+                if (value is not SemVersion)
                     throw new JsonSerializationException("Expected SemVersion object value");
                 writer.WriteValue(value.ToString());
             }
@@ -36,6 +36,7 @@ namespace HolzShots.Net.Custom
                 return null;
             if (reader.TokenType != JsonToken.String)
                 throw new JsonSerializationException($"Unexpected token or value when parsing version. Token: {reader.TokenType}, Value: {reader.Value}");
+
             try
             {
                 var v = reader.Value as string;
