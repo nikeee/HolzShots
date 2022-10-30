@@ -153,6 +153,13 @@ namespace HolzShots.Input.Actions
 
                     var (selectedArea, windowInfo) = await selector.PromptSelectionAsync();
 
+                    // Fixes https://github.com/nikeee/HolzShots/issues/127
+                    selectedArea = selectedArea with
+                    {
+                        X = selectedArea.X + SystemInformation.VirtualScreen.X,
+                        Y = selectedArea.Y + SystemInformation.VirtualScreen.Y,
+                    };
+
                     var recorder = ScreenRecorderSelector.CreateScreenRecorderForCurrentPlatform(ffmpegPath);
 
                     var tempRecordingDir = Path.Combine(Path.GetTempPath(), "hs-" + Path.GetRandomFileName());
