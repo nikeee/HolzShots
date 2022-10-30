@@ -5,7 +5,7 @@
     <RootNamespace>HolzShots</RootNamespace>
     <TargetFramework>net7.0-windows</TargetFramework>
 
-    <Version>2.0.0-preview.2</Version>
+    <Version>2.0.0-preview.3</Version>
 
     <Authors>Niklas Mollenhauer</Authors>
     <Copyright>Niklas Mollenhauer - AGPL-3.0</Copyright>
