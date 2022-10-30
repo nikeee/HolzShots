@@ -39,7 +39,7 @@ namespace HolzShots.Net.Custom
             try
             {
                 var v = reader.Value as string;
-                return SemVersion.Parse(v);
+                return SemVersion.Parse(v, SemVersionStyles.Strict);
             }
             catch (Exception ex)
             {
