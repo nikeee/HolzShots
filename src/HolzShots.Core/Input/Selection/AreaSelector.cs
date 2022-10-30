@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using HolzShots.Input.Selection.Decoration;
 using nud2dlib;
@@ -43,7 +44,7 @@ namespace HolzShots.Input.Selection
 
             var windowEnumerationTask = new CancellationTokenSource();
             windowEnumerationTask.CancelAfter(5000);
-            WindowFinder.GetCurrentWindowRectanglesAsync(Handle, allowEntireScreen, windowEnumerationTask.Token).ContinueWith(t => _availableWindowsForOutline = t.Result);
+            WindowFinder.GetCurrentWindowRectanglesAsync(Handle, allowEntireScreen, windowEnumerationTask.Token).ContinueWith(t => SetAvailableWindows(t.Result));
 
             _dimmingOverlayBrush = Device.CreateSolidColorBrush(new D2DColor(settingsContext.AreaSelectorDimmingOpacity, OverlayColor));
             _image = Device.CreateBitmapFromGDIBitmap(image);
@@ -79,6 +80,14 @@ namespace HolzShots.Input.Selection
             res.FillRectangle(_imageBounds, _dimmingOverlayBrush);
             res.EndRender();
             return res;
+        }
+
+        private void SetAvailableWindows(IReadOnlyList<WindowRectangle> windows)
+        {
+            _availableWindowsForOutline = windows.Select(w => w with
+            {
+                Rectangle = w.Rectangle.WorldToScreen(SystemInformation.VirtualScreen)
+            }).ToList();
         }
 
         #region Mouse and Keyboard Stuff
