@@ -11,6 +11,7 @@ using HolzShots.Windows.Net;
 using HolzShots.IO;
 using HolzShots.IO.Naming;
 using HolzShots.Capture.Video.UI;
+using HolzShots.Input.Selection;
 
 namespace HolzShots.Input.Actions
 {
@@ -157,11 +158,7 @@ namespace HolzShots.Input.Actions
                     // The area selector returns a position in the context of the image.
                     // This is needed to adjust the starting position to the global screen coordinates of the virutal screen,
                     // so we can pass this safely to ffmpeg
-                    selectedArea = selectedArea with
-                    {
-                        X = selectedArea.X + SystemInformation.VirtualScreen.X,
-                        Y = selectedArea.Y + SystemInformation.VirtualScreen.Y,
-                    };
+                    selectedArea = selectedArea.ScreenToWorld(SystemInformation.VirtualScreen);
 
                     var recorder = ScreenRecorderSelector.CreateScreenRecorderForCurrentPlatform(ffmpegPath);
 
