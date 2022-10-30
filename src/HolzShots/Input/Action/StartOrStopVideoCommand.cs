@@ -153,7 +153,10 @@ namespace HolzShots.Input.Actions
 
                     var (selectedArea, windowInfo) = await selector.PromptSelectionAsync();
 
-                    // Fixes https://github.com/nikeee/HolzShots/issues/127
+                    // Fixes GH-127
+                    // The area selector returns a position in the context of the image.
+                    // This is needed to adjust the starting position to the global screen coordinates of the virutal screen,
+                    // so we can pass this safely to ffmpeg
                     selectedArea = selectedArea with
                     {
                         X = selectedArea.X + SystemInformation.VirtualScreen.X,
