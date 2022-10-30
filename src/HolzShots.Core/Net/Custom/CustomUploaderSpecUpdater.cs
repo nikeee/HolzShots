@@ -42,7 +42,7 @@ namespace HolzShots.Net.Custom
                     }
 
                 }
-                catch (OperationCanceledException ex)
+                catch (OperationCanceledException)
                 {
                     throw;
                 }
@@ -57,7 +57,7 @@ namespace HolzShots.Net.Custom
                     var newSpec = parsedUploader.UploaderInfo;
                     if (newSpec != null)
                     {
-                        if (newSpec.Meta.Version > spec.Meta.Version)
+                        if (newSpec.Meta.Version.ComparePrecedenceTo(newSpec.Meta.Version) > 0)
                         {
                             availableUpdates.Add(new SpecUpdate(filePath, spec, newSpec, newSpecCandidate));
                         }

@@ -57,7 +57,7 @@ namespace HolzShots.Composition
                 throw new ArgumentNullException(nameof(sourceAttribute));
             Name = sourceAttribute.Name;
             Author = sourceAttribute.Author;
-            Version = SemVersion.Parse(sourceAttribute.Version);
+            Version = SemVersion.Parse(sourceAttribute.Version, SemVersionStyles.Strict);
             Website = sourceAttribute.Website;
             BugsUrl = sourceAttribute.BugsUrl;
             Contact = sourceAttribute.Contact;
