@@ -86,7 +86,7 @@ namespace HolzShots.Input.Actions
                     return;
 
                 var format = ImageFormatInformation.GetImageFormatFromFileName(f);
-                Debug.Assert(format != null);
+                Debug.Assert(format is not null);
 
                 try
                 {

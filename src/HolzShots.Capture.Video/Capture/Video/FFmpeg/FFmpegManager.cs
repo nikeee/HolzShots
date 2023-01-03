@@ -34,7 +34,7 @@ namespace HolzShots.Capture.Video.FFmpeg
             if (allowPathEnvVar)
             {
                 var ffmpegInPath = GetFFmpegAbsolutePathFromEnvVar();
-                if (ffmpegInPath != null)
+                if (ffmpegInPath is not null)
                 {
                     Debug.Assert(File.Exists(ffmpegInPath));
                     return ffmpegInPath;

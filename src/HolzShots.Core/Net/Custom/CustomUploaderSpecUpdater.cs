@@ -55,7 +55,7 @@ namespace HolzShots.Net.Custom
                 if (CustomUploader.TryParse(newSpecCandidate, null, out var parsedUploader))
                 {
                     var newSpec = parsedUploader.UploaderInfo;
-                    if (newSpec != null)
+                    if (newSpec is not null)
                     {
                         if (newSpec.Meta.Version.ComparePrecedenceTo(newSpec.Meta.Version) > 0)
                         {

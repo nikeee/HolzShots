@@ -63,7 +63,7 @@ namespace HolzShots.IO.Naming
                             if (!_availablePatterns.TryGetValue(tokenName.ToLowerInvariant(), out var ctor))
                                 throw new PatternSyntaxException();
 
-                            Debug.Assert(ctor != null);
+                            Debug.Assert(ctor is not null);
                             var item = ctor(tokenProperty);
 
                             if (!item.IsValid)

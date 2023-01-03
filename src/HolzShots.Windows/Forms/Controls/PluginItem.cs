@@ -20,7 +20,7 @@ namespace HolzShots.Windows.Forms.Controls
         public PluginItem(IPluginMetadata info)
         {
             InitializeComponent();
-            Debug.Assert(info != null);
+            Debug.Assert(info is not null);
 
             SuspendLayout();
 
@@ -36,8 +36,8 @@ namespace HolzShots.Windows.Forms.Controls
             pluginName.Text = _model.Name;
             pluginAuthor.Text = _model.Author;
 
-            authorWebsite.Enabled = _model.Website != null;
-            reportBug.Enabled = _model.BugsUrl != null;
+            authorWebsite.Enabled = _model.Website is not null;
+            reportBug.Enabled = _model.BugsUrl is not null;
         }
 
         #endregion
@@ -50,7 +50,7 @@ namespace HolzShots.Windows.Forms.Controls
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            Debug.Assert(e != null);
+            Debug.Assert(e is not null);
             // e.Graphics.DrawLine(_separatorPen, new Point(0 + BorderPadding, Height - 1), new Point(Width - 1 - BorderPadding, Height - 1));
             e.Graphics.DrawLine(_separatorPen, new Point(0, Height - 1), new Point(Width - 1, Height - 1));
         }
@@ -62,7 +62,7 @@ namespace HolzShots.Windows.Forms.Controls
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            Debug.Assert(e != null);
+            Debug.Assert(e is not null);
 
             if (_isMouseHovering)
             {
@@ -107,7 +107,7 @@ namespace HolzShots.Windows.Forms.Controls
 
         private static void OpenUrlIfPresent(string? url)
         {
-            if (url != null)
+            if (url is not null)
                 HolzShotsPaths.OpenLink(url);
         }
 

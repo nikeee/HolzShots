@@ -27,7 +27,7 @@ namespace HolzShots.IO
         /// <exception cref="System.IO.PathTooLongException" />
         public static void EnsureDirectory(string directory)
         {
-            Debug.Assert(directory != null);
+            Debug.Assert(directory is not null);
             DirectoryEx.EnsureDirectory(directory);
         }
 
@@ -45,7 +45,7 @@ namespace HolzShots.IO
 
         public static void OpenLink(string url)
         {
-            Debug.Assert(url != null);
+            Debug.Assert(url is not null);
 
             try
             {

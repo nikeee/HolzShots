@@ -23,7 +23,7 @@ namespace HolzShots.Drawing
         // Implemented some time ago. Now used in HolzShots. Do not touch.
         private unsafe static ImageFormat GetBestFittingFormatAlgorithm(Bitmap image)
         {
-            Debug.Assert(image != null);
+            Debug.Assert(image is not null);
 
             var lockRectangle = new Rectangle(0, 0, image!.Width, image.Height);
             var bits = image.LockBits(lockRectangle, ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);

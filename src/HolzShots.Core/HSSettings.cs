@@ -459,7 +459,7 @@ namespace HolzShots
 
         private static void RecursiveCopyBaseTypePrivateFields(object originalObject, IDictionary<object, object> visited, object cloneObject, Type typeToReflect)
         {
-            if (typeToReflect.BaseType != null)
+            if (typeToReflect.BaseType is not null)
             {
                 RecursiveCopyBaseTypePrivateFields(originalObject, visited, cloneObject, typeToReflect.BaseType);
                 CopyFields(originalObject, visited, cloneObject, typeToReflect.BaseType, BindingFlags.Instance | BindingFlags.NonPublic, info => info.IsPrivate);
@@ -470,13 +470,13 @@ namespace HolzShots
         {
             foreach (var fieldInfo in typeToReflect.GetFields(bindingFlags))
             {
-                if (filter != null && filter(fieldInfo) == false)
+                if (filter is not null && filter(fieldInfo) == false)
                     continue;
                 if (IsPrimitive(fieldInfo.FieldType))
                     continue;
 
                 var shouldIgnoreThisField = fieldInfo.GetCustomAttribute<LeaveUntouchedInObjectDeepCopyAttribute>();
-                if (shouldIgnoreThisField != null)
+                if (shouldIgnoreThisField is not null)
                     continue;
 
                 var originalFieldValue = fieldInfo.GetValue(originalObject);
@@ -500,7 +500,7 @@ namespace HolzShots
     {
         public static void ForEach(Array array, Action<Array, int[]> action)
         {
-            Debug.Assert(array != null);
+            Debug.Assert(array is not null);
 
             if (array.LongLength == 0)
                 return;

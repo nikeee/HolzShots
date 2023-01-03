@@ -19,7 +19,7 @@ namespace HolzShots.Input.Actions
             // If ManagedSettings.EnableFullscreenScreenshot Then
 
             var shot = CaptureFullScreen(settingsContext);
-            Debug.Assert(shot != null);
+            Debug.Assert(shot is not null);
             await ProcessCapturing(shot, settingsContext).ConfigureAwait(true);
         }
 

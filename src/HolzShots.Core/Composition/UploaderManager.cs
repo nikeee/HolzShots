@@ -18,8 +18,8 @@ namespace HolzShots.Composition
 
         public UploaderEntry? GetUploaderByName(string name)
         {
-            Debug.Assert(Plugins != null);
-            Debug.Assert(Customs != null);
+            Debug.Assert(Plugins is not null);
+            Debug.Assert(Customs is not null);
 
             // First, look up the installed plugins
             // If nothing found (null), take a look at installed json uploaders
@@ -28,12 +28,12 @@ namespace HolzShots.Composition
 
         public IReadOnlyList<string> GetUploaderNames()
         {
-            Debug.Assert(Plugins != null);
-            Debug.Assert(Customs != null);
+            Debug.Assert(Plugins is not null);
+            Debug.Assert(Customs is not null);
             var pn = Plugins.GetUploaderNames();
-            Debug.Assert(pn != null);
+            Debug.Assert(pn is not null);
             var un = Customs.GetUploaderNames();
-            Debug.Assert(un != null);
+            Debug.Assert(un is not null);
             var res = new List<string>(pn.Count + un.Count);
             res.AddRange(pn);
             res.AddRange(un);
@@ -42,12 +42,12 @@ namespace HolzShots.Composition
 
         public IReadOnlyList<IPluginMetadata> GetMetadata()
         {
-            Debug.Assert(Plugins != null);
-            Debug.Assert(Customs != null);
+            Debug.Assert(Plugins is not null);
+            Debug.Assert(Customs is not null);
             var pn = Plugins.GetMetadata();
-            Debug.Assert(pn != null);
+            Debug.Assert(pn is not null);
             var un = Customs.GetMetadata();
-            Debug.Assert(un != null);
+            Debug.Assert(un is not null);
             var res = new List<IPluginMetadata>(pn.Count + un.Count);
             res.AddRange(pn);
             res.AddRange(un);

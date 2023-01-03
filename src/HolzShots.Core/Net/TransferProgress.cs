@@ -9,7 +9,7 @@ namespace HolzShots.Net
 
         public static TransferProgress FromHttpProgressEventArgs(HttpProgressEventArgs args)
         {
-            Debug.Assert(args != null);
+            Debug.Assert(args is not null);
             return new TransferProgress(new MemSize(args.BytesTransferred), new MemSize(args.TotalBytes ?? args.BytesTransferred), UploadState.Processing);
         }
     }

@@ -10,8 +10,8 @@ namespace HolzShots.Input.Keyboard
 
         public HotkeyPressedEventArgs(KeyboardHook hook, Hotkey hotkey)
         {
-            Debug.Assert(hook != null);
-            Debug.Assert(hotkey != null);
+            Debug.Assert(hook is not null);
+            Debug.Assert(hotkey is not null);
             Hook = hook;
             Hotkey = hotkey;
         }

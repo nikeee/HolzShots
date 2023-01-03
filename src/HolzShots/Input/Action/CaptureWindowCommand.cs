@@ -26,7 +26,7 @@ namespace HolzShots.Input.Actions
             Native.User32.GetWindowPlacement(h, out Native.User32.WindowPlacement info);
 
             var shot = CaptureWindow(h, settingsContext);
-            if (shot != null)
+            if (shot is not null)
                 await ProcessCapturing(shot, settingsContext).ConfigureAwait(true);
         }
 

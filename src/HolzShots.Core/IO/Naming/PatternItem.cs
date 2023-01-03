@@ -22,7 +22,7 @@ namespace HolzShots.IO.Naming
 
         internal static (string name, string? prop) Parse(string value, ref int currentIndex)
         {
-            Debug.Assert(value != null);
+            Debug.Assert(value is not null);
             Debug.Assert(currentIndex >= 0);
             Debug.Assert(currentIndex < value.Length);
             Debug.Assert(value[currentIndex] == TokenStartChar);

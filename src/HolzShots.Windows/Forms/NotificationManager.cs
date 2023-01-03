@@ -42,7 +42,7 @@ namespace HolzShots.Windows.Forms
 
         public static void PluginLoadingFailed(PluginLoadingFailedException ex)
         {
-            Debug.Assert(ex != null);
+            Debug.Assert(ex is not null);
             var message = ex.InnerException?.Message ?? "No Message Provided";
             NotifierFlyout.ShowNotification("Plugins not loaded", $"We could not load the plugins. Here's the error message:\n{message}");
         }

@@ -147,7 +147,7 @@ namespace HolzShots.Net.Custom
             var matches = pattern.Matches(content);
             if (matches.Count > 0)
             {
-                if (MatchIndex != null && MatchIndex >= matches.Count)
+                if (MatchIndex is not null && MatchIndex >= matches.Count)
                     throw new UnableToFillTemplateException(content, $"Index of match ({MatchIndex}) exceeds the number of matches ({matches.Count}).");
 
                 var matchIndex = MatchIndex ?? 0;
@@ -183,7 +183,7 @@ namespace HolzShots.Net.Custom
                 currentChar = value[++index];
 
             var jsonPath = value[start..index].ToString();
-            Debug.Assert(jsonPath != null && jsonPath.Length > 0);
+            Debug.Assert(jsonPath is not null && jsonPath.Length > 0);
 
             ++index; // Consume >
 
@@ -202,7 +202,7 @@ namespace HolzShots.Net.Custom
                 throw new UnableToFillTemplateException(content, "Invalid JSON response", ex);
             }
 
-            Debug.Assert(contentJson != null);
+            Debug.Assert(contentJson is not null);
             // Get Success Link-Value
 
             var result = contentJson.SelectToken(JsonPath);

@@ -20,7 +20,7 @@ namespace HolzShots
         {
             get
             {
-                Debug.Assert(_uploaders != null);
+                Debug.Assert(_uploaders is not null);
                 Debug.Assert(_uploaders.Loaded);
                 return _uploaders;
             }

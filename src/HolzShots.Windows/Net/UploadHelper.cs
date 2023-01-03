@@ -25,7 +25,7 @@ namespace HolzShots.Windows.Net
 
         public static void InvokeUploadFinishedUI(UploadResult result, HSSettings settingsContext)
         {
-            Debug.Assert(result != null);
+            Debug.Assert(result is not null);
             Debug.Assert(!string.IsNullOrWhiteSpace(result.Url));
 
             switch (settingsContext.ActionAfterUpload)

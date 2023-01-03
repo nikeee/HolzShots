@@ -13,8 +13,8 @@ namespace HolzShots.Input.Keyboard
 
         public override void Refresh()
         {
-            Debug.Assert(Hook != null);
-            Debug.Assert(_lockObj != null);
+            Debug.Assert(Hook is not null);
+            Debug.Assert(_lockObj is not null);
 
             var exeptions = new List<Exception>(Count);
             lock (_lockObj)

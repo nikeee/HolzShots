@@ -95,7 +95,7 @@ namespace HolzShots.Input.Selection.Decoration
                 _fadeOutStarted = now;
 
             var opacity = 1f;
-            if (_fadeOutStarted != null)
+            if (_fadeOutStarted is not null)
                 opacity = EasingMath.EaseInSquare((float)(now - _fadeOutStarted.Value).TotalMilliseconds / (float)FadeDuration.TotalMilliseconds, 1, 0);
 
             if (opacity <= 0)

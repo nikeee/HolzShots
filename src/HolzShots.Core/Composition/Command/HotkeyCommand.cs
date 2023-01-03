@@ -15,9 +15,9 @@ namespace HolzShots.Composition.Command
 
         public HotkeyCommand(CommandManager<TSettings> parentManager, KeyBinding binding, Func<TSettings> currentSettingsGetter)
         {
-            Debug.Assert(parentManager != null);
-            Debug.Assert(binding != null);
-            Debug.Assert(currentSettingsGetter != null);
+            Debug.Assert(parentManager is not null);
+            Debug.Assert(binding is not null);
+            Debug.Assert(currentSettingsGetter is not null);
 
             _parentManager = parentManager;
             Hotkey = binding.Keys ?? throw new ArgumentNullException(nameof(binding.Keys));

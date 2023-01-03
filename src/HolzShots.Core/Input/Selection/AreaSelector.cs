@@ -60,7 +60,7 @@ namespace HolzShots.Input.Selection
             Debug.Assert(_tcs == null);
             Debug.Assert(!SelectionSemaphore.IsInAreaSelection);
 
-            if (_tcs != null)
+            if (_tcs is not null)
                 return _tcs.Task;
 
             SelectionSemaphore.IsInAreaSelection = true;
@@ -97,7 +97,7 @@ namespace HolzShots.Input.Selection
             if (_state is FinalState)
                 Debug.Fail("OnMouseDown after final state");
 
-            Debug.Assert(e != null);
+            Debug.Assert(e is not null);
             var currentPos = e.Location;
             switch (e.Button)
             {
@@ -135,7 +135,7 @@ namespace HolzShots.Input.Selection
             if (_state is FinalState)
                 Debug.Fail("OnMouseUp after final state");
 
-            Debug.Assert(e != null);
+            Debug.Assert(e is not null);
             switch (e.Button)
             {
                 case MouseButtons.Left:
@@ -186,7 +186,7 @@ namespace HolzShots.Input.Selection
             if (_state is FinalState)
                 Debug.Fail("OnMouseMove after final state");
 
-            Debug.Assert(e != null);
+            Debug.Assert(e is not null);
             var currentPos = e.Location;
 
             switch (_state)
@@ -221,7 +221,7 @@ namespace HolzShots.Input.Selection
                 case Keys.Tab when e.Shift && _state is InitialState s:
                     s.SelectWindowWithOffset(_availableWindowsForOutline, -1);
                     break;
-                case Keys.Return when _state is InitialState s && s.CurrentOutline != null:
+                case Keys.Return when _state is InitialState s && s.CurrentOutline is not null:
                     // The user has a window highlighted and pressed enter -> we just take the window outline as a result.
                     FinishSelectionByWindowOutlineClickOrKeyboardInput(s);
                     return;
@@ -237,7 +237,7 @@ namespace HolzShots.Input.Selection
             if (_state is FinalState)
                 return;
 
-            Debug.Assert(_dimmingOverlayBrush != null);
+            Debug.Assert(_dimmingOverlayBrush is not null);
 
             g.Antialias = false;
 
@@ -262,7 +262,7 @@ namespace HolzShots.Input.Selection
 
         private void CancelSelection()
         {
-            Debug.Assert(_tcs != null);
+            Debug.Assert(_tcs is not null);
             Debug.Assert(SelectionSemaphore.IsInAreaSelection);
             SelectionSemaphore.IsInAreaSelection = false;
 
@@ -278,7 +278,7 @@ namespace HolzShots.Input.Selection
                 return;
             }
 
-            Debug.Assert(_tcs != null);
+            Debug.Assert(_tcs is not null);
             Debug.Assert(SelectionSemaphore.IsInAreaSelection);
             SelectionSemaphore.IsInAreaSelection = false;
 
@@ -294,7 +294,7 @@ namespace HolzShots.Input.Selection
                 return;
             }
 
-            Debug.Assert(_tcs != null);
+            Debug.Assert(_tcs is not null);
             Debug.Assert(SelectionSemaphore.IsInAreaSelection);
             SelectionSemaphore.IsInAreaSelection = false;
 

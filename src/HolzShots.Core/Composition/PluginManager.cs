@@ -30,7 +30,7 @@ namespace HolzShots.Composition
             config.WithAssembly(typeof(PluginManager<T>).Assembly);
 
             // We allow null to be able to use the current loaded assemblies only
-            if (PluginDirectory != null)
+            if (PluginDirectory is not null)
             {
                 try
                 {
@@ -45,7 +45,7 @@ namespace HolzShots.Composition
                 foreach (var pluginDll in pluginDlls)
                 {
                     var assembly = Assembly.LoadFrom(pluginDll);
-                    if (assembly != null)
+                    if (assembly is not null)
                         config.WithAssembly(assembly);
                 }
             }

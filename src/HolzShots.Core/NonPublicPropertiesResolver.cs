@@ -11,8 +11,8 @@ namespace HolzShots
             var prop = base.CreateProperty(member, memberSerialization);
             if (member is PropertyInfo pi)
             {
-                prop.Readable = (pi.GetMethod != null);
-                prop.Writable = (pi.SetMethod != null);
+                prop.Readable = (pi.GetMethod is not null);
+                prop.Writable = (pi.SetMethod is not null);
             }
             return prop;
         }

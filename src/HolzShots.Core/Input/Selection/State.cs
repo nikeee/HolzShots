@@ -30,7 +30,7 @@ namespace HolzShots.Input.Selection
 
         public override void Draw(D2DGraphics g, DateTime now, TimeSpan elapsed, Rectangle bounds, D2DBitmap image)
         {
-            Debug.Assert(Decorations != null);
+            Debug.Assert(Decorations is not null);
             foreach (var d in Decorations)
                 d.UpdateAndDraw(g, now, elapsed, bounds, image, this);
         }
@@ -166,7 +166,7 @@ namespace HolzShots.Input.Selection
 
         public override void Draw(D2DGraphics g, DateTime now, TimeSpan elapsed, Rectangle bounds, D2DBitmap image)
         {
-            Debug.Assert(Decorations != null);
+            Debug.Assert(Decorations is not null);
             foreach (var d in Decorations)
                 d.UpdateAndDraw(g, now, elapsed, bounds, image, this);
         }

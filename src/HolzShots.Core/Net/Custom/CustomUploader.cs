@@ -21,8 +21,8 @@ namespace HolzShots.Net.Custom
             if (data == null)
                 throw new ArgumentNullException(nameof(data));
 
-            Debug.Assert(UploaderInfo != null);
-            Debug.Assert(UploaderInfo.Uploader != null);
+            Debug.Assert(UploaderInfo is not null);
+            Debug.Assert(UploaderInfo.Uploader is not null);
             Debug.Assert(!string.IsNullOrWhiteSpace(suggestedFileName));
             Debug.Assert(!string.IsNullOrWhiteSpace(mimeType));
 
@@ -48,7 +48,7 @@ namespace HolzShots.Net.Custom
             // Add the user-agent first, so the user can override it
             cl.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", SuggestedUserAgent);
 
-            if (uplInfo.Headers != null)
+            if (uplInfo.Headers is not null)
             {
                 foreach (var (header, value) in uplInfo.Headers)
                     cl.DefaultRequestHeaders.TryAddWithoutValidation(header, value);

@@ -88,14 +88,14 @@ namespace HolzShots.Input.Selection
 
                 case (int)Win32.WMessages.WM_SIZE:
                     base.WndProc(ref m);
-                    if (Device != null)
+                    if (Device is not null)
                     {
                         Device.Resize();
                         Invalidate(false);
                     }
                     break;
                 case (int)Win32.WMessages.WM_DESTROY:
-                    if (Device != null)
+                    if (Device is not null)
                         Device.Dispose();
 
                     base.WndProc(ref m);

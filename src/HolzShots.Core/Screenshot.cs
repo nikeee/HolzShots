@@ -60,7 +60,7 @@ namespace HolzShots
             {
                 if (disposing)
                 {
-                    Debug.Assert(_image != null);
+                    Debug.Assert(_image is not null);
                     _image.Dispose();
                 }
                 // free unmanaged resources (unmanaged objects) and override a finalizer below.

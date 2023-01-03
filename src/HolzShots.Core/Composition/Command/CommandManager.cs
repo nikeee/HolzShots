@@ -27,7 +27,7 @@ namespace HolzShots.Composition.Command
                 throw new ArgumentNullException(nameof(command));
 
             var name = GetCommandNameForType(command.GetType());
-            Debug.Assert(name != null);
+            Debug.Assert(name is not null);
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("Name of command is null or white space");
 
@@ -43,12 +43,12 @@ namespace HolzShots.Composition.Command
 
         public IHotkeyAction GetHotkeyActionFromKeyBinding(KeyBinding binding)
         {
-            // We assume that everything is already checked (validation step should have validated that all hotkeys are != null
+            // We assume that everything is already checked (validation step should have validated that all hotkeys are is not null
             // We also assume that every key is only assigned once
 
-            Debug.Assert(binding != null);
-            Debug.Assert(binding.Keys != null);
-            Debug.Assert(binding.Command != null);
+            Debug.Assert(binding is not null);
+            Debug.Assert(binding.Keys is not null);
+            Debug.Assert(binding.Command is not null);
 
             return new HotkeyCommand<TSettings>(this, binding, () => _settingsManager.CurrentSettings);
         }
@@ -83,7 +83,7 @@ namespace HolzShots.Composition.Command
             Debug.Assert(IsRegisteredCommand(command.CommandName));
 
             var commandInstance = GetCommand(command.CommandName);
-            Debug.Assert(commandInstance != null);
+            Debug.Assert(commandInstance is not null);
 
             var contextEffectiveSettings = _settingsManager.DeriveContextEffectiveSettings(currentSettings, command.Overrides);
             return commandInstance == null

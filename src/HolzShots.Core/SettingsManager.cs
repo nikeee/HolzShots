@@ -48,7 +48,7 @@ namespace HolzShots
         {
             _watcher.OnFileWritten += OnSettingsFileChanged;
 
-            if (_watcherCancellation != null)
+            if (_watcherCancellation is not null)
                 _watcherCancellation.Cancel();
 
             _watcherCancellation = new CancellationTokenSource();
@@ -157,8 +157,8 @@ namespace HolzShots
 
         private static void OverrideProperty(T targetObject, PropertyInfo property, dynamic value)
         {
-            Debug.Assert(targetObject != null);
-            Debug.Assert(property != null);
+            Debug.Assert(targetObject is not null);
+            Debug.Assert(property is not null);
 
             var propType = property.PropertyType;
 

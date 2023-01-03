@@ -26,7 +26,7 @@ namespace HolzShots.Drawing
 
                 // Regardless of whether the cursor is visible, we want to return the position
                 CursorPosition? cursorPos = null;
-                if (cursorInfo != null)
+                if (cursorInfo is not null)
                 {
                     var info = cursorInfo.Value;
 

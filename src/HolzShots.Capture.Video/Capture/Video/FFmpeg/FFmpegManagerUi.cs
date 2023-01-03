@@ -230,7 +230,7 @@ namespace HolzShots.Capture.Video.FFmpeg
             _dialogPage = dialogPage;
 
             var pBar = dialogPage.ProgressBar;
-            Debug.Assert(pBar != null);
+            Debug.Assert(pBar is not null);
 
             pBar.Minimum = 0;
             pBar.Maximum = 100;
@@ -239,7 +239,7 @@ namespace HolzShots.Capture.Video.FFmpeg
         protected override void OnReport(TransferProgress value)
         {
             var pBar = _dialogPage.ProgressBar;
-            Debug.Assert(pBar != null);
+            Debug.Assert(pBar is not null);
 
             switch (value.State)
             {

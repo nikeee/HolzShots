@@ -9,7 +9,7 @@ namespace HolzShots
         /// <summary> Wrapper around Clipboard.SetText that catches exceptions. </summary>
         public static bool SetText(string text)
         {
-            Debug.Assert(text != null);
+            Debug.Assert(text is not null);
 
             try
             {

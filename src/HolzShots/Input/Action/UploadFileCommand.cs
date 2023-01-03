@@ -34,7 +34,7 @@ namespace HolzShots.Input.Actions
             using var bmp = new Bitmap(fileName);
 
             var format = ImageFormatInformation.GetImageFormatFromFileName(fileName);
-            Debug.Assert(format != null);
+            Debug.Assert(format is not null);
 
             try
             {

@@ -24,7 +24,7 @@ namespace HolzShots.Input.Selection.Decoration
             g.DrawRectangle(rect, OutlineColor, 1.0f);
 
             var windowTitle = state.Title;
-            if (windowTitle != null)
+            if (windowTitle is not null)
                 g.DrawTextCenter(windowTitle, FontColor, FontName, FontSize, rect);
         }
 

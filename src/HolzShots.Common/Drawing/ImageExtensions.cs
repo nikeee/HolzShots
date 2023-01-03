@@ -30,7 +30,7 @@ namespace HolzShots.Drawing
 
             var rawData = image.GetRawData()!;
             var copy = (image.Clone() as Image)!;
-            Debug.Assert(copy != null);
+            Debug.Assert(copy is not null);
 
             copy!.SetRawData(rawData);
             return copy!;
@@ -72,7 +72,7 @@ namespace HolzShots.Drawing
             if (format == ImageFormat.Gif)
             {
                 var buffer = image.GetRawData();
-                Debug.Assert(buffer != null);
+                Debug.Assert(buffer is not null);
                 Debug.Assert(buffer!.Length > 0);
 
                 var gifStream = new MemoryStream(buffer);

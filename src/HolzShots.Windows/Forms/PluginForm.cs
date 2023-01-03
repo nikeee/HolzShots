@@ -14,7 +14,7 @@ namespace HolzShots.Windows.Forms
         public PluginForm(PluginFormModel model)
         {
             InitializeComponent();
-            Debug.Assert(model != null);
+            Debug.Assert(model is not null);
 
             SuspendLayout();
 

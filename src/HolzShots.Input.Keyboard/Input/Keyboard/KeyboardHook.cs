@@ -21,7 +21,7 @@ namespace HolzShots.Input.Keyboard
 
             var key = args.GetIdentifier();
 
-            if (RegisteredKeys.TryGetValue(key, out var hk) && hk != null)
+            if (RegisteredKeys.TryGetValue(key, out var hk) && hk is not null)
                 hk.InvokePressed(this);
         }
 

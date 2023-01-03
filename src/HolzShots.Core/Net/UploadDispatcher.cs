@@ -11,9 +11,9 @@ namespace HolzShots.Net
         /// <summary> Catch the UploadException! </summary>
         public static async Task<UploadResult> InitiateUploadToDefaultUploader(Image image, HSSettings settingsContext, UploaderManager uploaderManager, ImageFormat? format, ITransferProgressReporter? progressReporter)
         {
-            Debug.Assert(image != null);
-            Debug.Assert(settingsContext != null);
-            Debug.Assert(uploaderManager != null);
+            Debug.Assert(image is not null);
+            Debug.Assert(settingsContext is not null);
+            Debug.Assert(uploaderManager is not null);
 
             format ??= GetImageFormat(image, settingsContext);
             using var payload = new ImageUploadPayload(image, format);
@@ -21,14 +21,14 @@ namespace HolzShots.Net
         }
         public static Task<UploadResult> InitiateUploadToDefaultUploader(IUploadPayload payload, HSSettings settingsContext, UploaderManager uploaderManager, ITransferProgressReporter? progressReporter)
         {
-            Debug.Assert(payload != null);
-            Debug.Assert(settingsContext != null);
-            Debug.Assert(uploaderManager != null);
+            Debug.Assert(payload is not null);
+            Debug.Assert(settingsContext is not null);
+            Debug.Assert(uploaderManager is not null);
 
             var service = GetUploadServiceForSettingsContext(settingsContext, uploaderManager);
             Debug.Assert(service is not null);
-            Debug.Assert(service.Metadata != null);
-            Debug.Assert(service.Uploader != null);
+            Debug.Assert(service.Metadata is not null);
+            Debug.Assert(service.Uploader is not null);
 
             if (service?.Metadata == null || service?.Uploader == null)
                 throw new UploadException("Unable to find an uploader for the current settings context");
@@ -94,8 +94,8 @@ namespace HolzShots.Net
 
         public static UploaderEntry? GetUploadServiceForSettingsContext(HSSettings context, UploaderManager uploaderManager)
         {
-            Debug.Assert(context != null);
-            Debug.Assert(uploaderManager != null);
+            Debug.Assert(context is not null);
+            Debug.Assert(uploaderManager is not null);
             Debug.Assert(uploaderManager.Loaded);
 
             return uploaderManager.GetUploaderByName(context.TargetImageHoster);
@@ -104,8 +104,8 @@ namespace HolzShots.Net
 
         private static ImageFormat GetImageFormat(Image image, HSSettings settingsContext)
         {
-            Debug.Assert(image != null);
-            Debug.Assert(settingsContext != null);
+            Debug.Assert(image is not null);
+            Debug.Assert(settingsContext is not null);
 
             if (!settingsContext.EnableSmartFormatForUpload)
                 return ImageFormat.Png;

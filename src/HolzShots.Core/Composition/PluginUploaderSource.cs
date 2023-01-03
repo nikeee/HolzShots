@@ -17,7 +17,7 @@ namespace HolzShots.Composition
             Debug.Assert(Loaded);
 
             var pls = Plugins;
-            Debug.Assert(pls != null);
+            Debug.Assert(pls is not null);
 
             return pls
                 .Where(p => Uploader.HasEqualName(p.metadata.Name, name))
@@ -28,7 +28,7 @@ namespace HolzShots.Composition
         public IReadOnlyList<string> GetUploaderNames()
         {
             var meta = GetMetadata();
-            Debug.Assert(meta != null);
+            Debug.Assert(meta is not null);
             return meta.Select(i => i.Name).ToList();
         }
     }

@@ -37,7 +37,7 @@ namespace HolzShots.Input.Selection
                     return true;
 
                 var className = WindowHelpers.GetWindowClass(windowHandle);
-                if (className != null && _ignoredWindowClasses.Contains(className))
+                if (className is not null && _ignoredWindowClasses.Contains(className))
                     return true;
 
                 var windowRectangle = WindowHelpers.GetWindowRectangle(windowHandle);
@@ -81,7 +81,7 @@ namespace HolzShots.Input.Selection
                 // We don't want to capture the client area (yet?) as it pollutes the widnow list
                 /*
                 var clientRectangle = WindowHelpers.GetClientRectangle(windowHandle);
-                if (clientRectangle != null && clientRectangle.Value != r)
+                if (clientRectangle is not null && clientRectangle.Value != r)
                 {
                     var mappedClientRectangle = WindowHelpers.MapWindowPoints(windowHandle, IntPtr.Zero, clientRectangle.Value);
                     if (mappedClientRectangle.HasValue)

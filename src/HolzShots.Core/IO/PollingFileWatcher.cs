@@ -71,7 +71,7 @@ namespace HolzShots.IO
             var oldInfo = _info ?? throw new InvalidOperationException($"{nameof(_info)} was null in {nameof(InvokeEvent)}");
             _info = new FileInfo(FilePath);
 
-            if (_synchronizingObject != null)
+            if (_synchronizingObject is not null)
                 _synchronizingObject.InvokeIfNeeded(() => e(this, oldInfo));
             else
                 e(this, oldInfo);

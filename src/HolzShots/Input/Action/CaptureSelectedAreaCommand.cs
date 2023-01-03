@@ -34,7 +34,7 @@ namespace HolzShots.Input.Actions
                 try
                 {
                     shot = await CaptureSelection(settingsContext).ConfigureAwait(true);
-                    Debug.Assert(shot != null);
+                    Debug.Assert(shot is not null);
                     if (shot == null)
                         throw new TaskCanceledException();
                 }
@@ -43,7 +43,7 @@ namespace HolzShots.Input.Actions
                     Debug.WriteLine("Area Selection cancelled");
                     return;
                 }
-                Debug.Assert(shot != null);
+                Debug.Assert(shot is not null);
                 await ProcessCapturing(shot, settingsContext).ConfigureAwait(true);
             }
         }

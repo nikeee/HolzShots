@@ -45,11 +45,11 @@ namespace HolzShots.Composition
                     var uploader = JsonConvert.DeserializeObject<CustomUploaderSpec>(jsonStr, JsonConfig.JsonSettings);
 
                     // TODO: Aggregate errors of invalid files (and display them to the user)
-                    Debug.Assert(uploader != null);
+                    Debug.Assert(uploader is not null);
 
                     if (CustomUploader.TryLoad(uploader, out var loadedUploader))
                     {
-                        Debug.Assert(loadedUploader != null);
+                        Debug.Assert(loadedUploader is not null);
                         res.Add(uploader.Meta, loadedUploader);
                         files.Add(jsonFile, uploader);
                     }
@@ -71,15 +71,15 @@ namespace HolzShots.Composition
         public UploaderEntry? GetUploaderByName(string name)
         {
             var cupls = _customUploaders;
-            Debug.Assert(cupls != null);
+            Debug.Assert(cupls is not null);
 
             foreach (var (info, uploader) in _customUploaders)
             {
                 if (info == null)
                     continue;
-                Debug.Assert(info != null);
+                Debug.Assert(info is not null);
                 Debug.Assert(!string.IsNullOrEmpty(info.Name));
-                Debug.Assert(uploader != null);
+                Debug.Assert(uploader is not null);
 
                 if (Uploader.HasEqualName(info.Name, name))
                     return new UploaderEntry(info, uploader);

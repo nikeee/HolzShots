@@ -22,13 +22,13 @@ namespace HolzShots.Net
             Debug.Assert(!_speedCalculator.HasStarted);
 
             using var payloadStream = _payload.GetStream();
-            Debug.Assert(payloadStream != null);
+            Debug.Assert(payloadStream is not null);
 
             var cts = new CancellationTokenSource();
 
             var speed = _speedCalculator;
 
-            if (_progressReporter != null)
+            if (_progressReporter is not null)
                 speed.ProgressChanged += ProgressChanged;
 
             speed.Start();
@@ -40,7 +40,7 @@ namespace HolzShots.Net
             finally
             {
                 speed.Stop();
-                if (_progressReporter != null)
+                if (_progressReporter is not null)
                     speed.ProgressChanged -= ProgressChanged;
             }
         }

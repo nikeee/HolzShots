@@ -168,7 +168,7 @@ namespace HolzShots.Input.Actions
                     var extension = VideoUploadPayload.GetExtensionForVideoFormat(effectiveFormat);
                     var targetFile = Path.Combine(tempRecordingDir, "HS" + extension);
 
-                    if (windowInfo != null)
+                    if (windowInfo is not null)
                     {
                         // See GH#78
                         // The number 500 is just a guess. If it fails, it isn't such a problem and won't cause any harm
@@ -212,7 +212,7 @@ namespace HolzShots.Input.Actions
         public static string? EnsureAvailableFFmpegAndPotentiallyStartSetup()
         {
             var path = FFmpegManager.GetAbsoluteFFmpegPath(true);
-            if (path != null)
+            if (path is not null)
                 return path;
 
             var setupResult = FFmpegManagerUi.StartGuidedSetupDialog();
@@ -225,7 +225,7 @@ namespace HolzShots.Input.Actions
                     return null;
                 case AfterSetupAction.Coninue:
                     path = FFmpegManager.GetAbsoluteFFmpegPath(true);
-                    Debug.Assert(path != null);
+                    Debug.Assert(path is not null);
                     return path;
                 default:
                     Debug.Fail("Unhandled AfterSetupAction: " + setupResult);
@@ -233,7 +233,7 @@ namespace HolzShots.Input.Actions
             }
         }
 
-        public static bool IsScreenRecorderRunning() => _currentRecordingCts != null;
+        public static bool IsScreenRecorderRunning() => _currentRecordingCts is not null;
         public static void StopCurrentScreenRecorder(bool throwAwayResult)
         {
             _throwAwayResult = throwAwayResult;

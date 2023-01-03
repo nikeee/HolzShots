@@ -65,13 +65,13 @@ namespace HolzShots
 
         protected override IReadOnlyList<ValidationError> IsValidSettingsCandidate(HSSettings candidate)
         {
-            Debug.Assert(candidate != null);
+            Debug.Assert(candidate is not null);
 
             // We might want to use SemVer in the future
             if (candidate.Version != SupportedVersion)
                 return SingleError($"Version {candidate.Version} is not supported. This version of HolzShots only supports settings version {SupportedVersion}.", "version");
 
-            if (candidate.TargetImageHoster != null)
+            if (candidate.TargetImageHoster is not null)
             {
                 // TODO: Validate that we actually have an image service that is named like that
             }
