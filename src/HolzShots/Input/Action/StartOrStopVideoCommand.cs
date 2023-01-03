@@ -228,8 +228,7 @@ namespace HolzShots.Input.Actions
                     Debug.Assert(path is not null);
                     return path;
                 default:
-                    Debug.Fail("Unhandled AfterSetupAction: " + setupResult);
-                    throw new ArgumentException("Unhandled AfterSetupAction: " + setupResult);
+                    throw new UnreachableException("Unhandled AfterSetupAction: " + setupResult);
             }
         }
 

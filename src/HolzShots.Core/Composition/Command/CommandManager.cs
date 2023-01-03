@@ -34,10 +34,7 @@ namespace HolzShots.Composition.Command
             name = name.ToLowerInvariant();
 
             if (Actions.ContainsKey(name))
-            {
-                Debug.Fail($"Unhandled command: '{name}'");
-                return;
-            }
+                throw new UnreachableException($"Unhandled command: '{name}'");
             Actions[name] = command;
         }
 

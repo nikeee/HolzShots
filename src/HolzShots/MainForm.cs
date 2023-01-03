@@ -138,8 +138,7 @@ namespace HolzShots
                     return;
                 case FirstStartAction.None: return; // Intentionally left empty
                 default:
-                    Debug.Fail($"Unhandled action: '{action}'");
-                    return;
+                    throw new UnreachableException($"Unhandled action: '{action}'");
             }
         }
 

@@ -80,8 +80,7 @@ namespace HolzShots.Windows.Forms
                     SetSpeed(string.Empty);
                     break;
                 default:
-                    Debug.Fail($"Unhandled {nameof(UploadState)}");
-                    break;
+                    throw new UnreachableException($"Unhandled {nameof(UploadState)}");
             }
         }
 

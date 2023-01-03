@@ -95,7 +95,7 @@ namespace HolzShots.Input.Selection
         protected override void OnMouseDown(MouseEventArgs e)
         {
             if (_state is FinalState)
-                Debug.Fail("OnMouseDown after final state");
+                throw new UnreachableException("OnMouseDown after final state");
 
             Debug.Assert(e is not null);
             var currentPos = e.Location;
@@ -110,8 +110,8 @@ namespace HolzShots.Input.Selection
                             break;
                         case ResizingRectangleState _: break; // Pressing the left mouse button without leaving first is not possible
                         case MovingRectangleState _: break; // This should do nothing
-                        case FinalState _: Debug.Fail("Unhandled State"); break; // Not possible
-                        default: Debug.Fail("Unhandled State"); break;
+                        case FinalState _: throw new UnreachableException(); // Not possible
+                        default: throw new UnreachableException();
                     }
                     break;
                 case MouseButtons.Right:
@@ -122,8 +122,8 @@ namespace HolzShots.Input.Selection
                             _state = new MovingRectangleState(resizing.UserSelectionStart, resizing.CursorPosition);
                             break;
                         case MovingRectangleState _: break;  // Pressing the right mouse button without leaving first is not possible
-                        case FinalState _: Debug.Fail("Unhandled State"); break; // Not possible
-                        default: Debug.Fail("Unhandled State"); break;
+                        case FinalState _: throw new UnreachableException();// Not possible
+                        default: throw new UnreachableException();
                     }
                     break;
                 default:
@@ -133,7 +133,7 @@ namespace HolzShots.Input.Selection
         protected override void OnMouseUp(MouseEventArgs e)
         {
             if (_state is FinalState)
-                Debug.Fail("OnMouseUp after final state");
+                throw new UnreachableException("OnMouseUp after final state");
 
             Debug.Assert(e is not null);
             switch (e.Button)
@@ -154,15 +154,15 @@ namespace HolzShots.Input.Selection
                             else
                             {
                                 // The user most likely just clicked
-                                // In this case, he propably wantet to select a window that was outlined (if there was one)
+                                // In this case, he probably wanted to select a window that was outlined (if there was one)
                                 // TODO: This is a hack, we need to make this more pretty (put this in the FinalState)
                                 var i = new InitialState();
                                 i.SelectWindowBasedOnMouseMove(_availableWindowsForOutline, e.Location);
                                 FinishSelectionByWindowOutlineClickOrKeyboardInput(i);
                             }
                             break;
-                        case FinalState _: Debug.Fail("Unhandled State"); break; // Not possible
-                        default: Debug.Fail("Unhandled State"); break;
+                        case FinalState _: throw new UnreachableException(); // Not possible
+                        default: throw new UnreachableException();
                     }
                     break;
                 case MouseButtons.Right:
@@ -173,8 +173,8 @@ namespace HolzShots.Input.Selection
                         case MovingRectangleState moving:
                             _state = new ResizingRectangleState(moving.UserSelectionStart, moving.CursorPosition);
                             break;
-                        case FinalState _: Debug.Fail("Unhandled State"); break; // Not possible
-                        default: Debug.Fail("Unhandled State"); break;
+                        case FinalState _: throw new UnreachableException(); // Not possible
+                        default: throw new UnreachableException();
                     }
                     break;
                 default:
@@ -184,7 +184,7 @@ namespace HolzShots.Input.Selection
         protected override void OnMouseMove(MouseEventArgs e)
         {
             if (_state is FinalState)
-                Debug.Fail("OnMouseMove after final state");
+                throw new UnreachableException("OnMouseMove after final state");
 
             Debug.Assert(e is not null);
             var currentPos = e.Location;
@@ -202,7 +202,7 @@ namespace HolzShots.Input.Selection
                     moving.UpdateCursorPosition(currentPos);
                     break;
                 case FinalState _: break; // Nothing to be updated
-                default: Debug.Fail("Unhandled State"); break;
+                default: throw new UnreachableException();
             }
         }
         protected override void OnKeyUp(KeyEventArgs e)
@@ -251,7 +251,7 @@ namespace HolzShots.Input.Selection
                 case InitialState initial: break;
                 case RectangleState availableSelection: break;
                 case FinalState _: break; // Nothing to be updated
-                default: Debug.Fail("Unhandled State"); break;
+                default: throw new UnreachableException();
             }
 
             _magnifier.UpdateAndDraw(g, now, elapsed, _imageBounds, _image, _state);

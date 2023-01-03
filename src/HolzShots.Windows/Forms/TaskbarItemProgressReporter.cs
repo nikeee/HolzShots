@@ -47,8 +47,7 @@ namespace HolzShots.Windows.Forms
                     }
                     break;
                 default:
-                    Debug.Fail($"Unhandled UploadState: {progress.State}");
-                    break;
+                    throw new UnreachableException($"Unhandled UploadState: {progress.State}");
             }
         }
 
