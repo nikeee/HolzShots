@@ -270,13 +270,13 @@ public record VideoUploadPayload : IUploadPayload
         VideoCaptureFormat.Gif => "image/gif",
         VideoCaptureFormat.Mp4 => "video/mp4",
         VideoCaptureFormat.Webm => "video/webm",
-        _ => throw new ArgumentException("Unhaned VideoCaptureFormat: " + format),
+        _ => throw new UnreachableException("Unhaned VideoCaptureFormat: " + format),
     };
     public static string GetExtensionForVideoFormat(VideoCaptureFormat format) => format switch
     {
         VideoCaptureFormat.Gif => ".gif",
         VideoCaptureFormat.Mp4 => ".mp4",
         VideoCaptureFormat.Webm => ".webm",
-        _ => throw new ArgumentException("Unhaned VideoCaptureFormat: " + format),
+        _ => throw new UnreachableException("Unhaned VideoCaptureFormat: " + format),
     };
 }
