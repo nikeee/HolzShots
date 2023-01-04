@@ -1,117 +1,116 @@
 using System.Diagnostics;
 using System.IO;
 
-namespace HolzShots.IO
+namespace HolzShots.IO;
+
+public static class HolzShotsPaths
 {
-    public static class HolzShotsPaths
+    private static readonly string SystemAppDataDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+    private static readonly string UserPicturesDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+    public static string AppDataDirectory { get; } = Path.Combine(SystemAppDataDirectory, LibraryInformation.Name);
+
+    public const string CustomUploadersFilePattern = "*.json";
+
+    public static string SystemPath { get; } = Environment.GetFolderPath(Environment.SpecialFolder.System);
+
+    public static string PluginDirectory { get; } = Path.Combine(AppDataDirectory, "Plugin");
+    public static string CustomUploadersDirectory { get; } = PluginDirectory;
+    public static string DemoCustomUploaderPath { get; } = Path.Combine(CustomUploadersDirectory, "DirectUpload.net.hs.json");
+    public static string UserSettingsFilePath { get; } = Path.Combine(AppDataDirectory, "settings.json");
+    public static string DefaultScreenshotSavePath { get; } = Path.Combine(UserPicturesDirectory, LibraryInformation.Name);
+
+    /// <summary>
+    /// We are doing this synchronously, assuming the application is not located on a network drive.
+    /// See: https://stackoverflow.com/a/20596865
+    /// </summary>
+    /// <exception cref="System.UnauthorizedAccessException" />
+    /// <exception cref="System.IO.PathTooLongException" />
+    public static void EnsureDirectory(string directory)
     {
-        private static readonly string SystemAppDataDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-        private static readonly string UserPicturesDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
-        public static string AppDataDirectory { get; } = Path.Combine(SystemAppDataDirectory, LibraryInformation.Name);
+        Debug.Assert(directory is not null);
+        DirectoryEx.EnsureDirectory(directory);
+    }
 
-        public const string CustomUploadersFilePattern = "*.json";
-
-        public static string SystemPath { get; } = Environment.GetFolderPath(Environment.SpecialFolder.System);
-
-        public static string PluginDirectory { get; } = Path.Combine(AppDataDirectory, "Plugin");
-        public static string CustomUploadersDirectory { get; } = PluginDirectory;
-        public static string DemoCustomUploaderPath { get; } = Path.Combine(CustomUploadersDirectory, "DirectUpload.net.hs.json");
-        public static string UserSettingsFilePath { get; } = Path.Combine(AppDataDirectory, "settings.json");
-        public static string DefaultScreenshotSavePath { get; } = Path.Combine(UserPicturesDirectory, LibraryInformation.Name);
-
-        /// <summary>
-        /// We are doing this synchronously, assuming the application is not located on a network drive.
-        /// See: https://stackoverflow.com/a/20596865
-        /// </summary>
-        /// <exception cref="System.UnauthorizedAccessException" />
-        /// <exception cref="System.IO.PathTooLongException" />
-        public static void EnsureDirectory(string directory)
+    /// <returns>If some directory was created</returns>
+    public static bool EnsureAppDataDirectories()
+    {
+        if (!Directory.Exists(AppDataDirectory))
         {
-            Debug.Assert(directory is not null);
-            DirectoryEx.EnsureDirectory(directory);
+            Directory.CreateDirectory(AppDataDirectory);
+            Directory.CreateDirectory(PluginDirectory);
+            return true;
         }
+        return false;
+    }
 
-        /// <returns>If some directory was created</returns>
-        public static bool EnsureAppDataDirectories()
+    public static void OpenLink(string url)
+    {
+        Debug.Assert(url is not null);
+
+        try
         {
-            if (!Directory.Exists(AppDataDirectory))
-            {
-                Directory.CreateDirectory(AppDataDirectory);
-                Directory.CreateDirectory(PluginDirectory);
-                return true;
-            }
+            OpenFileInDefaultApplication(url);
+        }
+        catch
+        {
+            Trace.WriteLine("Could not open link: " + url);
+        }
+    }
+    public static void OpenFileInDefaultApplication(string fileName)
+    {
+        // Necessary since .NET core, see: https://stackoverflow.com/questions/46808315
+        var psi = new ProcessStartInfo(fileName)
+        {
+            UseShellExecute = true,
+        };
+        Process.Start(psi);
+    }
+    public static bool OpenSelectedFileInExplorer(string fileName)
+    {
+        Debug.Assert(!string.IsNullOrWhiteSpace(fileName));
+        if (string.IsNullOrEmpty(fileName))
+            return false;
+
+        var psi = new ProcessStartInfo(
+            "explorer",
+            $"/e, /select, \"{fileName}\""
+        );
+        try
+        {
+            Process.Start(psi);
+            return true;
+        }
+        catch
+        {
             return false;
         }
+    }
+    public static bool OpenFolderInExplorer(string directoryName)
+    {
+        Debug.Assert(!string.IsNullOrWhiteSpace(directoryName));
+        if (string.IsNullOrEmpty(directoryName))
+            return false;
 
-        public static void OpenLink(string url)
+        var psi = new ProcessStartInfo("explorer", directoryName)
         {
-            Debug.Assert(url is not null);
+            Verb = "open",
+            UseShellExecute = true,
+        };
 
-            try
-            {
-                OpenFileInDefaultApplication(url);
-            }
-            catch
-            {
-                Trace.WriteLine("Could not open link: " + url);
-            }
-        }
-        public static void OpenFileInDefaultApplication(string fileName)
+        try
         {
-            // Necessary since .NET core, see: https://stackoverflow.com/questions/46808315
-            var psi = new ProcessStartInfo(fileName)
-            {
-                UseShellExecute = true,
-            };
             Process.Start(psi);
+            return true;
         }
-        public static bool OpenSelectedFileInExplorer(string fileName)
+        catch
         {
-            Debug.Assert(!string.IsNullOrWhiteSpace(fileName));
-            if (string.IsNullOrEmpty(fileName))
-                return false;
-
-            var psi = new ProcessStartInfo(
-                "explorer",
-                $"/e, /select, \"{fileName}\""
-            );
-            try
-            {
-                Process.Start(psi);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
+            return false;
         }
-        public static bool OpenFolderInExplorer(string directoryName)
-        {
-            Debug.Assert(!string.IsNullOrWhiteSpace(directoryName));
-            if (string.IsNullOrEmpty(directoryName))
-                return false;
+    }
 
-            var psi = new ProcessStartInfo("explorer", directoryName)
-            {
-                Verb = "open",
-                UseShellExecute = true,
-            };
-
-            try
-            {
-                Process.Start(psi);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        /// <summary> TODO: Consider re-adding this functionality </summary>
-        public static void AddToRecentDocuments(string path)
-        {
-            Native.Shell32.SHAddToRecentDocs(Native.Shell32.ShellAddToRecentDocsFlags.Path, path);
-        }
+    /// <summary> TODO: Consider re-adding this functionality </summary>
+    public static void AddToRecentDocuments(string path)
+    {
+        Native.Shell32.SHAddToRecentDocs(Native.Shell32.ShellAddToRecentDocsFlags.Path, path);
     }
 }

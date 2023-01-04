@@ -1,102 +1,101 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace HolzShots.Capture.Video.UI
+namespace HolzShots.Capture.Video.UI;
+
+public partial class RecordingFrame : Form
 {
-    public partial class RecordingFrame : Form
+    const int FrameMarkerThickness = 6;
+    const int FrameMarkerWidth = FrameMarkerThickness * 8;
+
+    private static readonly Pen[] IndicationPens = new Pen[]
     {
-        const int FrameMarkerThickness = 6;
-        const int FrameMarkerWidth = FrameMarkerThickness * 8;
+        new(Color.Black, FrameMarkerThickness),
+        new(Color.Red, FrameMarkerThickness),
+        new(Color.White, FrameMarkerThickness),
+    };
 
-        private static readonly Pen[] IndicationPens = new Pen[]
+    private readonly Rectangle _indicatedRegion;
+    private int CurrentPenIndex = 0;
+    public RecordingFrame(Rectangle indicatedregion)
+    {
+        _indicatedRegion = indicatedregion;
+        InitializeComponent();
+        TopMost = true;
+        Bounds = Rectangle.Inflate(indicatedregion, FrameMarkerThickness, FrameMarkerThickness);
+    }
+
+    public void StartIndicating(CancellationToken cancellationToken)
+    {
+        RecordingIndicatorTimer.Interval = 500;
+        RecordingIndicatorTimer.Start();
+        cancellationToken.Register(() =>
         {
-            new(Color.Black, FrameMarkerThickness),
-            new(Color.Red, FrameMarkerThickness),
-            new(Color.White, FrameMarkerThickness),
-        };
+            RecordingIndicatorTimer.Stop();
+            Close();
+        });
+    }
 
-        private readonly Rectangle _indicatedRegion;
-        private int CurrentPenIndex = 0;
-        public RecordingFrame(Rectangle indicatedregion)
-        {
-            _indicatedRegion = indicatedregion;
-            InitializeComponent();
-            TopMost = true;
-            Bounds = Rectangle.Inflate(indicatedregion, FrameMarkerThickness, FrameMarkerThickness);
-        }
+    protected override void OnPaintBackground(PaintEventArgs e)
+    {
+        base.OnPaintBackground(e);
 
-        public void StartIndicating(CancellationToken cancellationToken)
-        {
-            RecordingIndicatorTimer.Interval = 500;
-            RecordingIndicatorTimer.Start();
-            cancellationToken.Register(() =>
-            {
-                RecordingIndicatorTimer.Stop();
-                Close();
-            });
-        }
+        var currentPen = IndicationPens[CurrentPenIndex];
+        var halfThickness = FrameMarkerThickness / 2;
 
-        protected override void OnPaintBackground(PaintEventArgs e)
-        {
-            base.OnPaintBackground(e);
+        // Top left
+        e.Graphics.DrawLine(
+            currentPen,
+            new Point(0, halfThickness),
+            new Point(0 + FrameMarkerWidth, halfThickness)
+        );
+        e.Graphics.DrawLine(
+            currentPen,
+            new Point(halfThickness, 0),
+            new Point(halfThickness, FrameMarkerWidth)
+        );
 
-            var currentPen = IndicationPens[CurrentPenIndex];
-            var halfThickness = FrameMarkerThickness / 2;
+        // Bottom left
+        e.Graphics.DrawLine(
+            currentPen,
+            new Point(0, Bounds.Height - halfThickness),
+            new Point(0 + FrameMarkerWidth, Bounds.Height - halfThickness)
+        );
+        e.Graphics.DrawLine(
+            currentPen,
+            new Point(halfThickness, Bounds.Height - FrameMarkerWidth),
+            new Point(halfThickness, Bounds.Height)
+        );
 
-            // Top left
-            e.Graphics.DrawLine(
-                currentPen,
-                new Point(0, halfThickness),
-                new Point(0 + FrameMarkerWidth, halfThickness)
-            );
-            e.Graphics.DrawLine(
-                currentPen,
-                new Point(halfThickness, 0),
-                new Point(halfThickness, FrameMarkerWidth)
-            );
+        // Top right
+        e.Graphics.DrawLine(
+            currentPen,
+            new Point(Bounds.Width - FrameMarkerWidth, halfThickness),
+            new Point(Bounds.Width, halfThickness)
+        );
+        e.Graphics.DrawLine(
+            currentPen,
+            new Point(Bounds.Width - halfThickness, 0),
+            new Point(Bounds.Width - halfThickness, FrameMarkerWidth)
+        );
 
-            // Bottom left
-            e.Graphics.DrawLine(
-                currentPen,
-                new Point(0, Bounds.Height - halfThickness),
-                new Point(0 + FrameMarkerWidth, Bounds.Height - halfThickness)
-            );
-            e.Graphics.DrawLine(
-                currentPen,
-                new Point(halfThickness, Bounds.Height - FrameMarkerWidth),
-                new Point(halfThickness, Bounds.Height)
-            );
+        // Bottom right
+        e.Graphics.DrawLine(
+            currentPen,
+            new Point(Bounds.Width - halfThickness, Bounds.Height - FrameMarkerWidth),
+            new Point(Bounds.Width - halfThickness, Bounds.Height)
+        );
+        e.Graphics.DrawLine(
+            currentPen,
+            new Point(Bounds.Width - FrameMarkerWidth, Bounds.Height - halfThickness),
+            new Point(Bounds.Width, Bounds.Height - halfThickness)
+        );
+    }
 
-            // Top right
-            e.Graphics.DrawLine(
-                currentPen,
-                new Point(Bounds.Width - FrameMarkerWidth, halfThickness),
-                new Point(Bounds.Width, halfThickness)
-            );
-            e.Graphics.DrawLine(
-                currentPen,
-                new Point(Bounds.Width - halfThickness, 0),
-                new Point(Bounds.Width - halfThickness, FrameMarkerWidth)
-            );
+    private void RecordingIndicatorTimer_Tick(object sender, EventArgs e)
+    {
+        CurrentPenIndex = (CurrentPenIndex + 1) % IndicationPens.Length;
 
-            // Bottom right
-            e.Graphics.DrawLine(
-                currentPen,
-                new Point(Bounds.Width - halfThickness, Bounds.Height - FrameMarkerWidth),
-                new Point(Bounds.Width - halfThickness, Bounds.Height)
-            );
-            e.Graphics.DrawLine(
-                currentPen,
-                new Point(Bounds.Width - FrameMarkerWidth, Bounds.Height - halfThickness),
-                new Point(Bounds.Width, Bounds.Height - halfThickness)
-            );
-        }
-
-        private void RecordingIndicatorTimer_Tick(object sender, EventArgs e)
-        {
-            CurrentPenIndex = (CurrentPenIndex + 1) % IndicationPens.Length;
-
-            Invalidate(false);
-        }
+        Invalidate(false);
     }
 }

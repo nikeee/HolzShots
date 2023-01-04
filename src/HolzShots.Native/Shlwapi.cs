@@ -1,15 +1,14 @@
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace HolzShots
+namespace HolzShots;
+
+public static class Shlwapi
 {
-    public static class Shlwapi
-    {
-        const string DllName = "shlwapi.dll";
+    const string DllName = "shlwapi.dll";
 
-        [DllImport(DllName, CharSet = CharSet.Unicode, SetLastError = false)]
-        public static extern bool PathFindOnPath([In, Out] StringBuilder file, [In] string[]? otherDirs);
+    [DllImport(DllName, CharSet = CharSet.Unicode, SetLastError = false)]
+    public static extern bool PathFindOnPath([In, Out] StringBuilder file, [In] string[]? otherDirs);
 
-        public const int MAX_PATH = 260;
-    }
+    public const int MAX_PATH = 260;
 }

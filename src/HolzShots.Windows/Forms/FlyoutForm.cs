@@ -1,19 +1,18 @@
 using System.Windows.Forms;
 
-namespace HolzShots.Windows.Forms
-{
-    public partial class FlyoutForm : Form
-    {
-        public FlyoutForm()
-        {
-            InitializeComponent();
-            StartPosition = FormStartPosition.Manual;
-        }
+namespace HolzShots.Windows.Forms;
 
-        private void FormLoad(object sender, EventArgs e)
-        {
-            MaximumSize = Size;
-            MinimumSize = Size;
-        }
+public partial class FlyoutForm : Form
+{
+    public FlyoutForm()
+    {
+        InitializeComponent();
+        StartPosition = FormStartPosition.Manual;
+    }
+
+    private void FormLoad(object sender, EventArgs e)
+    {
+        MaximumSize = Size;
+        MinimumSize = Size;
     }
 }

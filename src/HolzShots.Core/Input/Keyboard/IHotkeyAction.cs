@@ -1,11 +1,10 @@
 
-namespace HolzShots.Input.Keyboard
-{
-    public interface IHotkeyAction
-    {
-        bool Enabled { get; }
-        Hotkey Hotkey { get; }
+namespace HolzShots.Input.Keyboard;
 
-        Task Invoke(object? sender, HotkeyPressedEventArgs e);
-    }
+public interface IHotkeyAction
+{
+    bool Enabled { get; }
+    Hotkey Hotkey { get; }
+
+    Task Invoke(object? sender, HotkeyPressedEventArgs e);
 }

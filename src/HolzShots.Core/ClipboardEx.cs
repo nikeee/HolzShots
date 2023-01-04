@@ -2,42 +2,41 @@ using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Windows.Forms;
 
-namespace HolzShots
+namespace HolzShots;
+
+public static class ClipboardEx
 {
-    public static class ClipboardEx
+    /// <summary> Wrapper around Clipboard.SetText that catches exceptions. </summary>
+    public static bool SetText(string text)
     {
-        /// <summary> Wrapper around Clipboard.SetText that catches exceptions. </summary>
-        public static bool SetText(string text)
-        {
-            Debug.Assert(text is not null);
+        Debug.Assert(text is not null);
 
-            try
-            {
-                Clipboard.SetText(text);
-                return true;
-            }
-            catch (Exception e)
-            {
-                Trace.WriteLine(e.Message);
-                return false;
-            }
+        try
+        {
+            Clipboard.SetText(text);
+            return true;
         }
-
-        public static bool SetFiles(params string[] files)
+        catch (Exception e)
         {
-            var paths = new StringCollection();
-            foreach (string path in files)
-                paths.Add(path);
-            try
-            {
-                Clipboard.SetFileDropList(paths);
-                return true;
-            }
-            catch (Exception e)
-            {
-                Trace.WriteLine(e.Message);
-                return false;
-            }
+            Trace.WriteLine(e.Message);
+            return false;
+        }
+    }
+
+    public static bool SetFiles(params string[] files)
+    {
+        var paths = new StringCollection();
+        foreach (string path in files)
+            paths.Add(path);
+        try
+        {
+            Clipboard.SetFileDropList(paths);
+            return true;
+        }
+        catch (Exception e)
+        {
+            Trace.WriteLine(e.Message);
+            return false;
         }
     }
 }

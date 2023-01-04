@@ -3,127 +3,126 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using HolzShots.Composition;
 
-namespace HolzShots.Net
+namespace HolzShots.Net;
+
+public static class UploadDispatcher
 {
-    public static class UploadDispatcher
+    // TODO: maybe refactor this, so the payload gets created somewhere else
+    /// <summary> Catch the UploadException! </summary>
+    public static async Task<UploadResult> InitiateUploadToDefaultUploader(Image image, HSSettings settingsContext, UploaderManager uploaderManager, ImageFormat? format, ITransferProgressReporter? progressReporter)
     {
-        // TODO: maybe refactor this, so the payload gets created somewhere else
-        /// <summary> Catch the UploadException! </summary>
-        public static async Task<UploadResult> InitiateUploadToDefaultUploader(Image image, HSSettings settingsContext, UploaderManager uploaderManager, ImageFormat? format, ITransferProgressReporter? progressReporter)
+        Debug.Assert(image is not null);
+        Debug.Assert(settingsContext is not null);
+        Debug.Assert(uploaderManager is not null);
+
+        format ??= GetImageFormat(image, settingsContext);
+        using var payload = new ImageUploadPayload(image, format);
+        return await InitiateUploadToDefaultUploader(payload, settingsContext, uploaderManager, progressReporter);
+    }
+    public static Task<UploadResult> InitiateUploadToDefaultUploader(IUploadPayload payload, HSSettings settingsContext, UploaderManager uploaderManager, ITransferProgressReporter? progressReporter)
+    {
+        Debug.Assert(payload is not null);
+        Debug.Assert(settingsContext is not null);
+        Debug.Assert(uploaderManager is not null);
+
+        var service = GetUploadServiceForSettingsContext(settingsContext, uploaderManager);
+        Debug.Assert(service is not null);
+        Debug.Assert(service.Metadata is not null);
+        Debug.Assert(service.Uploader is not null);
+
+        if (service?.Metadata == null || service?.Uploader == null)
+            throw new UploadException("Unable to find an uploader for the current settings context");
+
+        return InitiateUpload(payload, settingsContext, service.Uploader, progressReporter);
+    }
+
+
+    // TODO: maybe refactor this, so the payload gets created somewhere else
+    /// <summary> Catch the UploadException! </summary>
+    public static async Task<UploadResult> InitiateUpload(Image image, HSSettings settingsContext, Uploader uploader, ImageFormat? format, ITransferProgressReporter? progressReporter)
+    {
+        format ??= GetImageFormat(image, settingsContext);
+        using var payload = new ImageUploadPayload(image, format);
+        return await InitiateUpload(payload, settingsContext, uploader, progressReporter);
+    }
+
+    public static async Task<UploadResult> InitiateUpload(IUploadPayload payload, HSSettings settingsContext, Uploader uploader, ITransferProgressReporter? progressReporter)
+    {
+        if (payload == null)
+            throw new ArgumentNullException(nameof(payload));
+        if (settingsContext == null)
+            throw new ArgumentNullException(nameof(settingsContext));
+        if (uploader == null)
+            throw new ArgumentNullException(nameof(uploader));
+
+        try
         {
-            Debug.Assert(image is not null);
-            Debug.Assert(settingsContext is not null);
-            Debug.Assert(uploaderManager is not null);
 
-            format ??= GetImageFormat(image, settingsContext);
-            using var payload = new ImageUploadPayload(image, format);
-            return await InitiateUploadToDefaultUploader(payload, settingsContext, uploaderManager, progressReporter);
-        }
-        public static Task<UploadResult> InitiateUploadToDefaultUploader(IUploadPayload payload, HSSettings settingsContext, UploaderManager uploaderManager, ITransferProgressReporter? progressReporter)
-        {
-            Debug.Assert(payload is not null);
-            Debug.Assert(settingsContext is not null);
-            Debug.Assert(uploaderManager is not null);
+            var sc = uploader.GetSupportedSettingsInvocations();
+            if ((sc & SettingsInvocationContexts.OnUse) == SettingsInvocationContexts.OnUse)
+            {
+                // A third-party settings dialog may throw an exception
+                // If it does, we abort the upload
+                await uploader.InvokeSettingsAsync(SettingsInvocationContexts.OnUse).ConfigureAwait(true);
+            }
 
-            var service = GetUploadServiceForSettingsContext(settingsContext, uploaderManager);
-            Debug.Assert(service is not null);
-            Debug.Assert(service.Metadata is not null);
-            Debug.Assert(service.Uploader is not null);
-
-            if (service?.Metadata == null || service?.Uploader == null)
-                throw new UploadException("Unable to find an uploader for the current settings context");
-
-            return InitiateUpload(payload, settingsContext, service.Uploader, progressReporter);
-        }
-
-
-        // TODO: maybe refactor this, so the payload gets created somewhere else
-        /// <summary> Catch the UploadException! </summary>
-        public static async Task<UploadResult> InitiateUpload(Image image, HSSettings settingsContext, Uploader uploader, ImageFormat? format, ITransferProgressReporter? progressReporter)
-        {
-            format ??= GetImageFormat(image, settingsContext);
-            using var payload = new ImageUploadPayload(image, format);
-            return await InitiateUpload(payload, settingsContext, uploader, progressReporter);
-        }
-
-        public static async Task<UploadResult> InitiateUpload(IUploadPayload payload, HSSettings settingsContext, Uploader uploader, ITransferProgressReporter? progressReporter)
-        {
-            if (payload == null)
-                throw new ArgumentNullException(nameof(payload));
-            if (settingsContext == null)
-                throw new ArgumentNullException(nameof(settingsContext));
-            if (uploader == null)
-                throw new ArgumentNullException(nameof(uploader));
-
+            using var ui = new UploadUI(payload, uploader, progressReporter);
             try
             {
+                ui.ShowUI();
 
-                var sc = uploader.GetSupportedSettingsInvocations();
-                if ((sc & SettingsInvocationContexts.OnUse) == SettingsInvocationContexts.OnUse)
-                {
-                    // A third-party settings dialog may throw an exception
-                    // If it does, we abort the upload
-                    await uploader.InvokeSettingsAsync(SettingsInvocationContexts.OnUse).ConfigureAwait(true);
-                }
-
-                using var ui = new UploadUI(payload, uploader, progressReporter);
-                try
-                {
-                    ui.ShowUI();
-
-                    return await ui.InvokeUploadAsync().ConfigureAwait(true);
-                }
-                finally
-                {
-                    ui.HideUI();
-                }
+                return await ui.InvokeUploadAsync().ConfigureAwait(true);
             }
-            catch (OperationCanceledException c)
+            finally
             {
-                throw new UploadCanceledException(c);
-            }
-            catch (UploadException)
-            {
-                throw;
-            }
-            catch (Exception ex)
-            {
-                throw new UploadException(ex.Message, ex);
+                ui.HideUI();
             }
         }
-
-        public static UploaderEntry? GetUploadServiceForSettingsContext(HSSettings context, UploaderManager uploaderManager)
+        catch (OperationCanceledException c)
         {
-            Debug.Assert(context is not null);
-            Debug.Assert(uploaderManager is not null);
-            Debug.Assert(uploaderManager.Loaded);
-
-            return uploaderManager.GetUploaderByName(context.TargetImageHoster);
-
+            throw new UploadCanceledException(c);
         }
-
-        private static ImageFormat GetImageFormat(Image image, HSSettings settingsContext)
+        catch (UploadException)
         {
-            Debug.Assert(image is not null);
-            Debug.Assert(settingsContext is not null);
+            throw;
+        }
+        catch (Exception ex)
+        {
+            throw new UploadException(ex.Message, ex);
+        }
+    }
 
-            if (!settingsContext.EnableSmartFormatForUpload)
-                return ImageFormat.Png;
+    public static UploaderEntry? GetUploadServiceForSettingsContext(HSSettings context, UploaderManager uploaderManager)
+    {
+        Debug.Assert(context is not null);
+        Debug.Assert(uploaderManager is not null);
+        Debug.Assert(uploaderManager.Loaded);
 
-            if (!Drawing.ImageFormatAnalyser.IsOptimizable(image))
-                return ImageFormat.Png;
+        return uploaderManager.GetUploaderByName(context.TargetImageHoster);
 
-            try
-            {
-                var bmp = image is Bitmap b ? b : new Bitmap(image);
+    }
 
-                return Drawing.ImageFormatAnalyser.GetBestFittingFormat(bmp); // Experimental?
-            }
-            catch (Exception e)
-            {
-                Debug.Fail(e.Message);
-                return ImageFormat.Png;
-            }
+    private static ImageFormat GetImageFormat(Image image, HSSettings settingsContext)
+    {
+        Debug.Assert(image is not null);
+        Debug.Assert(settingsContext is not null);
+
+        if (!settingsContext.EnableSmartFormatForUpload)
+            return ImageFormat.Png;
+
+        if (!Drawing.ImageFormatAnalyser.IsOptimizable(image))
+            return ImageFormat.Png;
+
+        try
+        {
+            var bmp = image is Bitmap b ? b : new Bitmap(image);
+
+            return Drawing.ImageFormatAnalyser.GetBestFittingFormat(bmp); // Experimental?
+        }
+        catch (Exception e)
+        {
+            Debug.Fail(e.Message);
+            return ImageFormat.Png;
         }
     }
 }

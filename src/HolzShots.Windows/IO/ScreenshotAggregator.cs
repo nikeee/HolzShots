@@ -6,122 +6,121 @@ using HolzShots.Drawing;
 using HolzShots.IO.Naming;
 using HolzShots.Windows.Forms;
 
-namespace HolzShots.IO
+namespace HolzShots.IO;
+
+public static class ScreenshotAggregator
 {
-    public static class ScreenshotAggregator
+    private static string _lastFileName = string.Empty;
+
+    public static void OpenPictureSaveDirectory(HSSettings settingsContext)
     {
-        private static string _lastFileName = string.Empty;
-
-        public static void OpenPictureSaveDirectory(HSSettings settingsContext)
+        var path = settingsContext.ExpandedSavePath;
+        if (string.IsNullOrWhiteSpace(path))
         {
-            var path = settingsContext.ExpandedSavePath;
-            if (string.IsNullOrWhiteSpace(path))
-            {
-                NotificationManager.NoPathSpecified();
-                return;
-            }
-
-            var ensuredDestinationDirectory = GetAndEnsureDestinationDirectory(settingsContext);
-            if (ensuredDestinationDirectory == null)
-            {
-                NotificationManager.PathDoesNotExist(path);
-                return;
-            }
-
-            if (!string.IsNullOrEmpty(_lastFileName) && File.Exists(_lastFileName))
-            {
-                HolzShotsPaths.OpenSelectedFileInExplorer(_lastFileName);
-            }
-            else
-            {
-                HolzShotsPaths.OpenFolderInExplorer(path);
-            }
+            NotificationManager.NoPathSpecified();
+            return;
         }
 
-        public static void HandleScreenshot(Screenshot shot, HSSettings settingsContext)
+        var ensuredDestinationDirectory = GetAndEnsureDestinationDirectory(settingsContext);
+        if (ensuredDestinationDirectory == null)
         {
-            //  If Not settingsContext.SaveImagesToLocalDisk OrElse Not CheckSavePath(settingsContext) Then Return
-            if (!settingsContext.SaveToLocalDisk)
-                return;
-
-            var ensuredDestinationDirectory = GetAndEnsureDestinationDirectory(settingsContext);
-            if (ensuredDestinationDirectory == null)
-                return;
-
-            SaveScreenshot(shot, ensuredDestinationDirectory, settingsContext);
+            NotificationManager.PathDoesNotExist(path);
+            return;
         }
 
-        private static void SaveScreenshot(Screenshot shot, string ensuredDestinationDirectory, HSSettings settingsContext)
+        if (!string.IsNullOrEmpty(_lastFileName) && File.Exists(_lastFileName))
         {
-            var format = ImageFormat.Png;
-            var extensionAndMimeType = ImageFormatInformation.GetExtensionAndMimeType(format);
+            HolzShotsPaths.OpenSelectedFileInExplorer(_lastFileName);
+        }
+        else
+        {
+            HolzShotsPaths.OpenFolderInExplorer(path);
+        }
+    }
 
-            Debug.Assert(shot.Image.GetType() == typeof(Bitmap));
+    public static void HandleScreenshot(Screenshot shot, HSSettings settingsContext)
+    {
+        //  If Not settingsContext.SaveImagesToLocalDisk OrElse Not CheckSavePath(settingsContext) Then Return
+        if (!settingsContext.SaveToLocalDisk)
+            return;
 
-            var screenshotImage = shot.Image.GetType() == typeof(Bitmap)
-                ? shot.Image
-                : new Bitmap(shot.Image);
+        var ensuredDestinationDirectory = GetAndEnsureDestinationDirectory(settingsContext);
+        if (ensuredDestinationDirectory == null)
+            return;
 
-            if (settingsContext.EnableSmartFormatForSaving && ImageFormatAnalyser.IsOptimizable(screenshotImage))
-            {
-                format = ImageFormatAnalyser.GetBestFittingFormat(screenshotImage);
+        SaveScreenshot(shot, ensuredDestinationDirectory, settingsContext);
+    }
 
-                extensionAndMimeType = format.GetExtensionAndMimeType();
-                Debug.Assert(!string.IsNullOrWhiteSpace(extensionAndMimeType.FileExtension));
-            }
+    private static void SaveScreenshot(Screenshot shot, string ensuredDestinationDirectory, HSSettings settingsContext)
+    {
+        var format = ImageFormat.Png;
+        var extensionAndMimeType = ImageFormatInformation.GetExtensionAndMimeType(format);
 
-            var pattern = settingsContext.SaveImageFileNamePattern;
-            var patternData = shot.GetFileMetadata(format);
+        Debug.Assert(shot.Image.GetType() == typeof(Bitmap));
 
-            string name;
-            try
-            {
+        var screenshotImage = shot.Image.GetType() == typeof(Bitmap)
+            ? shot.Image
+            : new Bitmap(shot.Image);
 
-                name = FileNamePatternFormatter.GetFileNameFromPattern(patternData, pattern);
-            }
-            catch (PatternSyntaxException)
-            {
-                NotificationManager.InvalidFilePattern(pattern);
-                return;
-            }
+        if (settingsContext.EnableSmartFormatForSaving && ImageFormatAnalyser.IsOptimizable(screenshotImage))
+        {
+            format = ImageFormatAnalyser.GetBestFittingFormat(screenshotImage);
 
-            var fileName = Path.ChangeExtension(name, extensionAndMimeType.FileExtension);
-            var path = GetAbsolutePath(ensuredDestinationDirectory, fileName);
-
-            var freePath = FileEx.GetUnusedFileNameFromCandidate(path);
-
-            screenshotImage.Save(freePath, format);
-
-            _lastFileName = path;
+            extensionAndMimeType = format.GetExtensionAndMimeType();
+            Debug.Assert(!string.IsNullOrWhiteSpace(extensionAndMimeType.FileExtension));
         }
 
-        private static string? GetAndEnsureDestinationDirectory(HSSettings settingsContext)
-        {
-            var resolvedPath = settingsContext.ExpandedSavePath;
-            Debug.Assert(!string.IsNullOrEmpty(resolvedPath));
+        var pattern = settingsContext.SaveImageFileNamePattern;
+        var patternData = shot.GetFileMetadata(format);
 
-            try
-            {
-                HolzShotsPaths.EnsureDirectory(resolvedPath);
-                return resolvedPath;
-            }
-            catch (UnauthorizedAccessException)
-            {
-                NotificationManager.UnauthorizedAccessExceptionDirectory(resolvedPath);
-                return null;
-            }
-            catch (PathTooLongException)
-            {
-                NotificationManager.PathIsTooLong(resolvedPath);
-                return null;
-            }
+        string name;
+        try
+        {
+
+            name = FileNamePatternFormatter.GetFileNameFromPattern(patternData, pattern);
+        }
+        catch (PatternSyntaxException)
+        {
+            NotificationManager.InvalidFilePattern(pattern);
+            return;
         }
 
-        private static string GetAbsolutePath(string resolvedSaveDir, string fileName)
+        var fileName = Path.ChangeExtension(name, extensionAndMimeType.FileExtension);
+        var path = GetAbsolutePath(ensuredDestinationDirectory, fileName);
+
+        var freePath = FileEx.GetUnusedFileNameFromCandidate(path);
+
+        screenshotImage.Save(freePath, format);
+
+        _lastFileName = path;
+    }
+
+    private static string? GetAndEnsureDestinationDirectory(HSSettings settingsContext)
+    {
+        var resolvedPath = settingsContext.ExpandedSavePath;
+        Debug.Assert(!string.IsNullOrEmpty(resolvedPath));
+
+        try
         {
-            if (string.IsNullOrWhiteSpace(fileName))
-                throw new ArgumentNullException(nameof(fileName));
-            return Path.Combine(resolvedSaveDir, fileName);
+            HolzShotsPaths.EnsureDirectory(resolvedPath);
+            return resolvedPath;
         }
+        catch (UnauthorizedAccessException)
+        {
+            NotificationManager.UnauthorizedAccessExceptionDirectory(resolvedPath);
+            return null;
+        }
+        catch (PathTooLongException)
+        {
+            NotificationManager.PathIsTooLong(resolvedPath);
+            return null;
+        }
+    }
+
+    private static string GetAbsolutePath(string resolvedSaveDir, string fileName)
+    {
+        if (string.IsNullOrWhiteSpace(fileName))
+            throw new ArgumentNullException(nameof(fileName));
+        return Path.Combine(resolvedSaveDir, fileName);
     }
 }

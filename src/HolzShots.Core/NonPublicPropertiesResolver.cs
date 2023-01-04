@@ -2,19 +2,18 @@ using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace HolzShots
+namespace HolzShots;
+
+public class NonPublicPropertiesResolver : CamelCasePropertyNamesContractResolver
 {
-    public class NonPublicPropertiesResolver : CamelCasePropertyNamesContractResolver
+    protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
     {
-        protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
+        var prop = base.CreateProperty(member, memberSerialization);
+        if (member is PropertyInfo pi)
         {
-            var prop = base.CreateProperty(member, memberSerialization);
-            if (member is PropertyInfo pi)
-            {
-                prop.Readable = (pi.GetMethod is not null);
-                prop.Writable = (pi.SetMethod is not null);
-            }
-            return prop;
+            prop.Readable = (pi.GetMethod is not null);
+            prop.Writable = (pi.SetMethod is not null);
         }
+        return prop;
     }
 }

@@ -1,73 +1,72 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace HolzShots.Input.Keyboard
+namespace HolzShots.Input.Keyboard;
+
+public class HolzShotsActionCollection : HotkeyActionCollection, IDisposable
 {
-    public class HolzShotsActionCollection : HotkeyActionCollection, IDisposable
+    private readonly object _lockObj = new();
+    private bool disposedValue;
+
+    public HolzShotsActionCollection(KeyboardHook hook, params IHotkeyAction[] actions)
+        : base(hook, actions) { }
+
+    public override void Refresh()
     {
-        private readonly object _lockObj = new();
-        private bool disposedValue;
+        Debug.Assert(Hook is not null);
+        Debug.Assert(_lockObj is not null);
 
-        public HolzShotsActionCollection(KeyboardHook hook, params IHotkeyAction[] actions)
-            : base(hook, actions) { }
-
-        public override void Refresh()
+        var exeptions = new List<Exception>(Count);
+        lock (_lockObj)
         {
-            Debug.Assert(Hook is not null);
-            Debug.Assert(_lockObj is not null);
+            Hook.UnregisterAllHotkeys();
 
-            var exeptions = new List<Exception>(Count);
-            lock (_lockObj)
+            foreach (var action in Actions)
             {
-                Hook.UnregisterAllHotkeys();
-
-                foreach (var action in Actions)
+                var h = action.Hotkey;
+                if (action.Enabled)
                 {
-                    var h = action.Hotkey;
-                    if (action.Enabled)
+                    try
                     {
-                        try
-                        {
-                            Hook.RegisterHotkey(h);
-                        }
-                        catch (Exception ex)
-                        {
-                            exeptions.Add(ex);
-                            continue;
-                        }
-
-                        h.KeyPressed += (sender, e) => { action.Invoke(sender, e); };
+                        Hook.RegisterHotkey(h);
                     }
+                    catch (Exception ex)
+                    {
+                        exeptions.Add(ex);
+                        continue;
+                    }
+
+                    h.KeyPressed += (sender, e) => { action.Invoke(sender, e); };
                 }
             }
-
-            if (exeptions.Count > 0)
-                throw new AggregateException("A number of Hotkeys failed to register", exeptions);
         }
 
-        protected virtual void Dispose(bool disposing)
+        if (exeptions.Count > 0)
+            throw new AggregateException("A number of Hotkeys failed to register", exeptions);
+    }
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (!disposedValue)
         {
-            if (!disposedValue)
+            if (disposing)
             {
-                if (disposing)
-                {
-                }
-
-                lock (_lockObj)
-                    Hook.UnregisterAllHotkeys();
-                disposedValue = true;
             }
-        }
 
-        ~HolzShotsActionCollection()
-        {
-            Dispose(disposing: false);
+            lock (_lockObj)
+                Hook.UnregisterAllHotkeys();
+            disposedValue = true;
         }
+    }
 
-        public void Dispose()
-        {
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
-        }
+    ~HolzShotsActionCollection()
+    {
+        Dispose(disposing: false);
+    }
+
+    public void Dispose()
+    {
+        Dispose(disposing: true);
+        GC.SuppressFinalize(this);
     }
 }

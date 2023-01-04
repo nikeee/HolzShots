@@ -1,16 +1,15 @@
 
-namespace HolzShots.Input.Keyboard
-{
+namespace HolzShots.Input.Keyboard;
 
-    /// <summary>The enumeration of possible modifiers.</summary>
-    [Flags]
-    public enum ModifierKeys
-    {
-        None = 0,
-        Alt = 1,
-        Control = 2,
-        Shift = 4,
-        Win = 8,
-        NoRepeat = 0x4000,
-    }
+
+/// <summary>The enumeration of possible modifiers.</summary>
+[Flags]
+public enum ModifierKeys
+{
+    None = 0,
+    Alt = 1,
+    Control = 2,
+    Shift = 4,
+    Win = 8,
+    NoRepeat = 0x4000,
 }

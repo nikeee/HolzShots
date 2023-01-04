@@ -1,15 +1,14 @@
-namespace HolzShots.UI
+namespace HolzShots.UI;
+
+public static class Localization
 {
-    public static class Localization
-    {
-        public const string DialogFilterImages = "Images";
-        public const string UploadTo = "Upload to {0}";
+    public const string DialogFilterImages = "Images";
+    public const string UploadTo = "Upload to {0}";
 
-        public const string PngImage = "PNG image";
-        public const string JpgImage = "JPG image";
-        public const string ChooseDestinationFileName = "Choose destination file name";
+    public const string PngImage = "PNG image";
+    public const string JpgImage = "JPG image";
+    public const string ChooseDestinationFileName = "Choose destination file name";
 
-        public const string PixelUnit = "px";
-        public const string PercentUnit = "%";
-    }
+    public const string PixelUnit = "px";
+    public const string PercentUnit = "%";
 }

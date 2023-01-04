@@ -8,87 +8,86 @@ using HolzShots.Net.Custom;
 using Newtonsoft.Json;
 using System.Linq;
 
-namespace HolzShots.Composition
+namespace HolzShots.Composition;
+
+public class CustomUploaderSource : IUploaderSource
 {
-    public class CustomUploaderSource : IUploaderSource
+    private readonly string _customUploadersDirectory;
+    private IReadOnlyDictionary<UploaderMeta, CustomUploader> _customUploaders = ImmutableDictionary<UploaderMeta, CustomUploader>.Empty;
+    private IReadOnlyDictionary<string, CustomUploaderSpec> _uploadersFiles = ImmutableDictionary<string, CustomUploaderSpec>.Empty;
+
+    public bool Loaded { get; private set; }
+
+    public CustomUploaderSource(string customUploadersDirectory)
     {
-        private readonly string _customUploadersDirectory;
-        private IReadOnlyDictionary<UploaderMeta, CustomUploader> _customUploaders = ImmutableDictionary<UploaderMeta, CustomUploader>.Empty;
-        private IReadOnlyDictionary<string, CustomUploaderSpec> _uploadersFiles = ImmutableDictionary<string, CustomUploaderSpec>.Empty;
+        if (string.IsNullOrEmpty(customUploadersDirectory))
+            throw new ArgumentNullException(nameof(customUploadersDirectory));
+        _customUploadersDirectory = customUploadersDirectory;
+    }
 
-        public bool Loaded { get; private set; }
-
-        public CustomUploaderSource(string customUploadersDirectory)
+    /// <summary> Can also be safely called for reloads. </summary>
+    public async Task Load()
+    {
+        try
         {
-            if (string.IsNullOrEmpty(customUploadersDirectory))
-                throw new ArgumentNullException(nameof(customUploadersDirectory));
-            _customUploadersDirectory = customUploadersDirectory;
-        }
+            HolzShotsPaths.EnsureDirectory(_customUploadersDirectory);
+            // var res = new Dictionary<UploaderMeta, CustomUploader>();
 
-        /// <summary> Can also be safely called for reloads. </summary>
-        public async Task Load()
-        {
-            try
+            var res = ImmutableDictionary.CreateBuilder<UploaderMeta, CustomUploader>();
+            var files = ImmutableDictionary.CreateBuilder<string, CustomUploaderSpec>();
+
+            foreach (var jsonFile in Directory.EnumerateFiles(_customUploadersDirectory, HolzShotsPaths.CustomUploadersFilePattern))
             {
-                HolzShotsPaths.EnsureDirectory(_customUploadersDirectory);
-                // var res = new Dictionary<UploaderMeta, CustomUploader>();
+                using var reader = File.OpenText(jsonFile);
+                var jsonStr = await reader.ReadToEndAsync().ConfigureAwait(false);
 
-                var res = ImmutableDictionary.CreateBuilder<UploaderMeta, CustomUploader>();
-                var files = ImmutableDictionary.CreateBuilder<string, CustomUploaderSpec>();
+                // TODO: Catch parsing errors
+                var uploader = JsonConvert.DeserializeObject<CustomUploaderSpec>(jsonStr, JsonConfig.JsonSettings);
 
-                foreach (var jsonFile in Directory.EnumerateFiles(_customUploadersDirectory, HolzShotsPaths.CustomUploadersFilePattern))
-                {
-                    using var reader = File.OpenText(jsonFile);
-                    var jsonStr = await reader.ReadToEndAsync().ConfigureAwait(false);
-
-                    // TODO: Catch parsing errors
-                    var uploader = JsonConvert.DeserializeObject<CustomUploaderSpec>(jsonStr, JsonConfig.JsonSettings);
-
-                    // TODO: Aggregate errors of invalid files (and display them to the user)
-                    Debug.Assert(uploader is not null);
-
-                    if (CustomUploader.TryLoad(uploader, out var loadedUploader))
-                    {
-                        Debug.Assert(loadedUploader is not null);
-                        res.Add(uploader.Meta, loadedUploader);
-                        files.Add(jsonFile, uploader);
-                    }
-                }
-
-                _uploadersFiles = files.ToImmutable();
-                _customUploaders = res.ToImmutable();
-            }
-            catch (FileNotFoundException)
-            {
-                _customUploaders = ImmutableDictionary<UploaderMeta, CustomUploader>.Empty;
-            }
-            finally
-            {
-                Loaded = true;
-            }
-        }
-
-        public UploaderEntry? GetUploaderByName(string name)
-        {
-            var cupls = _customUploaders;
-            Debug.Assert(cupls is not null);
-
-            foreach (var (info, uploader) in _customUploaders)
-            {
-                if (info == null)
-                    continue;
-                Debug.Assert(info is not null);
-                Debug.Assert(!string.IsNullOrEmpty(info.Name));
+                // TODO: Aggregate errors of invalid files (and display them to the user)
                 Debug.Assert(uploader is not null);
 
-                if (Uploader.HasEqualName(info.Name, name))
-                    return new UploaderEntry(info, uploader);
+                if (CustomUploader.TryLoad(uploader, out var loadedUploader))
+                {
+                    Debug.Assert(loadedUploader is not null);
+                    res.Add(uploader.Meta, loadedUploader);
+                    files.Add(jsonFile, uploader);
+                }
             }
 
-            return null;
+            _uploadersFiles = files.ToImmutable();
+            _customUploaders = res.ToImmutable();
         }
-        public IReadOnlyList<string> GetUploaderNames() => GetMetadata().Select(i => i.Name).ToList();
-        public IReadOnlyList<IPluginMetadata> GetMetadata() => _customUploaders.Select(kv => kv.Key).ToList();
-        public IReadOnlyList<(string filePath, CustomUploaderSpec spec)> GetCustomUploaderSpecs() => _uploadersFiles.Select(x => (x.Key, x.Value)).ToList();
+        catch (FileNotFoundException)
+        {
+            _customUploaders = ImmutableDictionary<UploaderMeta, CustomUploader>.Empty;
+        }
+        finally
+        {
+            Loaded = true;
+        }
     }
+
+    public UploaderEntry? GetUploaderByName(string name)
+    {
+        var cupls = _customUploaders;
+        Debug.Assert(cupls is not null);
+
+        foreach (var (info, uploader) in _customUploaders)
+        {
+            if (info == null)
+                continue;
+            Debug.Assert(info is not null);
+            Debug.Assert(!string.IsNullOrEmpty(info.Name));
+            Debug.Assert(uploader is not null);
+
+            if (Uploader.HasEqualName(info.Name, name))
+                return new UploaderEntry(info, uploader);
+        }
+
+        return null;
+    }
+    public IReadOnlyList<string> GetUploaderNames() => GetMetadata().Select(i => i.Name).ToList();
+    public IReadOnlyList<IPluginMetadata> GetMetadata() => _customUploaders.Select(kv => kv.Key).ToList();
+    public IReadOnlyList<(string filePath, CustomUploaderSpec spec)> GetCustomUploaderSpecs() => _uploadersFiles.Select(x => (x.Key, x.Value)).ToList();
 }

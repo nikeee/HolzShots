@@ -3,33 +3,32 @@ using System.Diagnostics;
 using System.Linq;
 using HolzShots.Net;
 
-namespace HolzShots.Composition
+namespace HolzShots.Composition;
+
+public class PluginUploaderSource : PluginManager<Uploader>, IUploaderSource
 {
-    public class PluginUploaderSource : PluginManager<Uploader>, IUploaderSource
+    public PluginUploaderSource(string pluginDirectory)
+        : base(pluginDirectory)
+    { }
+
+    public UploaderEntry? GetUploaderByName(string name)
     {
-        public PluginUploaderSource(string pluginDirectory)
-            : base(pluginDirectory)
-        { }
+        Debug.Assert(!string.IsNullOrEmpty(name));
+        Debug.Assert(Loaded);
 
-        public UploaderEntry? GetUploaderByName(string name)
-        {
-            Debug.Assert(!string.IsNullOrEmpty(name));
-            Debug.Assert(Loaded);
+        var pls = Plugins;
+        Debug.Assert(pls is not null);
 
-            var pls = Plugins;
-            Debug.Assert(pls is not null);
+        return pls
+            .Where(p => Uploader.HasEqualName(p.metadata.Name, name))
+            .Select(p => new UploaderEntry(new PluginMetadata(p.metadata), p.instance))
+            .FirstOrDefault();
+    }
 
-            return pls
-                .Where(p => Uploader.HasEqualName(p.metadata.Name, name))
-                .Select(p => new UploaderEntry(new PluginMetadata(p.metadata), p.instance))
-                .FirstOrDefault();
-        }
-
-        public IReadOnlyList<string> GetUploaderNames()
-        {
-            var meta = GetMetadata();
-            Debug.Assert(meta is not null);
-            return meta.Select(i => i.Name).ToList();
-        }
+    public IReadOnlyList<string> GetUploaderNames()
+    {
+        var meta = GetMetadata();
+        Debug.Assert(meta is not null);
+        return meta.Select(i => i.Name).ToList();
     }
 }
