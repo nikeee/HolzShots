@@ -2,19 +2,19 @@ using System.Runtime.InteropServices;
 
 namespace HolzShots.Native;
 
-public static class UxTheme
+public static partial class UxTheme
 {
     private const string DllName = "uxtheme.dll";
 
 
-    [DllImport(DllName)]
-    public extern static int SetWindowThemeAttribute(IntPtr hWnd, int wtype, ref WtaOptions attributes, uint size);
+    [LibraryImport(DllName)]
+    public static partial int SetWindowThemeAttribute(IntPtr hWnd, int wtype, ref WtaOptions attributes, uint size);
 
-    [DllImport(DllName)]
-    public extern static int GetThemeMargins(IntPtr hTheme, IntPtr hdc, int iPartId, int iStateId, int iPropId, IntPtr rect, ref Margin pMargins);
+    [LibraryImport(DllName)]
+    public static partial int GetThemeMargins(IntPtr hTheme, IntPtr hdc, int iPartId, int iStateId, int iPropId, IntPtr rect, ref Margin pMargins);
 
-    [DllImport(DllName, ExactSpelling = true, CharSet = CharSet.Unicode)]
-    public extern static int SetWindowTheme(IntPtr hWnd, string pszSubAppName, int pszSubIdList);
+    [LibraryImport(DllName, StringMarshalling = StringMarshalling.Utf16)]
+    public static partial int SetWindowTheme(IntPtr hWnd, string pszSubAppName, int pszSubIdList);
 
 
     #region Types

@@ -3,15 +3,15 @@ using System.Windows.Forms;
 
 namespace HolzShots.Input.Keyboard;
 
-internal static class NativeMethods
+internal static partial class NativeMethods
 {
     private const string User32 = "user32.dll";
 
-    [DllImport(User32, SetLastError = true)]
+    [LibraryImport(User32, SetLastError = true)]
     [return: MarshalAs(UnmanagedType.Bool)]
-    internal static extern bool RegisterHotKey(IntPtr hWnd, int id, ModifierKeys fsModifiers, Keys vk);
+    internal static partial bool RegisterHotKey(IntPtr hWnd, int id, ModifierKeys fsModifiers, Keys vk);
 
-    [DllImport(User32, SetLastError = true)]
+    [LibraryImport(User32, SetLastError = true)]
     [return: MarshalAs(UnmanagedType.Bool)]
-    internal static extern bool UnregisterHotKey(IntPtr hWnd, int id);
+    internal static partial bool UnregisterHotKey(IntPtr hWnd, int id);
 }

@@ -3,20 +3,20 @@ using System.Text;
 
 namespace HolzShots.Native;
 
-public static class User32
+public static partial class User32
 {
     private const string DllName = "user32.dll";
 
     #region SendMessage
 
-    [DllImport(DllName)]
-    public static extern IntPtr SendMessage(IntPtr hWnd, WindowMessage msg, IntPtr wParam, IntPtr lParam);
+    [LibraryImport(DllName)]
+    public static partial IntPtr SendMessage(IntPtr hWnd, WindowMessage msg, IntPtr wParam, IntPtr lParam);
 
     [DllImport(DllName, CharSet = CharSet.Unicode)]
     public static extern IntPtr SendMessage(IntPtr hWnd, WindowMessage msg, IntPtr wParam, StringBuilder lParam);
 
-    [DllImport(DllName)]
-    public static extern IntPtr SendMessage(IntPtr hWnd, WindowMessage msg, IntPtr wParam, [MarshalAs(UnmanagedType.LPWStr)] string lParam);
+    [LibraryImport(DllName)]
+    public static partial IntPtr SendMessage(IntPtr hWnd, WindowMessage msg, IntPtr wParam, [MarshalAs(UnmanagedType.LPWStr)] string lParam);
 
     #endregion
     #region Window Functions
@@ -24,17 +24,19 @@ public static class User32
     [DllImport(DllName, SetLastError = true, CharSet = CharSet.Unicode)]
     public static extern int GetWindowText(IntPtr hwnd, StringBuilder lpString, int cch);
 
-    [DllImport(DllName, SetLastError = true, CharSet = CharSet.Auto)]
-    public static extern int GetWindowTextLength(IntPtr hwnd);
+    [LibraryImport(DllName, SetLastError = true)]
+    public static partial int GetWindowTextLength(IntPtr hwnd);
 
-    [DllImport(DllName)]
-    public static extern bool IsIconic(IntPtr hWnd);
+    [LibraryImport(DllName)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    public static partial bool IsIconic(IntPtr hWnd);
 
     [DllImport(DllName, CharSet = CharSet.Unicode)]
     public static extern int GetClassName(IntPtr hWnd, StringBuilder lpClassName, int nMaxCount);
 
-    [DllImport(DllName)]
-    private static extern bool FlashWindowEx(in FlashWindowInfo pwfi);
+    [LibraryImport(DllName)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static partial bool FlashWindowEx(in FlashWindowInfo pwfi);
 
     /// <summary>
     /// Callback EnumWindowsCallback should return true to continue enumerating or false to stop.
@@ -42,9 +44,9 @@ public static class User32
     /// http://pinvoke.net/default.aspx/user32.EnumWindows
     /// https://docs.microsoft.com/en-us/previous-versions/windows/desktop/legacy/ms633498(v=vs.85)
     /// </summary>
-    [DllImport(DllName)]
+    [LibraryImport(DllName)]
     [return: MarshalAs(UnmanagedType.Bool)]
-    public static extern bool EnumWindows(EnumWindowsCallback enumWindowFunction, IntPtr lParam);
+    public static partial bool EnumWindows(EnumWindowsCallback enumWindowFunction, IntPtr lParam);
 
     /// <summary>
     /// Callback EnumWindowsCallback should return true to continue enumerating or false to stop.
@@ -54,35 +56,37 @@ public static class User32
     /// </summary>
     public delegate bool EnumWindowsCallback(IntPtr windowHandle, int lParam);
 
-    [DllImport(DllName)]
+    [LibraryImport(DllName)]
     [return: MarshalAs(UnmanagedType.Bool)]
-    public static extern bool IsWindowVisible(IntPtr windowHandle);
+    public static partial bool IsWindowVisible(IntPtr windowHandle);
 
-    [DllImport(DllName)]
+    [LibraryImport(DllName)]
     [return: MarshalAs(UnmanagedType.Bool)]
-    public static extern bool GetClientRect(IntPtr hWnd, out Rect lpRect);
+    public static partial bool GetClientRect(IntPtr hWnd, out Rect lpRect);
 
-    [DllImport(DllName, ExactSpelling = true, SetLastError = true)]
-    public static extern int MapWindowPoints(IntPtr hWndFrom, IntPtr hWndTo, [In, Out] ref Rect rect, [MarshalAs(UnmanagedType.U4)] int cPoints);
+    [LibraryImport(DllName, SetLastError = true)]
+    public static partial int MapWindowPoints(IntPtr hWndFrom, IntPtr hWndTo, ref Rect rect, [MarshalAs(UnmanagedType.U4)] uint cPoints);
 
-    [DllImport(DllName)]
-    static extern bool IsZoomed(IntPtr hWnd);
-
-    [DllImport(DllName, SetLastError = true)]
+    [LibraryImport(DllName)]
     [return: MarshalAs(UnmanagedType.Bool)]
-    public static extern bool GetWindowInfo(IntPtr hwnd, ref WindowInfo pwi);
+    public static partial bool IsZoomed(IntPtr hWnd);
+
+    [LibraryImport(DllName, SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    public static partial bool GetWindowInfo(IntPtr hwnd, ref WindowInfo pwi);
 
     #region Window Position
 
-    [DllImport(DllName)]
+    [LibraryImport(DllName)]
     [return: MarshalAs(UnmanagedType.Bool)]
-    public static extern bool GetWindowRect(IntPtr hWnd, out Rect lpRect);
+    public static partial bool GetWindowRect(IntPtr hWnd, out Rect lpRect);
 
     [DllImport(DllName)]
     public static extern bool GetWindowPlacement(IntPtr hWnd, out WindowPlacement lpwndpl);
 
-    [DllImport(DllName, CharSet = CharSet.Auto)]
-    public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndAfter, int x, int y, int width, int height, int flags);
+    [LibraryImport(DllName)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    public static partial bool SetWindowPos(IntPtr hWnd, IntPtr hWndAfter, int x, int y, int width, int height, int flags);
 
     /// <summary>
     /// The MoveWindow function changes the position and dimensions of the specified window. For a top-level window, the position and dimensions are relative to the upper-left corner of the screen. For a child window, they are relative to the upper-left corner of the parent window's client area.
@@ -95,14 +99,16 @@ public static class User32
     /// <param name="bRepaint">Specifies whether the window is to be repainted. If this parameter is TRUE, the window receives a message. If the parameter is FALSE, no repainting of any kind occurs. This applies to the client area, the nonclient area (including the title bar and scroll bars), and any part of the parent window uncovered as a result of moving a child window.</param>
     /// <returns>If the function succeeds, the return value is nonzero.
     /// <para>If the function fails, the return value is zero. To get extended error information, call GetLastError.</para></returns>
-    [DllImport(DllName)]
-    public static extern bool MoveWindow(IntPtr hWnd, int x, int y, int nWidth, int nHeight, bool bRepaint);
+    [LibraryImport(DllName)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    public static partial bool MoveWindow(IntPtr hWnd, int x, int y, int nWidth, int nHeight, [MarshalAs(UnmanagedType.Bool)] bool bRepaint);
 
-    [DllImport(DllName)]
-    public static extern bool SetForegroundWindow(IntPtr hWnd);
+    [LibraryImport(DllName)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    public static partial bool SetForegroundWindow(IntPtr hWnd);
 
-    [DllImport(DllName)]
-    public static extern IntPtr GetForegroundWindow();
+    [LibraryImport(DllName)]
+    public static partial IntPtr GetForegroundWindow();
 
     public static bool SetForegroundWindowEx(IntPtr windowHandle)
     {
@@ -123,40 +129,45 @@ public static class User32
     #endregion
     #region Threading
 
-    [DllImport(DllName)]
-    public static extern bool AttachThreadInput(int idAttach, int idAttachTo, bool fAttach);
+    [LibraryImport(DllName)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    public static partial bool AttachThreadInput(int idAttach, int idAttachTo, [MarshalAs(UnmanagedType.Bool)] bool fAttach);
 
-    [DllImport(DllName, SetLastError = true)]
-    public static extern int GetWindowThreadProcessId(IntPtr hWnd, IntPtr lpdwProcessId);
-    [DllImport(DllName, SetLastError = true)]
-    public static extern int GetWindowThreadProcessId(IntPtr hWnd, ref int lpdwProcessId);
+    [LibraryImport(DllName, SetLastError = true)]
+    public static partial int GetWindowThreadProcessId(IntPtr hWnd, IntPtr lpdwProcessId);
+    [LibraryImport(DllName, SetLastError = true)]
+    public static partial int GetWindowThreadProcessId(IntPtr hWnd, ref int lpdwProcessId);
 
     #endregion
     #region Drawing
 
-    [DllImport(DllName)]
-    public static extern bool DestroyIcon(IntPtr hIcon);
+    [LibraryImport(DllName)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    public static partial bool DestroyIcon(IntPtr hIcon);
 
-    [DllImport(DllName)]
-    public static extern bool LockWindowUpdate(IntPtr hWndLock);
+    [LibraryImport(DllName)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    public static partial bool LockWindowUpdate(IntPtr hWndLock);
 
-    [DllImport(DllName, CharSet = CharSet.Auto)]
-    public static extern int ReleaseDC(IntPtr hWnd, IntPtr hDc);
+    [LibraryImport(DllName)]
+    public static partial int ReleaseDC(IntPtr hWnd, IntPtr hDc);
 
-    [DllImport(DllName)]
-    public static extern IntPtr GetWindowDC(IntPtr window);
+    [LibraryImport(DllName)]
+    public static partial IntPtr GetWindowDC(IntPtr window);
 
-    [DllImport(DllName)]
-    public static extern bool GetCursorInfo(ref CursorInfo pci);
+    [LibraryImport(DllName)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    public static partial bool GetCursorInfo(ref CursorInfo pci);
 
-    [DllImport(DllName)]
-    public static extern bool DrawIcon(IntPtr hDC, int x, int y, IntPtr iconHandle);
+    [LibraryImport(DllName)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    public static partial bool DrawIcon(IntPtr hDC, int x, int y, IntPtr iconHandle);
 
     #endregion
     #region DC / DesktopWindow
 
-    [DllImport(DllName)]
-    public static extern IntPtr GetDesktopWindow();
+    [LibraryImport(DllName)]
+    public static partial IntPtr GetDesktopWindow();
 
     #endregion
 

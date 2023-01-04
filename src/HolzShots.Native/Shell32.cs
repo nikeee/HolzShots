@@ -2,15 +2,15 @@ using System.Runtime.InteropServices;
 
 namespace HolzShots.Native;
 
-public static class Shell32
+public static partial class Shell32
 {
     private const string DllName = "shell32.dll";
 
     [DllImport(DllName, BestFitMapping = false, ThrowOnUnmappableChar = true)]
     public static extern void SHAddToRecentDocs(ShellAddToRecentDocsFlags flag, [MarshalAs(UnmanagedType.LPStr)] string path);
 
-    [DllImport(DllName)]
-    public static extern IntPtr SHAppBarMessage(Abm msg, ref AppBarData data);
+    [LibraryImport(DllName)]
+    public static partial IntPtr SHAppBarMessage(Abm msg, ref AppBarData data);
 
     #region Types
 
