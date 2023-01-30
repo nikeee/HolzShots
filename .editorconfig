@@ -1,6 +1,5 @@
-root = true
-
 # More settings here: https://github.com/dotnet/roslyn/blob/master/.editorconfig
+root = true
 
 [*]
 charset = utf-8
