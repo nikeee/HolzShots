@@ -24,7 +24,6 @@
     <Import Include="Microsoft.CSharp" />
 
     <ProjectReference Include="..\HolzShots.Common\HolzShots.Common.csproj" />
-    <ProjectReference Include="..\HolzShots.Input.Keyboard\HolzShots.Input.Keyboard.csproj" />
 
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <PackageReference Include="Semver" Version="2.2.0" />
@@ -32,6 +31,8 @@
     <PackageReference Include="System.Composition" Version="7.0.0" />
     <PackageReference Include="System.ComponentModel.Composition" Version="7.0.0 " />
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.9" />
+
+    <PackageReference Include="HolzShots.Input.Keyboard" Version="2.0.0-preview.3" />
   </ItemGroup>
 
   <ItemGroup>
