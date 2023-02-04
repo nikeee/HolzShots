@@ -3,8 +3,8 @@ using System.Drawing;
 using System.Linq;
 
 using System.Windows.Forms;
-using Forms.Transitions;
-using Forms.Transitions.TransitionTypes;
+using HolzShots.Forms.Transitions;
+using HolzShots.Forms.Transitions.TransitionTypes;
 using HolzShots.Threading;
 
 namespace HolzShots.Windows.Forms;
