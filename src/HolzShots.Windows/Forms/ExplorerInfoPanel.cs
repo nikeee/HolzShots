@@ -33,27 +33,15 @@ public class ExplorerInfoPanel : Panel
         {
             if (Width > 0 && Height > 4)
             {
-                switch (Dock)
-                {
-                    case DockStyle.Bottom:
-                        DrawBottom(e.Graphics);
-                        break;
-                    case DockStyle.Top:
-                        DrawTop(e.Graphics);
-                        break;
-                    case DockStyle.Fill:
-                        DrawFill(e.Graphics);
-                        break;
-                    case DockStyle.Left:
-                        DrawLeft(e.Graphics);
-                        break;
-                    case DockStyle.Right:
-                        DrawRight(e.Graphics);
-                        break;
-                    case DockStyle.None:
-                        DrawFill(e.Graphics);
-                        break;
-                }
+                Dock switch {
+                    DockStyle.Bottom => DrawBottom(e.Graphics),
+                    DockStyle.Top => DrawTop(e.Graphics),
+                    DockStyle.Fill => DrawFill(e.Graphics),
+                    DockStyle.Left => DrawLeft(e.Graphics),
+                    DockStyle.Right => DrawRight(e.Graphics),
+                    DockStyle.None => DrawFill(e.Graphics),
+                    _ => DrawFill(e.Graphics)
+                };
             }
         }
         else
@@ -63,26 +51,11 @@ public class ExplorerInfoPanel : Panel
     }
 
 
-    private Brush CreateBrushTopDock()
-    {
-        return new LinearGradientBrush(_upperBrushPoint, new Point(0, Height - 3), _gradientColor2, _gradientColor1);
-    }
-    private Brush CreateBrushBottomDock()
-    {
-        return new LinearGradientBrush(_upperBrushPoint, new Point(0, Height - 3), _gradientColor1, _gradientColor2);
-    }
-    private Brush CreateBrushFillDock()
-    {
-        return new LinearGradientBrush(_upperBrushPoint, new Point(Width, Height), _gradientColor1, _gradientColor2);
-    }
-    private Brush CreateBrushLeftDock()
-    {
-        return new LinearGradientBrush(_upperBrushPoint, new Point(Width, Height), _gradientColor1, _gradientColor2);
-    }
-    private Brush CreateBrushRightDock()
-    {
-        return new LinearGradientBrush(_upperBrushPoint, new Point(Width, Height), _gradientColor2, _gradientColor1);
-    }
+    private Brush CreateBrushTopDock() => new LinearGradientBrush(_upperBrushPoint, new Point(0, Height - 3), _gradientColor2, _gradientColor1);
+    private Brush CreateBrushBottomDock() => new LinearGradientBrush(_upperBrushPoint, new Point(0, Height - 3), _gradientColor1, _gradientColor2);
+    private Brush CreateBrushFillDock() => new LinearGradientBrush(_upperBrushPoint, new Point(Width, Height), _gradientColor1, _gradientColor2);
+    private Brush CreateBrushLeftDock() => new LinearGradientBrush(_upperBrushPoint, new Point(Width, Height), _gradientColor1, _gradientColor2);
+    private Brush CreateBrushRightDock() => new LinearGradientBrush(_upperBrushPoint, new Point(Width, Height), _gradientColor2, _gradientColor1);
 
     private void DrawBottom(Graphics g)
     {
