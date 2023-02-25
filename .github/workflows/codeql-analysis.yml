@@ -20,23 +20,17 @@ jobs:
         language: ['csharp']
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+    - uses: actions/checkout@v3
 
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v2
+    - uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '7.0.x'
+        dotnet-version: '8.x'
         include-prerelease: true
 
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@v2
+    - uses: github/codeql-action/init@v2
       with:
         languages: ${{ matrix.language }}
 
-    - name: Build
-      run: |
-        dotnet build -c DEBUG
+    - run: dotnet build -c DEBUG
 
-    - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v2
+    - uses: github/codeql-action/analyze@v2

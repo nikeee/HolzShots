@@ -18,7 +18,7 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '7.0.x'
+        dotnet-version: '8.x'
 
     - name: Restore Dependencies
       run: |
@@ -26,17 +26,13 @@ jobs:
         dotnet restore
         # dotnet version --dry-run -f src/Common.props --build-meta { git rev-parse --short HEAD }
 
-    - name: Compile Solution
-      run: dotnet build -c $env:CONFIGURATION
+    - run: dotnet build -c $env:CONFIGURATION
 
-    - name: Compile Main Application
-      run: dotnet build -c $env:CONFIGURATION src\HolzShots\HolzShots.csproj
+    - run: dotnet build -c $env:CONFIGURATION src\HolzShots\HolzShots.csproj
 
-    - name: Run Tests
-      run: dotnet test -c $env:CONFIGURATION --no-build src\HolzShots.Core.Tests\HolzShots.Core.Tests.csproj
+    - run: dotnet test -c $env:CONFIGURATION --no-build src\HolzShots.Core.Tests\HolzShots.Core.Tests.csproj
 
-    - name: Install Schema-Checking Dependencies
-      run: npm install -g ajv-cli
+    - run: npm install -g ajv-cli
 
     # - name: Validate JSON Schemas
     #   run: |
