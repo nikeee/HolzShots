@@ -33,14 +33,29 @@ public class ExplorerInfoPanel : Panel
         {
             if (Width > 0 && Height > 4)
             {
-                Dock switch {
-                    DockStyle.Bottom => DrawBottom(e.Graphics),
-                    DockStyle.Top => DrawTop(e.Graphics),
-                    DockStyle.Fill => DrawFill(e.Graphics),
-                    DockStyle.Left => DrawLeft(e.Graphics),
-                    DockStyle.Right => DrawRight(e.Graphics),
-                    DockStyle.None => DrawFill(e.Graphics),
-                    _ => DrawFill(e.Graphics)
+                switch (Dock)
+                {
+                    case DockStyle.Bottom:
+                        DrawBottom(e.Graphics);
+                        break;
+                    case DockStyle.Top:
+                        DrawTop(e.Graphics);
+                        break;
+                    case DockStyle.Fill:
+                        DrawFill(e.Graphics);
+                        break;
+                    case DockStyle.Left:
+                        DrawLeft(e.Graphics);
+                        break;
+                    case DockStyle.Right:
+                        DrawRight(e.Graphics);
+                        break;
+                    case DockStyle.None:
+                        DrawFill(e.Graphics);
+                        break;
+                    default:
+                        DrawFill(e.Graphics);
+                        break;
                 };
             }
         }
