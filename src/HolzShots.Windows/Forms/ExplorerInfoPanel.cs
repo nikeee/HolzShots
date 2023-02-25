@@ -29,39 +29,38 @@ public class ExplorerInfoPanel : Panel
 
         base.OnPaint(e);
 
-        if (Enabled)
-        {
-            if (Width > 0 && Height > 4)
-            {
-                switch (Dock)
-                {
-                    case DockStyle.Bottom:
-                        DrawBottom(e.Graphics);
-                        break;
-                    case DockStyle.Top:
-                        DrawTop(e.Graphics);
-                        break;
-                    case DockStyle.Fill:
-                        DrawFill(e.Graphics);
-                        break;
-                    case DockStyle.Left:
-                        DrawLeft(e.Graphics);
-                        break;
-                    case DockStyle.Right:
-                        DrawRight(e.Graphics);
-                        break;
-                    case DockStyle.None:
-                        DrawFill(e.Graphics);
-                        break;
-                    default:
-                        DrawFill(e.Graphics);
-                        break;
-                };
-            }
-        }
-        else
+        if (!Enabled)
         {
             e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(240, 240, 240)), DisplayRectangle);
+            return;
+        }
+
+        if (Width <= 0 || Height <= 4)
+            return;
+
+        switch (Dock)
+        {
+            case DockStyle.Bottom:
+                DrawBottom(e.Graphics);
+                break;
+            case DockStyle.Top:
+                DrawTop(e.Graphics);
+                break;
+            case DockStyle.Fill:
+                DrawFill(e.Graphics);
+                break;
+            case DockStyle.Left:
+                DrawLeft(e.Graphics);
+                break;
+            case DockStyle.Right:
+                DrawRight(e.Graphics);
+                break;
+            case DockStyle.None:
+                DrawFill(e.Graphics);
+                break;
+            default:
+                DrawFill(e.Graphics);
+                break;
         }
     }
 
