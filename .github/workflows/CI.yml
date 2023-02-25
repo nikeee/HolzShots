@@ -44,10 +44,10 @@ jobs:
     - name: Collect Artifacts
       if: startsWith(github.ref, 'refs/tags/v')
       run: |
-        7z a HolzShots.zip ".\src\HolzShots\bin\$env:CONFIGURATION\net7.0-windows\win-x64\*.exe"
-        7z a HolzShots.zip ".\src\HolzShots\bin\$env:CONFIGURATION\net7.0-windows\win-x64\*.dll"
-        7z a HolzShots.zip ".\src\HolzShots\bin\$env:CONFIGURATION\net7.0-windows\win-x64\*.config"
-        7z a HolzShots.zip ".\src\HolzShots\bin\$env:CONFIGURATION\net7.0-windows\win-x64\*.manifest"
+        7z a HolzShots.zip ".\src\HolzShots\bin\$env:CONFIGURATION\net8.0-windows\win-x64\*.exe"
+        7z a HolzShots.zip ".\src\HolzShots\bin\$env:CONFIGURATION\net8.0-windows\win-x64\*.dll"
+        7z a HolzShots.zip ".\src\HolzShots\bin\$env:CONFIGURATION\net8.0-windows\win-x64\*.config"
+        7z a HolzShots.zip ".\src\HolzShots\bin\$env:CONFIGURATION\net8.0-windows\win-x64\*.manifest"
         sha256sum HolzShots.zip > sha256sums.txt
 
     - uses: actions/upload-artifact@v3
