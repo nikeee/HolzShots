@@ -46,6 +46,6 @@
     <PackageReference Include="MSTest.TestFramework" Version="3.0.2" />
 
 
-    <PackageReference Include="Semver" Version="2.2.0" />
+    <PackageReference Include="Semver" Version="2.3.0" />
   </ItemGroup>
 </Project>
