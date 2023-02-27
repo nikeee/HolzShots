@@ -25,7 +25,7 @@ public class WindowsFFmpegScreenRecorder : IScreenRecorder
 
             // We use "yuv420p" pixel format for Firefox compatibility
             // However, yuv420p needs both dimensions to be even. So we reduce the image size by 1 pixel on each dimension if the respective dimension is odd to fix the issue.
-            Firefox
+
                         // If we would get an invalid rectangle size by applying this size reduction, we take the original size and prohibit the yuv420p format, so it's "just" broken in firefox.
                         pixelFormat = "yuv420p";
             if (!IsRectangleShrinkable(rectangleOnScreenToCapture))
