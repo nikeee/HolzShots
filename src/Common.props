@@ -52,7 +52,7 @@
 
   <ItemGroup>
     <PackageReference Include="ThisAssembly" Version="1.2.9" />
-    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="7.0.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="7.0.1" />
   </ItemGroup>
 
 </Project>
