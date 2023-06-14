@@ -15,7 +15,7 @@
     <Import Include="Microsoft.CSharp" />
     <Import Include="System.Windows.Forms" />
 
-    <PackageReference Include="HolzShots.Forms.Transitions" Version="3.0.0-preview.0" />
+    <PackageReference Include="HolzShots.Forms.Transitions" Version="3.0.0-preview.1" />
     <PackageReference Include="StartupHelper" Version="1.0.3.4" />
     <PackageReference Include="TaskScheduler" Version="2.10.1" />
 
