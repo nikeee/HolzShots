@@ -11,11 +11,7 @@ public static class LibraryInformation
     private const string ReleaseSuffix = "%RELEASE-SUFFIX%"; // -beta
     public const string CommitsSinceTag = "%COMMITS-SINCE-TAG%"; // .2
     public const string CommitId = "%COMMIT-ID%"; // +deadbeef
-#if RELEASE && CI_BUILD
     public static readonly DateTime VersionDate = DateTime.ParseExact(ThisAssembly.Constants.BuildDate, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
-#else
-    public static readonly DateTime VersionDate = DateTime.Now;
-#endif
     public const string SemanticVersion = VersionFormal + ReleaseSuffix + CommitsSinceTag + CommitId;
 
     public const string SiteUrl = ThisAssembly.Constants.Website;
