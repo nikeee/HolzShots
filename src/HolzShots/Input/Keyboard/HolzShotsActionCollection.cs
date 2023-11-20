@@ -16,7 +16,7 @@ public class HolzShotsActionCollection : HotkeyActionCollection, IDisposable
         Debug.Assert(Hook is not null);
         Debug.Assert(_lockObj is not null);
 
-        var exeptions = new List<Exception>(Count);
+        var exceptions = new List<Exception>(Count);
         lock (_lockObj)
         {
             Hook.UnregisterAllHotkeys();
@@ -32,7 +32,7 @@ public class HolzShotsActionCollection : HotkeyActionCollection, IDisposable
                     }
                     catch (Exception ex)
                     {
-                        exeptions.Add(ex);
+                        exceptions.Add(ex);
                         continue;
                     }
 
@@ -41,8 +41,8 @@ public class HolzShotsActionCollection : HotkeyActionCollection, IDisposable
             }
         }
 
-        if (exeptions.Count > 0)
-            throw new AggregateException("A number of Hotkeys failed to register", exeptions);
+        if (exceptions.Count > 0)
+            throw new AggregateException("A number of Hotkeys failed to register", exceptions);
     }
 
     protected virtual void Dispose(bool disposing)

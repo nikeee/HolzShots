@@ -23,7 +23,7 @@
 
   <ItemGroup>
     <PackageReference Include="SingleInstanceCore" Version="2.2.2" />
-    <PackageReference Include="HolzShots.WindowsAPICodePack.ShellModified" Version="4.0.0" />
+    <PackageReference Include="HolzShots.WindowsAPICodePack.ShellModified" Version="4.1.0" />
 
     <ProjectReference Include="..\HolzShots.Capture.Video\HolzShots.Capture.Video.csproj" />
     <ProjectReference Include="..\HolzShots.Legacy\HolzShots.Legacy.vbproj" />

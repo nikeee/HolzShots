@@ -13,14 +13,13 @@ jobs:
       CONFIGURATION: Release
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         submodules: true
 
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v3
+    - uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '8.0.100-preview.1.23115.2'
+        dotnet-version: '8.x'
 
     - name: Restore Dependencies
       run: |
@@ -29,9 +28,7 @@ jobs:
         # dotnet version --dry-run -f src/Common.props --build-meta { git rev-parse --short HEAD }
 
     - run: dotnet build -c $env:CONFIGURATION
-
     - run: dotnet build -c $env:CONFIGURATION src\HolzShots\HolzShots.csproj
-
     - run: dotnet test -c $env:CONFIGURATION --no-build src\HolzShots.Core.Tests\HolzShots.Core.Tests.csproj
 
     - run: npm install -g ajv-cli
@@ -72,7 +69,7 @@ jobs:
       DOTNET_CLI_TELEMETRY_OPTOUT: true
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - uses: actions/download-artifact@v3
         with:
@@ -101,7 +98,7 @@ jobs:
           sed -i -e "s/__REPLACE_CHECKSUM__/${RELEASE_HASH}/g" package/tools/chocolateyinstall.ps1
 
       - name: Bundle Chocolatey Package
-        uses: crazy-max/ghaction-chocolatey@v2.1.0
+        uses: crazy-max/ghaction-chocolatey@v3.0.0
         with:
           args: pack --out . ./package/holzshots.nuspec
 

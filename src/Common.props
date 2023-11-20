@@ -22,6 +22,13 @@
 
   </PropertyGroup>
 
+  <PropertyGroup>
+    <!-- SourceLink Support -->
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
   <PropertyGroup Condition=" '$(CI)' == 'True' ">
     <DefineConstants>$(DefineConstants);CI_BUILD</DefineConstants>
   </PropertyGroup>
@@ -51,8 +58,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="ThisAssembly" Version="1.2.1" />
-    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="7.0.0" />
+    <PackageReference Include="ThisAssembly" Version="1.4.1" />
+    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="8.0.0" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All"/>
   </ItemGroup>
 
 </Project>

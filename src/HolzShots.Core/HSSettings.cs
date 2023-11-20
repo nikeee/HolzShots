@@ -324,8 +324,8 @@ public class CommandDeclaration
     public string CommandName { get; set; } = null!;
 
     /// <summary>
-    /// TODO: Maybe we want to create somethign that every setting can be overwritten in the params.
-    /// This would create the need for a context-sepcific settings instance that is merged from the global user settings and the params of that command.
+    /// TODO: Maybe we want to create something that every setting can be overwritten in the parameters.
+    /// This would create the need for a context-specific settings instance that is merged from the global user settings and the parameters of that command.
     /// </summary>
     [JsonProperty("params")]
     public IReadOnlyDictionary<string, string> Parameters { get; set; } = ImmutableDictionary<string, string>.Empty;

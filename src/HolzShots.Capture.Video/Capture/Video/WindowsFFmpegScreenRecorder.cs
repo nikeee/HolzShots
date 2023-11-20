@@ -23,14 +23,14 @@ public class WindowsFFmpegScreenRecorder : IScreenRecorder
         {
             // The user did not force a pixel format.
 
-            // We use "yuv420p" pixel format for firefox compatibility
+            // We use "yuv420p" pixel format for Firefox compatibility
             // However, yuv420p needs both dimensions to be even. So we reduce the image size by 1 pixel on each dimension if the respective dimension is odd to fix the issue.
 
-            // If we would get an invalid rectangle size by applying this size reduction, we take the original size and prohibit the yuv420p format, so it's "just" broken in firefox.
-            pixelFormat = "yuv420p";
+                        // If we would get an invalid rectangle size by applying this size reduction, we take the original size and prohibit the yuv420p format, so it's "just" broken in firefox.
+                        pixelFormat = "yuv420p";
             if (!IsRectangleShrinkable(rectangleOnScreenToCapture))
             {
-                // yuv420p not pussible, just use ffmpeg's default
+                // yuv420p not possible, just use ffmpeg's default
                 pixelFormat = null;
             }
             else
@@ -44,7 +44,7 @@ public class WindowsFFmpegScreenRecorder : IScreenRecorder
 
             if (!IsRectangleShrinkable(rectangleOnScreenToCapture))
             {
-                // In this case the user wants to record something that's too small and not poxxible to "fix" due to its size. We cannot do that in this format.
+                // In this case the user wants to record something that's too small and not possible to "fix" due to its size. We cannot do that in this format.
                 // We basically have two options:
                 //      1. Abort and tell the user to turn that off
                 //      2. Use FFmpeg's default format silently

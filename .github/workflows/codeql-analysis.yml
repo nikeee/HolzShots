@@ -2,7 +2,6 @@ name: CodeQL
 
 on:
   pull_request:
-    # The branches below must be a subset of the branches above
     branches: [master]
   schedule:
     - cron: '0 12 * * 5'
@@ -21,16 +20,15 @@ jobs:
         language: ['csharp']
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '8.0.100-preview.1.23115.2'
+        dotnet-version: '8.x'
 
     - uses: github/codeql-action/init@v2
       with:
         languages: ${{ matrix.language }}
 
     - run: dotnet build -c DEBUG
-
     - uses: github/codeql-action/analyze@v2
