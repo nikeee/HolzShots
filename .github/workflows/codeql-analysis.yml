@@ -6,12 +6,13 @@ on:
   schedule:
     - cron: '0 12 * * 5'
 
+env:
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+
 jobs:
   analyze:
     name: Analyze
     runs-on: windows-latest
-    env:
-      DOTNET_CLI_TELEMETRY_OPTOUT: true
 
     strategy:
       fail-fast: false
@@ -24,7 +25,6 @@ jobs:
     - uses: actions/setup-dotnet@v3
       with:
         dotnet-version: '8.x'
-        dotnet-quality: preview
 
     - uses: github/codeql-action/init@v2
       with:
