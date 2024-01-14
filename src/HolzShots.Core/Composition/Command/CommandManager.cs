@@ -7,19 +7,17 @@ using HolzShots.Input.Keyboard;
 namespace HolzShots.Composition.Command;
 
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
-public class CommandAttribute : Attribute
+public class CommandAttribute(string name) : Attribute
 {
-    public string Name { get; }
-    public CommandAttribute(string name) => Name = name ?? throw new ArgumentNullException(nameof(name));
+    public string Name { get; } = name ?? throw new ArgumentNullException(nameof(name));
 }
 
-public class CommandManager<TSettings>
+public class CommandManager<TSettings>(SettingsManager<TSettings> settingsManager)
     where TSettings : new()
 {
     private Dictionary<string, ICommand<TSettings>> Actions { get; } = new Dictionary<string, ICommand<TSettings>>();
 
-    private readonly SettingsManager<TSettings> _settingsManager;
-    public CommandManager(SettingsManager<TSettings> settingsManager) => _settingsManager = settingsManager ?? throw new ArgumentNullException(nameof(settingsManager));
+    private readonly SettingsManager<TSettings> _settingsManager = settingsManager ?? throw new ArgumentNullException(nameof(settingsManager));
 
     public void RegisterCommand(ICommand<TSettings> command)
     {
