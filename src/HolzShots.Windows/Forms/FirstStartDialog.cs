@@ -32,12 +32,11 @@ public static class FirstStartDialog
             Text = welcomeText,
 
             AllowCancel = false,
-            Buttons = new TaskDialogButtonCollection()
-            {
+            Buttons = [
                 openSettings,
                 openPlugins,
                 close,
-            },
+            ],
             DefaultButton = openSettings,
         };
 

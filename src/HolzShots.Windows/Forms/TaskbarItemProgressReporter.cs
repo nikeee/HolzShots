@@ -10,7 +10,7 @@ public sealed class TaskbarItemProgressReporter : ITransferProgressReporter
     private readonly TaskbarProgressManager _progressManager;
     private TaskbarProgressBarState _state;
 
-    private static readonly HashSet<TaskbarProgressManager> _currentManagers = new();
+    private static readonly HashSet<TaskbarProgressManager> _currentManagers = [];
 
     public TaskbarItemProgressReporter(IntPtr targetWindowHandle)
     {

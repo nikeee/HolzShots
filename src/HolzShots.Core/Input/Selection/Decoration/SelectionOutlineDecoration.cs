@@ -13,9 +13,9 @@ class SelectionOutlineDecoration : IStateDecoration<RectangleState>
     private const float AxisDistance = 5f;
 
     private static readonly D2DColor OutlineColor = D2DColor.White;
-    private static readonly float[] CustomDashStyle = new[] { 3f };
+    private static readonly float[] CustomDashStyle = [3f];
 
-    private DateTime _selectionStarted = DateTime.Now;
+    private readonly DateTime _selectionStarted = DateTime.Now;
 
     public static SelectionOutlineDecoration ForContext(D2DGraphics g, DateTime now) => new();
 

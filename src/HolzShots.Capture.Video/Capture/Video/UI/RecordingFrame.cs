@@ -8,12 +8,11 @@ public partial class RecordingFrame : Form
     const int FrameMarkerThickness = 6;
     const int FrameMarkerWidth = FrameMarkerThickness * 8;
 
-    private static readonly Pen[] IndicationPens = new Pen[]
-    {
+    private static readonly Pen[] IndicationPens = [
         new(Color.Black, FrameMarkerThickness),
         new(Color.Red, FrameMarkerThickness),
         new(Color.White, FrameMarkerThickness),
-    };
+    ];
 
     private readonly Rectangle _indicatedRegion;
     private int CurrentPenIndex = 0;

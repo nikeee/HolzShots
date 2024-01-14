@@ -11,7 +11,7 @@ Namespace Drawing.Tools
             _parent = p
         End Sub
 
-        Public Overrides Property BeginCoords As Point
+        Public Overrides Property BeginCoordinates As Point
             Get
                 Return InternalBeginCoords
             End Get
@@ -47,7 +47,7 @@ Namespace Drawing.Tools
                     g.FillEllipse(ClearBrush, InternalBeginCoords.X - CInt(_parent.EraserDiameter / 2), InternalBeginCoords.Y - CInt(_parent.EraserDiameter / 2), _parent.EraserDiameter, _parent.EraserDiameter)
                     _isFirstClick = False
                 Else
-                    g.FillEllipse(ClearBrush, EndCoords.X - CInt(_parent.EraserDiameter / 2), EndCoords.Y - CInt(_parent.EraserDiameter / 2), _parent.EraserDiameter, _parent.EraserDiameter)
+                    g.FillEllipse(ClearBrush, EndCoordinates.X - CInt(_parent.EraserDiameter / 2), EndCoordinates.Y - CInt(_parent.EraserDiameter / 2), _parent.EraserDiameter, _parent.EraserDiameter)
                 End If
             End Using
         End Sub

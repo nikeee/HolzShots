@@ -7,7 +7,7 @@ Namespace Drawing.Tools
         Inherits Tool
         Implements IDisposable
 
-        Public Overrides Property BeginCoords As Point
+        Public Overrides Property BeginCoordinates As Point
             Get
                 Return InternalBeginCoords
             End Get
@@ -39,7 +39,7 @@ Namespace Drawing.Tools
         Public Overrides Sub RenderFinalImage(ByRef rawImage As Image, sender As PaintPanel)
             Debug.Assert(TypeOf rawImage Is Bitmap)
 
-            _plist.Add(EndCoords)
+            _plist.Add(EndCoordinates)
             Using g As Graphics = Graphics.FromImage(rawImage)
                 g.SmoothingMode = SmoothingMode.AntiAlias
                 g.DrawHighlight(DirectCast(rawImage, Bitmap), _plist.ToArray(), _markerPen)
@@ -50,7 +50,7 @@ Namespace Drawing.Tools
         Public Overrides Sub RenderPreview(rawImage As Image, g As Graphics, sender As PaintPanel)
             Debug.Assert(TypeOf rawImage Is Bitmap)
 
-            _plist.Add(EndCoords)
+            _plist.Add(EndCoordinates)
             g.SmoothingMode = SmoothingMode.AntiAlias
             If _plist.Count > 0 Then
                 g.DrawHighlight(DirectCast(rawImage, Bitmap), _plist.ToArray(), _markerPen)

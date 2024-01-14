@@ -8,8 +8,8 @@ public sealed class ProcessPriorityRequest : IDisposable
     private static volatile bool _instanceExists;
 
     private readonly Process _currentProcess;
-    private ThreadPriority _initialThreadPriority;
-    private ProcessPriorityClass _initialProcessPriority;
+    private readonly ThreadPriority _initialThreadPriority;
+    private readonly ProcessPriorityClass _initialProcessPriority;
     private readonly bool _instanceValid;
 
     public ProcessPriorityRequest()
@@ -22,7 +22,7 @@ public sealed class ProcessPriorityRequest : IDisposable
         _currentProcess = Process.GetCurrentProcess();
         _initialThreadPriority = Thread.CurrentThread.Priority;
         _initialProcessPriority = _currentProcess.PriorityClass;
-        Debug.WriteLine("Priortiy raised.");
+        Debug.WriteLine("Priority raised.");
     }
 
     private void ResetPriority()
@@ -32,7 +32,7 @@ public sealed class ProcessPriorityRequest : IDisposable
         {
             Thread.CurrentThread.Priority = _initialThreadPriority;
             _currentProcess.PriorityClass = _initialProcessPriority;
-            Debug.WriteLine("Priortiy reset.");
+            Debug.WriteLine("Priority reset.");
         }
     }
 

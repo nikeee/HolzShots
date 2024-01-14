@@ -37,10 +37,10 @@ class InitialState : SelectionState
 
     public override void EnsureDecorationInitialization(D2DGraphics g, DateTime now)
     {
-        Decorations ??= new IStateDecoration<InitialState>[] {
+        Decorations ??= [
             HelpTextDecoration.ForContext(g, now),
             MouseWindowOutlineDecoration.ForContext(g, now),
-        };
+        ];
     }
 
     public void SelectWindowWithOffset(IReadOnlyList<WindowRectangle>? windows, int offset)
@@ -159,9 +159,9 @@ abstract class RectangleState : SelectionState
 
     public override void EnsureDecorationInitialization(D2DGraphics g, DateTime now)
     {
-        Decorations ??= new IStateDecoration<RectangleState>[] {
+        Decorations ??= [
             SelectionOutlineDecoration.ForContext(g, now),
-        };
+        ];
     }
 
     public override void Draw(D2DGraphics g, DateTime now, TimeSpan elapsed, Rectangle bounds, D2DBitmap image)
@@ -178,15 +178,12 @@ abstract class RectangleState : SelectionState
     }
 }
 
-class ResizingRectangleState : RectangleState
+class ResizingRectangleState(Point userSelectionStart, Point cursorPosition) : RectangleState(userSelectionStart, cursorPosition)
 {
-    public ResizingRectangleState(Point userSelectionStart, Point cursorPosition) : base(userSelectionStart, cursorPosition) { }
 }
 
-class MovingRectangleState : RectangleState
+class MovingRectangleState(Point userSelectionStart, Point cursorPosition) : RectangleState(userSelectionStart, cursorPosition)
 {
-    public MovingRectangleState(Point userSelectionStart, Point cursorPosition) : base(userSelectionStart, cursorPosition) { }
-
     public override void UpdateCursorPosition(Point newCursorPosition)
     {
         var prevStart = UserSelectionStart;
@@ -203,10 +200,9 @@ class MovingRectangleState : RectangleState
     }
 }
 
-class FinalState : SelectionState
+class FinalState(Rectangle result) : SelectionState
 {
-    public Rectangle Result { get; }
-    public FinalState(Rectangle result) => Result = result;
+    public Rectangle Result { get; } = result;
 
     public override void Draw(D2DGraphics g, DateTime now, TimeSpan elapsed, Rectangle bounds, D2DBitmap image)
     {

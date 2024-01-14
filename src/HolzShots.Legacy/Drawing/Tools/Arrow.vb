@@ -10,10 +10,10 @@ Namespace Drawing.Tools
         Private _arrowFirstpoint As Vector2
         Private _arrowSecondpoint As Vector2
         Private ReadOnly _arrowdrawpoints(3) As Point
-        Const ArrowRotationconstant As Single = 2.2 * Math.PI / 1.2
+        Const ArrowRotationConstant As Single = 2.2 * Math.PI / 1.2
         Private _arrowBtwn2 As Vector2
 
-        Public Overrides Property BeginCoords As Point
+        Public Overrides Property BeginCoordinates As Point
             Get
                 Return InternalBeginCoords
             End Get
@@ -25,7 +25,7 @@ Namespace Drawing.Tools
             End Set
         End Property
 
-        Public Overrides Property EndCoords As Point
+        Public Overrides Property EndCoordinates As Point
             Get
                 Return InternalEndCoords
             End Get
@@ -42,33 +42,33 @@ Namespace Drawing.Tools
         Public Overrides ReadOnly Property Cursor As Cursor = TheCursor
 
         Public Overrides Sub RenderFinalImage(ByRef rawImage As Image, sender As PaintPanel)
-            If _arrowFirstpoint <> Vector2.Zero AndAlso _arrowSecondpoint <> Vector2.Zero Then
-                Using g = Graphics.FromImage(rawImage)
-                    g.SmoothingMode = SmoothingMode.AntiAlias
+            If _arrowFirstpoint = Vector2.Zero OrElse _arrowSecondpoint = Vector2.Zero Then Return
 
-                    Dim pen As New Pen(sender.ArrowColor) With {
-                        .Width = If(sender.ArrowWidth <= 0, _arrowBtwn2.Length / 90, sender.ArrowWidth),
-                        .EndCap = LineCap.Triangle,
-                        .StartCap = LineCap.Round
-                    }
+            Using g = Graphics.FromImage(rawImage)
+                g.SmoothingMode = SmoothingMode.AntiAlias
 
-                    g.DrawLine(pen, _arrowdrawpoints(0), _arrowdrawpoints(1))
-                    pen.EndCap = LineCap.Round
-                    g.DrawLine(pen, _arrowdrawpoints(1), _arrowdrawpoints(2))
-                    g.DrawLine(pen, _arrowdrawpoints(1), _arrowdrawpoints(3))
-                End Using
-            End If
+                Dim pen As New Pen(sender.ArrowColor) With {
+                    .Width = If(sender.ArrowWidth <= 0, _arrowBtwn2.Length / 90, sender.ArrowWidth),
+                    .EndCap = LineCap.Triangle,
+                    .StartCap = LineCap.Round
+                }
+
+                g.DrawLine(pen, _arrowdrawpoints(0), _arrowdrawpoints(1))
+                pen.EndCap = LineCap.Round
+                g.DrawLine(pen, _arrowdrawpoints(1), _arrowdrawpoints(2))
+                g.DrawLine(pen, _arrowdrawpoints(1), _arrowdrawpoints(3))
+            End Using
         End Sub
 
         Public Overrides Sub RenderPreview(rawImage As Image, g As Graphics, sender As PaintPanel)
 
-            _arrowSecondpoint = New Vector2(EndCoords.X, EndCoords.Y)
+            _arrowSecondpoint = New Vector2(EndCoordinates.X, EndCoordinates.Y)
             If _arrowFirstpoint <> Vector2.Zero AndAlso _arrowSecondpoint <> Vector2.Zero Then
                 If _arrowFirstpoint <> _arrowSecondpoint Then
                     _arrowBtwn2 = _arrowSecondpoint - _arrowFirstpoint
                     Dim btwn = Vector2.Normalize(_arrowBtwn2) * _arrowBtwn2.Length / 5
-                    Dim c = btwn.Rotate(ArrowRotationconstant) + _arrowFirstpoint
-                    Dim d = btwn.Rotate(-ArrowRotationconstant) + _arrowFirstpoint
+                    Dim c = btwn.Rotate(ArrowRotationConstant) + _arrowFirstpoint
+                    Dim d = btwn.Rotate(-ArrowRotationConstant) + _arrowFirstpoint
                     _arrowdrawpoints(0) = _arrowSecondpoint.ToPoint2D()
                     _arrowdrawpoints(1) = _arrowFirstpoint.ToPoint2D()
                     _arrowdrawpoints(2) = c.ToPoint2D()

@@ -4,7 +4,7 @@ namespace HolzShots.Windows.Forms;
 
 public sealed class TaskbarWindow
 {
-    private static Lazy<TaskbarWindow> _instance = new(Initialize);
+    private readonly static Lazy<TaskbarWindow> _instance = new(Initialize);
     public static TaskbarWindow Instance => _instance.Value;
 
     public Rectangle Rectangle { get; }

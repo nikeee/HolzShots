@@ -2,7 +2,7 @@ using System.Windows.Forms;
 
 namespace HolzShots.Input;
 
-public  static class VideoCaptureFormatSelection
+public static class VideoCaptureFormatSelection
 {
     public static VideoCaptureFormat? PromptFormat()
     {
@@ -10,8 +10,7 @@ public  static class VideoCaptureFormatSelection
         {
             Caption = "Choose a video format",
             Heading = "Which format would you like to record in?",
-            Buttons = new TaskDialogButtonCollection()
-            {
+            Buttons = [
                new TaskDialogCommandLinkButton()
                {
                    Text = "MP4",
@@ -31,7 +30,7 @@ public  static class VideoCaptureFormatSelection
                    Tag = VideoCaptureFormat.Gif,
                },
                TaskDialogButton.Cancel,
-            }
+            ]
         });
 
         return pressedButton.Tag == null

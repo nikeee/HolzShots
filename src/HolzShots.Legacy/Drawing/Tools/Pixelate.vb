@@ -12,10 +12,10 @@ Namespace Drawing.Tools
 
         Public Overrides Sub RenderFinalImage(ByRef rawImage As Image, sender As PaintPanel)
             If rawImage IsNot Nothing Then
-                Dim rawSrcRect As New Rectangle(If(BeginCoords.X > EndCoords.X, EndCoords.X, BeginCoords.X),
-                                                If(BeginCoords.Y > EndCoords.Y, EndCoords.Y, BeginCoords.Y),
-                                                If(BeginCoords.X > EndCoords.X, BeginCoords.X - EndCoords.X, EndCoords.X - BeginCoords.X),
-                                                If(BeginCoords.Y > EndCoords.Y, BeginCoords.Y - EndCoords.Y, EndCoords.Y - BeginCoords.Y))
+                Dim rawSrcRect As New Rectangle(If(BeginCoordinates.X > EndCoordinates.X, EndCoordinates.X, BeginCoordinates.X),
+                                                If(BeginCoordinates.Y > EndCoordinates.Y, EndCoordinates.Y, BeginCoordinates.Y),
+                                                If(BeginCoordinates.X > EndCoordinates.X, BeginCoordinates.X - EndCoordinates.X, EndCoordinates.X - BeginCoordinates.X),
+                                                If(BeginCoordinates.Y > EndCoordinates.Y, BeginCoordinates.Y - EndCoordinates.Y, EndCoordinates.Y - BeginCoordinates.Y))
                 If rawSrcRect.X < 0 Then
                     rawSrcRect.Width += rawSrcRect.X
                     rawSrcRect.X = 0
@@ -43,10 +43,10 @@ Namespace Drawing.Tools
 
         Public Overrides Sub RenderPreview(rawImage As Image, g As Graphics, sender As PaintPanel)
             If rawImage IsNot Nothing Then
-                Dim rawSrcRect As New Rectangle(If(BeginCoords.X > EndCoords.X, EndCoords.X, BeginCoords.X),
-                                                If(BeginCoords.Y > EndCoords.Y, EndCoords.Y, BeginCoords.Y),
-                                                If(BeginCoords.X > EndCoords.X, BeginCoords.X - EndCoords.X, EndCoords.X - BeginCoords.X),
-                                                If(BeginCoords.Y > EndCoords.Y, BeginCoords.Y - EndCoords.Y, EndCoords.Y - BeginCoords.Y))
+                Dim rawSrcRect As New Rectangle(If(BeginCoordinates.X > EndCoordinates.X, EndCoordinates.X, BeginCoordinates.X),
+                                                If(BeginCoordinates.Y > EndCoordinates.Y, EndCoordinates.Y, BeginCoordinates.Y),
+                                                If(BeginCoordinates.X > EndCoordinates.X, BeginCoordinates.X - EndCoordinates.X, EndCoordinates.X - BeginCoordinates.X),
+                                                If(BeginCoordinates.Y > EndCoordinates.Y, BeginCoordinates.Y - EndCoordinates.Y, EndCoordinates.Y - BeginCoordinates.Y))
 
                 If rawSrcRect.X < 0 Then
                     rawSrcRect.Width += rawSrcRect.X

@@ -6,7 +6,7 @@ namespace HolzShots.Input.Actions;
 
 public abstract class ImageFileDependentCommand
 {
-    private static readonly string[] AllowedExtensions = new[] { ".bmp", ".jpg", ".jpeg", ".png", ".tif", ".tiff" };
+    private static readonly string[] AllowedExtensions = [".bmp", ".jpg", ".jpeg", ".png", ".tif", ".tiff"];
 
     public const string FileNameParameter = "fileName";
 

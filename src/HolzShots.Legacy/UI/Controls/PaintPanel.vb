@@ -301,7 +301,7 @@ Namespace UI.Controls
             _mousedown = True
             If _currenttool = ShotEditorTool.None OrElse _currenttool = ShotEditorTool.Text Then Exit Sub
 
-            CurrentToolObject.BeginCoords = e.Location
+            CurrentToolObject.BeginCoordinates = e.Location
         End Sub
 
         Private Sub RawBoxMouseEnter(sender As Object, e As EventArgs) Handles RawBox.MouseEnter
@@ -312,7 +312,7 @@ Namespace UI.Controls
             If e.Button = MouseButtons.Left Then
 
                 If CurrentToolObject IsNot Nothing Then
-                    CurrentToolObject.EndCoords = e.Location
+                    CurrentToolObject.EndCoordinates = e.Location
                     RawBox.Invalidate()
                 End If
 

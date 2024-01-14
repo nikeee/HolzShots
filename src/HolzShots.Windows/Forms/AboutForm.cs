@@ -57,10 +57,9 @@ public static class AboutDialog
             {
                 Text = $"Version: {version}",
             },
-            Buttons = new TaskDialogButtonCollection()
-            {
+            Buttons = [
                 TaskDialogButton.Close,
-            },
+            ],
         };
 
         // TODO: Maybe check if an update is available?

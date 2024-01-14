@@ -7,7 +7,7 @@ Namespace Drawing.Tools
         Inherits Tool
         Implements IDisposable
 
-        Public Overrides Property BeginCoords As Point
+        Public Overrides Property BeginCoordinates As Point
             Get
                 Return InternalBeginCoords
             End Get
@@ -37,7 +37,7 @@ Namespace Drawing.Tools
         Public Overrides ReadOnly Property ToolType As PaintPanel.ShotEditorTool = PaintPanel.ShotEditorTool.Censor
 
         Public Overrides Sub RenderFinalImage(ByRef rawImage As Image, ByVal sender As PaintPanel)
-            _plist.Add(EndCoords)
+            _plist.Add(EndCoordinates)
             Using g As Graphics = Graphics.FromImage(rawImage)
                 With g
                     .SmoothingMode = SmoothingMode.AntiAlias
@@ -53,7 +53,7 @@ Namespace Drawing.Tools
         End Sub
 
         Public Overrides Sub RenderPreview(ByVal rawImage As Image, ByVal g As Graphics, ByVal sender As PaintPanel)
-            _plist.Add(EndCoords)
+            _plist.Add(EndCoordinates)
             g.SmoothingMode = SmoothingMode.AntiAlias
             g.TextRenderingHint = TextRenderingHint.AntiAlias
             If _plist.Count > 0 Then

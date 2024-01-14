@@ -67,11 +67,10 @@ public class UpdateUploaderSpecsCommand : ICommand<HSSettings>
                 return $"- {update.OldSpec.Meta.Name}: {update.OldSpec.Meta.Version} -> {newName}{update.NewSpec.Meta.Version}";
             })),
         },
-        Buttons = new TaskDialogButtonCollection()
-        {
+        Buttons = [
             TaskDialogButton.No,
             TaskDialogButton.Yes,
-        },
+        ],
         DefaultButton = TaskDialogButton.No,
     };
 
@@ -85,10 +84,9 @@ public class UpdateUploaderSpecsCommand : ICommand<HSSettings>
         {
             Text = $"{res.NoUpdateUrl} had no update URL, {res.EmptyResponse + res.InvalidResponse} replied with an invalid response, {res.Errors.Count} had an error and {res.NoUpdateAvailable} are up-to-date.",
         },
-        Buttons = new TaskDialogButtonCollection()
-        {
+        Buttons = [
             TaskDialogButton.OK,
-        },
+        ],
         DefaultButton = TaskDialogButton.OK,
     };
 }

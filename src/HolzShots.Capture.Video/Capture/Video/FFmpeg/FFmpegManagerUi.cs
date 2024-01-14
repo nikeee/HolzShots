@@ -74,11 +74,11 @@ public static class FFmpegManagerUi
             Position = TaskDialogExpanderPosition.AfterFootnote,
         },
         AllowCancel = true,
-        Buttons = new TaskDialogButtonCollection() {
+        Buttons = [
             TaskDialogButton.Cancel,
             downloadButton,
             manualDownload,
-        },
+        ],
         DefaultButton = downloadButton,
     };
 
@@ -89,9 +89,9 @@ public static class FFmpegManagerUi
         Caption = "HolzShots is missing FFmpeg :(",
         Heading = "Could not find FFmpeg",
         Text = "You chose to do nothing, so the screen recording will now abort.",
-        Buttons = new TaskDialogButtonCollection() {
+        Buttons = [
             TaskDialogButton.OK, // This must be "OK" because OK will abort the screen recording
-        },
+        ],
         DefaultButton = TaskDialogButton.OK,
     };
 
@@ -102,9 +102,9 @@ public static class FFmpegManagerUi
         Caption = "HolzShots is missing FFmpeg :(",
         Heading = "Manual global installation",
         Text = $"To install it manually, you can use chocolatey, scoop or winget:\n\n\tscoop install ffmpeg\n\tchoco install ffmpeg\n\twinget install ffmpeg\n\nOr just download it from ffmpeg.org. Make sure the ffmpeg.exe is in your PATH after installation.\n\nClick on \"{quitButton.Text}\" to shut down HolzShots and perform the installation.",
-        Buttons = new TaskDialogButtonCollection() {
+        Buttons = [
             quitButton,
-        },
+        ],
         DefaultButton = quitButton,
     };
 
@@ -131,9 +131,7 @@ public static class FFmpegManagerUi
             Heading = "Downloading FFmpeg...",
             Text = "We're shifting some bits around to get you ready.",
             ProgressBar = downloadProgressBar,
-            Buttons = new TaskDialogButtonCollection() {
-                cancelDownloadButton,
-            },
+            Buttons = [cancelDownloadButton],
             // DefaultButton = None,
             Expander = new TaskDialogExpander()
             {
@@ -195,9 +193,9 @@ public static class FFmpegManagerUi
         Caption = "FFmpeg missing",
         Heading = "Done!",
         Text = "HolzShots has set up FFmpeg.\n\nWe will now continue with the screen recording that you started.",
-        Buttons = new TaskDialogButtonCollection() {
+        Buttons = [
             TaskDialogButton.Continue,
-        },
+        ],
         DefaultButton = TaskDialogButton.Continue,
     };
 
@@ -207,9 +205,9 @@ public static class FFmpegManagerUi
         Caption = "FFmpeg missing",
         Heading = "Something went wrong",
         Text = $"We tried our best, but somehow it did not work out. Try installing FFmpeg manually or to restart HolzShots.\nHere's some information on the error:\n\n{message}\n\nThe screen recording that you tried to do will now abort.\n\n",
-        Buttons = new TaskDialogButtonCollection() {
+        Buttons = [
             TaskDialogButton.OK, // This must be "OK" because OK will abort the screen recording
-        },
+        ],
         DefaultButton = TaskDialogButton.OK,
     };
 }

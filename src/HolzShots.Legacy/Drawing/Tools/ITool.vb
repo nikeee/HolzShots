@@ -7,7 +7,7 @@ Namespace Drawing.Tools
         Overridable ReadOnly Property Cursor As Cursor = Cursors.Default
 
         Protected InternalBeginCoords As Point
-        Overridable Property BeginCoords As Point
+        Overridable Property BeginCoordinates As Point
             Get
                 Return InternalBeginCoords
             End Get
@@ -19,7 +19,7 @@ Namespace Drawing.Tools
         End Property
 
         Protected InternalEndCoords As Point
-        Overridable Property EndCoords As Point
+        Overridable Property EndCoordinates As Point
             Get
                 Return InternalEndCoords
             End Get

@@ -15,10 +15,10 @@ Namespace Drawing.Tools
 
         Public Overrides Sub RenderFinalImage(ByRef rawImage As Image, ByVal sender As PaintPanel)
 
-            _rct.X = If(BeginCoords.X > EndCoords.X, EndCoords.X, BeginCoords.X)
-            _rct.Y = If(BeginCoords.Y > EndCoords.Y, EndCoords.Y, BeginCoords.Y)
-            _rct.Width = Math.Abs(BeginCoords.X - EndCoords.X)
-            _rct.Height = Math.Abs(BeginCoords.Y - EndCoords.Y)
+            _rct.X = If(BeginCoordinates.X > EndCoordinates.X, EndCoordinates.X, BeginCoordinates.X)
+            _rct.Y = If(BeginCoordinates.Y > EndCoordinates.Y, EndCoordinates.Y, BeginCoordinates.Y)
+            _rct.Width = Math.Abs(BeginCoordinates.X - EndCoordinates.X)
+            _rct.Height = Math.Abs(BeginCoordinates.Y - EndCoordinates.Y)
 
             If _rct.X + _rct.Width > rawImage.Width Then
                 _rct.Width = rawImage.Width - _rct.X
@@ -55,12 +55,12 @@ Namespace Drawing.Tools
 
         Public Overrides Sub RenderPreview(rawImage As Image, g As Graphics, sender As PaintPanel)
 
-            _rct.X = Math.Min(EndCoords.X, BeginCoords.X)
+            _rct.X = Math.Min(EndCoordinates.X, BeginCoordinates.X)
             'If(BeginCoords.X > SecondCoords.X, SecondCoords.X, BeginCoords.X)
-            _rct.Y = Math.Min(EndCoords.Y, BeginCoords.Y)
+            _rct.Y = Math.Min(EndCoordinates.Y, BeginCoordinates.Y)
             'If(BeginCoords.Y > SecondCoords.Y, SecondCoords.Y, BeginCoords.Y)
-            _rct.Width = Math.Abs(BeginCoords.X - EndCoords.X)
-            _rct.Height = Math.Abs(BeginCoords.Y - EndCoords.Y)
+            _rct.Width = Math.Abs(BeginCoordinates.X - EndCoordinates.X)
+            _rct.Height = Math.Abs(BeginCoordinates.Y - EndCoordinates.Y)
 
             If _rct.X + _rct.Width > rawImage.Width Then
                 _rct.Width = rawImage.Width - _rct.X
