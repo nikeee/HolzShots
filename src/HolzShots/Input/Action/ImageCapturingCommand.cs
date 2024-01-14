@@ -69,36 +69,35 @@ public abstract class ImageCapturingCommand : ICommand<HSSettings>
     private static void PromptSaveAs(Screenshot screenshot, HSSettings settingsContext)
     {
         // TODO: Move this
-        using (SaveFileDialog sfd = new SaveFileDialog())
+        using var sfd = new SaveFileDialog();
+        sfd.Filter = $"{Localization.PngImage}|*.png|{Localization.JpgImage}|*.jpg";
+        sfd.DefaultExt = ".png";
+        sfd.CheckPathExists = true;
+        sfd.Title = Localization.ChooseDestinationFileName;
+
+        var res = sfd.ShowDialog();
+        if (res != DialogResult.OK)
+            return;
+
+        var f = sfd.FileName;
+        if (string.IsNullOrWhiteSpace(f))
+            return;
+
+        var format = ImageFormatInformation.GetImageFormatFromFileName(f);
+        Debug.Assert(format is not null);
+
+        try
         {
-            sfd.Filter = $"{Localization.PngImage}|*.png|{Localization.JpgImage}|*.jpg";
-            sfd.DefaultExt = ".png";
-            sfd.CheckPathExists = true;
-            sfd.Title = Localization.ChooseDestinationFileName;
-            var res = sfd.ShowDialog();
-            if (res != DialogResult.OK)
-                return;
-
-            var f = sfd.FileName;
-            if (string.IsNullOrWhiteSpace(f))
-                return;
-
-            var format = ImageFormatInformation.GetImageFormatFromFileName(f);
-            Debug.Assert(format is not null);
-
-            try
-            {
-                using var fileStream = System.IO.File.OpenWrite(f);
-                screenshot.Image.SaveExtended(fileStream, format);
-            }
-            catch (PathTooLongException)
-            {
-                NotificationManager.PathIsTooLong(f);
-            }
-            catch (Exception ex)
-            {
-                NotificationManager.ErrorSavingImage(ex);
-            }
+            using var fileStream = File.OpenWrite(f);
+            screenshot.Image.SaveExtended(fileStream, format);
+        }
+        catch (PathTooLongException)
+        {
+            NotificationManager.PathIsTooLong(f);
+        }
+        catch (Exception ex)
+        {
+            NotificationManager.ErrorSavingImage(ex);
         }
     }
 

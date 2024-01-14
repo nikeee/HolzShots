@@ -55,18 +55,17 @@ public static class ImageFormatAnalyzer
     //No alpha-channel support
     private static ImageFormat GetBestFittingFormatBruteSaving(Bitmap image)
     {
-        using (var ms = new MemoryStream())
-        {
-            image.Save(ms, ImageFormat.Png);
-            long pngLength = ms.Length;
+        using var ms = new MemoryStream();
 
-            ms.SetLength(0);
+        image.Save(ms, ImageFormat.Png);
+        var pngLength = ms.Length;
 
-            image.Save(ms, ImageFormat.Jpeg);
-            long jpgLength = ms.Length;
+        ms.SetLength(0);
 
-            return jpgLength < pngLength ? ImageFormat.Jpeg : ImageFormat.Png;
-        }
+        image.Save(ms, ImageFormat.Jpeg);
+        var jpgLength = ms.Length;
+
+        return jpgLength < pngLength ? ImageFormat.Jpeg : ImageFormat.Png;
     }
 
     private unsafe static ImageFormat GetBestFittingFormatHybrid(Bitmap image)

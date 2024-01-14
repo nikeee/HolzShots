@@ -65,18 +65,14 @@ public class ColorSelector : ColorView
 
     private void ShowColorDialog()
     {
-        using (var colorDialog = new ColorDialog())
-        {
-            colorDialog.FullOpen = true;
-            colorDialog.ShowHelp = false;
-            colorDialog.Color = Color;
+        using var colorDialog = new ColorDialog();
+        colorDialog.FullOpen = true;
+        colorDialog.ShowHelp = false;
+        colorDialog.Color = Color;
 
-            var res = colorDialog.ShowDialog();
-            if (res == DialogResult.OK)
-            {
-                OnColorChanged(colorDialog.Color);
-            }
-        }
+        var res = colorDialog.ShowDialog();
+        if (res == DialogResult.OK)
+            OnColorChanged(colorDialog.Color);
     }
 
     #region Mouse Handling

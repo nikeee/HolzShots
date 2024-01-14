@@ -38,11 +38,10 @@ public static class ImageExtensions
         ArgumentNullException.ThrowIfNull(image);
         ArgumentNullException.ThrowIfNull(format);
 
-        using (var ms = new System.IO.MemoryStream(image.Width * image.Height * 4))
-        {
-            image.Save(ms, format);
-            return new MemSize(ms.Length);
-        }
+        using var ms = new System.IO.MemoryStream(image.Width * image.Height * 4);
+
+        image.Save(ms, format);
+        return new MemSize(ms.Length);
     }
 
     public static Image CloneGifBug(this Image image, ImageFormat format)
