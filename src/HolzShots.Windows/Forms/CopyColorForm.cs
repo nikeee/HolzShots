@@ -26,7 +26,7 @@ public partial class CopyColorForm : Form
 
         var lastLabelPosition = new Point(12, 42);
 
-        for (int i = 0; i < _formats.Count; ++i)
+        for (var i = 0; i < _formats.Count; ++i)
         {
             var format = _formats[i];
             var formattedColor = format(color);

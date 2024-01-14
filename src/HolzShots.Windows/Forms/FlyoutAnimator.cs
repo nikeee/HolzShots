@@ -46,15 +46,15 @@ public class FlyoutAnimator
 
         _currentVisibleFlyouts.Add(_target);
 
-        const int offfsetY = 8;
-        var destY = _instanceOffsetY - offfsetY;
+        const int offsetY = 8;
+        var targetY = _instanceOffsetY - offsetY;
 
         _target.Location = new Point(startX, startY);
         _target.Opacity = 0.0;
         _target.TopMost = true;
 
         var transition = new Transition(new Deceleration(durationMs));
-        transition.Add(this, nameof(TargetY), destY);
+        transition.Add(this, nameof(TargetY), targetY);
         transition.Add(this, nameof(TargetOpacity), 1.0);
 
         // TODO: Fix this in .NET 5:
@@ -71,13 +71,13 @@ public class FlyoutAnimator
     {
         _currentVisibleFlyouts.Remove(_target);
 
-        var destY = _instanceOffsetY + 20;
+        var targetY = _instanceOffsetY + 20;
 
         _target.Opacity = 1.0;
         _target.TopMost = true;
 
         var transition = new Transition(new Deceleration(durationMs));
-        transition.Add(this, nameof(TargetY), destY);
+        transition.Add(this, nameof(TargetY), targetY);
         transition.Add(this, nameof(TargetOpacity), 0.0);
 
         // TODO: Fix this in .NET 5:

@@ -146,7 +146,6 @@ public class VisualStyleStripRenderer(ToolBarTheme theme) : ToolStripSystemRende
     public ToolBarTheme Theme { get; set; } = theme;
 
     private string RebarClass => SubclassPrefix + "Rebar";
-    private string ToolbarClass => SubclassPrefix + "ToolBar";
     private string MenuClass => SubclassPrefix + "Menu";
     private string SubclassPrefix => Theme switch
     {
@@ -156,11 +155,6 @@ public class VisualStyleStripRenderer(ToolBarTheme theme) : ToolStripSystemRende
         ToolBarTheme.HelpBar => "Help::",
         _ => string.Empty,
     };
-
-    private VisualStyleElement Subclass(VisualStyleElement element)
-    {
-        return VisualStyleElement.CreateElement(SubclassPrefix + element.ClassName, element.Part, element.State);
-    }
 
     private bool EnsureRenderer()
     {
@@ -399,21 +393,21 @@ public class VisualStyleStripRenderer(ToolBarTheme theme) : ToolStripSystemRende
     protected override void OnRenderSeparator(ToolStripSeparatorRenderEventArgs e)
     {
         ArgumentNullException.ThrowIfNull(e);
-
-        if (e.ToolStrip.IsDropDown && EnsureRenderer())
+        if (e.ToolStrip?.IsDropDown != true || !EnsureRenderer())
         {
-            _renderer.SetParameters(MenuClass, (int)MenuPart.PopupSeparator, 0);
-
-            var rect = new Rectangle(
-                e.ToolStrip.DisplayRectangle.Left,
-                0,
-                e.ToolStrip.DisplayRectangle.Width,
-                e.Item.Height
-            );
-            _renderer.DrawBackground(e.Graphics, rect, rect);
-        }
-        else
             base.OnRenderSeparator(e);
+            return;
+        }
+
+        _renderer.SetParameters(MenuClass, (int)MenuPart.PopupSeparator, 0);
+
+        var rect = new Rectangle(
+            e.ToolStrip.DisplayRectangle.Left,
+            0,
+            e.ToolStrip.DisplayRectangle.Width,
+            e.Item.Height
+        );
+        _renderer.DrawBackground(e.Graphics, rect, rect);
     }
 
     protected override void OnRenderItemCheck(ToolStripItemImageRenderEventArgs e)
@@ -426,8 +420,10 @@ public class VisualStyleStripRenderer(ToolBarTheme theme) : ToolStripSystemRende
             bgRect.Width = bgRect.Height;
 
             // Now, mirror its position if the menu item is RTL.
-            if (e.Item.RightToLeft == RightToLeft.Yes)
+            if (e.Item.RightToLeft == RightToLeft.Yes && e.ToolStrip is not null)
+            {
                 bgRect = new Rectangle(e.ToolStrip.ClientSize.Width - bgRect.X - bgRect.Width, bgRect.Y, bgRect.Width, bgRect.Height);
+            }
 
             _renderer.SetParameters(MenuClass, (int)MenuPart.PopupCheckBackground, e.Item.Enabled ? (int)MenuPopupCheckBackgroundState.Normal : (int)MenuPopupCheckBackgroundState.Disabled);
             _renderer.DrawBackground(e.Graphics, bgRect);
@@ -452,7 +448,7 @@ public class VisualStyleStripRenderer(ToolBarTheme theme) : ToolStripSystemRende
         // The default renderer will draw an arrow for us (the UXTheme API seems not to have one for all directions),
         // but it will get the color wrong in many cases. The text color is probably the best color to use.
         if (EnsureRenderer())
-            e.ArrowColor = GetItemTextColor(e.Item);
+            e.ArrowColor = GetItemTextColor(e.Item!);
         base.OnRenderArrow(e);
     }
 
