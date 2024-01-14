@@ -13,8 +13,7 @@ public sealed class FileStringContentDataAttribute : DataAttribute
 
     public override IEnumerable<object[]> GetData(MethodInfo testMethod)
     {
-        if (testMethod == null)
-            throw new ArgumentNullException(nameof(testMethod));
+        ArgumentNullException.ThrowIfNull(testMethod);
         yield return new [] { File.ReadAllText(GetFullFilename(FileName)) };
     }
 

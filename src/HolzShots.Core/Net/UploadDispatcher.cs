@@ -48,12 +48,9 @@ public static class UploadDispatcher
 
     public static async Task<UploadResult> InitiateUpload(IUploadPayload payload, HSSettings settingsContext, Uploader uploader, ITransferProgressReporter? progressReporter)
     {
-        if (payload == null)
-            throw new ArgumentNullException(nameof(payload));
-        if (settingsContext == null)
-            throw new ArgumentNullException(nameof(settingsContext));
-        if (uploader == null)
-            throw new ArgumentNullException(nameof(uploader));
+        ArgumentNullException.ThrowIfNull(payload);
+        ArgumentNullException.ThrowIfNull(settingsContext);
+        ArgumentNullException.ThrowIfNull(uploader);
 
         try
         {

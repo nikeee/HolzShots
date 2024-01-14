@@ -21,8 +21,7 @@ internal class FFmpegWrapper : IDisposable
 
     public async Task<bool> Start(IFFmpegArguments arguments, CancellationToken cancellationToken)
     {
-        if (arguments == null)
-            throw new ArgumentNullException(nameof(arguments));
+        ArgumentNullException.ThrowIfNull(arguments);
 
         var commandLineArgs = arguments.GetArgumentString();
         _process.StartInfo = new ProcessStartInfo(_executablePath, commandLineArgs)

@@ -5,8 +5,7 @@ public static class FileNamePatternFormatter
 {
     public static string GetFileNameFromPattern(FileMetadata info, string pattern)
     {
-        if (pattern == null)
-            throw new ArgumentNullException(nameof(pattern));
+        ArgumentNullException.ThrowIfNull(pattern);
 
         var parsedPattern = FileNamePattern.Parse(pattern);
         if (parsedPattern.IsEmpty)

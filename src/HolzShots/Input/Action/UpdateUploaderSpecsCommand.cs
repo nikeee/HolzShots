@@ -11,10 +11,8 @@ public class UpdateUploaderSpecsCommand : ICommand<HSSettings>
 {
     public async Task Invoke(IReadOnlyDictionary<string, string> parameters, HSSettings settingsContext)
     {
-        if (parameters == null)
-            throw new ArgumentNullException(nameof(parameters));
-        if (settingsContext == null)
-            throw new ArgumentNullException(nameof(settingsContext));
+        ArgumentNullException.ThrowIfNull(parameters);
+        ArgumentNullException.ThrowIfNull(settingsContext);
 
         var cts = new CancellationTokenSource();
 

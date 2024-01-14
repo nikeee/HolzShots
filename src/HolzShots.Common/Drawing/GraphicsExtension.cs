@@ -7,15 +7,13 @@ public static class GraphicsExtension
 {
     public static void DrawHighlight(this Graphics g, Bitmap bmp, Point[] points, NativePen pen)
     {
-        if (g == null)
-            throw new NullReferenceException();
-        if (points == null)
-            throw new ArgumentNullException(nameof(points));
+        ArgumentNullException.ThrowIfNull(g);
+        ArgumentNullException.ThrowIfNull(bmp);
+        ArgumentNullException.ThrowIfNull(points);
+        ArgumentNullException.ThrowIfNull(pen);
         if (points.Length <= 1)
             throw new ArgumentException(nameof(points));
-        if (bmp == null)
-            throw new ArgumentNullException(nameof(bmp));
-        if (pen == null || pen.Handle == IntPtr.Zero)
+        if (pen.Handle == IntPtr.Zero)
             throw new ArgumentNullException(nameof(pen));
 
         var hdc = g.GetHdc();

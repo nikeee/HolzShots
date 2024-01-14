@@ -13,8 +13,7 @@ static class ReflectionUtil
     internal static TField? GetInstanceField<TU, TField>(TU instance, string fieldName)
         where TU : class
     {
-        if (instance == null)
-            throw new ArgumentNullException(nameof(instance));
+        ArgumentNullException.ThrowIfNull(instance);
 
         const BindingFlags bindFlags = BindingFlags.Instance | BindingFlags.NonPublic;
         var field = typeof(TU).GetField(fieldName, bindFlags);
@@ -26,8 +25,7 @@ static class ReflectionUtil
     internal static void SetInstanceField<TU, TField>(TU instance, string fieldName, TField value)
         where TU : class
     {
-        if (instance == null)
-            throw new ArgumentNullException(nameof(instance));
+        ArgumentNullException.ThrowIfNull(instance);
 
         const BindingFlags bindFlags = BindingFlags.Instance | BindingFlags.NonPublic;
         var field = typeof(TU).GetField(fieldName, bindFlags);

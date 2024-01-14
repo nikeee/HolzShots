@@ -9,10 +9,8 @@ public class OpenSaveDirectory : ICommand<HSSettings>
 {
     public Task Invoke(IReadOnlyDictionary<string, string> parameters, HSSettings settingsContext)
     {
-        if (parameters == null)
-            throw new ArgumentNullException(nameof(parameters));
-        if (settingsContext == null)
-            throw new ArgumentNullException(nameof(settingsContext));
+        ArgumentNullException.ThrowIfNull(parameters);
+        ArgumentNullException.ThrowIfNull(settingsContext);
 
         ScreenshotAggregator.OpenPictureSaveDirectory(settingsContext);
         return Task.CompletedTask;

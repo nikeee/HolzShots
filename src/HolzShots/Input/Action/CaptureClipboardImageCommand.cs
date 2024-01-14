@@ -11,10 +11,8 @@ public class CaptureClipboardImageCommand : ImageCapturingCommand
 {
     protected override async Task InvokeInternal(IReadOnlyDictionary<string, string> parameters, HSSettings settingsContext)
     {
-        if (parameters == null)
-            throw new ArgumentNullException(nameof(parameters));
-        if (settingsContext == null)
-            throw new ArgumentNullException(nameof(settingsContext));
+        ArgumentNullException.ThrowIfNull(parameters);
+        ArgumentNullException.ThrowIfNull(settingsContext);
 
         var image = GetClipboardImage();
         if (image == null)

@@ -18,8 +18,7 @@ public class CustomUploader : Uploader
 
     public async override Task<UploadResult> InvokeAsync(Stream data, string suggestedFileName, string mimeType, IProgress<TransferProgress> progress, CancellationToken cancellationToken)
     {
-        if (data == null)
-            throw new ArgumentNullException(nameof(data));
+        ArgumentNullException.ThrowIfNull(data);
 
         Debug.Assert(UploaderInfo is not null);
         Debug.Assert(UploaderInfo.Uploader is not null);

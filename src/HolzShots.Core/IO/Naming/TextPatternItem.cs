@@ -8,8 +8,7 @@ class TextPatternItem : PatternItem
     public TextPatternItem(string? propertyName)
         : base(propertyName)
     {
-        if (propertyName == null)
-            throw new ArgumentNullException(nameof(propertyName));
+        ArgumentNullException.ThrowIfNull(propertyName);
     }
 
     public override string TextRepresentation => PropertyName!;

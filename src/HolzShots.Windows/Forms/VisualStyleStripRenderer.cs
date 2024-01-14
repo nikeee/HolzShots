@@ -178,8 +178,7 @@ public class VisualStyleStripRenderer : ToolStripSystemRenderer
     // Gives parented ToolStrips a transparent background.
     protected override void Initialize(ToolStrip toolStrip)
     {
-        if (toolStrip == null)
-            throw new ArgumentNullException(nameof(toolStrip));
+        ArgumentNullException.ThrowIfNull(toolStrip);
 
         if (toolStrip.Parent is ToolStripPanel)
             toolStrip.BackColor = Color.Transparent;
@@ -193,8 +192,7 @@ public class VisualStyleStripRenderer : ToolStripSystemRenderer
     // once. Hopefully it isn't any more complicated than this.
     protected override void InitializePanel(ToolStripPanel toolStripPanel)
     {
-        if (toolStripPanel == null)
-            throw new ArgumentNullException(nameof(toolStripPanel));
+        ArgumentNullException.ThrowIfNull(toolStripPanel);
 
         foreach (var control in toolStripPanel.Controls)
         {
@@ -207,8 +205,7 @@ public class VisualStyleStripRenderer : ToolStripSystemRenderer
 
     protected override void OnRenderToolStripBorder(ToolStripRenderEventArgs e)
     {
-        if (e == null)
-            throw new ArgumentNullException(nameof(e));
+        ArgumentNullException.ThrowIfNull(e);
 
         if (EnsureRenderer())
         {
@@ -254,8 +251,7 @@ public class VisualStyleStripRenderer : ToolStripSystemRenderer
 
     protected override void OnRenderMenuItemBackground(ToolStripItemRenderEventArgs e)
     {
-        if (e == null)
-            throw new ArgumentNullException(nameof(e));
+        ArgumentNullException.ThrowIfNull(e);
 
         if (EnsureRenderer())
         {
@@ -271,8 +267,7 @@ public class VisualStyleStripRenderer : ToolStripSystemRenderer
 
     protected override void OnRenderToolStripPanelBackground(ToolStripPanelRenderEventArgs e)
     {
-        if (e == null)
-            throw new ArgumentNullException(nameof(e));
+        ArgumentNullException.ThrowIfNull(e);
 
         if (EnsureRenderer())
         {
@@ -296,8 +291,7 @@ public class VisualStyleStripRenderer : ToolStripSystemRenderer
     // Render the background of an actual menu bar, dropdown menu or toolbar.
     protected override void OnRenderToolStripBackground(ToolStripRenderEventArgs e)
     {
-        if (e == null)
-            throw new ArgumentNullException(nameof(e));
+        ArgumentNullException.ThrowIfNull(e);
 
         if (EnsureRenderer())
         {
@@ -340,8 +334,7 @@ public class VisualStyleStripRenderer : ToolStripSystemRenderer
     // It's OK to just draw over the default arrow since we also pass down arrow drawing to the system renderer.
     protected override void OnRenderSplitButtonBackground(ToolStripItemRenderEventArgs e)
     {
-        if (e == null)
-            throw new ArgumentNullException(nameof(e));
+        ArgumentNullException.ThrowIfNull(e);
 
         if (EnsureRenderer())
         {
@@ -364,8 +357,7 @@ public class VisualStyleStripRenderer : ToolStripSystemRenderer
 
     protected override void OnRenderItemText(ToolStripItemTextRenderEventArgs e)
     {
-        if (e == null)
-            throw new ArgumentNullException(nameof(e));
+        ArgumentNullException.ThrowIfNull(e);
 
         if (EnsureRenderer())
             e.TextColor = GetItemTextColor(e.Item);
@@ -375,8 +367,7 @@ public class VisualStyleStripRenderer : ToolStripSystemRenderer
 
     protected override void OnRenderImageMargin(ToolStripRenderEventArgs e)
     {
-        if (e == null)
-            throw new ArgumentNullException(nameof(e));
+        ArgumentNullException.ThrowIfNull(e);
 
         if (EnsureRenderer())
         {
@@ -410,8 +401,7 @@ public class VisualStyleStripRenderer : ToolStripSystemRenderer
 
     protected override void OnRenderSeparator(ToolStripSeparatorRenderEventArgs e)
     {
-        if (e == null)
-            throw new ArgumentNullException(nameof(e));
+        ArgumentNullException.ThrowIfNull(e);
 
         if (e.ToolStrip.IsDropDown && EnsureRenderer())
         {
@@ -431,8 +421,7 @@ public class VisualStyleStripRenderer : ToolStripSystemRenderer
 
     protected override void OnRenderItemCheck(ToolStripItemImageRenderEventArgs e)
     {
-        if (e == null)
-            throw new ArgumentNullException(nameof(e));
+        ArgumentNullException.ThrowIfNull(e);
 
         if (EnsureRenderer())
         {
@@ -461,8 +450,7 @@ public class VisualStyleStripRenderer : ToolStripSystemRenderer
 
     protected override void OnRenderArrow(ToolStripArrowRenderEventArgs e)
     {
-        if (e == null)
-            throw new ArgumentNullException(nameof(e));
+        ArgumentNullException.ThrowIfNull(e);
 
         // The default renderer will draw an arrow for us (the UXTheme API seems not to have one for all directions),
         // but it will get the colour wrong in many cases. The text colour is probably the best colour to use.
@@ -473,8 +461,7 @@ public class VisualStyleStripRenderer : ToolStripSystemRenderer
 
     protected override void OnRenderOverflowButtonBackground(ToolStripItemRenderEventArgs e)
     {
-        if (e == null)
-            throw new ArgumentNullException(nameof(e));
+        ArgumentNullException.ThrowIfNull(e);
 
         if (EnsureRenderer())
         {

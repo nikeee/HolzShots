@@ -11,10 +11,8 @@ public class EditImageCommand : ImageFileDependentCommand, ICommand<HSSettings>
 
     public Task Invoke(IReadOnlyDictionary<string, string> parameters, HSSettings settingsContext)
     {
-        if (parameters == null)
-            throw new ArgumentNullException(nameof(parameters));
-        if (settingsContext == null)
-            throw new ArgumentNullException(nameof(settingsContext));
+        ArgumentNullException.ThrowIfNull(parameters);
+        ArgumentNullException.ThrowIfNull(settingsContext);
 
         var fileName = parameters.Count != 1 || !parameters.ContainsKey(FileNameParameter) ? ShowFileSelector(OpenInShotEditor) : parameters[FileNameParameter];
 

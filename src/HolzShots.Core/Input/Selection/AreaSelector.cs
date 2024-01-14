@@ -28,8 +28,7 @@ public partial class AreaSelector : AnimatedForm, IAreaSelector
 
     private AreaSelector(Bitmap image, bool allowEntireScreen, HSSettings settingsContext)
     {
-        if (image == null)
-            throw new ArgumentNullException(nameof(image));
+        ArgumentNullException.ThrowIfNull(image);
 
         BackColor = Color.Black;
         Cursor = new(Properties.Resources.CrossCursor.Handle);

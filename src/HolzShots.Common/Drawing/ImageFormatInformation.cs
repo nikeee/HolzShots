@@ -21,8 +21,7 @@ public static class ImageFormatInformation
 
     public static FormatDefinition GetExtensionAndMimeType(this ImageFormat format)
     {
-        if (format == null)
-            throw new ArgumentNullException(nameof(format));
+        ArgumentNullException.ThrowIfNull(format);
         return _imageFormats[format];
     }
 
@@ -47,10 +46,8 @@ public static class ImageFormatInformation
     /// <param name="compression">Value between 0 and 100</param>
     public static void SaveAsJpeg(Image image, Stream destination, byte compression = 100)
     {
-        if (image == null)
-            throw new ArgumentNullException(nameof(image));
-        if (destination == null)
-            throw new ArgumentNullException(nameof(destination));
+        ArgumentNullException.ThrowIfNull(image);
+        ArgumentNullException.ThrowIfNull(destination);
 
         compression = Math.Min(compression, (byte)100);
 

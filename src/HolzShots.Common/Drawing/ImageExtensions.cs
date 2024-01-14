@@ -10,23 +10,20 @@ public static class ImageExtensions
     private const string _rawDataFieldName = "rawData";
     public static byte[]? GetRawData(this Image image)
     {
-        if (image == null)
-            throw new ArgumentNullException(nameof(image));
+        ArgumentNullException.ThrowIfNull(image);
 
         return ReflectionUtil.GetInstanceField<Image, byte[]>(image, _rawDataFieldName);
     }
     internal static void SetRawData(this Image image, byte[] rawData)
     {
-        if (image == null)
-            throw new ArgumentNullException(nameof(image));
+        ArgumentNullException.ThrowIfNull(image);
 
         ReflectionUtil.SetInstanceField(image, _rawDataFieldName, rawData);
     }
 
     public static Image CloneDeep(this Image image)
     {
-        if (image == null)
-            throw new ArgumentNullException(nameof(image));
+        ArgumentNullException.ThrowIfNull(image);
 
         var rawData = image.GetRawData()!;
         var copy = (image.Clone() as Image)!;
@@ -38,10 +35,8 @@ public static class ImageExtensions
 
     public static MemSize EstimateFileSize(this Image image, ImageFormat format)
     {
-        if (image == null)
-            throw new ArgumentNullException(nameof(image));
-        if (format == null)
-            throw new ArgumentNullException(nameof(format));
+        ArgumentNullException.ThrowIfNull(image);
+        ArgumentNullException.ThrowIfNull(format);
 
         using (var ms = new System.IO.MemoryStream(image.Width * image.Height * 4))
         {
@@ -52,10 +47,8 @@ public static class ImageExtensions
 
     public static Image CloneGifBug(this Image image, ImageFormat format)
     {
-        if (image == null)
-            throw new ArgumentNullException(nameof(image));
-        if (format == null)
-            throw new ArgumentNullException(nameof(format));
+        ArgumentNullException.ThrowIfNull(image);
+        ArgumentNullException.ThrowIfNull(format);
 
         return format == ImageFormat.Gif
             ? image.CloneDeep()
@@ -64,10 +57,8 @@ public static class ImageExtensions
 
     public static MemoryStream GetImageStream(this Image image, ImageFormat format)
     {
-        if (image == null)
-            throw new ArgumentNullException(nameof(image));
-        if (format == null)
-            throw new ArgumentNullException(nameof(format));
+        ArgumentNullException.ThrowIfNull(image);
+        ArgumentNullException.ThrowIfNull(format);
 
         if (format == ImageFormat.Gif)
         {
@@ -88,12 +79,9 @@ public static class ImageExtensions
 
     public static void SaveExtended(this Image image, Stream destination, ImageFormat format)
     {
-        if (image == null)
-            throw new ArgumentNullException(nameof(image));
-        if (destination == null)
-            throw new ArgumentNullException(nameof(destination));
-        if (format == null)
-            throw new ArgumentNullException(nameof(format));
+        ArgumentNullException.ThrowIfNull(image);
+        ArgumentNullException.ThrowIfNull(destination);
+        ArgumentNullException.ThrowIfNull(format);
 
         if (format == ImageFormat.Jpeg)
         {

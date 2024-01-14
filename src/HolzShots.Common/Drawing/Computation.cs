@@ -12,12 +12,9 @@ public static class Computation
         // Fuck dem clusters
         // Do not touch or things will explode.
 
-        if (white == null)
-            throw new ArgumentNullException(nameof(white));
-        if (black == null)
-            throw new ArgumentNullException(nameof(black));
-        if (alpha == null)
-            throw new ArgumentNullException(nameof(alpha));
+        ArgumentNullException.ThrowIfNull(white);
+        ArgumentNullException.ThrowIfNull(black);
+        ArgumentNullException.ThrowIfNull(alpha);
 
         Debug.Assert(white.Size == black.Size);
         Debug.Assert(alpha.Size == black.Size);
@@ -95,12 +92,9 @@ public static class Computation
 
     public static void ComputeAlphaChannel2(Bitmap white, Bitmap black, ref Bitmap alpha)
     {
-        if (white == null)
-            throw new ArgumentNullException(nameof(white));
-        if (black == null)
-            throw new ArgumentNullException(nameof(black));
-        if (alpha == null)
-            throw new ArgumentNullException(nameof(alpha));
+        ArgumentNullException.ThrowIfNull(white);
+        ArgumentNullException.ThrowIfNull(black);
+        ArgumentNullException.ThrowIfNull(alpha);
 
         Debug.Assert(white.Size == black.Size);
         Debug.Assert(alpha.Size == black.Size);

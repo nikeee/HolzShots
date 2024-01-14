@@ -51,10 +51,10 @@ public class PluginMetadata : IPluginMetadata
     public string? BugsUrl { get; }
     public string? Contact { get; }
     public string? Description { get; }
+
     public PluginMetadata(ICompileTimePluginMetadata sourceAttribute)
     {
-        if (sourceAttribute == null)
-            throw new ArgumentNullException(nameof(sourceAttribute));
+        ArgumentNullException.ThrowIfNull(sourceAttribute);
         Name = sourceAttribute.Name;
         Author = sourceAttribute.Author;
         Version = SemVersion.Parse(sourceAttribute.Version, SemVersionStyles.Strict);

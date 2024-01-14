@@ -17,10 +17,8 @@ public abstract class ImageCapturingCommand : ICommand<HSSettings>
 {
     protected static async Task ProcessCapturing(Screenshot screenshot, HSSettings settingsContext)
     {
-        if (screenshot == null)
-            throw new ArgumentNullException(nameof(screenshot));
-        if (settingsContext == null)
-            throw new ArgumentNullException(nameof(settingsContext));
+        ArgumentNullException.ThrowIfNull(screenshot);
+        ArgumentNullException.ThrowIfNull(settingsContext);
 
         ScreenshotAggregator.HandleScreenshot(screenshot, settingsContext);
 
@@ -106,8 +104,7 @@ public abstract class ImageCapturingCommand : ICommand<HSSettings>
 
     public async Task Invoke(IReadOnlyDictionary<string, string> parameters, HSSettings settingsContext)
     {
-        if (settingsContext == null)
-            throw new ArgumentNullException(nameof(settingsContext));
+        ArgumentNullException.ThrowIfNull(settingsContext);
 
         if (settingsContext.CaptureDelay > 0)
             await Task.Delay(TimeSpan.FromSeconds(settingsContext.CaptureDelay));

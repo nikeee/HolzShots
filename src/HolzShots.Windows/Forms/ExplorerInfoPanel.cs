@@ -24,8 +24,7 @@ public class ExplorerInfoPanel : Panel
 
     protected override void OnPaint(PaintEventArgs e)
     {
-        if (e == null)
-            throw new ArgumentNullException(nameof(e));
+        ArgumentNullException.ThrowIfNull(e);
 
         base.OnPaint(e);
 

@@ -14,10 +14,8 @@ public class CaptureSelectedAreaCommand : ImageCapturingCommand
 {
     protected override async Task InvokeInternal(IReadOnlyDictionary<string, string> parameters, HSSettings settingsContext)
     {
-        if (parameters == null)
-            throw new ArgumentNullException(nameof(parameters));
-        if (settingsContext == null)
-            throw new ArgumentNullException(nameof(settingsContext));
+        ArgumentNullException.ThrowIfNull(parameters);
+        ArgumentNullException.ThrowIfNull(settingsContext);
 
         // TODO: Add proper assertion
         // Debug.Assert(ManagedSettings.EnableAreaScreenshot)
@@ -50,8 +48,7 @@ public class CaptureSelectedAreaCommand : ImageCapturingCommand
 
     public static async Task<Screenshot?> CaptureSelection(HSSettings settingsContext)
     {
-        if (settingsContext == null)
-            throw new ArgumentNullException(nameof(settingsContext));
+        ArgumentNullException.ThrowIfNull(settingsContext);
 
         Debug.Assert(!SelectionSemaphore.IsInAreaSelection);
 

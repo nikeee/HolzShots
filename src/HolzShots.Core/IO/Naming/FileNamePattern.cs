@@ -33,8 +33,7 @@ public class FileNamePattern
 
     public static FileNamePattern Parse(string value)
     {
-        if (value == null)
-            throw new ArgumentNullException(nameof(value));
+        ArgumentNullException.ThrowIfNull(value);
         if (value.Length == 0)
             return new FileNamePattern();
 

@@ -15,8 +15,7 @@ public static class ImageFormatAnalyser
 
     public static bool IsOptimizable(Image image)
     {
-        if (image == null)
-            throw new ArgumentNullException(nameof(image));
+        ArgumentNullException.ThrowIfNull(image);
         return !image.RawFormat.Equals(ImageFormat.Gif);
     }
 
@@ -131,8 +130,7 @@ public static class ImageFormatAnalyser
 
     public static ImageFormat GetBestFittingFormat(Bitmap image, AlgorithmKind algorithm)
     {
-        if (image == null)
-            throw new ArgumentNullException(nameof(image));
+        ArgumentNullException.ThrowIfNull(image);
 
         switch (algorithm)
         {
