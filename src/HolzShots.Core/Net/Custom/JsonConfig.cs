@@ -9,8 +9,6 @@ static class JsonConfig
     internal static JsonSerializerSettings JsonSettings { get; } = new JsonSerializerSettings
     {
         ContractResolver = new CamelCasePropertyNamesContractResolver(),
-        Converters = new List<JsonConverter>() {
-            new SemVersionConverter()
-        }
+        Converters = [new SemVersionConverter()],
     };
 }

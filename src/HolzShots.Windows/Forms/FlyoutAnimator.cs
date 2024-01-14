@@ -11,7 +11,7 @@ namespace HolzShots.Windows.Forms;
 
 public class FlyoutAnimator
 {
-    private static readonly List<FlyoutForm> _currentVisibleFlyouts = new List<FlyoutForm>();
+    private static readonly List<FlyoutForm> _currentVisibleFlyouts = [];
 
     private readonly FlyoutForm _target;
 
