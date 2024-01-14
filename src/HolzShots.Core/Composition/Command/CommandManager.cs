@@ -52,7 +52,7 @@ public class CommandManager<TSettings>
 
     private ICommand<TSettings>? GetCommand(string name)
     {
-        Debug.Assert(IsRegisteredCommand(name), $"Command must be registered: {name ?? "<null>"}");
+        Debug.Assert(IsRegisteredCommand(name), $"Command must be registered: \"{name}\"");
         return Actions.TryGetValue(name.ToLowerInvariant(), out var command)
             ? command
             : null;

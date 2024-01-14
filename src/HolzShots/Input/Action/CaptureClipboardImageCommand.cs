@@ -28,11 +28,9 @@ public class CaptureClipboardImageCommand : ImageCapturingCommand
     {
         try
         {
-            return Clipboard.ContainsImage()
-                ? (Bitmap)Clipboard.GetImage()
-                : default;
+            return Clipboard.GetImage() as Bitmap;
         }
-        catch (Exception ex) when (ex is System.Runtime.InteropServices.ExternalException || ex is System.Threading.ThreadStateException)
+        catch (Exception ex) when (ex is System.Runtime.InteropServices.ExternalException || ex is ThreadStateException)
         {
             NotificationManager.RetrievingImageFromClipboardFailed(ex);
             return default;
