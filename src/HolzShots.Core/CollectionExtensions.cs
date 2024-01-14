@@ -14,7 +14,7 @@ public static class CollectionExtensions
         if (readOnlyList is IList<T> list)
             return list.IndexOf(element);
 
-        for (int i = 0; i < readOnlyList.Count; i++)
+        for (var i = 0; i < readOnlyList.Count; i++)
             if (EqualityComparer<T>.Default.Equals(element, readOnlyList[i]))
                 return i;
 

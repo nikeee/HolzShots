@@ -7,10 +7,9 @@ namespace HolzShots.Capture.Video;
 /// <summary>
 /// This recorder assumes that ffmpeg is in the current PATH and the version that should be used gets the highest priority.
 /// </summary>
-public class WindowsFFmpegScreenRecorder : IScreenRecorder
+public sealed class WindowsFFmpegScreenRecorder(string ffmpegPath) : IScreenRecorder
 {
-    private readonly string _ffmpegPath;
-    public WindowsFFmpegScreenRecorder(string ffmpegPath) => _ffmpegPath = ffmpegPath ?? throw new ArgumentNullException(nameof(ffmpegPath));
+    private readonly string _ffmpegPath = ffmpegPath ?? throw new ArgumentNullException(nameof(ffmpegPath));
 
     public async Task<ScreenRecording> Invoke(Rectangle rectangleOnScreenToCapture, string targetFile, VideoCaptureFormat outputFormat, HSSettings settingsContext, CancellationToken cancellationToken)
     {
@@ -26,8 +25,8 @@ public class WindowsFFmpegScreenRecorder : IScreenRecorder
             // We use "yuv420p" pixel format for Firefox compatibility
             // However, yuv420p needs both dimensions to be even. So we reduce the image size by 1 pixel on each dimension if the respective dimension is odd to fix the issue.
 
-                        // If we would get an invalid rectangle size by applying this size reduction, we take the original size and prohibit the yuv420p format, so it's "just" broken in firefox.
-                        pixelFormat = "yuv420p";
+            // If we would get an invalid rectangle size by applying this size reduction, we take the original size and prohibit the yuv420p format, so it's "just" broken in Firefox.
+            pixelFormat = "yuv420p";
             if (!IsRectangleShrinkable(rectangleOnScreenToCapture))
             {
                 // yuv420p not possible, just use ffmpeg's default
