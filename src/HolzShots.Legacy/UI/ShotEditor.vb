@@ -222,8 +222,8 @@ Namespace UI
                 HolzShots.My.Settings.EllipseWidth = 20
                 HolzShots.My.Settings.Save()
             End If
-            ThePanel.UseBoxInsteadOfCirlce = HolzShots.My.Settings.UseBoxInsteadOfCirlce
-            EllipseOrRectangle.Value = If(ThePanel.UseBoxInsteadOfCirlce, 1, 0)
+            ThePanel.UseBoxInsteadOfCircle = HolzShots.My.Settings.UseBoxInsteadOfCirlce
+            EllipseOrRectangle.Value = If(ThePanel.UseBoxInsteadOfCircle, 1, 0)
             EllipseBar.Value = HolzShots.My.Settings.EllipseWidth
             Ellipse_Width.Text = $"{EllipseBar.Value}px"
             ThePanel.EllipseColor = EllipseColorSelector.Color
@@ -348,7 +348,7 @@ Namespace UI
 
             HolzShots.My.Settings.ArrowColor = ArrowColorviewer.Color
             HolzShots.My.Settings.ArrowWidth = ArrowWidthSlider.Value
-            HolzShots.My.Settings.UseBoxInsteadOfCirlce = ThePanel.UseBoxInsteadOfCirlce
+            HolzShots.My.Settings.UseBoxInsteadOfCirlce = ThePanel.UseBoxInsteadOfCircle
 
             HolzShots.My.Settings.BlurFactor = ThePanel.BlurFactor
 
@@ -742,7 +742,7 @@ Namespace UI
         End Sub
 
         Private Sub EllipseOrRectangleValueChanged(sender As Object, e As EventArgs) Handles EllipseOrRectangle.ValueChanged
-            ThePanel.UseBoxInsteadOfCirlce = EllipseOrRectangle.Value = 1
+            ThePanel.UseBoxInsteadOfCircle = EllipseOrRectangle.Value = 1
             EllipseOrRectangleBox.Invalidate()
         End Sub
 
@@ -753,7 +753,7 @@ Namespace UI
         Private Sub EllipseOrRectangleBoxPaint(sender As Object, e As PaintEventArgs) Handles EllipseOrRectangleBox.Paint
             Dim rct As New Rectangle(2, 2, 12, 12)
             Dim pe As New Pen(Brushes.Red) With {.Width = 2}
-            If ThePanel.UseBoxInsteadOfCirlce Then
+            If ThePanel.UseBoxInsteadOfCircle Then
                 e.Graphics.DrawRectangle(pe, rct)
             Else
                 e.Graphics.SmoothingMode = SmoothingMode.HighQuality

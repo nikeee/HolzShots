@@ -1,5 +1,5 @@
 Imports System.Globalization
 
 Public Module UIConfig
-    Public CurrentCulture As New CultureInfo("en-US")
+    Public ReadOnly CurrentCulture As New CultureInfo("en-US")
 End Module

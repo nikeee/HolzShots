@@ -77,15 +77,15 @@ public readonly struct MemSize : IEquatable<MemSize>, IComparable<MemSize>, IPar
 
     #region +/- operators
 
-    public static MemSize operator +(MemSize bs1, MemSize bs2) => new MemSize(bs1.ByteCount + bs2.ByteCount);
+    public static MemSize operator +(MemSize bs1, MemSize bs2) => new(bs1.ByteCount + bs2.ByteCount);
     public static MemSize Add(MemSize bs1, MemSize bs2) => bs1 + bs2;
-    public static MemSize operator ++(MemSize b) => new MemSize(b.ByteCount + 1);
-    public static MemSize Increment(MemSize b) => new MemSize(b.ByteCount + 1);
+    public static MemSize operator ++(MemSize b) => new(b.ByteCount + 1);
+    public static MemSize Increment(MemSize b) => new(b.ByteCount + 1);
 
-    public static MemSize operator -(MemSize bs1, MemSize bs2) => new MemSize(bs1.ByteCount - bs2.ByteCount);
+    public static MemSize operator -(MemSize bs1, MemSize bs2) => new(bs1.ByteCount - bs2.ByteCount);
     public static MemSize Subtract(MemSize bs1, MemSize bs2) => bs1 - bs2;
-    public static MemSize operator --(MemSize b) => new MemSize(b.ByteCount - 1);
-    public static MemSize Decrement(MemSize b) => new MemSize(b.ByteCount - 1);
+    public static MemSize operator --(MemSize b) => new(b.ByteCount - 1);
+    public static MemSize Decrement(MemSize b) => new(b.ByteCount - 1);
 
     #endregion
     #region gt/lt operators
@@ -100,9 +100,8 @@ public readonly struct MemSize : IEquatable<MemSize>, IComparable<MemSize>, IPar
     #endregion
     #region casts
 
-#pragma warning disable CA1707
     public static explicit operator long(MemSize value) => value.ByteCount;
-#pragma warning restore CA1707
+
     public long ToInt64() => ByteCount;
 
     #endregion
@@ -171,7 +170,6 @@ public enum MemSizeUnit
     ExbiByte
 }
 
-#pragma warning disable CA1720 // Identifier contains type name
 public enum PrefixType
 {
     /// <summary>???</summary>
@@ -181,4 +179,3 @@ public enum PrefixType
     /// <summary>Decimal prefix. See <see href="https://en.wikipedia.org/wiki/Binary_prefix">Wikipedia</see>.</summary>
     Binary = 0x2
 }
-#pragma warning restore CA1720 // Identifier contains type name

@@ -73,7 +73,7 @@ public class HolzShotsApplication : ISingleInstance
         System.Diagnostics.Trace.WriteLine($"Processing: {string.Join(", ", args)}");
 #endif
         // TODO: Proper command line parsing, GH#60
-        for (int i = 0; i <= args.Length - 1; i++)
+        for (var i = 0; i <= args.Length - 1; i++)
         {
             switch (args[i])
             {

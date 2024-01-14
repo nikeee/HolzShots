@@ -38,7 +38,7 @@ public static class Taskbar
         {
             if (_ownerHandle == IntPtr.Zero)
             {
-                System.Diagnostics.Process currentProcess = System.Diagnostics.Process.GetCurrentProcess();
+                var currentProcess = System.Diagnostics.Process.GetCurrentProcess();
 
                 _ownerHandle = currentProcess == null || currentProcess.MainWindowHandle == IntPtr.Zero
                     ? IntPtr.Zero
@@ -53,9 +53,9 @@ public static class Taskbar
         if (!IsPlatformSupported)
             throw new Exception("Taskbar API not supported");
 
-        var inst = (ITaskbarList4)new CTaskbarList();
-        inst.HrInit();
-        return inst;
+        var instance = (ITaskbarList4)new CTaskbarList();
+        instance.HrInit();
+        return instance;
     }, false);
 
     private static ITaskbarList4 Instance => _instance.Value;
@@ -76,7 +76,7 @@ public static class Taskbar
         }
     }
 
-    private static readonly Version _windowsSeven = new Version(6, 1);
+    private static readonly Version _windowsSeven = new(6, 1);
     public static bool IsPlatformSupported => Environment.OSVersion.Version >= _windowsSeven;
 
     public static TaskbarProgressManager CreateProgressManagerForWindow(IWin32Window window) => CreateProgressManagerForWindow(window?.Handle ?? IntPtr.Zero);
@@ -126,7 +126,7 @@ internal interface ITaskbarList4
 
     // ITaskbarList3
     [PreserveSig]
-    void SetProgressValue(IntPtr hwnd, UInt64 ullCompleted, UInt64 ullTotal);
+    void SetProgressValue(IntPtr hwnd, ulong ullCompleted, ulong ullTotal);
     [PreserveSig]
     void SetProgressState(IntPtr hwnd, TaskbarProgressBarState tbpFlags);
     [PreserveSig]

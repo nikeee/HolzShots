@@ -8,22 +8,14 @@ namespace HolzShots.Native;
 /// The Windows API uses Left (X), Top (Y), Right and Bottom. So we need to wrap that.
 /// </summary>
 [StructLayout(LayoutKind.Sequential)]
-public readonly struct Rect
+public readonly struct Rect(int left, int top, int right, int bottom)
 {
-    public readonly int Left;
-    public readonly int Top;
-    public readonly int Right;
-    public readonly int Bottom;
+    public readonly int Left = left;
+    public readonly int Top = top;
+    public readonly int Right = right;
+    public readonly int Bottom = bottom;
 
     public static Rectangle ToRectangle(Rect rct) => Rectangle.FromLTRB(rct.Left, rct.Top, rct.Right, rct.Bottom);
-
-    public Rect(int left, int top, int right, int bottom)
-    {
-        Left = left;
-        Top = top;
-        Right = right;
-        Bottom = bottom;
-    }
 
     public static implicit operator Rectangle(Rect rct) => Rectangle.FromLTRB(rct.Left, rct.Top, rct.Right, rct.Bottom);
     public static implicit operator Rect(Rectangle rectangle) => new(rectangle.Left, rectangle.Top, rectangle.Right, rectangle.Bottom);

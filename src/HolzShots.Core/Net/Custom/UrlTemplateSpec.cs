@@ -134,10 +134,7 @@ class RegExSyntaxNode : ExpressionSyntaxNode
 
     public override string Evaluate(ResponseParser responseParser, string content)
     {
-        var parsedPatterns = responseParser.ParsedRegexPatterns;
-        if (parsedPatterns is null)
-            throw new UnableToFillTemplateException(content, "No pattern to match.");
-
+        var parsedPatterns = responseParser.ParsedRegexPatterns ?? throw new UnableToFillTemplateException(content, "No pattern to match.");
 
         if (PatternIndex < 0 || PatternIndex >= parsedPatterns.Count)
             throw new UnableToFillTemplateException(content, $"Reference to non-existent entry in regex pattern list: {PatternIndex}.");
@@ -206,9 +203,9 @@ class JsonSyntaxNode : ExpressionSyntaxNode
         // Get Success Link-Value
 
         var result = contentJson.SelectToken(JsonPath);
-        if (result == null)
-            throw new UnableToFillTemplateException(content, $"Could not select JSON path: {JsonPath}");
-        return result.ToString();
+        return result == null
+            ? throw new UnableToFillTemplateException(content, $"Could not select JSON path: {JsonPath}")
+            : result.ToString();
     }
 }
 
@@ -233,12 +230,8 @@ class TextSyntaxNode : TemplateSyntaxNode
     public override string Evaluate(ResponseParser responseParser, string content) => Text;
 }
 
-public class UnableToFillTemplateException : Exception
+public class UnableToFillTemplateException(string serverResponse, string message, Exception? innerException) : Exception(message, innerException)
 {
-    public string ServerResponse { get; }
+    public string ServerResponse { get; } = serverResponse;
     public UnableToFillTemplateException(string serverResponse, string message) : this(serverResponse, message, null) { }
-    public UnableToFillTemplateException(string serverResponse, string message, Exception? innerException) : base(message, innerException)
-    {
-        ServerResponse = serverResponse;
-    }
 }

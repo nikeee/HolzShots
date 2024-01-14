@@ -46,7 +46,7 @@ public partial class PluginItem : UserControl
 
     private const int BorderPadding = 0;
     private const int HotMargin = BorderPadding;
-    private static readonly Pen _separatorPen = new Pen(Color.FromArgb(0xff, 0xcc, 0xcc, 0xcc));
+    private static readonly Pen _separatorPen = new(Color.FromArgb(0xff, 0xcc, 0xcc, 0xcc));
 
     protected override void OnPaint(PaintEventArgs e)
     {
@@ -115,7 +115,7 @@ public partial class PluginItem : UserControl
     {
         public string Name => "Cool plugin";
         public string Author => "Even cooler author";
-        public SemVersion Version => new SemVersion(1);
+        public SemVersion Version => new(1);
         public string Website => "https://holzshots.net";
         public string BugsUrl => "https://github.com/nikeee/holzshots/issues";
         public string Contact => "https://github.com/nikeee/holzshots/issues";

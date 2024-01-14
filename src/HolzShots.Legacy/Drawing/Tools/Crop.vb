@@ -7,10 +7,10 @@ Namespace Drawing.Tools
         Implements IDisposable
 
         Private ReadOnly _alphaBrush As New SolidBrush(Color.FromArgb(128, 0, 0, 0))
-        Private ReadOnly _redCornerPen As Pen = New Pen(Color.FromArgb(255, 255, 0, 0)) With {.DashStyle = DashStyle.Dash}
+        Private ReadOnly _redCornerPen As New Pen(Color.FromArgb(255, 255, 0, 0)) With {.DashStyle = DashStyle.Dash}
         Private _rct As New Rectangle
 
-        Private Shared ReadOnly CursorInstance As Cursor = New Cursor(My.Resources.cropperCursor.Handle)
+        Private Shared ReadOnly CursorInstance As New Cursor(My.Resources.cropperCursor.Handle)
         Public Overrides ReadOnly Property Cursor As Cursor = CursorInstance
 
         Public Overrides Sub RenderFinalImage(ByRef rawImage As Image, ByVal sender As PaintPanel)
@@ -56,9 +56,9 @@ Namespace Drawing.Tools
         Public Overrides Sub RenderPreview(rawImage As Image, g As Graphics, sender As PaintPanel)
 
             _rct.X = Math.Min(EndCoordinates.X, BeginCoordinates.X)
-            'If(BeginCoords.X > SecondCoords.X, SecondCoords.X, BeginCoords.X)
+            'If(BeginCoordinates.X > SecondCoordinates.X, SecondCoordinates.X, BeginCoordinates.X)
             _rct.Y = Math.Min(EndCoordinates.Y, BeginCoordinates.Y)
-            'If(BeginCoords.Y > SecondCoords.Y, SecondCoords.Y, BeginCoords.Y)
+            'If(BeginCoordinates.Y > SecondCoordinates.Y, SecondCoordinates.Y, BeginCoordinates.Y)
             _rct.Width = Math.Abs(BeginCoordinates.X - EndCoordinates.X)
             _rct.Height = Math.Abs(BeginCoordinates.Y - EndCoordinates.Y)
 

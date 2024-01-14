@@ -5,7 +5,7 @@ namespace HolzShots.Net;
 // May move to other namespace?
 public class SpeedCalculatorProgress : Progress<TransferProgress>
 {
-    private readonly object _lockObj = new object();
+    private readonly object _lockObj = new();
 
     private DateTime _start;
     private DateTime _end;

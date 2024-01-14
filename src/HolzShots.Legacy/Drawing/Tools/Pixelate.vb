@@ -6,7 +6,7 @@ Namespace Drawing.Tools
         Inherits Tool
 
         ReadOnly _thePen As New Pen(Color.Red) With {.DashStyle = DashStyle.Dash}
-        Private Shared ReadOnly CursorInstance As Cursor = New Cursor(My.Resources.crossMedium.GetHicon())
+        Private Shared ReadOnly CursorInstance As New Cursor(My.Resources.crossMedium.GetHicon())
         Public Overrides ReadOnly Property Cursor As Cursor = CursorInstance
         Public Overrides ReadOnly Property ToolType As PaintPanel.ShotEditorTool = PaintPanel.ShotEditorTool.Blur
 
@@ -43,31 +43,33 @@ Namespace Drawing.Tools
 
         Public Overrides Sub RenderPreview(rawImage As Image, g As Graphics, sender As PaintPanel)
             If rawImage IsNot Nothing Then
-                Dim rawSrcRect As New Rectangle(If(BeginCoordinates.X > EndCoordinates.X, EndCoordinates.X, BeginCoordinates.X),
-                                                If(BeginCoordinates.Y > EndCoordinates.Y, EndCoordinates.Y, BeginCoordinates.Y),
-                                                If(BeginCoordinates.X > EndCoordinates.X, BeginCoordinates.X - EndCoordinates.X, EndCoordinates.X - BeginCoordinates.X),
-                                                If(BeginCoordinates.Y > EndCoordinates.Y, BeginCoordinates.Y - EndCoordinates.Y, EndCoordinates.Y - BeginCoordinates.Y))
+                Dim rawSrcRectangle As New Rectangle(
+                                            If(BeginCoordinates.X > EndCoordinates.X, EndCoordinates.X, BeginCoordinates.X),
+                                            If(BeginCoordinates.Y > EndCoordinates.Y, EndCoordinates.Y, BeginCoordinates.Y),
+                                            If(BeginCoordinates.X > EndCoordinates.X, BeginCoordinates.X - EndCoordinates.X, EndCoordinates.X - BeginCoordinates.X),
+                                            If(BeginCoordinates.Y > EndCoordinates.Y, BeginCoordinates.Y - EndCoordinates.Y, EndCoordinates.Y - BeginCoordinates.Y)
+                                        )
 
-                If rawSrcRect.X < 0 Then
-                    rawSrcRect.Width += rawSrcRect.X
-                    rawSrcRect.X = 0
+                If rawSrcRectangle.X < 0 Then
+                    rawSrcRectangle.Width += rawSrcRectangle.X
+                    rawSrcRectangle.X = 0
                 End If
-                If rawSrcRect.Y < 0 Then
-                    rawSrcRect.Height += rawSrcRect.Y
-                    rawSrcRect.Y = 0
+                If rawSrcRectangle.Y < 0 Then
+                    rawSrcRectangle.Height += rawSrcRectangle.Y
+                    rawSrcRectangle.Y = 0
                 End If
 
 
-                If rawSrcRect.Width = 0 OrElse rawSrcRect.Height = 0 Then Exit Sub
+                If rawSrcRectangle.Width = 0 OrElse rawSrcRectangle.Height = 0 Then Exit Sub
 
-                Using img As Bitmap = BlurImage(rawImage, sender.BlurFactor, rawSrcRect)
+                Using img As Bitmap = BlurImage(rawImage, sender.BlurFactor, rawSrcRectangle)
                     If img Is Nothing Then Exit Sub
 
                     g.CompositingMode = CompositingMode.SourceOver
-                    g.FillRectangle(Brushes.White, rawSrcRect)
-                    g.DrawImage(img, rawSrcRect)
+                    g.FillRectangle(Brushes.White, rawSrcRectangle)
+                    g.DrawImage(img, rawSrcRectangle)
                 End Using
-                g.DrawRectangle(_thePen, rawSrcRect)
+                g.DrawRectangle(_thePen, rawSrcRectangle)
             End If
         End Sub
 

@@ -59,9 +59,7 @@ public abstract class PluginManager<T>
             foreach (var instance in pluginInstances)
             {
                 var instanceType = instance!.GetType();
-                var metadata = instanceType.GetCustomAttribute<PluginAttribute>();
-                if (metadata is null)
-                    throw new InvalidOperationException("Expected metadata not to be null");
+                var metadata = instanceType.GetCustomAttribute<PluginAttribute>() ?? throw new InvalidOperationException("Expected metadata not to be null");
                 res.Add((metadata, instance));
             }
 

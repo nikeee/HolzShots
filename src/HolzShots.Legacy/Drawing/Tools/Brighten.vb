@@ -3,7 +3,7 @@ Imports HolzShots.UI.Controls
 Namespace Drawing.Tools
     Friend Class Brighten
         Inherits Tool
-        Private Shared ReadOnly CursorInstance As Cursor = New Cursor(My.Resources.crossMedium.GetHicon())
+        Private Shared ReadOnly CursorInstance As New Cursor(My.Resources.crossMedium.GetHicon())
         Public Overrides ReadOnly Property Cursor As Cursor = CursorInstance
         Public Overrides ReadOnly Property ToolType As PaintPanel.ShotEditorTool = PaintPanel.ShotEditorTool.Brighten
 

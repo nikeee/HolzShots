@@ -95,8 +95,7 @@ public abstract class AnimatedForm : Form
                 }
                 break;
             case (int)Win32.WMessages.WM_DESTROY:
-                if (Device is not null)
-                    Device.Dispose();
+                Device?.Dispose();
 
                 base.WndProc(ref m);
                 break;

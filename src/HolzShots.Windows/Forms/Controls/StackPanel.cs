@@ -20,13 +20,13 @@ public class StackPanel : Panel
 
     private class StackLayout : LayoutEngine
     {
-        internal static readonly StackLayout Instance = new StackLayout();
+        internal static readonly StackLayout Instance = new();
 
         public override bool Layout(object container, LayoutEventArgs layoutEventArgs)
         {
             Debug.Assert(container is StackPanel);
 
-            StackPanel stackPanel = (container as StackPanel)!;
+            var stackPanel = (container as StackPanel)!;
             if (stackPanel == null)
                 return false;
 

@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace HolzShots.Capture.Video.FFmpeg;
 
-internal class FFmpegWrapper : IDisposable
+internal class FFmpegWrapper(string executablePart) : IDisposable
 {
 #if DEBUG
     private const bool ShowFFmpegWindow = true;
@@ -11,13 +11,8 @@ internal class FFmpegWrapper : IDisposable
     private const bool ShowFFmpegWindow = false;
 #endif
 
-    private readonly string _executablePath;
-    private readonly Process _process;
-    public FFmpegWrapper(string executablePart)
-    {
-        _executablePath = executablePart ?? throw new ArgumentNullException(nameof(executablePart));
-        _process = new Process();
-    }
+    private readonly string _executablePath = executablePart ?? throw new ArgumentNullException(nameof(executablePart));
+    private readonly Process _process = new();
 
     public async Task<bool> Start(IFFmpegArguments arguments, CancellationToken cancellationToken)
     {

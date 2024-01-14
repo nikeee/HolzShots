@@ -4,7 +4,7 @@ Imports HolzShots.UI.Controls
 Namespace Drawing.Tools
     Friend Class Circle
         Inherits Tool
-        Private Shared ReadOnly CursorInstance As Cursor = New Cursor(My.Resources.crossMedium.GetHicon())
+        Private Shared ReadOnly CursorInstance As New Cursor(My.Resources.crossMedium.GetHicon())
         Public Overrides ReadOnly Property Cursor As Cursor = CursorInstance
         Public Overrides ReadOnly Property ToolType As PaintPanel.ShotEditorTool = PaintPanel.ShotEditorTool.Ellipse
 
@@ -21,7 +21,7 @@ Namespace Drawing.Tools
             _pen.Color = sender.EllipseColor
 
             Using g As Graphics = Graphics.FromImage(rawImage)
-                If sender.UseBoxInsteadOfCirlce Then
+                If sender.UseBoxInsteadOfCircle Then
                     g.DrawRectangle(_pen, _rct)
                 Else
                     g.SmoothingMode = SmoothingMode.AntiAlias
@@ -39,7 +39,7 @@ Namespace Drawing.Tools
             _pen.Width = sender.EllipseWidth
             _pen.Color = sender.EllipseColor
 
-            If sender.UseBoxInsteadOfCirlce Then
+            If sender.UseBoxInsteadOfCircle Then
                 g.DrawRectangle(_pen, _rct)
             Else
                 g.SmoothingMode = SmoothingMode.AntiAlias

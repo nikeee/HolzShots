@@ -20,7 +20,7 @@ Namespace Drawing.Tools
         End Sub
 
         Private Shared ReadOnly PipettenCursor As New Bitmap(195, 195)
-        Private Shared ReadOnly PenWhite As Pen = New Pen(Color.FromArgb(180, 255, 255, 255))
+        Private Shared ReadOnly PenWhite As New Pen(Color.FromArgb(180, 255, 255, 255))
 
         Private Shared ReadOnly CursorRectangle As New Rectangle(10, 10, PipettenCursor.Width - 20, PipettenCursor.Height - 20)
 

@@ -48,8 +48,7 @@ public class SettingsManager<T> : IDisposable, INotifyPropertyChanged
     {
         _watcher.OnFileWritten += OnSettingsFileChanged;
 
-        if (_watcherCancellation is not null)
-            _watcherCancellation.Cancel();
+        _watcherCancellation?.Cancel();
 
         _watcherCancellation = new CancellationTokenSource();
 

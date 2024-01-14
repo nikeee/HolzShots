@@ -36,7 +36,7 @@ public static partial class User32
 
     [LibraryImport(DllName)]
     [return: MarshalAs(UnmanagedType.Bool)]
-    private static partial bool FlashWindowEx(in FlashWindowInfo pwfi);
+    private static partial bool FlashWindowEx(in FlashWindowInfo window);
 
     /// <summary>
     /// Callback EnumWindowsCallback should return true to continue enumerating or false to stop.
@@ -73,16 +73,16 @@ public static partial class User32
 
     [LibraryImport(DllName, SetLastError = true)]
     [return: MarshalAs(UnmanagedType.Bool)]
-    public static partial bool GetWindowInfo(IntPtr hwnd, ref WindowInfo pwi);
+    public static partial bool GetWindowInfo(IntPtr hwnd, ref WindowInfo windowInfo);
 
     #region Window Position
 
     [LibraryImport(DllName)]
     [return: MarshalAs(UnmanagedType.Bool)]
-    public static partial bool GetWindowRect(IntPtr hWnd, out Rect lpRect);
+    public static partial bool GetWindowRect(IntPtr hWnd, out Rect result);
 
     [DllImport(DllName)]
-    public static extern bool GetWindowPlacement(IntPtr hWnd, out WindowPlacement lpwndpl);
+    public static extern bool GetWindowPlacement(IntPtr hWnd, out WindowPlacement result);
 
     [LibraryImport(DllName)]
     [return: MarshalAs(UnmanagedType.Bool)]
@@ -134,9 +134,9 @@ public static partial class User32
     public static partial bool AttachThreadInput(int idAttach, int idAttachTo, [MarshalAs(UnmanagedType.Bool)] bool fAttach);
 
     [LibraryImport(DllName, SetLastError = true)]
-    public static partial int GetWindowThreadProcessId(IntPtr hWnd, IntPtr lpdwProcessId);
+    public static partial int GetWindowThreadProcessId(IntPtr hWnd, IntPtr processIdPointer);
     [LibraryImport(DllName, SetLastError = true)]
-    public static partial int GetWindowThreadProcessId(IntPtr hWnd, ref int lpdwProcessId);
+    public static partial int GetWindowThreadProcessId(IntPtr hWnd, ref int processId);
 
     #endregion
     #region Drawing
@@ -175,7 +175,8 @@ public static partial class User32
 
 
     [StructLayout(LayoutKind.Sequential)]
-    public struct CursorInfo {
+    public struct CursorInfo
+    {
         public int cbSize;
         public readonly CursorFlags flags;
         public readonly IntPtr cursorHandle;
