@@ -34,10 +34,10 @@ public static class ImageFormatAnalyzer
             var widthIndex = image.Width - 1;
 
             if ((heightIndex < (LineCount * 10 + 1) && widthIndex < (LineCount * 10 + 1))
-                || (IsTransculent(p, bits.Stride, 0, 0))
-                || (IsTransculent(p, bits.Stride, widthIndex, heightIndex))
-                || (IsTransculent(p, bits.Stride, widthIndex, 0))
-                || (IsTransculent(p, bits.Stride, 0, heightIndex)))
+                || (IsTranslucent(p, bits.Stride, 0, 0))
+                || (IsTranslucent(p, bits.Stride, widthIndex, heightIndex))
+                || (IsTranslucent(p, bits.Stride, widthIndex, 0))
+                || (IsTranslucent(p, bits.Stride, 0, heightIndex)))
             {
                 return ImageFormat.Png;
             }
@@ -86,16 +86,16 @@ public static class ImageFormatAnalyzer
             if (heightIndex < (LineCount * 10 + 1) && widthIndex < (LineCount * 10 + 1))
                 return ImageFormat.Png;
 
-            if (IsTransculent(p, bits.Stride, 0, 0))
+            if (IsTranslucent(p, bits.Stride, 0, 0))
                 return ImageFormat.Png;
 
-            if (IsTransculent(p, bits.Stride, widthIndex, heightIndex))
+            if (IsTranslucent(p, bits.Stride, widthIndex, heightIndex))
                 return ImageFormat.Png;
 
-            if (IsTransculent(p, bits.Stride, widthIndex, 0))
+            if (IsTranslucent(p, bits.Stride, widthIndex, 0))
                 return ImageFormat.Png;
 
-            if (IsTransculent(p, bits.Stride, 0, heightIndex))
+            if (IsTranslucent(p, bits.Stride, 0, heightIndex))
                 return ImageFormat.Png;
 
             int x, y;
@@ -219,7 +219,7 @@ public static class ImageFormatAnalyzer
         _alpha = p[stride + 3];
         return Color.FromArgb(_alpha, _red, _green, _blue);
     }
-    private static unsafe bool IsTransculent(byte* p, int stride, int x, int y)
+    private static unsafe bool IsTranslucent(byte* p, int stride, int x, int y)
     {
         stride *= y;
         stride += x * 4;
