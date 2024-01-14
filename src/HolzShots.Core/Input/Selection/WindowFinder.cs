@@ -54,7 +54,7 @@ class WindowFinder
             foreach (var windowThatMayOverlayTheCurrentWindow in result)
             {
                 // Windows enumerates the windows from top Z to bottom.
-                // This means that if we get a windows rectangle that is entirely contained in another window, it is entirely overlayed by a previous enumerated window
+                // This means that if we get a windows rectangle that is entirely contained in another window, it is entirely overlaid by a previous enumerated window
                 // See: https://stackoverflow.com/questions/295996
                 if (windowThatMayOverlayTheCurrentWindow.Rectangle.Contains(r))
                     return true;
@@ -78,7 +78,7 @@ class WindowFinder
 
             // As we capture a window, we also want its client rectangle:
             // (so the user doesn't need to have the title bar in his screenshot)
-            // We don't want to capture the client area (yet?) as it pollutes the widnow list
+            // We don't want to capture the client area (yet?) as it pollutes the window list
             /*
             var clientRectangle = WindowHelpers.GetClientRectangle(windowHandle);
             if (clientRectangle is not null && clientRectangle.Value != r)

@@ -63,14 +63,14 @@ public static class EnvironmentEx
 
         var className = WindowHelpers.GetWindowClass(foregroundWindowHandle);
         if (className == null)
-            return false; // Call to GetClassName failed. Just assume that there is no app running in fullscreen
+            return false; // Call to GetClassName failed. Just assume that there is no app running in full screen
 
         // Ignore the desktop as well as the task bar (see GH#111)
         if (className == "WorkerW" || className == "Shell_TrayWnd")
             return false;
 
         if (!Native.User32.GetWindowRect(foregroundWindowHandle, out var windowNativeRect))
-            return false; // Call to GetWindowRect failed. Just assume that there is no app running in fullscreen
+            return false; // Call to GetWindowRect failed. Just assume that there is no app running in full screen
 
         System.Drawing.Rectangle windowBounds = windowNativeRect;
 
