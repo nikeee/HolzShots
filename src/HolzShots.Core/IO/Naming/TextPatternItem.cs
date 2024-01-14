@@ -13,5 +13,5 @@ class TextPatternItem : PatternItem
 
     public override string TextRepresentation => PropertyName!;
     public override bool IsValid => !string.IsNullOrEmpty(PropertyName) && !PropertyName.ContainsInvalidChars();
-    public override string FormatMetadata(FileMetadata metadata) => PropertyName.SanitizeFileName(string.Empty);
+    public override string FormatMetadata(FileMetadata metadata) => PropertyName!.SanitizeFileName(string.Empty);
 }

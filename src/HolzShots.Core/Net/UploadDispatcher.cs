@@ -107,14 +107,14 @@ public static class UploadDispatcher
         if (!settingsContext.EnableSmartFormatForUpload)
             return ImageFormat.Png;
 
-        if (!Drawing.ImageFormatAnalyser.IsOptimizable(image))
+        if (!Drawing.ImageFormatAnalyzer.IsOptimizable(image))
             return ImageFormat.Png;
 
         try
         {
             var bmp = image is Bitmap b ? b : new Bitmap(image);
 
-            return Drawing.ImageFormatAnalyser.GetBestFittingFormat(bmp); // Experimental?
+            return Drawing.ImageFormatAnalyzer.GetBestFittingFormat(bmp); // Experimental?
         }
         catch (Exception e)
         {

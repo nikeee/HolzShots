@@ -5,7 +5,7 @@ using System.IO;
 
 namespace HolzShots.Drawing;
 
-public static class ImageFormatAnalyser
+public static class ImageFormatAnalyzer
 {
     private const int RowScanCount = 5;
     private const int ColScanCount = 5;

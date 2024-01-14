@@ -62,9 +62,9 @@ public static class ScreenshotAggregator
             ? shot.Image
             : new Bitmap(shot.Image);
 
-        if (settingsContext.EnableSmartFormatForSaving && ImageFormatAnalyser.IsOptimizable(screenshotImage))
+        if (settingsContext.EnableSmartFormatForSaving && ImageFormatAnalyzer.IsOptimizable(screenshotImage))
         {
-            format = ImageFormatAnalyser.GetBestFittingFormat(screenshotImage);
+            format = ImageFormatAnalyzer.GetBestFittingFormat(screenshotImage);
 
             extensionAndMimeType = format.GetExtensionAndMimeType();
             Debug.Assert(!string.IsNullOrWhiteSpace(extensionAndMimeType.FileExtension));
