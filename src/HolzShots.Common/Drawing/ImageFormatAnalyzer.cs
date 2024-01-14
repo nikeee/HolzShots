@@ -97,14 +97,14 @@ public static class ImageFormatAnalyzer
             if (IsTranslucent(p, bits.Stride, 0, heightIndex))
                 return ImageFormat.Png;
 
-            int x, y;
-            int incHor = widthIndex / LineCount;
-            int incVer = heightIndex / LineCount;
-            int horTrues = 0, verTrues = 0;
+            var incHor = widthIndex / LineCount;
+            var incVer = heightIndex / LineCount;
+            var horTrues = 0;
+            var verTrues = 0;
 
-            for (x = 1; x <= widthIndex - ColScanCount; x += incHor)
+            for (var x = 1; x <= widthIndex - ColScanCount; x += incHor)
             {
-                for (y = 1; y <= heightIndex - RowScanCount; y += incVer)
+                for (var y = 1; y <= heightIndex - RowScanCount; y += incVer)
                 {
                     verTrues += ScanCol(p, bits.Stride, x, y);
                     horTrues += ScanRow(p, bits.Stride, x, y);
@@ -131,17 +131,13 @@ public static class ImageFormatAnalyzer
     {
         ArgumentNullException.ThrowIfNull(image);
 
-        switch (algorithm)
+        return algorithm switch
         {
-            case AlgorithmKind.ComplexScanning:
-                return GetBestFittingFormatAlgorithm(image);
-            case AlgorithmKind.BruteSaving:
-                return GetBestFittingFormatBruteSaving(image);
-            case AlgorithmKind.Hybrid:
-                return GetBestFittingFormatHybrid(image);
-            default:
-                throw new ArgumentException("Impossibru!");
-        }
+            AlgorithmKind.ComplexScanning => GetBestFittingFormatAlgorithm(image),
+            AlgorithmKind.BruteSaving => GetBestFittingFormatBruteSaving(image),
+            AlgorithmKind.Hybrid => GetBestFittingFormatHybrid(image),
+            _ => throw new ArgumentException("Impossibru!"),
+        };
     }
 
     private enum PredictedImageFormat
@@ -159,8 +155,8 @@ public static class ImageFormatAnalyzer
 
     private static unsafe int ScanCol(byte* p, int stride, int x, int y)
     {
-        int xBackup = x + ColScanCount;
-        bool first = true;
+        var xBackup = x + ColScanCount;
+        var first = true;
         Color c1;
         Color c2 = Color.FromArgb(0, 0, 0, 0);
         for (; x < xBackup; ++x)
@@ -178,10 +174,10 @@ public static class ImageFormatAnalyzer
     }
     private static unsafe int ScanRow(byte* p, int stride, int x, int y)
     {
-        int yBackup = y + RowScanCount;
-        bool first = true;
+        var yBackup = y + RowScanCount;
+        var first = true;
         Color c1;
-        Color c2 = Color.FromArgb(0, 0, 0, 0);
+        var c2 = Color.FromArgb(0, 0, 0, 0);
 
         for (; y < yBackup; ++y)
         {
