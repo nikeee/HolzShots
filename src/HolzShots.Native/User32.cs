@@ -192,28 +192,19 @@ public static partial class User32
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public readonly struct FlashWindowInfo
+    public readonly struct FlashWindowInfo(IntPtr handle, User32.FlashWindowFlags flags, uint count, uint timeout)
     {
-        private readonly uint _size;
-        private readonly IntPtr _windowHandle;
-        private readonly FlashWindowFlags _flags;
-        private readonly uint _count;
-        private readonly uint _timeout;
+        private readonly uint _size = Convert.ToUInt32(Marshal.SizeOf(typeof(FlashWindowInfo)));
+        private readonly IntPtr _windowHandle = handle;
+        private readonly FlashWindowFlags _flags = flags;
+        private readonly uint _count = count;
+        private readonly uint _timeout = timeout;
 
         public FlashWindowInfo(IntPtr handle)
             : this(handle, FlashWindowFlags.TimerNoFg | FlashWindowFlags.Tray, uint.MaxValue) { }
 
         public FlashWindowInfo(IntPtr handle, FlashWindowFlags flags, uint count)
             : this(handle, flags, count, 0) { }
-
-        public FlashWindowInfo(IntPtr handle, FlashWindowFlags flags, uint count, uint timeout)
-        {
-            _size = Convert.ToUInt32(Marshal.SizeOf(typeof(FlashWindowInfo)));
-            _windowHandle = handle;
-            _flags = flags;
-            _count = count;
-            _timeout = timeout;
-        }
 
         public void Flash() => FlashWindowEx(in this);
     }
