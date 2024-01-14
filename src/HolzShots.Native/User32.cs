@@ -9,29 +9,29 @@ public static partial class User32
 
     #region SendMessage
 
-    [LibraryImport(DllName)]
+    [LibraryImport(DllName, EntryPoint = "SendMessageW")]
     public static partial IntPtr SendMessage(IntPtr hWnd, WindowMessage msg, IntPtr wParam, IntPtr lParam);
 
-    [DllImport(DllName, CharSet = CharSet.Unicode)]
+    [DllImport(DllName, EntryPoint = "SendMessageW")]
     public static extern IntPtr SendMessage(IntPtr hWnd, WindowMessage msg, IntPtr wParam, StringBuilder lParam);
 
-    [LibraryImport(DllName)]
+    [LibraryImport(DllName, EntryPoint = "SendMessageW")]
     public static partial IntPtr SendMessage(IntPtr hWnd, WindowMessage msg, IntPtr wParam, [MarshalAs(UnmanagedType.LPWStr)] string lParam);
 
     #endregion
     #region Window Functions
 
-    [DllImport(DllName, SetLastError = true, CharSet = CharSet.Unicode)]
+    [DllImport(DllName, SetLastError = true, EntryPoint = "GetWindowText")]
     public static extern int GetWindowText(IntPtr hwnd, StringBuilder lpString, int cch);
 
-    [LibraryImport(DllName, SetLastError = true)]
+    [LibraryImport(DllName, SetLastError = true, EntryPoint = "GetWindowTextLengthW")]
     public static partial int GetWindowTextLength(IntPtr hwnd);
 
     [LibraryImport(DllName)]
     [return: MarshalAs(UnmanagedType.Bool)]
     public static partial bool IsIconic(IntPtr hWnd);
 
-    [DllImport(DllName, CharSet = CharSet.Unicode)]
+    [DllImport(DllName, EntryPoint = "GetClassName")]
     public static extern int GetClassName(IntPtr hWnd, StringBuilder lpClassName, int nMaxCount);
 
     [LibraryImport(DllName)]
