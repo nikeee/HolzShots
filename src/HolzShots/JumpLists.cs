@@ -6,53 +6,52 @@ using HolzShots.Windows.Forms;
 using Microsoft.WindowsAPICodePack.Shell;
 using Microsoft.WindowsAPICodePack.Taskbar;
 
-namespace HolzShots
+namespace HolzShots;
+
+static class JumpLists
 {
-    static class JumpLists
+    public static bool AreSupported => TaskbarManager.IsPlatformSupported;
+
+    public static void RegisterTasks()
     {
-        public static bool AreSupported => TaskbarManager.IsPlatformSupported;
+        Debug.Assert(TaskbarManager.IsPlatformSupported);
 
-        public static void RegisterTasks()
+        if (Properties.Settings.Default.UserTasksInitialized)
+            return;
+
+        Properties.Settings.Default.UserTasksInitialized = true;
+        Properties.Settings.Default.Save();
+
+        var jumpList = JumpList.CreateJumpList();
+        jumpList.ClearAllUserTasks();
+
+        var imageResources = Path.Combine(HolzShotsPaths.SystemPath, "imageres.dll");
+
+        if (File.Exists(imageResources))
         {
-            Debug.Assert(TaskbarManager.IsPlatformSupported);
-
-            if (Properties.Settings.Default.UserTasksInitialized)
-                return;
-
-            Properties.Settings.Default.UserTasksInitialized = true;
-            Properties.Settings.Default.Save();
-
-            var jumpList = JumpList.CreateJumpList();
-            jumpList.ClearAllUserTasks();
-
-            var imgres = Path.Combine(HolzShotsPaths.SystemPath, "imageres.dll");
-
-            if (File.Exists(imgres))
+            var fullScreen = new JumpListLink(Application.ExecutablePath, "Capture entire screen")
             {
-                var fullscreen = new JumpListLink(Application.ExecutablePath, "Capture entire screen")
-                {
-                    Arguments = CommandLine.FullscreenScreenshotCliCommand,
-                    IconReference = new IconReference(imgres, 105),
-                };
-                jumpList.AddUserTasks(fullscreen);
-            }
-
-            var selector = new JumpListLink(Application.ExecutablePath, "Capture Region")
-            {
-                Arguments = CommandLine.AreaSelectorCliCommand,
-                IconReference = new IconReference(Application.ExecutablePath, 0),
+                Arguments = CommandLine.FullscreenScreenshotCliCommand,
+                IconReference = new IconReference(imageResources, 105),
             };
+            jumpList.AddUserTasks(fullScreen);
+        }
 
-            jumpList.AddUserTasks(selector);
+        var selector = new JumpListLink(Application.ExecutablePath, "Capture Region")
+        {
+            Arguments = CommandLine.AreaSelectorCliCommand,
+            IconReference = new IconReference(Application.ExecutablePath, 0),
+        };
 
-            try
-            {
-                jumpList.Refresh();
-            }
-            catch (UnauthorizedAccessException)
-            {
-                // No deal when this fails :)
-            }
+        jumpList.AddUserTasks(selector);
+
+        try
+        {
+            jumpList.Refresh();
+        }
+        catch (UnauthorizedAccessException)
+        {
+            // No deal when this fails :)
         }
     }
 }

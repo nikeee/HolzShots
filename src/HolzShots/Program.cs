@@ -1,23 +1,22 @@
 using SingleInstanceCore;
 
-namespace HolzShots
+namespace HolzShots;
+
+static class Program
 {
-    static class Program
+    [STAThread]
+    static void Main()
     {
-        [STAThread]
-        static void Main()
+        var isFirstInstance = HolzShotsApplication.Instance.InitializeAsFirstInstance("HolzShots");
+        if (isFirstInstance)
         {
-            var isFirstInstance = HolzShotsApplication.Instance.InitializeAsFirstInstance("HolzShots");
-            if (isFirstInstance)
+            try
             {
-                try
-                {
-                    HolzShotsApplication.Instance.Run();
-                }
-                finally
-                {
-                    SingleInstance.Cleanup();
-                }
+                HolzShotsApplication.Instance.Run();
+            }
+            finally
+            {
+                SingleInstance.Cleanup();
             }
         }
     }
