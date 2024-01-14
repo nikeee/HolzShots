@@ -8,7 +8,7 @@ public class ColorView : Control
 {
     private readonly CheckerboardBrushWrapper _checkerboardBrushWrapper = CheckerboardBrushWrapper.CreateDefault(10);
 
-    private readonly SolidBrush _brush = new SolidBrush(Color.CornflowerBlue);
+    private readonly SolidBrush _brush = new(Color.CornflowerBlue);
     public Color Color
     {
         get => _brush.Color;
@@ -58,8 +58,8 @@ public class ColorView : Control
 
 public class ColorSelector : ColorView
 {
-    protected static readonly Pen HoverOuterBorderPen = new Pen(Color.FromArgb(255, 100, 165, 231));
-    protected static readonly Pen HoverInnerBorderPen = new Pen(Color.FromArgb(255, 203, 228, 253));
+    protected static readonly Pen HoverOuterBorderPen = new(Color.FromArgb(255, 100, 165, 231));
+    protected static readonly Pen HoverInnerBorderPen = new(Color.FromArgb(255, 203, 228, 253));
 
     public ColorSelector() => Cursor = Cursors.Hand;
 

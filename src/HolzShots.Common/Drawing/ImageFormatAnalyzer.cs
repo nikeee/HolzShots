@@ -158,7 +158,7 @@ public static class ImageFormatAnalyzer
         var xBackup = x + ColScanCount;
         var first = true;
         Color c1;
-        Color c2 = Color.FromArgb(0, 0, 0, 0);
+        var c2 = Color.FromArgb(0, 0, 0, 0);
         for (; x < xBackup; ++x)
         {
             c1 = GetPixel(p, stride, x, y);
@@ -196,7 +196,7 @@ public static class ImageFormatAnalyzer
     private static unsafe bool CheckForAlpha(byte* p, int widthIndex, int heightIndex)
     {
         p += 3;
-        for (byte* max = p + widthIndex * 4 * heightIndex - 3; p < max; p += 4)
+        for (var max = p + widthIndex * 4 * heightIndex - 3; p < max; p += 4)
             if (*p < 255)
                 return true;
         return false;

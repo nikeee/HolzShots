@@ -23,7 +23,7 @@ public class CaptureWindowCommand : ImageCapturingCommand
         // If ManagedSettings.EnableWindowScreenshot Then
         var h = Native.User32.GetForegroundWindow();
 
-        Native.User32.GetWindowPlacement(h, out Native.User32.WindowPlacement info);
+        Native.User32.GetWindowPlacement(h, out var _);
 
         var shot = CaptureWindow(h, settingsContext);
         if (shot is not null)
@@ -35,7 +35,7 @@ public class CaptureWindowCommand : ImageCapturingCommand
         if (Native.User32.IsIconic(windowHandle))
             return default;
 
-        using var prio = new ProcessPriorityRequest();
+        using var priority = new ProcessPriorityRequest();
         using var shotSet = GetShotSet(windowHandle, includeMargin, settingsContext);
         return Screenshot.FromWindow(shotSet);
     }
@@ -58,9 +58,9 @@ public class CaptureWindowCommand : ImageCapturingCommand
 
     private static WindowScreenshotSet DoAeroOn(IntPtr wndHandle, bool includeMargin, bool smallMargin)
     {
-        Native.User32.GetWindowRect(wndHandle, out Native.Rect nativeRectangle);
+        Native.User32.GetWindowRect(wndHandle, out var nativeRectangle);
 
-        Native.User32.GetWindowPlacement(wndHandle, out Native.User32.WindowPlacement placement);
+        Native.User32.GetWindowPlacement(wndHandle, out var placement);
 
         if (includeMargin)
         {
@@ -76,8 +76,8 @@ public class CaptureWindowCommand : ImageCapturingCommand
             }
             else
             {
-                Rectangle tmprect = nativeRectangle;
-                Point center = new Point(tmprect.X + System.Convert.ToInt32(tmprect.Width / (double)2), tmprect.Y + System.Convert.ToInt32(tmprect.Height / (double)2));
+                Rectangle tempRectangle = nativeRectangle;
+                var center = new Point(tempRectangle.X + Convert.ToInt32(tempRectangle.Width / (double)2), tempRectangle.Y + Convert.ToInt32(tempRectangle.Height / (double)2));
                 nativeRectangle = Screen.GetWorkingArea(center); // NativeTypes.Rect.FromRectangle(Screen.GetWorkingArea(center))
             }
         }
@@ -135,7 +135,7 @@ public class CaptureWindowCommand : ImageCapturingCommand
 
     private static WindowScreenshotSet DoAeroOff(IntPtr wndHandle, HSSettings settingsContext)
     {
-        Native.User32.GetWindowRect(wndHandle, out Native.Rect nativeRectangle);
+        Native.User32.GetWindowRect(wndHandle, out var nativeRectangle);
         Rectangle drawingRectangle = nativeRectangle;
 
         var (bmp, cursorPosition) = ScreenshotCreator.CaptureScreenshot(drawingRectangle, settingsContext.CaptureCursor);

@@ -1,5 +1,3 @@
-using System.Runtime.Serialization;
-
 namespace HolzShots.Composition;
 
 [Serializable]
@@ -16,8 +14,5 @@ public class PluginLoadingFailedException : Exception
     { }
     public PluginLoadingFailedException(string message, Exception innerException)
         : base(message, innerException)
-    { }
-    protected PluginLoadingFailedException(SerializationInfo info, StreamingContext context)
-        : base(info, context)
     { }
 }

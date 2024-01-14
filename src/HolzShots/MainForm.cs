@@ -46,7 +46,7 @@ public partial class MainForm : Form
         BeginInvoke(() => EnsureInvisibility());
 
         // This call is used to ensure that the working directory is the same as the directory of the .exe file
-        // The Startupmanager needs this.
+        // The StartupManager needs this.
         // We also need this because we ship ffmpeg right out of the box, so we can assume that "ffmpeg.exe" just points to the version next to the executable
         EnvironmentEx.CurrentStartupManager.FixWorkingDirectory();
 
@@ -91,7 +91,7 @@ public partial class MainForm : Form
         if (openFirstStartExperience)
             ShowFirstStartExperience();
 
-        // Just here to force the JIT to load some dependencies that the AreaSelector uses (so the first invocation isnt slow)
+        // Just here to force the JIT to load some dependencies that the AreaSelector uses (so the first invocation isn't slow)
         // Ref: https://stackoverflow.com/a/3747473
         System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(typeof(Input.Selection.AreaSelector).TypeHandle);
     }
@@ -157,7 +157,7 @@ public partial class MainForm : Form
         {
             e.Cancel = true;
 
-            // As the form was somehow attemted to close, we should make sure that it is at least _now_ closed
+            // As the form was somehow attempted to close, we should make sure that it is at least _now_ closed
             EnsureInvisibility();
         }
     }

@@ -51,7 +51,7 @@ public static class EnvironmentEx
         return value is null || (int)value != 0;
     }
 
-    /// <summary> It's a function instead of a property to singal that this call might be expensive (it involves a p/invoke) </summary>
+    /// <summary> It's a function instead of a property to signal that this call might be expensive (it involves a p/invoke) </summary>
     public static bool IsAeroEnabled() => IsVistaOrHigher && Native.DwmApi.DwmIsCompositionEnabled();
 
     public static bool IsFullscreenAppRunning()

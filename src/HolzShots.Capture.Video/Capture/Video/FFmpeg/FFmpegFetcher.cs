@@ -11,7 +11,7 @@ namespace HolzShots.Capture.Video.FFmpeg;
 public class FFmpegFetcher
 {
     // TODO: Ask the user if he wants to download the binary from that source
-    // TODO: If the result is null, the suer shouold be instructed to set up ffmpeg manually
+    // TODO: If the result is null, the user should be instructed to set up ffmpeg manually
     public static async Task<string?> GetUrlOfLatestBinary()
     {
         using var client = new HttpClient();
@@ -20,7 +20,7 @@ public class FFmpegFetcher
         var parsedResponse = JsonSerializer.Deserialize<FFmpegBinaryResponse>(responseStream);
 
         // HS requires a 64 bit windows, so we can hard-code this
-        return parsedResponse?.binaries["windows-64"]?.FFmpegUrl;
+        return parsedResponse?.Binaries["windows-64"]?.FFmpegUrl;
     }
 
     public static async Task LoadAndUnzipToDirectory(string targetDir, string url, IProgress<TransferProgress> progress, CancellationToken cancellationToken)
@@ -48,7 +48,7 @@ public class FFmpegFetcher
 internal record FFmpegBinaryResponse(
     [property: JsonPropertyName("version")] string Version, // Version Version
     [property: JsonPropertyName("permalink")] string Permalink,
-    [property: JsonPropertyName("bin")] Dictionary<string, FFmpegBinEntry> binaries
+    [property: JsonPropertyName("bin")] Dictionary<string, FFmpegBinEntry> Binaries
 );
 
 internal record FFmpegBinEntry(

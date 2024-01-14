@@ -15,11 +15,9 @@ public enum ToolBarTheme
 
 /// <summary>Renders a toolstrip using the UxTheme API via VisualStyleRenderer and a specific style.</summary>
 /// <remarks>Perhaps surprisingly, this does not need to be disposable.</remarks>
-public class VisualStyleStripRenderer : ToolStripSystemRenderer
+public class VisualStyleStripRenderer(ToolBarTheme theme) : ToolStripSystemRenderer
 {
     private VisualStyleRenderer _renderer = null!;
-
-    public VisualStyleStripRenderer(ToolBarTheme theme) => Theme = theme;
 
     // See http://msdn2.microsoft.com/en-us/library/bb773210.aspx - "Parts and States"
     // Only menu-related parts/states are needed here, VisualStyleRenderer handles most of the rest.
@@ -101,7 +99,7 @@ public class VisualStyleStripRenderer : ToolStripSystemRenderer
 
     private const int RebarBackground = 6;
 
-    private Padding GetThemeMargins(IDeviceContext dc, MarginType marginType)
+    private Padding GetThemeMargins(Graphics dc, MarginType marginType)
     {
         var margins = new Native.Margin();
         try
@@ -119,7 +117,7 @@ public class VisualStyleStripRenderer : ToolStripSystemRenderer
 
     private static int GetItemState(ToolStripItem item)
     {
-        bool hot = item.Selected;
+        var hot = item.Selected;
 
         if (item.IsOnDropDown)
         {
@@ -145,7 +143,7 @@ public class VisualStyleStripRenderer : ToolStripSystemRenderer
             : (int)MenuBarItemState.Disabled;
     }
 
-    public ToolBarTheme Theme { get; set; }
+    public ToolBarTheme Theme { get; set; } = theme;
 
     private string RebarClass => SubclassPrefix + "Rebar";
     private string ToolbarClass => SubclassPrefix + "ToolBar";
@@ -169,8 +167,7 @@ public class VisualStyleStripRenderer : ToolStripSystemRenderer
         if (!IsSupported)
             return false;
 
-        if (_renderer == null)
-            _renderer = new VisualStyleRenderer(VisualStyleElement.Button.PushButton.Normal);
+        _renderer ??= new VisualStyleRenderer(VisualStyleElement.Button.PushButton.Normal);
 
         return true;
     }
@@ -196,8 +193,8 @@ public class VisualStyleStripRenderer : ToolStripSystemRenderer
 
         foreach (var control in toolStripPanel.Controls)
         {
-            if (control is ToolStrip)
-                Initialize((ToolStrip)control);
+            if (control is ToolStrip strip)
+                Initialize(strip);
         }
 
         base.InitializePanel(toolStripPanel);
@@ -237,7 +234,7 @@ public class VisualStyleStripRenderer : ToolStripSystemRenderer
 
         // For a drop-down menu item, the background rectangles of the items should be touching vertically.
         // This ensures that's the case.
-        Rectangle rect = item.Bounds;
+        var rect = item.Bounds;
 
         // The background rectangle should be inset two pixels horizontally (on both sides), but we have
         // to take into account the border.
@@ -255,10 +252,10 @@ public class VisualStyleStripRenderer : ToolStripSystemRenderer
 
         if (EnsureRenderer())
         {
-            int partID = e.Item.IsOnDropDown ? (int)MenuPart.PopupItem : (int)MenuPart.BarItem;
+            var partID = e.Item.IsOnDropDown ? (int)MenuPart.PopupItem : (int)MenuPart.BarItem;
             _renderer.SetParameters(MenuClass, partID, GetItemState(e.Item));
 
-            Rectangle bgRect = GetBackgroundRectangle(e.Item);
+            var bgRect = GetBackgroundRectangle(e.Item);
             _renderer.DrawBackground(e.Graphics, bgRect, bgRect);
         }
         else
@@ -350,7 +347,7 @@ public class VisualStyleStripRenderer : ToolStripSystemRenderer
 
     private Color GetItemTextColor(ToolStripItem item)
     {
-        int partId = item.IsOnDropDown ? (int)MenuPart.PopupItem : (int)MenuPart.BarItem;
+        var partId = item.IsOnDropDown ? (int)MenuPart.PopupItem : (int)MenuPart.BarItem;
         _renderer.SetParameters(MenuClass, partId, GetItemState(item));
         return _renderer.GetColor(ColorProperty.TextColor);
     }
@@ -379,12 +376,12 @@ public class VisualStyleStripRenderer : ToolStripSystemRenderer
                 // based on whether or not it's RTL. (It doesn't need to be narrowed to an edge in LTR mode, but let's
                 // do that anyway.)
                 // Using the DisplayRectangle gets roughly the right size so that the separator is closer to the text.
-                Padding margins = GetThemeMargins(e.Graphics, MarginType.Sizing);
-                int extraWidth = (e.ToolStrip.Width - e.ToolStrip.DisplayRectangle.Width - margins.Left - margins.Right - 1) - e.AffectedBounds.Width;
-                Rectangle rect = e.AffectedBounds;
+                var margins = GetThemeMargins(e.Graphics, MarginType.Sizing);
+                var extraWidth = (e.ToolStrip.Width - e.ToolStrip.DisplayRectangle.Width - margins.Left - margins.Right - 1) - e.AffectedBounds.Width;
+                var rect = e.AffectedBounds;
                 rect.Y += 2;
                 rect.Height -= 4;
-                int sepWidth = _renderer.GetPartSize(e.Graphics, ThemeSizeType.True).Width;
+                var sepWidth = _renderer.GetPartSize(e.Graphics, ThemeSizeType.True).Width;
                 if (e.ToolStrip.RightToLeft == RightToLeft.Yes)
                 {
                     rect = new Rectangle(rect.X - extraWidth, rect.Y, sepWidth, rect.Height);
@@ -425,7 +422,7 @@ public class VisualStyleStripRenderer : ToolStripSystemRenderer
 
         if (EnsureRenderer())
         {
-            Rectangle bgRect = GetBackgroundRectangle(e.Item);
+            var bgRect = GetBackgroundRectangle(e.Item);
             bgRect.Width = bgRect.Height;
 
             // Now, mirror its position if the menu item is RTL.
@@ -435,7 +432,7 @@ public class VisualStyleStripRenderer : ToolStripSystemRenderer
             _renderer.SetParameters(MenuClass, (int)MenuPart.PopupCheckBackground, e.Item.Enabled ? (int)MenuPopupCheckBackgroundState.Normal : (int)MenuPopupCheckBackgroundState.Disabled);
             _renderer.DrawBackground(e.Graphics, bgRect);
 
-            Rectangle checkRect = e.ImageRectangle;
+            var checkRect = e.ImageRectangle;
             checkRect.X = bgRect.X + bgRect.Width / 2 - checkRect.Width / 2;
             checkRect.Y = bgRect.Y + bgRect.Height / 2 - checkRect.Height / 2;
 
@@ -466,11 +463,11 @@ public class VisualStyleStripRenderer : ToolStripSystemRenderer
         if (EnsureRenderer())
         {
             // BrowserTabBar::Rebar draws the chevron using the default background. Odd.
-            string rebarClass1 = RebarClass;
+            var rebarClass1 = RebarClass;
             if (Theme == ToolBarTheme.BrowserTabBar)
                 rebarClass1 = "Rebar";
 
-            int state = VisualStyleElement.Rebar.Chevron.Normal.State;
+            var state = VisualStyleElement.Rebar.Chevron.Normal.State;
             if (e.Item.Pressed)
                 state = VisualStyleElement.Rebar.Chevron.Pressed.State;
             else if (e.Item.Selected)

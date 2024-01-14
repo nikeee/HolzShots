@@ -4,9 +4,9 @@ using System.Text;
 
 namespace HolzShots.IO.Naming;
 
-public class FileNamePattern
+public class FileNamePattern(IReadOnlyList<PatternItem>? tokens)
 {
-    public IReadOnlyList<PatternItem> Tokens { get; }
+    public IReadOnlyList<PatternItem> Tokens { get; } = tokens ?? Array.Empty<PatternItem>();
 
     private static readonly Dictionary<string, Func<string?, PatternItem>> _availablePatterns = new()
     {
@@ -16,10 +16,6 @@ public class FileNamePattern
     };
 
     public FileNamePattern() : this(null) { }
-    public FileNamePattern(IReadOnlyList<PatternItem>? tokens)
-    {
-        Tokens = tokens ?? Array.Empty<PatternItem>();
-    }
 
     public bool IsEmpty => Tokens.Count == 0;
 
@@ -40,7 +36,7 @@ public class FileNamePattern
         var tokens = new List<PatternItem>();
         var textSb = new StringBuilder();
 
-        int currentIndex = 0;
+        var currentIndex = 0;
         while (currentIndex < value.Length)
         {
             var c = value[currentIndex];

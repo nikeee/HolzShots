@@ -38,27 +38,26 @@ namespace HolzShots
     {
         namespace Custom
         {
-            internal struct DeviceContext : IDisposable
+            internal readonly struct DeviceContext(IntPtr dc) : IDisposable
             {
-                public IntPtr DC { get; }
-                public DeviceContext(IntPtr dc) => DC = dc;
+                public IntPtr DC { get; } = dc;
+
                 public void Dispose() => NativeMethods.DeleteDC(DC);
-                public BitmapHandle SelectObject(BitmapHandle gdiObject) => new BitmapHandle(NativeMethods.SelectObject(DC, gdiObject.DC));
-                public BitmapHandle CreateCompatibleBitmap(Size size) => new BitmapHandle(NativeMethods.CreateCompatibleBitmap(DC, size.Width, size.Height));
+                public BitmapHandle SelectObject(BitmapHandle gdiObject) => new(NativeMethods.SelectObject(DC, gdiObject.DC));
+                public BitmapHandle CreateCompatibleBitmap(Size size) => new(NativeMethods.CreateCompatibleBitmap(DC, size.Width, size.Height));
 
                 public void BitBlt(Rectangle destination, DeviceContext source, Point sourceLocation, CopyPixelOperation operation)
                 {
                     NativeMethods.BitBlt(DC, destination.X, destination.Y, destination.Width, destination.Height, source.DC, sourceLocation.X, sourceLocation.Y, operation);
                 }
 
-                public static DeviceContext CreateCompatible(DeviceContext hdc) => new DeviceContext(NativeMethods.CreateCompatibleDC(hdc.DC));
-                public static DeviceContext FromWindow(IntPtr window) => new DeviceContext(Native.User32.GetWindowDC(window));
+                public static DeviceContext CreateCompatible(DeviceContext hdc) => new(NativeMethods.CreateCompatibleDC(hdc.DC));
+                public static DeviceContext FromWindow(IntPtr window) => new(Native.User32.GetWindowDC(window));
             }
 
-            struct BitmapHandle : IDisposable
+            readonly struct BitmapHandle(IntPtr dc) : IDisposable
             {
-                internal IntPtr DC { get; }
-                public BitmapHandle(IntPtr dc) => DC = dc;
+                internal IntPtr DC { get; } = dc;
 
                 public Bitmap ToImage() => Image.FromHbitmap(DC);
                 public void Dispose() => NativeMethods.DeleteObject(DC);
@@ -97,7 +96,7 @@ namespace HolzShots
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        public struct Margin : IEquatable<Margin>
+        public readonly struct Margin : IEquatable<Margin>
         {
             public int LeftWidth { get; }
             public int RightWidth { get; }
@@ -113,11 +112,11 @@ namespace HolzShots
                 BottomHeight = bottomHeight;
             }
 
-            public override int GetHashCode() => HashCode.Combine(LeftWidth, RightWidth, TopHeight, BottomHeight);
+            public override readonly int GetHashCode() => HashCode.Combine(LeftWidth, RightWidth, TopHeight, BottomHeight);
 
-            public override bool Equals(object? obj) => obj is Margin other && Equals(other);
+            public override readonly bool Equals(object? obj) => obj is Margin other && Equals(other);
 
-            public bool Equals(Margin margin)
+            public readonly bool Equals(Margin margin)
             {
                 return LeftWidth == margin.LeftWidth &&
                         RightWidth == margin.RightWidth &&

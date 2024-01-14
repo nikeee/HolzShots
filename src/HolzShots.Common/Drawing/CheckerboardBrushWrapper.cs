@@ -28,7 +28,7 @@ public sealed class CheckerboardBrushWrapper : IDisposable
         _brush = new Lazy<TextureBrush>(CreateTextureBrush, false);
     }
 
-    public static CheckerboardBrushWrapper CreateDefault(int tileSize) => new CheckerboardBrushWrapper(tileSize, DefaultCheckerboardFirstColor, DefaultCheckerboardSecondColor);
+    public static CheckerboardBrushWrapper CreateDefault(int tileSize) => new(tileSize, DefaultCheckerboardFirstColor, DefaultCheckerboardSecondColor);
 
     private TextureBrush CreateTextureBrush()
     {
