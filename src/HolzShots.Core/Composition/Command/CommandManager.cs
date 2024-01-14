@@ -15,7 +15,7 @@ public class CommandAttribute(string name) : Attribute
 public class CommandManager<TSettings>(SettingsManager<TSettings> settingsManager)
     where TSettings : new()
 {
-    private Dictionary<string, ICommand<TSettings>> Actions { get; } = new Dictionary<string, ICommand<TSettings>>();
+    private Dictionary<string, ICommand<TSettings>> Actions { get; } = [];
 
     private readonly SettingsManager<TSettings> _settingsManager = settingsManager ?? throw new ArgumentNullException(nameof(settingsManager));
 
