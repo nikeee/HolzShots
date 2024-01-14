@@ -4,32 +4,37 @@ using HolzShots.NativeTypes;
 
 namespace HolzShots
 {
-    internal static class NativeMethods
+    internal static partial class NativeMethods
     {
         private const string gdi32 = "gdi32.dll";
 
         #region gdi32
 
-        [DllImport(gdi32)]
-        internal static extern int SetROP2(IntPtr hdc, RasterOperation2 drawMode);
-        [DllImport(gdi32)]
-        internal static extern IntPtr CreatePen(PenStyle penStyle, int width, uint color);
-        [DllImport(gdi32)]
-        internal static extern IntPtr SelectObject(IntPtr hdc, IntPtr gdiObject);
-        [DllImport(gdi32)]
-        internal static extern bool DeleteObject(IntPtr obj);
-        [DllImport(gdi32)]
-        internal static extern bool MoveToEx(IntPtr hdc, int x, int y, IntPtr point);
-        [DllImport(gdi32)]
-        internal static extern bool LineTo(IntPtr hdc, int xEnd, int yEnd);
-        [DllImport(gdi32)]
-        internal static extern bool BitBlt(IntPtr hdcDst, int x1, int y1, int cx, int cy, IntPtr hdcSrc, int x2, int y2, CopyPixelOperation op);
-        [DllImport(gdi32)]
-        internal static extern IntPtr CreateCompatibleDC(IntPtr hdc);
-        [DllImport(gdi32)]
-        internal static extern bool DeleteDC(IntPtr hdc);
-        [DllImport(gdi32)]
-        internal static extern IntPtr CreateCompatibleBitmap(IntPtr hdc, int width, int height);
+        [LibraryImport(gdi32)]
+        internal static partial int SetROP2(IntPtr hdc, RasterOperation2 drawMode);
+        [LibraryImport(gdi32)]
+        internal static partial IntPtr CreatePen(PenStyle penStyle, int width, uint color);
+        [LibraryImport(gdi32)]
+        internal static partial IntPtr SelectObject(IntPtr hdc, IntPtr gdiObject);
+        [LibraryImport(gdi32)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static partial bool DeleteObject(IntPtr obj);
+        [LibraryImport(gdi32)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static partial bool MoveToEx(IntPtr hdc, int x, int y, IntPtr point);
+        [LibraryImport(gdi32)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static partial bool LineTo(IntPtr hdc, int xEnd, int yEnd);
+        [LibraryImport(gdi32)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static partial bool BitBlt(IntPtr hdcDst, int x1, int y1, int cx, int cy, IntPtr hdcSrc, int x2, int y2, CopyPixelOperation op);
+        [LibraryImport(gdi32)]
+        internal static partial IntPtr CreateCompatibleDC(IntPtr hdc);
+        [LibraryImport(gdi32)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static partial bool DeleteDC(IntPtr hdc);
+        [LibraryImport(gdi32)]
+        internal static partial IntPtr CreateCompatibleBitmap(IntPtr hdc, int width, int height);
 
         #endregion
     }
