@@ -37,9 +37,9 @@ public static class ImageFormatInformation
 
 
     /// <summary>Retrieves the Encoder Information for a given MimeType</summary>
-    /// <param name="mimeType">String: Mimetype</param>
+    /// <param name="mimeType">String: mime type</param>
     /// <returns>ImageCodecInfo: Mime info or null if not found</returns>
-    private static ImageCodecInfo? GetEncoderInfo(string mimeType) => ImageCodecInfo.GetImageEncoders().FirstOrDefault(e => e.MimeType == mimeType);
+    private static ImageCodecInfo GetEncoderInfo(string mimeType) => ImageCodecInfo.GetImageEncoders().Single(e => e.MimeType == mimeType);
 
     /// <summary>Save an Image as a Jpeg with a given compression</summary>
     /// <param name="image">Image to save</param>
@@ -55,7 +55,7 @@ public static class ImageFormatInformation
         compression = Math.Min(compression, (byte)100);
 
         var encodeParameters = new EncoderParameters(1);
-        encodeParameters.Param[0] = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, (long)compression);
+        encodeParameters.Param[0] = new EncoderParameter(Encoder.Quality, (long)compression);
 
         var encoderInfo = GetEncoderInfo(JpegMimeType);
         image.Save(destination, encoderInfo, encodeParameters);
