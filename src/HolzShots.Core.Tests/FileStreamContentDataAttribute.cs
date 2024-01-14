@@ -7,7 +7,7 @@ using Xunit.Sdk;
 namespace HolzShots.Core.Tests;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = false)]
-public sealed class FileByteArrayContentDataAttribute(params string[] fileNames) : DataAttribute
+public sealed class FileStreamContentDataAttribute(params string[] fileNames) : DataAttribute
 {
     public IReadOnlyCollection<string> FileNames { get; } = fileNames;
 
@@ -15,7 +15,7 @@ public sealed class FileByteArrayContentDataAttribute(params string[] fileNames)
     {
         ArgumentNullException.ThrowIfNull(testMethod);
         yield return FileNames
-            .Select(f => File.ReadAllBytes(GetFullFilename(f)))
+            .Select(f => new MemoryStream(File.ReadAllBytes(GetFullFilename(f))))
             .ToArray();
     }
 
