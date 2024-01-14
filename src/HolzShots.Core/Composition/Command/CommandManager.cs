@@ -21,8 +21,7 @@ public class CommandManager<TSettings>(SettingsManager<TSettings> settingsManage
 
     public void RegisterCommand(ICommand<TSettings> command)
     {
-        if (command == null)
-            throw new ArgumentNullException(nameof(command));
+        ArgumentNullException.ThrowIfNull(command);
 
         var name = GetCommandNameForType(command.GetType());
         Debug.Assert(name is not null);
@@ -65,15 +64,14 @@ public class CommandManager<TSettings>(SettingsManager<TSettings> settingsManage
     public Task Dispatch<T>(TSettings currentSettings, IReadOnlyDictionary<string, string> parameters) where T : ICommand<TSettings>
     {
         var name = GetCommandNameForType<T>();
-        if (name == null)
-            throw new InvalidOperationException();
-        return Dispatch(name, currentSettings, parameters);
+        return name == null
+            ? throw new InvalidOperationException()
+            : Dispatch(name, currentSettings, parameters);
     }
 
     public Task Dispatch(CommandDeclaration command, TSettings currentSettings)
     {
-        if (command == null)
-            throw new ArgumentNullException(nameof(command));
+        ArgumentNullException.ThrowIfNull(command);
 
         Debug.Assert(IsRegisteredCommand(command.CommandName));
 
