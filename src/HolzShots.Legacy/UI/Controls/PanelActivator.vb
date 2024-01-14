@@ -6,16 +6,17 @@ Namespace UI.Controls
         Private ReadOnly _toolPanelDict As New Dictionary(Of PaintPanel.ShotEditorTool, Panel)
 
         Public Sub AddPanel(tool As PaintPanel.ShotEditorTool, targetPanel As Panel)
-            If targetPanel Is Nothing Then Throw New ArgumentNullException(NameOf(targetPanel))
+            ArgumentNullException.ThrowIfNull(targetPanel)
             If _toolPanelDict.ContainsKey(tool) Then Throw New ArgumentException("Settings panel already in dictionary")
 
             _toolPanelDict.Add(tool, targetPanel)
         End Sub
 
         Public Sub ActivateSettingsPanel(tool As PaintPanel.ShotEditorTool)
-            If Not _toolPanelDict.ContainsKey(tool) Then Throw New ArgumentException("No matching settings panel")
+            Dim value As Panel = Nothing
+            If Not _toolPanelDict.TryGetValue(tool, value) Then Throw New ArgumentException("No matching settings panel")
 
-            Dim targetPanel = _toolPanelDict(tool)
+            Dim targetPanel = value
             targetPanel.Location = OpenPoint
             targetPanel.Visible = True
             targetPanel.BringToFront()

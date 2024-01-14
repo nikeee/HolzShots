@@ -54,7 +54,7 @@ public static class MathEx
         while (y != 0)
         {
             if ((y & 1) == 1)
-                res = res * x;
+                res *= x;
             x *= x;
             y >>= 1;
         }

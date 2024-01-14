@@ -53,7 +53,7 @@ Namespace Drawing.Tools
         End Sub
 
         Public Sub New(parent As PaintPanel)
-            If parent Is Nothing Then Throw New ArgumentNullException(NameOf(parent))
+            ArgumentNullException.ThrowIfNull(parent)
             _parent = parent
         End Sub
     End Class

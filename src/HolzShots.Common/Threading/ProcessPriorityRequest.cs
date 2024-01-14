@@ -39,21 +39,21 @@ public sealed class ProcessPriorityRequest : IDisposable
     #region IDisposable Support
 
     private bool disposedValue;
-    void Dispose(bool disposing)
+    void Dispose(bool _disposing)
     {
-        if (!disposedValue)
+        if (disposedValue)
+            return;
+
+        try
         {
-            try
-            {
-                ResetPriority();
-            }
-            catch
-            {
-                throw;
-            }
-            _instanceExists = false;
-            disposedValue = true;
+            ResetPriority();
         }
+        catch
+        {
+            throw;
+        }
+        _instanceExists = false;
+        disposedValue = true;
     }
 
     ~ProcessPriorityRequest() => Dispose(false);

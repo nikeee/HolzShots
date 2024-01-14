@@ -57,7 +57,7 @@ class SelectionOutlineDecoration : IStateDecoration<RectangleState>
     }
 
     /// <summary> This can be mate prettier (visual rendering appearance as well as the code itself). It works for now. </summary>
-    private D2DRect DrawWidthRuler(D2DGraphics g, D2DRect outline, string text)
+    private static D2DRect DrawWidthRuler(D2DGraphics g, D2DRect outline, string text)
     {
         var placeSize = new D2DSize(1000, 1000);
 
@@ -115,7 +115,7 @@ class SelectionOutlineDecoration : IStateDecoration<RectangleState>
     }
 
     /// <summary> This can be mate prettier (visual rendering appearance as well as the code itself). It works for now. </summary>
-    private D2DRect DrawHeightRuler(D2DGraphics g, D2DRect outline, string text)
+    private static D2DRect DrawHeightRuler(D2DGraphics g, D2DRect outline, string text)
     {
         var placeSize = new D2DSize(1000, 1000);
 

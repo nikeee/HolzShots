@@ -13,11 +13,10 @@ class WindowFinder
         );
     }
 
-    private static readonly ISet<string> _ignoredWindowClasses = new HashSet<string>()
-    {
+    private static readonly HashSet<string> _ignoredWindowClasses = [
         "Shell_TrayWnd", // Task bar
         "Shell_Secondary", // Task bar on second/third/... screen
-    };
+    ];
 
     public static ISet<WindowRectangle> GetCurrentWindowRectangles(IntPtr excludedHandle, bool allowEntireScreen)
     {

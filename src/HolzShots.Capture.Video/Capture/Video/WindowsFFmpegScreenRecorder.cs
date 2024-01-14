@@ -37,7 +37,7 @@ public sealed class WindowsFFmpegScreenRecorder(string ffmpegPath) : IScreenReco
                 rectangleOnScreenToCapture = CreateEvenRectangle(rectangleOnScreenToCapture);
             }
         }
-        else if (pixelFormat.Trim().ToLowerInvariant() == "yuv420p") // Are there other formats that may require a fixup?
+        else if (pixelFormat.Trim().Equals("yuv420p", StringComparison.InvariantCultureIgnoreCase)) // Are there other formats that may require a fixup?
         {
             // The user explicitly forced this pixel format
 

@@ -3,13 +3,10 @@ using System.Diagnostics;
 
 namespace HolzShots.Input.Keyboard;
 
-public class HolzShotsActionCollection : HotkeyActionCollection, IDisposable
+public class HolzShotsActionCollection(KeyboardHook hook, params IHotkeyAction[] actions) : HotkeyActionCollection(hook, actions), IDisposable
 {
     private readonly object _lockObj = new();
     private bool disposedValue;
-
-    public HolzShotsActionCollection(KeyboardHook hook, params IHotkeyAction[] actions)
-        : base(hook, actions) { }
 
     public override void Refresh()
     {

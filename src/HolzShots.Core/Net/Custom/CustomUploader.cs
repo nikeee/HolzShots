@@ -56,10 +56,10 @@ public class CustomUploader : Uploader
         var responseParser = uplInfo.ResponseParser;
         using var content = new MultipartFormDataContent();
 
-        var postParams = uplInfo.PostParams;
-        if (postParams is not null)
+        var postParameters = uplInfo.PostParams;
+        if (postParameters is not null)
         {
-            foreach (var (name, value) in postParams)
+            foreach (var (name, value) in postParameters)
                 content.Add(new StringContent(value), name);
         }
 
@@ -77,7 +77,7 @@ public class CustomUploader : Uploader
         if (!res.IsSuccessStatusCode)
             throw new UploadException($"The servers of {UploaderInfo.Meta.Name} responded with the error {res.StatusCode}: \"{res.ReasonPhrase}\".");
 
-        var resStr = await res.Content.ReadAsStringAsync().ConfigureAwait(false);
+        var resStr = await res.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
 
         var urlTemplateSpec = responseParser.UrlTemplateSpec;
 

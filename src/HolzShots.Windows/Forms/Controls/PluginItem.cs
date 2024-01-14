@@ -44,8 +44,6 @@ public partial class PluginItem : UserControl
 
     #region Painting and UI State
 
-    private const int BorderPadding = 0;
-    private const int HotMargin = BorderPadding;
     private static readonly Pen _separatorPen = new(Color.FromArgb(0xff, 0xcc, 0xcc, 0xcc));
 
     protected override void OnPaint(PaintEventArgs e)

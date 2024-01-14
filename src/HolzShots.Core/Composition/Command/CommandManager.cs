@@ -55,8 +55,8 @@ public class CommandManager<TSettings>(SettingsManager<TSettings> settingsManage
             : null;
     }
 
-    private string? GetCommandNameForType(Type t) => t.GetCustomAttribute<CommandAttribute>(false)?.Name;
-    private string? GetCommandNameForType<T>() where T : ICommand<TSettings> => GetCommandNameForType(typeof(T));
+    private static string? GetCommandNameForType(Type t) => t.GetCustomAttribute<CommandAttribute>(false)?.Name;
+    private static string? GetCommandNameForType<T>() where T : ICommand<TSettings> => GetCommandNameForType(typeof(T));
 
     public bool IsRegisteredCommand(string name) => !string.IsNullOrWhiteSpace(name) && Actions.ContainsKey(name.ToLowerInvariant());
 
