@@ -30,7 +30,7 @@ public class FlyoutAnimator
         _taskbarIsOnTopOrBottom = TaskbarWindow.Instance.Position == Native.Shell32.TaskbarPosition.Bottom
                                     || TaskbarWindow.Instance.Position == Native.Shell32.TaskbarPosition.Top;
 
-        _screenRectangle = Screen.PrimaryScreen.WorkingArea;
+        _screenRectangle = EnvironmentEx.PrimaryScreen.WorkingArea;
 
         var startX = _screenRectangle.X + _screenRectangle.Width - _target.Width - 10;
         var startY = _screenRectangle.Y + _screenRectangle.Height - _target.Height + (_taskbarIsOnTopOrBottom ? (TaskbarWindow.Instance.Rectangle.Height / 2) : 15);

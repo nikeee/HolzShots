@@ -23,6 +23,9 @@ public static class EnvironmentEx
 
     public static StartupManager CurrentStartupManager => _currentStartupManager.Value;
 
+    /// <summary> Calling this is costly. </summary>
+    public static Screen PrimaryScreen => Screen.PrimaryScreen ?? throw new Exception("Application requires a primary screen");
+
     // https://github.com/dotnet/runtime/issues/13051#issuecomment-510267727
     private static string _executablePath = null!;
     private static string ExecutablePath => _executablePath ??= GetExecutablePath();
@@ -73,8 +76,9 @@ public static class EnvironmentEx
 
         // This is pretty unreliable. But it works at least a little bit.
         // It doesn't work if the application is running full screen on a different monitor (or over all monitors).
-        return Screen.PrimaryScreen.Bounds.Height == windowBounds.Height
-            && Screen.PrimaryScreen.Bounds.Width == windowBounds.Width;
+        var ps = EnvironmentEx.PrimaryScreen;
+        return ps.Bounds.Height == windowBounds.Height
+            && ps.Bounds.Width == windowBounds.Width;
     }
 
     public static ToolStripRenderer ToolStripRendererForCurrentTheme { get; } = new VisualStyleStripRenderer(ToolBarTheme.Toolbar);
