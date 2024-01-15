@@ -26,13 +26,6 @@ public class ComputationTest
         Assert.Equal(expected.Height, black.Height);
 
         var actual = new Bitmap(white.Width, white.Height);
-
-        var start = DateTime.Now;
-        for (int i = 0; i < 1000; i++)
-            Computation.ComputeAlphaChannel(white, black, ref actual);
-        var end = DateTime.Now;
-        Console.WriteLine(end - start);
-
         Computation.ComputeAlphaChannel(white, black, ref actual);
 
         AssertImage(expected, actual);
@@ -56,13 +49,7 @@ public class ComputationTest
         Assert.Equal(expected.Height, black.Height);
 
         var actual = new Bitmap(white.Width, white.Height);
-
-        var start = DateTime.Now;
-        for(int i = 0; i < 1000;  i++)
-            Computation.ComputeAlphaChannel2(white, black, ref actual);
-        var end = DateTime.Now;
-        Console.WriteLine(end - start);
-
+        Computation.ComputeAlphaChannel2(white, black, ref actual);
 
         AssertImage(expected, actual);
     }
