@@ -10,7 +10,30 @@ namespace HolzShots.Tests.Drawing
     {
         [Theory]
         [FileStreamContentData("Files/0-white.png", "Files/0-black.png", "Files/0-expected.png")]
-        public void CheckAlphaChannelComputation(Stream whiteData, Stream blackData, Stream expectedData)
+        public void ComputeAlphaChannel(Stream whiteData, Stream blackData, Stream expectedData)
+        {
+            Assert.True(whiteData.Length > 0);
+            Assert.True(blackData.Length > 0);
+            Assert.True(expectedData.Length > 0);
+
+            var white = new Bitmap(whiteData);
+            var black = new Bitmap(blackData);
+            var expected = new Bitmap(expectedData);
+
+            // Sanity check for input data
+            Assert.Equal(white.Width, black.Width);
+            Assert.Equal(white.Height, black.Height);
+            Assert.Equal(expected.Height, black.Height);
+
+            var actual = new Bitmap(white.Width, white.Height);
+            Computation.ComputeAlphaChannel(white, black, ref actual);
+
+            AssertImage(expected, actual);
+        }
+
+        [Theory]
+        [FileStreamContentData("Files/0-white.png", "Files/0-black.png", "Files/0-expected.png")]
+        public void ComputeAlphaChannel2(Stream whiteData, Stream blackData, Stream expectedData)
         {
             Assert.True(whiteData.Length > 0);
             Assert.True(blackData.Length > 0);
@@ -29,7 +52,6 @@ namespace HolzShots.Tests.Drawing
             Computation.ComputeAlphaChannel2(white, black, ref actual);
 
             AssertImage(expected, actual);
-
         }
 
         private static void AssertImage(Bitmap expected, Bitmap actual)
