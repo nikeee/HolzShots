@@ -9,9 +9,6 @@ public static class Computation
 {
     public static void ComputeAlphaChannel(Bitmap white, Bitmap black, ref Bitmap alpha)
     {
-        // Fuck dem clusters
-        // Do not touch or things will explode.
-
         ArgumentNullException.ThrowIfNull(white);
         ArgumentNullException.ThrowIfNull(black);
         ArgumentNullException.ThrowIfNull(alpha);
@@ -40,8 +37,8 @@ public static class Computation
                     var alphaPointer = (byte*)alphaBits.Scan0;
 
                     int i, j;
-                    int wso = whiteStride - (width * 3);
-                    int aso = alphaStride - (width * 4);
+                    int sourcePadding = whiteStride - (width * 3);
+                    int destinationPadding = alphaStride - (width * 4);
 
                     for (i = 0; i < height; i++)
                     {
@@ -62,9 +59,9 @@ public static class Computation
 
                             whitePointer += 3;
                         }
-                        whitePointer += wso;
-                        blackPointer += wso;
-                        alphaPointer += aso;
+                        whitePointer += sourcePadding;
+                        blackPointer += sourcePadding;
+                        alphaPointer += destinationPadding;
                     }
                 }
             }
