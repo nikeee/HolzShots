@@ -99,6 +99,7 @@ public static class Computation
         Debug.Assert(white.Size == black.Size);
         Debug.Assert(alpha.Size == black.Size);
 
+        // Bitmap memory layout: https://stackoverflow.com/a/60107058
         unchecked
         {
             int width = white.Width;
@@ -120,8 +121,8 @@ public static class Computation
                     var alphaPointer = (NativeColor4*)alphaBits.Scan0;
 
                     int i, j;
-                    int wso = whiteStride - width;
-                    int aso = alphaStride - width;
+                    int paddingBytes = whiteStride - (width * sizeof(NativeColor4));
+                    int paddedStructs = paddingBytes / sizeof(NativeColor4);
 
                     for (i = 0; i < height; ++i)
                     {
@@ -137,12 +138,15 @@ public static class Computation
                                 ? (byte)0
                                 : (byte)(255 * blackPointer->B / (blackPointer->B - whitePointer->B + 255));
                             alphaPointer->A = (byte)(blackPointer->B - whitePointer->B + 255);
+
                             ++blackPointer;
                             ++whitePointer;
+                            ++alphaPointer;
                         }
-                        whitePointer += wso;
-                        blackPointer += wso;
-                        alphaPointer += aso;
+
+                        whitePointer += paddedStructs;
+                        blackPointer += paddedStructs;
+                        alphaPointer += paddedStructs;
                     }
                 }
             }
