@@ -10,32 +10,38 @@ namespace HolzShots.Tests.Drawing
     {
         [Theory]
         [FileStreamContentData("Files/0-white.png", "Files/0-black.png", "Files/0-expected.png")]
-        public void CheckAlphaChannelComputation(Stream white, Stream black, Stream expected)
+        public void CheckAlphaChannelComputation(Stream whiteData, Stream blackData, Stream expectedData)
         {
-            Assert.True(white.Length > 0);
-            Assert.True(black.Length > 0);
-            Assert.True(expected.Length > 0);
+            Assert.True(whiteData.Length > 0);
+            Assert.True(blackData.Length > 0);
+            Assert.True(expectedData.Length > 0);
 
-            var w = new Bitmap(white);
-            var b = new Bitmap(black);
-            var e = new Bitmap(expected);
+            var white = new Bitmap(whiteData);
+            var black = new Bitmap(blackData);
+            var expected = new Bitmap(expectedData);
 
             // Sanity check for input data
-            Assert.Equal(w.Width, b.Width);
-            Assert.Equal(w.Height, b.Height);
-            Assert.Equal(e.Height, b.Height);
+            Assert.Equal(white.Width, black.Width);
+            Assert.Equal(white.Height, black.Height);
+            Assert.Equal(expected.Height, black.Height);
 
-            var actual = new Bitmap(w.Width, w.Height);
-            Computation.ComputeAlphaChannel(w, b, ref actual);
+            var actual = new Bitmap(white.Width, white.Height);
+            Computation.ComputeAlphaChannel2(white, black, ref actual);
 
-            Assert.Equal(e.Width, actual.Width);
-            Assert.Equal(e.Height, actual.Height);
+            AssertImage(expected, actual);
 
-            for (var x = 0; x < w.Width; ++x)
+        }
+
+        private static void AssertImage(Bitmap expected, Bitmap actual)
+        {
+            Assert.Equal(expected.Width, actual.Width);
+            Assert.Equal(expected.Height, actual.Height);
+
+            for (var x = 0; x < expected.Width; ++x)
             {
-                for (var y = 0; y < w.Height; ++y)
+                for (var y = 0; y < expected.Height; ++y)
                 {
-                    Assert.Equal(e.GetPixel(x, y), actual.GetPixel(x, y));
+                    Assert.Equal(expected.GetPixel(x, y), actual.GetPixel(x, y));
                 }
             }
         }
