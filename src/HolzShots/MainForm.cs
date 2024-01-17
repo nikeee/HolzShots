@@ -220,7 +220,7 @@ public partial class MainForm : Form
             await _application.CommandManager.Dispatch(commandToRun, UserSettings.Current).ConfigureAwait(true); // Can throw exceptions and silently kill the application
     }
 
-    private void OpenAbout(object sender, EventArgs e) => AboutForm.Instance.Show();
+    private void OpenAbout(object sender, EventArgs e) => AboutDialog.Show(Properties.Resources.Logo_64x64);
     private void OpenFeedbackAndIssues(object sender, EventArgs e) => IO.HolzShotsPaths.OpenLink(LibraryInformation.IssuesUrl);
 
     private void ExitApplication(object? sender, EventArgs e)
