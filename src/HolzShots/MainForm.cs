@@ -22,7 +22,8 @@ public partial class MainForm : Form
 
     public MainForm(HolzShotsApplication application)
     {
-        _application = application ?? throw new ArgumentNullException(nameof(application));
+        ArgumentNullException.ThrowIfNull(application);
+        _application = application;
 
         InitializeComponent();
 

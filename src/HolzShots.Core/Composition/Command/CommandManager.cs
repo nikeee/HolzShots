@@ -25,8 +25,8 @@ public class CommandManager<TSettings>(SettingsManager<TSettings> settingsManage
 
         var name = GetCommandNameForType(command.GetType());
         Debug.Assert(name is not null);
-        if (string.IsNullOrWhiteSpace(name))
-            throw new ArgumentException("Name of command is null or white space");
+
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
 
         name = name.ToLowerInvariant();
 

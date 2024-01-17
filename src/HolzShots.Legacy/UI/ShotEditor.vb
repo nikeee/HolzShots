@@ -293,7 +293,7 @@ Namespace UI
 #Region "Filesystem"
 
         Private Sub SaveImage(fileName As String)
-            If String.IsNullOrEmpty(fileName) Then Throw New ArgumentNullException(NameOf(fileName))
+            ArgumentException.ThrowIfNullOrWhiteSpace(fileName)
             Try
                 Dim bmp = ThePanel.CombinedImage()
                 Debug.Assert(bmp IsNot Nothing)

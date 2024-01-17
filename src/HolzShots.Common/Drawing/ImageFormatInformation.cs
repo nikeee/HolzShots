@@ -28,8 +28,7 @@ public static class ImageFormatInformation
     public static ImageFormat/*?*/ GetImageFormatFromFileName(string fileName) => GetImageFormatFromFileExtension(Path.GetExtension(fileName));
     public static ImageFormat/*?*/ GetImageFormatFromFileExtension(string fileExtension)
     {
-        if (string.IsNullOrWhiteSpace(fileExtension))
-            throw new ArgumentNullException(nameof(fileExtension));
+        ArgumentException.ThrowIfNullOrWhiteSpace(fileExtension);
         return _imageFormats
             .SingleOrDefault(kv => kv.Value.FileExtension.Equals(fileExtension, StringComparison.OrdinalIgnoreCase)).Key;
     }

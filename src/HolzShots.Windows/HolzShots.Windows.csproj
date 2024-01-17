@@ -49,13 +49,6 @@
     <Compile Update="Forms\FlyoutForm.Designer.cs">
       <DependentUpon>FlyoutForm.cs</DependentUpon>
     </Compile>
-
-    <Compile Update="Forms\AboutForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Forms\AboutForm.Designer.cs">
-      <DependentUpon>AboutForm.cs</DependentUpon>
-    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -64,9 +57,6 @@
     </EmbeddedResource>
     <EmbeddedResource Update="Forms\FlyoutForm.resx">
       <DependentUpon>FlyoutForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Forms\AboutForm.resx">
-      <DependentUpon>AboutForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Update="Forms\PluginForm.resx">
       <DependentUpon>PluginForm.cs</DependentUpon>
