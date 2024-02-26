@@ -43,7 +43,7 @@
     <Reference Include="System.ComponentModel.Composition" />
 
     <PackageReference Include="Microsoft.NETCore.Platforms" Version="7.0.4" />
-    <PackageReference Include="MSTest.TestAdapter" Version="3.2.1" />
+    <PackageReference Include="MSTest.TestAdapter" Version="3.2.2" />
     <PackageReference Include="MSTest.TestFramework" Version="3.2.1" />
 
 
