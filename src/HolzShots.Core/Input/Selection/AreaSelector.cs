@@ -48,7 +48,7 @@ public partial class AreaSelector : AnimatedForm, IAreaSelector
         _dimmingOverlayBrush = Device.CreateSolidColorBrush(new D2DColor(settingsContext.AreaSelectorDimmingOpacity, OverlayColor));
         _image = Device.CreateBitmapFromGDIBitmap(image);
         _imageBounds = new Rectangle(0, 0, image.Width, image.Height);
-        _dimmedImage = CreateDimemdImage(image.Width, image.Height);
+        _dimmedImage = CreateDimmedImage(image.Width, image.Height);
         _background = _dimmedImage.GetBitmap();
     }
 
@@ -71,7 +71,7 @@ public partial class AreaSelector : AnimatedForm, IAreaSelector
         return _tcs.Task;
     }
 
-    private D2DBitmapGraphics CreateDimemdImage(int width, int height)
+    private D2DBitmapGraphics CreateDimmedImage(int width, int height)
     {
         var res = Device.CreateBitmapGraphics(width, height);
         res.BeginRender();
