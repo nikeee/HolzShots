@@ -1,5 +1,6 @@
 using System.Drawing;
 using nud2dlib;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace HolzShots.Input.Selection.Decoration;
 
@@ -48,29 +49,4 @@ class MouseWindowOutlineDecoration : IStateDecoration<InitialState>
     }
 
     public void Dispose() { }
-}
-
-
-static class D2DRectExtensions
-{
-    /// <summary>Like System.Drawing.Rectangle.Inflate(). Maintains rectangle's center. </summary>
-    public static void Inflate(this ref D2DRect rectangle, D2DSize size) => Inflate(ref rectangle, size.Width, size.Height);
-    /// <summary>Like System.Drawing.Rectangle.Inflate(). Maintains rectangle's center. </summary>
-    public static void Inflate(this ref D2DRect rectangle, float width, float height)
-    {
-        rectangle.X -= width;
-        rectangle.Y -= height;
-        rectangle.Width += width * 2;
-        rectangle.Height += height * 2;
-    }
-    /// <summary>Like System.Drawing.Rectangle.Inflate(). Maintains rectangle's center. </summary>
-    public static void Inflate(this ref D2DRect rectangle, Size size) => Inflate(ref rectangle, size.Width, size.Height);
-    /// <summary>Like System.Drawing.Rectangle.Inflate(). Maintains rectangle's center. </summary>
-    public static void Inflate(this ref D2DRect rectangle, int width, int height)
-    {
-        rectangle.X -= width;
-        rectangle.Y -= height;
-        rectangle.Width += width * 2;
-        rectangle.Height += height * 2;
-    }
 }
