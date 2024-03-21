@@ -69,7 +69,7 @@
 			"enum": [ "upload", "copyFile", "copyFilePath", "showInExplorer", "openInDefaultApp", "none" ]
 		},
 		"videoFormat": {
-			"enum": [ "mp4", "webm", "gif" ]
+			"enum": [ "mp4" ]
 		},
 		"frameRate": {
 			"type": "integer",

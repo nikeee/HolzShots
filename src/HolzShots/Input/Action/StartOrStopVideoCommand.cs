@@ -267,16 +267,16 @@ public record VideoUploadPayload : IUploadPayload
 
     static string GetMimeTypeForVideoFormat(VideoCaptureFormat format) => format switch
     {
-        VideoCaptureFormat.Gif => "image/gif",
         VideoCaptureFormat.Mp4 => "video/mp4",
-        VideoCaptureFormat.Webm => "video/webm",
-        _ => throw new UnreachableException("Unhaned VideoCaptureFormat: " + format),
+        // VideoCaptureFormat.Gif => "image/gif",
+        // VideoCaptureFormat.Webm => "video/webm",
+        _ => throw new UnreachableException("Unhandled VideoCaptureFormat: " + format),
     };
     public static string GetExtensionForVideoFormat(VideoCaptureFormat format) => format switch
     {
-        VideoCaptureFormat.Gif => ".gif",
         VideoCaptureFormat.Mp4 => ".mp4",
-        VideoCaptureFormat.Webm => ".webm",
-        _ => throw new UnreachableException("Unhaned VideoCaptureFormat: " + format),
+        // VideoCaptureFormat.Gif => ".gif",
+        // VideoCaptureFormat.Webm => ".webm",
+        _ => throw new UnreachableException("Unhandled VideoCaptureFormat: " + format),
     };
 }

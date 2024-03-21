@@ -17,6 +17,8 @@ public static class VideoCaptureFormatSelection
                    DescriptionText = "What most pages and messengers actually use when serving Gifs, because it's way smaller.",
                    Tag = VideoCaptureFormat.Mp4,
                },
+               // See GH-110
+               /*
                new TaskDialogCommandLinkButton()
                {
                    Text = "WebM",
@@ -29,6 +31,7 @@ public static class VideoCaptureFormatSelection
                    DescriptionText = "Legacy format that produces large files. Most of the time, embeddable as an image (like PNG or JPG).",
                    Tag = VideoCaptureFormat.Gif,
                },
+               */
                TaskDialogButton.Cancel,
             ]
         });

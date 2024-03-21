@@ -394,10 +394,11 @@ public enum VideoCaptureFormat
 {
     [EnumMember(Value = "mp4")]
     Mp4,
-    [EnumMember(Value = "webm")]
-    Webm,
-    [EnumMember(Value = "gif")]
-    Gif,
+    // See GH-110
+    // [EnumMember(Value = "webm")]
+    // Webm,
+    // [EnumMember(Value = "gif")]
+    // Gif,
     [EnumMember(Value = "ask")]
     AskBeforeRecording,
 }
