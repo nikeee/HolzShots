@@ -14,6 +14,7 @@
     <Description>A lightweight screenshot utility that gets out of your way.</Description>
     <ApplicationManifest>app.manifest</ApplicationManifest>
 
+    <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
   </PropertyGroup>
 
   <ItemGroup>
