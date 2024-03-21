@@ -88,9 +88,9 @@ jobs:
           RELEASE_YEAR=`date +"%Y"`
           RELEASE_HASH=`grep -ohiE "^[0-9a-z]+" sha256sums.txt`
 
-          echo ::set-output name=version::${RELEASE_VERSION}
-          echo ::set-output name=year::${RELEASE_YEAR}
-          echo ::set-output name=checksum::${RELEASE_HASH}
+          echo "version=${RELEASE_VERSION}" >> $GITHUB_OUTPUT
+          echo "year=${RELEASE_YEAR}" >> $GITHUB_OUTPUT
+          echo "checksum=${RELEASE_HASH}" >> $GITHUB_OUTPUT
 
           sed -i -e "s/__REPLACE_YEAR__/${RELEASE_YEAR}/g" package/holzshots.nuspec
           sed -i -e "s/__REPLACE_VERSION__/${RELEASE_VERSION}/g" package/holzshots.nuspec
@@ -105,7 +105,7 @@ jobs:
       # https://github.com/actions/upload-artifact/issues/11#issuecomment-568101677
       - id: get_choco_package
         shell: bash
-        run: echo "::set-output name=file::$(ls holzshots*.nupkg)"
+        run: echo "file=$(ls holzshots*.nupkg)" >> $GITHUB_OUTPUT
 
       - uses: actions/upload-artifact@v4
         with:
