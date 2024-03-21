@@ -22,7 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HolzShots.Common\HolzShots.Common.csproj" />
     <ProjectReference Include="..\HolzShots.Core\HolzShots.Core.csproj" />
   </ItemGroup>
 

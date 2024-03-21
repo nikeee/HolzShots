@@ -10,6 +10,7 @@
     <Product>HolzShots.Core</Product>
     <Description>HolzShots Core Components</Description>
 
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,13 +24,14 @@
     <Import Include="System.Windows.Forms" />
     <Import Include="Microsoft.CSharp" />
 
-    <ProjectReference Include="..\HolzShots.Common\HolzShots.Common.csproj" />
+    <ProjectReference Include="..\HolzShots.Native\HolzShots.Native.csproj" />
 
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Semver" Version="2.3.0" />
     <PackageReference Include="nud2dlib-x64" Version="2.0.0" />
     <PackageReference Include="System.Composition" Version="8.0.0" />
     <PackageReference Include="System.ComponentModel.Composition" Version="8.0.0 " />
+    <PackageReference Include="System.Drawing.Common" Version="8.0.3" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.9" />
 
     <PackageReference Include="HolzShots.Input.Keyboard" Version="2.0.0-preview.4" />
