@@ -5,7 +5,7 @@
     <RootNamespace>HolzShots</RootNamespace>
     <TargetFramework>net8.0-windows</TargetFramework>
 
-    <Version>2.0.0-preview.3</Version>
+    <Version>2.0.0</Version>
 
     <Authors>Niklas Mollenhauer</Authors>
     <PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
