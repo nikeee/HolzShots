@@ -11,7 +11,7 @@ public static class LibraryInformation
     public static readonly DateTime VersionDate = DateTime.ParseExact(ThisAssembly.Constants.BuildDate, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
 
     public const string SiteUrl = ThisAssembly.Constants.Website;
-    public const string SourceUrl = ThisAssembly.Git.RepositoryUrl;
+    public const string SourceUrl = ThisAssembly.Metadata.RepositoryUrl;
 
     public const string IssuesUrl = SourceUrl + "/issues";
     public const string LicenseUrl = SourceUrl + "/blob/master/LICENSE";
