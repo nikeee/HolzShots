@@ -31,6 +31,13 @@ holzshots upload-file [optional file path]
 ```
 Feel free to integrate this into your tooling!
 
+## Build from Source
+```cmd
+git clone git@github.com:nikeee/HolzShots.git
+cd HolzShots
+dotnet publish -c release
+```
+
 ### Licenses
 HolzShots is built on the shoulders of giants and uses various tools and libraries which all hav their respective license. Thank you!
 
