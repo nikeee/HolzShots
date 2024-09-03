@@ -53,12 +53,15 @@
     <Constant Include="SpdxLicense" Value="AGPL-3.0" />
     <Constant Include="Website" Value="https://holzshots.net" />
 
+    <!-- Make these available via ThisAssembly.Project -->
+    <ProjectProperty Include="RepositoryUrl" />
+
     <!-- TODO: fill this constant in CI -->
     <Constant Include="BuildDate" Value="2022-02-28" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="ThisAssembly" Version="1.4.3" />
+    <PackageReference Include="ThisAssembly" Version="1.5.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="8.0.0" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All"/>
   </ItemGroup>
