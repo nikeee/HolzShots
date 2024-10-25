@@ -16,10 +16,12 @@ Namespace UI.Controls
         Friend Event Initialized()
         Friend Event UpdateMousePosition(ByVal e As Point)
 
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
         Friend Property UseBoxInsteadOfCircle As Boolean = False
 
         Private _drawcursor As Boolean
 
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
         Public Property DrawCursor As Boolean
             Get
                 Return _drawcursor
@@ -30,11 +32,15 @@ Namespace UI.Controls
             End Set
         End Property
 
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
         Public Property EllipseWidth As Integer
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
         Public Property EllipseColor As Color
 
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
         Public Property ArrowColor As Color
 
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
         Public Property EraserDiameter As Integer
             Get
                 Return _eraseDiameter
@@ -48,6 +54,7 @@ Namespace UI.Controls
             End Set
         End Property
 
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
         Public Property MarkerColor As Color
             Get
                 Return _markerColor
@@ -61,6 +68,7 @@ Namespace UI.Controls
             End Set
         End Property
 
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
         Public Property MarkerWidth As Integer
             Get
                 Return _markerWidth
@@ -74,6 +82,7 @@ Namespace UI.Controls
             End Set
         End Property
 
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
         Public Property ZensursulaColor As Color
             Get
                 Return _zensursulaColor
@@ -87,6 +96,7 @@ Namespace UI.Controls
             End Set
         End Property
 
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
         Public Property ZensursulaWidth As Integer
             Get
                 Return _zensursulaWidth
@@ -100,6 +110,7 @@ Namespace UI.Controls
             End Set
         End Property
 
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
         Public Property ArrowWidth As Integer
             Get
                 Return _arrowWidth
@@ -114,6 +125,7 @@ Namespace UI.Controls
         End Property
 
         Private _blurFactor As Integer
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
         Public Property BlurFactor As Integer
             Get
                 Return _blurFactor
@@ -128,6 +140,7 @@ Namespace UI.Controls
             End Set
         End Property
 
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
         Public Property BrightenColor As Color
 
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
@@ -166,6 +179,7 @@ Namespace UI.Controls
             End Get
         End Property
 
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
         Public Property CurrentTool As ShotEditorTool
             Get
                 Return _currentTool

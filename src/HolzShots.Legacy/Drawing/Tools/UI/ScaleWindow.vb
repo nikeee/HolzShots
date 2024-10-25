@@ -1,10 +1,12 @@
 Imports HolzShots.UI
+Imports System.ComponentModel
 
 Namespace Drawing.Tools.UI
 
     Friend Class ScaleWindow
         Private ReadOnly _img As Image
 
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
         Public Property CurrentScaleUnit As ScaleUnit = ScaleUnit.Percent
         Public ReadOnly Property WidthBoxV As Double
             Get
