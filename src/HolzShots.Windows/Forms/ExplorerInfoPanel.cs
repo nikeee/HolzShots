@@ -1,6 +1,7 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using System.ComponentModel;
 
 namespace HolzShots.Windows.Forms;
 
@@ -14,6 +15,7 @@ public class ExplorerInfoPanel : Panel
     private static readonly Color _gradientColor2 = Color.FromArgb(241, 245, 251);
     private static readonly Point _upperBrushPoint = new(0, 3);
 
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public override Color BackColor { get; set; } = Color.Transparent;
 
     public ExplorerInfoPanel()

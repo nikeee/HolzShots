@@ -8,11 +8,13 @@ using HolzShots.Input.Actions;
 using HolzShots.Windows.Forms;
 using System.Linq;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace HolzShots;
 
 public partial class MainForm : Form
 {
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public DateTime ApplicationStarted { get; private set; }
 
     private readonly HolzShotsApplication _application;
