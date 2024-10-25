@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 using nud2dlib;
@@ -10,7 +11,10 @@ public abstract class AnimatedForm : Form
 
     private int _currentFps = 0;
     private int _lastFps = 0;
+
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public bool DrawFPS { get; set; }
+
     private DateTime _lastFpsUpdate = DateTime.Now;
     private D2DGraphics _graphics = null!;
 
