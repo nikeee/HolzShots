@@ -19,7 +19,7 @@ jobs:
 
     - uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: '8.x'
+        dotnet-version: '9.x'
 
     - name: Restore Dependencies
       run: |
@@ -41,10 +41,10 @@ jobs:
     - name: Collect Artifacts
       if: startsWith(github.ref, 'refs/tags/v')
       run: |
-        7z a HolzShots.zip ".\src\HolzShots\bin\$env:CONFIGURATION\net8.0-windows\win-x64\*.exe"
-        7z a HolzShots.zip ".\src\HolzShots\bin\$env:CONFIGURATION\net8.0-windows\win-x64\*.dll"
-        7z a HolzShots.zip ".\src\HolzShots\bin\$env:CONFIGURATION\net8.0-windows\win-x64\*.config"
-        7z a HolzShots.zip ".\src\HolzShots\bin\$env:CONFIGURATION\net8.0-windows\win-x64\*.manifest"
+        7z a HolzShots.zip ".\src\HolzShots\bin\$env:CONFIGURATION\net9.0-windows\win-x64\*.exe"
+        7z a HolzShots.zip ".\src\HolzShots\bin\$env:CONFIGURATION\net9.0-windows\win-x64\*.dll"
+        7z a HolzShots.zip ".\src\HolzShots\bin\$env:CONFIGURATION\net9.0-windows\win-x64\*.config"
+        7z a HolzShots.zip ".\src\HolzShots\bin\$env:CONFIGURATION\net9.0-windows\win-x64\*.manifest"
         sha256sum HolzShots.zip > sha256sums.txt
 
     - uses: actions/upload-artifact@v4
