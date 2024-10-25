@@ -1,6 +1,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using HolzShots.Drawing;
+using System.ComponentModel;
 
 namespace HolzShots.Windows.Forms;
 
@@ -9,6 +10,7 @@ public class ColorView : Control
     private readonly CheckerboardBrushWrapper _checkerboardBrushWrapper = CheckerboardBrushWrapper.CreateDefault(10);
 
     private readonly SolidBrush _brush = new(Color.CornflowerBlue);
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public Color Color
     {
         get => _brush.Color;

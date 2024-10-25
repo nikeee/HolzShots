@@ -1,5 +1,6 @@
 using System.Globalization;
 using System.Windows.Forms;
+using System.ComponentModel;
 
 namespace HolzShots.Windows.Forms.Controls;
 
@@ -10,6 +11,7 @@ public class NumericTextBox : TextBox
     private static readonly string _groupSeparator = _numberFormatInfo.NumberGroupSeparator;
     private static readonly string _negativeSign = _numberFormatInfo.NegativeSign;
 
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public bool AllowSpace { get; set; }
     public int IntValue => Text.Trim() == string.Empty ? 0 : int.Parse(Text);
     public decimal DecimalValue => Text.Trim() == string.Empty ? 0 : decimal.Parse(Text);
