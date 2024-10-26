@@ -104,9 +104,11 @@
     <Import Include="System.Drawing" />
     <Import Include="System.Diagnostics" />
     <Import Include="System.Windows.Forms" />
+
     <ProjectReference Include="..\HolzShots.Core\HolzShots.Core.csproj" />
     <ProjectReference Include="..\HolzShots.Windows\HolzShots.Windows.csproj" />
     <ProjectReference Include="..\HolzShots.Native\HolzShots.Native.csproj" />
+    <ProjectReference Include="..\HolzShots.LegacyNew\HolzShots.LegacyNew.csproj" />
 
     <PackageReference Include="Semver" Version="3.0.0" />
     <PackageReference Include="HolzShots.WindowsAPICodePack.ShellModified" Version="4.1.0" />

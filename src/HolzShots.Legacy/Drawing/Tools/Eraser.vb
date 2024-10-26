@@ -5,7 +5,7 @@ Namespace Drawing.Tools
     Friend Class Eraser
         Inherits Tool
 
-        Private _parent As PaintPanel
+        Private ReadOnly _parent As PaintPanel
 
         Public Sub SetParent(p As PaintPanel)
             _parent = p
@@ -15,7 +15,7 @@ Namespace Drawing.Tools
             Get
                 Return InternalBeginCoordinates
             End Get
-            Set(ByVal value As Point)
+            Set(value As Point)
                 InternalBeginCoordinates = value
                 RenderPreview(_parent.RawBox.Image, Nothing, _parent)
             End Set

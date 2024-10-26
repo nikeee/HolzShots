@@ -17,3 +17,5 @@ public partial class EraserSettingsControl : UserControl
         InitializeComponent();
     }
 }
+
+public readonly record struct EraserSettings(int Diameter);
