@@ -15,20 +15,18 @@ Namespace Drawing.Tools
 
         Public Overrides Sub RenderFinalImage(ByRef rawImage As Image, ByVal sender As PaintPanel)
 
-            _rct.X = If(BeginCoordinates.X > EndCoordinates.X, EndCoordinates.X, BeginCoordinates.X)
-            _rct.Y = If(BeginCoordinates.Y > EndCoordinates.Y, EndCoordinates.Y, BeginCoordinates.Y)
+            _rct.X = Math.Min(EndCoordinates.X, BeginCoordinates.X)
+            _rct.Y = Math.Min(EndCoordinates.Y, BeginCoordinates.Y)
             _rct.Width = Math.Abs(BeginCoordinates.X - EndCoordinates.X)
             _rct.Height = Math.Abs(BeginCoordinates.Y - EndCoordinates.Y)
 
             If _rct.X + _rct.Width > rawImage.Width Then
                 _rct.Width = rawImage.Width - _rct.X
-                If _rct.Width < 0 Then _rct.Width = Math.Abs(_rct.Width)
-                If _rct.Width = 0 Then _rct.Width = 1
+                _rct.Width = Math.Max(1, Math.Abs(_rct.Width))
             End If
             If _rct.Y + _rct.Height > rawImage.Height Then
                 _rct.Height = rawImage.Height - _rct.Y
-                If _rct.Height < 0 Then _rct.Height = Math.Abs(_rct.Height)
-                If _rct.Height = 0 Then _rct.Height = 1
+                _rct.Height = Math.Max(1, Math.Abs(_rct.Height))
             End If
 
             If _rct.X < 0 Then
@@ -56,21 +54,17 @@ Namespace Drawing.Tools
         Public Overrides Sub RenderPreview(rawImage As Image, g As Graphics, sender As PaintPanel)
 
             _rct.X = Math.Min(EndCoordinates.X, BeginCoordinates.X)
-            'If(BeginCoordinates.X > SecondCoordinates.X, SecondCoordinates.X, BeginCoordinates.X)
             _rct.Y = Math.Min(EndCoordinates.Y, BeginCoordinates.Y)
-            'If(BeginCoordinates.Y > SecondCoordinates.Y, SecondCoordinates.Y, BeginCoordinates.Y)
             _rct.Width = Math.Abs(BeginCoordinates.X - EndCoordinates.X)
             _rct.Height = Math.Abs(BeginCoordinates.Y - EndCoordinates.Y)
 
             If _rct.X + _rct.Width > rawImage.Width Then
                 _rct.Width = rawImage.Width - _rct.X
-                If _rct.Width < 0 Then _rct.Width = Math.Abs(_rct.Width)
-                If _rct.Width = 0 Then _rct.Width = 1
+                _rct.Width = Math.Max(1, Math.Abs(_rct.Width))
             End If
             If _rct.Y + _rct.Height > rawImage.Height Then
                 _rct.Height = rawImage.Height - _rct.Y
-                If _rct.Height < 0 Then _rct.Height = Math.Abs(_rct.Height)
-                If _rct.Height = 0 Then _rct.Height = 1
+                _rct.Height = Math.Max(1, Math.Abs(_rct.Height))
             End If
 
             If _rct.X < 0 Then

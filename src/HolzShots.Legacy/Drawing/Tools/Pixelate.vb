@@ -12,10 +12,15 @@ Namespace Drawing.Tools
 
         Public Overrides Sub RenderFinalImage(ByRef rawImage As Image, sender As PaintPanel)
             If rawImage IsNot Nothing Then
-                Dim rawSrcRect As New Rectangle(If(BeginCoordinates.X > EndCoordinates.X, EndCoordinates.X, BeginCoordinates.X),
-                                                If(BeginCoordinates.Y > EndCoordinates.Y, EndCoordinates.Y, BeginCoordinates.Y),
-                                                If(BeginCoordinates.X > EndCoordinates.X, BeginCoordinates.X - EndCoordinates.X, EndCoordinates.X - BeginCoordinates.X),
-                                                If(BeginCoordinates.Y > EndCoordinates.Y, BeginCoordinates.Y - EndCoordinates.Y, EndCoordinates.Y - BeginCoordinates.Y))
+
+
+                Dim rawSrcRect As New Rectangle(
+                    Math.Min(BeginCoordinates.X, EndCoordinates.X),
+                    Math.Min(BeginCoordinates.Y, EndCoordinates.Y),
+                    Math.Abs(BeginCoordinates.X - EndCoordinates.X),
+                    Math.Abs(BeginCoordinates.Y - EndCoordinates.Y)
+                )
+
                 If rawSrcRect.X < 0 Then
                     rawSrcRect.Width += rawSrcRect.X
                     rawSrcRect.X = 0
@@ -44,11 +49,11 @@ Namespace Drawing.Tools
         Public Overrides Sub RenderPreview(rawImage As Image, g As Graphics, sender As PaintPanel)
             If rawImage IsNot Nothing Then
                 Dim rawSrcRectangle As New Rectangle(
-                                            If(BeginCoordinates.X > EndCoordinates.X, EndCoordinates.X, BeginCoordinates.X),
-                                            If(BeginCoordinates.Y > EndCoordinates.Y, EndCoordinates.Y, BeginCoordinates.Y),
-                                            If(BeginCoordinates.X > EndCoordinates.X, BeginCoordinates.X - EndCoordinates.X, EndCoordinates.X - BeginCoordinates.X),
-                                            If(BeginCoordinates.Y > EndCoordinates.Y, BeginCoordinates.Y - EndCoordinates.Y, EndCoordinates.Y - BeginCoordinates.Y)
-                                        )
+                    Math.Min(BeginCoordinates.X, EndCoordinates.X),
+                    Math.Min(BeginCoordinates.Y, EndCoordinates.Y),
+                    Math.Abs(BeginCoordinates.X - EndCoordinates.X),
+                    Math.Abs(BeginCoordinates.Y - EndCoordinates.Y)
+                )
 
                 If rawSrcRectangle.X < 0 Then
                     rawSrcRectangle.Width += rawSrcRectangle.X
