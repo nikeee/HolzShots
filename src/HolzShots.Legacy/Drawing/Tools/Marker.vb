@@ -13,11 +13,11 @@ Namespace Drawing.Tools
             End Get
             Set(value As Point)
                 InternalBeginCoordinates = value
-                _plist = New List(Of Point) From {InternalBeginCoordinates}
+                _pointList = New List(Of Point) From {InternalBeginCoordinates}
             End Set
         End Property
 
-        Private _plist As List(Of Point)
+        Private _pointList As List(Of Point)
         Private _markerWidth As Integer
         Private ReadOnly _markerColor As Color
         Private ReadOnly _markerPen As NativePen
@@ -39,21 +39,21 @@ Namespace Drawing.Tools
         Public Overrides Sub RenderFinalImage(ByRef rawImage As Image, sender As PaintPanel)
             Debug.Assert(TypeOf rawImage Is Bitmap)
 
-            _plist.Add(EndCoordinates)
+            _pointList.Add(EndCoordinates)
             Using g As Graphics = Graphics.FromImage(rawImage)
                 g.SmoothingMode = SmoothingMode.AntiAlias
-                g.DrawHighlight(DirectCast(rawImage, Bitmap), _plist.ToArray(), _markerPen)
+                g.DrawHighlight(DirectCast(rawImage, Bitmap), _pointList.ToArray(), _markerPen)
             End Using
-            _plist.Clear()
+            _pointList.Clear()
         End Sub
 
         Public Overrides Sub RenderPreview(rawImage As Image, g As Graphics, sender As PaintPanel)
             Debug.Assert(TypeOf rawImage Is Bitmap)
 
-            _plist.Add(EndCoordinates)
+            _pointList.Add(EndCoordinates)
             g.SmoothingMode = SmoothingMode.AntiAlias
-            If _plist.Count > 0 Then
-                g.DrawHighlight(DirectCast(rawImage, Bitmap), _plist.ToArray(), _markerPen)
+            If _pointList.Count > 0 Then
+                g.DrawHighlight(DirectCast(rawImage, Bitmap), _pointList.ToArray(), _markerPen)
             End If
         End Sub
 
@@ -61,7 +61,7 @@ Namespace Drawing.Tools
             _markerWidth = markerWidth
             _markerColor = markerColor
             _markerPen = New NativePen(_markerColor, _markerWidth)
-            _plist = New List(Of Point)
+            _pointList = New List(Of Point)
         End Sub
 
         Public Sub Dispose() Implements IDisposable.Dispose

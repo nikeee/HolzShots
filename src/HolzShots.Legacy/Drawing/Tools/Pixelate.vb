@@ -88,15 +88,24 @@ Namespace Drawing.Tools
                 Using g As Graphics = Graphics.FromImage(smallBitmap)
                     g.CompositingMode = CompositingMode.SourceOver
                     g.InterpolationMode = InterpolationMode.HighQualityBilinear
-                    g.DrawImage(img, New Rectangle(0, 0, smallBitmap.Width, smallBitmap.Height), rawSrcRect, GraphicsUnit.Pixel)
+                    g.DrawImage(
+                        img,
+                        New Rectangle(0, 0, smallBitmap.Width, smallBitmap.Height),
+                        rawSrcRect,
+                        GraphicsUnit.Pixel
+                    )
                 End Using
+
                 Using secondBitmap As New Bitmap(rawSrcRect.Width, rawSrcRect.Height)
                     Using g As Graphics = Graphics.FromImage(secondBitmap)
                         g.CompositingMode = CompositingMode.SourceOver
                         g.InterpolationMode = InterpolationMode.HighQualityBilinear
-                        g.DrawImage(smallBitmap,
-                                    New Rectangle(0, 0, rawSrcRect.Width + factor, rawSrcRect.Height + factor),
-                                    New Rectangle(0, 0, smallBitmap.Width, smallBitmap.Height), GraphicsUnit.Pixel)
+                        g.DrawImage(
+                            smallBitmap,
+                            New Rectangle(0, 0, rawSrcRect.Width + factor, rawSrcRect.Height + factor),
+                            New Rectangle(0, 0, smallBitmap.Width, smallBitmap.Height),
+                            GraphicsUnit.Pixel
+                        )
                     End Using
                     Return DirectCast(secondBitmap.Clone(), Bitmap)
                 End Using
