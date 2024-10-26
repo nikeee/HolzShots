@@ -11,22 +11,22 @@ Namespace Drawing.Tools
             Else
                 Dim ratio As Double = bmp.Width / bmp.Height
 
-                Dim newwidth As Integer
-                Dim newheight As Integer
+                Dim newWidth As Integer
+                Dim newHeight As Integer
 
                 If bmp.Width >= bmp.Height Then
-                    newwidth = 100
-                    newheight = CInt(newwidth / ratio)
+                    newWidth = 100
+                    newHeight = CInt(newWidth / ratio)
                 Else
-                    newheight = 100
-                    newwidth = CInt(newheight * ratio)
+                    newHeight = 100
+                    newWidth = CInt(newHeight * ratio)
                 End If
 
-                Dim thumb As New Bitmap(newwidth, newheight)
+                Dim thumb As New Bitmap(newWidth, newHeight)
                 thumb.MakeTransparent()
-                Dim g As Graphics = Graphics.FromImage(thumb)
-                g.DrawImage(bmp, 0, 0, newwidth, newheight)
-                g.Dispose()
+                Using g As Graphics = Graphics.FromImage(thumb)
+                    g.DrawImage(bmp, 0, 0, newWidth, newHeight)
+                End Using
                 Return thumb
             End If
         End Function
