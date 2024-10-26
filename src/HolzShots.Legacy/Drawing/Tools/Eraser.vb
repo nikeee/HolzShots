@@ -1,4 +1,5 @@
 Imports System.Drawing.Drawing2D
+Imports HolzShots.Drawing.Tools.UI
 Imports HolzShots.UI.Controls
 
 Namespace Drawing.Tools
@@ -7,9 +8,7 @@ Namespace Drawing.Tools
 
         Private ReadOnly _parent As PaintPanel
 
-        Public Sub SetParent(p As PaintPanel)
-            _parent = p
-        End Sub
+        Private ReadOnly _settingsControl As SettingsControl(Of EraserSettings)
 
         Public Overrides Property BeginCoordinates As Point
             Get
@@ -55,6 +54,12 @@ Namespace Drawing.Tools
         Public Sub New(parent As PaintPanel)
             ArgumentNullException.ThrowIfNull(parent)
             _parent = parent
+            _settingsControl = New EraserSettingsControl(New EraserSettings(10))
+            AddHandler _settingsControl.OnSettingsUpdated, AddressOf OnSettingsUpdated
+        End Sub
+
+        Private Sub OnSettingsUpdated(sender As Object, newSettings As EraserSettings)
+            MessageBox.Show("Settings updated: " & newSettings.ToString())
         End Sub
     End Class
 End Namespace
