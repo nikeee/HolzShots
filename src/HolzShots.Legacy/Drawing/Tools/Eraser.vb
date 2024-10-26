@@ -13,10 +13,10 @@ Namespace Drawing.Tools
 
         Public Overrides Property BeginCoordinates As Point
             Get
-                Return InternalBeginCoords
+                Return InternalBeginCoordinates
             End Get
             Set(ByVal value As Point)
-                InternalBeginCoords = value
+                InternalBeginCoordinates = value
                 RenderPreview(_parent.RawBox.Image, Nothing, _parent)
             End Set
         End Property
@@ -44,7 +44,7 @@ Namespace Drawing.Tools
                 g.CompositingMode = CompositingMode.SourceCopy
                 g.SmoothingMode = SmoothingMode.AntiAlias
                 If _isFirstClick Then
-                    g.FillEllipse(ClearBrush, InternalBeginCoords.X - CInt(_parent.EraserDiameter / 2), InternalBeginCoords.Y - CInt(_parent.EraserDiameter / 2), _parent.EraserDiameter, _parent.EraserDiameter)
+                    g.FillEllipse(ClearBrush, InternalBeginCoordinates.X - CInt(_parent.EraserDiameter / 2), InternalBeginCoordinates.Y - CInt(_parent.EraserDiameter / 2), _parent.EraserDiameter, _parent.EraserDiameter)
                     _isFirstClick = False
                 Else
                     g.FillEllipse(ClearBrush, EndCoordinates.X - CInt(_parent.EraserDiameter / 2), EndCoordinates.Y - CInt(_parent.EraserDiameter / 2), _parent.EraserDiameter, _parent.EraserDiameter)

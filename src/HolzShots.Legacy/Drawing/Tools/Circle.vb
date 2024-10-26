@@ -12,10 +12,10 @@ Namespace Drawing.Tools
         Private _rct As New Rectangle()
 
         Public Overrides Sub RenderFinalImage(ByRef rawImage As Image, ByVal sender As PaintPanel)
-            _rct.X = Math.Min(InternalEndCoords.X, InternalBeginCoords.X)
-            _rct.Y = Math.Min(InternalEndCoords.Y, InternalBeginCoords.Y)
-            _rct.Width = CInt(Math.Max(Math.Abs(InternalBeginCoords.X - InternalEndCoords.X), _pen.Width))
-            _rct.Height = CInt(Math.Max(Math.Abs(InternalBeginCoords.Y - InternalEndCoords.Y), _pen.Width))
+            _rct.X = Math.Min(InternalEndCoordinates.X, InternalBeginCoordinates.X)
+            _rct.Y = Math.Min(InternalEndCoordinates.Y, InternalBeginCoordinates.Y)
+            _rct.Width = CInt(Math.Max(Math.Abs(InternalBeginCoordinates.X - InternalEndCoordinates.X), _pen.Width))
+            _rct.Height = CInt(Math.Max(Math.Abs(InternalBeginCoordinates.Y - InternalEndCoordinates.Y), _pen.Width))
 
             _pen.Width = sender.EllipseWidth
             _pen.Color = sender.EllipseColor
@@ -31,10 +31,10 @@ Namespace Drawing.Tools
         End Sub
 
         Public Overrides Sub RenderPreview(ByVal rawImage As Image, ByVal g As Graphics, ByVal sender As PaintPanel)
-            _rct.X = Math.Min(InternalEndCoords.X, InternalBeginCoords.X)
-            _rct.Y = Math.Min(InternalEndCoords.Y, InternalBeginCoords.Y)
-            _rct.Width = CInt(Math.Max(Math.Abs(InternalBeginCoords.X - InternalEndCoords.X), _pen.Width))
-            _rct.Height = CInt(Math.Max(Math.Abs(InternalBeginCoords.Y - InternalEndCoords.Y), _pen.Width))
+            _rct.X = Math.Min(InternalEndCoordinates.X, InternalBeginCoordinates.X)
+            _rct.Y = Math.Min(InternalEndCoordinates.Y, InternalBeginCoordinates.Y)
+            _rct.Width = CInt(Math.Max(Math.Abs(InternalBeginCoordinates.X - InternalEndCoordinates.X), _pen.Width))
+            _rct.Height = CInt(Math.Max(Math.Abs(InternalBeginCoordinates.Y - InternalEndCoordinates.Y), _pen.Width))
 
             _pen.Width = sender.EllipseWidth
             _pen.Color = sender.EllipseColor

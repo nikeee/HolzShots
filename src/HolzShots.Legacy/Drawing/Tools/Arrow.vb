@@ -15,11 +15,11 @@ Namespace Drawing.Tools
 
         Public Overrides Property BeginCoordinates As Point
             Get
-                Return InternalBeginCoords
+                Return InternalBeginCoordinates
             End Get
             Set(value As Point)
-                If value <> InternalBeginCoords Then
-                    InternalBeginCoords = value
+                If value <> InternalBeginCoordinates Then
+                    InternalBeginCoordinates = value
                     _arrowFirstPoint = New Vector2(value.X, value.Y)
                 End If
             End Set
@@ -27,11 +27,11 @@ Namespace Drawing.Tools
 
         Public Overrides Property EndCoordinates As Point
             Get
-                Return InternalEndCoords
+                Return InternalEndCoordinates
             End Get
             Set(value As Point)
-                If value <> InternalEndCoords Then
-                    InternalEndCoords = value
+                If value <> InternalEndCoordinates Then
+                    InternalEndCoordinates = value
                     _arrowSecondPoint = New Vector2(value.X, value.Y)
                 End If
             End Set

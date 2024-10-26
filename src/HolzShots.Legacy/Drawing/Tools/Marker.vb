@@ -9,11 +9,11 @@ Namespace Drawing.Tools
 
         Public Overrides Property BeginCoordinates As Point
             Get
-                Return InternalBeginCoords
+                Return InternalBeginCoordinates
             End Get
             Set(value As Point)
-                InternalBeginCoords = value
-                _plist = New List(Of Point) From {InternalBeginCoords}
+                InternalBeginCoordinates = value
+                _plist = New List(Of Point) From {InternalBeginCoordinates}
             End Set
         End Property
 

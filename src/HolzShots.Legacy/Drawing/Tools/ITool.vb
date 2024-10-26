@@ -6,26 +6,26 @@ Namespace Drawing.Tools
 
         Overridable ReadOnly Property Cursor As Cursor = Cursors.Default
 
-        Protected InternalBeginCoords As Point
+        Protected InternalBeginCoordinates As Point
         Overridable Property BeginCoordinates As Point
             Get
-                Return InternalBeginCoords
+                Return InternalBeginCoordinates
             End Get
             Set(value As Point)
-                If value <> InternalBeginCoords Then
-                    InternalBeginCoords = value
+                If value <> InternalBeginCoordinates Then
+                    InternalBeginCoordinates = value
                 End If
             End Set
         End Property
 
-        Protected InternalEndCoords As Point
+        Protected InternalEndCoordinates As Point
         Overridable Property EndCoordinates As Point
             Get
-                Return InternalEndCoords
+                Return InternalEndCoordinates
             End Get
             Set(value As Point)
-                If value <> InternalEndCoords Then
-                    InternalEndCoords = value
+                If value <> InternalEndCoordinates Then
+                    InternalEndCoordinates = value
                 End If
             End Set
         End Property
