@@ -14,7 +14,7 @@ Namespace UI.Controls
         Private _zensursulaWidth, _arrowWidth, _eraseDiameter, _markerWidth As Integer
 
         Friend Event Initialized()
-        Friend Event UpdateMousePosition(ByVal e As Point)
+        Friend Event UpdateMousePosition(e As Point)
 
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
         Friend Property UseBoxInsteadOfCircle As Boolean = False
@@ -26,7 +26,7 @@ Namespace UI.Controls
             Get
                 Return _drawcursor
             End Get
-            Set(ByVal value As Boolean)
+            Set(value As Boolean)
                 _drawcursor = value
                 RawBox.Invalidate()
             End Set
@@ -45,7 +45,7 @@ Namespace UI.Controls
             Get
                 Return _eraseDiameter
             End Get
-            Set(ByVal value As Integer)
+            Set(value As Integer)
                 _eraseDiameter = value
                 If CurrentTool = ShotEditorTool.Eraser Then
                     CurrentTool = ShotEditorTool.None
@@ -59,7 +59,7 @@ Namespace UI.Controls
             Get
                 Return _markerColor
             End Get
-            Set(ByVal value As Color)
+            Set(value As Color)
                 _markerColor = value
                 If CurrentTool = ShotEditorTool.Marker Then
                     CurrentTool = ShotEditorTool.None
@@ -73,7 +73,7 @@ Namespace UI.Controls
             Get
                 Return _markerWidth
             End Get
-            Set(ByVal value As Integer)
+            Set(value As Integer)
                 _markerWidth = value
                 If CurrentTool = ShotEditorTool.Marker Then
                     CurrentTool = ShotEditorTool.None
@@ -87,7 +87,7 @@ Namespace UI.Controls
             Get
                 Return _zensursulaColor
             End Get
-            Set(ByVal value As Color)
+            Set(value As Color)
                 _zensursulaColor = value
                 If CurrentTool = ShotEditorTool.Censor Then
                     CurrentTool = ShotEditorTool.None
@@ -101,7 +101,7 @@ Namespace UI.Controls
             Get
                 Return _zensursulaWidth
             End Get
-            Set(ByVal value As Integer)
+            Set(value As Integer)
                 _zensursulaWidth = value
                 If CurrentTool = ShotEditorTool.Censor Then
                     CurrentTool = ShotEditorTool.None
@@ -115,7 +115,7 @@ Namespace UI.Controls
             Get
                 Return _arrowWidth
             End Get
-            Set(ByVal value As Integer)
+            Set(value As Integer)
                 _arrowWidth = value
                 If CurrentTool = ShotEditorTool.Arrow Then
                     CurrentTool = ShotEditorTool.None
@@ -130,7 +130,7 @@ Namespace UI.Controls
             Get
                 Return _blurFactor
             End Get
-            Set(ByVal value As Integer)
+            Set(value As Integer)
                 If value <= 0 Then value = 7
                 _blurFactor = value
                 If CurrentTool = ShotEditorTool.Blur Then
@@ -148,7 +148,7 @@ Namespace UI.Controls
             Get
                 Return If(DesignMode, Nothing, _screenshot)
             End Get
-            Set(ByVal value As Screenshot)
+            Set(value As Screenshot)
                 If Not DesignMode Then
                     _screenshot = value
                 End If
@@ -184,7 +184,7 @@ Namespace UI.Controls
             Get
                 Return _currentTool
             End Get
-            Set(ByVal value As ShotEditorTool)
+            Set(value As ShotEditorTool)
                 _currentTool = value
                 Select Case value
                     Case ShotEditorTool.None
@@ -219,14 +219,14 @@ Namespace UI.Controls
         End Property
 
 
-        Private Event CurrentToolChanged(ByVal sender As Object, ByVal tool As Tool)
+        Private Event CurrentToolChanged(sender As Object, tool As Tool)
         Private _currentToolObject As Tool
 
         Private Property CurrentToolObject As Tool
             Get
                 Return _currentToolObject
             End Get
-            Set(ByVal value As Tool)
+            Set(value As Tool)
                 If value IsNot _currentToolObject Then
                     _currentToolObject = value
                     RaiseEvent CurrentToolChanged(Me, _currentToolObject)
@@ -234,7 +234,7 @@ Namespace UI.Controls
             End Set
         End Property
 
-        Private Sub CurrentToolChanged_Event(ByVal sender As Object, ByVal tool As Tool) Handles Me.CurrentToolChanged
+        Private Sub CurrentToolChanged_Event(sender As Object, tool As Tool) Handles Me.CurrentToolChanged
             If tool IsNot Nothing Then
                 Cursor = tool.Cursor
             End If
@@ -255,7 +255,7 @@ Namespace UI.Controls
             Scale = 1024
         End Enum
 
-        Public Sub Initialize(ByVal shot As Screenshot)
+        Public Sub Initialize(shot As Screenshot)
 
             _screenshot = shot
 
@@ -305,11 +305,11 @@ Namespace UI.Controls
 
 #Region "DrawLayer"
 
-        Private Sub DrawBoxMouseClick(ByVal sender As Object, ByVal e As MouseEventArgs) Handles RawBox.MouseClick
+        Private Sub DrawBoxMouseClick(sender As Object, e As MouseEventArgs) Handles RawBox.MouseClick
             CurrentToolObject?.MouseClicked(CurrentImage, e.Location, Cursor, Me)
         End Sub
 
-        Private Sub MouseLayerMouseDown(ByVal sender As Object, ByVal e As MouseEventArgs) Handles RawBox.MouseDown
+        Private Sub MouseLayerMouseDown(sender As Object, e As MouseEventArgs) Handles RawBox.MouseDown
             _mousedown = True
             If _currentTool = ShotEditorTool.None OrElse _currentTool = ShotEditorTool.Text Then Exit Sub
 
@@ -320,7 +320,7 @@ Namespace UI.Controls
             If Not RawBox.Focused Then RawBox.Focus()
         End Sub
 
-        Private Sub MouseLayerMouseMove(ByVal sender As Object, ByVal e As MouseEventArgs) Handles RawBox.MouseMove
+        Private Sub MouseLayerMouseMove(sender As Object, e As MouseEventArgs) Handles RawBox.MouseMove
             If e.Button = MouseButtons.Left Then
 
                 If CurrentToolObject IsNot Nothing Then
@@ -335,7 +335,7 @@ Namespace UI.Controls
             If Not RawBox.Focused Then RawBox.Focus()
         End Sub
 
-        Private Sub MouseLayerMouseUp(ByVal sender As Object, ByVal e As MouseEventArgs) Handles RawBox.MouseUp
+        Private Sub MouseLayerMouseUp(sender As Object, e As MouseEventArgs) Handles RawBox.MouseUp
             If e.Button = MouseButtons.Left Then
                 If CurrentTool = ShotEditorTool.Text Then
                     TextPanel.BringToFront()
@@ -354,7 +354,7 @@ Namespace UI.Controls
 
         Private _mousedown As Boolean = False
 
-        Private Sub RawBoxPaint(ByVal sender As Object, ByVal e As PaintEventArgs) Handles RawBox.Paint
+        Private Sub RawBoxPaint(sender As Object, e As PaintEventArgs) Handles RawBox.Paint
             If _mousedown = True Then
                 If _currentToolObject IsNot Nothing Then
                     CurrentToolObject.RenderPreview(CType(RawBox.Image, Bitmap), e.Graphics, Me)
@@ -429,7 +429,7 @@ Namespace UI.Controls
         Dim _dragPointMover As Point
         Dim _startPOsitionMover As Point
 
-        Private Sub PictureBox2MouseDown(ByVal sender As Object, ByVal e As MouseEventArgs) Handles MoverBox.MouseDown
+        Private Sub PictureBox2MouseDown(sender As Object, e As MouseEventArgs) Handles MoverBox.MouseDown
             If e.Button = MouseButtons.Left Then
                 _moverMouseDown = True
                 _startPOsitionMover = New Point(TextPanel.Location.X + EckenTeil.Location.X, TextPanel.Location.Y + EckenTeil.Location.Y)
@@ -437,25 +437,25 @@ Namespace UI.Controls
             End If
         End Sub
 
-        Private Sub PictureBox2MouseMove(ByVal sender As Object, ByVal e As MouseEventArgs) Handles MoverBox.MouseMove
+        Private Sub PictureBox2MouseMove(sender As Object, e As MouseEventArgs) Handles MoverBox.MouseMove
             If _moverMouseDown = True Then
                 Dim nCurPos As Point = EckenTeil.PointToScreen(New Point(TextPanel.Location.X + e.X, TextPanel.Location.Y + e.Y))
                 TextPanel.Location = New Point(_startPOsitionMover.X + nCurPos.X - _dragPointMover.X, _startPOsitionMover.Y + nCurPos.Y - _dragPointMover.Y)
             End If
         End Sub
 
-        Private Sub PictureBox2MouseUp(ByVal sender As Object, ByVal e As MouseEventArgs) Handles MoverBox.MouseUp
+        Private Sub PictureBox2MouseUp(sender As Object, e As MouseEventArgs) Handles MoverBox.MouseUp
             _moverMouseDown = False
         End Sub
 
-        Private Sub ChangeFontClick(ByVal sender As Object, ByVal e As EventArgs) Handles ChangeFont.Click
+        Private Sub ChangeFontClick(sender As Object, e As EventArgs) Handles ChangeFont.Click
             If TheFontDialog.ShowDialog() = DialogResult.OK Then
                 TextInput.Font = TheFontDialog.Font
                 TextInput.ForeColor = TheFontDialog.Color
             End If
         End Sub
 
-        Private Sub TextPanelVisibleChanged(ByVal sender As Object, ByVal e As EventArgs) _
+        Private Sub TextPanelVisibleChanged(sender As Object, e As EventArgs) _
             Handles TextPanel.VisibleChanged
             ChangeFont.Parent = tools_bg
             ChangeFont.Location = New Point(3, 2)
@@ -473,16 +473,16 @@ Namespace UI.Controls
             CancelButton.Location = New Point(117, 2)
         End Sub
 
-        Private Sub SelectAllClick(ByVal sender As Object, ByVal e As EventArgs) Handles SelectAll.Click
+        Private Sub SelectAllClick(sender As Object, e As EventArgs) Handles SelectAll.Click
             TextInput.Focus()
             TextInput.SelectAll()
         End Sub
 
-        Private Sub CancelButtonClick(ByVal sender As Object, ByVal e As EventArgs) Handles CancelButton.Click
+        Private Sub CancelButtonClick(sender As Object, e As EventArgs) Handles CancelButton.Click
             TextPanel.Visible = False
         End Sub
 
-        Private Sub InsertDateClick(ByVal sender As Object, ByVal e As EventArgs) Handles InsertDate.Click
+        Private Sub InsertDateClick(sender As Object, e As EventArgs) Handles InsertDate.Click
             TextInput.Paste(_screenshot.Timestamp.ToString())
         End Sub
 
@@ -490,7 +490,7 @@ Namespace UI.Controls
 
 #Region "Ruler"
 
-        Private Sub SaveLinealStuff(ByVal e As MouseEventArgs)
+        Private Sub SaveLinealStuff(e As MouseEventArgs)
 
             Dim hRect = New Rectangle(If(_currentMousePosition.X < e.X, _currentMousePosition.X, e.X) - 1, 0, Math.Abs(_currentMousePosition.X - e.X) + 2, HorizontalLinealBox.DisplayRectangle.Height)
             Dim vRect = New Rectangle(0, If(_currentMousePosition.Y < e.Y, _currentMousePosition.Y, e.Y) - 1, VerticalLinealBox.DisplayRectangle.Width, Math.Abs(_currentMousePosition.Y - e.Y) + 2)
@@ -513,7 +513,7 @@ Namespace UI.Controls
         Private Shared ReadOnly LinearBackgroundBrush As New SolidBrush(Color.FromArgb(255, 241, 243, 248)) '(255, 240, 241, 249))
         Private Shared ReadOnly LinePen As New Pen(Color.FromArgb(255, 142, 156, 175)) '(255, 137, 146, 179))
 
-        Private Sub HorizontalLinealBoxPaint(ByVal sender As Object, ByVal e As PaintEventArgs) Handles HorizontalLinealBox.Paint
+        Private Sub HorizontalLinealBoxPaint(sender As Object, e As PaintEventArgs) Handles HorizontalLinealBox.Paint
             With e.Graphics
                 .TextRenderingHint = TextRenderingHint.AntiAliasGridFit
                 .SmoothingMode = SmoothingMode.HighSpeed
@@ -542,7 +542,7 @@ Namespace UI.Controls
                 .DrawLine(BorderLinePen, 0, 0, Width, 0)
             End With
         End Sub
-        Private Sub VerticalLinealBoxPaint(ByVal sender As Object, ByVal e As PaintEventArgs) Handles VerticalLinealBox.Paint
+        Private Sub VerticalLinealBoxPaint(sender As Object, e As PaintEventArgs) Handles VerticalLinealBox.Paint
             With e.Graphics
                 .TextRenderingHint = TextRenderingHint.AntiAliasGridFit
                 .SmoothingMode = SmoothingMode.HighSpeed
@@ -576,7 +576,7 @@ Namespace UI.Controls
 
 #End Region
 
-        Private Sub WholePanelScroll(ByVal sender As Object, ByVal e As ScrollEventArgs) Handles WholePanel.Scroll
+        Private Sub WholePanelScroll(sender As Object, e As ScrollEventArgs) Handles WholePanel.Scroll
             If e.ScrollOrientation = ScrollOrientation.HorizontalScroll Then
                 HorizontalLinealBox.Invalidate()
             Else
@@ -584,7 +584,7 @@ Namespace UI.Controls
             End If
         End Sub
 
-        Private Sub EckenTeilPaint(ByVal sender As Object, ByVal e As PaintEventArgs) Handles EckenTeil.Paint
+        Private Sub EckenTeilPaint(sender As Object, e As PaintEventArgs) Handles EckenTeil.Paint
             e.Graphics.DrawRectangle(LinePen, EckenTeil.Width - 2, EckenTeil.Height - 2, 2, 2)
             e.Graphics.DrawLine(BorderLinePen, 0, 0, Width, 0)
         End Sub
