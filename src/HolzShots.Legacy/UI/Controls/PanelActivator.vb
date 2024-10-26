@@ -14,7 +14,9 @@ Namespace UI.Controls
 
         Public Sub ActivateSettingsPanel(tool As PaintPanel.ShotEditorTool)
             Dim value As Panel = Nothing
-            If Not _toolPanelDict.TryGetValue(tool, value) Then Throw New ArgumentException("No matching settings panel")
+            If Not _toolPanelDict.TryGetValue(tool, value) Then
+                Return
+            End If
 
             Dim targetPanel = value
             targetPanel.Location = OpenPoint
