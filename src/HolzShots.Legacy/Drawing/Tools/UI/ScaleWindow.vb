@@ -1,5 +1,5 @@
-Imports HolzShots.UI
 Imports System.ComponentModel
+Imports HolzShots.UI
 
 Namespace Drawing.Tools.UI
 

@@ -318,18 +318,6 @@ Namespace UI
 
 #End Region
 
-#Region "UI-Events"
-
-        Private Sub PrintClick(ByVal sender As Object, ByVal e As EventArgs) Handles Print.Click
-            If PrinterDialog.ShowDialog = DialogResult.OK Then
-                PrintingDocument.PrinterSettings = PrinterDialog.PrinterSettings
-                PrintingDocument.DocumentName = $"HolzShots - Screenshot [{DateTime.Now:hh:mm:ss}]"
-                PrintingDocument.Print()
-            End If
-        End Sub
-
-#End Region
-
 #Region "Updater"
 
         Private Sub UpdateSettings() Handles MyBase.FormClosing
@@ -567,15 +555,6 @@ Namespace UI
 
 #End Region
 
-#Region "Print"
-
-        Private Sub DruckTeilPrintPage(sender As Object, e As PrintPageEventArgs) Handles PrintingDocument.PrintPage
-            Dim bmp = ThePanel.CombinedImage
-            e.Graphics.DrawImage(bmp, e.PageBounds.Location)
-        End Sub
-
-#End Region
-
 #Region "Shortcut Keys"
 
         Private Sub ZensToolStripMenuItemClick() Handles ZensToolStripMenuItem.Click
@@ -610,9 +589,6 @@ Namespace UI
         End Sub
         Private Sub ClipboardToolStripMenuItemClick() Handles ClipboardToolStripMenuItem.Click
             CopyToClipboard.PerformClick()
-        End Sub
-        Private Sub PrintToolStripMenuItemClick() Handles PrintToolStripMenuItem.Click
-            Print.PerformClick()
         End Sub
         Private Sub KreisToolStripMenuItemClick() Handles KreisToolStripMenuItem.Click
             EllipseTool.PerformClick()

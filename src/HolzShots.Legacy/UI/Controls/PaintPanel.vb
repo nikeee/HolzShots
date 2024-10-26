@@ -508,7 +508,7 @@ Namespace UI.Controls
         End Sub
 
         Dim _currentMousePosition As Point
-        Private Shared ReadOnly Linearfont As New Font("Verdana", 8, FontStyle.Regular)
+        Private Shared ReadOnly RulerFont As New Font("Verdana", 8, FontStyle.Regular)
         Private Shared ReadOnly FontBrush As New SolidBrush(Color.FromArgb(255, 51, 75, 106)) '(255, 51, 75, 106))
         Private Shared ReadOnly LinearBackgroundBrush As New SolidBrush(Color.FromArgb(255, 241, 243, 248)) '(255, 240, 241, 249))
         Private Shared ReadOnly LinePen As New Pen(Color.FromArgb(255, 142, 156, 175)) '(255, 137, 146, 179))
@@ -532,7 +532,7 @@ Namespace UI.Controls
 
                     If i Mod 100 = 0 Then
                         .DrawLine(LinePen, xPos, 0, xPos, HorizontalLinealBox.Height - 2)
-                        .DrawString(i.ToString, Linearfont, FontBrush, xPos, 0)
+                        .DrawString(i.ToString, RulerFont, FontBrush, xPos, 0)
                     Else
                         .DrawLine(LinePen, xPos, HorizontalLinealBox.Height - 6, xPos, HorizontalLinealBox.Height - 2)
                     End If
@@ -563,7 +563,7 @@ Namespace UI.Controls
                         .DrawLine(LinePen, 0, yPos, VerticalLinealBox.Width - 2, yPos)
                         .TranslateTransform(0, yPos)
                         .RotateTransform(-90)
-                        .DrawString(i.ToString(CurrentCulture), Linearfont, FontBrush, - .MeasureString(i.ToString(CurrentCulture), Linearfont, 100).Width, 0)
+                        .DrawString(i.ToString(CurrentCulture), RulerFont, FontBrush, - .MeasureString(i.ToString(CurrentCulture), RulerFont, 100).Width, 0)
                         .ResetTransform()
                     Else
                         .DrawLine(LinePen, VerticalLinealBox.Width - 6, yPos, VerticalLinealBox.Width - 2, yPos)
