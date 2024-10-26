@@ -344,19 +344,7 @@ Namespace UI
         End Sub
 
         Private Sub ResetTools()
-            ThePanel.CurrentTool = PaintPanel.ShotEditorTool.None
-            CensorTool.Checked = False
-            MarkerTool.Checked = False
-            TextToolButton.Checked = False
-            CroppingTool.Checked = False
-            ArrowTool.Checked = False
-            EraserTool.Checked = False
-            BlurTool.Checked = False
-            EllipseTool.Checked = False
-            PipettenTool.Checked = False
-            BrightenTool.Checked = False
-            ScaleTool.Checked = False
-            _activator.HideAll()
+            EnableTool(PaintPanel.ShotEditorTool.None)
         End Sub
 
 #End Region
