@@ -30,7 +30,7 @@ Namespace UI.Controls
         End Sub
 
         Public Sub CreateSettingsPanel(tool As ITool(Of ToolSettingsBase))
-
+            Debug.Assert(tool.SettingsControl IsNot Nothing)
         End Sub
 
         Public Sub HideAll()
