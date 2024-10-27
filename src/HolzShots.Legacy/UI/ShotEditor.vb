@@ -362,6 +362,7 @@ Namespace UI
             _activator.AddPanel(PaintPanel.ShotEditorTool.Eraser, EraserSettingsPanel)
             _activator.AddPanel(PaintPanel.ShotEditorTool.Marker, MarkerSettingsPanel)
             _activator.AddPanel(PaintPanel.ShotEditorTool.Censor, CensorSettingsPanel)
+            _activator.AddPanel(PaintPanel.ShotEditorTool.LegacyNew, CurrentToolSettingsPanel)
 
             ToolControlMap.Add(PaintPanel.ShotEditorTool.Pipette, PipettenTool)
             ToolControlMap.Add(PaintPanel.ShotEditorTool.Scale, Nothing)

@@ -255,6 +255,7 @@ Namespace UI.Controls
             Pipette = 256
             Brighten = 512
             Scale = 1024
+            LegacyNew = 2048
         End Enum
 
         Public Sub Initialize(shot As Screenshot)

@@ -31,6 +31,14 @@ Namespace UI.Controls
 
         Public Sub CreateSettingsPanel(tool As ITool(Of ToolSettingsBase))
             Debug.Assert(tool.SettingsControl IsNot Nothing)
+            Dim control = tool.SettingsControl
+
+            Dim panel = _toolPanelDict(PaintPanel.ShotEditorTool.LegacyNew)
+            Debug.Assert(panel IsNot Nothing)
+
+            panel.Location = OpenPoint
+            panel.Visible = True
+            panel.BringToFront()
         End Sub
 
         Public Sub HideAll()

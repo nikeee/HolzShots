@@ -938,6 +938,7 @@ Namespace UI
             ' CurrentToolSettingsPanel
             ' 
             CurrentToolSettingsPanel.BackColor = SystemColors.Control
+            CurrentToolSettingsPanel.BorderStyle = BorderStyle.FixedSingle
             CurrentToolSettingsPanel.Location = New Point(472, 4)
             CurrentToolSettingsPanel.Name = "CurrentToolSettingsPanel"
             CurrentToolSettingsPanel.Size = New Size(273, 82)
