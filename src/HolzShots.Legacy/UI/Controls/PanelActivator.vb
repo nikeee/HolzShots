@@ -42,7 +42,9 @@ Namespace UI.Controls
         End Sub
 
         Public Sub HideAll()
-            _toolPanelDict.ToList().ForEach(Function(ent) ent.Value.Visible = False)
+            For Each v In _toolPanelDict.Values
+                v.Visible = False
+            Next
         End Sub
 
     End Class
