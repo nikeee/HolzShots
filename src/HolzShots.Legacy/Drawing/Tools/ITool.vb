@@ -1,46 +1,20 @@
+Imports HolzShots.Drawing.Tools.UI
 Imports HolzShots.UI.Controls
 
 Namespace Drawing.Tools
-    Friend MustInherit Class Tool
-        MustOverride ReadOnly Property ToolType As PaintPanel.ShotEditorTool
+    Friend Interface ITool(Of Out TSettings As ToolSettingsBase)
+        Inherits IDisposable
 
-        Overridable ReadOnly Property Cursor As Cursor = Cursors.Default
+        ReadOnly Property ToolType As PaintPanel.ShotEditorTool
+        ReadOnly Property Cursor As Cursor
+        ReadOnly Property SettingsControl As ISettingsControl(Of TSettings)
 
-        Protected InternalBeginCoordinates As Point
-        Overridable Property BeginCoordinates As Point
-            Get
-                Return InternalBeginCoordinates
-            End Get
-            Set(value As Point)
-                If value <> InternalBeginCoordinates Then
-                    InternalBeginCoordinates = value
-                End If
-            End Set
-        End Property
+        Property BeginCoordinates As Point
+        Property EndCoordinates As Point
 
-        Protected InternalEndCoordinates As Point
-        Overridable Property EndCoordinates As Point
-            Get
-                Return InternalEndCoordinates
-            End Get
-            Set(value As Point)
-                If value <> InternalEndCoordinates Then
-                    InternalEndCoordinates = value
-                End If
-            End Set
-        End Property
-
-        Overridable Sub RenderFinalImage(ByRef rawImage As Image, sender As PaintPanel)
-        End Sub
-
-        Overridable Sub RenderPreview(rawImage As Image, g As Graphics, sender As PaintPanel)
-        End Sub
-
-        Overridable Sub MouseOnlyMoved(rawImage As Image, ByRef currentCursor As Cursor, e As MouseEventArgs)
-        End Sub
-
-        Overridable Sub MouseClicked(rawImage As Image, e As Point, ByRef currentCursor As Cursor, trigger As Control)
-        End Sub
-
-    End Class
+        Sub RenderFinalImage(ByRef rawImage As Image, sender As PaintPanel)
+        Sub RenderPreview(rawImage As Image, g As Graphics, sender As PaintPanel)
+        Sub MouseOnlyMoved(rawImage As Image, ByRef currentCursor As Cursor, e As MouseEventArgs)
+        Sub MouseClicked(rawImage As Image, e As Point, ByRef currentCursor As Cursor, trigger As Control)
+    End Interface
 End Namespace

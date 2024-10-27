@@ -381,7 +381,9 @@ Namespace UI
             _activator.ActivateSettingsPanel(tool)
             Dim toolToEnable = ToolControlMap.GetValueOrDefault(tool)
             For Each button In ToolControlMap.Values
-                button.Checked = toolToEnable IsNot Nothing AndAlso button Is toolToEnable
+                If button IsNot Nothing Then
+                    button.Checked = toolToEnable IsNot Nothing AndAlso button Is toolToEnable
+                End If
             Next
             _activator.HideAll()
         End Sub

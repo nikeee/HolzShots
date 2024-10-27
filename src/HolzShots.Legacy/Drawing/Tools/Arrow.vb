@@ -1,11 +1,11 @@
 Imports System.Drawing.Drawing2D
 Imports System.Numerics
-Imports System.Runtime.CompilerServices
+Imports HolzShots.Drawing.Tools.UI
 Imports HolzShots.UI.Controls
 
 Namespace Drawing.Tools
     Friend Class Arrow
-        Inherits Tool
+        Implements ITool(Of ToolSettingsBase)
 
         Private _arrowFirstPoint As Vector2
         Private _arrowSecondPoint As Vector2
@@ -13,35 +13,38 @@ Namespace Drawing.Tools
         Const ArrowRotationConstant As Single = 2.2 * Math.PI / 1.2
         Private _arrowBtwn2 As Vector2
 
-        Public Overrides Property BeginCoordinates As Point
+        Private _beginCoordinates As Point
+        Public Property BeginCoordinates As Point Implements ITool(Of ToolSettingsBase).BeginCoordinates
             Get
-                Return InternalBeginCoordinates
+                Return _beginCoordinates
             End Get
             Set(value As Point)
-                If value <> InternalBeginCoordinates Then
-                    InternalBeginCoordinates = value
+                If value <> _beginCoordinates Then
+                    _beginCoordinates = value
                     _arrowFirstPoint = New Vector2(value.X, value.Y)
                 End If
             End Set
         End Property
 
-        Public Overrides Property EndCoordinates As Point
+        Private _endCoordinates As Point
+        Public Property EndCoordinates As Point Implements ITool(Of ToolSettingsBase).EndCoordinates
             Get
-                Return InternalEndCoordinates
+                Return _endCoordinates
             End Get
             Set(value As Point)
-                If value <> InternalEndCoordinates Then
-                    InternalEndCoordinates = value
+                If value <> _endCoordinates Then
+                    _endCoordinates = value
                     _arrowSecondPoint = New Vector2(value.X, value.Y)
                 End If
             End Set
         End Property
 
         Private Shared ReadOnly TheCursor As New Cursor(My.Resources.crossMedium.GetHicon())
-        Public Overrides ReadOnly Property ToolType As PaintPanel.ShotEditorTool = PaintPanel.ShotEditorTool.Arrow
-        Public Overrides ReadOnly Property Cursor As Cursor = TheCursor
+        Public ReadOnly Property ToolType As PaintPanel.ShotEditorTool = PaintPanel.ShotEditorTool.Arrow Implements ITool(Of ToolSettingsBase).ToolType
+        Public ReadOnly Property Cursor As Cursor = TheCursor Implements ITool(Of ToolSettingsBase).Cursor
+        Public ReadOnly Property SettingsControl As ISettingsControl(Of ToolSettingsBase) = Nothing Implements ITool(Of ToolSettingsBase).SettingsControl
 
-        Public Overrides Sub RenderFinalImage(ByRef rawImage As Image, sender As PaintPanel)
+        Public Sub RenderFinalImage(ByRef rawImage As Image, sender As PaintPanel) Implements ITool(Of ToolSettingsBase).RenderFinalImage
             If _arrowFirstPoint = Vector2.Zero OrElse _arrowSecondPoint = Vector2.Zero Then Return
 
             Using g = Graphics.FromImage(rawImage)
@@ -60,7 +63,7 @@ Namespace Drawing.Tools
             End Using
         End Sub
 
-        Public Overrides Sub RenderPreview(rawImage As Image, g As Graphics, sender As PaintPanel)
+        Public Sub RenderPreview(rawImage As Image, g As Graphics, sender As PaintPanel) Implements ITool(Of ToolSettingsBase).RenderPreview
 
             _arrowSecondPoint = New Vector2(EndCoordinates.X, EndCoordinates.Y)
             If _arrowFirstPoint <> Vector2.Zero AndAlso _arrowSecondPoint <> Vector2.Zero Then
@@ -88,17 +91,14 @@ Namespace Drawing.Tools
                 End If
             End If
         End Sub
+
+        Public Sub MouseOnlyMoved(rawImage As Image, ByRef currentCursor As Cursor, e As MouseEventArgs) Implements ITool(Of ToolSettingsBase).MouseOnlyMoved
+            ' Nothing to do here
+        End Sub
+        Public Sub MouseClicked(rawImage As Image, e As Point, ByRef currentCursor As Cursor, trigger As Control) Implements ITool(Of ToolSettingsBase).MouseClicked
+            ' Nothing to do here
+        End Sub
+        Public Sub Dispose() Implements ITool(Of ToolSettingsBase).Dispose
+        End Sub
     End Class
-
-    Module Vector2Ex
-        <Extension>
-        Public Function Rotate(vector As Vector2, angle As Single) As Vector2
-            Return New Vector2(CSng(Math.Cos(angle) * vector.X - Math.Sin(angle) * vector.Y), CSng(Math.Sin(angle) * vector.X + Math.Cos(angle) * vector.Y))
-        End Function
-
-        <Extension>
-        Public Function ToPoint2D(vector As Vector2) As Point
-            Return New Point(CInt(vector.X), CInt(vector.Y))
-        End Function
-    End Module
 End Namespace

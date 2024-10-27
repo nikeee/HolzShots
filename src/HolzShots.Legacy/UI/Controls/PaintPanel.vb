@@ -2,6 +2,7 @@ Imports System.ComponentModel
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Text
 Imports HolzShots.Drawing.Tools
+Imports HolzShots.Drawing.Tools.UI
 
 Namespace UI.Controls
     Friend Class PaintPanel
@@ -193,7 +194,7 @@ Namespace UI.Controls
                         CurrentToolObject = Nothing
                         Cursor = New Cursor(HolzShots.My.Resources.textCursor.Handle)
                     Case ShotEditorTool.Crop
-                        CurrentToolObject = New Crop
+                        CurrentToolObject = New Crop()
                     Case ShotEditorTool.Marker
                         CurrentToolObject = New Marker(MarkerWidth, MarkerColor)
                     Case ShotEditorTool.Censor
@@ -219,14 +220,14 @@ Namespace UI.Controls
         End Property
 
 
-        Private Event CurrentToolChanged(sender As Object, tool As Tool)
-        Private _currentToolObject As Tool
+        Private Event CurrentToolChanged(sender As Object, tool As ITool(Of ToolSettingsBase))
+        Private _currentToolObject As ITool(Of ToolSettingsBase)
 
-        Private Property CurrentToolObject As Tool
+        Private Property CurrentToolObject As ITool(Of ToolSettingsBase)
             Get
                 Return _currentToolObject
             End Get
-            Set(value As Tool)
+            Set(value As ITool(Of ToolSettingsBase))
                 If value IsNot _currentToolObject Then
                     _currentToolObject = value
                     RaiseEvent CurrentToolChanged(Me, _currentToolObject)
@@ -234,7 +235,7 @@ Namespace UI.Controls
             End Set
         End Property
 
-        Private Sub CurrentToolChanged_Event(sender As Object, tool As Tool) Handles Me.CurrentToolChanged
+        Private Sub CurrentToolChanged_Event(sender As Object, tool As ITool(Of ToolSettingsBase)) Handles Me.CurrentToolChanged
             If tool IsNot Nothing Then
                 Cursor = tool.Cursor
             End If
@@ -270,7 +271,7 @@ Namespace UI.Controls
             RaiseEvent Initialized()
         End Sub
 
-        Private Sub InvokeFinalRender(tool As Tool)
+        Private Sub InvokeFinalRender(tool As ITool(Of ToolSettingsBase))
             Dim img = DirectCast(CurrentImage.Clone(), Image)
             Debug.Assert(tool IsNot Nothing)
             tool.RenderFinalImage(img, Me)

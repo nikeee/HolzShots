@@ -1,19 +1,25 @@
+Imports System.Configuration
 Imports System.Drawing.Drawing2D
+Imports HolzShots.Drawing.Tools.UI
 Imports HolzShots.UI.Controls
 
 Namespace Drawing.Tools
-    Friend NotInheritable Class Crop
-        Inherits Tool
-        Implements IDisposable
+    Friend Class Crop
+        Implements ITool(Of ToolSettingsBase)
 
         Private ReadOnly _alphaBrush As New SolidBrush(Color.FromArgb(128, 0, 0, 0))
         Private ReadOnly _redCornerPen As New Pen(Color.FromArgb(255, 255, 0, 0)) With {.DashStyle = DashStyle.Dash}
         Private _rct As New Rectangle
 
         Private Shared ReadOnly CursorInstance As New Cursor(My.Resources.cropperCursor.Handle)
-        Public Overrides ReadOnly Property Cursor As Cursor = CursorInstance
+        Public ReadOnly Property Cursor As Cursor = CursorInstance Implements ITool(Of ToolSettingsBase).Cursor
+        Public ReadOnly Property ToolType As PaintPanel.ShotEditorTool = PaintPanel.ShotEditorTool.Crop Implements ITool(Of ToolSettingsBase).ToolType
+        Public ReadOnly Property SettingsControl As ISettingsControl(Of ToolSettingsBase) = Nothing Implements ITool(Of ToolSettingsBase).SettingsControl
 
-        Public Overrides Sub RenderFinalImage(ByRef rawImage As Image, ByVal sender As PaintPanel)
+        Public Property BeginCoordinates As Point Implements ITool(Of ToolSettingsBase).BeginCoordinates
+        Public Property EndCoordinates As Point Implements ITool(Of ToolSettingsBase).EndCoordinates
+
+        Public Sub RenderFinalImage(ByRef rawImage As Image, ByVal sender As PaintPanel) Implements ITool(Of ToolSettingsBase).RenderFinalImage
 
             _rct.X = Math.Min(EndCoordinates.X, BeginCoordinates.X)
             _rct.Y = Math.Min(EndCoordinates.Y, BeginCoordinates.Y)
@@ -51,7 +57,7 @@ Namespace Drawing.Tools
             GC.Collect()
         End Sub
 
-        Public Overrides Sub RenderPreview(rawImage As Image, g As Graphics, sender As PaintPanel)
+        Public Sub RenderPreview(rawImage As Image, g As Graphics, sender As PaintPanel) Implements ITool(Of ToolSettingsBase).RenderPreview
 
             _rct.X = Math.Min(EndCoordinates.X, BeginCoordinates.X)
             _rct.Y = Math.Min(EndCoordinates.Y, BeginCoordinates.Y)
@@ -84,11 +90,15 @@ Namespace Drawing.Tools
             g.DrawRectangle(_redCornerPen, _rct)
         End Sub
 
-        Public Overrides ReadOnly Property ToolType As PaintPanel.ShotEditorTool = PaintPanel.ShotEditorTool.Crop
-
-        Public Sub Dispose() Implements IDisposable.Dispose
+        Protected Sub Dispose() Implements ITool(Of ToolSettingsBase).Dispose
             _alphaBrush.Dispose()
             _redCornerPen.Dispose()
+        End Sub
+        Public Sub MouseOnlyMoved(rawImage As Image, ByRef currentCursor As Cursor, e As MouseEventArgs) Implements ITool(Of ToolSettingsBase).MouseOnlyMoved
+            ' Nothing to do here
+        End Sub
+        Public Sub MouseClicked(rawImage As Image, e As Point, ByRef currentCursor As Cursor, trigger As Control) Implements ITool(Of ToolSettingsBase).MouseClicked
+            ' Nothing to do here
         End Sub
     End Class
 End Namespace

@@ -1,10 +1,9 @@
 using System.ComponentModel;
-using System.Runtime;
 
 namespace HolzShots.Drawing.Tools.UI;
 
 [DefaultBindingProperty("Settings")]
-public partial class EraserSettingsControl : SettingsControl<EraserSettings>
+public partial class EraserSettingsControl : UserControl, ISettingsControl<EraserSettings>
 {
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public EraserSettings Settings
@@ -16,7 +15,7 @@ public partial class EraserSettingsControl : SettingsControl<EraserSettings>
         }
     }
 
-    public EraserSettingsControl(EraserSettings initialSettings) : base(initialSettings)
+    public EraserSettingsControl(EraserSettings initialSettings)
     {
         InitializeComponent();
         EraserDiameterTrackBar.ValueChanged += (_, _) =>
@@ -25,13 +24,16 @@ public partial class EraserSettingsControl : SettingsControl<EraserSettings>
         };
     }
 
-    public override event EventHandler<EraserSettings>? OnSettingsUpdated;
+    public event EventHandler<EraserSettings>? OnSettingsUpdated;
+    // public static ISettingsControl<EraserSettings> Create(EraserSettings initialSettings) => new EraserSettingsControl(initialSettings);
 }
 
 
-public abstract class SettingsControl<TSettings>(TSettings InitialSettings) : UserControl() where TSettings : struct
+public interface ISettingsControl<out TSettings> : IDisposable where TSettings : ToolSettingsBase
 {
-    public abstract event EventHandler<TSettings>? OnSettingsUpdated;
+    // public abstract event EventHandler<TSettings>? OnSettingsUpdated;
+    // static abstract ISettingsControl<TSettings> Create(TSettings initialSettings);
 }
 
-public readonly record struct EraserSettings(int Diameter);
+public abstract record ToolSettingsBase;
+public record EraserSettings(int Diameter) : ToolSettingsBase;
