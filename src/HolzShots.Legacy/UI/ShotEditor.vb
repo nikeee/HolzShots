@@ -378,7 +378,15 @@ Namespace UI
 
         Private Sub EnableTool(tool As PaintPanel.ShotEditorTool)
             ThePanel.CurrentTool = tool
-            _activator.ActivateSettingsPanel(tool)
+
+            Dim cto = ThePanel.CurrentToolObject
+            If cto?.SettingsControl IsNot Nothing Then
+                _activator.HideAll()
+                _activator.CreateSettingsPanel(cto)
+            Else
+                _activator.ActivateSettingsPanel(tool)
+            End If
+
             Dim toolToEnable = ToolControlMap.GetValueOrDefault(tool)
             For Each button In ToolControlMap.Values
                 If button IsNot Nothing Then
@@ -537,7 +545,7 @@ Namespace UI
             End If
         End Sub
 
-        Private Sub ArrowColorviewerColorChanged(sender As Object, c As Color) Handles ArrowColorviewer.ColorChanged
+        Private Sub ArrowColorViewerColorChanged(sender As Object, c As Color) Handles ArrowColorviewer.ColorChanged
             ThePanel.ArrowColor = c
         End Sub
 

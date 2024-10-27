@@ -1,3 +1,6 @@
+Imports HolzShots.Drawing.Tools
+Imports HolzShots.Drawing.Tools.UI
+
 Namespace UI.Controls
     Friend Class PanelActivator
 
@@ -24,6 +27,10 @@ Namespace UI.Controls
             targetPanel.BringToFront()
 
             _toolPanelDict.Where(Function(ent) ent.Key <> tool).ToList().ForEach(Function(ent) ent.Value.Visible = False)
+        End Sub
+
+        Public Sub CreateSettingsPanel(tool As ITool(Of ToolSettingsBase))
+
         End Sub
 
         Public Sub HideAll()

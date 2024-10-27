@@ -11,8 +11,8 @@ Namespace UI.Controls
         Private _screenshot As Screenshot
 
         Private _markerColor As Color
-        Private _zensursulaColor As Color
-        Private _zensursulaWidth, _arrowWidth, _eraseDiameter, _markerWidth As Integer
+        Private _censorColor As Color
+        Private _censorWidth, _arrowWidth, _eraseDiameter, _markerWidth As Integer
 
         Friend Event Initialized()
         Friend Event UpdateMousePosition(e As Point)
@@ -86,10 +86,10 @@ Namespace UI.Controls
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
         Public Property ZensursulaColor As Color
             Get
-                Return _zensursulaColor
+                Return _censorColor
             End Get
             Set(value As Color)
-                _zensursulaColor = value
+                _censorColor = value
                 If CurrentTool = ShotEditorTool.Censor Then
                     CurrentTool = ShotEditorTool.None
                     CurrentTool = ShotEditorTool.Censor
@@ -100,10 +100,10 @@ Namespace UI.Controls
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
         Public Property ZensursulaWidth As Integer
             Get
-                Return _zensursulaWidth
+                Return _censorWidth
             End Get
             Set(value As Integer)
-                _zensursulaWidth = value
+                _censorWidth = value
                 If CurrentTool = ShotEditorTool.Censor Then
                     CurrentTool = ShotEditorTool.None
                     CurrentTool = ShotEditorTool.Censor
@@ -223,7 +223,8 @@ Namespace UI.Controls
         Private Event CurrentToolChanged(sender As Object, tool As ITool(Of ToolSettingsBase))
         Private _currentToolObject As ITool(Of ToolSettingsBase)
 
-        Private Property CurrentToolObject As ITool(Of ToolSettingsBase)
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
+        Public Property CurrentToolObject As ITool(Of ToolSettingsBase)
             Get
                 Return _currentToolObject
             End Get
@@ -456,8 +457,7 @@ Namespace UI.Controls
             End If
         End Sub
 
-        Private Sub TextPanelVisibleChanged(sender As Object, e As EventArgs) _
-            Handles TextPanel.VisibleChanged
+        Private Sub TextPanelVisibleChanged(sender As Object, e As EventArgs) Handles TextPanel.VisibleChanged
             ChangeFont.Parent = tools_bg
             ChangeFont.Location = New Point(3, 2)
 
