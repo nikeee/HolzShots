@@ -937,6 +937,7 @@ Namespace UI
             ' 
             ' CurrentToolSettingsPanel
             ' 
+            CurrentToolSettingsPanel.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
             CurrentToolSettingsPanel.BackColor = SystemColors.Control
             CurrentToolSettingsPanel.BorderStyle = BorderStyle.FixedSingle
             CurrentToolSettingsPanel.Location = New Point(472, 4)

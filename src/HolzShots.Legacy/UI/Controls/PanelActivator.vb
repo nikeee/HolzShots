@@ -35,10 +35,17 @@ Namespace UI.Controls
             Dim panel = _toolPanelDict(PaintPanel.ShotEditorTool.LegacyNew)
             Debug.Assert(panel IsNot Nothing)
 
-            ActivateSettingsPanel(PaintPanel.ShotEditorTool.LegacyNew)
+            Dim controlRaw = tool.SettingsControl
+            Debug.Assert(controlRaw IsNot Nothing)
+            Debug.Assert(TypeOf controlRaw Is UserControl)
 
-            Dim control = tool.SettingsControl
-            Debug.Assert(control IsNot Nothing)
+            Dim control = DirectCast(controlRaw, Control)
+            control.Dock = DockStyle.Fill
+
+            panel.Controls.Clear()
+            panel.Controls.Add(control)
+
+            ActivateSettingsPanel(PaintPanel.ShotEditorTool.LegacyNew)
         End Sub
 
         Public Sub HideAll()

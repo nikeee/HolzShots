@@ -378,6 +378,8 @@ Namespace UI
         End Sub
 
         Private Sub EnableTool(tool As PaintPanel.ShotEditorTool)
+            _activator.HideAll()
+
             ThePanel.CurrentTool = tool
 
             Dim cto = ThePanel.CurrentToolObject
@@ -394,7 +396,6 @@ Namespace UI
                     button.Checked = toolToEnable IsNot Nothing AndAlso button Is toolToEnable
                 End If
             Next
-            _activator.HideAll()
         End Sub
 
         Private Sub PipettenToolClick() Handles PipettenTool.Click
