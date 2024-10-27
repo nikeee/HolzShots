@@ -30,12 +30,14 @@ Namespace Drawing.Tools
 
         Public ReadOnly Property Cursor As Cursor Implements ITool(Of EraserSettings).Cursor
             Get
-                Dim bmp As New Bitmap(_parent.EraserDiameter + 8, _parent.EraserDiameter + 8)
+                Dim settings = _settingsControl.Settings
+
+                Dim bmp As New Bitmap(settings.Diameter + 8, settings.Diameter + 8)
                 bmp.MakeTransparent()
                 Using g As Graphics = Graphics.FromImage(bmp)
                     g.SmoothingMode = SmoothingMode.AntiAlias
-                    g.FillEllipse(Brushes.LightGray, 4, 4, _parent.EraserDiameter, _parent.EraserDiameter)
-                    g.DrawEllipse(Pens.Black, 4, 4, _parent.EraserDiameter, _parent.EraserDiameter)
+                    g.FillEllipse(Brushes.LightGray, 4, 4, settings.Diameter, settings.Diameter)
+                    g.DrawEllipse(Pens.Black, 4, 4, settings.Diameter, settings.Diameter)
                 End Using
                 Return New Cursor(bmp.GetHicon)
             End Get
@@ -51,22 +53,25 @@ Namespace Drawing.Tools
             Using g As Graphics = Graphics.FromImage(rawImage)
                 g.CompositingMode = CompositingMode.SourceCopy
                 g.SmoothingMode = SmoothingMode.AntiAlias
+
+                Dim settings = _settingsControl.Settings
+
                 If _isFirstClick Then
                     g.FillEllipse(
                         ClearBrush,
-                        _beginCoordinates.X - CInt(_parent.EraserDiameter / 2),
-                        _beginCoordinates.Y - CInt(_parent.EraserDiameter / 2),
-                        _parent.EraserDiameter,
-                        _parent.EraserDiameter
+                        _beginCoordinates.X - CInt(settings.Diameter / 2),
+                        _beginCoordinates.Y - CInt(settings.Diameter / 2),
+                        settings.Diameter,
+                        settings.Diameter
                     )
                     _isFirstClick = False
                 Else
                     g.FillEllipse(
                         ClearBrush,
-                        EndCoordinates.X - CInt(_parent.EraserDiameter / 2),
-                        EndCoordinates.Y - CInt(_parent.EraserDiameter / 2),
-                        _parent.EraserDiameter,
-                        _parent.EraserDiameter
+                        EndCoordinates.X - CInt(settings.Diameter / 2),
+                        EndCoordinates.Y - CInt(settings.Diameter / 2),
+                        settings.Diameter,
+                        settings.Diameter
                     )
                 End If
             End Using

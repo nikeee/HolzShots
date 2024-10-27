@@ -31,6 +31,7 @@ public partial class EraserSettingsControl : UserControl, ISettingsControl<Erase
 
 public interface ISettingsControl<out TSettings> : IDisposable where TSettings : ToolSettingsBase
 {
+    TSettings Settings { get; }
     // public abstract event EventHandler<TSettings>? OnSettingsUpdated;
     // static abstract ISettingsControl<TSettings> Create(TSettings initialSettings);
 }
