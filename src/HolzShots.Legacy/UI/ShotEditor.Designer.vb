@@ -96,6 +96,7 @@ Namespace UI
             CopyToClipboard = New ToolStripButton()
             ThePanel = New PaintPanel()
             AutoCloseShotEditor = New CheckBox()
+            CurrentToolSettingsPanel = New Panel()
             ShareStrip.SuspendLayout()
             EditStrip.SuspendLayout()
             CensorSettingsPanel.SuspendLayout()
@@ -432,7 +433,7 @@ Namespace UI
             CensorSettingsPanel.Controls.Add(Pinsel_Width_Zensursula)
             CensorSettingsPanel.Controls.Add(ZensursulaColorSelector)
             CensorSettingsPanel.Controls.Add(ZensursulaBar)
-            CensorSettingsPanel.Location = New Point(481, 0)
+            CensorSettingsPanel.Location = New Point(472, 186)
             CensorSettingsPanel.Name = "CensorSettingsPanel"
             CensorSettingsPanel.Size = New Size(273, 82)
             CensorSettingsPanel.TabIndex = 14
@@ -934,11 +935,21 @@ Namespace UI
             AutoCloseShotEditor.Text = "Close ShotEditor when uploading"
             AutoCloseShotEditor.UseVisualStyleBackColor = True
             ' 
+            ' CurrentToolSettingsPanel
+            ' 
+            CurrentToolSettingsPanel.BackColor = SystemColors.Control
+            CurrentToolSettingsPanel.Location = New Point(472, 4)
+            CurrentToolSettingsPanel.Name = "CurrentToolSettingsPanel"
+            CurrentToolSettingsPanel.Size = New Size(273, 82)
+            CurrentToolSettingsPanel.TabIndex = 33
+            CurrentToolSettingsPanel.Visible = False
+            ' 
             ' ShotEditor
             ' 
             AutoScaleMode = AutoScaleMode.None
             BackColor = Color.FromArgb(CByte(245), CByte(246), CByte(247))
             ClientSize = New Size(759, 613)
+            Controls.Add(CurrentToolSettingsPanel)
             Controls.Add(AutoCloseShotEditor)
             Controls.Add(ThePanel)
             Controls.Add(EditStrip)
@@ -1076,5 +1087,6 @@ Namespace UI
         Friend WithEvents CopyPrintToolStrip As System.Windows.Forms.ToolStrip
         Friend WithEvents CopyToClipboard As System.Windows.Forms.ToolStripButton
         Friend WithEvents AutoCloseShotEditor As System.Windows.Forms.CheckBox
+        Friend WithEvents CurrentToolSettingsPanel As Panel
     End Class
 End Namespace
