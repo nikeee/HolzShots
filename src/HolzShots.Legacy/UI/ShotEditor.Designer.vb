@@ -60,12 +60,6 @@ Namespace UI
             BlackWhiteTracker = New TrackBar()
             GlassLabel9 = New Label()
             GlassLabel6 = New Label()
-            ArrowSettingsPanel = New Panel()
-            ArrowWidthSlider = New TrackBar()
-            GlassLabel11 = New Label()
-            ArrowWidthLabel = New Label()
-            GlassLabel10 = New Label()
-            ArrowColorviewer = New Windows.Forms.ColorSelector()
             ToolStrip1 = New ToolStrip()
             ScaleTool = New ToolStripButton()
             DrawCursor = New ToolStripButton()
@@ -86,8 +80,6 @@ Namespace UI
             CType(EllipseBar, ComponentModel.ISupportInitialize).BeginInit()
             BrightenSettingsPanel.SuspendLayout()
             CType(BlackWhiteTracker, ComponentModel.ISupportInitialize).BeginInit()
-            ArrowSettingsPanel.SuspendLayout()
-            CType(ArrowWidthSlider, ComponentModel.ISupportInitialize).BeginInit()
             ToolStrip1.SuspendLayout()
             BottomToolStrip.SuspendLayout()
             CopyPrintToolStrip.SuspendLayout()
@@ -536,65 +528,6 @@ Namespace UI
             GlassLabel6.TabIndex = 25
             GlassLabel6.Text = "Darken"
             ' 
-            ' ArrowSettingsPanel
-            ' 
-            ArrowSettingsPanel.BackColor = SystemColors.Control
-            ArrowSettingsPanel.Controls.Add(ArrowWidthSlider)
-            ArrowSettingsPanel.Controls.Add(GlassLabel11)
-            ArrowSettingsPanel.Controls.Add(ArrowWidthLabel)
-            ArrowSettingsPanel.Controls.Add(GlassLabel10)
-            ArrowSettingsPanel.Controls.Add(ArrowColorviewer)
-            ArrowSettingsPanel.Location = New Point(193, 362)
-            ArrowSettingsPanel.Name = "ArrowSettingsPanel"
-            ArrowSettingsPanel.Size = New Size(273, 82)
-            ArrowSettingsPanel.TabIndex = 26
-            ArrowSettingsPanel.Visible = False
-            ' 
-            ' ArrowWidthSlider
-            ' 
-            ArrowWidthSlider.Location = New Point(84, 3)
-            ArrowWidthSlider.Maximum = 100
-            ArrowWidthSlider.Name = "ArrowWidthSlider"
-            ArrowWidthSlider.Size = New Size(112, 45)
-            ArrowWidthSlider.TabIndex = 26
-            ArrowWidthSlider.TabStop = False
-            ArrowWidthSlider.Value = 1
-            ' 
-            ' GlassLabel11
-            ' 
-            GlassLabel11.AutoSize = True
-            GlassLabel11.Location = New Point(46, 10)
-            GlassLabel11.Name = "GlassLabel11"
-            GlassLabel11.Size = New Size(42, 15)
-            GlassLabel11.TabIndex = 28
-            GlassLabel11.Text = "Width:"
-            ' 
-            ' ArrowWidthLabel
-            ' 
-            ArrowWidthLabel.AutoSize = True
-            ArrowWidthLabel.Location = New Point(202, 3)
-            ArrowWidthLabel.Name = "ArrowWidthLabel"
-            ArrowWidthLabel.Size = New Size(13, 15)
-            ArrowWidthLabel.TabIndex = 27
-            ArrowWidthLabel.Text = "a"
-            ' 
-            ' GlassLabel10
-            ' 
-            GlassLabel10.AutoSize = True
-            GlassLabel10.Location = New Point(44, 50)
-            GlassLabel10.Name = "GlassLabel10"
-            GlassLabel10.Size = New Size(39, 15)
-            GlassLabel10.TabIndex = 25
-            GlassLabel10.Text = "Color:"
-            ' 
-            ' ArrowColorviewer
-            ' 
-            ArrowColorviewer.Cursor = Cursors.Hand
-            ArrowColorviewer.Location = New Point(93, 50)
-            ArrowColorviewer.Name = "ArrowColorviewer"
-            ArrowColorviewer.Size = New Size(20, 20)
-            ArrowColorviewer.TabIndex = 19
-            ' 
             ' ToolStrip1
             ' 
             ToolStrip1.AllowItemReorder = True
@@ -739,7 +672,6 @@ Namespace UI
             Controls.Add(CopyPrintToolStrip)
             Controls.Add(ToolStrip1)
             Controls.Add(BrightenSettingsPanel)
-            Controls.Add(ArrowSettingsPanel)
             Controls.Add(EllipseSettingsPanel)
             Controls.Add(ShareStrip)
             Controls.Add(BottomToolStrip)
@@ -761,9 +693,6 @@ Namespace UI
             BrightenSettingsPanel.ResumeLayout(False)
             BrightenSettingsPanel.PerformLayout()
             CType(BlackWhiteTracker, ComponentModel.ISupportInitialize).EndInit()
-            ArrowSettingsPanel.ResumeLayout(False)
-            ArrowSettingsPanel.PerformLayout()
-            CType(ArrowWidthSlider, ComponentModel.ISupportInitialize).EndInit()
             ToolStrip1.ResumeLayout(False)
             ToolStrip1.PerformLayout()
             BottomToolStrip.ResumeLayout(False)
@@ -816,15 +745,9 @@ Namespace UI
         Friend WithEvents GlassLabel9 As System.Windows.Forms.Label
         Friend WithEvents GlassLabel6 As System.Windows.Forms.Label
         Friend WithEvents BigColorViewer1 As HolzShots.Windows.Forms.ColorView
-        Friend WithEvents ArrowSettingsPanel As System.Windows.Forms.Panel
-        Friend WithEvents GlassLabel10 As System.Windows.Forms.Label
-        Friend WithEvents ArrowColorviewer As HolzShots.Windows.Forms.ColorSelector
         Friend WithEvents ToolStrip1 As System.Windows.Forms.ToolStrip
         Friend WithEvents ScaleTool As System.Windows.Forms.ToolStripButton
         Friend WithEvents DrawCursor As System.Windows.Forms.ToolStripButton
-        Friend WithEvents ArrowWidthSlider As System.Windows.Forms.TrackBar
-        Friend WithEvents GlassLabel11 As System.Windows.Forms.Label
-        Friend WithEvents ArrowWidthLabel As System.Windows.Forms.Label
         Friend WithEvents GlassLabel12 As System.Windows.Forms.Label
         Friend WithEvents EllipseOrRectangle As System.Windows.Forms.TrackBar
         Friend WithEvents EllipseOrRectangleBox As System.Windows.Forms.PictureBox

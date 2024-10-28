@@ -38,23 +38,6 @@ Namespace UI.Controls
         Public Property EllipseColor As Color
 
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
-        Public Property ArrowColor As Color
-
-        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
-        Public Property ArrowWidth As Integer
-            Get
-                Return _arrowWidth
-            End Get
-            Set(value As Integer)
-                _arrowWidth = value
-                If CurrentTool = ShotEditorTool.Arrow Then
-                    CurrentTool = ShotEditorTool.None
-                    CurrentTool = ShotEditorTool.Arrow
-                End If
-            End Set
-        End Property
-
-        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
         Public Property BrightenColor As Color
 
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>

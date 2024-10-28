@@ -97,13 +97,11 @@ Namespace UI
 
             EllipseSettingsPanel.BackColor = Color.Transparent
             BrightenSettingsPanel.BackColor = Color.Transparent
-            ArrowSettingsPanel.BackColor = Color.Transparent
             CurrentToolSettingsPanel.BackColor = Color.Transparent
 
             Dim focusColor As Color = BackColor
 
             BlackWhiteTracker.BackColor = focusColor
-            ArrowWidthSlider.BackColor = focusColor
 
             EllipseBar.BackColor = focusColor
             EllipseOrRectangle.BackColor = focusColor
@@ -143,7 +141,6 @@ Namespace UI
 #Region "Settings and stuff"
 
         Private Sub LoadToolSettings()
-            LoadArrow()
             LoadEllipse()
             LoadBrighten()
             EnlistUploaderPlugins()
@@ -164,13 +161,6 @@ Namespace UI
             End If
         End Sub
 
-
-        Private Sub LoadArrow()
-            ArrowColorviewer.Color = My.Settings.ArrowColor
-            ThePanel.ArrowColor = ArrowColorviewer.Color
-            ArrowWidthSlider.Value = Math.Clamp(My.Settings.ArrowWidth, ArrowWidthSlider.Minimum, ArrowWidthSlider.Maximum)
-            ArrowWidthSliderScroll()
-        End Sub
 
         Private Sub LoadEllipse()
             EllipseColorSelector.Color = HolzShots.My.Settings.EllipseColor
@@ -271,8 +261,6 @@ Namespace UI
 
             HolzShots.My.Settings.BrightenColor = BigColorViewer1.Color
 
-            HolzShots.My.Settings.ArrowColor = ArrowColorviewer.Color
-            HolzShots.My.Settings.ArrowWidth = ArrowWidthSlider.Value
             HolzShots.My.Settings.UseBoxInsteadOfCirlce = ThePanel.UseBoxInsteadOfCircle
 
             HolzShots.My.Settings.Save()
@@ -290,7 +278,6 @@ Namespace UI
 
         Private Sub AddSettingsPanels()
             _activator = New PanelActivator()
-            _activator.AddPanel(PaintPanel.ShotEditorTool.Arrow, ArrowSettingsPanel)
             _activator.AddPanel(PaintPanel.ShotEditorTool.Brighten, BrightenSettingsPanel)
             _activator.AddPanel(PaintPanel.ShotEditorTool.Ellipse, EllipseSettingsPanel)
             _activator.AddPanel(PaintPanel.ShotEditorTool.LegacyNew, CurrentToolSettingsPanel)
@@ -451,17 +438,8 @@ Namespace UI
             End If
         End Sub
 
-        Private Sub ArrowColorViewerColorChanged(sender As Object, c As Color) Handles ArrowColorviewer.ColorChanged
-            ThePanel.ArrowColor = c
-        End Sub
-
         Private Sub DrawCursorClick() Handles DrawCursor.Click
             ThePanel.DrawCursor = DrawCursor.Checked
-        End Sub
-
-        Private Sub ArrowWidthSliderScroll() Handles ArrowWidthSlider.Scroll
-            ArrowWidthLabel.Text = If(ArrowWidthSlider.Value = 0, "Auto", $"{ArrowWidthSlider.Value}px")
-            ThePanel.ArrowWidth = ArrowWidthSlider.Value
         End Sub
 
         Private Sub ShotEditorResize() Handles Me.Resize
