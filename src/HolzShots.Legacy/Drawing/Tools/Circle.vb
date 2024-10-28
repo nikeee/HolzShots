@@ -17,7 +17,7 @@ Namespace Drawing.Tools
         Private ReadOnly _pen As New Pen(Color.Black, 1) With {.DashStyle = DashStyle.Solid}
         Private _rct As New Rectangle()
 
-        Public Sub RenderFinalImage(ByRef rawImage As Image, ByVal sender As PaintPanel) Implements ITool(Of ToolSettingsBase).RenderFinalImage
+        Public Sub RenderFinalImage(ByRef rawImage As Image, sender As PaintPanel) Implements ITool(Of ToolSettingsBase).RenderFinalImage
             _rct.X = Math.Min(EndCoordinates.X, BeginCoordinates.X)
             _rct.Y = Math.Min(EndCoordinates.Y, BeginCoordinates.Y)
             _rct.Width = CInt(Math.Max(Math.Abs(BeginCoordinates.X - EndCoordinates.X), _pen.Width))
@@ -36,7 +36,7 @@ Namespace Drawing.Tools
             End Using
         End Sub
 
-        Public Sub RenderPreview(ByVal rawImage As Image, ByVal g As Graphics, ByVal sender As PaintPanel) Implements ITool(Of ToolSettingsBase).RenderPreview
+        Public Sub RenderPreview(rawImage As Image, g As Graphics, sender As PaintPanel) Implements ITool(Of ToolSettingsBase).RenderPreview
             _rct.X = Math.Min(EndCoordinates.X, BeginCoordinates.X)
             _rct.Y = Math.Min(EndCoordinates.Y, BeginCoordinates.Y)
             _rct.Width = CInt(Math.Max(Math.Abs(BeginCoordinates.X - EndCoordinates.X), _pen.Width))
