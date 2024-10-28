@@ -68,8 +68,8 @@ Namespace Drawing.Tools
 
         Public Sub RenderFinalImage(ByRef rawImage As Image, sender As PaintPanel) Implements ITool(Of CensorSettings).RenderFinalImage
             _pointList.Add(EndCoordinates)
-            Using g As Graphics = Graphics.FromImage(rawImage)
-                Using censorPen As Pen = CreatePen(_settingsControl.Settings)
+            Using g = Graphics.FromImage(rawImage)
+                Using censorPen = CreatePen(_settingsControl.Settings)
                     With g
                         .SmoothingMode = SmoothingMode.AntiAlias
                         .TextRenderingHint = TextRenderingHint.AntiAlias
@@ -93,7 +93,7 @@ Namespace Drawing.Tools
                 Return
             End If
 
-            Using censorPen As Pen = CreatePen(_settingsControl.Settings)
+            Using censorPen = CreatePen(_settingsControl.Settings)
                 Dim bs As Byte() = New Byte(_pointList.Count - 1) {}
                 bs(0) = CByte(PathPointType.Start)
                 For a = 1 To _pointList.Count - 1

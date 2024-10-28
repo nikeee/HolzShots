@@ -55,11 +55,6 @@ Namespace UI
             Ellipse_Width = New Label()
             EllipseColorSelector = New Windows.Forms.ColorSelector()
             EllipseBar = New TrackBar()
-            BrightenSettingsPanel = New Panel()
-            BigColorViewer1 = New Windows.Forms.ColorView()
-            BlackWhiteTracker = New TrackBar()
-            GlassLabel9 = New Label()
-            GlassLabel6 = New Label()
             ToolStrip1 = New ToolStrip()
             ScaleTool = New ToolStripButton()
             DrawCursor = New ToolStripButton()
@@ -78,8 +73,6 @@ Namespace UI
             CType(EllipseOrRectangleBox, ComponentModel.ISupportInitialize).BeginInit()
             CType(EllipseOrRectangle, ComponentModel.ISupportInitialize).BeginInit()
             CType(EllipseBar, ComponentModel.ISupportInitialize).BeginInit()
-            BrightenSettingsPanel.SuspendLayout()
-            CType(BlackWhiteTracker, ComponentModel.ISupportInitialize).BeginInit()
             ToolStrip1.SuspendLayout()
             BottomToolStrip.SuspendLayout()
             CopyPrintToolStrip.SuspendLayout()
@@ -479,55 +472,6 @@ Namespace UI
             EllipseBar.TabStop = False
             EllipseBar.Value = 1
             ' 
-            ' BrightenSettingsPanel
-            ' 
-            BrightenSettingsPanel.BackColor = SystemColors.Control
-            BrightenSettingsPanel.Controls.Add(BigColorViewer1)
-            BrightenSettingsPanel.Controls.Add(BlackWhiteTracker)
-            BrightenSettingsPanel.Controls.Add(GlassLabel9)
-            BrightenSettingsPanel.Controls.Add(GlassLabel6)
-            BrightenSettingsPanel.Location = New Point(193, 274)
-            BrightenSettingsPanel.Name = "BrightenSettingsPanel"
-            BrightenSettingsPanel.Size = New Size(273, 82)
-            BrightenSettingsPanel.TabIndex = 26
-            BrightenSettingsPanel.Visible = False
-            ' 
-            ' BigColorViewer1
-            ' 
-            BigColorViewer1.Location = New Point(61, 48)
-            BigColorViewer1.Name = "BigColorViewer1"
-            BigColorViewer1.Size = New Size(158, 26)
-            BigColorViewer1.TabIndex = 27
-            BigColorViewer1.TabStop = False
-            ' 
-            ' BlackWhiteTracker
-            ' 
-            BlackWhiteTracker.Location = New Point(73, 12)
-            BlackWhiteTracker.Maximum = 510
-            BlackWhiteTracker.Name = "BlackWhiteTracker"
-            BlackWhiteTracker.Size = New Size(122, 45)
-            BlackWhiteTracker.TabIndex = 26
-            BlackWhiteTracker.TabStop = False
-            BlackWhiteTracker.Value = 1
-            ' 
-            ' GlassLabel9
-            ' 
-            GlassLabel9.AutoSize = True
-            GlassLabel9.Location = New Point(201, 12)
-            GlassLabel9.Name = "GlassLabel9"
-            GlassLabel9.Size = New Size(52, 15)
-            GlassLabel9.TabIndex = 26
-            GlassLabel9.Text = "Brighten"
-            ' 
-            ' GlassLabel6
-            ' 
-            GlassLabel6.AutoSize = True
-            GlassLabel6.Location = New Point(31, 12)
-            GlassLabel6.Name = "GlassLabel6"
-            GlassLabel6.Size = New Size(44, 15)
-            GlassLabel6.TabIndex = 25
-            GlassLabel6.Text = "Darken"
-            ' 
             ' ToolStrip1
             ' 
             ToolStrip1.AllowItemReorder = True
@@ -671,7 +615,6 @@ Namespace UI
             Controls.Add(EditStrip)
             Controls.Add(CopyPrintToolStrip)
             Controls.Add(ToolStrip1)
-            Controls.Add(BrightenSettingsPanel)
             Controls.Add(EllipseSettingsPanel)
             Controls.Add(ShareStrip)
             Controls.Add(BottomToolStrip)
@@ -690,9 +633,6 @@ Namespace UI
             CType(EllipseOrRectangleBox, ComponentModel.ISupportInitialize).EndInit()
             CType(EllipseOrRectangle, ComponentModel.ISupportInitialize).EndInit()
             CType(EllipseBar, ComponentModel.ISupportInitialize).EndInit()
-            BrightenSettingsPanel.ResumeLayout(False)
-            BrightenSettingsPanel.PerformLayout()
-            CType(BlackWhiteTracker, ComponentModel.ISupportInitialize).EndInit()
             ToolStrip1.ResumeLayout(False)
             ToolStrip1.PerformLayout()
             BottomToolStrip.ResumeLayout(False)
@@ -740,11 +680,6 @@ Namespace UI
         Friend WithEvents ChooseServiceToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Friend WithEvents PipettenTool As System.Windows.Forms.ToolStripButton
         Friend WithEvents BrightenTool As System.Windows.Forms.ToolStripButton
-        Friend WithEvents BrightenSettingsPanel As System.Windows.Forms.Panel
-        Friend WithEvents BlackWhiteTracker As System.Windows.Forms.TrackBar
-        Friend WithEvents GlassLabel9 As System.Windows.Forms.Label
-        Friend WithEvents GlassLabel6 As System.Windows.Forms.Label
-        Friend WithEvents BigColorViewer1 As HolzShots.Windows.Forms.ColorView
         Friend WithEvents ToolStrip1 As System.Windows.Forms.ToolStrip
         Friend WithEvents ScaleTool As System.Windows.Forms.ToolStripButton
         Friend WithEvents DrawCursor As System.Windows.Forms.ToolStripButton

@@ -38,9 +38,6 @@ Namespace UI.Controls
         Public Property EllipseColor As Color
 
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
-        Public Property BrightenColor As Color
-
-        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
         Public Property Screenshot As Screenshot
             Get
                 Return If(DesignMode, Nothing, _screenshot)

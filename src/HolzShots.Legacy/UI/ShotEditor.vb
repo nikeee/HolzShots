@@ -96,12 +96,9 @@ Namespace UI
             AddSettingsPanels()
 
             EllipseSettingsPanel.BackColor = Color.Transparent
-            BrightenSettingsPanel.BackColor = Color.Transparent
             CurrentToolSettingsPanel.BackColor = Color.Transparent
 
             Dim focusColor As Color = BackColor
-
-            BlackWhiteTracker.BackColor = focusColor
 
             EllipseBar.BackColor = focusColor
             EllipseOrRectangle.BackColor = focusColor
@@ -142,7 +139,6 @@ Namespace UI
 
         Private Sub LoadToolSettings()
             LoadEllipse()
-            LoadBrighten()
             EnlistUploaderPlugins()
         End Sub
 
@@ -174,20 +170,6 @@ Namespace UI
             Ellipse_Width.Text = $"{EllipseBar.Value}px"
             ThePanel.EllipseColor = EllipseColorSelector.Color
             ThePanel.EllipseWidth = EllipseBar.Value
-        End Sub
-
-        Private Sub LoadBrighten()
-            Dim v As Integer = HolzShots.My.Settings.BrightenColor.A
-            If HolzShots.My.Settings.BrightenColor.R = HolzShots.My.Settings.BrightenColor.G AndAlso
-                HolzShots.My.Settings.BrightenColor.R = HolzShots.My.Settings.BrightenColor.B Then
-                If HolzShots.My.Settings.BrightenColor.R = 255 Then
-                    v += 255
-                ElseIf HolzShots.My.Settings.BrightenColor.R = 0 Then
-                    v = 255 - v
-                End If
-            End If
-            BlackWhiteTracker.Value = v
-            BlackWhiteTrackerScroll()
         End Sub
 
 #End Region
@@ -259,8 +241,6 @@ Namespace UI
             HolzShots.My.Settings.EllipseColor = EllipseColorSelector.Color
             HolzShots.My.Settings.EllipseWidth = EllipseBar.Value
 
-            HolzShots.My.Settings.BrightenColor = BigColorViewer1.Color
-
             HolzShots.My.Settings.UseBoxInsteadOfCirlce = ThePanel.UseBoxInsteadOfCircle
 
             HolzShots.My.Settings.Save()
@@ -278,7 +258,6 @@ Namespace UI
 
         Private Sub AddSettingsPanels()
             _activator = New PanelActivator()
-            _activator.AddPanel(PaintPanel.ShotEditorTool.Brighten, BrightenSettingsPanel)
             _activator.AddPanel(PaintPanel.ShotEditorTool.Ellipse, EllipseSettingsPanel)
             _activator.AddPanel(PaintPanel.ShotEditorTool.LegacyNew, CurrentToolSettingsPanel)
 
@@ -426,16 +405,6 @@ Namespace UI
 
         Private Sub ThePanelUpdateMousePosition(e As Point) Handles ThePanel.UpdateMousePosition
             MouseInfoLabel.Text = $"{e.X}, {e.Y}px"
-        End Sub
-
-        Private Sub BlackWhiteTrackerScroll() Handles BlackWhiteTracker.Scroll
-            If BlackWhiteTracker.Value >= 0 AndAlso BlackWhiteTracker.Value <= 255 Then
-                ThePanel.BrightenColor = Color.FromArgb(255 - BlackWhiteTracker.Value, 0, 0, 0)
-                BigColorViewer1.Color = ThePanel.BrightenColor
-            ElseIf BlackWhiteTracker.Value > 255 AndAlso BlackWhiteTracker.Value <= 510 Then
-                ThePanel.BrightenColor = Color.FromArgb(BlackWhiteTracker.Value - 255, 255, 255, 255)
-                BigColorViewer1.Color = ThePanel.BrightenColor
-            End If
         End Sub
 
         Private Sub DrawCursorClick() Handles DrawCursor.Click

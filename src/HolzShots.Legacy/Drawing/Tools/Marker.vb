@@ -73,9 +73,9 @@ Namespace Drawing.Tools
                 Return
             End If
 
-            Using g As Graphics = Graphics.FromImage(rawImage)
+            Using g = Graphics.FromImage(rawImage)
                 g.SmoothingMode = SmoothingMode.AntiAlias
-                Using markerPen As NativePen = CreatePen(_settingsControl.Settings)
+                Using markerPen = CreatePen(_settingsControl.Settings)
                     g.DrawHighlight(DirectCast(rawImage, Bitmap), _pointList.ToArray(), markerPen)
                 End Using
             End Using
@@ -91,7 +91,7 @@ Namespace Drawing.Tools
                 Return
             End If
 
-            Using markerPen As NativePen = CreatePen(_settingsControl.Settings)
+            Using markerPen = CreatePen(_settingsControl.Settings)
                 g.DrawHighlight(DirectCast(rawImage, Bitmap), _pointList.ToArray(), markerPen)
             End Using
         End Sub
