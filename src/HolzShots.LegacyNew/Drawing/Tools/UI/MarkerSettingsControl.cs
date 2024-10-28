@@ -5,7 +5,7 @@ namespace HolzShots.Drawing.Tools.UI;
 [DefaultBindingProperty("Settings")]
 public partial class MarkerSettingsControl : UserControl, ISettingsControl<MarkerSettings>
 {
-    private MarkerSettings _settings;
+    private readonly MarkerSettings _settings;
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public MarkerSettings Settings => _settings;
 

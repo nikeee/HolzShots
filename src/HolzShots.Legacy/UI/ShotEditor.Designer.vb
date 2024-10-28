@@ -46,15 +46,6 @@ Namespace UI
             ClipboardToolStripMenuItem = New ToolStripMenuItem()
             PrintToolStripMenuItem = New ToolStripMenuItem()
             ChooseServiceToolStripMenuItem = New ToolStripMenuItem()
-            EllipseSettingsPanel = New Panel()
-            EllipseOrRectangleBox = New PictureBox()
-            GlassLabel12 = New Label()
-            EllipseOrRectangle = New TrackBar()
-            GlassLabel8 = New Label()
-            GlassLabel7 = New Label()
-            Ellipse_Width = New Label()
-            EllipseColorSelector = New Windows.Forms.ColorSelector()
-            EllipseBar = New TrackBar()
             ToolStrip1 = New ToolStrip()
             ScaleTool = New ToolStripButton()
             DrawCursor = New ToolStripButton()
@@ -69,10 +60,6 @@ Namespace UI
             CurrentToolSettingsPanel = New Panel()
             ShareStrip.SuspendLayout()
             EditStrip.SuspendLayout()
-            EllipseSettingsPanel.SuspendLayout()
-            CType(EllipseOrRectangleBox, ComponentModel.ISupportInitialize).BeginInit()
-            CType(EllipseOrRectangle, ComponentModel.ISupportInitialize).BeginInit()
-            CType(EllipseBar, ComponentModel.ISupportInitialize).BeginInit()
             ToolStrip1.SuspendLayout()
             BottomToolStrip.SuspendLayout()
             CopyPrintToolStrip.SuspendLayout()
@@ -383,95 +370,6 @@ Namespace UI
             ChooseServiceToolStripMenuItem.Text = "ChooseService"
             ChooseServiceToolStripMenuItem.Visible = False
             ' 
-            ' EllipseSettingsPanel
-            ' 
-            EllipseSettingsPanel.BackColor = SystemColors.Control
-            EllipseSettingsPanel.Controls.Add(EllipseOrRectangleBox)
-            EllipseSettingsPanel.Controls.Add(GlassLabel12)
-            EllipseSettingsPanel.Controls.Add(EllipseOrRectangle)
-            EllipseSettingsPanel.Controls.Add(GlassLabel8)
-            EllipseSettingsPanel.Controls.Add(GlassLabel7)
-            EllipseSettingsPanel.Controls.Add(Ellipse_Width)
-            EllipseSettingsPanel.Controls.Add(EllipseColorSelector)
-            EllipseSettingsPanel.Controls.Add(EllipseBar)
-            EllipseSettingsPanel.Location = New Point(193, 186)
-            EllipseSettingsPanel.Name = "EllipseSettingsPanel"
-            EllipseSettingsPanel.Size = New Size(273, 82)
-            EllipseSettingsPanel.TabIndex = 21
-            EllipseSettingsPanel.Visible = False
-            ' 
-            ' EllipseOrRectangleBox
-            ' 
-            EllipseOrRectangleBox.Location = New Point(242, 50)
-            EllipseOrRectangleBox.Name = "EllipseOrRectangleBox"
-            EllipseOrRectangleBox.Size = New Size(16, 16)
-            EllipseOrRectangleBox.TabIndex = 28
-            EllipseOrRectangleBox.TabStop = False
-            ' 
-            ' GlassLabel12
-            ' 
-            GlassLabel12.AutoSize = True
-            GlassLabel12.Location = New Point(119, 50)
-            GlassLabel12.Name = "GlassLabel12"
-            GlassLabel12.Size = New Size(41, 15)
-            GlassLabel12.TabIndex = 27
-            GlassLabel12.Text = "Mode:"
-            ' 
-            ' EllipseOrRectangle
-            ' 
-            EllipseOrRectangle.Location = New Point(166, 50)
-            EllipseOrRectangle.Maximum = 1
-            EllipseOrRectangle.Name = "EllipseOrRectangle"
-            EllipseOrRectangle.Size = New Size(70, 45)
-            EllipseOrRectangle.TabIndex = 26
-            EllipseOrRectangle.TabStop = False
-            ' 
-            ' GlassLabel8
-            ' 
-            GlassLabel8.AutoSize = True
-            GlassLabel8.Location = New Point(42, 50)
-            GlassLabel8.Name = "GlassLabel8"
-            GlassLabel8.Size = New Size(39, 15)
-            GlassLabel8.TabIndex = 25
-            GlassLabel8.Text = "Color:"
-            ' 
-            ' GlassLabel7
-            ' 
-            GlassLabel7.AutoSize = True
-            GlassLabel7.Location = New Point(41, 10)
-            GlassLabel7.Name = "GlassLabel7"
-            GlassLabel7.Size = New Size(42, 15)
-            GlassLabel7.TabIndex = 24
-            GlassLabel7.Text = "Width:"
-            ' 
-            ' Ellipse_Width
-            ' 
-            Ellipse_Width.AutoSize = True
-            Ellipse_Width.Location = New Point(193, 15)
-            Ellipse_Width.Name = "Ellipse_Width"
-            Ellipse_Width.Size = New Size(13, 15)
-            Ellipse_Width.TabIndex = 22
-            Ellipse_Width.Text = "a"
-            ' 
-            ' EllipseColorSelector
-            ' 
-            EllipseColorSelector.Cursor = Cursors.Hand
-            EllipseColorSelector.Location = New Point(87, 50)
-            EllipseColorSelector.Name = "EllipseColorSelector"
-            EllipseColorSelector.Size = New Size(20, 20)
-            EllipseColorSelector.TabIndex = 19
-            ' 
-            ' EllipseBar
-            ' 
-            EllipseBar.Location = New Point(83, 6)
-            EllipseBar.Maximum = 100
-            EllipseBar.Minimum = 1
-            EllipseBar.Name = "EllipseBar"
-            EllipseBar.Size = New Size(104, 45)
-            EllipseBar.TabIndex = 16
-            EllipseBar.TabStop = False
-            EllipseBar.Value = 1
-            ' 
             ' ToolStrip1
             ' 
             ToolStrip1.AllowItemReorder = True
@@ -615,7 +513,6 @@ Namespace UI
             Controls.Add(EditStrip)
             Controls.Add(CopyPrintToolStrip)
             Controls.Add(ToolStrip1)
-            Controls.Add(EllipseSettingsPanel)
             Controls.Add(ShareStrip)
             Controls.Add(BottomToolStrip)
             Font = New Font("Segoe UI", 9F)
@@ -628,11 +525,6 @@ Namespace UI
             ShareStrip.PerformLayout()
             EditStrip.ResumeLayout(False)
             EditStrip.PerformLayout()
-            EllipseSettingsPanel.ResumeLayout(False)
-            EllipseSettingsPanel.PerformLayout()
-            CType(EllipseOrRectangleBox, ComponentModel.ISupportInitialize).EndInit()
-            CType(EllipseOrRectangle, ComponentModel.ISupportInitialize).EndInit()
-            CType(EllipseBar, ComponentModel.ISupportInitialize).EndInit()
             ToolStrip1.ResumeLayout(False)
             ToolStrip1.PerformLayout()
             BottomToolStrip.ResumeLayout(False)
@@ -670,12 +562,6 @@ Namespace UI
         Friend WithEvents PrintToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Friend WithEvents EllipseTool As System.Windows.Forms.ToolStripButton
         Friend WithEvents KreisToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents EllipseSettingsPanel As System.Windows.Forms.Panel
-        Friend WithEvents EllipseColorSelector As HolzShots.Windows.Forms.ColorSelector
-        Friend WithEvents EllipseBar As System.Windows.Forms.TrackBar
-        Friend WithEvents Ellipse_Width As System.Windows.Forms.Label
-        Friend WithEvents GlassLabel8 As System.Windows.Forms.Label
-        Friend WithEvents GlassLabel7 As System.Windows.Forms.Label
         Friend WithEvents UploadToHoster As System.Windows.Forms.ToolStripSplitButton
         Friend WithEvents ChooseServiceToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Friend WithEvents PipettenTool As System.Windows.Forms.ToolStripButton
@@ -683,9 +569,6 @@ Namespace UI
         Friend WithEvents ToolStrip1 As System.Windows.Forms.ToolStrip
         Friend WithEvents ScaleTool As System.Windows.Forms.ToolStripButton
         Friend WithEvents DrawCursor As System.Windows.Forms.ToolStripButton
-        Friend WithEvents GlassLabel12 As System.Windows.Forms.Label
-        Friend WithEvents EllipseOrRectangle As System.Windows.Forms.TrackBar
-        Friend WithEvents EllipseOrRectangleBox As System.Windows.Forms.PictureBox
         Friend WithEvents BottomToolStrip As System.Windows.Forms.ToolStrip
         Friend WithEvents ImageInfoLabel As System.Windows.Forms.ToolStripLabel
         Friend WithEvents MouseInfoLabel As System.Windows.Forms.ToolStripLabel

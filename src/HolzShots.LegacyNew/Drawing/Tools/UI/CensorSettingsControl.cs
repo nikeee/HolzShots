@@ -5,7 +5,7 @@ namespace HolzShots.Drawing.Tools.UI;
 [DefaultBindingProperty("Settings")]
 public partial class CensorSettingsControl : UserControl, ISettingsControl<CensorSettings>
 {
-    private CensorSettings _settings;
+    private readonly CensorSettings _settings;
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public CensorSettings Settings => _settings;
 

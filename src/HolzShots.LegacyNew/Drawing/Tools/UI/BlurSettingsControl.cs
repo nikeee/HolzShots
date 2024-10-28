@@ -5,23 +5,19 @@ namespace HolzShots.Drawing.Tools.UI;
 [DefaultBindingProperty("Settings")]
 public partial class BlurSettingsControl : UserControl, ISettingsControl<BlurSettings>
 {
+    private readonly BlurSettings _settings;
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-    public BlurSettings Settings
-    {
-        get => new(BlurDiameterTrackBar.Value);
-        set
-        {
-            BlurDiameterTrackBar.Value = value.Diameter;
-        }
-    }
+    public BlurSettings Settings => _settings;
 
     public BlurSettingsControl(BlurSettings initialSettings)
     {
         InitializeComponent();
-        Settings = initialSettings;
+        _settings = initialSettings;
         BlurDiameterTrackBar.ValueChanged += (_, _) =>
         {
-            BlurDiameterTrackBarLabel.Text = $"Factor: {BlurDiameterTrackBar.Value}px";
+            var v = BlurDiameterTrackBar.Value;
+            _settings.Diameter = v;
+            BlurDiameterTrackBarLabel.Text = $"Factor: {v}px";
         };
 
         BlurDiameterTrackBar.Value = initialSettings.Diameter;
@@ -30,5 +26,5 @@ public partial class BlurSettingsControl : UserControl, ISettingsControl<BlurSet
 
 public class BlurSettings(int diameter) : ToolSettingsBase
 {
-    public int Diameter { get; init; } = diameter;
+    public int Diameter { get; set; } = diameter;
 }

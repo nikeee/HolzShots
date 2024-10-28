@@ -5,23 +5,19 @@ namespace HolzShots.Drawing.Tools.UI;
 [DefaultBindingProperty("Settings")]
 public partial class EraserSettingsControl : UserControl, ISettingsControl<EraserSettings>
 {
+    private readonly EraserSettings _settings;
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-    public EraserSettings Settings
-    {
-        get => new(EraserDiameterTrackBar.Value);
-        set
-        {
-            EraserDiameterTrackBar.Value = value.Diameter;
-        }
-    }
+    public EraserSettings Settings => _settings;
 
     public EraserSettingsControl(EraserSettings initialSettings)
     {
         InitializeComponent();
-        Settings = initialSettings;
+        _settings = initialSettings;
         EraserDiameterTrackBar.ValueChanged += (_, _) =>
         {
-            EraserDiameterTrackBarLabel.Text = $"Diameter: {EraserDiameterTrackBar.Value}px";
+            var v = EraserDiameterTrackBar.Value;
+            _settings.Diameter = v;
+            EraserDiameterTrackBarLabel.Text = $"Diameter: {v}px";
         };
 
         EraserDiameterTrackBar.Value = initialSettings.Diameter;

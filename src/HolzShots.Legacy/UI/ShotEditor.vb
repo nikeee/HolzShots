@@ -95,13 +95,9 @@ Namespace UI
 
             AddSettingsPanels()
 
-            EllipseSettingsPanel.BackColor = Color.Transparent
             CurrentToolSettingsPanel.BackColor = Color.Transparent
 
             Dim focusColor As Color = BackColor
-
-            EllipseBar.BackColor = focusColor
-            EllipseOrRectangle.BackColor = focusColor
 
             ShareStrip.BackColor = Color.Transparent
             EditStrip.BackColor = Color.Transparent
@@ -138,7 +134,6 @@ Namespace UI
 #Region "Settings and stuff"
 
         Private Sub LoadToolSettings()
-            LoadEllipse()
             EnlistUploaderPlugins()
         End Sub
 
@@ -155,21 +150,6 @@ Namespace UI
                     item.ImageScaling = ToolStripItemImageScaling.None
                 Next
             End If
-        End Sub
-
-
-        Private Sub LoadEllipse()
-            EllipseColorSelector.Color = HolzShots.My.Settings.EllipseColor
-            If HolzShots.My.Settings.EllipseWidth > 100 OrElse HolzShots.My.Settings.EllipseWidth <= 0 Then
-                HolzShots.My.Settings.EllipseWidth = 20
-                HolzShots.My.Settings.Save()
-            End If
-            ThePanel.UseBoxInsteadOfCircle = HolzShots.My.Settings.UseBoxInsteadOfCirlce
-            EllipseOrRectangle.Value = If(ThePanel.UseBoxInsteadOfCircle, 1, 0)
-            EllipseBar.Value = HolzShots.My.Settings.EllipseWidth
-            Ellipse_Width.Text = $"{EllipseBar.Value}px"
-            ThePanel.EllipseColor = EllipseColorSelector.Color
-            ThePanel.EllipseWidth = EllipseBar.Value
         End Sub
 
 #End Region
@@ -238,12 +218,7 @@ Namespace UI
 #Region "Updater"
 
         Private Sub UpdateSettings() Handles MyBase.FormClosing
-            HolzShots.My.Settings.EllipseColor = EllipseColorSelector.Color
-            HolzShots.My.Settings.EllipseWidth = EllipseBar.Value
-
-            HolzShots.My.Settings.UseBoxInsteadOfCirlce = ThePanel.UseBoxInsteadOfCircle
-
-            HolzShots.My.Settings.Save()
+            My.Settings.Save()
         End Sub
 
         Private Sub ResetTools()
@@ -258,7 +233,6 @@ Namespace UI
 
         Private Sub AddSettingsPanels()
             _activator = New PanelActivator()
-            _activator.AddPanel(PaintPanel.ShotEditorTool.Ellipse, EllipseSettingsPanel)
             _activator.AddPanel(PaintPanel.ShotEditorTool.LegacyNew, CurrentToolSettingsPanel)
 
             ToolControlMap.Add(PaintPanel.ShotEditorTool.Pipette, PipettenTool)
@@ -376,15 +350,6 @@ Namespace UI
 
 #End Region
 
-        Private Sub EllipseBarValueChanged() Handles EllipseBar.ValueChanged
-            Ellipse_Width.Text = $"{EllipseBar.Value}px"
-            ThePanel.EllipseWidth = EllipseBar.Value
-        End Sub
-
-        Private Sub EllipseViewerColorChanged(sender As Object, c As Color) Handles EllipseColorSelector.ColorChanged
-            ThePanel.EllipseColor = c
-        End Sub
-
         Private Sub ImageInfoLabelMouseClick(sender As Object, e As MouseEventArgs) Handles ImageInfoLabel.MouseUp
 
             Dim s = ThePanel.Screenshot
@@ -449,26 +414,6 @@ Namespace UI
                 Return
             End Try
             HandleAfterUpload()
-        End Sub
-
-        Private Sub EllipseOrRectangleValueChanged(sender As Object, e As EventArgs) Handles EllipseOrRectangle.ValueChanged
-            ThePanel.UseBoxInsteadOfCircle = EllipseOrRectangle.Value = 1
-            EllipseOrRectangleBox.Invalidate()
-        End Sub
-
-        Private Sub EllipseOrRectangleBoxClick(sender As Object, e As EventArgs) Handles EllipseOrRectangleBox.Click
-            If EllipseOrRectangle.Value = 1 Then EllipseOrRectangle.Value = 0 Else EllipseOrRectangle.Value = 1
-        End Sub
-
-        Private Sub EllipseOrRectangleBoxPaint(sender As Object, e As PaintEventArgs) Handles EllipseOrRectangleBox.Paint
-            Dim rct As New Rectangle(2, 2, 12, 12)
-            Dim pe As New Pen(Brushes.Red) With {.Width = 2}
-            If ThePanel.UseBoxInsteadOfCircle Then
-                e.Graphics.DrawRectangle(pe, rct)
-            Else
-                e.Graphics.SmoothingMode = SmoothingMode.HighQuality
-                e.Graphics.DrawEllipse(pe, rct)
-            End If
         End Sub
 
         Private Sub HandleAfterUpload()

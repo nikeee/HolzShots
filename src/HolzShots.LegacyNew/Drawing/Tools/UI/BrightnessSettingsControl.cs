@@ -5,7 +5,7 @@ namespace HolzShots.Drawing.Tools.UI;
 [DefaultBindingProperty("Settings")]
 public partial class BrightnessSettingsControl : UserControl, ISettingsControl<BrightnessSettings>
 {
-    private BrightnessSettings _settings;
+    private readonly BrightnessSettings _settings;
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public BrightnessSettings Settings => _settings;
 

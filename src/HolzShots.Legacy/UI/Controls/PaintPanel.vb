@@ -10,14 +10,8 @@ Namespace UI.Controls
         Private _currentTool As ShotEditorTool
         Private _screenshot As Screenshot
 
-        Private _markerColor As Color
-        Private _arrowWidth, _eraseDiameter, _markerWidth As Integer
-
         Friend Event Initialized()
         Friend Event UpdateMousePosition(e As Point)
-
-        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
-        Friend Property UseBoxInsteadOfCircle As Boolean = False
 
         Private _drawCursor As Boolean
 
@@ -31,11 +25,6 @@ Namespace UI.Controls
                 RawBox.Invalidate()
             End Set
         End Property
-
-        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
-        Public Property EllipseWidth As Integer
-        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
-        Public Property EllipseColor As Color
 
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
         Public Property Screenshot As Screenshot
@@ -97,7 +86,7 @@ Namespace UI.Controls
                     Case ShotEditorTool.Blur
                         CurrentToolObject = New Blur
                     Case ShotEditorTool.Ellipse
-                        CurrentToolObject = New Circle
+                        CurrentToolObject = New Ellipse
                     Case ShotEditorTool.Pipette
                         CurrentToolObject = New Pipette
                     Case ShotEditorTool.Brighten

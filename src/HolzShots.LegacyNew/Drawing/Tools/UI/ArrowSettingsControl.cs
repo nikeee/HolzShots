@@ -5,7 +5,7 @@ namespace HolzShots.Drawing.Tools.UI;
 [DefaultBindingProperty("Settings")]
 public partial class ArrowSettingsControl : UserControl, ISettingsControl<ArrowSettings>
 {
-    private ArrowSettings _settings;
+    private readonly ArrowSettings _settings;
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public ArrowSettings Settings => _settings;
 
