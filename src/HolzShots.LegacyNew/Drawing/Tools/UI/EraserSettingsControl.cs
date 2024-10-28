@@ -25,14 +25,6 @@ public partial class EraserSettingsControl : UserControl, ISettingsControl<Erase
         };
     }
 }
-
-
-public interface ISettingsControl<out TSettings> : IDisposable where TSettings : ToolSettingsBase
-{
-    TSettings Settings { get; }
-}
-
-public abstract class ToolSettingsBase;
 public class EraserSettings(int diameter) : ToolSettingsBase
 {
     public int Diameter { get; init; } = diameter;
