@@ -20,15 +20,15 @@ Namespace UI.Controls
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
         Friend Property UseBoxInsteadOfCircle As Boolean = False
 
-        Private _drawcursor As Boolean
+        Private _drawCursor As Boolean
 
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
         Public Property DrawCursor As Boolean
             Get
-                Return _drawcursor
+                Return _drawCursor
             End Get
             Set(value As Boolean)
-                _drawcursor = value
+                _drawCursor = value
                 RawBox.Invalidate()
             End Set
         End Property
@@ -137,7 +137,7 @@ Namespace UI.Controls
             Get
                 If Not DesignMode Then
                     Dim bmp As Image = RawBox.Image
-                    If _drawcursor Then
+                    If _drawCursor Then
                         Using g As Graphics = Graphics.FromImage(bmp)
                             g.SmoothingMode = SmoothingMode.AntiAlias
                             g.CompositingQuality = CompositingQuality.HighQuality
@@ -172,7 +172,7 @@ Namespace UI.Controls
                     Case ShotEditorTool.Eraser
                         CurrentToolObject = New Eraser(Me)
                     Case ShotEditorTool.Blur
-                        CurrentToolObject = New Pixelate
+                        CurrentToolObject = New Blur
                     Case ShotEditorTool.Ellipse
                         CurrentToolObject = New Circle
                     Case ShotEditorTool.Pipette
@@ -334,7 +334,7 @@ Namespace UI.Controls
                     Exit Sub
                 End If
             End If
-            If _drawcursor AndAlso Screenshot IsNot Nothing Then
+            If _drawCursor AndAlso Screenshot IsNot Nothing Then
                 e.Graphics.SmoothingMode = SmoothingMode.AntiAlias
                 e.Graphics.CompositingQuality = CompositingQuality.HighQuality
                 'e.Graphics.DrawImage(Screenshot.Cursor, Screenshot.CursorCoordinates)

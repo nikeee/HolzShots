@@ -3,7 +3,7 @@ Imports HolzShots.Drawing.Tools.UI
 Imports HolzShots.UI.Controls
 
 Namespace Drawing.Tools
-    Friend Class Pixelate
+    Friend Class Blur
         Implements ITool(Of BlurSettings)
 
         ReadOnly _thePen As New Pen(Color.Red) With {.DashStyle = DashStyle.Dash}
