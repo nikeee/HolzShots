@@ -10,7 +10,12 @@ Namespace Drawing.Tools
         Public ReadOnly Property SettingsControl As ISettingsControl(Of ToolSettingsBase) = Nothing Implements ITool(Of ToolSettingsBase).SettingsControl
         Public Property BeginCoordinates As Point Implements ITool(Of ToolSettingsBase).BeginCoordinates
         Public Property EndCoordinates As Point Implements ITool(Of ToolSettingsBase).EndCoordinates
-
+        Public Sub LoadInitialSettings() Implements ITool(Of ToolSettingsBase).LoadInitialSettings
+            ' Nothing to do here
+        End Sub
+        Public Sub PersistSettings() Implements ITool(Of ToolSettingsBase).PersistSettings
+            ' Nothing to do here
+        End Sub
         Public Sub RenderFinalImage(ByRef rawImage As Image, sender As PaintPanel) Implements ITool(Of ToolSettingsBase).RenderFinalImage
 
             Using s As New ScaleWindow(rawImage)

@@ -50,18 +50,27 @@ Namespace Drawing.Tools
         End Property
 
         Sub New()
+            _settingsControl = New ArrowSettingsControl(ArrowSettings.Default)
+        End Sub
+
+        Public Sub LoadInitialSettings() Implements ITool(Of ArrowSettings).LoadInitialSettings
             Dim arrowWidth = Math.Clamp(My.Settings.ArrowWidth, ArrowSettings.MinimumWidth, ArrowSettings.MaximumWidth)
             If arrowWidth <> My.Settings.ArrowWidth Then
                 My.Settings.ArrowWidth = arrowWidth
                 My.Settings.Save()
             End If
 
-            _settingsControl = New ArrowSettingsControl(
-                New ArrowSettings(
-                    My.Settings.ArrowWidth,
-                    My.Settings.ArrowColor
-                )
-            )
+            With _settingsControl.Settings
+                .Width = My.Settings.ArrowWidth
+                .Color = My.Settings.ArrowColor
+            End With
+        End Sub
+
+        Public Sub PersistSettings() Implements ITool(Of ArrowSettings).PersistSettings
+            With _settingsControl.Settings
+                My.Settings.ArrowWidth = .Width
+                My.Settings.ArrowColor = .Color
+            End With
         End Sub
 
         Private Function CreatePen(settings As ArrowSettings, endCap As LineCap) As Pen

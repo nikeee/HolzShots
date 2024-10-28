@@ -21,12 +21,24 @@ Namespace Drawing.Tools
         Public Property EndCoordinates As Point Implements ITool(Of BlurSettings).EndCoordinates
 
         Sub New()
-            ' TODO: Move this
-            If HolzShots.My.Settings.BlurFactor > 30 OrElse HolzShots.My.Settings.BlurFactor <= 5 Then
-                HolzShots.My.Settings.BlurFactor = 7
-                HolzShots.My.Settings.Save()
+            _settingsControl = New BlurSettingsControl(BlurSettings.Default)
+        End Sub
+
+        Public Sub LoadInitialSettings() Implements ITool(Of BlurSettings).LoadInitialSettings
+            If My.Settings.BlurFactor > BlurSettings.MaximumDiameter OrElse My.Settings.BlurFactor <= BlurSettings.MinimumDiameter Then
+                My.Settings.BlurFactor = BlurSettings.Default.Diameter
+                My.Settings.Save()
             End If
-            _settingsControl = New BlurSettingsControl(New BlurSettings(My.Settings.BlurFactor))
+
+            With _settingsControl.Settings
+                .Diameter = My.Settings.BlurFactor
+            End With
+        End Sub
+
+        Public Sub PersistSettings() Implements ITool(Of BlurSettings).PersistSettings
+            With _settingsControl.Settings
+                My.Settings.BlurFactor = .Diameter
+            End With
         End Sub
 
         Public Sub RenderFinalImage(ByRef rawImage As Image, sender As PaintPanel) Implements ITool(Of BlurSettings).RenderFinalImage

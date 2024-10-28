@@ -11,6 +11,8 @@ public class EllipseSettings(int width, Color color, EllipseMode mode) : ToolSet
     public int Width { get; set; } = width;
     public Color Color { get; set; } = color;
     public EllipseMode Mode { get; set; } = mode;
+
+    public static EllipseSettings Default => new(5, Color.Red, EllipseMode.Rectangle);
 }
 
 public enum EllipseMode

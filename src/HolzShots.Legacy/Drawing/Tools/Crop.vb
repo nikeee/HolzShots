@@ -1,4 +1,3 @@
-Imports System.Configuration
 Imports System.Drawing.Drawing2D
 Imports HolzShots.Drawing.Tools.UI
 Imports HolzShots.UI.Controls
@@ -18,6 +17,13 @@ Namespace Drawing.Tools
 
         Public Property BeginCoordinates As Point Implements ITool(Of ToolSettingsBase).BeginCoordinates
         Public Property EndCoordinates As Point Implements ITool(Of ToolSettingsBase).EndCoordinates
+
+        Public Sub LoadInitialSettings() Implements ITool(Of ToolSettingsBase).LoadInitialSettings
+            ' Nothing to do here
+        End Sub
+        Public Sub PersistSettings() Implements ITool(Of ToolSettingsBase).PersistSettings
+            ' Nothing to do here
+        End Sub
 
         Public Sub RenderFinalImage(ByRef rawImage As Image, ByVal sender As PaintPanel) Implements ITool(Of ToolSettingsBase).RenderFinalImage
 

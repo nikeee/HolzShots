@@ -44,20 +44,27 @@ Namespace Drawing.Tools
         End Property
 
         Sub New()
-            ' TODO: Move
-            If My.Settings.ZensursulaWidth > 100 OrElse My.Settings.ZensursulaWidth <= 0 Then
-                My.Settings.ZensursulaWidth = 20
+            _settingsControl = New CensorSettingsControl(CensorSettings.Default)
+            _pointList = New List(Of Point)
+        End Sub
+
+        Public Sub LoadInitialSettings() Implements ITool(Of CensorSettings).LoadInitialSettings
+            If My.Settings.ZensursulaWidth > CensorSettings.MaximumWidth OrElse My.Settings.ZensursulaWidth < CensorSettings.MinimumWidth Then
+                My.Settings.ZensursulaWidth = CensorSettings.Default.Width
                 My.Settings.Save()
             End If
-            ' TODO: Save settings on unload
 
-            _settingsControl = New CensorSettingsControl(
-                New CensorSettings(
-                    My.Settings.ZensursulaWidth,
-                    My.Settings.ZensursulaColor
-                )
-            )
-            _pointList = New List(Of Point)
+            With _settingsControl.Settings
+                .Width = My.Settings.ZensursulaWidth
+                .Color = My.Settings.ZensursulaColor
+            End With
+        End Sub
+
+        Public Sub PersistSettings() Implements ITool(Of CensorSettings).PersistSettings
+            With _settingsControl.Settings
+                My.Settings.ZensursulaWidth = .Width
+                My.Settings.ZensursulaColor = .Color
+            End With
         End Sub
 
         Private Shared Function CreatePen(settings As CensorSettings) As Pen

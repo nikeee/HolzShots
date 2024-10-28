@@ -13,6 +13,10 @@ public partial class BlurSettingsControl : UserControl, ISettingsControl<BlurSet
     {
         InitializeComponent();
         _settings = initialSettings;
+
+        BlurDiameterTrackBar.Minimum = BlurSettings.MinimumDiameter;
+        BlurDiameterTrackBar.Maximum = BlurSettings.MaximumDiameter;
+
         BlurDiameterTrackBar.ValueChanged += (_, _) =>
         {
             var v = BlurDiameterTrackBar.Value;
@@ -22,9 +26,4 @@ public partial class BlurSettingsControl : UserControl, ISettingsControl<BlurSet
 
         BlurDiameterTrackBar.Value = initialSettings.Diameter;
     }
-}
-
-public class BlurSettings(int diameter) : ToolSettingsBase
-{
-    public int Diameter { get; set; } = diameter;
 }

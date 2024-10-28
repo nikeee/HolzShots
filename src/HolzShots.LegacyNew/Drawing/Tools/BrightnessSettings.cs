@@ -1,4 +1,4 @@
-﻿namespace HolzShots.Drawing.Tools;
+namespace HolzShots.Drawing.Tools;
 
 public class BrightnessSettings(int brightness) : ToolSettingsBase
 {
@@ -9,4 +9,6 @@ public class BrightnessSettings(int brightness) : ToolSettingsBase
     public Color BrightnessColor => Brightness <= 255
                 ? Color.FromArgb(255 - Brightness, 0, 0, 0)
                 : Color.FromArgb(Brightness - 255, 255, 255, 255);
+
+    public static BrightnessSettings Default => new(0);
 }

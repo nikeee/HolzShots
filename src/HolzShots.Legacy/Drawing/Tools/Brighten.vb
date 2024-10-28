@@ -20,19 +20,29 @@ Namespace Drawing.Tools
         Public Property EndCoordinates As Point Implements ITool(Of BrightnessSettings).EndCoordinates
 
         Sub New()
-            Dim v As Integer = HolzShots.My.Settings.BrightenColor.A
+            _settingsControl = New BrightnessSettingsControl(BrightnessSettings.Default)
+        End Sub
+
+        Public Sub LoadInitialSettings() Implements ITool(Of BrightnessSettings).LoadInitialSettings
+            Dim v As Integer = My.Settings.BrightenColor.A
             If My.Settings.BrightenColor.R = My.Settings.BrightenColor.G AndAlso
                 My.Settings.BrightenColor.R = My.Settings.BrightenColor.B Then
-                If HolzShots.My.Settings.BrightenColor.R = 255 Then
+                If My.Settings.BrightenColor.R = 255 Then
                     v += 255
-                ElseIf HolzShots.My.Settings.BrightenColor.R = 0 Then
+                ElseIf My.Settings.BrightenColor.R = 0 Then
                     v = 255 - v
                 End If
             End If
 
-            _settingsControl = New BrightnessSettingsControl(
-                New BrightnessSettings(v)
-            )
+            With _settingsControl.Settings
+                .Brightness = v
+            End With
+        End Sub
+
+        Public Sub PersistSettings() Implements ITool(Of BrightnessSettings).PersistSettings
+            With _settingsControl.Settings
+                My.Settings.BrightenColor = .BrightnessColor
+            End With
         End Sub
 
 

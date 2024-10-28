@@ -13,6 +13,10 @@ public partial class EraserSettingsControl : UserControl, ISettingsControl<Erase
     {
         InitializeComponent();
         _settings = initialSettings;
+
+        EraserDiameterTrackBar.Minimum = EraserSettings.MinimumDiameter;
+        EraserDiameterTrackBar.Maximum = EraserSettings.MaximumDiameter;
+
         EraserDiameterTrackBar.ValueChanged += (_, _) =>
         {
             var v = EraserDiameterTrackBar.Value;

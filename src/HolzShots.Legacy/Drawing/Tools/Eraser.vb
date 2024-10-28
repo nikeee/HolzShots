@@ -80,15 +80,24 @@ Namespace Drawing.Tools
             ArgumentNullException.ThrowIfNull(parent)
             _parent = parent
 
-            ' TODO: Move this
-            If My.Settings.EraserDiameter > 100 OrElse My.Settings.EraserDiameter <= 0 Then
-                My.Settings.EraserDiameter = 20
+            _settingsControl = New EraserSettingsControl(EraserSettings.Default)
+        End Sub
+
+        Public Sub LoadInitialSettings() Implements ITool(Of EraserSettings).LoadInitialSettings
+            If My.Settings.EraserDiameter > EraserSettings.MaximumDiameter OrElse My.Settings.EraserDiameter <= EraserSettings.MinimumDiameter Then
+                My.Settings.EraserDiameter = EraserSettings.Default.Diameter
                 My.Settings.Save()
             End If
 
-            _settingsControl = New EraserSettingsControl(
-                New EraserSettings(My.Settings.EraserDiameter)
-            )
+            With _settingsControl.Settings
+                .Diameter = My.Settings.EraserDiameter
+            End With
+        End Sub
+
+        Public Sub PersistSettings() Implements ITool(Of EraserSettings).PersistSettings
+            With _settingsControl.Settings
+                My.Settings.EraserDiameter = .Diameter
+            End With
         End Sub
 
         Private Sub OnSettingsUpdated(sender As Object, newSettings As EraserSettings)

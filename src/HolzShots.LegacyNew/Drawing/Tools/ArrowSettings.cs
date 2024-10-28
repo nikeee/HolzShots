@@ -7,4 +7,6 @@ public class ArrowSettings(int width, Color color) : ToolSettingsBase
 
     public int Width { get; set; } = width;
     public Color Color { get; set; } = color;
+
+    public static ArrowSettings Default => new(0, Color.Red);
 }

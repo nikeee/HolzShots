@@ -20,13 +20,27 @@ Namespace UI.Controls
             Dim control = DirectCast(controlRaw, Control)
             control.Dock = DockStyle.Fill
 
-            _panel.Controls.Clear()
             _panel.Controls.Add(control)
-
-            ' TODO: Dispose old panel and call some handler?
 
             _panel.Visible = True
             _panel.BringToFront()
+        End Sub
+
+        Public Sub ClearSettingsPanel()
+
+            Dim toRemove = New List(Of Control)
+            For Each c In _panel.Controls
+                Dim control = DirectCast(c, Control)
+                If control IsNot Nothing Then
+                    toRemove.Add(control)
+                End If
+            Next
+
+            _panel.Controls.Clear()
+
+            For Each c In toRemove
+                c.Dispose()
+            Next
         End Sub
     End Class
 End Namespace

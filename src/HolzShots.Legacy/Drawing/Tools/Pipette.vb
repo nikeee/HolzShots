@@ -31,6 +31,14 @@ Namespace Drawing.Tools
         Private _cursorImage As New Bitmap(28, 28)
         Private ReadOnly _cursorPen As New Pen(Brushes.Black)
 
+        Public Sub LoadInitialSettings() Implements ITool(Of ToolSettingsBase).LoadInitialSettings
+            ' Nothing to do here
+        End Sub
+
+        Public Sub PersistSettings() Implements ITool(Of ToolSettingsBase).PersistSettings
+            ' Nothing to do here
+        End Sub
+
         Private Function DrawCursor(c As Color) As Icon
             _cursorImage = New Bitmap(195, 195)
             _cursorImage.MakeTransparent()

@@ -126,14 +126,10 @@ Namespace UI
 
         Private Sub ShotShowerLoad() Handles MyBase.Load
             ThePanel.Initialize(_screenshot)
-            LoadToolSettings()
+            EnlistUploaderPlugins()
         End Sub
 
 #Region "Settings and stuff"
-
-        Private Sub LoadToolSettings()
-            EnlistUploaderPlugins()
-        End Sub
 
         Private Sub EnlistUploaderPlugins()
 
@@ -246,9 +242,25 @@ Namespace UI
         End Sub
 
         Private Sub EnableTool(tool As PaintPanel.ShotEditorTool)
+
+            Dim previousTool = ThePanel.CurrentTool
+
+            If previousTool = tool Then
+                Return
+            End If
+
+            Dim previousToolObject = ThePanel.CurrentToolObject
+
+            previousToolObject.PersistSettings() ' may depend on controls, so we cannot clear the settings panel before
+
+            _activator.ClearSettingsPanel()
+
             ThePanel.CurrentTool = tool
 
             Dim cto = ThePanel.CurrentToolObject
+
+            cto.LoadInitialSettings()
+
             If cto?.SettingsControl IsNot Nothing Then
                 _activator.CreateSettingsPanel(cto)
             End If

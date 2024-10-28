@@ -43,20 +43,27 @@ Namespace Drawing.Tools
         Public ReadOnly Property ToolType As PaintPanel.ShotEditorTool = PaintPanel.ShotEditorTool.Marker Implements ITool(Of MarkerSettings).ToolType
 
         Sub New()
-            ' TODO: Move
-            If My.Settings.MarkerWidth > 100 OrElse My.Settings.MarkerWidth <= 0 Then
-                My.Settings.MarkerWidth = 20
+            _settingsControl = New MarkerSettingsControl(MarkerSettings.Default)
+            _pointList = New List(Of Point)
+        End Sub
+
+        Public Sub LoadInitialSettings() Implements ITool(Of MarkerSettings).LoadInitialSettings
+            If My.Settings.MarkerWidth > MarkerSettings.MaximumWidth OrElse My.Settings.MarkerWidth < MarkerSettings.MinimumWidth Then
+                My.Settings.MarkerWidth = MarkerSettings.Default.Width
                 My.Settings.Save()
             End If
-            ' TODO: Save settings on unload
 
-            _settingsControl = New MarkerSettingsControl(
-                New MarkerSettings(
-                    My.Settings.MarkerWidth,
-                    My.Settings.MarkerColor
-                )
-            )
-            _pointList = New List(Of Point)
+            With _settingsControl.Settings
+                .Width = My.Settings.MarkerWidth
+                .Color = My.Settings.MarkerColor
+            End With
+        End Sub
+
+        Public Sub PersistSettings() Implements ITool(Of MarkerSettings).PersistSettings
+            With _settingsControl.Settings
+                My.Settings.MarkerWidth = .Width
+                My.Settings.MarkerColor = .Color
+            End With
         End Sub
 
         Private Shared Function CreatePen(settings As MarkerSettings) As NativePen

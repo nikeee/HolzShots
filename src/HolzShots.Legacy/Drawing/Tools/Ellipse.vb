@@ -21,19 +21,28 @@ Namespace Drawing.Tools
         End Property
 
         Sub New()
-            ' TODO: Move
-            If My.Settings.EllipseWidth > 100 OrElse My.Settings.EllipseWidth <= 0 Then
-                My.Settings.EllipseWidth = 20
+            _settingsControl = New EllipseSettingsControl(EllipseSettings.Default)
+        End Sub
+
+        Public Sub LoadInitialSettings() Implements ITool(Of EllipseSettings).LoadInitialSettings
+            If My.Settings.EllipseWidth > EllipseSettings.MaximumWidth OrElse My.Settings.EllipseWidth < EllipseSettings.MinimumWidth Then
+                My.Settings.EllipseWidth = EllipseSettings.Default.Width
                 My.Settings.Save()
             End If
 
-            _settingsControl = New EllipseSettingsControl(
-                New EllipseSettings(
-                    My.Settings.EllipseWidth,
-                    My.Settings.EllipseColor,
-                    If(My.Settings.UseBoxInsteadOfCirlce, EllipseMode.Rectangle, EllipseMode.Ellipse)
-                )
-            )
+            With _settingsControl.Settings
+                .Color = My.Settings.EllipseColor
+                .Width = My.Settings.EllipseWidth
+                .Mode = If(My.Settings.UseBoxInsteadOfCirlce, EllipseMode.Rectangle, EllipseMode.Ellipse)
+            End With
+        End Sub
+
+        Public Sub PersistSettings() Implements ITool(Of EllipseSettings).PersistSettings
+            With _settingsControl.Settings
+                .Color = My.Settings.EllipseColor
+                .Width = My.Settings.EllipseWidth
+                My.Settings.UseBoxInsteadOfCirlce = .Mode = EllipseMode.Rectangle
+            End With
         End Sub
 
         Private Shared Function CreatePen(settings As EllipseSettings) As Pen

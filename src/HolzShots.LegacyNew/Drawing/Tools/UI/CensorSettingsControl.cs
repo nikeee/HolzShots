@@ -14,6 +14,9 @@ public partial class CensorSettingsControl : UserControl, ISettingsControl<Censo
         InitializeComponent();
         _settings = initialSettings;
 
+        CensorDiameterTrackBar.Minimum = CensorSettings.MinimumWidth;
+        CensorDiameterTrackBar.Maximum = CensorSettings.MaximumWidth;
+
         CensorDiameterTrackBar.ValueChanged += (_, _) =>
         {
             _settings.Width = CensorDiameterTrackBar.Value;
