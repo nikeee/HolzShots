@@ -73,7 +73,7 @@ Namespace Drawing.Tools
             }
         End Function
 
-        Public Sub RenderFinalImage(ByRef rawImage As Image, sender As PaintPanel) Implements ITool(Of CensorSettings).RenderFinalImage
+        Public Sub RenderFinalImage(ByRef rawImage As Image) Implements ITool(Of CensorSettings).RenderFinalImage
             _pointList.Add(EndCoordinates)
             Using g = Graphics.FromImage(rawImage)
                 Using censorPen = CreatePen(_settingsControl.Settings)

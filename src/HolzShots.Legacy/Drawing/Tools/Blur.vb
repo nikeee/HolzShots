@@ -41,7 +41,7 @@ Namespace Drawing.Tools
             End With
         End Sub
 
-        Public Sub RenderFinalImage(ByRef rawImage As Image, sender As PaintPanel) Implements ITool(Of BlurSettings).RenderFinalImage
+        Public Sub RenderFinalImage(ByRef rawImage As Image) Implements ITool(Of BlurSettings).RenderFinalImage
             If rawImage Is Nothing Then
                 Return
             End If
@@ -62,13 +62,17 @@ Namespace Drawing.Tools
                 rawSrcRect.Y = 0
             End If
 
-            If rawSrcRect.Width = 0 OrElse rawSrcRect.Height = 0 Then Exit Sub
+            If rawSrcRect.Width = 0 OrElse rawSrcRect.Height = 0 Then
+                Return
+            End If
 
             Using g As Graphics = Graphics.FromImage(rawImage)
                 Dim settings = _settingsControl.Settings
 
                 Using img As Bitmap = BlurImage(rawImage, settings.Diameter, rawSrcRect)
-                    If img Is Nothing Then Exit Sub
+                    If img Is Nothing Then
+                        Return
+                    End If
 
                     g.FillRectangle(Brushes.White, rawSrcRect)
                     g.CompositingMode = CompositingMode.SourceOver

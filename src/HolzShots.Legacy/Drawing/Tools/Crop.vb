@@ -8,7 +8,6 @@ Namespace Drawing.Tools
 
         Private ReadOnly _alphaBrush As New SolidBrush(Color.FromArgb(128, 0, 0, 0))
         Private ReadOnly _redCornerPen As New Pen(Color.FromArgb(255, 255, 0, 0)) With {.DashStyle = DashStyle.Dash}
-        Private _rct As New Rectangle
 
         Private Shared ReadOnly CursorInstance As New Cursor(My.Resources.cropperCursor.Handle)
         Public ReadOnly Property Cursor As Cursor = CursorInstance Implements ITool(Of ToolSettingsBase).Cursor
@@ -25,75 +24,69 @@ Namespace Drawing.Tools
             ' Nothing to do here
         End Sub
 
-        Public Sub RenderFinalImage(ByRef rawImage As Image, ByVal sender As PaintPanel) Implements ITool(Of ToolSettingsBase).RenderFinalImage
+        Public Sub RenderFinalImage(ByRef rawImage As Image) Implements ITool(Of ToolSettingsBase).RenderFinalImage
+            Dim rect = New Rectangle(
+                Math.Min(EndCoordinates.X, BeginCoordinates.X),
+                Math.Min(EndCoordinates.Y, BeginCoordinates.Y),
+                Math.Abs(BeginCoordinates.X - EndCoordinates.X),
+                Math.Abs(BeginCoordinates.Y - EndCoordinates.Y)
+            )
 
-            _rct.X = Math.Min(EndCoordinates.X, BeginCoordinates.X)
-            _rct.Y = Math.Min(EndCoordinates.Y, BeginCoordinates.Y)
-            _rct.Width = Math.Abs(BeginCoordinates.X - EndCoordinates.X)
-            _rct.Height = Math.Abs(BeginCoordinates.Y - EndCoordinates.Y)
-
-            If _rct.X + _rct.Width > rawImage.Width Then
-                _rct.Width = rawImage.Width - _rct.X
-                _rct.Width = Math.Max(1, Math.Abs(_rct.Width))
+            If rect.X + rect.Width > rawImage.Width Then
+                rect.Width = Math.Max(1, Math.Abs(rawImage.Width - rect.X))
             End If
-            If _rct.Y + _rct.Height > rawImage.Height Then
-                _rct.Height = rawImage.Height - _rct.Y
-                _rct.Height = Math.Max(1, Math.Abs(_rct.Height))
-            End If
-
-            If _rct.X < 0 Then
-                _rct.Width += _rct.X
-                _rct.X = 0
-            End If
-            If _rct.Y < 0 Then
-                _rct.Height += _rct.Y
-                _rct.Y = 0
+            If rect.Y + rect.Height > rawImage.Height Then
+                rect.Height = Math.Max(1, Math.Abs(rawImage.Height - rect.Y))
             End If
 
-            Dim newBmp As New Bitmap(_rct.Width, _rct.Height)
+            If rect.X < 0 Then
+                rect.Width += rect.X
+                rect.X = 0
+            End If
+            If rect.Y < 0 Then
+                rect.Height += rect.Y
+                rect.Y = 0
+            End If
+
+            Dim newBmp As New Bitmap(rect.Width, rect.Height)
 
             Using g As Graphics = Graphics.FromImage(newBmp)
                 g.InterpolationMode = InterpolationMode.HighQualityBilinear
-                g.DrawImage(rawImage, New Rectangle(0, 0, newBmp.Width, newBmp.Height), _rct, GraphicsUnit.Pixel)
+                g.DrawImage(rawImage, New Rectangle(0, 0, newBmp.Width, newBmp.Height), rect, GraphicsUnit.Pixel)
             End Using
 
-
             rawImage = newBmp
-            sender.RawBox.Image = newBmp
-            GC.Collect()
         End Sub
 
         Public Sub RenderPreview(rawImage As Image, g As Graphics) Implements ITool(Of ToolSettingsBase).RenderPreview
+            Dim rect = New Rectangle(
+                Math.Min(EndCoordinates.X, BeginCoordinates.X),
+                Math.Min(EndCoordinates.Y, BeginCoordinates.Y),
+                Math.Abs(BeginCoordinates.X - EndCoordinates.X),
+                Math.Abs(BeginCoordinates.Y - EndCoordinates.Y)
+            )
 
-            _rct.X = Math.Min(EndCoordinates.X, BeginCoordinates.X)
-            _rct.Y = Math.Min(EndCoordinates.Y, BeginCoordinates.Y)
-            _rct.Width = Math.Abs(BeginCoordinates.X - EndCoordinates.X)
-            _rct.Height = Math.Abs(BeginCoordinates.Y - EndCoordinates.Y)
-
-            If _rct.X + _rct.Width > rawImage.Width Then
-                _rct.Width = rawImage.Width - _rct.X
-                _rct.Width = Math.Max(1, Math.Abs(_rct.Width))
+            If rect.X + rect.Width > rawImage.Width Then
+                rect.Width = rawImage.Width - rect.X
+                rect.Width = Math.Max(1, Math.Abs(rect.Width))
             End If
-            If _rct.Y + _rct.Height > rawImage.Height Then
-                _rct.Height = rawImage.Height - _rct.Y
-                _rct.Height = Math.Max(1, Math.Abs(_rct.Height))
-            End If
-
-            If _rct.X < 0 Then
-                _rct.Width += _rct.X
-                _rct.X = 0
-            End If
-            If _rct.Y < 0 Then
-                _rct.Height += _rct.Y
-                _rct.Y = 0
+            If rect.Y + rect.Height > rawImage.Height Then
+                rect.Height = rawImage.Height - rect.Y
+                rect.Height = Math.Max(1, Math.Abs(rect.Height))
             End If
 
+            If rect.X < 0 Then
+                rect.Width += rect.X
+                rect.X = 0
+            End If
+            If rect.Y < 0 Then
+                rect.Height += rect.Y
+                rect.Y = 0
+            End If
 
             g.FillRectangle(_alphaBrush, rawImage.GetBounds(GraphicsUnit.Pixel))
-
-            g.DrawImage(rawImage, _rct, _rct, GraphicsUnit.Pixel)
-
-            g.DrawRectangle(_redCornerPen, _rct)
+            g.DrawImage(rawImage, rect, rect, GraphicsUnit.Pixel)
+            g.DrawRectangle(_redCornerPen, rect)
         End Sub
 
         Protected Sub Dispose() Implements ITool(Of ToolSettingsBase).Dispose

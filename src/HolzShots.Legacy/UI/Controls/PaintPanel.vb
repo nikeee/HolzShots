@@ -2,7 +2,6 @@ Imports System.ComponentModel
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Text
 Imports HolzShots.Drawing.Tools
-Imports HolzShots.Drawing.Tools.UI
 
 Namespace UI.Controls
     Friend Class PaintPanel
@@ -84,18 +83,16 @@ Namespace UI.Controls
                     Case ShotEditorTool.Eraser
                         CurrentToolObject = New Eraser(Me)
                     Case ShotEditorTool.Blur
-                        CurrentToolObject = New Blur
+                        CurrentToolObject = New Blur()
                     Case ShotEditorTool.Ellipse
-                        CurrentToolObject = New Ellipse
+                        CurrentToolObject = New Ellipse()
                     Case ShotEditorTool.Pipette
-                        CurrentToolObject = New Pipette
+                        CurrentToolObject = New Pipette()
                     Case ShotEditorTool.Brighten
-                        CurrentToolObject = New Brighten
+                        CurrentToolObject = New Brighten()
                     Case ShotEditorTool.Arrow
-                        CurrentToolObject = New Arrow
-                    Case ShotEditorTool.Scale
-                        CurrentToolObject = New Scale
-                        InvokeFinalRender(CurrentToolObject)
+                        CurrentToolObject = New Arrow()
+                    Case Else
                         CurrentToolObject = Nothing
                 End Select
             End Set
@@ -136,8 +133,7 @@ Namespace UI.Controls
             Ellipse = 128
             Pipette = 256
             Brighten = 512
-            Scale = 1024
-            LegacyNew = 2048
+            LegacyNew = 1024
         End Enum
 
         Public Sub Initialize(shot As Screenshot)
@@ -158,7 +154,20 @@ Namespace UI.Controls
         Private Sub InvokeFinalRender(tool As ITool(Of ToolSettingsBase))
             Dim img = DirectCast(CurrentImage.Clone(), Image)
             Debug.Assert(tool IsNot Nothing)
-            tool.RenderFinalImage(img, Me)
+
+            ' Dim oldImageRef = img
+            tool.RenderFinalImage(img)
+            ' If ReferenceEquals(oldImageRef, img) Then
+            '     RawBox.Image = oldImageRef
+            ' End If
+
+            _undoStack.Push(img)
+            UpdateRawBox()
+        End Sub
+
+        Public Sub RunDialogTool(tool As IDialogTool)
+            Dim img = DirectCast(CurrentImage.Clone(), Image)
+            tool.ShowToolDialog(img, Screenshot, Me)
             _undoStack.Push(img)
             UpdateRawBox()
         End Sub
@@ -230,7 +239,7 @@ Namespace UI.Controls
                     If TypeOf CurrentToolObject IsNot Pipette Then
                         InvokeFinalRender(CurrentToolObject)
                     Else
-                        CurrentToolObject.RenderFinalImage(CurrentImage, Me)
+                        CurrentToolObject.RenderFinalImage(CurrentImage)
                     End If
                 End If
                 _mousedown = False

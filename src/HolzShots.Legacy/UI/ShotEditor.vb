@@ -2,6 +2,7 @@ Imports System.IO
 Imports System.Runtime.InteropServices
 Imports HolzShots.Composition
 Imports HolzShots.Drawing
+Imports HolzShots.Drawing.Tools
 Imports HolzShots.Net
 Imports HolzShots.UI.Controls
 Imports HolzShots.Windows.Forms
@@ -129,10 +130,7 @@ Namespace UI
             EnlistUploaderPlugins()
         End Sub
 
-#Region "Settings and stuff"
-
         Private Sub EnlistUploaderPlugins()
-
             UploadToHoster.DropDown.ImageScalingSize = New Size(16, 16)
             UploadToHoster.DropDown.AutoSize = True
             If _uploaders.Loaded Then
@@ -145,8 +143,6 @@ Namespace UI
                 Next
             End If
         End Sub
-
-#End Region
 
 #End Region
 
@@ -229,7 +225,6 @@ Namespace UI
             _activator = New PanelActivator(CurrentToolSettingsPanel)
 
             ToolControlMap.Add(PaintPanel.ShotEditorTool.Pipette, PipettenTool)
-            ToolControlMap.Add(PaintPanel.ShotEditorTool.Scale, Nothing)
             ToolControlMap.Add(PaintPanel.ShotEditorTool.Ellipse, EllipseTool)
             ToolControlMap.Add(PaintPanel.ShotEditorTool.Text, TextToolButton)
             ToolControlMap.Add(PaintPanel.ShotEditorTool.Eraser, EraserTool)
@@ -242,7 +237,6 @@ Namespace UI
         End Sub
 
         Private Sub EnableTool(tool As PaintPanel.ShotEditorTool)
-
             Dim previousTool = ThePanel.CurrentTool
 
             If previousTool = tool Then
@@ -276,7 +270,7 @@ Namespace UI
             EnableTool(PaintPanel.ShotEditorTool.Pipette)
         End Sub
         Private Sub ScaleToolClick() Handles ScaleTool.Click
-            EnableTool(PaintPanel.ShotEditorTool.Scale)
+            ThePanel.RunDialogTool(New Scale())
         End Sub
         Private Sub CircleToolClick() Handles EllipseTool.Click
             EnableTool(PaintPanel.ShotEditorTool.Ellipse)

@@ -81,7 +81,7 @@ Namespace Drawing.Tools
                 }
         End Function
 
-        Public Sub RenderFinalImage(ByRef rawImage As Image, sender As PaintPanel) Implements ITool(Of ArrowSettings).RenderFinalImage
+        Public Sub RenderFinalImage(ByRef rawImage As Image) Implements ITool(Of ArrowSettings).RenderFinalImage
             If _arrowFirstPoint = Vector2.Zero OrElse _arrowSecondPoint = Vector2.Zero Then
                 Return
             End If

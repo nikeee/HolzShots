@@ -50,7 +50,7 @@ Namespace Drawing.Tools
             Return New SolidBrush(settings.BrightnessColor)
         End Function
 
-        Public Sub RenderFinalImage(ByRef rawImage As Image, sender As PaintPanel) Implements ITool(Of BrightnessSettings).RenderFinalImage
+        Public Sub RenderFinalImage(ByRef rawImage As Image) Implements ITool(Of BrightnessSettings).RenderFinalImage
             Dim rct As New Rectangle(
                 Math.Min(BeginCoordinates.X, EndCoordinates.X),
                 Math.Min(BeginCoordinates.Y, EndCoordinates.Y),

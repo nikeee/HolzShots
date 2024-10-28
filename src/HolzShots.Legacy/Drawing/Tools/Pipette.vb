@@ -84,7 +84,7 @@ Namespace Drawing.Tools
             _cursorPen.Dispose()
         End Sub
 
-        Public Sub RenderFinalImage(ByRef rawImage As Image, sender As PaintPanel) Implements ITool(Of ToolSettingsBase).RenderFinalImage
+        Public Sub RenderFinalImage(ByRef rawImage As Image) Implements ITool(Of ToolSettingsBase).RenderFinalImage
             ' Nothing to do here
         End Sub
         Public Sub RenderPreview(rawImage As Image, g As Graphics) Implements ITool(Of ToolSettingsBase).RenderPreview

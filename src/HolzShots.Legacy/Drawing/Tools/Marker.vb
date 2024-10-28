@@ -71,7 +71,7 @@ Namespace Drawing.Tools
         End Function
 
 
-        Public Sub RenderFinalImage(ByRef rawImage As Image, sender As PaintPanel) Implements ITool(Of MarkerSettings).RenderFinalImage
+        Public Sub RenderFinalImage(ByRef rawImage As Image) Implements ITool(Of MarkerSettings).RenderFinalImage
             Debug.Assert(TypeOf rawImage Is Bitmap)
 
             _pointList.Add(EndCoordinates)

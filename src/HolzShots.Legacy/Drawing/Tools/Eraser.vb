@@ -108,7 +108,7 @@ Namespace Drawing.Tools
             _settingsControl.Dispose()
         End Sub
 
-        Public Sub RenderFinalImage(ByRef rawImage As Image, sender As PaintPanel) Implements ITool(Of EraserSettings).RenderFinalImage
+        Public Sub RenderFinalImage(ByRef rawImage As Image) Implements ITool(Of EraserSettings).RenderFinalImage
             ' Nothing to do here
         End Sub
         Public Sub MouseOnlyMoved(rawImage As Image, ByRef currentCursor As Cursor, e As MouseEventArgs) Implements ITool(Of EraserSettings).MouseOnlyMoved

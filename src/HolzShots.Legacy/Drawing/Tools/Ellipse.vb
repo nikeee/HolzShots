@@ -51,7 +51,7 @@ Namespace Drawing.Tools
             }
         End Function
 
-        Public Sub RenderFinalImage(ByRef rawImage As Image, sender As PaintPanel) Implements ITool(Of EllipseSettings).RenderFinalImage
+        Public Sub RenderFinalImage(ByRef rawImage As Image) Implements ITool(Of EllipseSettings).RenderFinalImage
             Dim settings = _settingsControl.Settings
 
             Dim rect = New Rectangle(
