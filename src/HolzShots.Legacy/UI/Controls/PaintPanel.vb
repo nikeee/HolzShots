@@ -41,34 +41,6 @@ Namespace UI.Controls
         Public Property ArrowColor As Color
 
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
-        Public Property MarkerColor As Color
-            Get
-                Return _markerColor
-            End Get
-            Set(value As Color)
-                _markerColor = value
-                If CurrentTool = ShotEditorTool.Marker Then
-                    CurrentTool = ShotEditorTool.None
-                    CurrentTool = ShotEditorTool.Marker
-                End If
-            End Set
-        End Property
-
-        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
-        Public Property MarkerWidth As Integer
-            Get
-                Return _markerWidth
-            End Get
-            Set(value As Integer)
-                _markerWidth = value
-                If CurrentTool = ShotEditorTool.Marker Then
-                    CurrentTool = ShotEditorTool.None
-                    CurrentTool = ShotEditorTool.Marker
-                End If
-            End Set
-        End Property
-
-        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
         Public Property ArrowWidth As Integer
             Get
                 Return _arrowWidth
@@ -133,11 +105,11 @@ Namespace UI.Controls
                         Cursor = Cursors.Default
                     Case ShotEditorTool.Text
                         CurrentToolObject = Nothing
-                        Cursor = New Cursor(HolzShots.My.Resources.textCursor.Handle)
+                        Cursor = New Cursor(My.Resources.textCursor.Handle)
                     Case ShotEditorTool.Crop
                         CurrentToolObject = New Crop()
                     Case ShotEditorTool.Marker
-                        CurrentToolObject = New Marker(MarkerWidth, MarkerColor)
+                        CurrentToolObject = New Marker()
                     Case ShotEditorTool.Censor
                         CurrentToolObject = New Censor()
                     Case ShotEditorTool.Eraser

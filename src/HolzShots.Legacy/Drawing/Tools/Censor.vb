@@ -60,7 +60,7 @@ Namespace Drawing.Tools
             _pointList = New List(Of Point)
         End Sub
 
-        Private Function CreatePen(settings As CensorSettings) As Pen
+        Private Shared Function CreatePen(settings As CensorSettings) As Pen
             Return New Pen(Color.FromArgb(255, settings.Color), settings.Width) With {
                 .LineJoin = LineJoin.Round
             }
@@ -104,6 +104,7 @@ Namespace Drawing.Tools
         End Sub
 
         Protected Sub Dispose() Implements ITool(Of CensorSettings).Dispose
+            ' Nothing to do here
         End Sub
 
         Public Sub MouseOnlyMoved(rawImage As Image, ByRef currentCursor As Cursor, e As MouseEventArgs) Implements ITool(Of CensorSettings).MouseOnlyMoved

@@ -46,12 +46,6 @@ Namespace UI
             ClipboardToolStripMenuItem = New ToolStripMenuItem()
             PrintToolStripMenuItem = New ToolStripMenuItem()
             ChooseServiceToolStripMenuItem = New ToolStripMenuItem()
-            MarkerSettingsPanel = New Panel()
-            GlassLabel4 = New Label()
-            GlassLabel1 = New Label()
-            Pinsel_Width_Marker = New Label()
-            MarkerColorSelector = New Windows.Forms.ColorSelector()
-            MarkerBar = New TrackBar()
             EllipseSettingsPanel = New Panel()
             EllipseOrRectangleBox = New PictureBox()
             GlassLabel12 = New Label()
@@ -86,8 +80,6 @@ Namespace UI
             CurrentToolSettingsPanel = New Panel()
             ShareStrip.SuspendLayout()
             EditStrip.SuspendLayout()
-            MarkerSettingsPanel.SuspendLayout()
-            CType(MarkerBar, ComponentModel.ISupportInitialize).BeginInit()
             EllipseSettingsPanel.SuspendLayout()
             CType(EllipseOrRectangleBox, ComponentModel.ISupportInitialize).BeginInit()
             CType(EllipseOrRectangle, ComponentModel.ISupportInitialize).BeginInit()
@@ -405,66 +397,6 @@ Namespace UI
             ChooseServiceToolStripMenuItem.Size = New Size(226, 22)
             ChooseServiceToolStripMenuItem.Text = "ChooseService"
             ChooseServiceToolStripMenuItem.Visible = False
-            ' 
-            ' MarkerSettingsPanel
-            ' 
-            MarkerSettingsPanel.BackColor = SystemColors.Control
-            MarkerSettingsPanel.Controls.Add(GlassLabel4)
-            MarkerSettingsPanel.Controls.Add(GlassLabel1)
-            MarkerSettingsPanel.Controls.Add(Pinsel_Width_Marker)
-            MarkerSettingsPanel.Controls.Add(MarkerColorSelector)
-            MarkerSettingsPanel.Controls.Add(MarkerBar)
-            MarkerSettingsPanel.Location = New Point(193, 98)
-            MarkerSettingsPanel.Name = "MarkerSettingsPanel"
-            MarkerSettingsPanel.Size = New Size(273, 82)
-            MarkerSettingsPanel.TabIndex = 20
-            MarkerSettingsPanel.Visible = False
-            ' 
-            ' GlassLabel4
-            ' 
-            GlassLabel4.AutoSize = True
-            GlassLabel4.Location = New Point(42, 51)
-            GlassLabel4.Name = "GlassLabel4"
-            GlassLabel4.Size = New Size(39, 15)
-            GlassLabel4.TabIndex = 26
-            GlassLabel4.Text = "Color:"
-            ' 
-            ' GlassLabel1
-            ' 
-            GlassLabel1.AutoSize = True
-            GlassLabel1.Location = New Point(39, 11)
-            GlassLabel1.Name = "GlassLabel1"
-            GlassLabel1.Size = New Size(42, 15)
-            GlassLabel1.TabIndex = 23
-            GlassLabel1.Text = "Width:"
-            ' 
-            ' Pinsel_Width_Marker
-            ' 
-            Pinsel_Width_Marker.AutoSize = True
-            Pinsel_Width_Marker.Location = New Point(193, 11)
-            Pinsel_Width_Marker.Name = "Pinsel_Width_Marker"
-            Pinsel_Width_Marker.Size = New Size(13, 15)
-            Pinsel_Width_Marker.TabIndex = 20
-            Pinsel_Width_Marker.Text = "a"
-            ' 
-            ' MarkerColorSelector
-            ' 
-            MarkerColorSelector.Cursor = Cursors.Hand
-            MarkerColorSelector.Location = New Point(93, 50)
-            MarkerColorSelector.Name = "MarkerColorSelector"
-            MarkerColorSelector.Size = New Size(20, 20)
-            MarkerColorSelector.TabIndex = 19
-            ' 
-            ' MarkerBar
-            ' 
-            MarkerBar.Location = New Point(83, 6)
-            MarkerBar.Maximum = 100
-            MarkerBar.Minimum = 1
-            MarkerBar.Name = "MarkerBar"
-            MarkerBar.Size = New Size(104, 45)
-            MarkerBar.TabIndex = 16
-            MarkerBar.TabStop = False
-            MarkerBar.Value = 1
             ' 
             ' EllipseSettingsPanel
             ' 
@@ -809,7 +741,6 @@ Namespace UI
             Controls.Add(BrightenSettingsPanel)
             Controls.Add(ArrowSettingsPanel)
             Controls.Add(EllipseSettingsPanel)
-            Controls.Add(MarkerSettingsPanel)
             Controls.Add(ShareStrip)
             Controls.Add(BottomToolStrip)
             Font = New Font("Segoe UI", 9F)
@@ -822,9 +753,6 @@ Namespace UI
             ShareStrip.PerformLayout()
             EditStrip.ResumeLayout(False)
             EditStrip.PerformLayout()
-            MarkerSettingsPanel.ResumeLayout(False)
-            MarkerSettingsPanel.PerformLayout()
-            CType(MarkerBar, ComponentModel.ISupportInitialize).EndInit()
             EllipseSettingsPanel.ResumeLayout(False)
             EllipseSettingsPanel.PerformLayout()
             CType(EllipseOrRectangleBox, ComponentModel.ISupportInitialize).EndInit()
@@ -873,16 +801,10 @@ Namespace UI
         Friend WithEvents PrintToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Friend WithEvents EllipseTool As System.Windows.Forms.ToolStripButton
         Friend WithEvents KreisToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents MarkerSettingsPanel As System.Windows.Forms.Panel
-        Friend WithEvents MarkerColorSelector As HolzShots.Windows.Forms.ColorSelector
-        Friend WithEvents MarkerBar As System.Windows.Forms.TrackBar
         Friend WithEvents EllipseSettingsPanel As System.Windows.Forms.Panel
         Friend WithEvents EllipseColorSelector As HolzShots.Windows.Forms.ColorSelector
         Friend WithEvents EllipseBar As System.Windows.Forms.TrackBar
-        Friend WithEvents Pinsel_Width_Marker As System.Windows.Forms.Label
         Friend WithEvents Ellipse_Width As System.Windows.Forms.Label
-        Friend WithEvents GlassLabel4 As System.Windows.Forms.Label
-        Friend WithEvents GlassLabel1 As System.Windows.Forms.Label
         Friend WithEvents GlassLabel8 As System.Windows.Forms.Label
         Friend WithEvents GlassLabel7 As System.Windows.Forms.Label
         Friend WithEvents UploadToHoster As System.Windows.Forms.ToolStripSplitButton

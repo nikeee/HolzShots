@@ -95,7 +95,6 @@ Namespace UI
 
             AddSettingsPanels()
 
-            MarkerSettingsPanel.BackColor = Color.Transparent
             EllipseSettingsPanel.BackColor = Color.Transparent
             BrightenSettingsPanel.BackColor = Color.Transparent
             ArrowSettingsPanel.BackColor = Color.Transparent
@@ -103,7 +102,6 @@ Namespace UI
 
             Dim focusColor As Color = BackColor
 
-            MarkerBar.BackColor = focusColor
             BlackWhiteTracker.BackColor = focusColor
             ArrowWidthSlider.BackColor = focusColor
 
@@ -146,7 +144,6 @@ Namespace UI
 
         Private Sub LoadToolSettings()
             LoadArrow()
-            LoadMarker()
             LoadEllipse()
             LoadBrighten()
             EnlistUploaderPlugins()
@@ -173,18 +170,6 @@ Namespace UI
             ThePanel.ArrowColor = ArrowColorviewer.Color
             ArrowWidthSlider.Value = Math.Clamp(My.Settings.ArrowWidth, ArrowWidthSlider.Minimum, ArrowWidthSlider.Maximum)
             ArrowWidthSliderScroll()
-        End Sub
-
-        Private Sub LoadMarker()
-            MarkerColorSelector.Color = HolzShots.My.Settings.MarkerColor
-            If HolzShots.My.Settings.MarkerWidth > 100 OrElse HolzShots.My.Settings.MarkerWidth <= 0 Then
-                HolzShots.My.Settings.MarkerWidth = 20
-                HolzShots.My.Settings.Save()
-            End If
-            MarkerBar.Value = HolzShots.My.Settings.MarkerWidth
-            Pinsel_Width_Marker.Text = $"{MarkerBar.Value}px"
-            ThePanel.MarkerColor = MarkerColorSelector.Color
-            ThePanel.MarkerWidth = MarkerBar.Value
         End Sub
 
         Private Sub LoadEllipse()
@@ -281,9 +266,6 @@ Namespace UI
 #Region "Updater"
 
         Private Sub UpdateSettings() Handles MyBase.FormClosing
-            HolzShots.My.Settings.MarkerColor = MarkerColorSelector.Color
-            HolzShots.My.Settings.MarkerWidth = MarkerBar.Value
-
             HolzShots.My.Settings.EllipseColor = EllipseColorSelector.Color
             HolzShots.My.Settings.EllipseWidth = EllipseBar.Value
 
@@ -311,7 +293,6 @@ Namespace UI
             _activator.AddPanel(PaintPanel.ShotEditorTool.Arrow, ArrowSettingsPanel)
             _activator.AddPanel(PaintPanel.ShotEditorTool.Brighten, BrightenSettingsPanel)
             _activator.AddPanel(PaintPanel.ShotEditorTool.Ellipse, EllipseSettingsPanel)
-            _activator.AddPanel(PaintPanel.ShotEditorTool.Marker, MarkerSettingsPanel)
             _activator.AddPanel(PaintPanel.ShotEditorTool.LegacyNew, CurrentToolSettingsPanel)
 
             ToolControlMap.Add(PaintPanel.ShotEditorTool.Pipette, PipettenTool)
@@ -429,17 +410,6 @@ Namespace UI
 
 #End Region
 
-#Region "Tool Settings"
-
-        Private Sub MarkerBarValueChanged() Handles MarkerBar.Scroll
-            Pinsel_Width_Marker.Text = $"{MarkerBar.Value}px"
-            ThePanel.MarkerWidth = MarkerBar.Value
-        End Sub
-
-        Private Sub MarkerViewerColorChanged(sender As Object, c As Color) Handles MarkerColorSelector.ColorChanged
-            ThePanel.MarkerColor = c
-        End Sub
-
         Private Sub EllipseBarValueChanged() Handles EllipseBar.ValueChanged
             Ellipse_Width.Text = $"{EllipseBar.Value}px"
             ThePanel.EllipseWidth = EllipseBar.Value
@@ -448,8 +418,6 @@ Namespace UI
         Private Sub EllipseViewerColorChanged(sender As Object, c As Color) Handles EllipseColorSelector.ColorChanged
             ThePanel.EllipseColor = c
         End Sub
-
-#End Region
 
         Private Sub ImageInfoLabelMouseClick(sender As Object, e As MouseEventArgs) Handles ImageInfoLabel.MouseUp
 
