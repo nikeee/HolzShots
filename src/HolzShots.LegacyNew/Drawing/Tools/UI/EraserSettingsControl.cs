@@ -18,23 +18,22 @@ public partial class EraserSettingsControl : UserControl, ISettingsControl<Erase
     public EraserSettingsControl(EraserSettings initialSettings)
     {
         InitializeComponent();
+        Settings = initialSettings;
         EraserDiameterTrackBar.ValueChanged += (_, _) =>
         {
-            OnSettingsUpdated?.Invoke(this, new(EraserDiameterTrackBar.Value));
+            EraserDiameterTrackBarLabel.Text = $"{EraserDiameterTrackBar.Value}px";
         };
     }
-
-    public event EventHandler<EraserSettings>? OnSettingsUpdated;
-    // public static ISettingsControl<EraserSettings> Create(EraserSettings initialSettings) => new EraserSettingsControl(initialSettings);
 }
 
 
 public interface ISettingsControl<out TSettings> : IDisposable where TSettings : ToolSettingsBase
 {
     TSettings Settings { get; }
-    // public abstract event EventHandler<TSettings>? OnSettingsUpdated;
-    // static abstract ISettingsControl<TSettings> Create(TSettings initialSettings);
 }
 
-public abstract record ToolSettingsBase;
-public record EraserSettings(int Diameter) : ToolSettingsBase;
+public abstract class ToolSettingsBase;
+public class EraserSettings(int diameter) : ToolSettingsBase
+{
+    public int Diameter { get; init; } = diameter;
+}

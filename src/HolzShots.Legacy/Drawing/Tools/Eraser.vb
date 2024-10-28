@@ -80,8 +80,14 @@ Namespace Drawing.Tools
         Public Sub New(parent As PaintPanel)
             ArgumentNullException.ThrowIfNull(parent)
             _parent = parent
-            _settingsControl = New EraserSettingsControl(New EraserSettings(10))
-            ' AddHandler _settingsControl.OnSettingsUpdated, AddressOf OnSettingsUpdated
+
+            ' TODO: Move this
+            If My.Settings.EraserDiameter > 100 OrElse My.Settings.EraserDiameter <= 0 Then
+                My.Settings.EraserDiameter = 20
+                My.Settings.Save()
+            End If
+
+            _settingsControl = New EraserSettingsControl(New EraserSettings(My.Settings.EraserDiameter))
         End Sub
 
         Private Sub OnSettingsUpdated(sender As Object, newSettings As EraserSettings)

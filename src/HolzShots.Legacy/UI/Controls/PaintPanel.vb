@@ -42,20 +42,6 @@ Namespace UI.Controls
         Public Property ArrowColor As Color
 
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
-        Public Property EraserDiameter As Integer
-            Get
-                Return _eraseDiameter
-            End Get
-            Set(value As Integer)
-                _eraseDiameter = value
-                If CurrentTool = ShotEditorTool.Eraser Then
-                    CurrentTool = ShotEditorTool.None
-                    CurrentTool = ShotEditorTool.Eraser
-                End If
-            End Set
-        End Property
-
-        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
         Public Property MarkerColor As Color
             Get
                 Return _markerColor

@@ -58,10 +58,6 @@ Namespace UI
             Pinsel_Width_Marker = New Label()
             MarkerColorSelector = New Windows.Forms.ColorSelector()
             MarkerBar = New TrackBar()
-            EraserSettingsPanel = New Panel()
-            GlassLabel5 = New Label()
-            EraserDiameterLabel = New Label()
-            EraserBar = New TrackBar()
             EllipseSettingsPanel = New Panel()
             EllipseOrRectangleBox = New PictureBox()
             GlassLabel12 = New Label()
@@ -103,8 +99,6 @@ Namespace UI
             CType(ZensursulaBar, ComponentModel.ISupportInitialize).BeginInit()
             MarkerSettingsPanel.SuspendLayout()
             CType(MarkerBar, ComponentModel.ISupportInitialize).BeginInit()
-            EraserSettingsPanel.SuspendLayout()
-            CType(EraserBar, ComponentModel.ISupportInitialize).BeginInit()
             EllipseSettingsPanel.SuspendLayout()
             CType(EllipseOrRectangleBox, ComponentModel.ISupportInitialize).BeginInit()
             CType(EllipseOrRectangle, ComponentModel.ISupportInitialize).BeginInit()
@@ -545,47 +539,6 @@ Namespace UI
             MarkerBar.TabStop = False
             MarkerBar.Value = 1
             ' 
-            ' EraserSettingsPanel
-            ' 
-            EraserSettingsPanel.BackColor = SystemColors.Control
-            EraserSettingsPanel.Controls.Add(GlassLabel5)
-            EraserSettingsPanel.Controls.Add(EraserDiameterLabel)
-            EraserSettingsPanel.Controls.Add(EraserBar)
-            EraserSettingsPanel.Location = New Point(472, 98)
-            EraserSettingsPanel.Name = "EraserSettingsPanel"
-            EraserSettingsPanel.Size = New Size(273, 82)
-            EraserSettingsPanel.TabIndex = 21
-            EraserSettingsPanel.Visible = False
-            ' 
-            ' GlassLabel5
-            ' 
-            GlassLabel5.AutoSize = True
-            GlassLabel5.Location = New Point(19, 36)
-            GlassLabel5.Name = "GlassLabel5"
-            GlassLabel5.Size = New Size(58, 15)
-            GlassLabel5.TabIndex = 24
-            GlassLabel5.Text = "Diameter:"
-            ' 
-            ' EraserDiameterLabel
-            ' 
-            EraserDiameterLabel.AutoSize = True
-            EraserDiameterLabel.Location = New Point(184, 34)
-            EraserDiameterLabel.Name = "EraserDiameterLabel"
-            EraserDiameterLabel.Size = New Size(13, 15)
-            EraserDiameterLabel.TabIndex = 21
-            EraserDiameterLabel.Text = "a"
-            ' 
-            ' EraserBar
-            ' 
-            EraserBar.Location = New Point(83, 34)
-            EraserBar.Maximum = 100
-            EraserBar.Minimum = 1
-            EraserBar.Name = "EraserBar"
-            EraserBar.Size = New Size(104, 45)
-            EraserBar.TabIndex = 16
-            EraserBar.TabStop = False
-            EraserBar.Value = 1
-            ' 
             ' EllipseSettingsPanel
             ' 
             EllipseSettingsPanel.BackColor = SystemColors.Control
@@ -961,7 +914,6 @@ Namespace UI
             Controls.Add(BrightenSettingsPanel)
             Controls.Add(ArrowSettingsPanel)
             Controls.Add(EllipseSettingsPanel)
-            Controls.Add(EraserSettingsPanel)
             Controls.Add(MarkerSettingsPanel)
             Controls.Add(CensorSettingsPanel)
             Controls.Add(ShareStrip)
@@ -982,9 +934,6 @@ Namespace UI
             MarkerSettingsPanel.ResumeLayout(False)
             MarkerSettingsPanel.PerformLayout()
             CType(MarkerBar, ComponentModel.ISupportInitialize).EndInit()
-            EraserSettingsPanel.ResumeLayout(False)
-            EraserSettingsPanel.PerformLayout()
-            CType(EraserBar, ComponentModel.ISupportInitialize).EndInit()
             EllipseSettingsPanel.ResumeLayout(False)
             EllipseSettingsPanel.PerformLayout()
             CType(EllipseOrRectangleBox, ComponentModel.ISupportInitialize).EndInit()
@@ -1042,20 +991,16 @@ Namespace UI
         Friend WithEvents MarkerSettingsPanel As System.Windows.Forms.Panel
         Friend WithEvents MarkerColorSelector As HolzShots.Windows.Forms.ColorSelector
         Friend WithEvents MarkerBar As System.Windows.Forms.TrackBar
-        Friend WithEvents EraserSettingsPanel As System.Windows.Forms.Panel
-        Friend WithEvents EraserBar As System.Windows.Forms.TrackBar
         Friend WithEvents EllipseSettingsPanel As System.Windows.Forms.Panel
         Friend WithEvents EllipseColorSelector As HolzShots.Windows.Forms.ColorSelector
         Friend WithEvents EllipseBar As System.Windows.Forms.TrackBar
         Friend WithEvents Pinsel_Width_Zensursula As System.Windows.Forms.Label
         Friend WithEvents Pinsel_Width_Marker As System.Windows.Forms.Label
-        Friend WithEvents EraserDiameterLabel As System.Windows.Forms.Label
         Friend WithEvents Ellipse_Width As System.Windows.Forms.Label
         Friend WithEvents GlassLabel2 As System.Windows.Forms.Label
         Friend WithEvents GlassLabel3 As System.Windows.Forms.Label
         Friend WithEvents GlassLabel4 As System.Windows.Forms.Label
         Friend WithEvents GlassLabel1 As System.Windows.Forms.Label
-        Friend WithEvents GlassLabel5 As System.Windows.Forms.Label
         Friend WithEvents GlassLabel8 As System.Windows.Forms.Label
         Friend WithEvents GlassLabel7 As System.Windows.Forms.Label
         Friend WithEvents UploadToHoster As System.Windows.Forms.ToolStripSplitButton

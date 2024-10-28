@@ -53,6 +53,5 @@ Namespace UI.Controls
                 v.Visible = False
             Next
         End Sub
-
     End Class
 End Namespace

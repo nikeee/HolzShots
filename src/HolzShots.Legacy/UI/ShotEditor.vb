@@ -97,11 +97,11 @@ Namespace UI
 
             CensorSettingsPanel.BackColor = Color.Transparent
             MarkerSettingsPanel.BackColor = Color.Transparent
-            EraserSettingsPanel.BackColor = Color.Transparent
             EllipseSettingsPanel.BackColor = Color.Transparent
             BrightenSettingsPanel.BackColor = Color.Transparent
             ArrowSettingsPanel.BackColor = Color.Transparent
             BlurSettingsPanel.BackColor = Color.Transparent
+            CurrentToolSettingsPanel.BackColor = Color.Transparent
 
             Dim focusColor As Color = BackColor
 
@@ -113,8 +113,6 @@ Namespace UI
 
             EllipseBar.BackColor = focusColor
             EllipseOrRectangle.BackColor = focusColor
-
-            EraserBar.BackColor = focusColor
 
             ShareStrip.BackColor = Color.Transparent
             EditStrip.BackColor = Color.Transparent
@@ -154,7 +152,6 @@ Namespace UI
             LoadZensursula()
             LoadArrow()
             LoadMarker()
-            LoadEraser()
             LoadEllipse()
             LoadBrighten()
             LoadPixelator()
@@ -229,16 +226,6 @@ Namespace UI
             ThePanel.EllipseColor = EllipseColorSelector.Color
             ThePanel.EllipseWidth = EllipseBar.Value
             'Ellips_style.UseCompatibleTextRendering = True
-        End Sub
-
-        Private Sub LoadEraser()
-            If HolzShots.My.Settings.EraserDiameter > 100 OrElse HolzShots.My.Settings.EraserDiameter <= 0 Then
-                HolzShots.My.Settings.EraserDiameter = 20
-                HolzShots.My.Settings.Save()
-            End If
-            EraserBar.Value = HolzShots.My.Settings.EraserDiameter
-            EraserDiameterLabel.Text = $"{ EraserBar.Value}px"
-            ThePanel.EraserDiameter = EraserBar.Value
         End Sub
 
         Private Sub LoadBrighten()
@@ -327,8 +314,6 @@ Namespace UI
             HolzShots.My.Settings.MarkerColor = MarkerColorSelector.Color
             HolzShots.My.Settings.MarkerWidth = MarkerBar.Value
 
-            HolzShots.My.Settings.EraserDiameter = EraserBar.Value
-
             HolzShots.My.Settings.EllipseColor = EllipseColorSelector.Color
             HolzShots.My.Settings.EllipseWidth = EllipseBar.Value
 
@@ -359,7 +344,6 @@ Namespace UI
             _activator.AddPanel(PaintPanel.ShotEditorTool.Brighten, BrightenSettingsPanel)
             _activator.AddPanel(PaintPanel.ShotEditorTool.Blur, BlurSettingsPanel)
             _activator.AddPanel(PaintPanel.ShotEditorTool.Ellipse, EllipseSettingsPanel)
-            _activator.AddPanel(PaintPanel.ShotEditorTool.Eraser, EraserSettingsPanel)
             _activator.AddPanel(PaintPanel.ShotEditorTool.Marker, MarkerSettingsPanel)
             _activator.AddPanel(PaintPanel.ShotEditorTool.Censor, CensorSettingsPanel)
             _activator.AddPanel(PaintPanel.ShotEditorTool.LegacyNew, CurrentToolSettingsPanel)
@@ -497,11 +481,6 @@ Namespace UI
 
         Private Sub MarkerViewerColorChanged(sender As Object, c As Color) Handles MarkerColorSelector.ColorChanged
             ThePanel.MarkerColor = c
-        End Sub
-
-        Private Sub EraserBarScroll() Handles EraserBar.ValueChanged
-            EraserDiameterLabel.Text = $"{EraserBar.Value}px"
-            ThePanel.EraserDiameter = EraserBar.Value
         End Sub
 
         Private Sub EllipseBarValueChanged() Handles EllipseBar.ValueChanged
