@@ -250,8 +250,7 @@ Namespace UI
             End If
 
             Dim previousToolObject = ThePanel.CurrentToolObject
-
-            previousToolObject.PersistSettings() ' may depend on controls, so we cannot clear the settings panel before
+            previousToolObject?.PersistSettings() ' may depend on controls, so we cannot clear the settings panel before
 
             _activator.ClearSettingsPanel()
 
