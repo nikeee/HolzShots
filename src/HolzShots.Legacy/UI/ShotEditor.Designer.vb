@@ -78,9 +78,6 @@ Namespace UI
             ArrowWidthLabel = New Label()
             GlassLabel10 = New Label()
             ArrowColorviewer = New Windows.Forms.ColorSelector()
-            BlurSettingsPanel = New Panel()
-            GlassLabel14 = New Label()
-            BlurnessBar = New TrackBar()
             ToolStrip1 = New ToolStrip()
             ScaleTool = New ToolStripButton()
             DrawCursor = New ToolStripButton()
@@ -107,8 +104,6 @@ Namespace UI
             CType(BlackWhiteTracker, ComponentModel.ISupportInitialize).BeginInit()
             ArrowSettingsPanel.SuspendLayout()
             CType(ArrowWidthSlider, ComponentModel.ISupportInitialize).BeginInit()
-            BlurSettingsPanel.SuspendLayout()
-            CType(BlurnessBar, ComponentModel.ISupportInitialize).BeginInit()
             ToolStrip1.SuspendLayout()
             BottomToolStrip.SuspendLayout()
             CopyPrintToolStrip.SuspendLayout()
@@ -736,37 +731,6 @@ Namespace UI
             ArrowColorviewer.Size = New Size(20, 20)
             ArrowColorviewer.TabIndex = 19
             ' 
-            ' BlurSettingsPanel
-            ' 
-            BlurSettingsPanel.BackColor = SystemColors.Control
-            BlurSettingsPanel.Controls.Add(GlassLabel14)
-            BlurSettingsPanel.Controls.Add(BlurnessBar)
-            BlurSettingsPanel.Location = New Point(193, 450)
-            BlurSettingsPanel.Name = "BlurSettingsPanel"
-            BlurSettingsPanel.Size = New Size(273, 82)
-            BlurSettingsPanel.TabIndex = 27
-            BlurSettingsPanel.Visible = False
-            ' 
-            ' GlassLabel14
-            ' 
-            GlassLabel14.AutoSize = True
-            GlassLabel14.Location = New Point(19, 17)
-            GlassLabel14.Name = "GlassLabel14"
-            GlassLabel14.Size = New Size(58, 15)
-            GlassLabel14.TabIndex = 22
-            GlassLabel14.Text = "Diameter:"
-            ' 
-            ' BlurnessBar
-            ' 
-            BlurnessBar.Location = New Point(78, 13)
-            BlurnessBar.Maximum = 30
-            BlurnessBar.Minimum = 5
-            BlurnessBar.Name = "BlurnessBar"
-            BlurnessBar.Size = New Size(175, 45)
-            BlurnessBar.TabIndex = 16
-            BlurnessBar.TabStop = False
-            BlurnessBar.Value = 5
-            ' 
             ' ToolStrip1
             ' 
             ToolStrip1.AllowItemReorder = True
@@ -909,7 +873,6 @@ Namespace UI
             Controls.Add(ThePanel)
             Controls.Add(EditStrip)
             Controls.Add(CopyPrintToolStrip)
-            Controls.Add(BlurSettingsPanel)
             Controls.Add(ToolStrip1)
             Controls.Add(BrightenSettingsPanel)
             Controls.Add(ArrowSettingsPanel)
@@ -945,9 +908,6 @@ Namespace UI
             ArrowSettingsPanel.ResumeLayout(False)
             ArrowSettingsPanel.PerformLayout()
             CType(ArrowWidthSlider, ComponentModel.ISupportInitialize).EndInit()
-            BlurSettingsPanel.ResumeLayout(False)
-            BlurSettingsPanel.PerformLayout()
-            CType(BlurnessBar, ComponentModel.ISupportInitialize).EndInit()
             ToolStrip1.ResumeLayout(False)
             ToolStrip1.PerformLayout()
             BottomToolStrip.ResumeLayout(False)
@@ -1024,9 +984,6 @@ Namespace UI
         Friend WithEvents GlassLabel12 As System.Windows.Forms.Label
         Friend WithEvents EllipseOrRectangle As System.Windows.Forms.TrackBar
         Friend WithEvents EllipseOrRectangleBox As System.Windows.Forms.PictureBox
-        Friend WithEvents BlurSettingsPanel As System.Windows.Forms.Panel
-        Friend WithEvents GlassLabel14 As System.Windows.Forms.Label
-        Friend WithEvents BlurnessBar As System.Windows.Forms.TrackBar
         Friend WithEvents BottomToolStrip As System.Windows.Forms.ToolStrip
         Friend WithEvents ImageInfoLabel As System.Windows.Forms.ToolStripLabel
         Friend WithEvents MouseInfoLabel As System.Windows.Forms.ToolStripLabel

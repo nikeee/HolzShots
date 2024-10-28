@@ -21,7 +21,7 @@ public partial class EraserSettingsControl : UserControl, ISettingsControl<Erase
         Settings = initialSettings;
         EraserDiameterTrackBar.ValueChanged += (_, _) =>
         {
-            EraserDiameterTrackBarLabel.Text = $"{EraserDiameterTrackBar.Value}px";
+            EraserDiameterTrackBarLabel.Text = $"Diameter: {EraserDiameterTrackBar.Value}px";
         };
     }
 }

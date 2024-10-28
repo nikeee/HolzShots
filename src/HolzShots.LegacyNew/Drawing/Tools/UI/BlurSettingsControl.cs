@@ -21,7 +21,7 @@ public partial class BlurSettingsControl : UserControl, ISettingsControl<BlurSet
         Settings = initialSettings;
         BlurDiameterTrackBar.ValueChanged += (_, _) =>
         {
-            BlurDiameterTrackBarLabel.Text = $"{BlurDiameterTrackBar.Value}px";
+            BlurDiameterTrackBarLabel.Text = $"Factor: {BlurDiameterTrackBar.Value}px";
         };
     }
 }

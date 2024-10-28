@@ -100,12 +100,10 @@ Namespace UI
             EllipseSettingsPanel.BackColor = Color.Transparent
             BrightenSettingsPanel.BackColor = Color.Transparent
             ArrowSettingsPanel.BackColor = Color.Transparent
-            BlurSettingsPanel.BackColor = Color.Transparent
             CurrentToolSettingsPanel.BackColor = Color.Transparent
 
             Dim focusColor As Color = BackColor
 
-            BlurnessBar.BackColor = focusColor
             ZensursulaBar.BackColor = focusColor
             MarkerBar.BackColor = focusColor
             BlackWhiteTracker.BackColor = focusColor
@@ -154,7 +152,6 @@ Namespace UI
             LoadMarker()
             LoadEllipse()
             LoadBrighten()
-            LoadPixelator()
             EnlistUploaderPlugins()
         End Sub
 
@@ -171,15 +168,6 @@ Namespace UI
                     item.ImageScaling = ToolStripItemImageScaling.None
                 Next
             End If
-        End Sub
-
-        Private Sub LoadPixelator()
-            If HolzShots.My.Settings.BlurFactor > 30 OrElse HolzShots.My.Settings.BlurFactor <= 5 Then
-                HolzShots.My.Settings.BlurFactor = 7
-                HolzShots.My.Settings.Save()
-            End If
-            ThePanel.BlurFactor = HolzShots.My.Settings.BlurFactor
-            BlurnessBar.Value = ThePanel.BlurFactor
         End Sub
 
         Private Sub LoadZensursula()
@@ -323,8 +311,6 @@ Namespace UI
             HolzShots.My.Settings.ArrowWidth = ArrowWidthSlider.Value
             HolzShots.My.Settings.UseBoxInsteadOfCirlce = ThePanel.UseBoxInsteadOfCircle
 
-            HolzShots.My.Settings.BlurFactor = ThePanel.BlurFactor
-
             HolzShots.My.Settings.Save()
         End Sub
 
@@ -342,7 +328,6 @@ Namespace UI
             _activator = New PanelActivator()
             _activator.AddPanel(PaintPanel.ShotEditorTool.Arrow, ArrowSettingsPanel)
             _activator.AddPanel(PaintPanel.ShotEditorTool.Brighten, BrightenSettingsPanel)
-            _activator.AddPanel(PaintPanel.ShotEditorTool.Blur, BlurSettingsPanel)
             _activator.AddPanel(PaintPanel.ShotEditorTool.Ellipse, EllipseSettingsPanel)
             _activator.AddPanel(PaintPanel.ShotEditorTool.Marker, MarkerSettingsPanel)
             _activator.AddPanel(PaintPanel.ShotEditorTool.Censor, CensorSettingsPanel)
@@ -603,10 +588,6 @@ Namespace UI
             If _settingsContext.CloseAfterUpload Then
                 Close()
             End If
-        End Sub
-
-        Private Sub BlurnessBarValueChanged() Handles BlurnessBar.ValueChanged
-            ThePanel.BlurFactor = BlurnessBar.Value
         End Sub
 
         Private Async Sub UploadCurrentImageToDefaultProvider() Handles UploadToHoster.ButtonClick

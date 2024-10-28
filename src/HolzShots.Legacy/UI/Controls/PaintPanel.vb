@@ -111,22 +111,6 @@ Namespace UI.Controls
             End Set
         End Property
 
-        Private _blurFactor As Integer
-        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
-        Public Property BlurFactor As Integer
-            Get
-                Return _blurFactor
-            End Get
-            Set(value As Integer)
-                If value <= 0 Then value = 7
-                _blurFactor = value
-                If CurrentTool = ShotEditorTool.Blur Then
-                    CurrentTool = ShotEditorTool.None
-                    CurrentTool = ShotEditorTool.Blur
-                End If
-            End Set
-        End Property
-
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
         Public Property BrightenColor As Color
 

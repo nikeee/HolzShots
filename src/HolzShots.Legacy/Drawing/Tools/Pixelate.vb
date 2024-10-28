@@ -4,81 +4,101 @@ Imports HolzShots.UI.Controls
 
 Namespace Drawing.Tools
     Friend Class Pixelate
-        Implements ITool(Of ToolSettingsBase)
+        Implements ITool(Of BlurSettings)
 
         ReadOnly _thePen As New Pen(Color.Red) With {.DashStyle = DashStyle.Dash}
         Private Shared ReadOnly CursorInstance As New Cursor(My.Resources.crossMedium.GetHicon())
-        Public ReadOnly Property Cursor As Cursor = CursorInstance Implements ITool(Of ToolSettingsBase).Cursor
-        Public ReadOnly Property ToolType As PaintPanel.ShotEditorTool = PaintPanel.ShotEditorTool.Blur Implements ITool(Of ToolSettingsBase).ToolType
-        Public ReadOnly Property SettingsControl As ISettingsControl(Of ToolSettingsBase) = Nothing Implements ITool(Of ToolSettingsBase).SettingsControl
-        Public Property BeginCoordinates As Point Implements ITool(Of ToolSettingsBase).BeginCoordinates
-        Public Property EndCoordinates As Point Implements ITool(Of ToolSettingsBase).EndCoordinates
-        Public Sub RenderFinalImage(ByRef rawImage As Image, sender As PaintPanel) Implements ITool(Of ToolSettingsBase).RenderFinalImage
-            If rawImage IsNot Nothing Then
+        Public ReadOnly Property Cursor As Cursor = CursorInstance Implements ITool(Of BlurSettings).Cursor
+        Public ReadOnly Property ToolType As PaintPanel.ShotEditorTool = PaintPanel.ShotEditorTool.Blur Implements ITool(Of BlurSettings).ToolType
 
+        Private ReadOnly _settingsControl As ISettingsControl(Of BlurSettings)
+        Public ReadOnly Property SettingsControl As ISettingsControl(Of BlurSettings) Implements ITool(Of BlurSettings).SettingsControl
+            Get
+                Return _settingsControl
+            End Get
+        End Property
+        Public Property BeginCoordinates As Point Implements ITool(Of BlurSettings).BeginCoordinates
+        Public Property EndCoordinates As Point Implements ITool(Of BlurSettings).EndCoordinates
 
-                Dim rawSrcRect As New Rectangle(
-                    Math.Min(BeginCoordinates.X, EndCoordinates.X),
-                    Math.Min(BeginCoordinates.Y, EndCoordinates.Y),
-                    Math.Abs(BeginCoordinates.X - EndCoordinates.X),
-                    Math.Abs(BeginCoordinates.Y - EndCoordinates.Y)
-                )
-
-                If rawSrcRect.X < 0 Then
-                    rawSrcRect.Width += rawSrcRect.X
-                    rawSrcRect.X = 0
-                End If
-                If rawSrcRect.Y < 0 Then
-                    rawSrcRect.Height += rawSrcRect.Y
-                    rawSrcRect.Y = 0
-                End If
-
-                If rawSrcRect.Width = 0 OrElse rawSrcRect.Height = 0 Then Exit Sub
-
-                Using g As Graphics = Graphics.FromImage(rawImage)
-
-                    Using img As Bitmap = BlurImage(rawImage, sender.BlurFactor, rawSrcRect)
-                        If img Is Nothing Then Exit Sub
-
-                        g.FillRectangle(Brushes.White, rawSrcRect)
-                        g.CompositingMode = CompositingMode.SourceOver
-                        g.DrawImage(img, rawSrcRect)
-                    End Using
-                End Using
-
+        Sub New()
+            ' TODO: Move this
+            If HolzShots.My.Settings.BlurFactor > 30 OrElse HolzShots.My.Settings.BlurFactor <= 5 Then
+                HolzShots.My.Settings.BlurFactor = 7
+                HolzShots.My.Settings.Save()
             End If
+            _settingsControl = New BlurSettingsControl(New BlurSettings(My.Settings.BlurFactor))
         End Sub
 
-        Public Sub RenderPreview(rawImage As Image, g As Graphics, sender As PaintPanel) Implements ITool(Of ToolSettingsBase).RenderPreview
-            If rawImage IsNot Nothing Then
-                Dim rawSrcRectangle As New Rectangle(
-                    Math.Min(BeginCoordinates.X, EndCoordinates.X),
-                    Math.Min(BeginCoordinates.Y, EndCoordinates.Y),
-                    Math.Abs(BeginCoordinates.X - EndCoordinates.X),
-                    Math.Abs(BeginCoordinates.Y - EndCoordinates.Y)
-                )
+        Public Sub RenderFinalImage(ByRef rawImage As Image, sender As PaintPanel) Implements ITool(Of BlurSettings).RenderFinalImage
+            If rawImage Is Nothing Then
+                Return
+            End If
 
-                If rawSrcRectangle.X < 0 Then
-                    rawSrcRectangle.Width += rawSrcRectangle.X
-                    rawSrcRectangle.X = 0
-                End If
-                If rawSrcRectangle.Y < 0 Then
-                    rawSrcRectangle.Height += rawSrcRectangle.Y
-                    rawSrcRectangle.Y = 0
-                End If
+            Dim rawSrcRect As New Rectangle(
+                Math.Min(BeginCoordinates.X, EndCoordinates.X),
+                Math.Min(BeginCoordinates.Y, EndCoordinates.Y),
+                Math.Abs(BeginCoordinates.X - EndCoordinates.X),
+                Math.Abs(BeginCoordinates.Y - EndCoordinates.Y)
+            )
 
+            If rawSrcRect.X < 0 Then
+                rawSrcRect.Width += rawSrcRect.X
+                rawSrcRect.X = 0
+            End If
+            If rawSrcRect.Y < 0 Then
+                rawSrcRect.Height += rawSrcRect.Y
+                rawSrcRect.Y = 0
+            End If
 
-                If rawSrcRectangle.Width = 0 OrElse rawSrcRectangle.Height = 0 Then Exit Sub
+            If rawSrcRect.Width = 0 OrElse rawSrcRect.Height = 0 Then Exit Sub
 
-                Using img As Bitmap = BlurImage(rawImage, sender.BlurFactor, rawSrcRectangle)
+            Using g As Graphics = Graphics.FromImage(rawImage)
+                Dim settings = _settingsControl.Settings
+
+                Using img As Bitmap = BlurImage(rawImage, settings.Diameter, rawSrcRect)
                     If img Is Nothing Then Exit Sub
 
+                    g.FillRectangle(Brushes.White, rawSrcRect)
                     g.CompositingMode = CompositingMode.SourceOver
-                    g.FillRectangle(Brushes.White, rawSrcRectangle)
-                    g.DrawImage(img, rawSrcRectangle)
+                    g.DrawImage(img, rawSrcRect)
                 End Using
-                g.DrawRectangle(_thePen, rawSrcRectangle)
+            End Using
+        End Sub
+
+        Public Sub RenderPreview(rawImage As Image, g As Graphics, sender As PaintPanel) Implements ITool(Of BlurSettings).RenderPreview
+            If rawImage Is Nothing Then
+                Return
             End If
+
+            Dim rawSrcRectangle As New Rectangle(
+                Math.Min(BeginCoordinates.X, EndCoordinates.X),
+                Math.Min(BeginCoordinates.Y, EndCoordinates.Y),
+                Math.Abs(BeginCoordinates.X - EndCoordinates.X),
+                Math.Abs(BeginCoordinates.Y - EndCoordinates.Y)
+            )
+
+            If rawSrcRectangle.X < 0 Then
+                rawSrcRectangle.Width += rawSrcRectangle.X
+                rawSrcRectangle.X = 0
+            End If
+
+            If rawSrcRectangle.Y < 0 Then
+                rawSrcRectangle.Height += rawSrcRectangle.Y
+                rawSrcRectangle.Y = 0
+            End If
+
+            If rawSrcRectangle.Width = 0 OrElse rawSrcRectangle.Height = 0 Then Exit Sub
+
+            Dim settings = _settingsControl.Settings
+
+            Using img As Bitmap = BlurImage(rawImage, settings.Diameter, rawSrcRectangle)
+                If img Is Nothing Then Exit Sub
+
+                g.CompositingMode = CompositingMode.SourceOver
+                g.FillRectangle(Brushes.White, rawSrcRectangle)
+                g.DrawImage(img, rawSrcRectangle)
+            End Using
+            g.DrawRectangle(_thePen, rawSrcRectangle)
         End Sub
 
         Private Shared Function BlurImage(img As Image, factor As Integer, rawSrcRect As Rectangle) As Bitmap
@@ -114,13 +134,13 @@ Namespace Drawing.Tools
                 End Using
             End Using
         End Function
-        Public Sub MouseOnlyMoved(rawImage As Image, ByRef currentCursor As Cursor, e As MouseEventArgs) Implements ITool(Of ToolSettingsBase).MouseOnlyMoved
+        Public Sub MouseOnlyMoved(rawImage As Image, ByRef currentCursor As Cursor, e As MouseEventArgs) Implements ITool(Of BlurSettings).MouseOnlyMoved
             ' Nothing to do here
         End Sub
-        Public Sub MouseClicked(rawImage As Image, e As Point, ByRef currentCursor As Cursor, trigger As Control) Implements ITool(Of ToolSettingsBase).MouseClicked
+        Public Sub MouseClicked(rawImage As Image, e As Point, ByRef currentCursor As Cursor, trigger As Control) Implements ITool(Of BlurSettings).MouseClicked
             ' Nothing to do here
         End Sub
-        Public Sub Dispose() Implements ITool(Of ToolSettingsBase).Dispose
+        Public Sub Dispose() Implements ITool(Of BlurSettings).Dispose
         End Sub
     End Class
 End Namespace
