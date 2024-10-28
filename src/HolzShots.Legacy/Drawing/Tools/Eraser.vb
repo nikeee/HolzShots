@@ -42,7 +42,7 @@ Namespace Drawing.Tools
             End Get
         End Property
 
-        Public ReadOnly Property ToolType As PaintPanel.ShotEditorTool = PaintPanel.ShotEditorTool.Eraser Implements ITool(Of EraserSettings).ToolType
+        Public ReadOnly Property ToolType As ShotEditorTool = ShotEditorTool.Eraser Implements ITool(Of EraserSettings).ToolType
 
         Private Shared ReadOnly ClearBrush As Brush = New SolidBrush(Color.FromArgb(0, Color.White))
 

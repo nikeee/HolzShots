@@ -1,7 +1,6 @@
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Text
 Imports HolzShots.Drawing.Tools.UI
-Imports HolzShots.UI.Controls
 
 Namespace Drawing.Tools
     Friend NotInheritable Class Censor
@@ -34,7 +33,7 @@ Namespace Drawing.Tools
             End Get
         End Property
 
-        Public ReadOnly Property ToolType As PaintPanel.ShotEditorTool = PaintPanel.ShotEditorTool.Censor Implements ITool(Of CensorSettings).ToolType
+        Public ReadOnly Property ToolType As ShotEditorTool = ShotEditorTool.Censor Implements ITool(Of CensorSettings).ToolType
 
         Private ReadOnly _settingsControl As ISettingsControl(Of CensorSettings)
         Public ReadOnly Property SettingsControl As ISettingsControl(Of CensorSettings) Implements ITool(Of CensorSettings).SettingsControl

@@ -1,12 +1,11 @@
 Imports System.Drawing.Drawing2D
 Imports HolzShots.Drawing.Tools.UI
-Imports HolzShots.UI.Controls
 Imports HolzShots.Windows.Forms
 
 Namespace Drawing.Tools
     Friend NotInheritable Class Pipette
         Implements ITool(Of ToolSettingsBase)
-        Public ReadOnly Property ToolType As PaintPanel.ShotEditorTool = PaintPanel.ShotEditorTool.Pipette Implements ITool(Of ToolSettingsBase).ToolType
+        Public ReadOnly Property ToolType As ShotEditorTool = ShotEditorTool.Pipette Implements ITool(Of ToolSettingsBase).ToolType
 
         Public ReadOnly Property Cursor As Cursor = Cursors.Cross Implements ITool(Of ToolSettingsBase).Cursor
         Public ReadOnly Property SettingsControl As ISettingsControl(Of ToolSettingsBase) = Nothing Implements ITool(Of ToolSettingsBase).SettingsControl

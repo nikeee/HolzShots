@@ -1,7 +1,5 @@
-Imports System.Configuration
 Imports System.Drawing.Drawing2D
 Imports HolzShots.Drawing.Tools.UI
-Imports HolzShots.UI.Controls
 
 Namespace Drawing.Tools
     Friend Class Ellipse
@@ -11,7 +9,7 @@ Namespace Drawing.Tools
 
         Private Shared ReadOnly CursorInstance As New Cursor(My.Resources.crossMedium.GetHicon())
         Public ReadOnly Property Cursor As Cursor = CursorInstance Implements ITool(Of EllipseSettings).Cursor
-        Public ReadOnly Property ToolType As PaintPanel.ShotEditorTool = PaintPanel.ShotEditorTool.Ellipse Implements ITool(Of EllipseSettings).ToolType
+        Public ReadOnly Property ToolType As ShotEditorTool = ShotEditorTool.Ellipse Implements ITool(Of EllipseSettings).ToolType
 
         Private ReadOnly _settingsControl As EllipseSettingsControl
         Public ReadOnly Property SettingsControl As ISettingsControl(Of EllipseSettings) Implements ITool(Of EllipseSettings).SettingsControl

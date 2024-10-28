@@ -1,6 +1,5 @@
 Imports System.Drawing.Drawing2D
 Imports HolzShots.Drawing.Tools.UI
-Imports HolzShots.UI.Controls
 
 Namespace Drawing.Tools
     Friend Class Blur
@@ -9,7 +8,7 @@ Namespace Drawing.Tools
         ReadOnly _thePen As New Pen(Color.Red) With {.DashStyle = DashStyle.Dash}
         Private Shared ReadOnly CursorInstance As New Cursor(My.Resources.crossMedium.GetHicon())
         Public ReadOnly Property Cursor As Cursor = CursorInstance Implements ITool(Of BlurSettings).Cursor
-        Public ReadOnly Property ToolType As PaintPanel.ShotEditorTool = PaintPanel.ShotEditorTool.Blur Implements ITool(Of BlurSettings).ToolType
+        Public ReadOnly Property ToolType As ShotEditorTool = ShotEditorTool.Blur Implements ITool(Of BlurSettings).ToolType
 
         Private ReadOnly _settingsControl As ISettingsControl(Of BlurSettings)
         Public ReadOnly Property SettingsControl As ISettingsControl(Of BlurSettings) Implements ITool(Of BlurSettings).SettingsControl

@@ -1,7 +1,6 @@
 Imports System.Drawing.Drawing2D
 Imports System.Numerics
 Imports HolzShots.Drawing.Tools.UI
-Imports HolzShots.UI.Controls
 
 Namespace Drawing.Tools
     Friend Class Arrow
@@ -40,7 +39,7 @@ Namespace Drawing.Tools
         End Property
 
         Private Shared ReadOnly TheCursor As New Cursor(My.Resources.crossMedium.GetHicon())
-        Public ReadOnly Property ToolType As PaintPanel.ShotEditorTool = PaintPanel.ShotEditorTool.Arrow Implements ITool(Of ArrowSettings).ToolType
+        Public ReadOnly Property ToolType As ShotEditorTool = ShotEditorTool.Arrow Implements ITool(Of ArrowSettings).ToolType
         Public ReadOnly Property Cursor As Cursor = TheCursor Implements ITool(Of ArrowSettings).Cursor
         Private ReadOnly _settingsControl As ISettingsControl(Of ArrowSettings)
         Public ReadOnly Property SettingsControl As ISettingsControl(Of ArrowSettings) Implements ITool(Of ArrowSettings).SettingsControl

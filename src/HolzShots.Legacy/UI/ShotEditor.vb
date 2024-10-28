@@ -212,31 +212,31 @@ Namespace UI
         End Sub
 
         Private Sub ResetTools()
-            EnableTool(PaintPanel.ShotEditorTool.None)
+            EnableTool(ShotEditorTool.None)
         End Sub
 
 #End Region
 
 #Region "Painting Tools"
 
-        Private ReadOnly ToolControlMap As New Dictionary(Of PaintPanel.ShotEditorTool, ToolStripButton)
+        Private ReadOnly ToolControlMap As New Dictionary(Of ShotEditorTool, ToolStripButton)
 
         Private Sub AddSettingsPanels()
             _activator = New PanelActivator(CurrentToolSettingsPanel)
 
-            ToolControlMap.Add(PaintPanel.ShotEditorTool.Pipette, PipettenTool)
-            ToolControlMap.Add(PaintPanel.ShotEditorTool.Ellipse, EllipseTool)
-            ToolControlMap.Add(PaintPanel.ShotEditorTool.Text, TextToolButton)
-            ToolControlMap.Add(PaintPanel.ShotEditorTool.Eraser, EraserTool)
-            ToolControlMap.Add(PaintPanel.ShotEditorTool.Crop, CroppingTool)
-            ToolControlMap.Add(PaintPanel.ShotEditorTool.Arrow, ArrowTool)
-            ToolControlMap.Add(PaintPanel.ShotEditorTool.Censor, CensorTool)
-            ToolControlMap.Add(PaintPanel.ShotEditorTool.Marker, MarkerTool)
-            ToolControlMap.Add(PaintPanel.ShotEditorTool.Blur, BlurTool)
-            ToolControlMap.Add(PaintPanel.ShotEditorTool.Brighten, BrightenTool)
+            ToolControlMap.Add(ShotEditorTool.Pipette, PipettenTool)
+            ToolControlMap.Add(ShotEditorTool.Ellipse, EllipseTool)
+            ToolControlMap.Add(ShotEditorTool.Text, TextToolButton)
+            ToolControlMap.Add(ShotEditorTool.Eraser, EraserTool)
+            ToolControlMap.Add(ShotEditorTool.Crop, CroppingTool)
+            ToolControlMap.Add(ShotEditorTool.Arrow, ArrowTool)
+            ToolControlMap.Add(ShotEditorTool.Censor, CensorTool)
+            ToolControlMap.Add(ShotEditorTool.Marker, MarkerTool)
+            ToolControlMap.Add(ShotEditorTool.Blur, BlurTool)
+            ToolControlMap.Add(ShotEditorTool.Brighten, BrightenTool)
         End Sub
 
-        Private Sub EnableTool(tool As PaintPanel.ShotEditorTool)
+        Private Sub EnableTool(tool As ShotEditorTool)
             Dim previousTool = ThePanel.CurrentTool
 
             If previousTool = tool Then
@@ -267,37 +267,37 @@ Namespace UI
         End Sub
 
         Private Sub PipettenToolClick() Handles PipettenTool.Click
-            EnableTool(PaintPanel.ShotEditorTool.Pipette)
+            EnableTool(ShotEditorTool.Pipette)
         End Sub
         Private Sub ScaleToolClick() Handles ScaleTool.Click
             ThePanel.RunDialogTool(New Scale())
         End Sub
         Private Sub CircleToolClick() Handles EllipseTool.Click
-            EnableTool(PaintPanel.ShotEditorTool.Ellipse)
+            EnableTool(ShotEditorTool.Ellipse)
         End Sub
         Private Sub TextToolButtonClick() Handles TextToolButton.Click
-            EnableTool(PaintPanel.ShotEditorTool.Text)
+            EnableTool(ShotEditorTool.Text)
         End Sub
         Private Sub EraserButtonClick() Handles EraserTool.Click
-            EnableTool(PaintPanel.ShotEditorTool.Eraser)
+            EnableTool(ShotEditorTool.Eraser)
         End Sub
         Private Sub CroppingToolClick() Handles CroppingTool.Click
-            EnableTool(PaintPanel.ShotEditorTool.Crop)
+            EnableTool(ShotEditorTool.Crop)
         End Sub
         Private Sub ArrowToolClick() Handles ArrowTool.Click
-            EnableTool(PaintPanel.ShotEditorTool.Arrow)
+            EnableTool(ShotEditorTool.Arrow)
         End Sub
         Private Sub ZensursulaClick() Handles CensorTool.Click
-            EnableTool(PaintPanel.ShotEditorTool.Censor)
+            EnableTool(ShotEditorTool.Censor)
         End Sub
         Private Sub HighlightClick() Handles MarkerTool.Click
-            EnableTool(PaintPanel.ShotEditorTool.Marker)
+            EnableTool(ShotEditorTool.Marker)
         End Sub
         Private Sub PixelateAreaClick() Handles BlurTool.Click
-            EnableTool(PaintPanel.ShotEditorTool.Blur)
+            EnableTool(ShotEditorTool.Blur)
         End Sub
         Private Sub BrightenToolClick() Handles BrightenTool.Click
-            EnableTool(PaintPanel.ShotEditorTool.Brighten)
+            EnableTool(ShotEditorTool.Brighten)
         End Sub
 
         Private Sub UndoStuffClick() Handles UndoStuff.Click

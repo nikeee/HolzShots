@@ -1,8 +1,6 @@
-Imports System.Configuration
 Imports System.Drawing.Drawing2D
 Imports HolzShots.Drawing
 Imports HolzShots.Drawing.Tools.UI
-Imports HolzShots.UI.Controls
 
 Namespace Drawing.Tools
     Friend NotInheritable Class Marker
@@ -40,7 +38,7 @@ Namespace Drawing.Tools
             End Get
         End Property
 
-        Public ReadOnly Property ToolType As PaintPanel.ShotEditorTool = PaintPanel.ShotEditorTool.Marker Implements ITool(Of MarkerSettings).ToolType
+        Public ReadOnly Property ToolType As ShotEditorTool = ShotEditorTool.Marker Implements ITool(Of MarkerSettings).ToolType
 
         Sub New()
             _settingsControl = New MarkerSettingsControl(MarkerSettings.Default)

@@ -1,6 +1,5 @@
 Imports System.Drawing.Drawing2D
 Imports HolzShots.Drawing.Tools.UI
-Imports HolzShots.UI.Controls
 
 Namespace Drawing.Tools
     Friend Class Crop
@@ -11,7 +10,7 @@ Namespace Drawing.Tools
 
         Private Shared ReadOnly CursorInstance As New Cursor(My.Resources.cropperCursor.Handle)
         Public ReadOnly Property Cursor As Cursor = CursorInstance Implements ITool(Of ToolSettingsBase).Cursor
-        Public ReadOnly Property ToolType As PaintPanel.ShotEditorTool = PaintPanel.ShotEditorTool.Crop Implements ITool(Of ToolSettingsBase).ToolType
+        Public ReadOnly Property ToolType As ShotEditorTool = ShotEditorTool.Crop Implements ITool(Of ToolSettingsBase).ToolType
         Public ReadOnly Property SettingsControl As ISettingsControl(Of ToolSettingsBase) = Nothing Implements ITool(Of ToolSettingsBase).SettingsControl
 
         Public Property BeginCoordinates As Point Implements ITool(Of ToolSettingsBase).BeginCoordinates

@@ -1,6 +1,4 @@
-Imports System.Drawing.Drawing2D
 Imports HolzShots.Drawing.Tools.UI
-Imports HolzShots.UI.Controls
 
 Namespace Drawing.Tools
     Friend Class Brighten
@@ -8,7 +6,7 @@ Namespace Drawing.Tools
 
         Private Shared ReadOnly CursorInstance As New Cursor(My.Resources.crossMedium.GetHicon())
         Public ReadOnly Property Cursor As Cursor = CursorInstance Implements ITool(Of BrightnessSettings).Cursor
-        Public ReadOnly Property ToolType As PaintPanel.ShotEditorTool = PaintPanel.ShotEditorTool.Brighten Implements ITool(Of BrightnessSettings).ToolType
+        Public ReadOnly Property ToolType As ShotEditorTool = ShotEditorTool.Brighten Implements ITool(Of BrightnessSettings).ToolType
         Private ReadOnly _settingsControl As BrightnessSettingsControl
         Public ReadOnly Property SettingsControl As ISettingsControl(Of BrightnessSettings) Implements ITool(Of BrightnessSettings).SettingsControl
             Get
