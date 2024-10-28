@@ -101,10 +101,6 @@ Namespace Drawing.Tools
             End With
         End Sub
 
-        Private Sub OnSettingsUpdated(sender As Object, newSettings As EraserSettings)
-            MessageBox.Show("Settings updated: " & newSettings.ToString())
-        End Sub
-
         Public Sub Dispose() Implements ITool(Of EraserSettings).Dispose
             _settingsControl.Dispose()
         End Sub
