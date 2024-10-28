@@ -89,7 +89,7 @@ Namespace Drawing.Tools
             _pointList.Clear()
         End Sub
 
-        Public Sub RenderPreview(rawImage As Image, g As Graphics, sender As PaintPanel) Implements ITool(Of MarkerSettings).RenderPreview
+        Public Sub RenderPreview(rawImage As Image, g As Graphics) Implements ITool(Of MarkerSettings).RenderPreview
             Debug.Assert(TypeOf rawImage Is Bitmap)
 
             _pointList.Add(EndCoordinates)

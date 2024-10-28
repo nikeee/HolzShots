@@ -87,7 +87,7 @@ Namespace Drawing.Tools
         Public Sub RenderFinalImage(ByRef rawImage As Image, sender As PaintPanel) Implements ITool(Of ToolSettingsBase).RenderFinalImage
             ' Nothing to do here
         End Sub
-        Public Sub RenderPreview(rawImage As Image, g As Graphics, sender As PaintPanel) Implements ITool(Of ToolSettingsBase).RenderPreview
+        Public Sub RenderPreview(rawImage As Image, g As Graphics) Implements ITool(Of ToolSettingsBase).RenderPreview
             ' Nothing to do here
         End Sub
     End Class

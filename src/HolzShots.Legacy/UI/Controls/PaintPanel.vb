@@ -242,7 +242,7 @@ Namespace UI.Controls
         Private Sub RawBoxPaint(sender As Object, e As PaintEventArgs) Handles RawBox.Paint
             If _mousedown = True Then
                 If _currentToolObject IsNot Nothing Then
-                    CurrentToolObject.RenderPreview(CType(RawBox.Image, Bitmap), e.Graphics, Me)
+                    CurrentToolObject.RenderPreview(CType(RawBox.Image, Bitmap), e.Graphics)
                     Exit Sub
                 End If
             End If

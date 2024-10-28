@@ -73,7 +73,7 @@ Namespace Drawing.Tools
             End Using
         End Sub
 
-        Public Sub RenderPreview(rawImage As Image, g As Graphics, sender As PaintPanel) Implements ITool(Of EllipseSettings).RenderPreview
+        Public Sub RenderPreview(rawImage As Image, g As Graphics) Implements ITool(Of EllipseSettings).RenderPreview
             Dim settings = _settingsControl.Settings
 
             Dim rect = New Rectangle(

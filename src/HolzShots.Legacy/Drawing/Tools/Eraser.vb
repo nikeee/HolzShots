@@ -22,7 +22,7 @@ Namespace Drawing.Tools
             End Get
             Set(value As Point)
                 _beginCoordinates = value
-                RenderPreview(_parent.RawBox.Image, Nothing, _parent)
+                RenderPreview(_parent.RawBox.Image, Nothing)
             End Set
         End Property
         Public Property EndCoordinates As Point Implements ITool(Of EraserSettings).EndCoordinates
@@ -48,7 +48,7 @@ Namespace Drawing.Tools
 
         Private _isFirstClick As Boolean = True
 
-        Public Sub RenderPreview(rawImage As Image, ga As Graphics, sender As PaintPanel) Implements ITool(Of EraserSettings).RenderPreview
+        Public Sub RenderPreview(rawImage As Image, ga As Graphics) Implements ITool(Of EraserSettings).RenderPreview
             Using g As Graphics = Graphics.FromImage(rawImage)
                 g.CompositingMode = CompositingMode.SourceCopy
                 g.SmoothingMode = SmoothingMode.AntiAlias

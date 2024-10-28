@@ -65,7 +65,7 @@ Namespace Drawing.Tools
             End Using
         End Sub
 
-        Public Sub RenderPreview(rawImage As Image, g As Graphics, sender As PaintPanel) Implements ITool(Of BrightnessSettings).RenderPreview
+        Public Sub RenderPreview(rawImage As Image, g As Graphics) Implements ITool(Of BrightnessSettings).RenderPreview
             Dim rct As New Rectangle(
                 Math.Min(BeginCoordinates.X, EndCoordinates.X),
                 Math.Min(BeginCoordinates.Y, EndCoordinates.Y),

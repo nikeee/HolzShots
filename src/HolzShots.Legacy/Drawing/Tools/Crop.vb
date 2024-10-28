@@ -63,7 +63,7 @@ Namespace Drawing.Tools
             GC.Collect()
         End Sub
 
-        Public Sub RenderPreview(rawImage As Image, g As Graphics, sender As PaintPanel) Implements ITool(Of ToolSettingsBase).RenderPreview
+        Public Sub RenderPreview(rawImage As Image, g As Graphics) Implements ITool(Of ToolSettingsBase).RenderPreview
 
             _rct.X = Math.Min(EndCoordinates.X, BeginCoordinates.X)
             _rct.Y = Math.Min(EndCoordinates.Y, BeginCoordinates.Y)

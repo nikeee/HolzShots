@@ -77,7 +77,7 @@ Namespace Drawing.Tools
             End Using
         End Sub
 
-        Public Sub RenderPreview(rawImage As Image, g As Graphics, sender As PaintPanel) Implements ITool(Of BlurSettings).RenderPreview
+        Public Sub RenderPreview(rawImage As Image, g As Graphics) Implements ITool(Of BlurSettings).RenderPreview
             If rawImage Is Nothing Then
                 Return
             End If

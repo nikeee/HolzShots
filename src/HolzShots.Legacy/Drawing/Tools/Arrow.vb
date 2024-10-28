@@ -98,7 +98,7 @@ Namespace Drawing.Tools
             End Using
         End Sub
 
-        Public Sub RenderPreview(rawImage As Image, g As Graphics, sender As PaintPanel) Implements ITool(Of ArrowSettings).RenderPreview
+        Public Sub RenderPreview(rawImage As Image, g As Graphics) Implements ITool(Of ArrowSettings).RenderPreview
 
             _arrowSecondPoint = New Vector2(EndCoordinates.X, EndCoordinates.Y)
 

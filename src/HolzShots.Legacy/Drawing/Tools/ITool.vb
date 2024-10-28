@@ -13,7 +13,7 @@ Namespace Drawing.Tools
         Property EndCoordinates As Point
 
         Sub RenderFinalImage(ByRef rawImage As Image, sender As PaintPanel)
-        Sub RenderPreview(rawImage As Image, g As Graphics, sender As PaintPanel)
+        Sub RenderPreview(rawImage As Image, g As Graphics)
         Sub MouseOnlyMoved(rawImage As Image, ByRef currentCursor As Cursor, e As MouseEventArgs)
         Sub MouseClicked(rawImage As Image, e As Point, ByRef currentCursor As Cursor, trigger As Control)
 

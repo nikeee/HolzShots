@@ -91,7 +91,7 @@ Namespace Drawing.Tools
             _pointList.Clear()
         End Sub
 
-        Public Sub RenderPreview(rawImage As Image, g As Graphics, sender As PaintPanel) Implements ITool(Of CensorSettings).RenderPreview
+        Public Sub RenderPreview(rawImage As Image, g As Graphics) Implements ITool(Of CensorSettings).RenderPreview
             _pointList.Add(EndCoordinates)
             g.SmoothingMode = SmoothingMode.AntiAlias
             g.TextRenderingHint = TextRenderingHint.AntiAlias
