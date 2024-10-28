@@ -40,7 +40,7 @@ Namespace Drawing.Tools
         Public ReadOnly Property ToolType As PaintPanel.ShotEditorTool = PaintPanel.ShotEditorTool.Censor Implements ITool(Of ToolSettingsBase).ToolType
         Public ReadOnly Property SettingsControl As ISettingsControl(Of ToolSettingsBase) = Nothing Implements ITool(Of ToolSettingsBase).SettingsControl
 
-        Public Sub RenderFinalImage(ByRef rawImage As Image, ByVal sender As PaintPanel) Implements ITool(Of ToolSettingsBase).RenderFinalImage
+        Public Sub RenderFinalImage(ByRef rawImage As Image, sender As PaintPanel) Implements ITool(Of ToolSettingsBase).RenderFinalImage
             _pointList.Add(EndCoordinates)
             Using g As Graphics = Graphics.FromImage(rawImage)
                 With g
@@ -49,14 +49,14 @@ Namespace Drawing.Tools
                     If _pointList.Count > 0 AndAlso (_pointList.Count - 1) Mod 3 = 0 Then
                         .DrawBeziers(_censorPen, _pointList.ToArray())
                     Else
-                        g.DrawBeziers(_censorPen, _pointList.Take(_pointList.Count - (_pointList.Count - 1) Mod 3).ToArray())
+                        .DrawBeziers(_censorPen, _pointList.Take(_pointList.Count - (_pointList.Count - 1) Mod 3).ToArray())
                     End If
                 End With
             End Using
             _pointList.Clear()
         End Sub
 
-        Public Sub RenderPreview(ByVal rawImage As Image, ByVal g As Graphics, ByVal sender As PaintPanel) Implements ITool(Of ToolSettingsBase).RenderPreview
+        Public Sub RenderPreview(rawImage As Image, g As Graphics, sender As PaintPanel) Implements ITool(Of ToolSettingsBase).RenderPreview
             _pointList.Add(EndCoordinates)
             g.SmoothingMode = SmoothingMode.AntiAlias
             g.TextRenderingHint = TextRenderingHint.AntiAlias
@@ -70,9 +70,9 @@ Namespace Drawing.Tools
             End If
         End Sub
 
-        Public Sub New(ByVal zensurWidth As Integer, ByVal zensurColor As Color)
-            _censorWidth = zensurWidth
-            _censorColor = zensurColor
+        Public Sub New(censorWidth As Integer, censorColor As Color)
+            _censorWidth = censorWidth
+            _censorColor = censorColor
             _censorPen = New Pen(Color.FromArgb(255, _censorColor), _censorWidth) With {
                 .LineJoin = LineJoin.Round
             }
