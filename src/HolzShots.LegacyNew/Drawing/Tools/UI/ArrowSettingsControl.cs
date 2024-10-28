@@ -14,8 +14,8 @@ public partial class ArrowSettingsControl : UserControl, ISettingsControl<ArrowS
         InitializeComponent();
         _settings = initialSettings;
 
-        ArrowDiameterTrackBar.Maximum = ArrowSettings.MaximumWidth;
         ArrowDiameterTrackBar.Minimum = ArrowSettings.MinimumWidth;
+        ArrowDiameterTrackBar.Maximum = ArrowSettings.MaximumWidth;
 
         ArrowDiameterTrackBar.ValueChanged += (_, _) =>
         {
@@ -28,13 +28,4 @@ public partial class ArrowSettingsControl : UserControl, ISettingsControl<ArrowS
         ArrowDiameterTrackBar.Value = initialSettings.Width;
         ArrowColorSelector.Color = initialSettings.Color;
     }
-}
-
-public class ArrowSettings(int width, Color color) : ToolSettingsBase
-{
-    public const int MinimumWidth = 0;
-    public const int MaximumWidth = 100;
-
-    public int Width { get; set; } = width;
-    public Color Color { get; set; } = color;
 }

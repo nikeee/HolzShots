@@ -27,7 +27,3 @@ public partial class EraserSettingsControl : UserControl, ISettingsControl<Erase
         EraserDiameterTrackBar.Value = initialSettings.Diameter;
     }
 }
-public class EraserSettings(int diameter) : ToolSettingsBase
-{
-    public int Diameter { get; init; } = diameter;
-}

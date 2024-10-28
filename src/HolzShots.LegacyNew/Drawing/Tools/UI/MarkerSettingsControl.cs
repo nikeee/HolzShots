@@ -25,9 +25,3 @@ public partial class MarkerSettingsControl : UserControl, ISettingsControl<Marke
         MarkerColorSelector.Color = initialSettings.Color;
     }
 }
-
-public class MarkerSettings(int width, Color color) : ToolSettingsBase
-{
-    public int Width { get; set; } = width;
-    public Color Color { get; set; } = color;
-}

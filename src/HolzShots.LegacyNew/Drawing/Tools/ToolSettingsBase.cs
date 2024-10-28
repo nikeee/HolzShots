@@ -1,3 +1,3 @@
-﻿namespace HolzShots.Drawing.Tools.UI;
+namespace HolzShots.Drawing.Tools;
 
 public abstract class ToolSettingsBase;
