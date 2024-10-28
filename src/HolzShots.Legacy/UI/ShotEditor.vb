@@ -95,7 +95,6 @@ Namespace UI
 
             AddSettingsPanels()
 
-            CensorSettingsPanel.BackColor = Color.Transparent
             MarkerSettingsPanel.BackColor = Color.Transparent
             EllipseSettingsPanel.BackColor = Color.Transparent
             BrightenSettingsPanel.BackColor = Color.Transparent
@@ -104,7 +103,6 @@ Namespace UI
 
             Dim focusColor As Color = BackColor
 
-            ZensursulaBar.BackColor = focusColor
             MarkerBar.BackColor = focusColor
             BlackWhiteTracker.BackColor = focusColor
             ArrowWidthSlider.BackColor = focusColor
@@ -147,7 +145,6 @@ Namespace UI
 #Region "Settings and stuff"
 
         Private Sub LoadToolSettings()
-            LoadZensursula()
             LoadArrow()
             LoadMarker()
             LoadEllipse()
@@ -170,17 +167,6 @@ Namespace UI
             End If
         End Sub
 
-        Private Sub LoadZensursula()
-            ZensursulaColorSelector.Color = HolzShots.My.Settings.ZensursulaColor
-            If HolzShots.My.Settings.ZensursulaWidth > 100 OrElse HolzShots.My.Settings.ZensursulaWidth <= 0 Then
-                HolzShots.My.Settings.ZensursulaWidth = 20
-                HolzShots.My.Settings.Save()
-            End If
-            ZensursulaBar.Value = HolzShots.My.Settings.ZensursulaWidth
-            Pinsel_Width_Zensursula.Text = $"{ZensursulaBar.Value}px"
-            ThePanel.ZensursulaColor = ZensursulaColorSelector.Color
-            ThePanel.ZensursulaWidth = ZensursulaBar.Value
-        End Sub
 
         Private Sub LoadArrow()
             ArrowColorviewer.Color = My.Settings.ArrowColor
@@ -295,9 +281,6 @@ Namespace UI
 #Region "Updater"
 
         Private Sub UpdateSettings() Handles MyBase.FormClosing
-            HolzShots.My.Settings.ZensursulaColor = ZensursulaColorSelector.Color
-            HolzShots.My.Settings.ZensursulaWidth = ZensursulaBar.Value
-
             HolzShots.My.Settings.MarkerColor = MarkerColorSelector.Color
             HolzShots.My.Settings.MarkerWidth = MarkerBar.Value
 
@@ -329,7 +312,6 @@ Namespace UI
             _activator.AddPanel(PaintPanel.ShotEditorTool.Brighten, BrightenSettingsPanel)
             _activator.AddPanel(PaintPanel.ShotEditorTool.Ellipse, EllipseSettingsPanel)
             _activator.AddPanel(PaintPanel.ShotEditorTool.Marker, MarkerSettingsPanel)
-            _activator.AddPanel(PaintPanel.ShotEditorTool.Censor, CensorSettingsPanel)
             _activator.AddPanel(PaintPanel.ShotEditorTool.LegacyNew, CurrentToolSettingsPanel)
 
             ToolControlMap.Add(PaintPanel.ShotEditorTool.Pipette, PipettenTool)
@@ -448,15 +430,6 @@ Namespace UI
 #End Region
 
 #Region "Tool Settings"
-
-        Private Sub ZensursulaBarValueChanged() Handles ZensursulaBar.Scroll
-            Pinsel_Width_Zensursula.Text = $"{ZensursulaBar.Value}px"
-            ThePanel.ZensursulaWidth = ZensursulaBar.Value
-        End Sub
-
-        Private Sub ZensursulaViewerColorChanged(sender As Object, c As Color) Handles ZensursulaColorSelector.ColorChanged
-            ThePanel.ZensursulaColor = c
-        End Sub
 
         Private Sub MarkerBarValueChanged() Handles MarkerBar.Scroll
             Pinsel_Width_Marker.Text = $"{MarkerBar.Value}px"

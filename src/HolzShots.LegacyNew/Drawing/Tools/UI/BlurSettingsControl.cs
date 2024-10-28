@@ -23,6 +23,8 @@ public partial class BlurSettingsControl : UserControl, ISettingsControl<BlurSet
         {
             BlurDiameterTrackBarLabel.Text = $"Factor: {BlurDiameterTrackBar.Value}px";
         };
+
+        BlurDiameterTrackBar.Value = initialSettings.Diameter;
     }
 }
 

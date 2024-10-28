@@ -46,12 +46,6 @@ Namespace UI
             ClipboardToolStripMenuItem = New ToolStripMenuItem()
             PrintToolStripMenuItem = New ToolStripMenuItem()
             ChooseServiceToolStripMenuItem = New ToolStripMenuItem()
-            CensorSettingsPanel = New Panel()
-            GlassLabel2 = New Label()
-            GlassLabel3 = New Label()
-            Pinsel_Width_Zensursula = New Label()
-            ZensursulaColorSelector = New Windows.Forms.ColorSelector()
-            ZensursulaBar = New TrackBar()
             MarkerSettingsPanel = New Panel()
             GlassLabel4 = New Label()
             GlassLabel1 = New Label()
@@ -92,8 +86,6 @@ Namespace UI
             CurrentToolSettingsPanel = New Panel()
             ShareStrip.SuspendLayout()
             EditStrip.SuspendLayout()
-            CensorSettingsPanel.SuspendLayout()
-            CType(ZensursulaBar, ComponentModel.ISupportInitialize).BeginInit()
             MarkerSettingsPanel.SuspendLayout()
             CType(MarkerBar, ComponentModel.ISupportInitialize).BeginInit()
             EllipseSettingsPanel.SuspendLayout()
@@ -413,66 +405,6 @@ Namespace UI
             ChooseServiceToolStripMenuItem.Size = New Size(226, 22)
             ChooseServiceToolStripMenuItem.Text = "ChooseService"
             ChooseServiceToolStripMenuItem.Visible = False
-            ' 
-            ' CensorSettingsPanel
-            ' 
-            CensorSettingsPanel.BackColor = SystemColors.Control
-            CensorSettingsPanel.Controls.Add(GlassLabel2)
-            CensorSettingsPanel.Controls.Add(GlassLabel3)
-            CensorSettingsPanel.Controls.Add(Pinsel_Width_Zensursula)
-            CensorSettingsPanel.Controls.Add(ZensursulaColorSelector)
-            CensorSettingsPanel.Controls.Add(ZensursulaBar)
-            CensorSettingsPanel.Location = New Point(472, 186)
-            CensorSettingsPanel.Name = "CensorSettingsPanel"
-            CensorSettingsPanel.Size = New Size(273, 82)
-            CensorSettingsPanel.TabIndex = 14
-            CensorSettingsPanel.Visible = False
-            ' 
-            ' GlassLabel2
-            ' 
-            GlassLabel2.AutoSize = True
-            GlassLabel2.Location = New Point(49, 52)
-            GlassLabel2.Name = "GlassLabel2"
-            GlassLabel2.Size = New Size(39, 15)
-            GlassLabel2.TabIndex = 26
-            GlassLabel2.Text = "Color:"
-            ' 
-            ' GlassLabel3
-            ' 
-            GlassLabel3.AutoSize = True
-            GlassLabel3.Location = New Point(46, 11)
-            GlassLabel3.Name = "GlassLabel3"
-            GlassLabel3.Size = New Size(42, 15)
-            GlassLabel3.TabIndex = 22
-            GlassLabel3.Text = "Width:"
-            ' 
-            ' Pinsel_Width_Zensursula
-            ' 
-            Pinsel_Width_Zensursula.AutoSize = True
-            Pinsel_Width_Zensursula.Location = New Point(187, 11)
-            Pinsel_Width_Zensursula.Name = "Pinsel_Width_Zensursula"
-            Pinsel_Width_Zensursula.Size = New Size(13, 15)
-            Pinsel_Width_Zensursula.TabIndex = 21
-            Pinsel_Width_Zensursula.Text = "a"
-            ' 
-            ' ZensursulaColorSelector
-            ' 
-            ZensursulaColorSelector.Cursor = Cursors.Hand
-            ZensursulaColorSelector.Location = New Point(93, 50)
-            ZensursulaColorSelector.Name = "ZensursulaColorSelector"
-            ZensursulaColorSelector.Size = New Size(20, 20)
-            ZensursulaColorSelector.TabIndex = 19
-            ' 
-            ' ZensursulaBar
-            ' 
-            ZensursulaBar.Location = New Point(83, 6)
-            ZensursulaBar.Maximum = 100
-            ZensursulaBar.Minimum = 1
-            ZensursulaBar.Name = "ZensursulaBar"
-            ZensursulaBar.Size = New Size(104, 45)
-            ZensursulaBar.TabIndex = 16
-            ZensursulaBar.TabStop = False
-            ZensursulaBar.Value = 1
             ' 
             ' MarkerSettingsPanel
             ' 
@@ -878,7 +810,6 @@ Namespace UI
             Controls.Add(ArrowSettingsPanel)
             Controls.Add(EllipseSettingsPanel)
             Controls.Add(MarkerSettingsPanel)
-            Controls.Add(CensorSettingsPanel)
             Controls.Add(ShareStrip)
             Controls.Add(BottomToolStrip)
             Font = New Font("Segoe UI", 9F)
@@ -891,9 +822,6 @@ Namespace UI
             ShareStrip.PerformLayout()
             EditStrip.ResumeLayout(False)
             EditStrip.PerformLayout()
-            CensorSettingsPanel.ResumeLayout(False)
-            CensorSettingsPanel.PerformLayout()
-            CType(ZensursulaBar, ComponentModel.ISupportInitialize).EndInit()
             MarkerSettingsPanel.ResumeLayout(False)
             MarkerSettingsPanel.PerformLayout()
             CType(MarkerBar, ComponentModel.ISupportInitialize).EndInit()
@@ -945,20 +873,14 @@ Namespace UI
         Friend WithEvents PrintToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Friend WithEvents EllipseTool As System.Windows.Forms.ToolStripButton
         Friend WithEvents KreisToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents CensorSettingsPanel As System.Windows.Forms.Panel
-        Friend WithEvents ZensursulaBar As System.Windows.Forms.TrackBar
-        Friend WithEvents ZensursulaColorSelector As HolzShots.Windows.Forms.ColorSelector
         Friend WithEvents MarkerSettingsPanel As System.Windows.Forms.Panel
         Friend WithEvents MarkerColorSelector As HolzShots.Windows.Forms.ColorSelector
         Friend WithEvents MarkerBar As System.Windows.Forms.TrackBar
         Friend WithEvents EllipseSettingsPanel As System.Windows.Forms.Panel
         Friend WithEvents EllipseColorSelector As HolzShots.Windows.Forms.ColorSelector
         Friend WithEvents EllipseBar As System.Windows.Forms.TrackBar
-        Friend WithEvents Pinsel_Width_Zensursula As System.Windows.Forms.Label
         Friend WithEvents Pinsel_Width_Marker As System.Windows.Forms.Label
         Friend WithEvents Ellipse_Width As System.Windows.Forms.Label
-        Friend WithEvents GlassLabel2 As System.Windows.Forms.Label
-        Friend WithEvents GlassLabel3 As System.Windows.Forms.Label
         Friend WithEvents GlassLabel4 As System.Windows.Forms.Label
         Friend WithEvents GlassLabel1 As System.Windows.Forms.Label
         Friend WithEvents GlassLabel8 As System.Windows.Forms.Label

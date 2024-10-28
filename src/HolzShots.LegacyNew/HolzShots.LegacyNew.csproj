@@ -12,4 +12,8 @@
     <Product>HolzShots.LegacyNew</Product>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\HolzShots.Windows\HolzShots.Windows.csproj" />
+  </ItemGroup>
+
 </Project>

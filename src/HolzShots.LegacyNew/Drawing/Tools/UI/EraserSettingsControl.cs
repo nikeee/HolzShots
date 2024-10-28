@@ -23,6 +23,8 @@ public partial class EraserSettingsControl : UserControl, ISettingsControl<Erase
         {
             EraserDiameterTrackBarLabel.Text = $"Diameter: {EraserDiameterTrackBar.Value}px";
         };
+
+        EraserDiameterTrackBar.Value = initialSettings.Diameter;
     }
 }
 public class EraserSettings(int diameter) : ToolSettingsBase

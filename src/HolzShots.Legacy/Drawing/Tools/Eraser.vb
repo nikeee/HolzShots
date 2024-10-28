@@ -9,7 +9,6 @@ Namespace Drawing.Tools
         Private ReadOnly _parent As PaintPanel
 
         Private ReadOnly _settingsControl As ISettingsControl(Of EraserSettings)
-
         Public ReadOnly Property SettingsControl As ISettingsControl(Of EraserSettings) Implements ITool(Of EraserSettings).SettingsControl
             Get
                 Return _settingsControl
@@ -87,7 +86,9 @@ Namespace Drawing.Tools
                 My.Settings.Save()
             End If
 
-            _settingsControl = New EraserSettingsControl(New EraserSettings(My.Settings.EraserDiameter))
+            _settingsControl = New EraserSettingsControl(
+                New EraserSettings(My.Settings.EraserDiameter)
+            )
         End Sub
 
         Private Sub OnSettingsUpdated(sender As Object, newSettings As EraserSettings)

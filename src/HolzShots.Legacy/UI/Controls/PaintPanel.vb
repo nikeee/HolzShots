@@ -11,8 +11,7 @@ Namespace UI.Controls
         Private _screenshot As Screenshot
 
         Private _markerColor As Color
-        Private _censorColor As Color
-        Private _censorWidth, _arrowWidth, _eraseDiameter, _markerWidth As Integer
+        Private _arrowWidth, _eraseDiameter, _markerWidth As Integer
 
         Friend Event Initialized()
         Friend Event UpdateMousePosition(e As Point)
@@ -65,34 +64,6 @@ Namespace UI.Controls
                 If CurrentTool = ShotEditorTool.Marker Then
                     CurrentTool = ShotEditorTool.None
                     CurrentTool = ShotEditorTool.Marker
-                End If
-            End Set
-        End Property
-
-        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
-        Public Property ZensursulaColor As Color
-            Get
-                Return _censorColor
-            End Get
-            Set(value As Color)
-                _censorColor = value
-                If CurrentTool = ShotEditorTool.Censor Then
-                    CurrentTool = ShotEditorTool.None
-                    CurrentTool = ShotEditorTool.Censor
-                End If
-            End Set
-        End Property
-
-        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
-        Public Property ZensursulaWidth As Integer
-            Get
-                Return _censorWidth
-            End Get
-            Set(value As Integer)
-                _censorWidth = value
-                If CurrentTool = ShotEditorTool.Censor Then
-                    CurrentTool = ShotEditorTool.None
-                    CurrentTool = ShotEditorTool.Censor
                 End If
             End Set
         End Property
@@ -168,7 +139,7 @@ Namespace UI.Controls
                     Case ShotEditorTool.Marker
                         CurrentToolObject = New Marker(MarkerWidth, MarkerColor)
                     Case ShotEditorTool.Censor
-                        CurrentToolObject = New Censor(ZensursulaWidth, ZensursulaColor)
+                        CurrentToolObject = New Censor()
                     Case ShotEditorTool.Eraser
                         CurrentToolObject = New Eraser(Me)
                     Case ShotEditorTool.Blur
