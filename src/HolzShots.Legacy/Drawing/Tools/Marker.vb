@@ -1,4 +1,5 @@
 Imports System.Drawing.Drawing2D
+Imports System.Numerics
 Imports HolzShots.Drawing
 Imports HolzShots.Drawing.Tools.UI
 
@@ -7,17 +8,17 @@ Namespace Drawing.Tools
         Implements ITool(Of MarkerSettings)
         Private _pointList As List(Of Point)
 
-        Private _beginCoordinates As Point
-        Public Property BeginCoordinates As Point Implements ITool(Of MarkerSettings).BeginCoordinates
+        Private _beginCoordinates As Vector2
+        Public Property BeginCoordinates As Vector2 Implements ITool(Of MarkerSettings).BeginCoordinates
             Get
                 Return _beginCoordinates
             End Get
-            Set(value As Point)
+            Set(value As Vector2)
                 _beginCoordinates = value
-                _pointList = New List(Of Point) From {_beginCoordinates}
+                _pointList = New List(Of Point) From {_beginCoordinates.ToPoint2D()}
             End Set
         End Property
-        Public Property EndCoordinates As Point Implements ITool(Of MarkerSettings).EndCoordinates
+        Public Property EndCoordinates As Vector2 Implements ITool(Of MarkerSettings).EndCoordinates
 
         Public ReadOnly Property Cursor As Cursor Implements ITool(Of MarkerSettings).Cursor
             Get
@@ -72,7 +73,7 @@ Namespace Drawing.Tools
         Public Sub RenderFinalImage(ByRef rawImage As Image) Implements ITool(Of MarkerSettings).RenderFinalImage
             Debug.Assert(TypeOf rawImage Is Bitmap)
 
-            _pointList.Add(EndCoordinates)
+            _pointList.Add(EndCoordinates.ToPoint2D())
 
             If _pointList.Count <= 1 Then
                 Return
@@ -90,7 +91,7 @@ Namespace Drawing.Tools
         Public Sub RenderPreview(rawImage As Image, g As Graphics) Implements ITool(Of MarkerSettings).RenderPreview
             Debug.Assert(TypeOf rawImage Is Bitmap)
 
-            _pointList.Add(EndCoordinates)
+            _pointList.Add(EndCoordinates.ToPoint2D())
             g.SmoothingMode = SmoothingMode.AntiAlias
             If _pointList.Count <= 0 Then
                 Return
@@ -108,7 +109,7 @@ Namespace Drawing.Tools
         Public Sub MouseOnlyMoved(rawImage As Image, ByRef currentCursor As Cursor, e As MouseEventArgs) Implements ITool(Of MarkerSettings).MouseOnlyMoved
             ' Nothing to do here
         End Sub
-        Public Sub MouseClicked(rawImage As Image, e As Point, ByRef currentCursor As Cursor, trigger As Control) Implements ITool(Of MarkerSettings).MouseClicked
+        Public Sub MouseClicked(rawImage As Image, e As Vector2, ByRef currentCursor As Cursor, trigger As Control) Implements ITool(Of MarkerSettings).MouseClicked
             ' Nothing to do here
         End Sub
     End Class

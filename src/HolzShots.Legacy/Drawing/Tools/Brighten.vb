@@ -1,3 +1,4 @@
+Imports System.Numerics
 Imports HolzShots.Drawing.Tools.UI
 
 Namespace Drawing.Tools
@@ -14,8 +15,8 @@ Namespace Drawing.Tools
             End Get
         End Property
 
-        Public Property BeginCoordinates As Point Implements ITool(Of BrightnessSettings).BeginCoordinates
-        Public Property EndCoordinates As Point Implements ITool(Of BrightnessSettings).EndCoordinates
+        Public Property BeginCoordinates As Vector2 Implements ITool(Of BrightnessSettings).BeginCoordinates
+        Public Property EndCoordinates As Vector2 Implements ITool(Of BrightnessSettings).EndCoordinates
 
         Sub New()
             _settingsControl = New BrightnessSettingsControl(BrightnessSettings.Default)
@@ -49,12 +50,12 @@ Namespace Drawing.Tools
         End Function
 
         Public Sub RenderFinalImage(ByRef rawImage As Image) Implements ITool(Of BrightnessSettings).RenderFinalImage
-            Dim rct As New Rectangle(
+            Dim rct = Rectangle.Round(New RectangleF(
                 Math.Min(BeginCoordinates.X, EndCoordinates.X),
                 Math.Min(BeginCoordinates.Y, EndCoordinates.Y),
                 Math.Abs(BeginCoordinates.X - EndCoordinates.X),
                 Math.Abs(BeginCoordinates.Y - EndCoordinates.Y)
-            )
+            ))
 
             Using gr = Graphics.FromImage(rawImage)
                 Using brush = CreateBrush(_settingsControl.Settings)
@@ -64,12 +65,12 @@ Namespace Drawing.Tools
         End Sub
 
         Public Sub RenderPreview(rawImage As Image, g As Graphics) Implements ITool(Of BrightnessSettings).RenderPreview
-            Dim rct As New Rectangle(
+            Dim rct = Rectangle.Round(New RectangleF(
                 Math.Min(BeginCoordinates.X, EndCoordinates.X),
                 Math.Min(BeginCoordinates.Y, EndCoordinates.Y),
                 Math.Abs(BeginCoordinates.X - EndCoordinates.X),
                 Math.Abs(BeginCoordinates.Y - EndCoordinates.Y)
-            )
+            ))
 
             Using brush = CreateBrush(_settingsControl.Settings)
                 g.FillRectangle(brush, rct)
@@ -80,7 +81,7 @@ Namespace Drawing.Tools
             ' Nothing to do here
         End Sub
 
-        Public Sub MouseClicked(rawImage As Image, e As Point, ByRef currentCursor As Cursor, trigger As Control) Implements ITool(Of BrightnessSettings).MouseClicked
+        Public Sub MouseClicked(rawImage As Image, e As Vector2, ByRef currentCursor As Cursor, trigger As Control) Implements ITool(Of BrightnessSettings).MouseClicked
             ' Nothing to do here
         End Sub
         Public Sub Dispose() Implements ITool(Of BrightnessSettings).Dispose

@@ -1,4 +1,5 @@
 Imports System.Drawing.Drawing2D
+Imports System.Numerics
 Imports HolzShots.Drawing.Tools.UI
 
 Namespace Drawing.Tools
@@ -16,8 +17,8 @@ Namespace Drawing.Tools
                 Return _settingsControl
             End Get
         End Property
-        Public Property BeginCoordinates As Point Implements ITool(Of BlurSettings).BeginCoordinates
-        Public Property EndCoordinates As Point Implements ITool(Of BlurSettings).EndCoordinates
+        Public Property BeginCoordinates As Vector2 Implements ITool(Of BlurSettings).BeginCoordinates
+        Public Property EndCoordinates As Vector2 Implements ITool(Of BlurSettings).EndCoordinates
 
         Sub New()
             _settingsControl = New BlurSettingsControl(BlurSettings.Default)
@@ -45,12 +46,12 @@ Namespace Drawing.Tools
                 Return
             End If
 
-            Dim rawSrcRect As New Rectangle(
+            Dim rawSrcRect = Rectangle.Round(New RectangleF(
                 Math.Min(BeginCoordinates.X, EndCoordinates.X),
                 Math.Min(BeginCoordinates.Y, EndCoordinates.Y),
                 Math.Abs(BeginCoordinates.X - EndCoordinates.X),
                 Math.Abs(BeginCoordinates.Y - EndCoordinates.Y)
-            )
+            ))
 
             If rawSrcRect.X < 0 Then
                 rawSrcRect.Width += rawSrcRect.X
@@ -85,12 +86,12 @@ Namespace Drawing.Tools
                 Return
             End If
 
-            Dim rawSrcRectangle As New Rectangle(
+            Dim rawSrcRectangle = Rectangle.Round(New RectangleF(
                 Math.Min(BeginCoordinates.X, EndCoordinates.X),
                 Math.Min(BeginCoordinates.Y, EndCoordinates.Y),
                 Math.Abs(BeginCoordinates.X - EndCoordinates.X),
                 Math.Abs(BeginCoordinates.Y - EndCoordinates.Y)
-            )
+            ))
 
             If rawSrcRectangle.X < 0 Then
                 rawSrcRectangle.Width += rawSrcRectangle.X
@@ -152,7 +153,7 @@ Namespace Drawing.Tools
         Public Sub MouseOnlyMoved(rawImage As Image, ByRef currentCursor As Cursor, e As MouseEventArgs) Implements ITool(Of BlurSettings).MouseOnlyMoved
             ' Nothing to do here
         End Sub
-        Public Sub MouseClicked(rawImage As Image, e As Point, ByRef currentCursor As Cursor, trigger As Control) Implements ITool(Of BlurSettings).MouseClicked
+        Public Sub MouseClicked(rawImage As Image, e As Vector2, ByRef currentCursor As Cursor, trigger As Control) Implements ITool(Of BlurSettings).MouseClicked
             ' Nothing to do here
         End Sub
         Public Sub Dispose() Implements ITool(Of BlurSettings).Dispose

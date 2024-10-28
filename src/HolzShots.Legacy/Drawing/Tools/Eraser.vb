@@ -1,4 +1,5 @@
 Imports System.Drawing.Drawing2D
+Imports System.Numerics
 Imports HolzShots.Drawing.Tools.UI
 Imports HolzShots.UI.Controls
 
@@ -15,17 +16,17 @@ Namespace Drawing.Tools
             End Get
         End Property
 
-        Private _beginCoordinates As Point
-        Public Property BeginCoordinates As Point Implements ITool(Of EraserSettings).BeginCoordinates
+        Private _beginCoordinates As Vector2
+        Public Property BeginCoordinates As Vector2 Implements ITool(Of EraserSettings).BeginCoordinates
             Get
                 Return _beginCoordinates
             End Get
-            Set(value As Point)
+            Set(value As Vector2)
                 _beginCoordinates = value
                 RenderPreview(_parent.RawBox.Image, Nothing)
             End Set
         End Property
-        Public Property EndCoordinates As Point Implements ITool(Of EraserSettings).EndCoordinates
+        Public Property EndCoordinates As Vector2 Implements ITool(Of EraserSettings).EndCoordinates
 
         Public ReadOnly Property Cursor As Cursor Implements ITool(Of EraserSettings).Cursor
             Get
@@ -114,7 +115,7 @@ Namespace Drawing.Tools
         Public Sub MouseOnlyMoved(rawImage As Image, ByRef currentCursor As Cursor, e As MouseEventArgs) Implements ITool(Of EraserSettings).MouseOnlyMoved
             ' Nothing to do here
         End Sub
-        Public Sub MouseClicked(rawImage As Image, e As Point, ByRef currentCursor As Cursor, trigger As Control) Implements ITool(Of EraserSettings).MouseClicked
+        Public Sub MouseClicked(rawImage As Image, e As Vector2, ByRef currentCursor As Cursor, trigger As Control) Implements ITool(Of EraserSettings).MouseClicked
             ' Nothing to do here
         End Sub
     End Class

@@ -1,4 +1,5 @@
 Imports System.Drawing.Drawing2D
+Imports System.Numerics
 Imports HolzShots.Drawing.Tools.UI
 Imports HolzShots.Windows.Forms
 
@@ -10,8 +11,8 @@ Namespace Drawing.Tools
         Public ReadOnly Property Cursor As Cursor = Cursors.Cross Implements ITool(Of ToolSettingsBase).Cursor
         Public ReadOnly Property SettingsControl As ISettingsControl(Of ToolSettingsBase) = Nothing Implements ITool(Of ToolSettingsBase).SettingsControl
 
-        Public Property BeginCoordinates As Point Implements ITool(Of ToolSettingsBase).BeginCoordinates
-        Public Property EndCoordinates As Point Implements ITool(Of ToolSettingsBase).EndCoordinates
+        Public Property BeginCoordinates As Vector2 Implements ITool(Of ToolSettingsBase).BeginCoordinates
+        Public Property EndCoordinates As Vector2 Implements ITool(Of ToolSettingsBase).EndCoordinates
 
         Public Sub MouseOnlyMoved(rawImage As Image, ByRef currentCursor As Cursor, e As MouseEventArgs) Implements ITool(Of ToolSettingsBase).MouseOnlyMoved
             Debug.Assert(TypeOf rawImage Is Bitmap)
@@ -70,11 +71,11 @@ Namespace Drawing.Tools
 
 
 
-        Public Sub MouseClicked(rawImage As Image, e As Point, ByRef currentCursor As Cursor, trigger As Control) Implements ITool(Of ToolSettingsBase).MouseClicked
+        Public Sub MouseClicked(rawImage As Image, e As Vector2, ByRef currentCursor As Cursor, trigger As Control) Implements ITool(Of ToolSettingsBase).MouseClicked
             Debug.Assert(TypeOf rawImage Is Bitmap)
             Dim rawBmp = If(TypeOf rawImage Is Bitmap, DirectCast(rawImage, Bitmap), New Bitmap(rawImage))
-            Dim c As Color = rawBmp.GetPixel(e.X, e.Y)
-            Dim viewer As New CopyColorForm(c, trigger.PointToScreen(e))
+            Dim c As Color = rawBmp.GetPixel(CInt(e.X), CInt(e.Y))
+            Dim viewer As New CopyColorForm(c, trigger.PointToScreen(e.ToPoint2D()))
             viewer.Show()
         End Sub
 

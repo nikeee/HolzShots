@@ -1,5 +1,6 @@
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Text
+Imports System.Numerics
 Imports HolzShots.Drawing.Tools.UI
 
 Namespace Drawing.Tools
@@ -8,18 +9,18 @@ Namespace Drawing.Tools
 
         Private _pointList As List(Of Point)
 
-        Private _beginCoordinates As Point
-        Public Property BeginCoordinates As Point Implements ITool(Of CensorSettings).BeginCoordinates
+        Private _beginCoordinates As Vector2
+        Public Property BeginCoordinates As Vector2 Implements ITool(Of CensorSettings).BeginCoordinates
             Get
                 Return _beginCoordinates
             End Get
-            Set(value As Point)
+            Set(value As Vector2)
                 _beginCoordinates = value
-                _pointList = New List(Of Point) From {_beginCoordinates}
+                _pointList = New List(Of Point) From {_beginCoordinates.ToPoint2D()}
             End Set
         End Property
 
-        Public Property EndCoordinates As Point Implements ITool(Of CensorSettings).EndCoordinates
+        Public Property EndCoordinates As Vector2 Implements ITool(Of CensorSettings).EndCoordinates
 
         Public ReadOnly Property Cursor As Cursor Implements ITool(Of CensorSettings).Cursor
             Get
@@ -73,7 +74,7 @@ Namespace Drawing.Tools
         End Function
 
         Public Sub RenderFinalImage(ByRef rawImage As Image) Implements ITool(Of CensorSettings).RenderFinalImage
-            _pointList.Add(EndCoordinates)
+            _pointList.Add(EndCoordinates.ToPoint2D())
             Using g = Graphics.FromImage(rawImage)
                 Using censorPen = CreatePen(_settingsControl.Settings)
                     With g
@@ -91,7 +92,7 @@ Namespace Drawing.Tools
         End Sub
 
         Public Sub RenderPreview(rawImage As Image, g As Graphics) Implements ITool(Of CensorSettings).RenderPreview
-            _pointList.Add(EndCoordinates)
+            _pointList.Add(EndCoordinates.ToPoint2D())
             g.SmoothingMode = SmoothingMode.AntiAlias
             g.TextRenderingHint = TextRenderingHint.AntiAlias
 
@@ -116,7 +117,7 @@ Namespace Drawing.Tools
         Public Sub MouseOnlyMoved(rawImage As Image, ByRef currentCursor As Cursor, e As MouseEventArgs) Implements ITool(Of CensorSettings).MouseOnlyMoved
             ' Nothing to do here
         End Sub
-        Public Sub MouseClicked(rawImage As Image, e As Point, ByRef currentCursor As Cursor, trigger As Control) Implements ITool(Of CensorSettings).MouseClicked
+        Public Sub MouseClicked(rawImage As Image, e As Vector2, ByRef currentCursor As Cursor, trigger As Control) Implements ITool(Of CensorSettings).MouseClicked
             ' Nothing to do here
         End Sub
     End Class

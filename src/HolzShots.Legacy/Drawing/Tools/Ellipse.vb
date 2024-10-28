@@ -1,11 +1,12 @@
 Imports System.Drawing.Drawing2D
+Imports System.Numerics
 Imports HolzShots.Drawing.Tools.UI
 
 Namespace Drawing.Tools
     Friend Class Ellipse
         Implements ITool(Of EllipseSettings)
-        Public Property BeginCoordinates As Point Implements ITool(Of EllipseSettings).BeginCoordinates
-        Public Property EndCoordinates As Point Implements ITool(Of EllipseSettings).EndCoordinates
+        Public Property BeginCoordinates As Vector2 Implements ITool(Of EllipseSettings).BeginCoordinates
+        Public Property EndCoordinates As Vector2 Implements ITool(Of EllipseSettings).EndCoordinates
 
         Private Shared ReadOnly CursorInstance As New Cursor(My.Resources.crossMedium.GetHicon())
         Public ReadOnly Property Cursor As Cursor = CursorInstance Implements ITool(Of EllipseSettings).Cursor
@@ -52,12 +53,12 @@ Namespace Drawing.Tools
         Public Sub RenderFinalImage(ByRef rawImage As Image) Implements ITool(Of EllipseSettings).RenderFinalImage
             Dim settings = _settingsControl.Settings
 
-            Dim rect = New Rectangle(
+            Dim rect = Rectangle.Round(New RectangleF(
                 Math.Min(EndCoordinates.X, BeginCoordinates.X),
                 Math.Min(EndCoordinates.Y, BeginCoordinates.Y),
                 Math.Max(Math.Abs(BeginCoordinates.X - EndCoordinates.X), settings.Width),
                 Math.Max(Math.Abs(BeginCoordinates.Y - EndCoordinates.Y), settings.Width)
-            )
+            ))
 
             Using g = Graphics.FromImage(rawImage)
                 Using pen = CreatePen(settings)
@@ -74,12 +75,12 @@ Namespace Drawing.Tools
         Public Sub RenderPreview(rawImage As Image, g As Graphics) Implements ITool(Of EllipseSettings).RenderPreview
             Dim settings = _settingsControl.Settings
 
-            Dim rect = New Rectangle(
+            Dim rect = Rectangle.Round(New RectangleF(
                 Math.Min(EndCoordinates.X, BeginCoordinates.X),
                 Math.Min(EndCoordinates.Y, BeginCoordinates.Y),
                 Math.Max(Math.Abs(BeginCoordinates.X - EndCoordinates.X), settings.Width),
                 Math.Max(Math.Abs(BeginCoordinates.Y - EndCoordinates.Y), settings.Width)
-            )
+            ))
 
             Using pen = CreatePen(settings)
                 If settings.Mode = EllipseMode.Rectangle Then
@@ -94,7 +95,7 @@ Namespace Drawing.Tools
         Public Sub MouseOnlyMoved(rawImage As Image, ByRef currentCursor As Cursor, e As MouseEventArgs) Implements ITool(Of EllipseSettings).MouseOnlyMoved
             ' Nothing to do here
         End Sub
-        Public Sub MouseClicked(rawImage As Image, e As Point, ByRef currentCursor As Cursor, trigger As Control) Implements ITool(Of EllipseSettings).MouseClicked
+        Public Sub MouseClicked(rawImage As Image, e As Vector2, ByRef currentCursor As Cursor, trigger As Control) Implements ITool(Of EllipseSettings).MouseClicked
             ' Nothing to do here
         End Sub
         Public Sub Dispose() Implements ITool(Of EllipseSettings).Dispose

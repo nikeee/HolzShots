@@ -1,6 +1,7 @@
 Imports System.ComponentModel
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Text
+Imports HolzShots.Drawing
 Imports HolzShots.Drawing.Tools
 
 Namespace UI.Controls
@@ -186,14 +187,14 @@ Namespace UI.Controls
 #Region "DrawLayer"
 
         Private Sub DrawBoxMouseClick(sender As Object, e As MouseEventArgs) Handles RawBox.MouseClick
-            CurrentToolObject?.MouseClicked(CurrentImage, e.Location, Cursor, Me)
+            CurrentToolObject?.MouseClicked(CurrentImage, e.Location.ToVector2(), Cursor, Me)
         End Sub
 
         Private Sub MouseLayerMouseDown(sender As Object, e As MouseEventArgs) Handles RawBox.MouseDown
             _mousedown = True
             If _currentTool = ShotEditorTool.None OrElse _currentTool = ShotEditorTool.Text Then Exit Sub
 
-            CurrentToolObject.BeginCoordinates = e.Location
+            CurrentToolObject.BeginCoordinates = e.Location.ToVector2()
         End Sub
 
         Private Sub RawBoxMouseEnter(sender As Object, e As EventArgs) Handles RawBox.MouseEnter
@@ -204,7 +205,7 @@ Namespace UI.Controls
             If e.Button = MouseButtons.Left Then
 
                 If CurrentToolObject IsNot Nothing Then
-                    CurrentToolObject.EndCoordinates = e.Location
+                    CurrentToolObject.EndCoordinates = e.Location.ToVector2()
                     RawBox.Invalidate()
                 End If
 

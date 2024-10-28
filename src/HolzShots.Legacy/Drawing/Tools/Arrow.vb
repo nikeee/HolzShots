@@ -8,16 +8,18 @@ Namespace Drawing.Tools
 
         Private _arrowFirstPoint As Vector2
         Private _arrowSecondPoint As Vector2
+
         Private ReadOnly _arrowDrawPoints(3) As Point
+
         Const ArrowRotationConstant As Single = 2.2 * Math.PI / 1.2
         Private _arrowBetween2 As Vector2
 
-        Private _beginCoordinates As Point
-        Public Property BeginCoordinates As Point Implements ITool(Of ArrowSettings).BeginCoordinates
+        Private _beginCoordinates As Vector2
+        Public Property BeginCoordinates As Vector2 Implements ITool(Of ArrowSettings).BeginCoordinates
             Get
                 Return _beginCoordinates
             End Get
-            Set(value As Point)
+            Set(value As Vector2)
                 If value <> _beginCoordinates Then
                     _beginCoordinates = value
                     _arrowFirstPoint = New Vector2(value.X, value.Y)
@@ -25,12 +27,12 @@ Namespace Drawing.Tools
             End Set
         End Property
 
-        Private _endCoordinates As Point
-        Public Property EndCoordinates As Point Implements ITool(Of ArrowSettings).EndCoordinates
+        Private _endCoordinates As Vector2
+        Public Property EndCoordinates As Vector2 Implements ITool(Of ArrowSettings).EndCoordinates
             Get
                 Return _endCoordinates
             End Get
-            Set(value As Point)
+            Set(value As Vector2)
                 If value <> _endCoordinates Then
                     _endCoordinates = value
                     _arrowSecondPoint = New Vector2(value.X, value.Y)
@@ -133,7 +135,7 @@ Namespace Drawing.Tools
         Public Sub MouseOnlyMoved(rawImage As Image, ByRef currentCursor As Cursor, e As MouseEventArgs) Implements ITool(Of ArrowSettings).MouseOnlyMoved
             ' Nothing to do here
         End Sub
-        Public Sub MouseClicked(rawImage As Image, e As Point, ByRef currentCursor As Cursor, trigger As Control) Implements ITool(Of ArrowSettings).MouseClicked
+        Public Sub MouseClicked(rawImage As Image, e As Vector2, ByRef currentCursor As Cursor, trigger As Control) Implements ITool(Of ArrowSettings).MouseClicked
             ' Nothing to do here
         End Sub
         Public Sub Dispose() Implements ITool(Of ArrowSettings).Dispose
