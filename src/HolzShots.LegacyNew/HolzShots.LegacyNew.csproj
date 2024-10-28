@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\Common.props" />
+
+  <PropertyGroup>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+
+    <AssemblyTitle>HolzShots.LegacyNew</AssemblyTitle>
+    <Product>HolzShots.LegacyNew</Product>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HolzShots.Windows\HolzShots.Windows.csproj" />
+  </ItemGroup>
+
+</Project>

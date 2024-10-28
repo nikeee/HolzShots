@@ -1,53 +1,77 @@
 Imports System.Drawing.Drawing2D
+Imports HolzShots.Drawing.Tools.UI
 Imports HolzShots.UI.Controls
 
 Namespace Drawing.Tools
     Friend Class Eraser
-        Inherits Tool
+        Implements ITool(Of EraserSettings)
 
-        Private _parent As PaintPanel
+        Private ReadOnly _parent As PaintPanel
 
-        Public Sub SetParent(p As PaintPanel)
-            _parent = p
-        End Sub
-
-        Public Overrides Property BeginCoordinates As Point
+        Private ReadOnly _settingsControl As ISettingsControl(Of EraserSettings)
+        Public ReadOnly Property SettingsControl As ISettingsControl(Of EraserSettings) Implements ITool(Of EraserSettings).SettingsControl
             Get
-                Return InternalBeginCoordinates
+                Return _settingsControl
             End Get
-            Set(ByVal value As Point)
-                InternalBeginCoordinates = value
-                RenderPreview(_parent.RawBox.Image, Nothing, _parent)
-            End Set
         End Property
 
-        Public Overrides ReadOnly Property Cursor As Cursor
+        Private _beginCoordinates As Point
+        Public Property BeginCoordinates As Point Implements ITool(Of EraserSettings).BeginCoordinates
             Get
-                Dim bmp As New Bitmap(_parent.EraserDiameter + 8, _parent.EraserDiameter + 8)
+                Return _beginCoordinates
+            End Get
+            Set(value As Point)
+                _beginCoordinates = value
+                RenderPreview(_parent.RawBox.Image, Nothing)
+            End Set
+        End Property
+        Public Property EndCoordinates As Point Implements ITool(Of EraserSettings).EndCoordinates
+
+        Public ReadOnly Property Cursor As Cursor Implements ITool(Of EraserSettings).Cursor
+            Get
+                Dim settings = _settingsControl.Settings
+
+                Dim bmp As New Bitmap(settings.Diameter + 8, settings.Diameter + 8)
                 bmp.MakeTransparent()
                 Using g As Graphics = Graphics.FromImage(bmp)
                     g.SmoothingMode = SmoothingMode.AntiAlias
-                    g.FillEllipse(Brushes.LightGray, 4, 4, _parent.EraserDiameter, _parent.EraserDiameter)
-                    g.DrawEllipse(Pens.Black, 4, 4, _parent.EraserDiameter, _parent.EraserDiameter)
+                    g.FillEllipse(Brushes.LightGray, 4, 4, settings.Diameter, settings.Diameter)
+                    g.DrawEllipse(Pens.Black, 4, 4, settings.Diameter, settings.Diameter)
                 End Using
                 Return New Cursor(bmp.GetHicon)
             End Get
         End Property
 
-        Public Overrides ReadOnly Property ToolType As PaintPanel.ShotEditorTool = PaintPanel.ShotEditorTool.Eraser
+        Public ReadOnly Property ToolType As PaintPanel.ShotEditorTool = PaintPanel.ShotEditorTool.Eraser Implements ITool(Of EraserSettings).ToolType
 
         Private Shared ReadOnly ClearBrush As Brush = New SolidBrush(Color.FromArgb(0, Color.White))
+
         Private _isFirstClick As Boolean = True
 
-        Public Overrides Sub RenderPreview(rawImage As Image, ga As Graphics, sender As PaintPanel)
+        Public Sub RenderPreview(rawImage As Image, ga As Graphics) Implements ITool(Of EraserSettings).RenderPreview
             Using g As Graphics = Graphics.FromImage(rawImage)
                 g.CompositingMode = CompositingMode.SourceCopy
                 g.SmoothingMode = SmoothingMode.AntiAlias
+
+                Dim settings = _settingsControl.Settings
+
                 If _isFirstClick Then
-                    g.FillEllipse(ClearBrush, InternalBeginCoordinates.X - CInt(_parent.EraserDiameter / 2), InternalBeginCoordinates.Y - CInt(_parent.EraserDiameter / 2), _parent.EraserDiameter, _parent.EraserDiameter)
+                    g.FillEllipse(
+                        ClearBrush,
+                        _beginCoordinates.X - CInt(settings.Diameter / 2),
+                        _beginCoordinates.Y - CInt(settings.Diameter / 2),
+                        settings.Diameter,
+                        settings.Diameter
+                    )
                     _isFirstClick = False
                 Else
-                    g.FillEllipse(ClearBrush, EndCoordinates.X - CInt(_parent.EraserDiameter / 2), EndCoordinates.Y - CInt(_parent.EraserDiameter / 2), _parent.EraserDiameter, _parent.EraserDiameter)
+                    g.FillEllipse(
+                        ClearBrush,
+                        EndCoordinates.X - CInt(settings.Diameter / 2),
+                        EndCoordinates.Y - CInt(settings.Diameter / 2),
+                        settings.Diameter,
+                        settings.Diameter
+                    )
                 End If
             End Using
         End Sub
@@ -55,6 +79,43 @@ Namespace Drawing.Tools
         Public Sub New(parent As PaintPanel)
             ArgumentNullException.ThrowIfNull(parent)
             _parent = parent
+
+            _settingsControl = New EraserSettingsControl(EraserSettings.Default)
+        End Sub
+
+        Public Sub LoadInitialSettings() Implements ITool(Of EraserSettings).LoadInitialSettings
+            If My.Settings.EraserDiameter > EraserSettings.MaximumDiameter OrElse My.Settings.EraserDiameter <= EraserSettings.MinimumDiameter Then
+                My.Settings.EraserDiameter = EraserSettings.Default.Diameter
+                My.Settings.Save()
+            End If
+
+            With _settingsControl.Settings
+                .Diameter = My.Settings.EraserDiameter
+            End With
+        End Sub
+
+        Public Sub PersistSettings() Implements ITool(Of EraserSettings).PersistSettings
+            With _settingsControl.Settings
+                My.Settings.EraserDiameter = .Diameter
+            End With
+        End Sub
+
+        Private Sub OnSettingsUpdated(sender As Object, newSettings As EraserSettings)
+            MessageBox.Show("Settings updated: " & newSettings.ToString())
+        End Sub
+
+        Public Sub Dispose() Implements ITool(Of EraserSettings).Dispose
+            _settingsControl.Dispose()
+        End Sub
+
+        Public Sub RenderFinalImage(ByRef rawImage As Image, sender As PaintPanel) Implements ITool(Of EraserSettings).RenderFinalImage
+            ' Nothing to do here
+        End Sub
+        Public Sub MouseOnlyMoved(rawImage As Image, ByRef currentCursor As Cursor, e As MouseEventArgs) Implements ITool(Of EraserSettings).MouseOnlyMoved
+            ' Nothing to do here
+        End Sub
+        Public Sub MouseClicked(rawImage As Image, e As Point, ByRef currentCursor As Cursor, trigger As Control) Implements ITool(Of EraserSettings).MouseClicked
+            ' Nothing to do here
         End Sub
     End Class
 End Namespace

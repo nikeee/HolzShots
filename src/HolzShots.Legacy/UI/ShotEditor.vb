@@ -1,5 +1,3 @@
-Imports System.Drawing.Drawing2D
-Imports System.Drawing.Printing
 Imports System.IO
 Imports System.Runtime.InteropServices
 Imports HolzShots.Composition
@@ -95,26 +93,9 @@ Namespace UI
 
             AddSettingsPanels()
 
-            CensorSettingsPanel.BackColor = Color.Transparent
-            MarkerSettingsPanel.BackColor = Color.Transparent
-            EraserSettingsPanel.BackColor = Color.Transparent
-            EllipseSettingsPanel.BackColor = Color.Transparent
-            BrightenSettingsPanel.BackColor = Color.Transparent
-            ArrowSettingsPanel.BackColor = Color.Transparent
-            BlurSettingsPanel.BackColor = Color.Transparent
+            CurrentToolSettingsPanel.BackColor = Color.Transparent
 
             Dim focusColor As Color = BackColor
-
-            BlurnessBar.BackColor = focusColor
-            ZensursulaBar.BackColor = focusColor
-            MarkerBar.BackColor = focusColor
-            BlackWhiteTracker.BackColor = focusColor
-            ArrowWidthSlider.BackColor = focusColor
-
-            EllipseBar.BackColor = focusColor
-            EllipseOrRectangle.BackColor = focusColor
-
-            EraserBar.BackColor = focusColor
 
             ShareStrip.BackColor = Color.Transparent
             EditStrip.BackColor = Color.Transparent
@@ -145,21 +126,10 @@ Namespace UI
 
         Private Sub ShotShowerLoad() Handles MyBase.Load
             ThePanel.Initialize(_screenshot)
-            LoadToolSettings()
+            EnlistUploaderPlugins()
         End Sub
 
 #Region "Settings and stuff"
-
-        Private Sub LoadToolSettings()
-            LoadZensursula()
-            LoadArrow()
-            LoadMarker()
-            LoadEraser()
-            LoadEllipse()
-            LoadBrighten()
-            LoadPixelator()
-            EnlistUploaderPlugins()
-        End Sub
 
         Private Sub EnlistUploaderPlugins()
 
@@ -174,85 +144,6 @@ Namespace UI
                     item.ImageScaling = ToolStripItemImageScaling.None
                 Next
             End If
-        End Sub
-
-        Private Sub LoadPixelator()
-            If HolzShots.My.Settings.BlurFactor > 30 OrElse HolzShots.My.Settings.BlurFactor <= 5 Then
-                HolzShots.My.Settings.BlurFactor = 7
-                HolzShots.My.Settings.Save()
-            End If
-            ThePanel.BlurFactor = HolzShots.My.Settings.BlurFactor
-            BlurnessBar.Value = ThePanel.BlurFactor
-        End Sub
-
-        Private Sub LoadZensursula()
-            ZensursulaColorSelector.Color = HolzShots.My.Settings.ZensursulaColor
-            If HolzShots.My.Settings.ZensursulaWidth > 100 OrElse HolzShots.My.Settings.ZensursulaWidth <= 0 Then
-                HolzShots.My.Settings.ZensursulaWidth = 20
-                HolzShots.My.Settings.Save()
-            End If
-            ZensursulaBar.Value = HolzShots.My.Settings.ZensursulaWidth
-            Pinsel_Width_Zensursula.Text = $"{ZensursulaBar.Value}px"
-            ThePanel.ZensursulaColor = ZensursulaColorSelector.Color
-            ThePanel.ZensursulaWidth = ZensursulaBar.Value
-        End Sub
-
-        Private Sub LoadArrow()
-            ArrowColorviewer.Color = My.Settings.ArrowColor
-            ThePanel.ArrowColor = ArrowColorviewer.Color
-            ArrowWidthSlider.Value = Math.Clamp(My.Settings.ArrowWidth, ArrowWidthSlider.Minimum, ArrowWidthSlider.Maximum)
-            ArrowWidthSliderScroll()
-        End Sub
-
-        Private Sub LoadMarker()
-            MarkerColorSelector.Color = HolzShots.My.Settings.MarkerColor
-            If HolzShots.My.Settings.MarkerWidth > 100 OrElse HolzShots.My.Settings.MarkerWidth <= 0 Then
-                HolzShots.My.Settings.MarkerWidth = 20
-                HolzShots.My.Settings.Save()
-            End If
-            MarkerBar.Value = HolzShots.My.Settings.MarkerWidth
-            Pinsel_Width_Marker.Text = $"{MarkerBar.Value}px"
-            ThePanel.MarkerColor = MarkerColorSelector.Color
-            ThePanel.MarkerWidth = MarkerBar.Value
-        End Sub
-
-        Private Sub LoadEllipse()
-            EllipseColorSelector.Color = HolzShots.My.Settings.EllipseColor
-            If HolzShots.My.Settings.EllipseWidth > 100 OrElse HolzShots.My.Settings.EllipseWidth <= 0 Then
-                HolzShots.My.Settings.EllipseWidth = 20
-                HolzShots.My.Settings.Save()
-            End If
-            ThePanel.UseBoxInsteadOfCircle = HolzShots.My.Settings.UseBoxInsteadOfCirlce
-            EllipseOrRectangle.Value = If(ThePanel.UseBoxInsteadOfCircle, 1, 0)
-            EllipseBar.Value = HolzShots.My.Settings.EllipseWidth
-            Ellipse_Width.Text = $"{EllipseBar.Value}px"
-            ThePanel.EllipseColor = EllipseColorSelector.Color
-            ThePanel.EllipseWidth = EllipseBar.Value
-            'Ellips_style.UseCompatibleTextRendering = True
-        End Sub
-
-        Private Sub LoadEraser()
-            If HolzShots.My.Settings.EraserDiameter > 100 OrElse HolzShots.My.Settings.EraserDiameter <= 0 Then
-                HolzShots.My.Settings.EraserDiameter = 20
-                HolzShots.My.Settings.Save()
-            End If
-            EraserBar.Value = HolzShots.My.Settings.EraserDiameter
-            EraserDiameterLabel.Text = $"{ EraserBar.Value}px"
-            ThePanel.EraserDiameter = EraserBar.Value
-        End Sub
-
-        Private Sub LoadBrighten()
-            Dim v As Integer = HolzShots.My.Settings.BrightenColor.A
-            If HolzShots.My.Settings.BrightenColor.R = HolzShots.My.Settings.BrightenColor.G AndAlso
-                HolzShots.My.Settings.BrightenColor.R = HolzShots.My.Settings.BrightenColor.B Then
-                If HolzShots.My.Settings.BrightenColor.R = 255 Then
-                    v += 255
-                ElseIf HolzShots.My.Settings.BrightenColor.R = 0 Then
-                    v = 255 - v
-                End If
-            End If
-            BlackWhiteTracker.Value = v
-            BlackWhiteTrackerScroll()
         End Sub
 
 #End Region
@@ -321,42 +212,11 @@ Namespace UI
 #Region "Updater"
 
         Private Sub UpdateSettings() Handles MyBase.FormClosing
-            HolzShots.My.Settings.ZensursulaColor = ZensursulaColorSelector.Color
-            HolzShots.My.Settings.ZensursulaWidth = ZensursulaBar.Value
-
-            HolzShots.My.Settings.MarkerColor = MarkerColorSelector.Color
-            HolzShots.My.Settings.MarkerWidth = MarkerBar.Value
-
-            HolzShots.My.Settings.EraserDiameter = EraserBar.Value
-
-            HolzShots.My.Settings.EllipseColor = EllipseColorSelector.Color
-            HolzShots.My.Settings.EllipseWidth = EllipseBar.Value
-
-            HolzShots.My.Settings.BrightenColor = BigColorViewer1.Color
-
-            HolzShots.My.Settings.ArrowColor = ArrowColorviewer.Color
-            HolzShots.My.Settings.ArrowWidth = ArrowWidthSlider.Value
-            HolzShots.My.Settings.UseBoxInsteadOfCirlce = ThePanel.UseBoxInsteadOfCircle
-
-            HolzShots.My.Settings.BlurFactor = ThePanel.BlurFactor
-
-            HolzShots.My.Settings.Save()
+            My.Settings.Save()
         End Sub
 
         Private Sub ResetTools()
-            ThePanel.CurrentTool = PaintPanel.ShotEditorTool.None
-            CensorTool.Checked = False
-            MarkerTool.Checked = False
-            TextToolButton.Checked = False
-            CroppingTool.Checked = False
-            ArrowTool.Checked = False
-            EraserTool.Checked = False
-            BlurTool.Checked = False
-            EllipseTool.Checked = False
-            PipettenTool.Checked = False
-            BrightenTool.Checked = False
-            ScaleTool.Checked = False
-            _activator.HideAll()
+            EnableTool(PaintPanel.ShotEditorTool.None)
         End Sub
 
 #End Region
@@ -366,14 +226,7 @@ Namespace UI
         Private ReadOnly ToolControlMap As New Dictionary(Of PaintPanel.ShotEditorTool, ToolStripButton)
 
         Private Sub AddSettingsPanels()
-            _activator = New PanelActivator()
-            _activator.AddPanel(PaintPanel.ShotEditorTool.Arrow, ArrowSettingsPanel)
-            _activator.AddPanel(PaintPanel.ShotEditorTool.Brighten, BrightenSettingsPanel)
-            _activator.AddPanel(PaintPanel.ShotEditorTool.Blur, BlurSettingsPanel)
-            _activator.AddPanel(PaintPanel.ShotEditorTool.Ellipse, EllipseSettingsPanel)
-            _activator.AddPanel(PaintPanel.ShotEditorTool.Eraser, EraserSettingsPanel)
-            _activator.AddPanel(PaintPanel.ShotEditorTool.Marker, MarkerSettingsPanel)
-            _activator.AddPanel(PaintPanel.ShotEditorTool.Censor, CensorSettingsPanel)
+            _activator = New PanelActivator(CurrentToolSettingsPanel)
 
             ToolControlMap.Add(PaintPanel.ShotEditorTool.Pipette, PipettenTool)
             ToolControlMap.Add(PaintPanel.ShotEditorTool.Scale, Nothing)
@@ -389,13 +242,34 @@ Namespace UI
         End Sub
 
         Private Sub EnableTool(tool As PaintPanel.ShotEditorTool)
+
+            Dim previousTool = ThePanel.CurrentTool
+
+            If previousTool = tool Then
+                Return
+            End If
+
+            Dim previousToolObject = ThePanel.CurrentToolObject
+            previousToolObject?.PersistSettings() ' may depend on controls, so we cannot clear the settings panel before
+
+            _activator.ClearSettingsPanel()
+
             ThePanel.CurrentTool = tool
-            _activator.ActivateSettingsPanel(tool)
+
+            Dim cto = ThePanel.CurrentToolObject
+
+            cto.LoadInitialSettings()
+
+            If cto?.SettingsControl IsNot Nothing Then
+                _activator.CreateSettingsPanel(cto)
+            End If
+
             Dim toolToEnable = ToolControlMap.GetValueOrDefault(tool)
             For Each button In ToolControlMap.Values
-                button.Checked = toolToEnable IsNot Nothing AndAlso button Is toolToEnable
+                If button IsNot Nothing Then
+                    button.Checked = toolToEnable IsNot Nothing AndAlso button Is toolToEnable
+                End If
             Next
-            _activator.HideAll()
         End Sub
 
         Private Sub PipettenToolClick() Handles PipettenTool.Click
@@ -479,42 +353,6 @@ Namespace UI
 
 #End Region
 
-#Region "Tool Settings"
-
-        Private Sub ZensursulaBarValueChanged() Handles ZensursulaBar.Scroll
-            Pinsel_Width_Zensursula.Text = $"{ZensursulaBar.Value}px"
-            ThePanel.ZensursulaWidth = ZensursulaBar.Value
-        End Sub
-
-        Private Sub ZensursulaViewerColorChanged(sender As Object, c As Color) Handles ZensursulaColorSelector.ColorChanged
-            ThePanel.ZensursulaColor = c
-        End Sub
-
-        Private Sub MarkerBarValueChanged() Handles MarkerBar.Scroll
-            Pinsel_Width_Marker.Text = $"{MarkerBar.Value}px"
-            ThePanel.MarkerWidth = MarkerBar.Value
-        End Sub
-
-        Private Sub MarkerViewerColorChanged(sender As Object, c As Color) Handles MarkerColorSelector.ColorChanged
-            ThePanel.MarkerColor = c
-        End Sub
-
-        Private Sub EraserBarScroll() Handles EraserBar.ValueChanged
-            EraserDiameterLabel.Text = $"{EraserBar.Value}px"
-            ThePanel.EraserDiameter = EraserBar.Value
-        End Sub
-
-        Private Sub EllipseBarValueChanged() Handles EllipseBar.ValueChanged
-            Ellipse_Width.Text = $"{EllipseBar.Value}px"
-            ThePanel.EllipseWidth = EllipseBar.Value
-        End Sub
-
-        Private Sub EllipseViewerColorChanged(sender As Object, c As Color) Handles EllipseColorSelector.ColorChanged
-            ThePanel.EllipseColor = c
-        End Sub
-
-#End Region
-
         Private Sub ImageInfoLabelMouseClick(sender As Object, e As MouseEventArgs) Handles ImageInfoLabel.MouseUp
 
             Dim s = ThePanel.Screenshot
@@ -537,27 +375,8 @@ Namespace UI
             MouseInfoLabel.Text = $"{e.X}, {e.Y}px"
         End Sub
 
-        Private Sub BlackWhiteTrackerScroll() Handles BlackWhiteTracker.Scroll
-            If BlackWhiteTracker.Value >= 0 AndAlso BlackWhiteTracker.Value <= 255 Then
-                ThePanel.BrightenColor = Color.FromArgb(255 - BlackWhiteTracker.Value, 0, 0, 0)
-                BigColorViewer1.Color = ThePanel.BrightenColor
-            ElseIf BlackWhiteTracker.Value > 255 AndAlso BlackWhiteTracker.Value <= 510 Then
-                ThePanel.BrightenColor = Color.FromArgb(BlackWhiteTracker.Value - 255, 255, 255, 255)
-                BigColorViewer1.Color = ThePanel.BrightenColor
-            End If
-        End Sub
-
-        Private Sub ArrowColorviewerColorChanged(sender As Object, c As Color) Handles ArrowColorviewer.ColorChanged
-            ThePanel.ArrowColor = c
-        End Sub
-
         Private Sub DrawCursorClick() Handles DrawCursor.Click
             ThePanel.DrawCursor = DrawCursor.Checked
-        End Sub
-
-        Private Sub ArrowWidthSliderScroll() Handles ArrowWidthSlider.Scroll
-            ArrowWidthLabel.Text = If(ArrowWidthSlider.Value = 0, "Auto", $"{ArrowWidthSlider.Value}px")
-            ThePanel.ArrowWidth = ArrowWidthSlider.Value
         End Sub
 
         Private Sub ShotEditorResize() Handles Me.Resize
@@ -600,34 +419,10 @@ Namespace UI
             HandleAfterUpload()
         End Sub
 
-        Private Sub EllipseOrRectangleValueChanged(sender As Object, e As EventArgs) Handles EllipseOrRectangle.ValueChanged
-            ThePanel.UseBoxInsteadOfCircle = EllipseOrRectangle.Value = 1
-            EllipseOrRectangleBox.Invalidate()
-        End Sub
-
-        Private Sub EllipseOrRectangleBoxClick(sender As Object, e As EventArgs) Handles EllipseOrRectangleBox.Click
-            If EllipseOrRectangle.Value = 1 Then EllipseOrRectangle.Value = 0 Else EllipseOrRectangle.Value = 1
-        End Sub
-
-        Private Sub EllipseOrRectangleBoxPaint(sender As Object, e As PaintEventArgs) Handles EllipseOrRectangleBox.Paint
-            Dim rct As New Rectangle(2, 2, 12, 12)
-            Dim pe As New Pen(Brushes.Red) With {.Width = 2}
-            If ThePanel.UseBoxInsteadOfCircle Then
-                e.Graphics.DrawRectangle(pe, rct)
-            Else
-                e.Graphics.SmoothingMode = SmoothingMode.HighQuality
-                e.Graphics.DrawEllipse(pe, rct)
-            End If
-        End Sub
-
         Private Sub HandleAfterUpload()
             If _settingsContext.CloseAfterUpload Then
                 Close()
             End If
-        End Sub
-
-        Private Sub BlurnessBarValueChanged() Handles BlurnessBar.ValueChanged
-            ThePanel.BlurFactor = BlurnessBar.Value
         End Sub
 
         Private Async Sub UploadCurrentImageToDefaultProvider() Handles UploadToHoster.ButtonClick

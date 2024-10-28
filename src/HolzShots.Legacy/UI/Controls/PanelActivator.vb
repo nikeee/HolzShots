@@ -1,34 +1,46 @@
+Imports HolzShots.Drawing.Tools
+
 Namespace UI.Controls
     Friend Class PanelActivator
 
-        Private Shared ReadOnly OpenPoint As New Point(475, 0) '(525, 0)
-
-        Private ReadOnly _toolPanelDict As New Dictionary(Of PaintPanel.ShotEditorTool, Panel)
-
-        Public Sub AddPanel(tool As PaintPanel.ShotEditorTool, targetPanel As Panel)
-            ArgumentNullException.ThrowIfNull(targetPanel)
-            If _toolPanelDict.ContainsKey(tool) Then Throw New ArgumentException("Settings panel already in dictionary")
-
-            _toolPanelDict.Add(tool, targetPanel)
+        Private ReadOnly _panel As Control
+        Sub New(panel As Control)
+            ArgumentNullException.ThrowIfNull(panel)
+            _panel = panel
         End Sub
 
-        Public Sub ActivateSettingsPanel(tool As PaintPanel.ShotEditorTool)
-            Dim value As Panel = Nothing
-            If Not _toolPanelDict.TryGetValue(tool, value) Then
-                Return
-            End If
+        Public Sub CreateSettingsPanel(tool As ITool(Of ToolSettingsBase))
+            Debug.Assert(tool.SettingsControl IsNot Nothing)
+            Debug.Assert(_panel IsNot Nothing)
 
-            Dim targetPanel = value
-            targetPanel.Location = OpenPoint
-            targetPanel.Visible = True
-            targetPanel.BringToFront()
+            Dim controlRaw = tool.SettingsControl
+            Debug.Assert(controlRaw IsNot Nothing)
+            Debug.Assert(TypeOf controlRaw Is UserControl)
 
-            _toolPanelDict.Where(Function(ent) ent.Key <> tool).ToList().ForEach(Function(ent) ent.Value.Visible = False)
+            Dim control = DirectCast(controlRaw, Control)
+            control.Dock = DockStyle.Fill
+
+            _panel.Controls.Add(control)
+
+            _panel.Visible = True
+            _panel.BringToFront()
         End Sub
 
-        Public Sub HideAll()
-            _toolPanelDict.ToList().ForEach(Function(ent) ent.Value.Visible = False)
-        End Sub
+        Public Sub ClearSettingsPanel()
 
+            Dim toRemove = New List(Of Control)
+            For Each c In _panel.Controls
+                Dim control = DirectCast(c, Control)
+                If control IsNot Nothing Then
+                    toRemove.Add(control)
+                End If
+            Next
+
+            _panel.Controls.Clear()
+
+            For Each c In toRemove
+                c.Dispose()
+            Next
+        End Sub
     End Class
 End Namespace

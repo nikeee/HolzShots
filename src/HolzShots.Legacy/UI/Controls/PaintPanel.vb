@@ -2,6 +2,7 @@ Imports System.ComponentModel
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Text
 Imports HolzShots.Drawing.Tools
+Imports HolzShots.Drawing.Tools.UI
 
 Namespace UI.Controls
     Friend Class PaintPanel
@@ -9,139 +10,21 @@ Namespace UI.Controls
         Private _currentTool As ShotEditorTool
         Private _screenshot As Screenshot
 
-        Private _markerColor As Color
-        Private _zensursulaColor As Color
-        Private _zensursulaWidth, _arrowWidth, _eraseDiameter, _markerWidth As Integer
-
         Friend Event Initialized()
         Friend Event UpdateMousePosition(e As Point)
 
-        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
-        Friend Property UseBoxInsteadOfCircle As Boolean = False
-
-        Private _drawcursor As Boolean
+        Private _drawCursor As Boolean
 
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
         Public Property DrawCursor As Boolean
             Get
-                Return _drawcursor
+                Return _drawCursor
             End Get
             Set(value As Boolean)
-                _drawcursor = value
+                _drawCursor = value
                 RawBox.Invalidate()
             End Set
         End Property
-
-        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
-        Public Property EllipseWidth As Integer
-        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
-        Public Property EllipseColor As Color
-
-        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
-        Public Property ArrowColor As Color
-
-        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
-        Public Property EraserDiameter As Integer
-            Get
-                Return _eraseDiameter
-            End Get
-            Set(value As Integer)
-                _eraseDiameter = value
-                If CurrentTool = ShotEditorTool.Eraser Then
-                    CurrentTool = ShotEditorTool.None
-                    CurrentTool = ShotEditorTool.Eraser
-                End If
-            End Set
-        End Property
-
-        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
-        Public Property MarkerColor As Color
-            Get
-                Return _markerColor
-            End Get
-            Set(value As Color)
-                _markerColor = value
-                If CurrentTool = ShotEditorTool.Marker Then
-                    CurrentTool = ShotEditorTool.None
-                    CurrentTool = ShotEditorTool.Marker
-                End If
-            End Set
-        End Property
-
-        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
-        Public Property MarkerWidth As Integer
-            Get
-                Return _markerWidth
-            End Get
-            Set(value As Integer)
-                _markerWidth = value
-                If CurrentTool = ShotEditorTool.Marker Then
-                    CurrentTool = ShotEditorTool.None
-                    CurrentTool = ShotEditorTool.Marker
-                End If
-            End Set
-        End Property
-
-        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
-        Public Property ZensursulaColor As Color
-            Get
-                Return _zensursulaColor
-            End Get
-            Set(value As Color)
-                _zensursulaColor = value
-                If CurrentTool = ShotEditorTool.Censor Then
-                    CurrentTool = ShotEditorTool.None
-                    CurrentTool = ShotEditorTool.Censor
-                End If
-            End Set
-        End Property
-
-        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
-        Public Property ZensursulaWidth As Integer
-            Get
-                Return _zensursulaWidth
-            End Get
-            Set(value As Integer)
-                _zensursulaWidth = value
-                If CurrentTool = ShotEditorTool.Censor Then
-                    CurrentTool = ShotEditorTool.None
-                    CurrentTool = ShotEditorTool.Censor
-                End If
-            End Set
-        End Property
-
-        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
-        Public Property ArrowWidth As Integer
-            Get
-                Return _arrowWidth
-            End Get
-            Set(value As Integer)
-                _arrowWidth = value
-                If CurrentTool = ShotEditorTool.Arrow Then
-                    CurrentTool = ShotEditorTool.None
-                    CurrentTool = ShotEditorTool.Arrow
-                End If
-            End Set
-        End Property
-
-        Private _blurFactor As Integer
-        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
-        Public Property BlurFactor As Integer
-            Get
-                Return _blurFactor
-            End Get
-            Set(value As Integer)
-                If value <= 0 Then value = 7
-                _blurFactor = value
-                If CurrentTool = ShotEditorTool.Blur Then
-                    CurrentTool = ShotEditorTool.None
-                    CurrentTool = ShotEditorTool.Blur
-                End If
-            End Set
-        End Property
-
-        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
-        Public Property BrightenColor As Color
 
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
         Public Property Screenshot As Screenshot
@@ -166,7 +49,7 @@ Namespace UI.Controls
             Get
                 If Not DesignMode Then
                     Dim bmp As Image = RawBox.Image
-                    If _drawcursor Then
+                    If _drawCursor Then
                         Using g As Graphics = Graphics.FromImage(bmp)
                             g.SmoothingMode = SmoothingMode.AntiAlias
                             g.CompositingQuality = CompositingQuality.HighQuality
@@ -191,19 +74,19 @@ Namespace UI.Controls
                         Cursor = Cursors.Default
                     Case ShotEditorTool.Text
                         CurrentToolObject = Nothing
-                        Cursor = New Cursor(HolzShots.My.Resources.textCursor.Handle)
+                        Cursor = New Cursor(My.Resources.textCursor.Handle)
                     Case ShotEditorTool.Crop
-                        CurrentToolObject = New Crop
+                        CurrentToolObject = New Crop()
                     Case ShotEditorTool.Marker
-                        CurrentToolObject = New Marker(MarkerWidth, MarkerColor)
+                        CurrentToolObject = New Marker()
                     Case ShotEditorTool.Censor
-                        CurrentToolObject = New Censor(ZensursulaWidth, ZensursulaColor)
+                        CurrentToolObject = New Censor()
                     Case ShotEditorTool.Eraser
                         CurrentToolObject = New Eraser(Me)
                     Case ShotEditorTool.Blur
-                        CurrentToolObject = New Pixelate
+                        CurrentToolObject = New Blur
                     Case ShotEditorTool.Ellipse
-                        CurrentToolObject = New Circle
+                        CurrentToolObject = New Ellipse
                     Case ShotEditorTool.Pipette
                         CurrentToolObject = New Pipette
                     Case ShotEditorTool.Brighten
@@ -219,14 +102,15 @@ Namespace UI.Controls
         End Property
 
 
-        Private Event CurrentToolChanged(sender As Object, tool As Tool)
-        Private _currentToolObject As Tool
+        Private Event CurrentToolChanged(sender As Object, tool As ITool(Of ToolSettingsBase))
+        Private _currentToolObject As ITool(Of ToolSettingsBase)
 
-        Private Property CurrentToolObject As Tool
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
+        Public Property CurrentToolObject As ITool(Of ToolSettingsBase)
             Get
                 Return _currentToolObject
             End Get
-            Set(value As Tool)
+            Set(value As ITool(Of ToolSettingsBase))
                 If value IsNot _currentToolObject Then
                     _currentToolObject = value
                     RaiseEvent CurrentToolChanged(Me, _currentToolObject)
@@ -234,7 +118,7 @@ Namespace UI.Controls
             End Set
         End Property
 
-        Private Sub CurrentToolChanged_Event(sender As Object, tool As Tool) Handles Me.CurrentToolChanged
+        Private Sub CurrentToolChanged_Event(sender As Object, tool As ITool(Of ToolSettingsBase)) Handles Me.CurrentToolChanged
             If tool IsNot Nothing Then
                 Cursor = tool.Cursor
             End If
@@ -253,6 +137,7 @@ Namespace UI.Controls
             Pipette = 256
             Brighten = 512
             Scale = 1024
+            LegacyNew = 2048
         End Enum
 
         Public Sub Initialize(shot As Screenshot)
@@ -270,7 +155,7 @@ Namespace UI.Controls
             RaiseEvent Initialized()
         End Sub
 
-        Private Sub InvokeFinalRender(tool As Tool)
+        Private Sub InvokeFinalRender(tool As ITool(Of ToolSettingsBase))
             Dim img = DirectCast(CurrentImage.Clone(), Image)
             Debug.Assert(tool IsNot Nothing)
             tool.RenderFinalImage(img, Me)
@@ -357,11 +242,11 @@ Namespace UI.Controls
         Private Sub RawBoxPaint(sender As Object, e As PaintEventArgs) Handles RawBox.Paint
             If _mousedown = True Then
                 If _currentToolObject IsNot Nothing Then
-                    CurrentToolObject.RenderPreview(CType(RawBox.Image, Bitmap), e.Graphics, Me)
+                    CurrentToolObject.RenderPreview(CType(RawBox.Image, Bitmap), e.Graphics)
                     Exit Sub
                 End If
             End If
-            If _drawcursor AndAlso Screenshot IsNot Nothing Then
+            If _drawCursor AndAlso Screenshot IsNot Nothing Then
                 e.Graphics.SmoothingMode = SmoothingMode.AntiAlias
                 e.Graphics.CompositingQuality = CompositingQuality.HighQuality
                 'e.Graphics.DrawImage(Screenshot.Cursor, Screenshot.CursorCoordinates)
@@ -455,8 +340,7 @@ Namespace UI.Controls
             End If
         End Sub
 
-        Private Sub TextPanelVisibleChanged(sender As Object, e As EventArgs) _
-            Handles TextPanel.VisibleChanged
+        Private Sub TextPanelVisibleChanged(sender As Object, e As EventArgs) Handles TextPanel.VisibleChanged
             ChangeFont.Parent = tools_bg
             ChangeFont.Location = New Point(3, 2)
 
