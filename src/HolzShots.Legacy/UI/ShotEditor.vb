@@ -213,7 +213,6 @@ Namespace UI
             Ellipse_Width.Text = $"{EllipseBar.Value}px"
             ThePanel.EllipseColor = EllipseColorSelector.Color
             ThePanel.EllipseWidth = EllipseBar.Value
-            'Ellips_style.UseCompatibleTextRendering = True
         End Sub
 
         Private Sub LoadBrighten()
