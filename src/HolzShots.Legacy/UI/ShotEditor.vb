@@ -1,5 +1,3 @@
-Imports System.Drawing.Drawing2D
-Imports System.Drawing.Printing
 Imports System.IO
 Imports System.Runtime.InteropServices
 Imports HolzShots.Composition
@@ -232,8 +230,7 @@ Namespace UI
         Private ReadOnly ToolControlMap As New Dictionary(Of PaintPanel.ShotEditorTool, ToolStripButton)
 
         Private Sub AddSettingsPanels()
-            _activator = New PanelActivator()
-            _activator.AddPanel(PaintPanel.ShotEditorTool.LegacyNew, CurrentToolSettingsPanel)
+            _activator = New PanelActivator(CurrentToolSettingsPanel)
 
             ToolControlMap.Add(PaintPanel.ShotEditorTool.Pipette, PipettenTool)
             ToolControlMap.Add(PaintPanel.ShotEditorTool.Scale, Nothing)
@@ -249,16 +246,11 @@ Namespace UI
         End Sub
 
         Private Sub EnableTool(tool As PaintPanel.ShotEditorTool)
-            _activator.HideAll()
-
             ThePanel.CurrentTool = tool
 
             Dim cto = ThePanel.CurrentToolObject
             If cto?.SettingsControl IsNot Nothing Then
-                _activator.HideAll()
                 _activator.CreateSettingsPanel(cto)
-            Else
-                _activator.ActivateSettingsPanel(tool)
             End If
 
             Dim toolToEnable = ToolControlMap.GetValueOrDefault(tool)

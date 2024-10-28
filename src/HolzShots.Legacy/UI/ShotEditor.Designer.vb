@@ -477,7 +477,7 @@ Namespace UI
             ThePanel.Location = New Point(0, 120)
             ThePanel.Margin = New Padding(0)
             ThePanel.Name = "ThePanel"
-            ThePanel.Size = New Size(165, 468)
+            ThePanel.Size = New Size(759, 468)
             ThePanel.TabIndex = 12
             ' 
             ' AutoCloseShotEditor
