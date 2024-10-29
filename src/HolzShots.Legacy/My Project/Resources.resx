@@ -154,9 +154,6 @@
   <data name="fontMedium" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\fontMedium.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="verticalMedium" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\verticalMedium.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="dateMedium" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\dateMedium.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -198,9 +195,6 @@
   </data>
   <data name="openMedium" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\openMedium.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="horizontalMedium" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\horizontalMedium.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="TexttoolsBackground" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\TexttoolsBackground.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
