@@ -17,6 +17,6 @@ public class EllipseSettings(int width, Color color, EllipseMode mode) : ToolSet
 
 public enum EllipseMode
 {
-    Ellipse,
-    Rectangle,
+    Ellipse = 0,
+    Rectangle = 1,
 }

@@ -94,5 +94,41 @@ namespace HolzShots.Properties {
                 this["CensorColor"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public int EllipseWidth {
+            get {
+                return ((int)(this["EllipseWidth"]));
+            }
+            set {
+                this["EllipseWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Red")]
+        public global::System.Drawing.Color EllipseColor {
+            get {
+                return ((global::System.Drawing.Color)(this["EllipseColor"]));
+            }
+            set {
+                this["EllipseColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int EllipseMode {
+            get {
+                return ((int)(this["EllipseMode"]));
+            }
+            set {
+                this["EllipseMode"] = value;
+            }
+        }
     }
 }
