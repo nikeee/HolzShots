@@ -130,5 +130,29 @@ namespace HolzShots.Properties {
                 this["EllipseMode"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int MarkerWidth {
+            get {
+                return ((int)(this["MarkerWidth"]));
+            }
+            set {
+                this["MarkerWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Yellow")]
+        public global::System.Drawing.Color MarkerColor {
+            get {
+                return ((global::System.Drawing.Color)(this["MarkerColor"]));
+            }
+            set {
+                this["MarkerColor"] = value;
+            }
+        }
     }
 }
