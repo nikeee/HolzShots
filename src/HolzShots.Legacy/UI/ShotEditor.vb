@@ -198,7 +198,7 @@ Namespace UI
         Private Sub AddSettingsPanels()
             _activator = New PanelActivator(CurrentToolSettingsPanel)
 
-            ToolControlMap.Add(ShotEditorTool.Pipette, PipettenTool)
+            ToolControlMap.Add(ShotEditorTool.Eyedropper, PipettenTool)
             ToolControlMap.Add(ShotEditorTool.Ellipse, EllipseTool)
             ToolControlMap.Add(ShotEditorTool.Text, TextToolButton)
             ToolControlMap.Add(ShotEditorTool.Eraser, EraserTool)
@@ -241,7 +241,7 @@ Namespace UI
         End Sub
 
         Private Sub PipettenToolClick() Handles PipettenTool.Click
-            EnableTool(ShotEditorTool.Pipette)
+            EnableTool(ShotEditorTool.Eyedropper)
         End Sub
         Private Sub ScaleToolClick() Handles ScaleTool.Click
             ThePanel.RunDialogTool(New Scale())

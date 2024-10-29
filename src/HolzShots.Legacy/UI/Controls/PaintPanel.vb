@@ -87,8 +87,8 @@ Namespace UI.Controls
                         CurrentToolObject = New Blur()
                     Case ShotEditorTool.Ellipse
                         CurrentToolObject = New Ellipse()
-                    Case ShotEditorTool.Pipette
-                        CurrentToolObject = New Pipette()
+                    Case ShotEditorTool.Eyedropper
+                        CurrentToolObject = New Eyedropper()
                     Case ShotEditorTool.Brighten
                         CurrentToolObject = New Brighten()
                     Case ShotEditorTool.Arrow
@@ -223,7 +223,7 @@ Namespace UI.Controls
                     TextPanel.Location = New Point(e.Location.X + RawBox.Location.X, e.Location.Y + RawBox.Location.Y)
                     TextPanel.Visible = True
                 ElseIf CurrentToolObject IsNot Nothing AndAlso CurrentToolObject.GetType IsNot GetType(Scale) Then
-                    If TypeOf CurrentToolObject IsNot Pipette Then
+                    If TypeOf CurrentToolObject IsNot Eyedropper Then
                         InvokeFinalRender(CurrentToolObject)
                     Else
                         CurrentToolObject.RenderFinalImage(CurrentImage)
@@ -382,7 +382,7 @@ Namespace UI.Controls
 
             RaiseEvent UpdateMousePosition(e.Location)
 
-            If CurrentTool = ShotEditorTool.Pipette Then
+            If CurrentTool = ShotEditorTool.Eyedropper Then
                 CurrentToolObject.MouseOnlyMoved(CurrentImage, Cursor, e)
             End If
         End Sub

@@ -6,9 +6,9 @@ using HolzShots.Windows.Forms;
 
 namespace HolzShots.Drawing.Tools;
 
-public class Pipette : ITool<ToolSettingsBase>
+public class Eyedropper : ITool<ToolSettingsBase>
 {
-    public ShotEditorTool ToolType { get; } = ShotEditorTool.Pipette;
+    public ShotEditorTool ToolType { get; } = ShotEditorTool.Eyedropper;
 
     public Cursor Cursor { get; } = Cursors.Cross;
     public ISettingsControl<ToolSettingsBase>? SettingsControl { get; } = null; // TODO Change to default(_) if this is not a reference type
@@ -21,14 +21,16 @@ public class Pipette : ITool<ToolSettingsBase>
         Debug.Assert(rawImage is Bitmap);
         var rawBmp = rawImage is Bitmap ? (Bitmap)rawImage : new Bitmap(rawImage);
         if (new Rectangle(0, 0, rawImage.Width, rawImage.Height).Contains(e.Location))
+        {
             // currentCursor.Dispose()
             currentCursor = new Cursor(DrawCursor(rawBmp.GetPixel(e.X, e.Y)).Handle);
+        }
     }
 
-    private static readonly Bitmap PipettenCursor = new(195, 195);
+    private static readonly Bitmap EyedropperCursor = new(195, 195);
     private static readonly Pen PenWhite = new(Color.FromArgb(180, 255, 255, 255));
 
-    private static readonly Rectangle CursorRectangle = new Rectangle(10, 10, PipettenCursor.Width - 20, PipettenCursor.Height - 20);
+    private static readonly Rectangle CursorRectangle = new (10, 10, EyedropperCursor.Width - 20, EyedropperCursor.Height - 20);
 
     private Bitmap _cursorImage = new(28, 28);
     private readonly Pen _cursorPen = new(Brushes.Black);

@@ -11,7 +11,7 @@ public enum ShotEditorTool
     Eraser = 32,
     Blur = 64,
     Ellipse = 128,
-    Pipette = 256,
+    Eyedropper = 256,
     Brighten = 512,
     LegacyNew = 1024
 }

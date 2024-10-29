@@ -29,7 +29,7 @@ Namespace Drawing.Tools
 
                 Dim bmp As New Bitmap(settings.Diameter + 8, settings.Diameter + 8)
                 bmp.MakeTransparent()
-                Using g As Graphics = Graphics.FromImage(bmp)
+                Using g = Graphics.FromImage(bmp)
                     g.SmoothingMode = SmoothingMode.AntiAlias
                     g.FillEllipse(Brushes.LightGray, 4, 4, settings.Diameter, settings.Diameter)
                     g.DrawEllipse(Pens.Black, 4, 4, settings.Diameter, settings.Diameter)
@@ -45,7 +45,7 @@ Namespace Drawing.Tools
         Private _isFirstClick As Boolean = True
 
         Public Sub RenderPreview(rawImage As Image, ga As Graphics) Implements ITool(Of EraserSettings).RenderPreview
-            Using g As Graphics = Graphics.FromImage(rawImage)
+            Using g = Graphics.FromImage(rawImage)
                 g.CompositingMode = CompositingMode.SourceCopy
                 g.SmoothingMode = SmoothingMode.AntiAlias
 
