@@ -7,7 +7,7 @@ public interface ITool<out TSettings> : IDisposable where TSettings : ToolSettin
 {
     ShotEditorTool ToolType { get; }
     Cursor Cursor { get; }
-    ISettingsControl<TSettings> SettingsControl { get; }
+    ISettingsControl<TSettings>? SettingsControl { get; }
 
     Vector2 BeginCoordinates { get; set; }
     Vector2 EndCoordinates { get; set; }
