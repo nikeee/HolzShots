@@ -82,7 +82,7 @@ Namespace UI.Controls
                     Case ShotEditorTool.Censor
                         CurrentToolObject = New Censor()
                     Case ShotEditorTool.Eraser
-                        CurrentToolObject = New Eraser(Me)
+                        CurrentToolObject = New Eraser()
                     Case ShotEditorTool.Blur
                         CurrentToolObject = New Blur()
                     Case ShotEditorTool.Ellipse
@@ -188,6 +188,7 @@ Namespace UI.Controls
 
         Private Sub DrawBoxMouseClick(sender As Object, e As MouseEventArgs) Handles RawBox.MouseClick
             CurrentToolObject?.MouseClicked(CurrentImage, e.Location.ToVector2(), Cursor, Me)
+            RawBox.Invalidate()
         End Sub
 
         Private Sub MouseLayerMouseDown(sender As Object, e As MouseEventArgs) Handles RawBox.MouseDown
@@ -195,6 +196,8 @@ Namespace UI.Controls
             If _currentTool = ShotEditorTool.None OrElse _currentTool = ShotEditorTool.Text Then Exit Sub
 
             CurrentToolObject.BeginCoordinates = e.Location.ToVector2()
+            RawBox.Invalidate()
+            ' CurrentToolObject.RenderPreview(CType(RawBox.Image, Bitmap))
         End Sub
 
         Private Sub RawBoxMouseEnter(sender As Object, e As EventArgs) Handles RawBox.MouseEnter

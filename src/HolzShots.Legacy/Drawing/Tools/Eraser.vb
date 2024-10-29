@@ -7,20 +7,8 @@ Namespace Drawing.Tools
     Friend Class Eraser
         Implements ITool(Of EraserSettings)
 
-        Private ReadOnly _parent As PaintPanel
-
         Public ReadOnly Property SettingsControl As ISettingsControl(Of EraserSettings) Implements ITool(Of EraserSettings).SettingsControl
-
-        Private _beginCoordinates As Vector2
         Public Property BeginCoordinates As Vector2 Implements ITool(Of EraserSettings).BeginCoordinates
-            Get
-                Return _beginCoordinates
-            End Get
-            Set(value As Vector2)
-                _beginCoordinates = value
-                RenderPreview(_parent.RawBox.Image, Nothing)
-            End Set
-        End Property
         Public Property EndCoordinates As Vector2 Implements ITool(Of EraserSettings).EndCoordinates
 
         Public ReadOnly Property Cursor As Cursor Implements ITool(Of EraserSettings).Cursor
@@ -54,8 +42,8 @@ Namespace Drawing.Tools
                 If _isFirstClick Then
                     g.FillEllipse(
                         ClearBrush,
-                        _beginCoordinates.X - CInt(settings.Diameter / 2),
-                        _beginCoordinates.Y - CInt(settings.Diameter / 2),
+                        _BeginCoordinates.X - CInt(settings.Diameter / 2),
+                        _BeginCoordinates.Y - CInt(settings.Diameter / 2),
                         settings.Diameter,
                         settings.Diameter
                     )
@@ -72,10 +60,7 @@ Namespace Drawing.Tools
             End Using
         End Sub
 
-        Public Sub New(parent As PaintPanel)
-            ArgumentNullException.ThrowIfNull(parent)
-            _parent = parent
-
+        Public Sub New()
             SettingsControl = New EraserSettingsControl(EraserSettings.Default)
         End Sub
 
