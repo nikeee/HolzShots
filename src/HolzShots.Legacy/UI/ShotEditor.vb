@@ -21,8 +21,6 @@ Namespace UI
         Private ReadOnly _screenshot As Screenshot
         Private ReadOnly _uploaders As UploaderManager
 
-#Region "Win7/8-Thumbnails"
-
         Private _uploadThumbnailButton As ThumbnailToolBarButton
         Private _saveThumbnailButton As ThumbnailToolBarButton
         Private _copyThumbnailButton As ThumbnailToolBarButton
@@ -50,10 +48,6 @@ Namespace UI
                 TaskbarManager.Instance.ThumbnailToolBars.AddButtons(Handle, _uploadThumbnailButton, _saveThumbnailButton, _copyThumbnailButton)
             End If
         End Sub
-
-#End Region
-
-#Region "Ctors"
 
         Public Sub New(screenshot As Screenshot, uploaders As UploaderManager, settingsContext As HSSettings)
             Debug.Assert(screenshot IsNot Nothing)
@@ -121,10 +115,6 @@ Namespace UI
             ResumeLayout(True)
         End Sub
 
-#End Region
-
-#Region "Form Events"
-
         Private Sub ShotShowerLoad() Handles MyBase.Load
             ThePanel.Initialize(_screenshot)
             EnlistUploaderPlugins()
@@ -144,11 +134,7 @@ Namespace UI
             End If
         End Sub
 
-#End Region
-
-#Region "Image Actions"
-
-        Private Sub SaveImage() Handles SaveButton.Click
+        Private Sub SaveImage() Handles SaveButton.Click, SaveToolStripMenuItem.Click
             Using sfd As New SaveFileDialog()
                 sfd.Filter = $"{Localization.PngImage}|*.png|{Localization.JpgImage}|*.jpg"
                 sfd.DefaultExt = ".png"
@@ -163,7 +149,7 @@ Namespace UI
             End Using
         End Sub
 
-        Private Sub CopyImage() Handles CopyToClipboard.Click
+        Private Sub CopyImage() Handles CopyToClipboard.Click, ClipboardToolStripMenuItem.Click
             Dim bmp = ThePanel.CombinedImage
             Try
                 Clipboard.SetImage(bmp)
@@ -174,10 +160,6 @@ Namespace UI
                 NotificationManager.CopyImageFailed(ex)
             End Try
         End Sub
-
-#End Region
-
-#Region "Filesystem"
 
         Private Sub SaveImage(fileName As String)
             ArgumentException.ThrowIfNullOrWhiteSpace(fileName)
@@ -203,10 +185,6 @@ Namespace UI
             End Try
         End Sub
 
-#End Region
-
-#Region "Updater"
-
         Private Sub UpdateSettings() Handles MyBase.FormClosing
             My.Settings.Save()
         End Sub
@@ -214,10 +192,6 @@ Namespace UI
         Private Sub ResetTools()
             EnableTool(ShotEditorTool.None)
         End Sub
-
-#End Region
-
-#Region "Painting Tools"
 
         Private ReadOnly ToolControlMap As New Dictionary(Of ShotEditorTool, ToolStripButton)
 
@@ -272,80 +246,37 @@ Namespace UI
         Private Sub ScaleToolClick() Handles ScaleTool.Click
             ThePanel.RunDialogTool(New Scale())
         End Sub
-        Private Sub CircleToolClick() Handles EllipseTool.Click
+        Private Sub CircleToolClick() Handles EllipseTool.Click, KreisToolStripMenuItem.Click
             EnableTool(ShotEditorTool.Ellipse)
         End Sub
-        Private Sub TextToolButtonClick() Handles TextToolButton.Click
+        Private Sub TextToolButtonClick() Handles TextToolButton.Click, TextToolStripMenuItem.Click
             EnableTool(ShotEditorTool.Text)
         End Sub
-        Private Sub EraserButtonClick() Handles EraserTool.Click
+        Private Sub EraserButtonClick() Handles EraserTool.Click, EraseToolStripMenuItem.Click
             EnableTool(ShotEditorTool.Eraser)
         End Sub
-        Private Sub CroppingToolClick() Handles CroppingTool.Click
+        Private Sub CroppingToolClick() Handles CroppingTool.Click, CropToolStripMenuItem.Click
             EnableTool(ShotEditorTool.Crop)
         End Sub
-        Private Sub ArrowToolClick() Handles ArrowTool.Click
+        Private Sub ArrowToolClick() Handles ArrowTool.Click, ArrowToolStripMenuItem.Click
             EnableTool(ShotEditorTool.Arrow)
         End Sub
-        Private Sub ZensursulaClick() Handles CensorTool.Click
+        Private Sub ZensursulaClick() Handles CensorTool.Click, ZensToolStripMenuItem.Click
             EnableTool(ShotEditorTool.Censor)
         End Sub
-        Private Sub HighlightClick() Handles MarkerTool.Click
+        Private Sub HighlightClick() Handles MarkerTool.Click, MarkToolStripMenuItem.Click
             EnableTool(ShotEditorTool.Marker)
         End Sub
-        Private Sub PixelateAreaClick() Handles BlurTool.Click
+        Private Sub PixelateAreaClick() Handles BlurTool.Click, PixelateToolStripMenuItem.Click
             EnableTool(ShotEditorTool.Blur)
         End Sub
         Private Sub BrightenToolClick() Handles BrightenTool.Click
             EnableTool(ShotEditorTool.Brighten)
         End Sub
 
-        Private Sub UndoStuffClick() Handles UndoStuff.Click
+        Private Sub UndoStuffClick() Handles UndoStuff.Click, ResetToolStripMenuItem.Click
             ThePanel.Undo()
         End Sub
-
-#End Region
-
-#Region "Shortcut Keys"
-
-        Private Sub ZensToolStripMenuItemClick() Handles ZensToolStripMenuItem.Click
-            CensorTool.PerformClick()
-        End Sub
-        Private Sub MarkToolStripMenuItemClick() Handles MarkToolStripMenuItem.Click
-            MarkerTool.PerformClick()
-        End Sub
-        Private Sub TextToolStripMenuItemClick() Handles TextToolStripMenuItem.Click
-            TextToolButton.PerformClick()
-        End Sub
-        Private Sub CropToolStripMenuItemClick() Handles CropToolStripMenuItem.Click
-            CroppingTool.PerformClick()
-        End Sub
-        Private Sub EraseToolStripMenuItemClick() Handles EraseToolStripMenuItem.Click
-            EraserTool.PerformClick()
-        End Sub
-        Private Sub PixelateToolStripMenuItemClick() Handles PixelateToolStripMenuItem.Click
-            BlurTool.PerformClick()
-        End Sub
-        Private Sub ArrowToolStripMenuItemClick() Handles ArrowToolStripMenuItem.Click
-            ArrowTool.PerformClick()
-        End Sub
-        Private Sub ResetToolStripMenuItemClick() Handles ResetToolStripMenuItem.Click
-            UndoStuff.PerformClick()
-        End Sub
-        Private Sub UploadToolStripMenuItemClick() Handles UploadToolStripMenuItem.Click
-            UploadToHoster.PerformButtonClick()
-        End Sub
-        Private Sub SaveToolStripMenuItemClick() Handles SaveToolStripMenuItem.Click
-            SaveButton.PerformClick()
-        End Sub
-        Private Sub ClipboardToolStripMenuItemClick() Handles ClipboardToolStripMenuItem.Click
-            CopyToClipboard.PerformClick()
-        End Sub
-        Private Sub KreisToolStripMenuItemClick() Handles KreisToolStripMenuItem.Click
-            EllipseTool.PerformClick()
-        End Sub
-
-#End Region
 
         Private Sub ImageInfoLabelMouseClick(sender As Object, e As MouseEventArgs) Handles ImageInfoLabel.MouseUp
 
@@ -419,7 +350,7 @@ Namespace UI
             End If
         End Sub
 
-        Private Async Sub UploadCurrentImageToDefaultProvider() Handles UploadToHoster.ButtonClick
+        Private Async Sub UploadCurrentImageToDefaultProvider() Handles UploadToHoster.ButtonClick, UploadToolStripMenuItem.Click
             Dim image = ThePanel.CombinedImage
 
             Dim progressReporter = UploadHelper.GetUploadReporterForCurrentSettingsContext(_settingsContext, Me)
