@@ -46,5 +46,17 @@ namespace HolzShots.Properties {
                 this["ArrowColor"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("7")]
+        public int BlurFactor {
+            get {
+                return ((int)(this["BlurFactor"]));
+            }
+            set {
+                this["BlurFactor"] = value;
+            }
+        }
     }
 }

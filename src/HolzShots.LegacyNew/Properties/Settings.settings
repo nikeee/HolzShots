@@ -8,5 +8,8 @@
     <Setting Name="ArrowColor" Type="System.Drawing.Color" Scope="User">
       <Value Profile="(Default)">Red</Value>
     </Setting>
+    <Setting Name="BlurFactor" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">7</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
