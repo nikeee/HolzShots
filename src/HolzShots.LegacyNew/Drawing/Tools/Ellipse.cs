@@ -9,8 +9,8 @@ public class Ellipse : ITool<EllipseSettings>
     public Vector2 BeginCoordinates { get; set; }
     public Vector2 EndCoordinates { get; set; }
 
-    private static readonly Cursor CursorInstance = new(Properties.Resources.crossMedium.GetHicon());
-    public Cursor Cursor { get; } = CursorInstance;
+    private static readonly Cursor _cursor = new(Properties.Resources.crossMedium.GetHicon());
+    public Cursor Cursor { get; } = _cursor;
     public ShotEditorTool ToolType { get; } = ShotEditorTool.Ellipse;
 
     public ISettingsControl<EllipseSettings> SettingsControl { get; }

@@ -5,8 +5,8 @@ namespace HolzShots.Drawing.Tools;
 
 public class Brighten : ITool<BrightnessSettings>
 {
-    private static readonly Cursor CursorInstance = new Cursor(Properties.Resources.crossMedium.GetHicon());
-    public Cursor Cursor { get; } = CursorInstance;
+    private static readonly Cursor _cursor = new (Properties.Resources.crossMedium.GetHicon());
+    public Cursor Cursor { get; } = _cursor;
     public ShotEditorTool ToolType { get; } = ShotEditorTool.Brighten;
     public ISettingsControl<BrightnessSettings> SettingsControl { get; } = new BrightnessSettingsControl(BrightnessSettings.Default);
 
@@ -24,7 +24,6 @@ public class Brighten : ITool<BrightnessSettings>
         var settings = SettingsControl.Settings;
         Properties.Settings.Default.BrightenFactor = settings.Brightness;
     }
-
 
     private static Brush CreateBrush(BrightnessSettings settings) => new SolidBrush(settings.BrightnessColor);
 

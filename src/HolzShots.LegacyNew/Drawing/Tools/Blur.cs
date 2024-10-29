@@ -6,9 +6,9 @@ namespace HolzShots.Drawing.Tools;
 
 public class Blur : ITool<BlurSettings>
 {
-    private readonly Pen _thePen = new Pen(Color.Red) { DashStyle = DashStyle.Dash };
-    private static readonly Cursor CursorInstance = new Cursor(Properties.Resources.crossMedium.GetHicon());
-    public Cursor Cursor { get; } = CursorInstance;
+    private readonly Pen _thePen = new (Color.Red) { DashStyle = DashStyle.Dash };
+    private static readonly Cursor _cursor = new (Properties.Resources.crossMedium.GetHicon());
+    public Cursor Cursor { get; } = _cursor;
     public ShotEditorTool ToolType { get; } = ShotEditorTool.Blur;
 
     public ISettingsControl<BlurSettings> SettingsControl { get; } = new BlurSettingsControl(BlurSettings.Default);
