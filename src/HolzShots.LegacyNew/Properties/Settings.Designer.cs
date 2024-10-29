@@ -154,5 +154,17 @@ namespace HolzShots.Properties {
                 this["MarkerColor"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("20")]
+        public int EraserDiameter {
+            get {
+                return ((int)(this["EraserDiameter"]));
+            }
+            set {
+                this["EraserDiameter"] = value;
+            }
+        }
     }
 }
