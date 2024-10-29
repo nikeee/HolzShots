@@ -70,5 +70,29 @@ namespace HolzShots.Properties {
                 this["BrightenFactor"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("20")]
+        public int CensorWidth {
+            get {
+                return ((int)(this["CensorWidth"]));
+            }
+            set {
+                this["CensorWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Black")]
+        public global::System.Drawing.Color CensorColor {
+            get {
+                return ((global::System.Drawing.Color)(this["CensorColor"]));
+            }
+            set {
+                this["CensorColor"] = value;
+            }
+        }
     }
 }
