@@ -21,7 +21,7 @@ public partial class ArrowSettingsControl : UserControl, ISettingsControl<ArrowS
         {
             var v = ArrowDiameterTrackBar.Value;
             _settings.Width = v;
-            ArrowDiameterTrackBarLabel.Text = $"Width: {(v == 0 ? "Auto" : v)}px";
+            ArrowDiameterTrackBarLabel.Text = $"Width: " + (v == 0 ? "Auto" : $"{v}px");
         };
         ArrowColorSelector.ColorChanged += (_, _) => _settings.Color = ArrowColorSelector.Color;
 

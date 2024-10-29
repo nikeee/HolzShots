@@ -58,5 +58,17 @@ namespace HolzShots.Properties {
                 this["BlurFactor"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int BrightenFactor {
+            get {
+                return ((int)(this["BrightenFactor"]));
+            }
+            set {
+                this["BrightenFactor"] = value;
+            }
+        }
     }
 }
