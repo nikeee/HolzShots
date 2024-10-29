@@ -8,18 +8,13 @@ Namespace Drawing.Tools
         Private Shared ReadOnly CursorInstance As New Cursor(My.Resources.crossMedium.GetHicon())
         Public ReadOnly Property Cursor As Cursor = CursorInstance Implements ITool(Of BrightnessSettings).Cursor
         Public ReadOnly Property ToolType As ShotEditorTool = ShotEditorTool.Brighten Implements ITool(Of BrightnessSettings).ToolType
-        Private ReadOnly _settingsControl As BrightnessSettingsControl
         Public ReadOnly Property SettingsControl As ISettingsControl(Of BrightnessSettings) Implements ITool(Of BrightnessSettings).SettingsControl
-            Get
-                Return _settingsControl
-            End Get
-        End Property
 
         Public Property BeginCoordinates As Vector2 Implements ITool(Of BrightnessSettings).BeginCoordinates
         Public Property EndCoordinates As Vector2 Implements ITool(Of BrightnessSettings).EndCoordinates
 
         Sub New()
-            _settingsControl = New BrightnessSettingsControl(BrightnessSettings.Default)
+            SettingsControl = New BrightnessSettingsControl(BrightnessSettings.Default)
         End Sub
 
         Public Sub LoadInitialSettings() Implements ITool(Of BrightnessSettings).LoadInitialSettings
@@ -33,13 +28,13 @@ Namespace Drawing.Tools
                 End If
             End If
 
-            With _settingsControl.Settings
+            With SettingsControl.Settings
                 .Brightness = v
             End With
         End Sub
 
         Public Sub PersistSettings() Implements ITool(Of BrightnessSettings).PersistSettings
-            With _settingsControl.Settings
+            With SettingsControl.Settings
                 My.Settings.BrightenColor = .BrightnessColor
             End With
         End Sub
@@ -58,7 +53,7 @@ Namespace Drawing.Tools
             ))
 
             Using gr = Graphics.FromImage(rawImage)
-                Using brush = CreateBrush(_settingsControl.Settings)
+                Using brush = CreateBrush(SettingsControl.Settings)
                     gr.FillRectangle(brush, rct)
                 End Using
             End Using
@@ -72,7 +67,7 @@ Namespace Drawing.Tools
                 Math.Abs(BeginCoordinates.Y - EndCoordinates.Y)
             ))
 
-            Using brush = CreateBrush(_settingsControl.Settings)
+            Using brush = CreateBrush(SettingsControl.Settings)
                 g.FillRectangle(brush, rct)
             End Using
         End Sub

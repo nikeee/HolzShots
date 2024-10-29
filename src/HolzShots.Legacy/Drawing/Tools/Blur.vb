@@ -11,17 +11,12 @@ Namespace Drawing.Tools
         Public ReadOnly Property Cursor As Cursor = CursorInstance Implements ITool(Of BlurSettings).Cursor
         Public ReadOnly Property ToolType As ShotEditorTool = ShotEditorTool.Blur Implements ITool(Of BlurSettings).ToolType
 
-        Private ReadOnly _settingsControl As ISettingsControl(Of BlurSettings)
         Public ReadOnly Property SettingsControl As ISettingsControl(Of BlurSettings) Implements ITool(Of BlurSettings).SettingsControl
-            Get
-                Return _settingsControl
-            End Get
-        End Property
         Public Property BeginCoordinates As Vector2 Implements ITool(Of BlurSettings).BeginCoordinates
         Public Property EndCoordinates As Vector2 Implements ITool(Of BlurSettings).EndCoordinates
 
         Sub New()
-            _settingsControl = New BlurSettingsControl(BlurSettings.Default)
+            SettingsControl = New BlurSettingsControl(BlurSettings.Default)
         End Sub
 
         Public Sub LoadInitialSettings() Implements ITool(Of BlurSettings).LoadInitialSettings
@@ -30,13 +25,13 @@ Namespace Drawing.Tools
                 My.Settings.Save()
             End If
 
-            With _settingsControl.Settings
+            With SettingsControl.Settings
                 .Diameter = My.Settings.BlurFactor
             End With
         End Sub
 
         Public Sub PersistSettings() Implements ITool(Of BlurSettings).PersistSettings
-            With _settingsControl.Settings
+            With SettingsControl.Settings
                 My.Settings.BlurFactor = .Diameter
             End With
         End Sub
@@ -67,7 +62,7 @@ Namespace Drawing.Tools
             End If
 
             Using g As Graphics = Graphics.FromImage(rawImage)
-                Dim settings = _settingsControl.Settings
+                Dim settings = SettingsControl.Settings
 
                 Using img As Bitmap = BlurImage(rawImage, settings.Diameter, rawSrcRect)
                     If img Is Nothing Then
@@ -105,7 +100,7 @@ Namespace Drawing.Tools
 
             If rawSrcRectangle.Width = 0 OrElse rawSrcRectangle.Height = 0 Then Exit Sub
 
-            Dim settings = _settingsControl.Settings
+            Dim settings = SettingsControl.Settings
 
             Using img As Bitmap = BlurImage(rawImage, settings.Diameter, rawSrcRectangle)
                 If img Is Nothing Then Exit Sub

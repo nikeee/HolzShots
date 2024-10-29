@@ -12,15 +12,10 @@ Namespace Drawing.Tools
         Public ReadOnly Property Cursor As Cursor = CursorInstance Implements ITool(Of EllipseSettings).Cursor
         Public ReadOnly Property ToolType As ShotEditorTool = ShotEditorTool.Ellipse Implements ITool(Of EllipseSettings).ToolType
 
-        Private ReadOnly _settingsControl As EllipseSettingsControl
         Public ReadOnly Property SettingsControl As ISettingsControl(Of EllipseSettings) Implements ITool(Of EllipseSettings).SettingsControl
-            Get
-                Return _settingsControl
-            End Get
-        End Property
 
         Sub New()
-            _settingsControl = New EllipseSettingsControl(EllipseSettings.Default)
+            SettingsControl = New EllipseSettingsControl(EllipseSettings.Default)
         End Sub
 
         Public Sub LoadInitialSettings() Implements ITool(Of EllipseSettings).LoadInitialSettings
@@ -29,7 +24,7 @@ Namespace Drawing.Tools
                 My.Settings.Save()
             End If
 
-            With _settingsControl.Settings
+            With SettingsControl.Settings
                 .Color = My.Settings.EllipseColor
                 .Width = My.Settings.EllipseWidth
                 .Mode = If(My.Settings.UseBoxInsteadOfCirlce, EllipseMode.Rectangle, EllipseMode.Ellipse)
@@ -37,7 +32,7 @@ Namespace Drawing.Tools
         End Sub
 
         Public Sub PersistSettings() Implements ITool(Of EllipseSettings).PersistSettings
-            With _settingsControl.Settings
+            With SettingsControl.Settings
                 .Color = My.Settings.EllipseColor
                 .Width = My.Settings.EllipseWidth
                 My.Settings.UseBoxInsteadOfCirlce = .Mode = EllipseMode.Rectangle
@@ -51,7 +46,7 @@ Namespace Drawing.Tools
         End Function
 
         Public Sub RenderFinalImage(ByRef rawImage As Image) Implements ITool(Of EllipseSettings).RenderFinalImage
-            Dim settings = _settingsControl.Settings
+            Dim settings = SettingsControl.Settings
 
             Dim rect = Rectangle.Round(New RectangleF(
                 Math.Min(EndCoordinates.X, BeginCoordinates.X),
@@ -73,7 +68,7 @@ Namespace Drawing.Tools
         End Sub
 
         Public Sub RenderPreview(rawImage As Image, g As Graphics) Implements ITool(Of EllipseSettings).RenderPreview
-            Dim settings = _settingsControl.Settings
+            Dim settings = SettingsControl.Settings
 
             Dim rect = Rectangle.Round(New RectangleF(
                 Math.Min(EndCoordinates.X, BeginCoordinates.X),

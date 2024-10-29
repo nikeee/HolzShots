@@ -22,7 +22,7 @@ Namespace Drawing.Tools
 
         Public ReadOnly Property Cursor As Cursor Implements ITool(Of MarkerSettings).Cursor
             Get
-                Dim markerWidth = Math.Max(5, _settingsControl.Settings.Width)
+                Dim markerWidth = Math.Max(5, SettingsControl.Settings.Width)
                 Dim bmp As New Bitmap(Convert.ToInt32(0.2 * markerWidth), markerWidth)
                 bmp.MakeTransparent()
                 Using g As Graphics = Graphics.FromImage(bmp)
@@ -32,17 +32,12 @@ Namespace Drawing.Tools
             End Get
         End Property
 
-        Private ReadOnly _settingsControl As ISettingsControl(Of MarkerSettings)
         Public ReadOnly Property SettingsControl As ISettingsControl(Of MarkerSettings) Implements ITool(Of MarkerSettings).SettingsControl
-            Get
-                Return _settingsControl
-            End Get
-        End Property
 
         Public ReadOnly Property ToolType As ShotEditorTool = ShotEditorTool.Marker Implements ITool(Of MarkerSettings).ToolType
 
         Sub New()
-            _settingsControl = New MarkerSettingsControl(MarkerSettings.Default)
+            SettingsControl = New MarkerSettingsControl(MarkerSettings.Default)
             _pointList = New List(Of Point)
         End Sub
 
@@ -52,14 +47,14 @@ Namespace Drawing.Tools
                 My.Settings.Save()
             End If
 
-            With _settingsControl.Settings
+            With SettingsControl.Settings
                 .Width = My.Settings.MarkerWidth
                 .Color = My.Settings.MarkerColor
             End With
         End Sub
 
         Public Sub PersistSettings() Implements ITool(Of MarkerSettings).PersistSettings
-            With _settingsControl.Settings
+            With SettingsControl.Settings
                 My.Settings.MarkerWidth = .Width
                 My.Settings.MarkerColor = .Color
             End With
@@ -81,7 +76,7 @@ Namespace Drawing.Tools
 
             Using g = Graphics.FromImage(rawImage)
                 g.SmoothingMode = SmoothingMode.AntiAlias
-                Using markerPen = CreatePen(_settingsControl.Settings)
+                Using markerPen = CreatePen(SettingsControl.Settings)
                     g.DrawHighlight(DirectCast(rawImage, Bitmap), _pointList.ToArray(), markerPen)
                 End Using
             End Using
@@ -97,7 +92,7 @@ Namespace Drawing.Tools
                 Return
             End If
 
-            Using markerPen = CreatePen(_settingsControl.Settings)
+            Using markerPen = CreatePen(SettingsControl.Settings)
                 g.DrawHighlight(DirectCast(rawImage, Bitmap), _pointList.ToArray(), markerPen)
             End Using
         End Sub

@@ -24,7 +24,7 @@ Namespace Drawing.Tools
 
         Public ReadOnly Property Cursor As Cursor Implements ITool(Of CensorSettings).Cursor
             Get
-                Dim censorWidth = Math.Max(5, _settingsControl.Settings.Width)
+                Dim censorWidth = Math.Max(5, SettingsControl.Settings.Width)
                 Dim bmp As New Bitmap(Convert.ToInt32(0.2 * censorWidth), censorWidth)
                 bmp.MakeTransparent()
                 Using g As Graphics = Graphics.FromImage(bmp)
@@ -36,15 +36,10 @@ Namespace Drawing.Tools
 
         Public ReadOnly Property ToolType As ShotEditorTool = ShotEditorTool.Censor Implements ITool(Of CensorSettings).ToolType
 
-        Private ReadOnly _settingsControl As ISettingsControl(Of CensorSettings)
         Public ReadOnly Property SettingsControl As ISettingsControl(Of CensorSettings) Implements ITool(Of CensorSettings).SettingsControl
-            Get
-                Return _settingsControl
-            End Get
-        End Property
 
         Sub New()
-            _settingsControl = New CensorSettingsControl(CensorSettings.Default)
+            SettingsControl = New CensorSettingsControl(CensorSettings.Default)
             _pointList = New List(Of Point)
         End Sub
 
@@ -54,14 +49,14 @@ Namespace Drawing.Tools
                 My.Settings.Save()
             End If
 
-            With _settingsControl.Settings
+            With SettingsControl.Settings
                 .Width = My.Settings.ZensursulaWidth
                 .Color = My.Settings.ZensursulaColor
             End With
         End Sub
 
         Public Sub PersistSettings() Implements ITool(Of CensorSettings).PersistSettings
-            With _settingsControl.Settings
+            With SettingsControl.Settings
                 My.Settings.ZensursulaWidth = .Width
                 My.Settings.ZensursulaColor = .Color
             End With
@@ -76,7 +71,7 @@ Namespace Drawing.Tools
         Public Sub RenderFinalImage(ByRef rawImage As Image) Implements ITool(Of CensorSettings).RenderFinalImage
             _pointList.Add(EndCoordinates.ToPoint2D())
             Using g = Graphics.FromImage(rawImage)
-                Using censorPen = CreatePen(_settingsControl.Settings)
+                Using censorPen = CreatePen(SettingsControl.Settings)
                     With g
                         .SmoothingMode = SmoothingMode.AntiAlias
                         .TextRenderingHint = TextRenderingHint.AntiAlias
@@ -100,7 +95,7 @@ Namespace Drawing.Tools
                 Return
             End If
 
-            Using censorPen = CreatePen(_settingsControl.Settings)
+            Using censorPen = CreatePen(SettingsControl.Settings)
                 Dim bs As Byte() = New Byte(_pointList.Count - 1) {}
                 bs(0) = CByte(PathPointType.Start)
                 For a = 1 To _pointList.Count - 1

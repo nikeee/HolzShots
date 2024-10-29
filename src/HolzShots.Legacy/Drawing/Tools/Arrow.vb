@@ -17,15 +17,10 @@ Namespace Drawing.Tools
         Private Shared ReadOnly TheCursor As New Cursor(My.Resources.crossMedium.GetHicon())
         Public ReadOnly Property ToolType As ShotEditorTool = ShotEditorTool.Arrow Implements ITool(Of ArrowSettings).ToolType
         Public ReadOnly Property Cursor As Cursor = TheCursor Implements ITool(Of ArrowSettings).Cursor
-        Private ReadOnly _settingsControl As ISettingsControl(Of ArrowSettings)
         Public ReadOnly Property SettingsControl As ISettingsControl(Of ArrowSettings) Implements ITool(Of ArrowSettings).SettingsControl
-            Get
-                Return _settingsControl
-            End Get
-        End Property
 
         Sub New()
-            _settingsControl = New ArrowSettingsControl(ArrowSettings.Default)
+            SettingsControl = New ArrowSettingsControl(ArrowSettings.Default)
         End Sub
 
         Public Sub LoadInitialSettings() Implements ITool(Of ArrowSettings).LoadInitialSettings
@@ -35,14 +30,14 @@ Namespace Drawing.Tools
                 My.Settings.Save()
             End If
 
-            With _settingsControl.Settings
+            With SettingsControl.Settings
                 .Width = My.Settings.ArrowWidth
                 .Color = My.Settings.ArrowColor
             End With
         End Sub
 
         Public Sub PersistSettings() Implements ITool(Of ArrowSettings).PersistSettings
-            With _settingsControl.Settings
+            With SettingsControl.Settings
                 My.Settings.ArrowWidth = .Width
                 My.Settings.ArrowColor = .Color
             End With
@@ -64,7 +59,7 @@ Namespace Drawing.Tools
             Using g = Graphics.FromImage(rawImage)
                 g.SmoothingMode = SmoothingMode.AntiAlias
 
-                Using pen As Pen = CreatePen(_settingsControl.Settings, LineCap.Triangle)
+                Using pen As Pen = CreatePen(SettingsControl.Settings, LineCap.Triangle)
                     g.DrawLine(pen, _arrowDrawPoints(0), _arrowDrawPoints(1))
                     pen.EndCap = LineCap.Round
                     g.DrawLine(pen, _arrowDrawPoints(1), _arrowDrawPoints(2))
@@ -99,7 +94,7 @@ Namespace Drawing.Tools
             End If
 
             g.SmoothingMode = SmoothingMode.AntiAlias
-            Using pen As Pen = CreatePen(_settingsControl.Settings, LineCap.Round)
+            Using pen As Pen = CreatePen(SettingsControl.Settings, LineCap.Round)
                 g.DrawLine(pen, _arrowDrawPoints(0), _arrowDrawPoints(1))
                 g.DrawLine(pen, _arrowDrawPoints(1), _arrowDrawPoints(2))
                 g.DrawLine(pen, _arrowDrawPoints(1), _arrowDrawPoints(3))

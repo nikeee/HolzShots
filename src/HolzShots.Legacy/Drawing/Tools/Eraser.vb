@@ -9,12 +9,7 @@ Namespace Drawing.Tools
 
         Private ReadOnly _parent As PaintPanel
 
-        Private ReadOnly _settingsControl As ISettingsControl(Of EraserSettings)
         Public ReadOnly Property SettingsControl As ISettingsControl(Of EraserSettings) Implements ITool(Of EraserSettings).SettingsControl
-            Get
-                Return _settingsControl
-            End Get
-        End Property
 
         Private _beginCoordinates As Vector2
         Public Property BeginCoordinates As Vector2 Implements ITool(Of EraserSettings).BeginCoordinates
@@ -30,7 +25,7 @@ Namespace Drawing.Tools
 
         Public ReadOnly Property Cursor As Cursor Implements ITool(Of EraserSettings).Cursor
             Get
-                Dim settings = _settingsControl.Settings
+                Dim settings = SettingsControl.Settings
 
                 Dim bmp As New Bitmap(settings.Diameter + 8, settings.Diameter + 8)
                 bmp.MakeTransparent()
@@ -54,7 +49,7 @@ Namespace Drawing.Tools
                 g.CompositingMode = CompositingMode.SourceCopy
                 g.SmoothingMode = SmoothingMode.AntiAlias
 
-                Dim settings = _settingsControl.Settings
+                Dim settings = SettingsControl.Settings
 
                 If _isFirstClick Then
                     g.FillEllipse(
@@ -81,7 +76,7 @@ Namespace Drawing.Tools
             ArgumentNullException.ThrowIfNull(parent)
             _parent = parent
 
-            _settingsControl = New EraserSettingsControl(EraserSettings.Default)
+            SettingsControl = New EraserSettingsControl(EraserSettings.Default)
         End Sub
 
         Public Sub LoadInitialSettings() Implements ITool(Of EraserSettings).LoadInitialSettings
@@ -90,19 +85,19 @@ Namespace Drawing.Tools
                 My.Settings.Save()
             End If
 
-            With _settingsControl.Settings
+            With SettingsControl.Settings
                 .Diameter = My.Settings.EraserDiameter
             End With
         End Sub
 
         Public Sub PersistSettings() Implements ITool(Of EraserSettings).PersistSettings
-            With _settingsControl.Settings
+            With SettingsControl.Settings
                 My.Settings.EraserDiameter = .Diameter
             End With
         End Sub
 
         Public Sub Dispose() Implements ITool(Of EraserSettings).Dispose
-            _settingsControl.Dispose()
+            SettingsControl.Dispose()
         End Sub
 
         Public Sub RenderFinalImage(ByRef rawImage As Image) Implements ITool(Of EraserSettings).RenderFinalImage
