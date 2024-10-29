@@ -6,39 +6,13 @@ Namespace Drawing.Tools
     Friend Class Arrow
         Implements ITool(Of ArrowSettings)
 
-        Private _arrowFirstPoint As Vector2
-        Private _arrowSecondPoint As Vector2
-
         Private ReadOnly _arrowDrawPoints(3) As Point
 
         Const ArrowRotationConstant As Single = 2.2 * Math.PI / 1.2
         Private _arrowBetween2 As Vector2
 
-        Private _beginCoordinates As Vector2
         Public Property BeginCoordinates As Vector2 Implements ITool(Of ArrowSettings).BeginCoordinates
-            Get
-                Return _beginCoordinates
-            End Get
-            Set(value As Vector2)
-                If value <> _beginCoordinates Then
-                    _beginCoordinates = value
-                    _arrowFirstPoint = New Vector2(value.X, value.Y)
-                End If
-            End Set
-        End Property
-
-        Private _endCoordinates As Vector2
         Public Property EndCoordinates As Vector2 Implements ITool(Of ArrowSettings).EndCoordinates
-            Get
-                Return _endCoordinates
-            End Get
-            Set(value As Vector2)
-                If value <> _endCoordinates Then
-                    _endCoordinates = value
-                    _arrowSecondPoint = New Vector2(value.X, value.Y)
-                End If
-            End Set
-        End Property
 
         Private Shared ReadOnly TheCursor As New Cursor(My.Resources.crossMedium.GetHicon())
         Public ReadOnly Property ToolType As ShotEditorTool = ShotEditorTool.Arrow Implements ITool(Of ArrowSettings).ToolType
@@ -83,7 +57,7 @@ Namespace Drawing.Tools
         End Function
 
         Public Sub RenderFinalImage(ByRef rawImage As Image) Implements ITool(Of ArrowSettings).RenderFinalImage
-            If _arrowFirstPoint = Vector2.Zero OrElse _arrowSecondPoint = Vector2.Zero Then
+            If BeginCoordinates = Vector2.Zero OrElse EndCoordinates = Vector2.Zero Then
                 Return
             End If
 
@@ -101,26 +75,26 @@ Namespace Drawing.Tools
 
         Public Sub RenderPreview(rawImage As Image, g As Graphics) Implements ITool(Of ArrowSettings).RenderPreview
 
-            _arrowSecondPoint = New Vector2(EndCoordinates.X, EndCoordinates.Y)
+            EndCoordinates = New Vector2(EndCoordinates.X, EndCoordinates.Y)
 
-            If _arrowFirstPoint = Vector2.Zero OrElse _arrowSecondPoint = Vector2.Zero Then
+            If BeginCoordinates = Vector2.Zero OrElse EndCoordinates = Vector2.Zero Then
                 Return
             End If
 
-            If _arrowFirstPoint <> _arrowSecondPoint Then
-                _arrowBetween2 = _arrowSecondPoint - _arrowFirstPoint
+            If BeginCoordinates <> EndCoordinates Then
+                _arrowBetween2 = EndCoordinates - BeginCoordinates
 
                 Dim between = Vector2.Normalize(_arrowBetween2) * _arrowBetween2.Length / 5
-                Dim c = between.Rotate(ArrowRotationConstant) + _arrowFirstPoint
-                Dim d = between.Rotate(-ArrowRotationConstant) + _arrowFirstPoint
-                _arrowDrawPoints(0) = _arrowSecondPoint.ToPoint2D()
-                _arrowDrawPoints(1) = _arrowFirstPoint.ToPoint2D()
+                Dim c = between.Rotate(ArrowRotationConstant) + BeginCoordinates
+                Dim d = between.Rotate(-ArrowRotationConstant) + BeginCoordinates
+                _arrowDrawPoints(0) = EndCoordinates.ToPoint2D()
+                _arrowDrawPoints(1) = BeginCoordinates.ToPoint2D()
                 _arrowDrawPoints(2) = c.ToPoint2D()
                 _arrowDrawPoints(3) = d.ToPoint2D()
 
             End If
 
-            If _arrowSecondPoint = Vector2.Zero Then
+            If EndCoordinates = Vector2.Zero Then
                 Return
             End If
 
