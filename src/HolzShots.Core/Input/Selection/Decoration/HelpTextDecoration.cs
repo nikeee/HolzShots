@@ -1,5 +1,6 @@
 using System.Drawing;
 using System.Linq;
+using System.Numerics;
 using HolzShots.Input.Selection.Animation;
 using unvell.D2DLib;
 
@@ -23,7 +24,7 @@ class HelpTextDecoration : IStateDecoration<InitialState>
     };
 
 
-    private static readonly D2DSize Margin = new(10, 5);
+    private static readonly Vector2 Margin = new(10, 5);
     private static readonly D2DColor BackgroundColor = new(0.2f, 1f, 1f, 1f);
     private static readonly D2DColor FontColor = new(1f, 0.9f, 0.9f, 0.9f);
     private static readonly TimeSpan FadeStart = TimeSpan.FromSeconds(5);
@@ -51,7 +52,7 @@ class HelpTextDecoration : IStateDecoration<InitialState>
         int lastX = 100;
         int lastY = 100;
 
-        var someRandomSize = new D2DSize(1000, 1000);
+        var someRandomSize = new Vector2(1000, 1000);
 
         for (int i = 0; i < res.Length; ++i)
         {
@@ -60,8 +61,8 @@ class HelpTextDecoration : IStateDecoration<InitialState>
             var destination = new Rectangle(
                 lastX,
                 lastY,
-                (int)(textSize.width + 2 * Margin.width),
-                (int)(textSize.height + 2 * Margin.height)
+                (int)(textSize.width + 2 * Margin.X),
+                (int)(textSize.height + 2 * Margin.Y)
             );
 
             var start = new Rectangle(
@@ -108,8 +109,8 @@ class HelpTextDecoration : IStateDecoration<InitialState>
             var rect = animation.Current;
 
             var textLocation = new D2DRect(
-                animation.Destination.X + Margin.width,
-                animation.Destination.Y + Margin.height,
+                animation.Destination.X + Margin.X,
+                animation.Destination.Y + Margin.Y,
                 animation.Destination.Width,
                 animation.Destination.Height
             );

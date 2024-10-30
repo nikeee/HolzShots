@@ -1,4 +1,5 @@
 using System.Drawing;
+using System.Numerics;
 using unvell.D2DLib;
 
 namespace HolzShots;
@@ -6,7 +7,7 @@ namespace HolzShots;
 static class D2DRectExtensions
 {
     /// <summary>Like System.Drawing.Rectangle.Inflate(). Maintains rectangle's center. </summary>
-    public static void Inflate(this ref D2DRect rectangle, D2DSize size) => rectangle.Inflate(size.width, size.height);
+    public static void Inflate(this ref D2DRect rectangle, Vector2 size) => rectangle.Inflate(size.X, size.Y);
     /// <summary>Like System.Drawing.Rectangle.Inflate(). Maintains rectangle's center. </summary>
     public static void Inflate(this ref D2DRect rectangle, float width, float height)
     {

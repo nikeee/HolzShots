@@ -1,6 +1,6 @@
 using System.Drawing;
+using System.Numerics;
 using unvell.D2DLib;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace HolzShots.Input.Selection.Decoration;
 
@@ -11,7 +11,7 @@ class MouseWindowOutlineDecoration : IStateDecoration<InitialState>
     private D2DColor FontColor = D2DColor.WhiteSmoke;
     private D2DColor BackgroundColor = new(1f, 0.2f, 0.2f, 0.2f);
     private D2DColor OutlineColor = D2DColor.White;
-    private readonly D2DSize _placeSize = new(1000, 1000);
+    private readonly Vector2 _placeSize = new(1000, 1000);
 
     public static MouseWindowOutlineDecoration ForContext(D2DGraphics g, DateTime now) => new();
 
