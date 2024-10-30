@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Drawing;
 using HolzShots.Input.Selection.Animation;
 using HolzShots.Input.Selection.Decoration;
-using nud2dlib;
+using unvell.D2DLib;
 
 namespace HolzShots.Input.Selection;
 

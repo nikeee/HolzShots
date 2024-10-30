@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using HolzShots.Input.Selection.Decoration;
-using nud2dlib;
+using unvell.D2DLib;
 
 namespace HolzShots.Input.Selection;
 

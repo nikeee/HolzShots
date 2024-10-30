@@ -1,7 +1,7 @@
 using System.Drawing;
 using System.Numerics;
 using HolzShots.Input.Selection.Animation;
-using nud2dlib;
+using unvell.D2DLib;
 
 namespace HolzShots.Input.Selection.Decoration;
 

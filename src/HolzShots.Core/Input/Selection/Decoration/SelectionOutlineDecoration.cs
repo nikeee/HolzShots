@@ -1,6 +1,6 @@
 using System.Drawing;
 using System.Numerics;
-using nud2dlib;
+using unvell.D2DLib;
 
 namespace HolzShots.Input.Selection.Decoration;
 
@@ -21,6 +21,10 @@ class SelectionOutlineDecoration : IStateDecoration<RectangleState>
 
     public void UpdateAndDraw(D2DGraphics g, DateTime now, TimeSpan elapsed, Rectangle bounds, D2DBitmap image, RectangleState state)
     {
+        var device = g.Device;
+        if (device == null)
+            return;
+
         var outline = state.GetSelectedOutline(bounds);
         D2DRect rect = outline; // Caution: implicit conversion which we don't want to do twice
 
@@ -32,12 +36,15 @@ class SelectionOutlineDecoration : IStateDecoration<RectangleState>
 
         var currentDashOffset = (float)(now - _selectionStarted).TotalMilliseconds / 40;
 
-        using var selectionOutlinePen = g.Device.CreatePen(
+        using var selectionOutlinePen = device.CreatePen(
             OutlineColor,
             D2DDashStyle.Custom,
             CustomDashStyle,
             currentDashOffset
         );
+
+        if (selectionOutlinePen == null)
+            return;
 
         g.DrawRectangle(selectionOutline, selectionOutlinePen, 1.0f);
 
@@ -64,14 +71,14 @@ class SelectionOutlineDecoration : IStateDecoration<RectangleState>
         var widthLabelSize = g.MeasureText(text, FontName, FontSize, placeSize);
 
         var widthLabelRect = new D2DRect(
-            outline.X + (outline.Width / 2f) - (widthLabelSize.Width / 2f),
+            outline.X + (outline.Width / 2f) - (widthLabelSize.width / 2f),
             outline.Y,
-            widthLabelSize.Width,
-            widthLabelSize.Height
+            widthLabelSize.width,
+            widthLabelSize.height
         );
 
-        if (widthLabelRect.Y - widthLabelSize.Height - AxisDistance >= 0f)
-            widthLabelRect.Offset(0, -widthLabelSize.Height - AxisDistance);
+        if (widthLabelRect.Y - widthLabelSize.height - AxisDistance >= 0f)
+            widthLabelRect.Offset(0, -widthLabelSize.height - AxisDistance);
 
         var leftRulerLineStart = new Vector2(
             outline.X,
@@ -123,15 +130,15 @@ class SelectionOutlineDecoration : IStateDecoration<RectangleState>
 
         var heightLabelRect = new D2DRect(
             outline.X,
-            outline.Y + (outline.Height / 2f) - (heightLabelSize.Height / 2f),
-            heightLabelSize.Width,
-            heightLabelSize.Height
+            outline.Y + (outline.Height / 2f) - (heightLabelSize.height / 2f),
+            heightLabelSize.width,
+            heightLabelSize.height
         );
 
         var rulerOffset = Vector2.Zero;
-        if (heightLabelRect.X - heightLabelSize.Width - AxisDistance >= 0f)
+        if (heightLabelRect.X - heightLabelSize.width - AxisDistance >= 0f)
         {
-            heightLabelRect.Offset(-heightLabelSize.Width - AxisDistance, 0);
+            heightLabelRect.Offset(-heightLabelSize.width - AxisDistance, 0);
 
             rulerOffset = new Vector2(-AxisDistance * 2f * 2f, 0);
         }

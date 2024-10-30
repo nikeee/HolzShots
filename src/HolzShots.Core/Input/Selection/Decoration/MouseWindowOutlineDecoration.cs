@@ -1,5 +1,5 @@
 using System.Drawing;
-using nud2dlib;
+using unvell.D2DLib;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace HolzShots.Input.Selection.Decoration;
@@ -36,10 +36,10 @@ class MouseWindowOutlineDecoration : IStateDecoration<InitialState>
             var padding = new Size(10, 4);
 
             var backgroundRectangle = new D2DRect(
-                rect.X + (int)(rect.Width / 2) - (int)(textSize.Width / 2),
-                rect.Y + (int)(rect.Height / 2) - (int)(textSize.Height / 2),
-                textSize.Width,
-                textSize.Height
+                rect.X + (int)(rect.Width / 2) - (int)(textSize.width / 2),
+                rect.Y + (int)(rect.Height / 2) - (int)(textSize.height / 2),
+                textSize.width,
+                textSize.height
             );
             backgroundRectangle.Inflate(padding);
 
