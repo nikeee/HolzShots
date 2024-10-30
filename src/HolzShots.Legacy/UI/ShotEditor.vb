@@ -4,7 +4,6 @@ Imports HolzShots.Composition
 Imports HolzShots.Drawing
 Imports HolzShots.Drawing.Tools
 Imports HolzShots.Net
-Imports HolzShots.UI.Controls
 Imports HolzShots.Windows.Forms
 Imports HolzShots.Windows.Net
 Imports Microsoft.WindowsAPICodePack.Taskbar
@@ -106,7 +105,7 @@ Namespace UI
                             String.Empty
                         )
 
-            Dim renderer = HolzShots.Windows.Forms.EnvironmentEx.ToolStripRendererForCurrentTheme()
+            Dim renderer = EnvironmentEx.ToolStripRendererForCurrentTheme()
             ShareStrip.Renderer = renderer
             ToolStrip1.Renderer = renderer
             EditStrip.Renderer = renderer
@@ -187,10 +186,6 @@ Namespace UI
 
         Private Sub UpdateSettings() Handles MyBase.FormClosing
             My.Settings.Save()
-        End Sub
-
-        Private Sub ResetTools()
-            EnableTool(ShotEditorTool.None)
         End Sub
 
         Private ReadOnly ToolControlMap As New Dictionary(Of ShotEditorTool, ToolStripButton)
