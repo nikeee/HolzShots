@@ -446,7 +446,7 @@ Namespace UI.Controls
                         .DrawLine(LinePen, 0, yPos, VerticalLinealBox.Width - 2, yPos)
                         .TranslateTransform(0, yPos)
                         .RotateTransform(-90)
-                        .DrawString(i.ToString(CurrentCulture), RulerFont, FontBrush, - .MeasureString(i.ToString(CurrentCulture), RulerFont, 100).Width, 0)
+                        .DrawString(i.ToString(UIConfig.Culture), RulerFont, FontBrush, - .MeasureString(i.ToString(UIConfig.Culture), RulerFont, 100).Width, 0)
                         .ResetTransform()
                     Else
                         .DrawLine(LinePen, VerticalLinealBox.Width - 6, yPos, VerticalLinealBox.Width - 2, yPos)

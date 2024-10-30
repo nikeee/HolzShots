@@ -32,7 +32,7 @@ Namespace UI
                 Dim uploadTooltip As String = String.Empty
                 If _defaultUploader?.Metadata IsNot Nothing Then
                     uploadTooltip = UploadToHoster.ToolTipText.Remove(UploadToHoster.ToolTipText.IndexOf(" (", StringComparison.Ordinal))
-                    uploadTooltip = String.Format(CurrentCulture, uploadTooltip, _defaultUploader.Metadata.Name)
+                    uploadTooltip = String.Format(UIConfig.Culture, uploadTooltip, _defaultUploader.Metadata.Name)
                 End If
 
                 _uploadThumbnailButton = New ThumbnailToolBarButton(Icon.FromHandle(My.Resources.uploadMedium.GetHicon()), uploadTooltip)
@@ -102,7 +102,7 @@ Namespace UI
             UploadToHoster.Enabled = _defaultUploader?.Metadata IsNot Nothing
             UploadToHoster.ToolTipText = If(
                             _defaultUploader?.Metadata IsNot Nothing,
-                            String.Format(CurrentCulture, UploadToHoster.ToolTipText, _defaultUploader?.Metadata.Name),
+                            String.Format(UIConfig.Culture, UploadToHoster.ToolTipText, _defaultUploader?.Metadata.Name),
                             String.Empty
                         )
 
