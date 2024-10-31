@@ -53,7 +53,7 @@ Namespace UI
             ImageInfoLabel = New ToolStripLabel()
             CopyPrintToolStrip = New ToolStrip()
             CopyToClipboard = New ToolStripButton()
-            ThePanel = New PaintPanel2()
+            ThePanel = New PaintPanel()
             AutoCloseShotEditor = New CheckBox()
             CurrentToolSettingsPanel = New Panel()
             ShareStrip.SuspendLayout()
@@ -520,7 +520,7 @@ Namespace UI
         Friend WithEvents MarkerTool As System.Windows.Forms.ToolStripButton
         Friend WithEvents UndoStuff As System.Windows.Forms.ToolStripButton
         Friend WithEvents CroppingTool As System.Windows.Forms.ToolStripButton
-        Friend WithEvents ThePanel As PaintPanel2
+        Friend WithEvents ThePanel As PaintPanel
         Friend WithEvents ArrowTool As System.Windows.Forms.ToolStripButton
         Friend WithEvents EraserTool As System.Windows.Forms.ToolStripButton
         Friend WithEvents BlurTool As System.Windows.Forms.ToolStripButton

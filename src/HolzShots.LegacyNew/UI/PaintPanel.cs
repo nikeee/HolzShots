@@ -4,17 +4,16 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using HolzShots.Drawing.Tools;
 using HolzShots.Drawing;
-using static ThisAssembly.Resources.Drawing;
 
 namespace HolzShots.UI
 {
-    public partial class PaintPanel2 : UserControl
+    public partial class PaintPanel : UserControl
     {
 
         public event EventHandler Initialized;
         public event EventHandler<Point> UpdateMousePosition;
 
-        public PaintPanel2()
+        public PaintPanel()
         {
             InitializeComponent();
             CurrentToolChanged += CurrentToolChanged_Event;
@@ -165,7 +164,7 @@ namespace HolzShots.UI
             }
         }
 
-        private void CurrentToolChanged_Event(object sender, ITool<ToolSettingsBase> tool)
+        private void CurrentToolChanged_Event(object? sender, ITool<ToolSettingsBase> tool)
         {
             if (tool != null)
                 Cursor = tool.Cursor;
