@@ -24,12 +24,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Update="UI\Controls\PaintPanel.Designer.vb">
-      <DependentUpon>PaintPanel.vb</DependentUpon>
-    </Compile>
-    <Compile Update="UI\Controls\PaintPanel.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Update="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
@@ -54,10 +48,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="UI\Controls\PaintPanel.resx">
-      <DependentUpon>PaintPanel.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Update="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
