@@ -28,20 +28,105 @@
         /// </summary>
         private void InitializeComponent()
         {
+            WholePanel = new Panel();
+            RawBox = new PictureBox();
+            TheFontDialog = new FontDialog();
+            EckenTeil = new PictureBox();
+            VerticalLinealBox = new PictureBox();
+            HorizontalLinealBox = new PictureBox();
+            WholePanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)RawBox).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)EckenTeil).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)VerticalLinealBox).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)HorizontalLinealBox).BeginInit();
             SuspendLayout();
+            // 
+            // WholePanel
+            // 
+            WholePanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            WholePanel.AutoScroll = true;
+            WholePanel.BackColor = Color.FromArgb(202, 212, 227);
+            WholePanel.Controls.Add(RawBox);
+            WholePanel.Location = new Point(23, 23);
+            WholePanel.Margin = new Padding(4, 3, 4, 3);
+            WholePanel.Name = "WholePanel";
+            WholePanel.Size = new Size(623, 509);
+            WholePanel.TabIndex = 17;
+            // 
+            // RawBox
+            // 
+            RawBox.BackColor = SystemColors.GradientActiveCaption;
+            RawBox.Location = new Point(2, 7);
+            RawBox.Margin = new Padding(4, 3, 4, 3);
+            RawBox.Name = "RawBox";
+            RawBox.Size = new Size(100, 50);
+            RawBox.SizeMode = PictureBoxSizeMode.AutoSize;
+            RawBox.TabIndex = 12;
+            RawBox.TabStop = false;
+            // 
+            // TheFontDialog
+            // 
+            TheFontDialog.ShowColor = true;
+            // 
+            // EckenTeil
+            // 
+            EckenTeil.BackColor = Color.FromArgb(240, 241, 249);
+            EckenTeil.Location = new Point(0, 0);
+            EckenTeil.Margin = new Padding(4, 3, 4, 3);
+            EckenTeil.Name = "EckenTeil";
+            EckenTeil.Size = new Size(23, 23);
+            EckenTeil.TabIndex = 18;
+            EckenTeil.TabStop = false;
+            // 
+            // VerticalLinealBox
+            // 
+            VerticalLinealBox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            VerticalLinealBox.Location = new Point(0, 23);
+            VerticalLinealBox.Margin = new Padding(4, 3, 4, 3);
+            VerticalLinealBox.Name = "VerticalLinealBox";
+            VerticalLinealBox.Size = new Size(23, 509);
+            VerticalLinealBox.TabIndex = 20;
+            VerticalLinealBox.TabStop = false;
+            // 
+            // HorizontalLinealBox
+            // 
+            HorizontalLinealBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            HorizontalLinealBox.Location = new Point(23, 0);
+            HorizontalLinealBox.Margin = new Padding(4, 3, 4, 3);
+            HorizontalLinealBox.Name = "HorizontalLinealBox";
+            HorizontalLinealBox.Size = new Size(623, 23);
+            HorizontalLinealBox.TabIndex = 19;
+            HorizontalLinealBox.TabStop = false;
             // 
             // PaintPanel
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.GradientActiveCaption;
+            Controls.Add(WholePanel);
+            Controls.Add(EckenTeil);
+            Controls.Add(VerticalLinealBox);
+            Controls.Add(HorizontalLinealBox);
             Margin = new Padding(4, 3, 4, 3);
             Name = "PaintPanel";
             Size = new Size(646, 532);
             Load += PaintPanel_Load;
+            WholePanel.ResumeLayout(false);
+            WholePanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)RawBox).EndInit();
+            ((System.ComponentModel.ISupportInitialize)EckenTeil).EndInit();
+            ((System.ComponentModel.ISupportInitialize)VerticalLinealBox).EndInit();
+            ((System.ComponentModel.ISupportInitialize)HorizontalLinealBox).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
+
+        internal Panel WholePanel;
+        internal PictureBox RawBox;
+        internal FontDialog TheFontDialog;
+        internal PictureBox EckenTeil;
+        internal PictureBox VerticalLinealBox;
+        internal PictureBox HorizontalLinealBox;
     }
 }

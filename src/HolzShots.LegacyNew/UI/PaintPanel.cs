@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using HolzShots.Drawing.Tools;
 using HolzShots.Drawing;
+using static unvell.D2DLib.WinForm.Win32;
 
 namespace HolzShots.UI
 {
@@ -67,7 +68,7 @@ namespace HolzShots.UI
         {
             get
             {
-                return DesignMode ? null : _undoStack.Count > 0 ? _undoStack.Peek() : Screenshot.Image;
+                return DesignMode ? new Bitmap(1, 1) : _undoStack.Count > 0 ? _undoStack.Peek() : Screenshot.Image;
             }
         }
 
@@ -85,7 +86,7 @@ namespace HolzShots.UI
                         {
                             g.SmoothingMode = SmoothingMode.AntiAlias;
                             g.CompositingQuality = CompositingQuality.HighQuality;
-                            g.DrawImage(My.Resources.windowsCursorMedium, Screenshot.CursorPosition.OnImage);
+                            g.DrawImage(Properties.Resources.windowsCursorMedium, Screenshot.CursorPosition.OnImage);
                         }
                     }
                     return bmp;
@@ -106,78 +107,52 @@ namespace HolzShots.UI
                 _currentTool = value;
                 switch (value)
                 {
-                    case object _ when ShotEditorTool.None:
-                        {
-                            Cursor = Cursors.Default;
-                            break;
-                        }
+                    case ShotEditorTool.None:
+                        Cursor = System.Windows.Forms.Cursors.Default;
+                        break;
+                    case ShotEditorTool.Text:
+                        CurrentToolObject = null; // TODO Change to default(_) if this is not a reference type
+                        break;
+                    case ShotEditorTool.Crop:
 
-                    case object _ when ShotEditorTool.Text:
-                        {
-                            CurrentToolObject = null/* TODO Change to default(_) if this is not a reference type */;
-                            Cursor = new Cursor(My.Resources.textCursor.Handle);
-                            break;
-                        }
+                        CurrentToolObject = new Crop();
+                        break;
+                    case ShotEditorTool.Marker:
 
-                    case object _ when ShotEditorTool.Crop:
-                        {
-                            CurrentToolObject = new Crop();
-                            break;
-                        }
+                        CurrentToolObject = new Marker();
+                        break;
+                    case ShotEditorTool.Censor:
 
-                    case object _ when ShotEditorTool.Marker:
-                        {
-                            CurrentToolObject = new Marker();
-                            break;
-                        }
+                        CurrentToolObject = new Censor();
+                        break;
+                    case ShotEditorTool.Eraser:
 
-                    case object _ when ShotEditorTool.Censor:
-                        {
-                            CurrentToolObject = new Censor();
-                            break;
-                        }
+                        CurrentToolObject = new Eraser();
+                        break;
+                    case ShotEditorTool.Blur:
 
-                    case object _ when ShotEditorTool.Eraser:
-                        {
-                            CurrentToolObject = new Eraser();
-                            break;
-                        }
+                        CurrentToolObject = new Blur();
+                        break;
+                    case ShotEditorTool.Ellipse:
 
-                    case object _ when ShotEditorTool.Blur:
-                        {
-                            CurrentToolObject = new Blur();
-                            break;
-                        }
+                        CurrentToolObject = new Ellipse();
+                        break;
+                    case ShotEditorTool.Eyedropper:
 
-                    case object _ when ShotEditorTool.Ellipse:
-                        {
-                            CurrentToolObject = new Ellipse();
-                            break;
-                        }
+                        CurrentToolObject = new Eyedropper();
+                        break;
+                    case ShotEditorTool.Brighten:
 
-                    case object _ when ShotEditorTool.Eyedropper:
-                        {
-                            CurrentToolObject = new Eyedropper();
-                            break;
-                        }
+                        CurrentToolObject = new Brighten();
+                        break;
+                    case ShotEditorTool.Arrow:
 
-                    case object _ when ShotEditorTool.Brighten:
-                        {
-                            CurrentToolObject = new Brighten();
-                            break;
-                        }
-
-                    case object _ when ShotEditorTool.Arrow:
-                        {
-                            CurrentToolObject = new Arrow();
-                            break;
-                        }
-
+                        CurrentToolObject = new Arrow();
+                        break;
                     default:
-                        {
-                            CurrentToolObject = null/* TODO Change to default(_) if this is not a reference type */;
-                            break;
-                        }
+
+                        CurrentToolObject = null/* TODO Change to default(_) if this is not a reference type */;
+                        break;
                 }
             }
         }
@@ -232,9 +207,12 @@ namespace HolzShots.UI
         {
             var img = (Image)CurrentImage.Clone();
             Debug.Assert(tool != null);
+            Debug.Assert(img != null);
+            if (img == null)
+                return;
 
             // Dim oldImageRef = img
-            tool.RenderFinalImage(img);
+            tool.RenderFinalImage(ref img);
             // If ReferenceEquals(oldImageRef, img) Then
             // RawBox.Image = oldImageRef
             // End If
@@ -246,7 +224,10 @@ namespace HolzShots.UI
         public void RunDialogTool(IDialogTool tool)
         {
             var img = (Image)CurrentImage.Clone();
-            tool.ShowToolDialog(img, Screenshot, this);
+            if (img == null)
+                return;
+
+            tool.ShowToolDialog(ref img, Screenshot, this);
             _undoStack.Push(img);
             UpdateRawBox();
         }
@@ -257,42 +238,27 @@ namespace HolzShots.UI
             RawBox.Invalidate();
         }
 
-        private class Localization
+        private static class Localization
         {
-            private Localization()
-            {
-            }
-            public const var SizeInfo = "{0}x{1}px, creation date: {2}";
-            public const var SizeInfoText = "The image is {0}-by-{1}px. Left click to copy the image size. Right click to copy creation date. Middle click to copy both.";
+            public const string SizeInfo = "{0}x{1}px, creation date: {2}";
+            public const string SizeInfoText = "The image is {0}-by-{1}px. Left click to copy the image size. Right click to copy creation date. Middle click to copy both.";
         }
 
-        public string SizeInfo
-        {
-            get
-            {
-                return string.Format(Localization.SizeInfo, _screenshot.Size.Width, _screenshot.Size.Height, _screenshot.Timestamp);
-            }
-        }
+        public string SizeInfo => string.Format(Localization.SizeInfo, _screenshot.Size.Width, _screenshot.Size.Height, _screenshot.Timestamp);
 
-        public string SizeInfoText
-        {
-            get
-            {
-                return string.Format(Localization.SizeInfoText, _screenshot.Size.Width, _screenshot.Size.Height);
-            }
-        }
-
+        public string SizeInfoText => string.Format(Localization.SizeInfoText, _screenshot.Size.Width, _screenshot.Size.Height);
 
 
         private void DrawBoxMouseClick(object sender, MouseEventArgs e)
         {
-            CurrentToolObject?.MouseClicked(CurrentImage, e.Location.ToVector2(), Cursor, this);
+            var cursor = Cursor;
+            CurrentToolObject?.MouseClicked(CurrentImage, e.Location.ToVector2(), ref cursor, this);
             RawBox.Invalidate();
         }
 
         private void MouseLayerMouseDown(object sender, MouseEventArgs e)
         {
-            _mousedown = true;
+            _mouseDown = true;
             if (_currentTool == ShotEditorTool.None || _currentTool == ShotEditorTool.Text)
                 return;
 
@@ -325,30 +291,27 @@ namespace HolzShots.UI
 
         private void MouseLayerMouseUp(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
+            if (e.Button != MouseButtons.Left)
+                return;
+
+            if (CurrentToolObject is not Eyedropper)
+                InvokeFinalRender(CurrentToolObject);
+            else
             {
-                if (CurrentTool == ShotEditorTool.Text)
-                {
-                    TextPanel.BringToFront();
-                    TextPanel.Location = new Point(e.Location.X + RawBox.Location.X, e.Location.Y + RawBox.Location.Y);
-                    TextPanel.Visible = true;
-                }
-                else if (CurrentToolObject != null && CurrentToolObject.GetType != typeof(Scale))
-                {
-                    if (!CurrentToolObject is Eyedropper)
-                        InvokeFinalRender(CurrentToolObject);
-                    else
-                        CurrentToolObject.RenderFinalImage(CurrentImage);
-                }
-                _mousedown = false;
+                var img = CurrentImage;
+                if (img == null)
+                    return;
+
+                CurrentToolObject.RenderFinalImage(ref img);
             }
+            _mouseDown = false;
         }
 
-        private bool _mousedown = false;
+        private bool _mouseDown = false;
 
         private void RawBoxPaint(object sender, PaintEventArgs e)
         {
-            if (_mousedown == true)
+            if (_mouseDown == true)
             {
                 if (_currentToolObject != null)
                 {
@@ -364,7 +327,7 @@ namespace HolzShots.UI
         }
 
 
-        private readonly Stack<Image> _undoStack = new Stack<Image>();
+        private readonly Stack<Image> _undoStack = new();
 
         public void Undo()
         {
@@ -398,102 +361,15 @@ namespace HolzShots.UI
             RawBox.Focus();
         }
 
-        private void TextOkClick()
-        {
-            TextPanel.Visible = false;
-
-            using (RichTextBox rtb = new RichTextBox() { Location = RawBox.Location, Parent = RawBox.Parent, Font = RawBox.Font, BorderStyle = BorderStyle.None })
-            {
-                var charLocation = rtb.GetPositionFromCharIndex(0);
-
-                Point location = new Point(TextPanel.Location.X - charLocation.X, TextPanel.Location.Y - charLocation.Y);
-
-                var img = (Image)CurrentImage.Clone();
-
-                using (Graphics g = Graphics.FromImage(img))
-                {
-                    g.TextRenderingHint = TextRenderingHint.AntiAlias;
-                    g.DrawString(TextInput.Text, TextInput.Font, new SolidBrush(TextInput.ForeColor), location);
-                }
-
-                _undoStack.Push(img);
-                UpdateRawBox();
-                RawBox.Focus();
-            }
-        }
-
 
         private bool _moverMouseDown = false;
         private Point _dragPointMover;
         private Point _startPOsitionMover;
 
-        private void PictureBox2MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                _moverMouseDown = true;
-                _startPOsitionMover = new Point(TextPanel.Location.X + EckenTeil.Location.X, TextPanel.Location.Y + EckenTeil.Location.Y);
-                _dragPointMover = EckenTeil.PointToScreen(new Point(TextPanel.Location.X + e.X, TextPanel.Location.Y + e.Y));
-            }
-        }
-
-        private void PictureBox2MouseMove(object sender, MouseEventArgs e)
-        {
-            if (_moverMouseDown == true)
-            {
-                Point nCurPos = EckenTeil.PointToScreen(new Point(TextPanel.Location.X + e.X, TextPanel.Location.Y + e.Y));
-                TextPanel.Location = new Point(_startPOsitionMover.X + nCurPos.X - _dragPointMover.X, _startPOsitionMover.Y + nCurPos.Y - _dragPointMover.Y);
-            }
-        }
-
         private void PictureBox2MouseUp(object sender, MouseEventArgs e)
         {
             _moverMouseDown = false;
         }
-
-        private void ChangeFontClick(object sender, EventArgs e)
-        {
-            if (TheFontDialog.ShowDialog() == DialogResult.OK)
-            {
-                TextInput.Font = TheFontDialog.Font;
-                TextInput.ForeColor = TheFontDialog.Color;
-            }
-        }
-
-        private void TextPanelVisibleChanged(object sender, EventArgs e)
-        {
-            ChangeFont.Parent = tools_bg;
-            ChangeFont.Location = new Point(3, 2);
-
-            MoverBox.Parent = tools_bg;
-            MoverBox.Location = new Point(178, 2);
-
-            SelectAll.Parent = tools_bg;
-            SelectAll.Location = new Point(41, 2);
-
-            InsertDate.Parent = tools_bg;
-            InsertDate.Location = new Point(75, 2);
-
-            CancelButton.Parent = tools_bg;
-            CancelButton.Location = new Point(117, 2);
-        }
-
-        private void SelectAllClick(object sender, EventArgs e)
-        {
-            TextInput.Focus();
-            TextInput.SelectAll();
-        }
-
-        private void CancelButtonClick(object sender, EventArgs e)
-        {
-            TextPanel.Visible = false;
-        }
-
-        private void InsertDateClick(object sender, EventArgs e)
-        {
-            TextInput.Paste(_screenshot.Timestamp.ToString());
-        }
-
 
 
         private void SaveLinealStuff(MouseEventArgs e)
@@ -509,7 +385,10 @@ namespace HolzShots.UI
             UpdateMousePosition?.Invoke(e.Location);
 
             if (CurrentTool == ShotEditorTool.Eyedropper)
-                CurrentToolObject.MouseOnlyMoved(CurrentImage, Cursor, e);
+            {
+                var cursor = Cursor;
+                CurrentToolObject.MouseOnlyMoved(CurrentImage, ref cursor, e);
+            }
         }
 
         private Point _currentMousePosition;
@@ -557,7 +436,7 @@ namespace HolzShots.UI
             {
                 var withBlock = e.Graphics;
                 withBlock.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
-                withBlock.SmoothingMode = SmoothingMode.HighSpeedx;
+                withBlock.SmoothingMode = SmoothingMode.HighSpeed;
                 withBlock.PixelOffsetMode = PixelOffsetMode.HighSpeed;
                 withBlock.CompositingQuality = CompositingQuality.HighSpeed;
 

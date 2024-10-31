@@ -117,5 +117,17 @@ namespace HolzShots.Properties {
                 return ((System.Drawing.Icon)(obj));
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon.
+        /// </summary>
+        internal static System.Drawing.Bitmap windowsCursorMedium
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("windowsCursorMedium", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }
