@@ -14,7 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HolzShots.Windows\HolzShots.Windows.csproj" />
-    <PackageReference Include="HolzShots.WindowsAPICodePack.ShellModified" Version="4.2.0" />
+    <PackageReference Include="HolzShots.WindowsAPICodePack.ShellModified" Version="4.2.1" />
   </ItemGroup>
 
   <ItemGroup>

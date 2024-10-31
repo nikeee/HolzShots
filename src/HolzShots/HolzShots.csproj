@@ -24,10 +24,10 @@
 
   <ItemGroup>
     <PackageReference Include="SingleInstanceCore" Version="2.2.2" />
-    <PackageReference Include="HolzShots.WindowsAPICodePack.ShellModified" Version="4.2.0" />
+    <PackageReference Include="HolzShots.WindowsAPICodePack.ShellModified" Version="4.2.1" />
 
     <ProjectReference Include="..\HolzShots.Capture.Video\HolzShots.Capture.Video.csproj" />
-    <ProjectReference Include="..\HolzShots.Legacy\HolzShots.Legacy.vbproj" />
+    <ProjectReference Include="..\HolzShots.LegacyNew\HolzShots.LegacyNew.csproj" />
     <ProjectReference Include="..\HolzShots.Windows\HolzShots.Windows.csproj" />
   </ItemGroup>
 
