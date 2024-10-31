@@ -60,6 +60,6 @@
     <ProjectReference Include="..\HolzShots.LegacyNew\HolzShots.LegacyNew.csproj" />
 
     <PackageReference Include="Semver" Version="3.0.0" />
-    <PackageReference Include="HolzShots.WindowsAPICodePack.ShellModified" Version="4.1.0" />
+    <PackageReference Include="HolzShots.WindowsAPICodePack.ShellModified" Version="4.2.0" />
   </ItemGroup>
 </Project>
