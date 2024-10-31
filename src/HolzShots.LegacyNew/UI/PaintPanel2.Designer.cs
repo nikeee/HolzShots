@@ -1,6 +1,6 @@
 ﻿namespace HolzShots.UI
 {
-    partial class PaintPanel
+    partial class PaintPanel2
     {
         /// <summary> 
         /// Required designer variable.
