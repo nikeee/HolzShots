@@ -4,26 +4,24 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using HolzShots.Drawing.Tools;
 using HolzShots.Drawing;
+using static ThisAssembly.Resources.Drawing;
 
 namespace HolzShots.UI
 {
     public partial class PaintPanel2 : UserControl
     {
+
+        public event EventHandler Initialized;
+        public event EventHandler<Point> UpdateMousePosition;
+
         public PaintPanel2()
         {
             InitializeComponent();
+            CurrentToolChanged += CurrentToolChanged_Event;
         }
 
         private ShotEditorTool _currentTool;
         private Screenshot _screenshot;
-
-        internal event InitializedEventHandler Initialized;
-
-        internal delegate void InitializedEventHandler();
-
-        internal event UpdateMousePositionEventHandler UpdateMousePosition;
-
-        internal delegate void UpdateMousePositionEventHandler(Point e);
 
         private bool _drawCursor;
 
@@ -146,9 +144,7 @@ namespace HolzShots.UI
         }
 
 
-        private event CurrentToolChangedEventHandler CurrentToolChanged;
-
-        private delegate void CurrentToolChangedEventHandler(object sender, ITool<ToolSettingsBase> tool);
+        private event EventHandler<ITool<ToolSettingsBase>> CurrentToolChanged;
 
         private ITool<ToolSettingsBase> _currentToolObject;
 
@@ -188,7 +184,7 @@ namespace HolzShots.UI
 
             RawBox.Focus();
 
-            Initialized?.Invoke();
+            Initialized?.Invoke(this, new EventArgs());
         }
 
         private void InvokeFinalRender(ITool<ToolSettingsBase> tool)
@@ -327,7 +323,7 @@ namespace HolzShots.UI
             }
         }
 
-        private void PaintPanelDisposed()
+        private void PaintPanelDisposed(object sender, EventArgs e)
         {
             foreach (var i in _undoStack)
             {
@@ -343,20 +339,10 @@ namespace HolzShots.UI
             }
         }
 
-        private void PaintPanelLoad()
+        private void PaintPanelLoad(object sender, EventArgs e)
         {
             BackColor = Color.FromArgb(207, 217, 231);
             RawBox.Focus();
-        }
-
-
-        private bool _moverMouseDown = false;
-        private Point _dragPointMover;
-        private Point _startPOsitionMover;
-
-        private void PictureBox2MouseUp(object sender, MouseEventArgs e)
-        {
-            _moverMouseDown = false;
         }
 
 
@@ -370,7 +356,7 @@ namespace HolzShots.UI
             HorizontalLinealBox.Invalidate(hRect, false);
             VerticalLinealBox.Invalidate(vRect, false);
 
-            UpdateMousePosition?.Invoke(e.Location);
+            UpdateMousePosition?.Invoke(this, e.Location);
 
             if (CurrentTool == ShotEditorTool.Eyedropper)
             {
@@ -471,11 +457,6 @@ namespace HolzShots.UI
             e.Graphics.DrawLine(BorderLinePen, 0, 0, Width, 0);
         }
 
-        private static readonly Pen BorderLinePen = new Pen(Color.FromArgb(218, 219, 220));
-
-        private void PaintPanel_Load(object sender, EventArgs e)
-        {
-
-        }
+        private static readonly Pen BorderLinePen = new(Color.FromArgb(218, 219, 220));
     }
 }

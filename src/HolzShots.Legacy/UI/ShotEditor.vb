@@ -287,7 +287,7 @@ Namespace UI
             MouseInfoLabel.Text = "0, 0px"
         End Sub
 
-        Private Sub ThePanelUpdateMousePosition(e As Point) Handles ThePanel.UpdateMousePosition
+        Private Sub ThePanelUpdateMousePosition(sender As Object, e As Point) Handles ThePanel.UpdateMousePosition
             MouseInfoLabel.Text = $"{e.X}, {e.Y}px"
         End Sub
 

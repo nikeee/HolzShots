@@ -1,13 +1,13 @@
-﻿namespace HolzShots.UI
+namespace HolzShots.UI
 {
     partial class PaintPanel2
     {
-        /// <summary> 
+        /// <summary>
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary> 
+        /// <summary>
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
@@ -22,8 +22,8 @@
 
         #region Component Designer generated code
 
-        /// <summary> 
-        /// Required method for Designer support - do not modify 
+        /// <summary>
+        /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
@@ -40,9 +40,9 @@
             ((System.ComponentModel.ISupportInitialize)VerticalLinealBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)HorizontalLinealBox).BeginInit();
             SuspendLayout();
-            // 
+            //
             // WholePanel
-            // 
+            //
             WholePanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             WholePanel.AutoScroll = true;
             WholePanel.BackColor = Color.FromArgb(202, 212, 227);
@@ -52,9 +52,9 @@
             WholePanel.Name = "WholePanel";
             WholePanel.Size = new Size(623, 509);
             WholePanel.TabIndex = 17;
-            // 
+            //
             // RawBox
-            // 
+            //
             RawBox.BackColor = SystemColors.GradientActiveCaption;
             RawBox.Location = new Point(2, 7);
             RawBox.Margin = new Padding(4, 3, 4, 3);
@@ -63,13 +63,19 @@
             RawBox.SizeMode = PictureBoxSizeMode.AutoSize;
             RawBox.TabIndex = 12;
             RawBox.TabStop = false;
-            // 
+            RawBox.MouseClick += DrawBoxMouseClick;
+            RawBox.MouseDown += MouseLayerMouseDown;
+            RawBox.MouseEnter += RawBoxMouseEnter;
+            RawBox.MouseMove += MouseLayerMouseMove;
+            RawBox.MouseUp += MouseLayerMouseUp;
+            RawBox.Paint += RawBoxPaint;
+            //
             // TheFontDialog
-            // 
+            //
             TheFontDialog.ShowColor = true;
-            // 
+            //
             // EckenTeil
-            // 
+            //
             EckenTeil.BackColor = Color.FromArgb(240, 241, 249);
             EckenTeil.Location = new Point(0, 0);
             EckenTeil.Margin = new Padding(4, 3, 4, 3);
@@ -77,9 +83,9 @@
             EckenTeil.Size = new Size(23, 23);
             EckenTeil.TabIndex = 18;
             EckenTeil.TabStop = false;
-            // 
+            //
             // VerticalLinealBox
-            // 
+            //
             VerticalLinealBox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             VerticalLinealBox.Location = new Point(0, 23);
             VerticalLinealBox.Margin = new Padding(4, 3, 4, 3);
@@ -87,9 +93,10 @@
             VerticalLinealBox.Size = new Size(23, 509);
             VerticalLinealBox.TabIndex = 20;
             VerticalLinealBox.TabStop = false;
-            // 
+            VerticalLinealBox.Paint += VerticalLinealBoxPaint;
+            //
             // HorizontalLinealBox
-            // 
+            //
             HorizontalLinealBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             HorizontalLinealBox.Location = new Point(23, 0);
             HorizontalLinealBox.Margin = new Padding(4, 3, 4, 3);
@@ -97,9 +104,10 @@
             HorizontalLinealBox.Size = new Size(623, 23);
             HorizontalLinealBox.TabIndex = 19;
             HorizontalLinealBox.TabStop = false;
-            // 
-            // PaintPanel
-            // 
+            HorizontalLinealBox.Paint += HorizontalLinealBoxPaint;
+            //
+            // PaintPanel2
+            //
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.GradientActiveCaption;
@@ -108,9 +116,10 @@
             Controls.Add(VerticalLinealBox);
             Controls.Add(HorizontalLinealBox);
             Margin = new Padding(4, 3, 4, 3);
-            Name = "PaintPanel";
+            Name = "PaintPanel2";
             Size = new Size(646, 532);
-            Load += PaintPanel_Load;
+            Load += PaintPanelLoad;
+            Disposed += PaintPanelDisposed;
             WholePanel.ResumeLayout(false);
             WholePanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)RawBox).EndInit();
@@ -126,7 +135,7 @@
         internal PictureBox RawBox;
         internal FontDialog TheFontDialog;
         internal PictureBox EckenTeil;
-        internal PictureBox VerticalLinealBox;
-        internal PictureBox HorizontalLinealBox;
+        public PictureBox VerticalLinealBox;
+        public PictureBox HorizontalLinealBox;
     }
 }

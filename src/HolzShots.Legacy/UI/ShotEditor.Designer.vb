@@ -53,7 +53,7 @@ Namespace UI
             ImageInfoLabel = New ToolStripLabel()
             CopyPrintToolStrip = New ToolStrip()
             CopyToClipboard = New ToolStripButton()
-            ThePanel = New PaintPanel()
+            ThePanel = New PaintPanel2()
             AutoCloseShotEditor = New CheckBox()
             CurrentToolSettingsPanel = New Panel()
             ShareStrip.SuspendLayout()
@@ -62,9 +62,9 @@ Namespace UI
             BottomToolStrip.SuspendLayout()
             CopyPrintToolStrip.SuspendLayout()
             SuspendLayout()
-            ' 
+            '
             ' ShareStrip
-            ' 
+            '
             ShareStrip.AllowItemReorder = True
             ShareStrip.AutoSize = False
             ShareStrip.BackColor = Color.Transparent
@@ -81,9 +81,9 @@ Namespace UI
             ShareStrip.Size = New Size(111, 44)
             ShareStrip.TabIndex = 1
             ShareStrip.Text = "Actions"
-            ' 
+            '
             ' UploadToHoster
-            ' 
+            '
             UploadToHoster.BackColor = Color.Transparent
             UploadToHoster.DisplayStyle = ToolStripItemDisplayStyle.Image
             UploadToHoster.DropDownButtonWidth = 15
@@ -94,9 +94,9 @@ Namespace UI
             UploadToHoster.Name = "UploadToHoster"
             UploadToHoster.Size = New Size(52, 36)
             UploadToHoster.Text = "Upload to {0} (Strg+Q)"
-            ' 
+            '
             ' SaveButton
-            ' 
+            '
             SaveButton.BackColor = Color.Transparent
             SaveButton.DisplayStyle = ToolStripItemDisplayStyle.Image
             SaveButton.Image = My.Resources.Resources.saveMedium
@@ -106,9 +106,9 @@ Namespace UI
             SaveButton.Name = "SaveButton"
             SaveButton.Size = New Size(36, 36)
             SaveButton.Text = "Save (Ctrl+Shift+S)"
-            ' 
+            '
             ' EditStrip
-            ' 
+            '
             EditStrip.AllowItemReorder = True
             EditStrip.AutoSize = False
             EditStrip.BackColor = Color.FromArgb(CByte(0), CByte(0), CByte(0), CByte(0))
@@ -121,12 +121,12 @@ Namespace UI
             EditStrip.Name = "EditStrip"
             EditStrip.Padding = New Padding(0)
             EditStrip.RenderMode = ToolStripRenderMode.System
-            EditStrip.Size = New Size(475, 39)
+            EditStrip.Size = New Size(439, 39)
             EditStrip.TabIndex = 11
             EditStrip.Text = "Edit"
-            ' 
+            '
             ' CensorTool
-            ' 
+            '
             CensorTool.CheckOnClick = True
             CensorTool.DisplayStyle = ToolStripItemDisplayStyle.Image
             CensorTool.Image = My.Resources.Resources.censorMedium
@@ -136,9 +136,9 @@ Namespace UI
             CensorTool.Name = "CensorTool"
             CensorTool.Size = New Size(36, 37)
             CensorTool.Text = "Redact (Ctrl+A)"
-            ' 
+            '
             ' MarkerTool
-            ' 
+            '
             MarkerTool.CheckOnClick = True
             MarkerTool.DisplayStyle = ToolStripItemDisplayStyle.Image
             MarkerTool.Image = My.Resources.Resources.highlighterMedium
@@ -148,9 +148,9 @@ Namespace UI
             MarkerTool.Name = "MarkerTool"
             MarkerTool.Size = New Size(36, 37)
             MarkerTool.Text = "Mark (Ctrl+S)"
-            ' 
+            '
             ' CroppingTool
-            ' 
+            '
             CroppingTool.CheckOnClick = True
             CroppingTool.DisplayStyle = ToolStripItemDisplayStyle.Image
             CroppingTool.Image = My.Resources.Resources.cropMedium
@@ -159,9 +159,9 @@ Namespace UI
             CroppingTool.Name = "CroppingTool"
             CroppingTool.Size = New Size(36, 37)
             CroppingTool.Text = "Crop Image (Ctrl+D)"
-            ' 
+            '
             ' EraserTool
-            ' 
+            '
             EraserTool.CheckOnClick = True
             EraserTool.DisplayStyle = ToolStripItemDisplayStyle.Image
             EraserTool.Image = My.Resources.Resources.Eraser
@@ -170,9 +170,9 @@ Namespace UI
             EraserTool.Name = "EraserTool"
             EraserTool.Size = New Size(36, 37)
             EraserTool.Text = "Eraser (Ctrl+E)"
-            ' 
+            '
             ' BlurTool
-            ' 
+            '
             BlurTool.CheckOnClick = True
             BlurTool.DisplayStyle = ToolStripItemDisplayStyle.Image
             BlurTool.Image = My.Resources.Resources.blurMedium
@@ -181,9 +181,9 @@ Namespace UI
             BlurTool.Name = "BlurTool"
             BlurTool.Size = New Size(36, 37)
             BlurTool.Text = "Blur Area (Ctrl+F)"
-            ' 
+            '
             ' EllipseTool
-            ' 
+            '
             EllipseTool.DisplayStyle = ToolStripItemDisplayStyle.Image
             EllipseTool.Image = My.Resources.Resources.circleMedium
             EllipseTool.ImageTransparentColor = Color.Magenta
@@ -191,9 +191,9 @@ Namespace UI
             EllipseTool.Name = "EllipseTool"
             EllipseTool.Size = New Size(36, 37)
             EllipseTool.Text = "Ellipse (Ctrl+H)"
-            ' 
+            '
             ' PipettenTool
-            ' 
+            '
             PipettenTool.DisplayStyle = ToolStripItemDisplayStyle.Image
             PipettenTool.Image = My.Resources.Resources.pickerMedium
             PipettenTool.ImageTransparentColor = Color.Magenta
@@ -201,9 +201,9 @@ Namespace UI
             PipettenTool.Name = "PipettenTool"
             PipettenTool.Size = New Size(36, 37)
             PipettenTool.Text = "Eye Dropper"
-            ' 
+            '
             ' BrightenTool
-            ' 
+            '
             BrightenTool.DisplayStyle = ToolStripItemDisplayStyle.Image
             BrightenTool.Image = My.Resources.Resources.brightenMedium
             BrightenTool.ImageTransparentColor = Color.Magenta
@@ -211,9 +211,9 @@ Namespace UI
             BrightenTool.Name = "BrightenTool"
             BrightenTool.Size = New Size(36, 37)
             BrightenTool.Text = "Brighten or Darken Image"
-            ' 
+            '
             ' ArrowTool
-            ' 
+            '
             ArrowTool.CheckOnClick = True
             ArrowTool.DisplayStyle = ToolStripItemDisplayStyle.Image
             ArrowTool.Image = My.Resources.Resources.arrowMedium
@@ -222,9 +222,9 @@ Namespace UI
             ArrowTool.Name = "ArrowTool"
             ArrowTool.Size = New Size(36, 37)
             ArrowTool.Text = "Arrow (Ctrl+G)"
-            ' 
+            '
             ' UndoStuff
-            ' 
+            '
             UndoStuff.DisplayStyle = ToolStripItemDisplayStyle.Image
             UndoStuff.Image = My.Resources.Resources.undoMedium
             UndoStuff.ImageScaling = ToolStripItemImageScaling.None
@@ -233,9 +233,9 @@ Namespace UI
             UndoStuff.Name = "UndoStuff"
             UndoStuff.Size = New Size(36, 37)
             UndoStuff.Text = "Undo (Ctrl+Z)"
-            ' 
+            '
             ' ToolStripDropDownButton1
-            ' 
+            '
             ToolStripDropDownButton1.DisplayStyle = ToolStripItemDisplayStyle.Image
             ToolStripDropDownButton1.DropDownItems.AddRange(New ToolStripItem() {ZensToolStripMenuItem, MarkToolStripMenuItem, CropToolStripMenuItem, EraseToolStripMenuItem, PixelateToolStripMenuItem, KreisToolStripMenuItem, ArrowToolStripMenuItem, ResetToolStripMenuItem, UploadToolStripMenuItem, SaveToolStripMenuItem, ClipboardToolStripMenuItem, PrintToolStripMenuItem, ChooseServiceToolStripMenuItem})
             ToolStripDropDownButton1.Image = CType(resources.GetObject("ToolStripDropDownButton1.Image"), Image)
@@ -244,113 +244,113 @@ Namespace UI
             ToolStripDropDownButton1.Size = New Size(45, 36)
             ToolStripDropDownButton1.Text = "ToolStripDropDownButton1"
             ToolStripDropDownButton1.Visible = False
-            ' 
+            '
             ' ZensToolStripMenuItem
-            ' 
+            '
             ZensToolStripMenuItem.Name = "ZensToolStripMenuItem"
             ZensToolStripMenuItem.ShortcutKeys = Keys.Control Or Keys.A
             ZensToolStripMenuItem.Size = New Size(226, 22)
             ZensToolStripMenuItem.Text = "Zens"
             ZensToolStripMenuItem.Visible = False
-            ' 
+            '
             ' MarkToolStripMenuItem
-            ' 
+            '
             MarkToolStripMenuItem.Name = "MarkToolStripMenuItem"
             MarkToolStripMenuItem.ShortcutKeys = Keys.Control Or Keys.S
             MarkToolStripMenuItem.Size = New Size(226, 22)
             MarkToolStripMenuItem.Text = "Mark"
             MarkToolStripMenuItem.Visible = False
-            ' 
+            '
             ' CropToolStripMenuItem
-            ' 
+            '
             CropToolStripMenuItem.Name = "CropToolStripMenuItem"
             CropToolStripMenuItem.ShortcutKeys = Keys.Control Or Keys.D
             CropToolStripMenuItem.Size = New Size(226, 22)
             CropToolStripMenuItem.Text = "Crop"
             CropToolStripMenuItem.Visible = False
-            ' 
+            '
             ' EraseToolStripMenuItem
-            ' 
+            '
             EraseToolStripMenuItem.Name = "EraseToolStripMenuItem"
             EraseToolStripMenuItem.ShortcutKeys = Keys.Control Or Keys.E
             EraseToolStripMenuItem.Size = New Size(226, 22)
             EraseToolStripMenuItem.Text = "Erase"
             EraseToolStripMenuItem.Visible = False
-            ' 
+            '
             ' PixelateToolStripMenuItem
-            ' 
+            '
             PixelateToolStripMenuItem.Name = "PixelateToolStripMenuItem"
             PixelateToolStripMenuItem.ShortcutKeys = Keys.Control Or Keys.F
             PixelateToolStripMenuItem.Size = New Size(226, 22)
             PixelateToolStripMenuItem.Text = "Pixelate"
             PixelateToolStripMenuItem.Visible = False
-            ' 
+            '
             ' KreisToolStripMenuItem
-            ' 
+            '
             KreisToolStripMenuItem.Name = "KreisToolStripMenuItem"
             KreisToolStripMenuItem.ShortcutKeys = Keys.Control Or Keys.H
             KreisToolStripMenuItem.Size = New Size(226, 22)
             KreisToolStripMenuItem.Text = "Circle"
             KreisToolStripMenuItem.Visible = False
-            ' 
+            '
             ' ArrowToolStripMenuItem
-            ' 
+            '
             ArrowToolStripMenuItem.Name = "ArrowToolStripMenuItem"
             ArrowToolStripMenuItem.ShortcutKeys = Keys.Control Or Keys.G
             ArrowToolStripMenuItem.Size = New Size(226, 22)
             ArrowToolStripMenuItem.Text = "Arrow"
             ArrowToolStripMenuItem.Visible = False
-            ' 
+            '
             ' ResetToolStripMenuItem
-            ' 
+            '
             ResetToolStripMenuItem.Name = "ResetToolStripMenuItem"
             ResetToolStripMenuItem.ShortcutKeys = Keys.Control Or Keys.Z
             ResetToolStripMenuItem.Size = New Size(226, 22)
             ResetToolStripMenuItem.Text = "Reset"
             ResetToolStripMenuItem.Visible = False
-            ' 
+            '
             ' UploadToolStripMenuItem
-            ' 
+            '
             UploadToolStripMenuItem.Name = "UploadToolStripMenuItem"
             UploadToolStripMenuItem.ShortcutKeys = Keys.Control Or Keys.Q
             UploadToolStripMenuItem.Size = New Size(226, 22)
             UploadToolStripMenuItem.Text = "Upload"
             UploadToolStripMenuItem.Visible = False
-            ' 
+            '
             ' SaveToolStripMenuItem
-            ' 
+            '
             SaveToolStripMenuItem.Name = "SaveToolStripMenuItem"
             SaveToolStripMenuItem.ShortcutKeys = Keys.Control Or Keys.Shift Or Keys.S
             SaveToolStripMenuItem.Size = New Size(226, 22)
             SaveToolStripMenuItem.Text = "Save"
             SaveToolStripMenuItem.Visible = False
-            ' 
+            '
             ' ClipboardToolStripMenuItem
-            ' 
+            '
             ClipboardToolStripMenuItem.Name = "ClipboardToolStripMenuItem"
             ClipboardToolStripMenuItem.ShortcutKeys = Keys.Control Or Keys.C
             ClipboardToolStripMenuItem.Size = New Size(226, 22)
             ClipboardToolStripMenuItem.Text = "Clipboard"
             ClipboardToolStripMenuItem.Visible = False
-            ' 
+            '
             ' PrintToolStripMenuItem
-            ' 
+            '
             PrintToolStripMenuItem.Name = "PrintToolStripMenuItem"
             PrintToolStripMenuItem.ShortcutKeys = Keys.Control Or Keys.P
             PrintToolStripMenuItem.Size = New Size(226, 22)
             PrintToolStripMenuItem.Text = "Print"
             PrintToolStripMenuItem.Visible = False
-            ' 
+            '
             ' ChooseServiceToolStripMenuItem
-            ' 
+            '
             ChooseServiceToolStripMenuItem.Name = "ChooseServiceToolStripMenuItem"
             ChooseServiceToolStripMenuItem.ShortcutKeys = Keys.Control Or Keys.Shift Or Keys.Q
             ChooseServiceToolStripMenuItem.Size = New Size(226, 22)
             ChooseServiceToolStripMenuItem.Text = "ChooseService"
             ChooseServiceToolStripMenuItem.Visible = False
-            ' 
+            '
             ' ToolStrip1
-            ' 
+            '
             ToolStrip1.AllowItemReorder = True
             ToolStrip1.AutoSize = False
             ToolStrip1.BackColor = Color.FromArgb(CByte(0), CByte(0), CByte(0), CByte(0))
@@ -365,9 +365,9 @@ Namespace UI
             ToolStrip1.Size = New Size(115, 30)
             ToolStrip1.TabIndex = 27
             ToolStrip1.Text = "Edit"
-            ' 
+            '
             ' ScaleTool
-            ' 
+            '
             ScaleTool.DisplayStyle = ToolStripItemDisplayStyle.Image
             ScaleTool.Image = My.Resources.Resources.scaleSmall
             ScaleTool.ImageTransparentColor = Color.Magenta
@@ -375,9 +375,9 @@ Namespace UI
             ScaleTool.Name = "ScaleTool"
             ScaleTool.Size = New Size(23, 20)
             ScaleTool.Text = "Scale Image"
-            ' 
+            '
             ' DrawCursor
-            ' 
+            '
             DrawCursor.CheckOnClick = True
             DrawCursor.DisplayStyle = ToolStripItemDisplayStyle.Image
             DrawCursor.Image = My.Resources.Resources.cursorMedium
@@ -386,9 +386,9 @@ Namespace UI
             DrawCursor.Name = "DrawCursor"
             DrawCursor.Size = New Size(23, 20)
             DrawCursor.Text = "Draw Cursor"
-            ' 
+            '
             ' BottomToolStrip
-            ' 
+            '
             BottomToolStrip.Dock = DockStyle.Bottom
             BottomToolStrip.GripStyle = ToolStripGripStyle.Hidden
             BottomToolStrip.Items.AddRange(New ToolStripItem() {MouseInfoLabel, ToolStripSeparator1, ImageInfoLabel})
@@ -397,9 +397,9 @@ Namespace UI
             BottomToolStrip.RenderMode = ToolStripRenderMode.System
             BottomToolStrip.Size = New Size(759, 25)
             BottomToolStrip.TabIndex = 30
-            ' 
+            '
             ' MouseInfoLabel
-            ' 
+            '
             MouseInfoLabel.AutoSize = False
             MouseInfoLabel.BackColor = Color.Transparent
             MouseInfoLabel.Image = My.Resources.Resources.cursorPositionSmall
@@ -407,23 +407,23 @@ Namespace UI
             MouseInfoLabel.Name = "MouseInfoLabel"
             MouseInfoLabel.Size = New Size(120, 22)
             MouseInfoLabel.Text = "MouseInfoLabel"
-            ' 
+            '
             ' ToolStripSeparator1
-            ' 
+            '
             ToolStripSeparator1.Name = "ToolStripSeparator1"
             ToolStripSeparator1.Size = New Size(6, 25)
-            ' 
+            '
             ' ImageInfoLabel
-            ' 
+            '
             ImageInfoLabel.BackColor = Color.Transparent
             ImageInfoLabel.Image = My.Resources.Resources.imageDimensionsSmall
             ImageInfoLabel.Margin = New Padding(5, 1, 0, 2)
             ImageInfoLabel.Name = "ImageInfoLabel"
             ImageInfoLabel.Size = New Size(105, 22)
             ImageInfoLabel.Text = "ImageInfoLabel"
-            ' 
+            '
             ' CopyPrintToolStrip
-            ' 
+            '
             CopyPrintToolStrip.BackColor = Color.Transparent
             CopyPrintToolStrip.Dock = DockStyle.None
             CopyPrintToolStrip.GripStyle = ToolStripGripStyle.Hidden
@@ -434,9 +434,9 @@ Namespace UI
             CopyPrintToolStrip.RenderMode = ToolStripRenderMode.System
             CopyPrintToolStrip.Size = New Size(24, 22)
             CopyPrintToolStrip.TabIndex = 31
-            ' 
+            '
             ' CopyToClipboard
-            ' 
+            '
             CopyToClipboard.BackColor = Color.Transparent
             CopyToClipboard.DisplayStyle = ToolStripItemDisplayStyle.Image
             CopyToClipboard.Image = My.Resources.Resources.clipboardSmall
@@ -446,9 +446,9 @@ Namespace UI
             CopyToClipboard.Name = "CopyToClipboard"
             CopyToClipboard.Size = New Size(22, 20)
             CopyToClipboard.Text = "Copy to Clipboard (Ctrl+C)"
-            ' 
+            '
             ' ThePanel
-            ' 
+            '
             ThePanel.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
             ThePanel.BackColor = Color.FromArgb(CByte(207), CByte(217), CByte(231))
             ThePanel.BackgroundImageLayout = ImageLayout.None
@@ -458,9 +458,9 @@ Namespace UI
             ThePanel.Name = "ThePanel"
             ThePanel.Size = New Size(759, 468)
             ThePanel.TabIndex = 12
-            ' 
+            '
             ' AutoCloseShotEditor
-            ' 
+            '
             AutoCloseShotEditor.AutoSize = True
             AutoCloseShotEditor.FlatStyle = FlatStyle.System
             AutoCloseShotEditor.Location = New Point(148, 9)
@@ -469,19 +469,19 @@ Namespace UI
             AutoCloseShotEditor.TabIndex = 32
             AutoCloseShotEditor.Text = "Close ShotEditor when uploading"
             AutoCloseShotEditor.UseVisualStyleBackColor = True
-            ' 
+            '
             ' CurrentToolSettingsPanel
-            ' 
+            '
             CurrentToolSettingsPanel.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
             CurrentToolSettingsPanel.BackColor = SystemColors.Control
-            CurrentToolSettingsPanel.Location = New Point(472, 4)
+            CurrentToolSettingsPanel.Location = New Point(447, 4)
             CurrentToolSettingsPanel.Name = "CurrentToolSettingsPanel"
-            CurrentToolSettingsPanel.Size = New Size(273, 82)
+            CurrentToolSettingsPanel.Size = New Size(298, 82)
             CurrentToolSettingsPanel.TabIndex = 33
             CurrentToolSettingsPanel.Visible = False
-            ' 
+            '
             ' ShotEditor
-            ' 
+            '
             AutoScaleMode = AutoScaleMode.None
             BackColor = Color.FromArgb(CByte(245), CByte(246), CByte(247))
             ClientSize = New Size(759, 613)
@@ -520,7 +520,7 @@ Namespace UI
         Friend WithEvents MarkerTool As System.Windows.Forms.ToolStripButton
         Friend WithEvents UndoStuff As System.Windows.Forms.ToolStripButton
         Friend WithEvents CroppingTool As System.Windows.Forms.ToolStripButton
-        Friend WithEvents ThePanel As PaintPanel
+        Friend WithEvents ThePanel As PaintPanel2
         Friend WithEvents ArrowTool As System.Windows.Forms.ToolStripButton
         Friend WithEvents EraserTool As System.Windows.Forms.ToolStripButton
         Friend WithEvents BlurTool As System.Windows.Forms.ToolStripButton
