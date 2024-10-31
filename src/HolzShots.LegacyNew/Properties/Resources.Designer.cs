@@ -105,5 +105,17 @@ namespace HolzShots.Properties {
                 return ((System.Drawing.Icon)(obj));
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon.
+        /// </summary>
+        internal static System.Drawing.Icon crossCursor
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("crossCursor", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
     }
 }
