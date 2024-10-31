@@ -183,7 +183,7 @@ Namespace UI.Controls
             'RawBox
             '
             Me.RawBox.BackColor = System.Drawing.SystemColors.GradientActiveCaption
-            Me.RawBox.BackgroundImage = Global.HolzShots.My.Resources.Resources.PaintPanelBackground
+            Me.RawBox.BackgroundImage = Global.HolzShots.My.Resources.Resources.checkerboardBackground
             Me.RawBox.Location = New System.Drawing.Point(2, 6)
             Me.RawBox.Name = "RawBox"
             Me.RawBox.Size = New System.Drawing.Size(100, 50)
