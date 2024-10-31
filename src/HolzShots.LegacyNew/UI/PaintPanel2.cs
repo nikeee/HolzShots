@@ -101,9 +101,6 @@ namespace HolzShots.UI
                     case ShotEditorTool.None:
                         Cursor = System.Windows.Forms.Cursors.Default;
                         break;
-                    case ShotEditorTool.Text:
-                        CurrentToolObject = null; // TODO Change to default(_) if this is not a reference type
-                        break;
                     case ShotEditorTool.Crop:
 
                         CurrentToolObject = new Crop();
@@ -250,7 +247,7 @@ namespace HolzShots.UI
         private void MouseLayerMouseDown(object sender, MouseEventArgs e)
         {
             _mouseDown = true;
-            if (_currentTool == ShotEditorTool.None || _currentTool == ShotEditorTool.Text)
+            if (_currentTool == ShotEditorTool.None)
                 return;
 
             CurrentToolObject.BeginCoordinates = e.Location.ToVector2();

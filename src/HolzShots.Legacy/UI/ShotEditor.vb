@@ -195,7 +195,6 @@ Namespace UI
 
             ToolControlMap.Add(ShotEditorTool.Eyedropper, PipettenTool)
             ToolControlMap.Add(ShotEditorTool.Ellipse, EllipseTool)
-            ToolControlMap.Add(ShotEditorTool.Text, TextToolButton)
             ToolControlMap.Add(ShotEditorTool.Eraser, EraserTool)
             ToolControlMap.Add(ShotEditorTool.Crop, CroppingTool)
             ToolControlMap.Add(ShotEditorTool.Arrow, ArrowTool)
@@ -243,9 +242,6 @@ Namespace UI
         End Sub
         Private Sub CircleToolClick() Handles EllipseTool.Click, KreisToolStripMenuItem.Click
             EnableTool(ShotEditorTool.Ellipse)
-        End Sub
-        Private Sub TextToolButtonClick() Handles TextToolButton.Click, TextToolStripMenuItem.Click
-            EnableTool(ShotEditorTool.Text)
         End Sub
         Private Sub EraserButtonClick() Handles EraserTool.Click, EraseToolStripMenuItem.Click
             EnableTool(ShotEditorTool.Eraser)

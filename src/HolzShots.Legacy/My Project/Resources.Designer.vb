@@ -253,16 +253,6 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
-        Friend ReadOnly Property moveMedium() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("moveMedium", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-
-        '''<summary>
-        '''  Looks up a localized resource of type System.Drawing.Bitmap.
-        '''</summary>
         Friend ReadOnly Property checkerboardBackground() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("checkerboardBackground", resourceCulture)
@@ -296,46 +286,6 @@ Namespace My.Resources
         Friend ReadOnly Property scaleSmall() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("scaleSmall", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-
-        '''<summary>
-        '''  Looks up a localized resource of type System.Drawing.Bitmap.
-        '''</summary>
-        Friend ReadOnly Property selectAllMedium() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("selectAllMedium", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-
-        '''<summary>
-        '''  Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
-        '''</summary>
-        Friend ReadOnly Property textCursor() As System.Drawing.Icon
-            Get
-                Dim obj As Object = ResourceManager.GetObject("textCursor", resourceCulture)
-                Return CType(obj,System.Drawing.Icon)
-            End Get
-        End Property
-
-        '''<summary>
-        '''  Looks up a localized resource of type System.Drawing.Bitmap.
-        '''</summary>
-        Friend ReadOnly Property textMedium() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("textMedium", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-
-        '''<summary>
-        '''  Looks up a localized resource of type System.Drawing.Bitmap.
-        '''</summary>
-        Friend ReadOnly Property TexttoolsBackground() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("TexttoolsBackground", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property

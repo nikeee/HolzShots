@@ -72,9 +72,6 @@ Namespace UI.Controls
                 Select Case value
                     Case ShotEditorTool.None
                         Cursor = Cursors.Default
-                    Case ShotEditorTool.Text
-                        CurrentToolObject = Nothing
-                        Cursor = New Cursor(My.Resources.textCursor.Handle)
                     Case ShotEditorTool.Crop
                         CurrentToolObject = New Crop()
                     Case ShotEditorTool.Marker
@@ -193,7 +190,7 @@ Namespace UI.Controls
 
         Private Sub MouseLayerMouseDown(sender As Object, e As MouseEventArgs) Handles RawBox.MouseDown
             _mousedown = True
-            If _currentTool = ShotEditorTool.None OrElse _currentTool = ShotEditorTool.Text Then Exit Sub
+            If _currentTool = ShotEditorTool.None Then Exit Sub
 
             CurrentToolObject.BeginCoordinates = e.Location.ToVector2()
             RawBox.Invalidate()
@@ -221,11 +218,7 @@ Namespace UI.Controls
 
         Private Sub MouseLayerMouseUp(sender As Object, e As MouseEventArgs) Handles RawBox.MouseUp
             If e.Button = MouseButtons.Left Then
-                If CurrentTool = ShotEditorTool.Text Then
-                    TextPanel.BringToFront()
-                    TextPanel.Location = New Point(e.Location.X + RawBox.Location.X, e.Location.Y + RawBox.Location.Y)
-                    TextPanel.Visible = True
-                ElseIf CurrentToolObject IsNot Nothing AndAlso CurrentToolObject.GetType IsNot GetType(Scale) Then
+                If CurrentToolObject IsNot Nothing AndAlso CurrentToolObject.GetType IsNot GetType(Scale) Then
                     If TypeOf CurrentToolObject IsNot Eyedropper Then
                         InvokeFinalRender(CurrentToolObject)
                     Else
@@ -279,97 +272,6 @@ Namespace UI.Controls
             BackColor = Color.FromArgb(207, 217, 231)
             RawBox.Focus()
         End Sub
-
-        Private Sub TextOkClick() Handles text_ok.Click
-            TextPanel.Visible = False
-
-            Using rtb As New RichTextBox With {
-                    .Location = RawBox.Location,
-                    .Parent = RawBox.Parent,
-                    .Font = RawBox.Font,
-                    .BorderStyle = BorderStyle.None
-                }
-
-                Dim charLocation = rtb.GetPositionFromCharIndex(0)
-
-                Dim location As New Point(TextPanel.Location.X - charLocation.X, TextPanel.Location.Y - charLocation.Y)
-
-                Dim img = DirectCast(CurrentImage.Clone(), Image)
-
-                Using g As Graphics = Graphics.FromImage(img)
-                    g.TextRenderingHint = TextRenderingHint.AntiAlias
-                    g.DrawString(TextInput.Text, TextInput.Font, New SolidBrush(TextInput.ForeColor), location)
-                End Using
-
-                _undoStack.Push(img)
-                UpdateRawBox()
-                RawBox.Focus()
-            End Using
-        End Sub
-
-#Region "TextPanel"
-
-        Dim _moverMouseDown As Boolean = False
-        Dim _dragPointMover As Point
-        Dim _startPOsitionMover As Point
-
-        Private Sub PictureBox2MouseDown(sender As Object, e As MouseEventArgs) Handles MoverBox.MouseDown
-            If e.Button = MouseButtons.Left Then
-                _moverMouseDown = True
-                _startPOsitionMover = New Point(TextPanel.Location.X + EckenTeil.Location.X, TextPanel.Location.Y + EckenTeil.Location.Y)
-                _dragPointMover = EckenTeil.PointToScreen(New Point(TextPanel.Location.X + e.X, TextPanel.Location.Y + e.Y))
-            End If
-        End Sub
-
-        Private Sub PictureBox2MouseMove(sender As Object, e As MouseEventArgs) Handles MoverBox.MouseMove
-            If _moverMouseDown = True Then
-                Dim nCurPos As Point = EckenTeil.PointToScreen(New Point(TextPanel.Location.X + e.X, TextPanel.Location.Y + e.Y))
-                TextPanel.Location = New Point(_startPOsitionMover.X + nCurPos.X - _dragPointMover.X, _startPOsitionMover.Y + nCurPos.Y - _dragPointMover.Y)
-            End If
-        End Sub
-
-        Private Sub PictureBox2MouseUp(sender As Object, e As MouseEventArgs) Handles MoverBox.MouseUp
-            _moverMouseDown = False
-        End Sub
-
-        Private Sub ChangeFontClick(sender As Object, e As EventArgs) Handles ChangeFont.Click
-            If TheFontDialog.ShowDialog() = DialogResult.OK Then
-                TextInput.Font = TheFontDialog.Font
-                TextInput.ForeColor = TheFontDialog.Color
-            End If
-        End Sub
-
-        Private Sub TextPanelVisibleChanged(sender As Object, e As EventArgs) Handles TextPanel.VisibleChanged
-            ChangeFont.Parent = tools_bg
-            ChangeFont.Location = New Point(3, 2)
-
-            MoverBox.Parent = tools_bg
-            MoverBox.Location = New Point(178, 2)
-
-            SelectAll.Parent = tools_bg
-            SelectAll.Location = New Point(41, 2)
-
-            InsertDate.Parent = tools_bg
-            InsertDate.Location = New Point(75, 2)
-
-            CancelButton.Parent = tools_bg
-            CancelButton.Location = New Point(117, 2)
-        End Sub
-
-        Private Sub SelectAllClick(sender As Object, e As EventArgs) Handles SelectAll.Click
-            TextInput.Focus()
-            TextInput.SelectAll()
-        End Sub
-
-        Private Sub CancelButtonClick(sender As Object, e As EventArgs) Handles CancelButton.Click
-            TextPanel.Visible = False
-        End Sub
-
-        Private Sub InsertDateClick(sender As Object, e As EventArgs) Handles InsertDate.Click
-            TextInput.Paste(_screenshot.Timestamp.ToString())
-        End Sub
-
-#End Region
 
 #Region "Ruler"
 

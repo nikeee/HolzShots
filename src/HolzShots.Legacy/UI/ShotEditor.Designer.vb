@@ -22,7 +22,6 @@ Namespace UI
             EditStrip = New ToolStrip()
             CensorTool = New ToolStripButton()
             MarkerTool = New ToolStripButton()
-            TextToolButton = New ToolStripButton()
             CroppingTool = New ToolStripButton()
             EraserTool = New ToolStripButton()
             BlurTool = New ToolStripButton()
@@ -34,7 +33,6 @@ Namespace UI
             ToolStripDropDownButton1 = New ToolStripDropDownButton()
             ZensToolStripMenuItem = New ToolStripMenuItem()
             MarkToolStripMenuItem = New ToolStripMenuItem()
-            TextToolStripMenuItem = New ToolStripMenuItem()
             CropToolStripMenuItem = New ToolStripMenuItem()
             EraseToolStripMenuItem = New ToolStripMenuItem()
             PixelateToolStripMenuItem = New ToolStripMenuItem()
@@ -118,7 +116,7 @@ Namespace UI
             EditStrip.GripMargin = New Padding(0)
             EditStrip.GripStyle = ToolStripGripStyle.Hidden
             EditStrip.ImageScalingSize = New Size(32, 32)
-            EditStrip.Items.AddRange(New ToolStripItem() {CensorTool, MarkerTool, TextToolButton, CroppingTool, EraserTool, BlurTool, EllipseTool, PipettenTool, BrightenTool, ArrowTool, UndoStuff, ToolStripDropDownButton1})
+            EditStrip.Items.AddRange(New ToolStripItem() {CensorTool, MarkerTool, CroppingTool, EraserTool, BlurTool, EllipseTool, PipettenTool, BrightenTool, ArrowTool, UndoStuff, ToolStripDropDownButton1})
             EditStrip.Location = New Point(5, 47)
             EditStrip.Name = "EditStrip"
             EditStrip.Padding = New Padding(0)
@@ -150,17 +148,6 @@ Namespace UI
             MarkerTool.Name = "MarkerTool"
             MarkerTool.Size = New Size(36, 37)
             MarkerTool.Text = "Mark (Ctrl+S)"
-            ' 
-            ' TextToolButton
-            ' 
-            TextToolButton.CheckOnClick = True
-            TextToolButton.DisplayStyle = ToolStripItemDisplayStyle.Image
-            TextToolButton.Image = My.Resources.Resources.textMedium
-            TextToolButton.ImageTransparentColor = Color.Magenta
-            TextToolButton.Margin = New Padding(2, 0, 2, 2)
-            TextToolButton.Name = "TextToolButton"
-            TextToolButton.Size = New Size(36, 37)
-            TextToolButton.Text = "Insert Text (Ctrl+T)"
             ' 
             ' CroppingTool
             ' 
@@ -250,7 +237,7 @@ Namespace UI
             ' ToolStripDropDownButton1
             ' 
             ToolStripDropDownButton1.DisplayStyle = ToolStripItemDisplayStyle.Image
-            ToolStripDropDownButton1.DropDownItems.AddRange(New ToolStripItem() {ZensToolStripMenuItem, MarkToolStripMenuItem, TextToolStripMenuItem, CropToolStripMenuItem, EraseToolStripMenuItem, PixelateToolStripMenuItem, KreisToolStripMenuItem, ArrowToolStripMenuItem, ResetToolStripMenuItem, UploadToolStripMenuItem, SaveToolStripMenuItem, ClipboardToolStripMenuItem, PrintToolStripMenuItem, ChooseServiceToolStripMenuItem})
+            ToolStripDropDownButton1.DropDownItems.AddRange(New ToolStripItem() {ZensToolStripMenuItem, MarkToolStripMenuItem, CropToolStripMenuItem, EraseToolStripMenuItem, PixelateToolStripMenuItem, KreisToolStripMenuItem, ArrowToolStripMenuItem, ResetToolStripMenuItem, UploadToolStripMenuItem, SaveToolStripMenuItem, ClipboardToolStripMenuItem, PrintToolStripMenuItem, ChooseServiceToolStripMenuItem})
             ToolStripDropDownButton1.Image = CType(resources.GetObject("ToolStripDropDownButton1.Image"), Image)
             ToolStripDropDownButton1.ImageTransparentColor = Color.Magenta
             ToolStripDropDownButton1.Name = "ToolStripDropDownButton1"
@@ -273,14 +260,6 @@ Namespace UI
             MarkToolStripMenuItem.Size = New Size(226, 22)
             MarkToolStripMenuItem.Text = "Mark"
             MarkToolStripMenuItem.Visible = False
-            ' 
-            ' TextToolStripMenuItem
-            ' 
-            TextToolStripMenuItem.Name = "TextToolStripMenuItem"
-            TextToolStripMenuItem.ShortcutKeys = Keys.Control Or Keys.T
-            TextToolStripMenuItem.Size = New Size(226, 22)
-            TextToolStripMenuItem.Text = "Text"
-            TextToolStripMenuItem.Visible = False
             ' 
             ' CropToolStripMenuItem
             ' 
@@ -540,7 +519,6 @@ Namespace UI
         Friend WithEvents CensorTool As System.Windows.Forms.ToolStripButton
         Friend WithEvents MarkerTool As System.Windows.Forms.ToolStripButton
         Friend WithEvents UndoStuff As System.Windows.Forms.ToolStripButton
-        Friend WithEvents TextToolButton As System.Windows.Forms.ToolStripButton
         Friend WithEvents CroppingTool As System.Windows.Forms.ToolStripButton
         Friend WithEvents ThePanel As PaintPanel
         Friend WithEvents ArrowTool As System.Windows.Forms.ToolStripButton
@@ -549,7 +527,6 @@ Namespace UI
         Friend WithEvents ToolStripDropDownButton1 As System.Windows.Forms.ToolStripDropDownButton
         Friend WithEvents ZensToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Friend WithEvents MarkToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents TextToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Friend WithEvents CropToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Friend WithEvents EraseToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Friend WithEvents PixelateToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
