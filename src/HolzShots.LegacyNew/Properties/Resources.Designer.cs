@@ -129,5 +129,41 @@ namespace HolzShots.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon.
+        /// </summary>
+        internal static System.Drawing.Bitmap uploadMedium
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("uploadMedium", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon.
+        /// </summary>
+        internal static System.Drawing.Bitmap saveMedium
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("saveMedium", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon.
+        /// </summary>
+        internal static System.Drawing.Bitmap clipboardMedium
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("clipboardMedium", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }
