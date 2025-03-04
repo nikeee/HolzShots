@@ -98,7 +98,7 @@ jobs:
           sed -i -e "s/__REPLACE_CHECKSUM__/${RELEASE_HASH}/g" package/tools/chocolateyinstall.ps1
 
       - name: Bundle Chocolatey Package
-        uses: crazy-max/ghaction-chocolatey@v3.2.0
+        uses: crazy-max/ghaction-chocolatey@v3.3.0
         with:
           args: pack --out . ./package/holzshots.nuspec
 
