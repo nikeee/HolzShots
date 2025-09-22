@@ -26,7 +26,7 @@
 
     <ProjectReference Include="..\HolzShots.Native\HolzShots.Native.csproj" />
 
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
     <PackageReference Include="Semver" Version="3.0.0" />
     <PackageReference Include="unvell.d2dlib-x64" Version="1.5.0" />
     <PackageReference Include="System.Composition" Version="9.0.9" />
