@@ -26,9 +26,9 @@ jobs:
       with:
         dotnet-version: '10.x'
 
-    - uses: github/codeql-action/init@v3
+    - uses: github/codeql-action/init@v4
       with:
         languages: ${{ matrix.language }}
 
     - run: dotnet build -c DEBUG
-    - uses: github/codeql-action/analyze@v3
+    - uses: github/codeql-action/analyze@v4
