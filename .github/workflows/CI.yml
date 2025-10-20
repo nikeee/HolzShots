@@ -27,8 +27,8 @@ jobs:
         dotnet restore
         # dotnet version --dry-run -f src/Common.props --build-meta { git rev-parse --short HEAD }
 
-    - run: dotnet build --self-contained -c $env:CONFIGURATION
-    - run: dotnet build --self-contained -c $env:CONFIGURATION src\HolzShots\HolzShots.csproj
+    - run: dotnet build --self-contained --runtime win-x64 -c $env:CONFIGURATION
+    - run: dotnet build --self-contained --runtime win-x64 -c $env:CONFIGURATION src\HolzShots\HolzShots.csproj
     - run: dotnet test -c $env:CONFIGURATION --no-build src\HolzShots.Core.Tests\HolzShots.Core.Tests.csproj
 
     - run: npm install -g ajv-cli
