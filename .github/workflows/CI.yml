@@ -39,7 +39,6 @@ jobs:
     #     ajv -s json-schema.json -d src/schema/*.schema.json
 
     - name: Collect Artifacts
-      if: startsWith(github.ref, 'refs/tags/v')
       run: |
         7z a HolzShots.zip ".\src\HolzShots\bin\$env:CONFIGURATION\net10.0-windows\win-x64\*.exe"
         7z a HolzShots.zip ".\src\HolzShots\bin\$env:CONFIGURATION\net10.0-windows\win-x64\*.dll"
@@ -48,13 +47,11 @@ jobs:
         sha256sum HolzShots.zip > sha256sums.txt
 
     - uses: actions/upload-artifact@v4
-      if: startsWith(github.ref, 'refs/tags/v')
       with:
         name: HolzShots.zip
         path: HolzShots.zip
 
     - uses: actions/upload-artifact@v4
-      if: startsWith(github.ref, 'refs/tags/v')
       with:
         name: sha256sums.txt
         path: sha256sums.txt
