@@ -46,12 +46,12 @@ jobs:
         7z a HolzShots.zip ".\src\HolzShots\bin\$env:CONFIGURATION\net10.0-windows\win-x64\*.manifest"
         sha256sum HolzShots.zip > sha256sums.txt
 
-    - uses: actions/upload-artifact@v4
+    - uses: actions/upload-artifact@v5
       with:
         name: HolzShots.zip
         path: HolzShots.zip
 
-    - uses: actions/upload-artifact@v4
+    - uses: actions/upload-artifact@v5
       with:
         name: sha256sums.txt
         path: sha256sums.txt
@@ -104,7 +104,7 @@ jobs:
         shell: bash
         run: echo "file=$(ls holzshots*.nupkg)" >> $GITHUB_OUTPUT
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: holzshots.nupkg
           path: ${{ steps.get_choco_package.outputs.file }}
