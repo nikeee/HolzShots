@@ -41,7 +41,7 @@
 
     <PackageReference Include="Microsoft.NETCore.Platforms" Version="7.0.4" />
     <PackageReference Include="MSTest.TestAdapter" Version="4.0.0" />
-    <PackageReference Include="MSTest.TestFramework" Version="4.0.0" />
+    <PackageReference Include="MSTest.TestFramework" Version="4.0.2" />
 
 
     <PackageReference Include="Semver" Version="3.0.0" />
