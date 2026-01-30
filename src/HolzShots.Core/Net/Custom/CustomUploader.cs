@@ -13,7 +13,8 @@ public class CustomUploader : Uploader
 
     protected CustomUploader(CustomUploaderSpec? customData)
     {
-        UploaderInfo = customData ?? throw new ArgumentNullException(nameof(customData));
+        ArgumentNullException.ThrowIfNull(customData);
+        UploaderInfo = customData;
     }
 
     public async override Task<UploadResult> InvokeAsync(Stream data, string suggestedFileName, string mimeType, IProgress<TransferProgress> progress, CancellationToken cancellationToken)
@@ -82,7 +83,7 @@ public class CustomUploader : Uploader
         var urlTemplateSpec = responseParser.UrlTemplateSpec;
 
         // As the URL template is optional, we just take the entire response if it is not there
-        if (urlTemplateSpec == null)
+        if (urlTemplateSpec is null)
             return new UploadResult(this, resStr, DateTime.Now);
 
         try

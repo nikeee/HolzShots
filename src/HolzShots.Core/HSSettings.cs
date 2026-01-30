@@ -39,9 +39,12 @@ public class HSSettings
 
     /// <summary> Note: Use <see cref="ExpandedSavePath" /> internally when actually saving something. </summary>
     [SettingsDoc(
-        "The path where screenshots and screen recordings will be saved.\n" +
-        "Feel free to use environment variables like %USERPROFILE%, %ONEDRIVE% or %TMP%.\n\n" +
-        "If you want to save videos to a different path, override this setting in the respective command.",
+        """
+        The path where screenshots and screen recordings will be saved.
+        Feel free to use environment variables like %USERPROFILE%, %ONEDRIVE% or %TMP%.
+
+        If you want to save videos to a different path, override this setting in the respective command.
+        """,
         Overridable = true
     )]
     [JsonProperty("save.path")]
@@ -55,22 +58,26 @@ public class HSSettings
     #region image.save.*
 
     [SettingsDoc(
-        "The pattern to use for saving images to the local disk. You can use several placeholders:\n" +
-        "    <date>: The date when the screenshot was created. Defaults to ISO 8601 (sortable) timestamps.\n" +
-        "            You can use string formats that .NET supports: https://docs.microsoft.com/en-us/dotnet/api/system.datetime.tostring\n" +
-        "            For example, you can use <date:s>\n" +
-        "\n" +
-        "    <size:width>, <size:height>: The width or the height of the image.",
+        """
+        The pattern to use for saving images to the local disk. You can use several placeholders:
+            <date>: The date when the screenshot was created. Defaults to ISO 8601 (sortable) timestamps.
+                    You can use string formats that .NET supports: https://docs.microsoft.com/en-us/dotnet/api/system.datetime.tostring
+                    For example, you can use <date:s>
+
+            <size:width>, <size:height>: The width or the height of the image.
+        """,
         Overridable = true
     )]
     [JsonProperty("image.save.pattern")]
     public string SaveImageFileNamePattern { get; private set; } = "Screenshot-<Date>";
 
     [SettingsDoc(
-        "When enabled, HolzShots decides whether a screenshot should be saved as a JPEG or a PNG.\n" +
-        "Some screenshots are better saved as JPGs, for example if they consist of a large photo.\n" +
-        "Saving it as a PNG is better suited for pictures of programs.\n" +
-        "If JPG is used, there may be a loss in quality. PNG does not reduce the image quality, but uses more space when photos are saved.",
+        """
+        When enabled, HolzShots decides whether a screenshot should be saved as a JPEG or a PNG.
+        Some screenshots are better saved as JPGs, for example if they consist of a large photo.
+        Saving it as a PNG is better suited for pictures of programs.
+        If JPG is used, there may be a loss in quality. PNG does not reduce the image quality, but uses more space when photos are saved.
+        """,
         Overridable = true
     )]
     [JsonProperty("image.save.autoDetectBestImageFormat")]
@@ -80,12 +87,14 @@ public class HSSettings
     #region video.*
 
     [SettingsDoc(
-        "The pattern to use for saving videos to the local disk. You can use several placeholders:\n" +
-        "    <date>: The date when the video recording was started. Defaults to ISO 8601 (sortable) timestamps.\n" +
-        "            You can use string formats that .NET supports: https://docs.microsoft.com/en-us/dotnet/api/system.datetime.tostring\n" +
-        "            For example, you can use <date:s>\n" +
-        "\n" +
-        "    <size:width>, <size:height>: The width or the height of the video.",
+        """
+        The pattern to use for saving videos to the local disk. You can use several placeholders:
+            <date>: The date when the video recording was started. Defaults to ISO 8601 (sortable) timestamps.
+                    You can use string formats that .NET supports: https://docs.microsoft.com/en-us/dotnet/api/system.datetime.tostring
+                    For example, you can use <date:s>
+
+            <size:width>, <size:height>: The width or the height of the video.
+        """,
         Overridable = true
     )]
     [JsonProperty("video.save.pattern")]
@@ -115,10 +124,9 @@ public class HSSettings
     [JsonProperty("video.framesPerSecond")]
     public int VideoFrameRate
     {
-        get => _videoFrameRate;
-        private set => _videoFrameRate = Math.Clamp(value, 1, 30);
-    }
-    private int _videoFrameRate = 30;
+        get => field;
+        private set => field = Math.Clamp(value, 1, 30);
+    } = 30;
 
     #endregion
     #region editor.*
@@ -159,10 +167,12 @@ public class HSSettings
     public bool ShowUploadProgress { get; private set; } = true;
 
     [SettingsDoc(
-        "What will be done with the link that you get from your upload. Possible options are:\n" +
-        "    flyout: A popup-window in the corner that shows some options for copying the link\n" +
-        "    copy: Copy the link to the clipboard\n" +
-        "    none: Do nothing",
+        """
+        What will be done with the link that you get from your upload. Possible options are:
+            flyout: A popup-window in the corner that shows some options for copying the link
+            copy: Copy the link to the clipboard
+            none: Do nothing
+        """,
         Default = "flyout",
         Overridable = true
     )]
@@ -189,10 +199,12 @@ public class HSSettings
     /// TODO: Maybe use a different name for that.
     /// </summary>
     [SettingsDoc(
-        "When enabled, HolzShots decides whether a screenshot should be uploaded as a JPEG or a PNG.\n" +
-        "Some screenshots are better uploaded as JPGs, for example if they consist of a large photo.\n" +
-        "Uploading it as a PNG is better suited for pictures of programs.\n" +
-        "If JPG is used, there may be a loss in quality. PNG does not reduce the image quality, but uses more space when photos are saved and therefore takes longer to upload.",
+        """
+        When enabled, HolzShots decides whether a screenshot should be uploaded as a JPEG or a PNG.
+        Some screenshots are better uploaded as JPGs, for example if they consist of a large photo.
+        Uploading it as a PNG is better suited for pictures of programs.
+        If JPG is used, there may be a loss in quality. PNG does not reduce the image quality, but uses more space when photos are saved and therefore takes longer to upload.
+        """,
         Default = "false",
         Overridable = true
     )]
@@ -216,12 +228,14 @@ public class HSSettings
     /// For now, this should work.
     /// </summary>
     [SettingsDoc(
-        "What to do after an image got captured. Possible options are:\n" +
-        "    openEditor: Open the shot editor with the captured image\n" +
-        "    upload: Upload the image to the specified default image service\n" +
-        "    saveAs: Show a dialog and choose where you want to save the image\n" +
-        "    copy: Copy the image data to clipboard; useful for pasting the image to popular messengers etc.\n" +
-        "    none: Do nothing (this would only trigger saving the image to disk if this is enabled)",
+        """
+        What to do after an image got captured. Possible options are:
+            openEditor: Open the shot editor with the captured image
+            upload: Upload the image to the specified default image service
+            saveAs: Show a dialog and choose where you want to save the image
+            copy: Copy the image data to clipboard; useful for pasting the image to popular messengers etc.
+            none: Do nothing (this would only trigger saving the image to disk if this is enabled)
+        """,
         Default = "openEditor",
         Overridable = true
     )]
@@ -229,13 +243,15 @@ public class HSSettings
     public ImageCaptureHandlingAction ActionAfterImageCapture { get; private set; } = ImageCaptureHandlingAction.OpenEditor;
 
     [SettingsDoc(
-        "What to do after capturing a screen recording. Possible options are:\n" +
-        "    upload: Upload the image to the specified default service\n" +
-        "    copyFile: Copy the file to the clipboard; useful for pasting the video to popular messengers etc.\n" +
-        "    copyFilePath: Copy the path to file to the clipboard.\n" +
-        "    showInExplorer: Opens an explorer window in the path of the saved video.\n" +
-        "    openInDefaultApp: Opens the video in the default application for that file type.\n" +
-        "    none: Do nothing (this would only trigger saving the video to disk if this is enabled)",
+        """
+        What to do after capturing a screen recording. Possible options are:
+            upload: Upload the image to the specified default service
+            copyFile: Copy the file to the clipboard; useful for pasting the video to popular messengers etc.
+            copyFilePath: Copy the path to file to the clipboard.
+            showInExplorer: Opens an explorer window in the path of the saved video.
+            openInDefaultApp: Opens the video in the default application for that file type.
+            none: Do nothing (this would only trigger saving the video to disk if this is enabled)
+        """,
         Default = "showInExplorer",
         Overridable = true
     )]
@@ -250,10 +266,9 @@ public class HSSettings
     [JsonProperty("capture.selection.dimmingOpacity")]
     public float AreaSelectorDimmingOpacity
     {
-        get => _areaSelectorDimmingOpacity;
-        private set => _areaSelectorDimmingOpacity = Math.Clamp(value, 0.0f, 1.0f);
-    }
-    private float _areaSelectorDimmingOpacity = 0.8f;
+        get => field;
+        private set => field = Math.Clamp(value, 0.0f, 1.0f);
+    } = 0.8f;
 
     [SettingsDoc(
         "Seconds to wait before invoking the capture. Must be >=0.",
@@ -263,14 +278,16 @@ public class HSSettings
     [JsonProperty("capture.delayInSeconds")]
     public float CaptureDelay
     {
-        get => _captureDelay;
-        private set => _captureDelay = MathF.Max(0.0f, value);
-    }
-    private float _captureDelay = 0.0f;
+        get => field;
+        private set => field = MathF.Max(0.0f, value);
+    } = 0.0f;
 
     [SettingsDoc(
-        "Capture the mouse cursor.\n\n" +
-        "When recording videos and you want to have a cursor visible, make sure you set this option to \"true\" in the command overrides.",
+        """
+        Capture the mouse cursor.
+
+        When recording videos and you want to have a cursor visible, make sure you set this option to "true" in the command overrides.
+        """,
         Default = "false",
         Overridable = true
     )]
@@ -307,7 +324,7 @@ public class HSSettings
     )]
     [JsonProperty("key.bindings")]
     [field: LeaveUntouchedInObjectDeepCopy] // Support for this doesn't make any sense
-    public IReadOnlyList<KeyBinding> KeyBindings { get; set; } = ImmutableList<KeyBinding>.Empty;
+    public IReadOnlyList<KeyBinding> KeyBindings { get; set; } = [];
 
     #endregion
 }
@@ -427,7 +444,7 @@ public static class ObjectExtensions
 
     private static object? InternalCopy(object? originalObject, IDictionary<object, object> visited)
     {
-        if (originalObject == null)
+        if (originalObject is null)
             return null;
 
         var typeToReflect = originalObject.GetType();

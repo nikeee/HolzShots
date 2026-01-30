@@ -5,11 +5,8 @@ using HolzShots.Net;
 
 namespace HolzShots.Composition;
 
-public class PluginUploaderSource : PluginManager<Uploader>, IUploaderSource
+public class PluginUploaderSource(string pluginDirectory) : PluginManager<Uploader>(pluginDirectory), IUploaderSource
 {
-    public PluginUploaderSource(string pluginDirectory)
-        : base(pluginDirectory)
-    { }
 
     public UploaderEntry? GetUploaderByName(string name)
     {

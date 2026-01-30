@@ -27,7 +27,8 @@ public record ImageUploadPayload : IUploadPayload
 
     public ImageUploadPayload(Image image, ImageFormat format)
     {
-        _format = format ?? throw new ArgumentNullException(nameof(format));
+        ArgumentNullException.ThrowIfNull(format);
+        _format = format;
         _image = image.CloneGifBug(_format);
 
         (Extension, MimeType) = _format.GetExtensionAndMimeType();

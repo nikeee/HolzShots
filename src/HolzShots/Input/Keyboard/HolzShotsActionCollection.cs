@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading;
 
 namespace HolzShots.Input.Keyboard;
 
 public class HolzShotsActionCollection(KeyboardHook hook, params IHotkeyAction[] actions) : HotkeyActionCollection(hook, actions), IDisposable
 {
-    private readonly object _lockObj = new();
+    private readonly Lock _lockObj = new();
     private bool disposedValue;
 
     public override void Refresh()

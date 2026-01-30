@@ -12,8 +12,10 @@ public partial class UploadResultForm : FlyoutForm
 
     public UploadResultForm(UploadResult result, HSSettings settingsContext)
     {
-        _result = result ?? throw new ArgumentNullException(nameof(result));
-        _settingsContext = settingsContext ?? throw new ArgumentNullException(nameof(settingsContext));
+        ArgumentNullException.ThrowIfNull(result);
+        ArgumentNullException.ThrowIfNull(settingsContext);
+        _result = result;
+        _settingsContext = settingsContext;
 
         InitializeComponent();
         StartPosition = FormStartPosition.Manual;

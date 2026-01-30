@@ -3,18 +3,16 @@ using System.Text;
 
 namespace HolzShots.IO.Naming;
 
-public abstract class PatternItem
+public abstract class PatternItem(string? propertyName)
 {
     public const char TokenStartChar = '<';
     public const char TokenEndChar = '>';
     public const char PropertySeparatorChar = ':';
 
-    public string? PropertyName { get; }
+    public string? PropertyName { get; } = propertyName;
     public abstract string Keyword { get; }
     public abstract string TextRepresentation { get; }
     public abstract bool IsValid { get; }
-
-    public PatternItem(string? propertyName) => PropertyName = propertyName;
 
     public abstract string FormatMetadata(FileMetadata metadata);
 

@@ -15,8 +15,9 @@ public class ValidationError
 
     public ValidationError(string message, IReadOnlyList<string> affectedProperties, Exception? exception = null)
     {
-        Message = message ?? throw new ArgumentNullException(nameof(message));
-        AffectedProperties = affectedProperties ?? ImmutableList<string>.Empty;
+        ArgumentNullException.ThrowIfNull(message);
+        Message = message;
+        AffectedProperties = affectedProperties ?? [];
         Exception = exception;
     }
 

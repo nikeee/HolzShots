@@ -1,11 +1,12 @@
 using System.Diagnostics;
+using System.Threading;
 
 namespace HolzShots.Net;
 
 // May move to other namespace?
 public class SpeedCalculatorProgress : Progress<TransferProgress>
 {
-    private readonly object _lockObj = new();
+    private readonly Lock _lockObj = new();
 
     private DateTime _start;
     private DateTime _end;

@@ -21,10 +21,10 @@ class PollingFileWatcher
 
     internal PollingFileWatcher(string filePath, TimeSpan pollingInterval, ISynchronizeInvoke? synchronizingObject = null)
     {
-        FilePath = filePath ?? throw new ArgumentNullException(nameof(filePath));
-        PollingInterval = pollingInterval >= MinimumPollingInterval
-                                ? pollingInterval
-                                : throw new ArgumentException($"pollingInterval should be >= {MinimumPollingInterval}");
+        ArgumentNullException.ThrowIfNull(filePath);
+        ArgumentOutOfRangeException.ThrowIfLessThan(pollingInterval, MinimumPollingInterval);
+        FilePath = filePath;
+        PollingInterval = pollingInterval;
         _synchronizingObject = synchronizingObject;
     }
 
@@ -61,7 +61,7 @@ class PollingFileWatcher
     void InvokeEvent()
     {
         var e = OnFileWritten;
-        if (e == null)
+        if (e is null)
             return;
 
         // We pass the original FileInfo object to the event handlers

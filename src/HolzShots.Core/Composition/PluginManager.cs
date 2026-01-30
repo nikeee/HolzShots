@@ -13,7 +13,7 @@ public abstract class PluginManager<T>
 {
     private const string AssemblyFilter = "*.dll";
 
-    public IReadOnlyCollection<(ICompileTimePluginMetadata metadata, T instance)> Plugins { get; private set; } = Array.Empty<(ICompileTimePluginMetadata, T)>();
+    public IReadOnlyCollection<(ICompileTimePluginMetadata metadata, T instance)> Plugins { get; private set; } = [];
 
     public string PluginDirectory { get; }
     public bool Loaded { get; private set; } = false;

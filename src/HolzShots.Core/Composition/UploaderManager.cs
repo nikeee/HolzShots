@@ -3,16 +3,11 @@ using System.Diagnostics;
 
 namespace HolzShots.Composition;
 
-public class UploaderManager : IUploaderSource
+public class UploaderManager(PluginUploaderSource plugins, CustomUploaderSource customs) : IUploaderSource
 {
     public bool Loaded => Plugins.Loaded && Customs.Loaded;
-    public PluginUploaderSource Plugins { get; }
-    public CustomUploaderSource Customs { get; }
-    public UploaderManager(PluginUploaderSource plugins, CustomUploaderSource customs)
-    {
-        Plugins = plugins ?? throw new ArgumentNullException(nameof(plugins));
-        Customs = customs ?? throw new ArgumentNullException(nameof(customs));
-    }
+    public PluginUploaderSource Plugins { get; } = plugins ?? throw new ArgumentNullException(nameof(plugins));
+    public CustomUploaderSource Customs { get; } = customs ?? throw new ArgumentNullException(nameof(customs));
 
     public Task Load() => Task.WhenAll(Plugins.Load(), Customs.Load());
 
@@ -34,10 +29,7 @@ public class UploaderManager : IUploaderSource
         Debug.Assert(pn is not null);
         var un = Customs.GetUploaderNames();
         Debug.Assert(un is not null);
-        var res = new List<string>(pn.Count + un.Count);
-        res.AddRange(pn);
-        res.AddRange(un);
-        return res;
+        return [.. pn, .. un];
     }
 
     public IReadOnlyList<IPluginMetadata> GetMetadata()
@@ -48,9 +40,6 @@ public class UploaderManager : IUploaderSource
         Debug.Assert(pn is not null);
         var un = Customs.GetMetadata();
         Debug.Assert(un is not null);
-        var res = new List<IPluginMetadata>(pn.Count + un.Count);
-        res.AddRange(pn);
-        res.AddRange(un);
-        return res;
+        return [.. pn, .. un];
     }
 }

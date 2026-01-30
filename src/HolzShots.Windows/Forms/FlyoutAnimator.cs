@@ -17,7 +17,8 @@ public class FlyoutAnimator
 
     public FlyoutAnimator(FlyoutForm target)
     {
-        _target = target ?? throw new ArgumentNullException(nameof(target));
+        ArgumentNullException.ThrowIfNull(target);
+        _target = target;
         _target.StartPosition = FormStartPosition.Manual;
     }
 

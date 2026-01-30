@@ -3,14 +3,9 @@ using HolzShots.Drawing.Tools;
 
 namespace HolzShots.UI;
 
-public class PanelActivator
+public class PanelActivator(Control panel)
 {
-    private readonly Control _panel;
-    public PanelActivator(Control panel)
-    {
-        ArgumentNullException.ThrowIfNull(panel);
-        _panel = panel;
-    }
+    private readonly Control _panel = panel ?? throw new ArgumentNullException(nameof(panel));
 
     public void CreateSettingsPanel(ITool<ToolSettingsBase> tool)
     {
@@ -32,12 +27,7 @@ public class PanelActivator
 
     public void ClearSettingsPanel()
     {
-        var toRemove = new List<Control>();
-        foreach (var i in _panel.Controls)
-        {
-            if (i is Control c)
-                toRemove.Add(c);
-        }
+        List<Control> toRemove = [.. _panel.Controls.OfType<Control>()];
 
         _panel.Controls.Clear();
 

@@ -166,7 +166,7 @@ namespace HolzShots.UI
 
         private void CurrentToolChanged_Event(object? sender, ITool<ToolSettingsBase> tool)
         {
-            if (tool != null)
+            if (tool is not null)
                 Cursor = tool.Cursor;
         }
 
@@ -189,9 +189,9 @@ namespace HolzShots.UI
         private void InvokeFinalRender(ITool<ToolSettingsBase> tool)
         {
             var img = (Image)CurrentImage.Clone();
-            Debug.Assert(tool != null);
-            Debug.Assert(img != null);
-            if (img == null)
+            Debug.Assert(tool is not null);
+            Debug.Assert(img is not null);
+            if (img is null)
                 return;
 
             // Dim oldImageRef = img
@@ -261,7 +261,7 @@ namespace HolzShots.UI
         {
             if (e.Button == MouseButtons.Left)
             {
-                if (CurrentToolObject != null)
+                if (CurrentToolObject is not null)
                 {
                     CurrentToolObject.EndCoordinates = e.Location.ToVector2();
                     RawBox.Invalidate();
@@ -284,7 +284,7 @@ namespace HolzShots.UI
             else
             {
                 var img = CurrentImage;
-                if (img == null)
+                if (img is null)
                     return;
 
                 CurrentToolObject.RenderFinalImage(ref img);
@@ -296,9 +296,9 @@ namespace HolzShots.UI
 
         private void RawBoxPaint(object sender, PaintEventArgs e)
         {
-            if (_mouseDown == true)
+            if (_mouseDown)
             {
-                if (_currentToolObject != null)
+                if (_currentToolObject is not null)
                 {
                     CurrentToolObject.RenderPreview((Bitmap)RawBox.Image, e.Graphics);
                     return;
