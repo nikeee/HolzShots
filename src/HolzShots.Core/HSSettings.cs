@@ -34,7 +34,7 @@ public class HSSettings
         Overridable = true
     )]
     [JsonPropertyName("save.enabled")]
-    public bool SaveToLocalDisk { get; private set; } = true;
+    public bool SaveToLocalDisk { get; init; } = true;
 
     /// <summary> Note: Use <see cref="ExpandedSavePath" /> internally when actually saving something. </summary>
     [SettingsDoc(
@@ -47,7 +47,7 @@ public class HSSettings
         Overridable = true
     )]
     [JsonPropertyName("save.path")]
-    public string SavePath { get; private set; } = HolzShotsPaths.DefaultScreenshotSavePath;
+    public string SavePath { get; init; } = HolzShotsPaths.DefaultScreenshotSavePath;
 
     /// <remarks> Use this instead of <see cref="SavePath" /> when actually saving a file. </remarks>
     [JsonIgnore]
@@ -68,7 +68,7 @@ public class HSSettings
         Overridable = true
     )]
     [JsonPropertyName("image.save.pattern")]
-    public string SaveImageFileNamePattern { get; private set; } = "Screenshot-<Date>";
+    public string SaveImageFileNamePattern { get; init; } = "Screenshot-<Date>";
 
     [SettingsDoc(
         """
@@ -80,7 +80,7 @@ public class HSSettings
         Overridable = true
     )]
     [JsonPropertyName("image.save.autoDetectBestImageFormat")]
-    public bool EnableSmartFormatForSaving { get; private set; } = false;
+    public bool EnableSmartFormatForSaving { get; init; } = false;
 
     #endregion
     #region video.*
@@ -97,14 +97,14 @@ public class HSSettings
         Overridable = true
     )]
     [JsonPropertyName("video.save.pattern")]
-    public string SaveVideoFileNamePattern { get; private set; } = "Recording-<Date>";
+    public string SaveVideoFileNamePattern { get; init; } = "Recording-<Date>";
 
     [SettingsDoc(
         "The pixel format for videos to use. Look up FFmpeg's pix_fmt parameter for valid values. Leave unconfigured if you don't know what this means.",
         Overridable = true
     )]
     [JsonPropertyName("video.save.pixelFormat")]
-    public string? VideoPixelFormat { get; private set; } = null;
+    public string? VideoPixelFormat { get; init; } = null;
 
     [SettingsDoc(
         "File format that recorded screen captures will be saved as. Use \"ask\" to select the format before the recording.",
@@ -112,7 +112,7 @@ public class HSSettings
         Overridable = true
     )]
     [JsonPropertyName("video.format")]
-    public VideoCaptureFormat VideoOutputFormat { get; private set; } = VideoCaptureFormat.Mp4; // Not changing default to "ask" before GH#110
+    public VideoCaptureFormat VideoOutputFormat { get; init; } = VideoCaptureFormat.Mp4; // Not changing default to "ask" before GH#110
 
     // TODO: This is pretty buggy right now. FPS > 30 seem to result in a glitchy video.
     [SettingsDoc(
@@ -124,7 +124,7 @@ public class HSSettings
     public int VideoFrameRate
     {
         get;
-        private set => field = Math.Clamp(value, 1, 30);
+        init => field = Math.Clamp(value, 1, 30);
     } = 30;
 
     #endregion
@@ -136,7 +136,7 @@ public class HSSettings
         Overridable = true
     )]
     [JsonPropertyName("editor.closeAfterUpload")]
-    public bool CloseAfterUpload { get; private set; } = false;
+    public bool CloseAfterUpload { get; init; } = false;
 
     [SettingsDoc(
         "Close the shot editor once the image was saved.",
@@ -144,7 +144,7 @@ public class HSSettings
         Overridable = true
     )]
     [JsonPropertyName("editor.closeAfterSave")]
-    public bool CloseAfterSave { get; private set; } = false;
+    public bool CloseAfterSave { get; init; } = false;
 
     [SettingsDoc(
         "The window title of the shot editor. Feel free to override the title on your key bindings.",
@@ -152,7 +152,7 @@ public class HSSettings
         Overridable = true
     )]
     [JsonPropertyName("editor.title")]
-    public string ShotEditorTitle { get; private set; } = "Shot Editor";
+    public string ShotEditorTitle { get; init; } = "Shot Editor";
 
     #endregion
     #region upload.*
@@ -163,7 +163,7 @@ public class HSSettings
         Overridable = true
     )]
     [JsonPropertyName("upload.showProgress")]
-    public bool ShowUploadProgress { get; private set; } = true;
+    public bool ShowUploadProgress { get; init; } = true;
 
     [SettingsDoc(
         """
@@ -176,7 +176,7 @@ public class HSSettings
         Overridable = true
     )]
     [JsonPropertyName("upload.actionAfterUpload")]
-    public UploadHandlingAction ActionAfterUpload { get; private set; } = UploadHandlingAction.Flyout;
+    public UploadHandlingAction ActionAfterUpload { get; init; } = UploadHandlingAction.Flyout;
 
     [SettingsDoc(
         "Show a confirmation message as soon as the URL was copied and \"upload.actionAfterUpload\" is set to \"copy\".",
@@ -184,7 +184,7 @@ public class HSSettings
         Overridable = true
     )]
     [JsonPropertyName("upload.actionAfterUpload.copy.showConfirmation")]
-    public bool ShowCopyConfirmation { get; private set; } = true;
+    public bool ShowCopyConfirmation { get; init; } = true;
 
     [SettingsDoc(
         "Automatically close the flyout containing the URL to the image as soon as some button is pressed and \"upload.actionAfterUpload\" is set to \"flyout\".",
@@ -192,7 +192,7 @@ public class HSSettings
         Overridable = true
     )]
     [JsonPropertyName("upload.actionAfterUpload.flyout.closeOnCopy")]
-    public bool AutoCloseLinkViewer { get; private set; } = true;
+    public bool AutoCloseLinkViewer { get; init; } = true;
 
     /// <summary>
     /// TODO: Maybe use a different name for that.
@@ -208,7 +208,7 @@ public class HSSettings
         Overridable = true
     )]
     [JsonPropertyName("upload.image.autoDetectBestImageFormat")]
-    public bool EnableSmartFormatForUpload { get; private set; } = false;
+    public bool EnableSmartFormatForUpload { get; init; } = false;
 
     [SettingsDoc(
         "Name of the service HolzShots is goind to upload the image.",
@@ -216,7 +216,7 @@ public class HSSettings
         Overridable = true
     )]
     [JsonPropertyName("upload.service")]
-    public string TargetImageHoster { get; private set; } = "directupload.net";
+    public string TargetImageHoster { get; init; } = "directupload.net";
 
     #endregion
     #region capture.*
@@ -239,7 +239,7 @@ public class HSSettings
         Overridable = true
     )]
     [JsonPropertyName("capture.image.actionAfterCapture")]
-    public ImageCaptureHandlingAction ActionAfterImageCapture { get; private set; } = ImageCaptureHandlingAction.OpenEditor;
+    public ImageCaptureHandlingAction ActionAfterImageCapture { get; init; } = ImageCaptureHandlingAction.OpenEditor;
 
     [SettingsDoc(
         """
@@ -255,7 +255,7 @@ public class HSSettings
         Overridable = true
     )]
     [JsonPropertyName("capture.video.actionAfterCapture")]
-    public VideoCaptureHandlingAction ActionAfterVideoCapture { get; private set; } = VideoCaptureHandlingAction.ShowInExplorer;
+    public VideoCaptureHandlingAction ActionAfterVideoCapture { get; init; } = VideoCaptureHandlingAction.ShowInExplorer;
 
     [SettingsDoc(
         "Opacity of the dimming effect when selection a region to capture. Must be between 0.0 and 1.0.",
@@ -266,7 +266,7 @@ public class HSSettings
     public float AreaSelectorDimmingOpacity
     {
         get;
-        private set => field = Math.Clamp(value, 0.0f, 1.0f);
+        init => field = Math.Clamp(value, 0.0f, 1.0f);
     } = 0.8f;
 
     [SettingsDoc(
@@ -278,7 +278,7 @@ public class HSSettings
     public float CaptureDelay
     {
         get;
-        private set => field = MathF.Max(0.0f, value);
+        init => field = MathF.Max(0.0f, value);
     } = 0.0f;
 
     [SettingsDoc(
@@ -291,7 +291,7 @@ public class HSSettings
         Overridable = true
     )]
     [JsonPropertyName("capture.cursor")]
-    public bool CaptureCursor { get; private set; } = false;
+    public bool CaptureCursor { get; init; } = false;
 
     #endregion
     #region tray.*
@@ -314,7 +314,7 @@ public class HSSettings
         Overridable = true // TODO: Check if we check this on hotkey invocation with the appropriate settings context
     )]
     [JsonPropertyName("key.enabledDuringFullscreen")]
-    public bool EnableHotkeysDuringFullscreen { get; private set; } = true;
+    public bool EnableHotkeysDuringFullscreen { get; init; } = true;
 
     // TODO: Fix visibility
     [SettingsDoc(
