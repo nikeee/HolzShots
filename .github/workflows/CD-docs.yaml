@@ -1,0 +1,50 @@
+name: CD-Docs
+
+on:
+  push:
+    branches:
+      - "!*"
+    tags:
+      - "v*"
+
+jobs:
+  build:
+    runs-on: ubuntu-slim
+
+    environment:
+      name: holzshots.net
+
+    steps:
+    - uses: actions/checkout@v6
+
+    - uses: actions/setup-node@v6
+      with:
+        node-version: 25.x
+        cache: npm
+
+    - run: npm ci
+    - run: node --run build
+      # env:
+      #   VITE_MATOMO_API_BASE: ${{ vars.MATOMO_API_BASE }}
+
+    - uses: actions/upload-pages-artifact@v4
+      with:
+        path: ./docs/dist
+
+  deploy:
+    runs-on: ubuntu-slim
+    name: Deploy
+
+    permissions:
+      pages: write
+      id-token: write
+
+    needs: build
+
+    environment:
+      name: holzshots.net
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
