@@ -1,0 +1,137 @@
+{
+	"$schema": "https://json-schema.org/draft/2019-09/schema",
+	"$id": "https://holzshots.net/schema/uploader.json",
+
+	"title": "HolzShots JSON-Defined Uploader",
+	"type": "object",
+
+	"definitions": {
+		"url": {
+			"pattern": "^(https?|http?)://",
+			"minLength": 1,
+			"maxLength": 255
+		},
+		"semver": {
+			"id": "semver.schema.json",
+			"type": "string",
+			"minLength": 5,
+			"maxLength": 14,
+			"pattern": "^(?:0|[1-9]\\d*)\\.(?:0|[1-9]\\d*)\\.(?:0|[1-9]\\d*)$"
+		},
+		"httpUploadMethod": {
+			"enum": [ "post", "put" ]
+		}
+	},
+
+	"properties": {
+		"schemaVersion": {
+			"description": "Version of uploader spec",
+			"type": "string",
+			"const": "0.1.0"
+		},
+
+		"meta": {
+			"type": "object",
+			"properties": {
+				"version": {
+					"description": "Semantic version of uploader",
+					"type": "string",
+					"$ref": "#/definitions/semver"
+				},
+				"author": {
+					"description": "Author of this uploader",
+					"type": "string"
+				},
+				"contact": {
+					"description": "How to get in contact with the author.",
+					"type": "string"
+				},
+				"bugsUrl": {
+					"description": "URL where to report bugs",
+					"type": "string",
+					"$ref": "#/definitions/url"
+				},
+				"updateUrl": {
+					"description": "URL where to find updates of this uploader",
+					"type": "string",
+					"$ref": "#/definitions/url"
+				},
+				"url": {
+					"description": "Home page of this uploader",
+					"type": "string",
+					"$ref": "#/definitions/url"
+				},
+				"description": {
+					"description": "Description of the uploader",
+					"type": "string"
+				},
+				"license": {
+					"description": "License in SPDX format of this uploader; See https://spdx.org/licenses",
+					"type": "string"
+				}
+			},
+			"required": [
+				"version",
+				"name",
+				"author",
+				"license"
+			]
+		},
+
+		"uploader": {
+			"description": "Invokes a multipart/formdata request to upload the file",
+			"type": "object",
+			"properties": {
+				"method": {
+					"description": "The HTTP method to use for the file upload.",
+					"$ref": "#/definitions/httpUploadMethod",
+					"default": "post"
+				},
+				"fileFormName": {
+					"description": "The name of the file input element of the form.",
+					"type": "string"
+				},
+				"requestUrl": {
+					"description": "The target URL of the request.",
+					"type": "string"
+				},
+				"postParams": {
+					"description": "Various fields that also need to be sent.",
+					"type": "object"
+				},
+				"headers": {
+					"description": "Additional HTTP headers that are send. You can also override User-Agent etc.\nMaybe you want to add an API key here?",
+					"type": "object"
+				},
+				"maxFileSize": {
+					"description": "The maximum file size in bytes that the uploader supports. If the image is larger than that, no attempt to upload it is made.\nOmit this field if there is no limit (or you don't know if there is one).",
+					"type": "integer"
+				},
+				"responseParser": {
+					"type": "object",
+					"properties": {
+						"kind": {
+							"description": "How to parse the response. We only support Regex at the moment. Others will follow soon.",
+							"type": "string",
+							"const": "regex"
+						},
+						"success": {
+							"description": "The regex pattern that extracts the URL of the image.\nNamed capturing groups can be used in the url template later.",
+							"type": "string"
+						},
+						"failure": {
+							"description": "If the success pattern did not match, this pattern is invoked. You can match for an error reason. That reason will be displayed to the user.",
+							"type": "string"
+						},
+						"urlTemplate": {
+							"description": "Will be filled with matches of the \"success\" regex pattern.\nUse $name$ to refer to the contents of the capturing group called \"name\".\nIf the regex returned multiple matches, use $2,name$ to get the third match (we are 0-based here).",
+							"type": "string"
+						}
+					},
+					"required": [ "kind", "success", "urlTemplate" ]
+				}
+			},
+			"required": [ "fileFormName", "requestUrl", "responseParser" ]
+		}
+	}
+}

@@ -1,0 +1,21 @@
+{
+  "name": "holzshots.net",
+  "description": "HolzShot's website",
+  "version": "1.0.0",
+  "author": "Niklas Mollenhauer <nikeee@outlook.com>",
+  "license": "MIT",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "vitepress dev",
+    "build": "vitepress build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nikeee/holzshots.net.git"
+  },
+  "homepage": "https://holzshots.net",
+  "devDependencies": {
+    "vitepress": "^2.0.0-alpha.15"
+  }
+}
