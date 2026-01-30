@@ -215,63 +215,65 @@ public class SettingsManager<T> : IDisposable, INotifyPropertyChanged
                 return;
             }
 
-            // What is this
-            if (propType == typeof(bool) && value is bool b)
+            switch (Type.GetTypeCode(propType))
             {
-                property.SetValue(targetObject, b);
-                return;
+                case TypeCode.Boolean:
+                    if (value is bool b)
+                    {
+                        property.SetValue(targetObject, b);
+                        return;
+                    }
+                    break;
+                case TypeCode.Double:
+                    if (HandleFloatNumber<double>(targetObject, property, value))
+                        return;
+                    break;
+                case TypeCode.Int32:
+                    if (HandleIntegerNumber<int>(targetObject, property, value))
+                        return;
+                    break;
+                case TypeCode.Int64:
+                    if (HandleIntegerNumber<long>(targetObject, property, value))
+                        return;
+                    break;
+                case TypeCode.Int16:
+                    if (HandleIntegerNumber<short>(targetObject, property, value))
+                        return;
+                    break;
+                case TypeCode.Byte:
+                    if (HandleIntegerNumber<byte>(targetObject, property, value))
+                        return;
+                    break;
+                case TypeCode.Char:
+                    if (value is char c)
+                    {
+                        property.SetValue(targetObject, c);
+                        return;
+                    }
+                    break;
+                case TypeCode.UInt32:
+                    if (HandleIntegerNumber<uint>(targetObject, property, value))
+                        return;
+                    break;
+                case TypeCode.UInt64:
+                    if (HandleIntegerNumber<ulong>(targetObject, property, value))
+                        return;
+                    break;
+                case TypeCode.UInt16:
+                    if (HandleIntegerNumber<ushort>(targetObject, property, value))
+                        return;
+                    break;
+                case TypeCode.Single:
+                    throw new NotSupportedException("Json format does not support float numbers"); // JSON has standardized double, so we only accept that
+                case TypeCode.SByte:
+                    if (value is sbyte)
+                        throw new NotSupportedException("Json format does not support sbyte numbers");
+                    break;
+                case TypeCode.Decimal:
+                    if (value is decimal)
+                        throw new NotSupportedException("Json format does not support decimal numbers");
+                    break;
             }
-            if (propType == typeof(double))
-            {
-                if (HandleFloatNumber<double>(targetObject, property, value))
-                    return;
-            }
-            if (propType == typeof(int))
-            {
-                if (HandleIntegerNumber<int>(targetObject, property, value))
-                    return;
-            }
-            if (propType == typeof(long))
-            {
-                if (HandleIntegerNumber<long>(targetObject, property, value))
-                    return;
-            }
-            if (propType == typeof(short))
-            {
-                if (HandleIntegerNumber<short>(targetObject, property, value))
-                    return;
-            }
-            if (propType == typeof(byte))
-            {
-                if (HandleIntegerNumber<byte>(targetObject, property, value))
-                    return;
-            }
-            if (propType == typeof(char) && value is char c)
-            {
-                property.SetValue(targetObject, c);
-                return;
-            }
-            if (propType == typeof(uint) && value is uint)
-            {
-                if (HandleIntegerNumber<uint>(targetObject, property, value))
-                    return;
-            }
-            if (propType == typeof(ulong) && value is ulong)
-            {
-                if (HandleIntegerNumber<ulong>(targetObject, property, value))
-                    return;
-            }
-            if (propType == typeof(ushort) && value is ushort)
-            {
-                if (HandleIntegerNumber<ushort>(targetObject, property, value))
-                    return;
-            }
-            if (propType == typeof(float))
-                throw new NotSupportedException("Json format does not support float numbers"); // JSON has standardized double, so we only accept that
-            if (propType == typeof(sbyte) && value is sbyte)
-                throw new NotSupportedException("Json format does not support sbyte numbers");
-            if (propType == typeof(decimal) && value is decimal)
-                throw new NotSupportedException("Json format does not support decimal numbers");
         }
 
         if (propType == typeof(string) && value is string s)
