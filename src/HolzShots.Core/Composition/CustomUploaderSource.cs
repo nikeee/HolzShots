@@ -10,20 +10,16 @@ using System.Linq;
 
 namespace HolzShots.Composition;
 
-public class CustomUploaderSource : IUploaderSource
+public class CustomUploaderSource(string customUploadersDirectory) : IUploaderSource
 {
-    private readonly string _customUploadersDirectory;
+    private readonly string _customUploadersDirectory = string.IsNullOrEmpty(customUploadersDirectory)
+        ? throw new ArgumentNullException(nameof(customUploadersDirectory))
+        : customUploadersDirectory;
+
     private IReadOnlyDictionary<UploaderMeta, CustomUploader> _customUploaders = ImmutableDictionary<UploaderMeta, CustomUploader>.Empty;
     private IReadOnlyDictionary<string, CustomUploaderSpec> _uploadersFiles = ImmutableDictionary<string, CustomUploaderSpec>.Empty;
 
     public bool Loaded { get; private set; }
-
-    public CustomUploaderSource(string customUploadersDirectory)
-    {
-        if (string.IsNullOrEmpty(customUploadersDirectory))
-            throw new ArgumentNullException(nameof(customUploadersDirectory));
-        _customUploadersDirectory = customUploadersDirectory;
-    }
 
     /// <summary> Can also be safely called for reloads. </summary>
     public async Task Load()

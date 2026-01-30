@@ -124,10 +124,9 @@ public class HSSettings
     [JsonProperty("video.framesPerSecond")]
     public int VideoFrameRate
     {
-        get => _videoFrameRate;
-        private set => _videoFrameRate = Math.Clamp(value, 1, 30);
-    }
-    private int _videoFrameRate = 30;
+        get => field;
+        private set => field = Math.Clamp(value, 1, 30);
+    } = 30;
 
     #endregion
     #region editor.*
@@ -267,10 +266,9 @@ public class HSSettings
     [JsonProperty("capture.selection.dimmingOpacity")]
     public float AreaSelectorDimmingOpacity
     {
-        get => _areaSelectorDimmingOpacity;
-        private set => _areaSelectorDimmingOpacity = Math.Clamp(value, 0.0f, 1.0f);
-    }
-    private float _areaSelectorDimmingOpacity = 0.8f;
+        get => field;
+        private set => field = Math.Clamp(value, 0.0f, 1.0f);
+    } = 0.8f;
 
     [SettingsDoc(
         "Seconds to wait before invoking the capture. Must be >=0.",
@@ -280,10 +278,9 @@ public class HSSettings
     [JsonProperty("capture.delayInSeconds")]
     public float CaptureDelay
     {
-        get => _captureDelay;
-        private set => _captureDelay = MathF.Max(0.0f, value);
-    }
-    private float _captureDelay = 0.0f;
+        get => field;
+        private set => field = MathF.Max(0.0f, value);
+    } = 0.0f;
 
     [SettingsDoc(
         """
