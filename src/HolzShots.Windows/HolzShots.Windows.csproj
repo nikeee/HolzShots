@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
 
@@ -19,15 +19,6 @@
 
     <ProjectReference Include="..\HolzShots.Core\HolzShots.Core.csproj" />
     <ProjectReference Include="..\HolzShots.Native\HolzShots.Native.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Microsoft.Win32.TaskScheduler, Version=2.10.1.0, Culture=neutral, PublicKeyToken=e25603a88b3aa7da, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\TaskScheduler.2.10.1\lib\net452\Microsoft.Win32.TaskScheduler.dll</HintPath>
-    </Reference>
-    <Reference Include="StartupHelper, Version=1.0.3.4, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\StartupHelper.1.0.3.4\lib\net40\StartupHelper.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
   <ItemGroup>
