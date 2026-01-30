@@ -29,10 +29,7 @@ public class UploaderManager(PluginUploaderSource plugins, CustomUploaderSource 
         Debug.Assert(pn is not null);
         var un = Customs.GetUploaderNames();
         Debug.Assert(un is not null);
-        var res = new List<string>(pn.Count + un.Count);
-        res.AddRange(pn);
-        res.AddRange(un);
-        return res;
+        return [.. pn, .. un];
     }
 
     public IReadOnlyList<IPluginMetadata> GetMetadata()
@@ -43,9 +40,6 @@ public class UploaderManager(PluginUploaderSource plugins, CustomUploaderSource 
         Debug.Assert(pn is not null);
         var un = Customs.GetMetadata();
         Debug.Assert(un is not null);
-        var res = new List<IPluginMetadata>(pn.Count + un.Count);
-        res.AddRange(pn);
-        res.AddRange(un);
-        return res;
+        return [.. pn, .. un];
     }
 }

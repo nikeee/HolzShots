@@ -2,22 +2,13 @@ using System.Diagnostics;
 
 namespace HolzShots.Net;
 
-public sealed class UploadUI : IDisposable
+public sealed class UploadUI(IUploadPayload payload, Uploader uploader, ITransferProgressReporter? progressReporter) : IDisposable
 {
-    private readonly IUploadPayload _payload;
-    private readonly Uploader _uploader;
-    private readonly ITransferProgressReporter? _progressReporter;
+    private readonly IUploadPayload _payload = payload ?? throw new ArgumentNullException(nameof(payload));
+    private readonly Uploader _uploader = uploader ?? throw new ArgumentNullException(nameof(uploader));
+    private readonly ITransferProgressReporter? _progressReporter = progressReporter;
 
     private readonly SpeedCalculatorProgress _speedCalculator = new();
-
-    public UploadUI(IUploadPayload payload, Uploader uploader, ITransferProgressReporter? progressReporter)
-    {
-        ArgumentNullException.ThrowIfNull(payload);
-        ArgumentNullException.ThrowIfNull(uploader);
-        _payload = payload;
-        _uploader = uploader;
-        _progressReporter = progressReporter;
-    }
 
     public async Task<UploadResult> InvokeUploadAsync()
     {

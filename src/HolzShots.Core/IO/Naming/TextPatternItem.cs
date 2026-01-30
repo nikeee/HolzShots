@@ -1,15 +1,9 @@
 
 namespace HolzShots.IO.Naming;
 
-class TextPatternItem : PatternItem
+class TextPatternItem(string? propertyName) : PatternItem(propertyName ?? throw new ArgumentNullException(nameof(propertyName)))
 {
     public override string Keyword => "text";
-
-    public TextPatternItem(string? propertyName)
-        : base(propertyName)
-    {
-        ArgumentNullException.ThrowIfNull(propertyName);
-    }
 
     public override string TextRepresentation => PropertyName!;
     public override bool IsValid => !string.IsNullOrEmpty(PropertyName) && !PropertyName.ContainsInvalidChars();

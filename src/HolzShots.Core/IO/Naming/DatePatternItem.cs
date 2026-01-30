@@ -2,9 +2,8 @@ using System.Globalization;
 
 namespace HolzShots.IO.Naming;
 
-class DatePatternItem : PatternItem
+class DatePatternItem(string? propertyName) : PatternItem(propertyName)
 {
-    public DatePatternItem(string? propertyName) : base(propertyName) { }
 
     public override string Keyword => "date";
     public override string TextRepresentation => string.IsNullOrWhiteSpace(PropertyName) ? $"<{Keyword}:ISO>" : $"<{Keyword}:{PropertyName}>";

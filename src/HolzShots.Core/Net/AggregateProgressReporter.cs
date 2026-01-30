@@ -2,14 +2,9 @@ using System.Collections.Generic;
 
 namespace HolzShots.Net;
 
-public sealed class AggregateProgressReporter : ITransferProgressReporter
+public sealed class AggregateProgressReporter(IReadOnlyCollection<ITransferProgressReporter> reporters) : ITransferProgressReporter
 {
-    private readonly IReadOnlyCollection<ITransferProgressReporter> _reporters;
-    public AggregateProgressReporter(IReadOnlyCollection<ITransferProgressReporter> reporters)
-    {
-        ArgumentNullException.ThrowIfNull(reporters);
-        _reporters = reporters;
-    }
+    private readonly IReadOnlyCollection<ITransferProgressReporter> _reporters = reporters ?? throw new ArgumentNullException(nameof(reporters));
 
     public void CloseProgress()
     {
