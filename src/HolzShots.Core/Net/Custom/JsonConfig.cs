@@ -12,5 +12,7 @@ static class JsonConfig
         Converters = { new SemVersionConverter() },
         PropertyNameCaseInsensitive = true,
         WriteIndented = false,
+        ReadCommentHandling = JsonCommentHandling.Skip, // Allow JSON comments like Newtonsoft.Json
+        AllowTrailingCommas = true, // Allow trailing commas like Newtonsoft.Json
     };
 }
