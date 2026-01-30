@@ -140,10 +140,10 @@ public class SettingsManagerTest
         using var tempFile = new TempSettingsFile();
         var manager = new SettingsManager<HSSettings>(tempFile.Path);
         var settings = new HSSettings();
-
+        
         var overrides = new Dictionary<string, dynamic>
         {
-            ["upload.actionAfterUpload"] = "copy"
+            ["upload.actionAfterUpload"] = "copyLink"
         }.ToImmutableDictionary();
 
         var result = manager.DeriveContextEffectiveSettings(settings, overrides);

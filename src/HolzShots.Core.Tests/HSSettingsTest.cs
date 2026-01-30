@@ -63,7 +63,7 @@ public class HSSettingsTest
             "editor.closeAfterSave": true,
             "editor.title": "Custom Editor",
             "upload.showProgress": false,
-            "upload.actionAfterUpload": "copy",
+            "upload.actionAfterUpload": "copyLink",
             "upload.actionAfterUpload.copy.showConfirmation": false,
             "upload.actionAfterUpload.flyout.closeOnCopy": false,
             "upload.image.autoDetectBestImageFormat": true,
