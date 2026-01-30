@@ -36,8 +36,6 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
 
-    <Reference Include="System.ComponentModel.Composition" />
-
     <PackageReference Include="Semver" Version="3.0.0" />
   </ItemGroup>
 </Project>
