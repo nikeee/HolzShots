@@ -45,7 +45,7 @@ public partial class AreaSelector : AnimatedForm, IAreaSelector
         windowEnumerationTask.CancelAfter(5000);
         WindowFinder.GetCurrentWindowRectanglesAsync(Handle, allowEntireScreen, windowEnumerationTask.Token).ContinueWith(t => SetAvailableWindows(t.Result));
 
-        _dimmingOverlayBrush = Device.CreateSolidColorBrush(new D2DColor(settingsContext.AreaSelectorDimmingOpacity, OverlayColor));
+        _dimmingOverlayBrush = Device.CreateSolidColorBrush(new D2DColor((float)settingsContext.AreaSelectorDimmingOpacity, OverlayColor));
         _image = Device.CreateBitmapFromGDIBitmap(image);
         _imageBounds = new Rectangle(0, 0, image.Width, image.Height);
         _dimmedImage = CreateDimmedImage(image.Width, image.Height);

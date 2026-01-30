@@ -263,7 +263,7 @@ public class HSSettings
         Overridable = true
     )]
     [JsonPropertyName("capture.selection.dimmingOpacity")]
-    public float AreaSelectorDimmingOpacity
+    public double AreaSelectorDimmingOpacity
     {
         get;
         init => field = Math.Clamp(value, 0.0f, 1.0f);
@@ -275,11 +275,11 @@ public class HSSettings
         Overridable = true
     )]
     [JsonPropertyName("capture.delayInSeconds")]
-    public float CaptureDelay
+    public double CaptureDelay
     {
         get;
-        init => field = MathF.Max(0.0f, value);
-    } = 0.0f;
+        init => field = Math.Max(0.0, value);
+    } = 0.0;
 
     [SettingsDoc(
         """

@@ -124,7 +124,7 @@ public class SettingsManagerTest
 
         var overrides = new Dictionary<string, dynamic>
         {
-            ["capture.selection.dimmingOpacity"] = 0.5f
+            ["capture.selection.dimmingOpacity"] = 0.5
         };
 
         var result = manager.DeriveContextEffectiveSettings(settings, overrides);
@@ -251,7 +251,7 @@ public class SettingsManagerTest
 
         var overrides = new Dictionary<string, dynamic>
         {
-            ["capture.selection.dimmingOpacity"] = 2.0f
+            ["capture.selection.dimmingOpacity"] = 2.0
         };
 
         var result = manager.DeriveContextEffectiveSettings(settings, overrides);
@@ -275,7 +275,7 @@ public class SettingsManagerTest
         var result = manager.DeriveContextEffectiveSettings(settings, overrides);
 
         Assert.NotSame(settings, result);
-        Assert.Equal(3.5f, result.CaptureDelay);
+        Assert.Equal(3.5, result.CaptureDelay);
     }
 
     [Fact]

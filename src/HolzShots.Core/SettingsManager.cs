@@ -222,11 +222,6 @@ public class SettingsManager<T> : IDisposable, INotifyPropertyChanged
                 if (HandleFloatNumber<double>(targetObject, property, value))
                     return;
             }
-            if (propType == typeof(float))
-            {
-                if (HandleFloatNumber<float>(targetObject, property, value))
-                    return;
-            }
             if (propType == typeof(int))
             {
                 if (HandleIntegerNumber<int>(targetObject, property, value))
@@ -267,16 +262,12 @@ public class SettingsManager<T> : IDisposable, INotifyPropertyChanged
                 if (HandleIntegerNumber<ushort>(targetObject, property, value))
                     return;
             }
+            if (propType == typeof(float))
+                throw new NotSupportedException("Json format does not support float numbers"); // JSON has standardized double, so we only accept that
             if (propType == typeof(sbyte) && value is sbyte)
-            {
-                if (HandleIntegerNumber<sbyte>(targetObject, property, value))
-                    return;
-            }
+                throw new NotSupportedException("Json format does not support sbyte numbers");
             if (propType == typeof(decimal) && value is decimal)
-            {
-                if (HandleFloatNumber<decimal>(targetObject, property, value))
-                    return;
-            }
+                throw new NotSupportedException("Json format does not support decimal numbers");
         }
 
         if (propType == typeof(string) && value is string s)
