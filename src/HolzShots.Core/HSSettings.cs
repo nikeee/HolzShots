@@ -124,7 +124,7 @@ public class HSSettings
     [JsonPropertyName("video.framesPerSecond")]
     public int VideoFrameRate
     {
-        get => field;
+        get;
         private set => field = Math.Clamp(value, 1, 30);
     } = 30;
 
@@ -266,7 +266,7 @@ public class HSSettings
     [JsonPropertyName("capture.selection.dimmingOpacity")]
     public float AreaSelectorDimmingOpacity
     {
-        get => field;
+        get;
         private set => field = Math.Clamp(value, 0.0f, 1.0f);
     } = 0.8f;
 
@@ -278,7 +278,7 @@ public class HSSettings
     [JsonPropertyName("capture.delayInSeconds")]
     public float CaptureDelay
     {
-        get => field;
+        get;
         private set => field = MathF.Max(0.0f, value);
     } = 0.0f;
 
