@@ -63,7 +63,7 @@ public class SettingsManagerTest
         var manager = new SettingsManager<HSSettings>(tempFile.Path);
         var settings = new HSSettings();
         var originalSaveToLocalDisk = settings.SaveToLocalDisk;
-        
+
         var overrides = new Dictionary<string, dynamic>
         {
             ["save.enabled"] = !originalSaveToLocalDisk
@@ -82,7 +82,7 @@ public class SettingsManagerTest
         using var tempFile = new TempSettingsFile();
         var manager = new SettingsManager<HSSettings>(tempFile.Path);
         var settings = new HSSettings();
-        
+
         var customPath = Path.Combine(Path.GetTempPath(), "CustomPath");
         var overrides = new Dictionary<string, dynamic>
         {
@@ -102,7 +102,7 @@ public class SettingsManagerTest
         using var tempFile = new TempSettingsFile();
         var manager = new SettingsManager<HSSettings>(tempFile.Path);
         var settings = new HSSettings();
-        
+
         var overrides = new Dictionary<string, dynamic>
         {
             ["video.framesPerSecond"] = 15
@@ -111,8 +111,8 @@ public class SettingsManagerTest
         var result = manager.DeriveContextEffectiveSettings(settings, overrides);
 
         Assert.NotSame(settings, result);
-        Assert.Equal(30, settings.VideoFrameRate); // Original unchanged (default is 30)
-        Assert.Equal(15, result.VideoFrameRate);    // Copy changed
+        Assert.Equal(30, settings.VideoFrameRate);
+        Assert.Equal(15, result.VideoFrameRate);
     }
 
     [Fact]
@@ -121,7 +121,7 @@ public class SettingsManagerTest
         using var tempFile = new TempSettingsFile();
         var manager = new SettingsManager<HSSettings>(tempFile.Path);
         var settings = new HSSettings();
-        
+
         var overrides = new Dictionary<string, dynamic>
         {
             ["capture.selection.dimmingOpacity"] = 0.5f
@@ -130,8 +130,8 @@ public class SettingsManagerTest
         var result = manager.DeriveContextEffectiveSettings(settings, overrides);
 
         Assert.NotSame(settings, result);
-        Assert.Equal(0.8f, settings.AreaSelectorDimmingOpacity); // Original unchanged
-        Assert.Equal(0.5f, result.AreaSelectorDimmingOpacity);   // Copy changed
+        Assert.Equal(0.8f, settings.AreaSelectorDimmingOpacity);
+        Assert.Equal(0.5f, result.AreaSelectorDimmingOpacity);
     }
 
     [Fact]
@@ -140,7 +140,7 @@ public class SettingsManagerTest
         using var tempFile = new TempSettingsFile();
         var manager = new SettingsManager<HSSettings>(tempFile.Path);
         var settings = new HSSettings();
-        
+
         var overrides = new Dictionary<string, dynamic>
         {
             ["upload.actionAfterUpload"] = "copy"
@@ -149,8 +149,8 @@ public class SettingsManagerTest
         var result = manager.DeriveContextEffectiveSettings(settings, overrides);
 
         Assert.NotSame(settings, result);
-        Assert.Equal(UploadHandlingAction.Flyout, settings.ActionAfterUpload); // Original unchanged
-        Assert.Equal(UploadHandlingAction.CopyToClipboard, result.ActionAfterUpload); // Copy changed
+        Assert.Equal(UploadHandlingAction.Flyout, settings.ActionAfterUpload);
+        Assert.Equal(UploadHandlingAction.CopyToClipboard, result.ActionAfterUpload);
     }
 
     [Fact]
@@ -159,7 +159,7 @@ public class SettingsManagerTest
         using var tempFile = new TempSettingsFile();
         var manager = new SettingsManager<HSSettings>(tempFile.Path);
         var settings = new HSSettings();
-        
+
         var videosPath = Path.Combine(Path.GetTempPath(), "Videos");
         var overrides = new Dictionary<string, dynamic>
         {
@@ -195,7 +195,7 @@ public class SettingsManagerTest
         var manager = new SettingsManager<HSSettings>(tempFile.Path);
         var settings = new HSSettings();
         var originalValue = settings.ActionAfterUpload;
-        
+
         var overrides = new Dictionary<string, dynamic>
         {
             ["upload.actionAfterUpload"] = "invalidValue"
@@ -213,7 +213,7 @@ public class SettingsManagerTest
         using var tempFile = new TempSettingsFile();
         var manager = new SettingsManager<HSSettings>(tempFile.Path);
         var settings = new HSSettings();
-        
+
         var overrides = new Dictionary<string, dynamic>
         {
             ["nonexistent.property"] = "someValue"
@@ -230,7 +230,7 @@ public class SettingsManagerTest
         using var tempFile = new TempSettingsFile();
         var manager = new SettingsManager<HSSettings>(tempFile.Path);
         var settings = new HSSettings();
-        
+
         var overrides = new Dictionary<string, dynamic>
         {
             ["video.framesPerSecond"] = 50
@@ -248,7 +248,7 @@ public class SettingsManagerTest
         using var tempFile = new TempSettingsFile();
         var manager = new SettingsManager<HSSettings>(tempFile.Path);
         var settings = new HSSettings();
-        
+
         var overrides = new Dictionary<string, dynamic>
         {
             ["capture.selection.dimmingOpacity"] = 2.0f
@@ -266,7 +266,7 @@ public class SettingsManagerTest
         using var tempFile = new TempSettingsFile();
         var manager = new SettingsManager<HSSettings>(tempFile.Path);
         var settings = new HSSettings();
-        
+
         var overrides = new Dictionary<string, dynamic>
         {
             ["capture.delayInSeconds"] = 3.5
@@ -284,7 +284,7 @@ public class SettingsManagerTest
         using var tempFile = new TempSettingsFile();
         var manager = new SettingsManager<HSSettings>(tempFile.Path);
         var settings = new HSSettings();
-        
+
         var overrides = new Dictionary<string, dynamic>
         {
             ["save.enabled"] = false

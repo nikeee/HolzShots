@@ -144,10 +144,10 @@ public class HSSettingsTest
     }
 
     [Theory]
-    [InlineData(35, 30)] // Should clamp to max 30
-    [InlineData(0, 1)]   // Should clamp to min 1
-    [InlineData(-5, 1)]  // Should clamp to min 1
-    [InlineData(15, 15)] // Should keep valid value
+    [InlineData(35, 30)]
+    [InlineData(0, 1)]
+    [InlineData(-5, 1)]
+    [InlineData(15, 15)]
     public void VideoFrameRate_ClampsToValidRange(int input, int expected)
     {
         var json = $"{{\"video.framesPerSecond\": {input}}}";
@@ -159,9 +159,9 @@ public class HSSettingsTest
     }
 
     [Theory]
-    [InlineData(1.5f, 1.0f)]  
-    [InlineData(-0.5f, 0.0f)] 
-    [InlineData(0.5f, 0.5f)]  
+    [InlineData(1.5f, 1.0f)]
+    [InlineData(-0.5f, 0.0f)]
+    [InlineData(0.5f, 0.5f)]
     public void AreaSelectorDimmingOpacity_ClampsToValidRange(float input, float expected)
     {
         var json = $"{{\"capture.selection.dimmingOpacity\": {input.ToString(System.Globalization.CultureInfo.InvariantCulture)}}}";
