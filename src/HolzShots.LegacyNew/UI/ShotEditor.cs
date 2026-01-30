@@ -267,7 +267,7 @@ namespace HolzShots.UI
                 if (_settingsContext.CloseAfterSave)
                     Close();
             }
-            catch (PathTooLongException ex)
+            catch (PathTooLongException)
             {
                 NotificationManager.PathIsTooLong(fileName, this);
             }
@@ -288,7 +288,7 @@ namespace HolzShots.UI
                 Debug.Assert(result != null);
                 UploadHelper.InvokeUploadFinishedUI(result, _settingsContext);
             }
-            catch (UploadCanceledException ex)
+            catch (UploadCanceledException)
             {
                 NotificationManager.ShowOperationCanceled();
             }
