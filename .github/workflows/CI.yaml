@@ -7,69 +7,80 @@ env:
 
 jobs:
   build:
-    runs-on: windows-latest
     name: Build and Test
+    runs-on: windows-latest
     env:
       CONFIGURATION: Release
 
     steps:
-    - uses: actions/checkout@v6
-      with:
-        submodules: true
+      - uses: actions/checkout@v6
+        with:
+          submodules: true
 
-    - uses: actions/setup-node@v6
-      with:
-        node-version: 25.x
-        cache: npm
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 25.x
+          cache: npm
 
-    - uses: actions/setup-dotnet@v5
-      with:
-        dotnet-version: '10.x'
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: '10.x'
 
-    - name: Restore Dependencies
-      run: |
-        dotnet tool install -g dotnet-version-cli
-        dotnet restore
-        # dotnet version --dry-run --build-meta { git rev-parse --short HEAD }
+      - name: Restore Dependencies
+        run: |
+          dotnet tool install -g dotnet-version-cli
+          dotnet restore
+          # dotnet version --dry-run --build-meta { git rev-parse --short HEAD }
 
-    - run: dotnet build --self-contained -c $env:CONFIGURATION
-    - run: dotnet build --self-contained -c $env:CONFIGURATION src\HolzShots\HolzShots.csproj
-    - run: dotnet test -c $env:CONFIGURATION --no-build src\HolzShots.Core.Tests\HolzShots.Core.Tests.csproj
+      - run: dotnet build --self-contained -c $env:CONFIGURATION
+      - run: dotnet build --self-contained -c $env:CONFIGURATION src\HolzShots\HolzShots.csproj
+      - run: dotnet test -c $env:CONFIGURATION --no-build src\HolzShots.Core.Tests\HolzShots.Core.Tests.csproj
 
-    - run: npm install -g ajv-cli
+      - run: npm install -g ajv-cli
 
-    - run: npm ci
-      working-directory: ./docs
-    - run: node --run build
-      working-directory: ./docs
+      # - name: Validate JSON Schemas
+      #   run: |
+      #     curl -o json-schema.json https://json-schema.org/draft/2019-09/schema
+      #     ajv -s json-schema.json -d src/schema/*.schema.json
 
-    # - name: Validate JSON Schemas
-    #   run: |
-    #     curl -o json-schema.json https://json-schema.org/draft/2019-09/schema
-    #     ajv -s json-schema.json -d src/schema/*.schema.json
+      - name: Collect Artifacts
+        run: |
+          7z a HolzShots.zip ".\src\HolzShots\bin\$env:CONFIGURATION\net10.0-windows\win-x64\*.exe"
+          7z a HolzShots.zip ".\src\HolzShots\bin\$env:CONFIGURATION\net10.0-windows\win-x64\*.dll"
+          7z a HolzShots.zip ".\src\HolzShots\bin\$env:CONFIGURATION\net10.0-windows\win-x64\*.config"
+          7z a HolzShots.zip ".\src\HolzShots\bin\$env:CONFIGURATION\net10.0-windows\win-x64\*.manifest"
+          sha256sum HolzShots.zip > sha256sums.txt
 
-    - name: Collect Artifacts
-      run: |
-        7z a HolzShots.zip ".\src\HolzShots\bin\$env:CONFIGURATION\net10.0-windows\win-x64\*.exe"
-        7z a HolzShots.zip ".\src\HolzShots\bin\$env:CONFIGURATION\net10.0-windows\win-x64\*.dll"
-        7z a HolzShots.zip ".\src\HolzShots\bin\$env:CONFIGURATION\net10.0-windows\win-x64\*.config"
-        7z a HolzShots.zip ".\src\HolzShots\bin\$env:CONFIGURATION\net10.0-windows\win-x64\*.manifest"
-        sha256sum HolzShots.zip > sha256sums.txt
+      - uses: actions/upload-artifact@v6
+        with:
+          name: HolzShots.zip
+          path: HolzShots.zip
 
-    - uses: actions/upload-artifact@v6
-      with:
-        name: HolzShots.zip
-        path: HolzShots.zip
+      - uses: actions/upload-artifact@v6
+        with:
+          name: sha256sums.txt
+          path: sha256sums.txt
 
-    - uses: actions/upload-artifact@v6
-      with:
-        name: sha256sums.txt
-        path: sha256sums.txt
+  docs:
+    name: Build Docs
+    runs-on: ubuntu-slim
+    needs: build
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 25.x
+          cache: npm
+
+      - run: npm ci
+        working-directory: ./docs
+      - run: node --run build
+        working-directory: ./docs
 
   release:
-    runs-on: windows-latest
-    needs: [build]
     name: Publish Release
+    runs-on: windows-latest
+    needs: docs
     if: startsWith(github.ref, 'refs/tags/v')
     env:
       CONFIGURATION: Release
