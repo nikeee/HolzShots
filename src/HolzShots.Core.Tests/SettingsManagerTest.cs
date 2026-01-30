@@ -67,7 +67,7 @@ public class SettingsManagerTest
         var overrides = new Dictionary<string, dynamic>
         {
             ["save.enabled"] = !originalSaveToLocalDisk
-        }.ToImmutableDictionary();
+        };
 
         var result = manager.DeriveContextEffectiveSettings(settings, overrides);
 
@@ -87,7 +87,7 @@ public class SettingsManagerTest
         var overrides = new Dictionary<string, dynamic>
         {
             ["save.path"] = customPath
-        }.ToImmutableDictionary();
+        };
 
         var result = manager.DeriveContextEffectiveSettings(settings, overrides);
 
@@ -106,7 +106,7 @@ public class SettingsManagerTest
         var overrides = new Dictionary<string, dynamic>
         {
             ["video.framesPerSecond"] = 15
-        }.ToImmutableDictionary();
+        };
 
         var result = manager.DeriveContextEffectiveSettings(settings, overrides);
 
@@ -125,7 +125,7 @@ public class SettingsManagerTest
         var overrides = new Dictionary<string, dynamic>
         {
             ["capture.selection.dimmingOpacity"] = 0.5f
-        }.ToImmutableDictionary();
+        };
 
         var result = manager.DeriveContextEffectiveSettings(settings, overrides);
 
@@ -140,11 +140,11 @@ public class SettingsManagerTest
         using var tempFile = new TempSettingsFile();
         var manager = new SettingsManager<HSSettings>(tempFile.Path);
         var settings = new HSSettings();
-        
+
         var overrides = new Dictionary<string, dynamic>
         {
             ["upload.actionAfterUpload"] = "copyLink"
-        }.ToImmutableDictionary();
+        };
 
         var result = manager.DeriveContextEffectiveSettings(settings, overrides);
 
@@ -169,7 +169,7 @@ public class SettingsManagerTest
             ["video.framesPerSecond"] = 20,
             ["capture.cursor"] = true,
             ["upload.actionAfterUpload"] = "none"
-        }.ToImmutableDictionary();
+        };
 
         var result = manager.DeriveContextEffectiveSettings(settings, overrides);
 
@@ -199,7 +199,7 @@ public class SettingsManagerTest
         var overrides = new Dictionary<string, dynamic>
         {
             ["upload.actionAfterUpload"] = "invalidValue"
-        }.ToImmutableDictionary();
+        };
 
         var result = manager.DeriveContextEffectiveSettings(settings, overrides);
 
@@ -217,7 +217,7 @@ public class SettingsManagerTest
         var overrides = new Dictionary<string, dynamic>
         {
             ["nonexistent.property"] = "someValue"
-        }.ToImmutableDictionary();
+        };
 
         var result = manager.DeriveContextEffectiveSettings(settings, overrides);
 
@@ -234,7 +234,7 @@ public class SettingsManagerTest
         var overrides = new Dictionary<string, dynamic>
         {
             ["video.framesPerSecond"] = 50
-        }.ToImmutableDictionary();
+        };
 
         var result = manager.DeriveContextEffectiveSettings(settings, overrides);
 
@@ -252,7 +252,7 @@ public class SettingsManagerTest
         var overrides = new Dictionary<string, dynamic>
         {
             ["capture.selection.dimmingOpacity"] = 2.0f
-        }.ToImmutableDictionary();
+        };
 
         var result = manager.DeriveContextEffectiveSettings(settings, overrides);
 
@@ -270,7 +270,7 @@ public class SettingsManagerTest
         var overrides = new Dictionary<string, dynamic>
         {
             ["capture.delayInSeconds"] = 3.5
-        }.ToImmutableDictionary();
+        };
 
         var result = manager.DeriveContextEffectiveSettings(settings, overrides);
 
@@ -288,7 +288,7 @@ public class SettingsManagerTest
         var overrides = new Dictionary<string, dynamic>
         {
             ["save.enabled"] = false
-        }.ToImmutableDictionary();
+        };
 
         var result = manager.DeriveContextEffectiveSettings(settings, overrides);
 
