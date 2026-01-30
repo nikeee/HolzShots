@@ -1,6 +1,5 @@
 using System.Numerics;
 using unvell.D2DLib;
-using unvell.D2DLib;
 
 namespace HolzShots.Input.Selection.Animation;
 
