@@ -332,10 +332,11 @@ namespace HolzShots.UI
                 {
                     i.Dispose();
                 }
-                catch (Exception ex)
+                catch
                 {
                     Debugger.Break();
                     Debug.Fail("Failed to dispose undoStack");
+                    throw;
                 }
             }
         }
