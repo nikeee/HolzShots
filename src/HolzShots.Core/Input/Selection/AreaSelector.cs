@@ -16,7 +16,6 @@ public partial class AreaSelector : AnimatedForm, IAreaSelector
 
     private static TaskCompletionSource<SelectionResult>? _tcs;
 
-    // TODO: Dispose these unmanaged resources
     private readonly D2DBrush _dimmingOverlayBrush;
     private readonly D2DBitmap _image;
     private readonly Rectangle _imageBounds;
@@ -86,10 +85,9 @@ public partial class AreaSelector : AnimatedForm, IAreaSelector
 
     private void SetAvailableWindows(IReadOnlyList<WindowRectangle> windows)
     {
-        _availableWindowsForOutline = windows.Select(w => w with
-        {
-            Rectangle = w.Rectangle.WorldToScreen(SystemInformation.VirtualScreen)
-        }).ToList();
+        _availableWindowsForOutline = [
+            ..windows.Select(w => w with { Rectangle = w.Rectangle.WorldToScreen(SystemInformation.VirtualScreen) })
+        ];
     }
 
     #region Mouse and Keyboard Stuff
@@ -318,5 +316,6 @@ public partial class AreaSelector : AnimatedForm, IAreaSelector
         _image?.Dispose();
         _dimmedImage?.Dispose();
         _dimmingOverlayBrush?.Dispose();
+        _background?.Dispose();
     }
 }
