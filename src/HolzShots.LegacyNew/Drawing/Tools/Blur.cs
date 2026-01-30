@@ -111,7 +111,8 @@ public class Blur : ITool<BlurSettings>
         g.DrawRectangle(_thePen, rawSrcRectangle);
     }
 
-    private static Bitmap BlurImage(Image img, int factor, Rectangle rawSrcRect)
+    /// <returns>null if empty rectangle</returns>
+    private static Bitmap? BlurImage(Image img, int factor, Rectangle rawSrcRect)
     {
         var width = Convert.ToInt32(Math.Round(Math.Ceiling(rawSrcRect.Width / (double)factor)));
         var height = Convert.ToInt32(Math.Round(Math.Ceiling(rawSrcRect.Height / (double)factor)));

@@ -10,8 +10,8 @@ namespace HolzShots.UI
     public partial class PaintPanel : UserControl
     {
 
-        public event EventHandler Initialized;
-        public event EventHandler<Point> UpdateMousePosition;
+        public event EventHandler? Initialized;
+        public event EventHandler<Point>? UpdateMousePosition;
 
         public PaintPanel()
         {
