@@ -9,14 +9,14 @@ public static class StringExtensions
     public static string SanitizeFileName(this string fileName, string? replaceWith)
     {
         ArgumentNullException.ThrowIfNull(fileName);
-        if (fileName.Length == 0)
+        if (fileName is [])
             return string.Empty;
         return string.Join(replaceWith ?? string.Empty, fileName.Split(_illegalFileNameChars));
     }
     public static bool ContainsInvalidChars(this string fileName)
     {
         ArgumentNullException.ThrowIfNull(fileName);
-        if (fileName.Length == 0)
+        if (fileName is [])
             return false;
         return fileName.IndexOfAny(_illegalFileNameChars) > -1;
     }
