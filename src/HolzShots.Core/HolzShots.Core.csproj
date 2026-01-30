@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
 
@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Import Include="System.ComponentModel.Composition" />
     <Import Include="System.Net" />
     <Import Include="System.Windows.Forms" />
     <Import Include="Microsoft.CSharp" />
@@ -28,7 +27,6 @@
     <PackageReference Include="Semver" Version="3.0.0" />
     <PackageReference Include="unvell.d2dlib-x64" Version="1.5.0" />
     <PackageReference Include="System.Composition" Version="10.0.2" />
-    <PackageReference Include="System.ComponentModel.Composition" Version="10.0.2" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="6.0.0" />
 
     <PackageReference Include="HolzShots.Input.Keyboard" Version="4.0.0" />
