@@ -12,8 +12,10 @@ public sealed class UploadUI : IDisposable
 
     public UploadUI(IUploadPayload payload, Uploader uploader, ITransferProgressReporter? progressReporter)
     {
-        _payload = payload ?? throw new ArgumentNullException(nameof(payload));
-        _uploader = uploader ?? throw new ArgumentNullException(nameof(uploader));
+        ArgumentNullException.ThrowIfNull(payload);
+        ArgumentNullException.ThrowIfNull(uploader);
+        _payload = payload;
+        _uploader = uploader;
         _progressReporter = progressReporter;
     }
 

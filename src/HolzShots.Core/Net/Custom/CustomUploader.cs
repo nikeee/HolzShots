@@ -13,7 +13,8 @@ public class CustomUploader : Uploader
 
     protected CustomUploader(CustomUploaderSpec? customData)
     {
-        UploaderInfo = customData ?? throw new ArgumentNullException(nameof(customData));
+        ArgumentNullException.ThrowIfNull(customData);
+        UploaderInfo = customData;
     }
 
     public async override Task<UploadResult> InvokeAsync(Stream data, string suggestedFileName, string mimeType, IProgress<TransferProgress> progress, CancellationToken cancellationToken)

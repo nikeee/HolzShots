@@ -38,7 +38,8 @@ public class SettingsManager<T> : IDisposable, INotifyPropertyChanged
     {
         Debug.Assert(!string.IsNullOrEmpty(settingsFilePath));
 
-        SettingsFilePath = settingsFilePath ?? throw new ArgumentNullException(nameof(settingsFilePath));
+        ArgumentNullException.ThrowIfNull(settingsFilePath);
+        SettingsFilePath = settingsFilePath;
 
         _watcher = new PollingFileWatcher(settingsFilePath, _pollingInterval, synchronizingObject);
         _synchronizingObject = synchronizingObject;

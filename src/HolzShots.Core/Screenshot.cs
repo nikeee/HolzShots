@@ -18,7 +18,8 @@ public sealed class Screenshot // : IDisposable
 
     private Screenshot(Bitmap image, DateTime timestamp, CursorPosition? cursorPosition, ScreenshotSource source, string? processName, string? windowTitle)
     {
-        Image = image ?? throw new ArgumentNullException(nameof(image));
+        ArgumentNullException.ThrowIfNull(image);
+        Image = image;
         Size = image.Size;
         Timestamp = timestamp;
         CursorPosition = cursorPosition;

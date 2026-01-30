@@ -7,7 +7,8 @@ public sealed class AggregateProgressReporter : ITransferProgressReporter
     private readonly IReadOnlyCollection<ITransferProgressReporter> _reporters;
     public AggregateProgressReporter(IReadOnlyCollection<ITransferProgressReporter> reporters)
     {
-        _reporters = reporters ?? throw new ArgumentNullException(nameof(reporters));
+        ArgumentNullException.ThrowIfNull(reporters);
+        _reporters = reporters;
     }
 
     public void CloseProgress()
