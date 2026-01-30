@@ -185,7 +185,7 @@ jobs:
       pages: write
       id-token: write
 
-    needs: [docs, release]
+    needs: [docs]
 
     environment:
       name: holzshots.net
