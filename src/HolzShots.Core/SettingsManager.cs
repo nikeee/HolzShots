@@ -115,7 +115,7 @@ public class SettingsManager<T> : IDisposable, INotifyPropertyChanged
 
     private void InvokeWithSynchronizingObjectIfNeeded(Action action)
     {
-        if (_synchronizingObject == null)
+        if (_synchronizingObject is null)
             action();
         else
             _synchronizingObject.InvokeIfNeeded(action);
@@ -142,7 +142,7 @@ public class SettingsManager<T> : IDisposable, INotifyPropertyChanged
             var jsonAttr = prop.GetCustomAttribute<JsonPropertyAttribute>();
             var jsonPropertyName = jsonAttr?.PropertyName;
 
-            if (jsonPropertyName == null)
+            if (jsonPropertyName is null)
                 continue;
 
             if (!overrides.TryGetValue(jsonPropertyName, out var overriddenValue))
@@ -167,7 +167,7 @@ public class SettingsManager<T> : IDisposable, INotifyPropertyChanged
             {
                 var enumMember = propType.GetField(enumMemberName);
                 var enumMemberAttr = enumMember?.GetCustomAttribute<System.Runtime.Serialization.EnumMemberAttribute>();
-                if (enumMemberAttr == null)
+                if (enumMemberAttr is null)
                     continue;
                 if (enumMemberAttr.Value == jsonEnumMember)
                 {
@@ -181,7 +181,7 @@ public class SettingsManager<T> : IDisposable, INotifyPropertyChanged
 
         if (propType.IsPrimitive)
         {
-            if (value == null)
+            if (value is null)
             {
                 // Ignore primitive values that are null (they cannot be)
                 // Maybe we want to change this behaviour later so that this property gets set to default()

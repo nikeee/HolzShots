@@ -82,7 +82,7 @@ public class CustomUploader : Uploader
         var urlTemplateSpec = responseParser.UrlTemplateSpec;
 
         // As the URL template is optional, we just take the entire response if it is not there
-        if (urlTemplateSpec == null)
+        if (urlTemplateSpec is null)
             return new UploadResult(this, resStr, DateTime.Now);
 
         try

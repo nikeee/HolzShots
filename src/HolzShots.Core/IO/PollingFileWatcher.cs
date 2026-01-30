@@ -61,7 +61,7 @@ class PollingFileWatcher
     void InvokeEvent()
     {
         var e = OnFileWritten;
-        if (e == null)
+        if (e is null)
             return;
 
         // We pass the original FileInfo object to the event handlers

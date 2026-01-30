@@ -212,8 +212,8 @@ namespace HolzShots.UI
             var toolToEnable = _toolControlMap.GetValueOrDefault(tool);
             foreach (var button in _toolControlMap.Values)
             {
-                if (button != null)
-                    button.Checked = toolToEnable != null && button == toolToEnable;
+                if (button is not null)
+                    button.Checked = toolToEnable is not null && button == toolToEnable;
             }
         }
 

@@ -447,7 +447,7 @@ public static class ObjectExtensions
 
     private static object? InternalCopy(object? originalObject, IDictionary<object, object> visited)
     {
-        if (originalObject == null)
+        if (originalObject is null)
             return null;
 
         var typeToReflect = originalObject.GetType();
