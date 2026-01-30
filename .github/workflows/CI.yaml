@@ -17,11 +17,6 @@ jobs:
         with:
           submodules: true
 
-      - uses: actions/setup-node@v6
-        with:
-          node-version: 25.x
-          cache: npm
-
       - uses: actions/setup-dotnet@v5
         with:
           dotnet-version: '10.x'
