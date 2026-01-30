@@ -75,7 +75,7 @@ public partial class AreaSelector : AnimatedForm, IAreaSelector
 
     private D2DBitmapGraphics CreateDimmedImage(int width, int height)
     {
-        var res = Device.CreateBitmapGraphics(width, height);
+        var res = Device.CreateBitmapGraphics(width, height) ?? throw new D2DInteropException($"Could not create `{nameof(D2DBitmapGraphics)}`");
         res.BeginRender();
         res.DrawBitmap(_image, _imageBounds);
         res.FillRectangle(_imageBounds, _dimmingOverlayBrush);

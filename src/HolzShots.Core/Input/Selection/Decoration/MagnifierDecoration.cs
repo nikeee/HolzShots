@@ -39,7 +39,8 @@ internal class MagnifierDecoration : IStateDecoration<SelectionState>
         var size = new Vector2(_ellipseAnimation.Current.X, _ellipseAnimation.Current.Y);
         var ellipse = new D2DEllipse(center, size);
 
-        using (var ellipseGeometry = g.Device.CreateEllipseGeometry(center, size))
+        // g has a device because it's created with "new D2DGraphics(Device)"
+        using (var ellipseGeometry = g.Device!.CreateEllipseGeometry(center, size))
         {
             // TODO: This is bug in corners of the screen. However, we don't care at the moment
 
