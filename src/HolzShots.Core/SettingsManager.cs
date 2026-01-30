@@ -24,7 +24,11 @@ public class SettingsManager<T> : IDisposable, INotifyPropertyChanged
         ReadCommentHandling = JsonCommentHandling.Skip,
         AllowTrailingCommas = true,
         IncludeFields = true,
-        Converters = { new JsonStringEnumConverter() },
+        Converters = {
+            new JsonStringEnumConverter<ImageCaptureHandlingAction>(),
+            new JsonStringEnumConverter<VideoCaptureHandlingAction>(),
+            new JsonStringEnumConverter<VideoCaptureFormat>(),
+        },
         PropertyNameCaseInsensitive = true,
     };
 
