@@ -19,7 +19,7 @@ public class UrlTemplateSpec
 
     public static UrlTemplateSpec? Parse(ResponseParser responseParser, ReadOnlySpan<char> value)
     {
-        if (value == null)
+        if (value == ReadOnlySpan<char>.Empty)
             return null;
 
         var nodes = ImmutableList.CreateBuilder<TemplateSyntaxNode>();
