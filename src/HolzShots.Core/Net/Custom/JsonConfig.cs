@@ -1,14 +1,18 @@
 using System.Collections.Generic;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace HolzShots.Net.Custom;
 
 static class JsonConfig
 {
-    internal static JsonSerializerSettings JsonSettings { get; } = new JsonSerializerSettings
+    internal static JsonSerializerOptions JsonOptions { get; } = new JsonSerializerOptions
     {
-        ContractResolver = new CamelCasePropertyNamesContractResolver(),
-        Converters = [new SemVersionConverter()],
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        Converters = { new SemVersionConverter() },
+        PropertyNameCaseInsensitive = true,
+        WriteIndented = false,
+        ReadCommentHandling = JsonCommentHandling.Skip, // Allow JSON comments like Newtonsoft.Json
+        AllowTrailingCommas = true, // Allow trailing commas like Newtonsoft.Json
     };
 }

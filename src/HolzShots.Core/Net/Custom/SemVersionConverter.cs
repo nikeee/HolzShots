@@ -1,4 +1,5 @@
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Semver;
 
 namespace HolzShots.Net.Custom;
@@ -7,44 +8,39 @@ namespace HolzShots.Net.Custom;
 /// Taken from
 /// https://gist.github.com/madaz/efab4a5554b88dc2862d58046ddba00f
 /// (https://github.com/maxhauser/semver/issues/21)
+/// Migrated to System.Text.Json
 /// </summary>
-public class SemVersionConverter : JsonConverter
+public class SemVersionConverter : JsonConverter<SemVersion>
 {
-    public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
+    public override void Write(Utf8JsonWriter writer, SemVersion value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(writer);
 
         if (value == null)
         {
-            writer.WriteNull();
+            writer.WriteNullValue();
         }
         else
         {
-            if (value is not SemVersion)
-                throw new JsonSerializationException("Expected SemVersion object value");
-            writer.WriteValue(value.ToString());
+            writer.WriteStringValue(value.ToString());
         }
     }
 
-    public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
+    public override SemVersion? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        ArgumentNullException.ThrowIfNull(reader);
-
-        if (reader.TokenType == JsonToken.Null)
+        if (reader.TokenType == JsonTokenType.Null)
             return null;
-        if (reader.TokenType != JsonToken.String)
-            throw new JsonSerializationException($"Unexpected token or value when parsing version. Token: {reader.TokenType}, Value: {reader.Value}");
+        if (reader.TokenType != JsonTokenType.String)
+            throw new JsonException($"Unexpected token or value when parsing version. Token: {reader.TokenType}");
 
         try
         {
-            var v = reader.Value as string;
+            var v = reader.GetString();
             return SemVersion.Parse(v, SemVersionStyles.Strict);
         }
         catch (Exception ex)
         {
-            throw new JsonSerializationException($"Error parsing SemVersion string: {reader.Value}", ex);
+            throw new JsonException($"Error parsing SemVersion string: {reader.GetString()}", ex);
         }
     }
-
-    public override bool CanConvert(Type objectType) => objectType == typeof(SemVersion);
 }

@@ -2,8 +2,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Text;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using System.Text.Json;
 
 namespace HolzShots.Net.Custom;
 
@@ -189,12 +188,12 @@ class JsonSyntaxNode : ExpressionSyntaxNode
 
     public override string Evaluate(ResponseParser responseParser, string content)
     {
-        JObject contentJson;
+        JsonDocument contentJson;
         try
         {
-            contentJson = JObject.Parse(content);
+            contentJson = JsonDocument.Parse(content);
         }
-        catch (JsonReaderException ex)
+        catch (JsonException ex)
         {
             throw new UnableToFillTemplateException(content, "Invalid JSON response", ex);
         }
@@ -202,10 +201,31 @@ class JsonSyntaxNode : ExpressionSyntaxNode
         Debug.Assert(contentJson is not null);
         // Get Success Link-Value
 
-        var result = contentJson.SelectToken(JsonPath);
-        return result == null
-            ? throw new UnableToFillTemplateException(content, $"Could not select JSON path: {JsonPath}")
-            : result.ToString();
+        // System.Text.Json doesn't have a built-in JSONPath implementation like Newtonsoft.Json's SelectToken
+        // For simple paths like "data.url", we need to manually traverse
+        var result = SelectJsonElement(contentJson.RootElement, JsonPath);
+        return result.HasValue
+            ? result.Value.ToString()
+            : throw new UnableToFillTemplateException(content, $"Could not select JSON path: {JsonPath}");
+    }
+
+    private static JsonElement? SelectJsonElement(JsonElement root, string path)
+    {
+        var current = root;
+        var parts = path.Split('.');
+
+        foreach (var part in parts)
+        {
+            if (current.ValueKind != JsonValueKind.Object)
+                return null;
+
+            if (!current.TryGetProperty(part, out var next))
+                return null;
+
+            current = next;
+        }
+
+        return current;
     }
 }
 

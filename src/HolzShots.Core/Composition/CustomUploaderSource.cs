@@ -2,10 +2,10 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.IO;
+using System.Text.Json;
 using HolzShots.IO;
 using HolzShots.Net;
 using HolzShots.Net.Custom;
-using Newtonsoft.Json;
 using System.Linq;
 
 namespace HolzShots.Composition;
@@ -38,7 +38,7 @@ public class CustomUploaderSource(string customUploadersDirectory) : IUploaderSo
                 var jsonStr = await reader.ReadToEndAsync().ConfigureAwait(false);
 
                 // TODO: Catch parsing errors
-                var uploader = JsonConvert.DeserializeObject<CustomUploaderSpec>(jsonStr, JsonConfig.JsonSettings);
+                var uploader = JsonSerializer.Deserialize<CustomUploaderSpec>(jsonStr, JsonConfig.JsonOptions);
 
                 // TODO: Aggregate errors of invalid files (and display them to the user)
                 Debug.Assert(uploader is not null);
