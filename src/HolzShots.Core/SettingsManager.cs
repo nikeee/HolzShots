@@ -166,9 +166,14 @@ public class SettingsManager<T> : IDisposable, INotifyPropertyChanged
             value = jsonElement.ValueKind switch
             {
                 JsonValueKind.String => jsonElement.GetString()!,
-                JsonValueKind.Number => jsonElement.TryGetInt32(out var i) ? i :
-                                       jsonElement.TryGetInt64(out var l) ? l :
-                                       jsonElement.TryGetDouble(out var d) ? d : (object)jsonElement.GetDecimal(),
+                JsonValueKind.Number =>
+                    jsonElement.TryGetInt32(out var i)
+                    ? i
+                    : jsonElement.TryGetInt64(out var l)
+                    ? l
+                    : jsonElement.TryGetDouble(out var d)
+                    ? d
+                    : throw new ArgumentException("Unable to parse value"),
                 JsonValueKind.True => true,
                 JsonValueKind.False => false,
                 JsonValueKind.Null => null!,
