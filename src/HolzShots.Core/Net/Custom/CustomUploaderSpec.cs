@@ -3,9 +3,10 @@ using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using HolzShots.Composition;
-using Newtonsoft.Json;
 using Semver;
 
 namespace HolzShots.Net.Custom;
@@ -17,10 +18,10 @@ public record CustomUploaderSpec(SemVersion SchemaVersion, UploaderMeta Meta, Up
     {
         try
         {
-            var res = JsonConvert.DeserializeObject<CustomUploaderSpec>(value, JsonConfig.JsonSettings);
+            var res = JsonSerializer.Deserialize<CustomUploaderSpec>(value, JsonConfig.JsonOptions);
             return res ?? throw new FormatException("Unable to parse JSON value, result was null");
         }
-        catch (JsonReaderException ex)
+        catch (JsonException ex)
         {
             throw new FormatException("Unable to parse JSON value", ex);
         }
@@ -85,17 +86,19 @@ public record UploaderConfig(
 [Serializable]
 public class ResponseParser
 {
-    [IgnoreDataMember]
-    [field: NonSerialized]
-    public IReadOnlyList<string>? RegexPatterns { get; } = null;
+    [JsonIgnore]
+    public IReadOnlyList<string>? RegexPatterns { get; }
+    
+    [JsonIgnore]
     public IReadOnlyList<Regex>? ParsedRegexPatterns { get; }
+    
     public string? UrlTemplate { get; }
     // public string Failure { get; } = null;
 
-    [IgnoreDataMember]
-    [field: NonSerialized]
+    [JsonIgnore]
     public UrlTemplateSpec? UrlTemplateSpec { get; }
 
+    [JsonConstructor]
     public ResponseParser(IReadOnlyList<string>? regexPatterns, string? urlTemplate)
     {
         RegexPatterns = regexPatterns;

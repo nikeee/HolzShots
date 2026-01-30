@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Net.Http;
 using System.Net.Http.Handlers;
-using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace HolzShots.Net.Custom;
 
@@ -119,7 +119,7 @@ public class CustomUploader : Uploader
             result = default;
             return false;
         }
-        catch (JsonReaderException)
+        catch (JsonException)
         {
             result = default;
             return false;
