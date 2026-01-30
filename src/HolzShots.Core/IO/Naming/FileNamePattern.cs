@@ -6,7 +6,7 @@ namespace HolzShots.IO.Naming;
 
 public class FileNamePattern(IReadOnlyList<PatternItem>? tokens)
 {
-    public IReadOnlyList<PatternItem> Tokens { get; } = tokens ?? Array.Empty<PatternItem>();
+    public IReadOnlyList<PatternItem> Tokens { get; } = tokens ?? [];
 
     private static readonly Dictionary<string, Func<string?, PatternItem>> _availablePatterns = new()
     {

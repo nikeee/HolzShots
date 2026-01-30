@@ -327,7 +327,7 @@ public class HSSettings
     )]
     [JsonProperty("key.bindings")]
     [field: LeaveUntouchedInObjectDeepCopy] // Support for this doesn't make any sense
-    public IReadOnlyList<KeyBinding> KeyBindings { get; set; } = ImmutableList<KeyBinding>.Empty;
+    public IReadOnlyList<KeyBinding> KeyBindings { get; set; } = [];
 
     #endregion
 }

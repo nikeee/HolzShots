@@ -126,7 +126,7 @@ public class SettingsManager<T> : IDisposable, INotifyPropertyChanged
     public event EventHandler<IReadOnlyList<ValidationError>>? OnValidationError;
     public event PropertyChangedEventHandler? PropertyChanged;
 
-    protected virtual IReadOnlyList<ValidationError> IsValidSettingsCandidate(T candidate) => ImmutableList<ValidationError>.Empty;
+    protected virtual IReadOnlyList<ValidationError> IsValidSettingsCandidate(T candidate) => [];
 
     public T DeriveContextEffectiveSettings(T input, IReadOnlyDictionary<string, dynamic> overrides)
     {
