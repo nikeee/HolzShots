@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Reflection;
-using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 using HolzShots.Input.Keyboard;
 using HolzShots.IO;
@@ -365,58 +364,58 @@ public class CommandDeclaration
 [JsonConverter(typeof(JsonStringEnumConverter))]
 public enum UploadHandlingAction
 {
-    [EnumMember(Value = "flyout")]
+    [JsonStringEnumMemberName("flyout")]
     Flyout,
-    [EnumMember(Value = "copyLink")]
+    [JsonStringEnumMemberName("copyLink")]
     CopyToClipboard,
-    [EnumMember(Value = "none")]
+    [JsonStringEnumMemberName("none")]
     None,
 }
 
-[JsonConverter(typeof(JsonStringEnumConverter))]
+[JsonConverter(typeof(JsonStringEnumConverter<ImageCaptureHandlingAction>))]
 public enum ImageCaptureHandlingAction
 {
-    [EnumMember(Value = "openEditor")]
+    [JsonStringEnumMemberName("openEditor")]
     OpenEditor,
-    [EnumMember(Value = "upload")]
+    [JsonStringEnumMemberName("upload")]
     Upload,
-    [EnumMember(Value = "saveAs")]
+    [JsonStringEnumMemberName("saveAs")]
     SaveAs,
-    [EnumMember(Value = "copyImage")]
+    [JsonStringEnumMemberName("copyImage")]
     Copy,
-    [EnumMember(Value = "none")]
+    [JsonStringEnumMemberName("none")]
     None,
 }
 
-[JsonConverter(typeof(JsonStringEnumConverter))]
+[JsonConverter(typeof(JsonStringEnumConverter<VideoCaptureHandlingAction>))]
 public enum VideoCaptureHandlingAction
 {
-    [EnumMember(Value = "upload")]
+    [JsonStringEnumMemberName("upload")]
     Upload,
-    [EnumMember(Value = "copyFile")]
+    [JsonStringEnumMemberName("copyFile")]
     CopyFile,
-    [EnumMember(Value = "copyFilePath")]
+    [JsonStringEnumMemberName("copyFilePath")]
     CopyFilePath,
-    [EnumMember(Value = "showInExplorer")]
+    [JsonStringEnumMemberName("showInExplorer")]
     ShowInExplorer,
-    [EnumMember(Value = "openInDefaultApp")]
+    [JsonStringEnumMemberName("openInDefaultApp")]
     OpenInDefaultApp,
-    [EnumMember(Value = "none")]
+    [JsonStringEnumMemberName("none")]
     None,
 }
 
 /// <remarks> When adding new entries to this enum, consider adding it in the <see cref="HolzShots.Input.VideoCaptureFormatSelection.PromptFormat" /> of <see cref="HolzShots.Input.VideoCaptureFormatSelection" />. </remarks>
-[JsonConverter(typeof(JsonStringEnumConverter))]
+[JsonConverter(typeof(JsonStringEnumConverter<VideoCaptureFormat>))]
 public enum VideoCaptureFormat
 {
-    [EnumMember(Value = "mp4")]
+    [JsonStringEnumMemberName("mp4")]
     Mp4,
     // See GH-110
-    // [EnumMember(Value = "webm")]
+    // [JsonStringEnumMemberName("webm")]
     // Webm,
-    // [EnumMember(Value = "gif")]
+    // [JsonStringEnumMemberName("gif")]
     // Gif,
-    [EnumMember(Value = "ask")]
+    [JsonStringEnumMemberName("ask")]
     AskBeforeRecording,
 }
 
