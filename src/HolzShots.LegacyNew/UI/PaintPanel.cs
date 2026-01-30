@@ -245,7 +245,9 @@ namespace HolzShots.UI
             if (_currentTool == ShotEditorTool.None)
                 return;
 
-            CurrentToolObject.BeginCoordinates = e.Location.ToVector2();
+            var startPosition = e.Location.ToVector2();
+            CurrentToolObject.BeginCoordinates = startPosition;
+            CurrentToolObject.EndCoordinates = startPosition;
             RawBox.Invalidate();
         }
 
