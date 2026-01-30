@@ -188,10 +188,11 @@ public class SettingsManager<T> : IDisposable, INotifyPropertyChanged
             foreach (var enumMemberName in Enum.GetNames(propType))
             {
                 var enumMember = propType.GetField(enumMemberName);
-                var enumMemberAttr = enumMember?.GetCustomAttribute<System.Runtime.Serialization.EnumMemberAttribute>();
+                var enumMemberAttr = enumMember?.GetCustomAttribute<JsonStringEnumMemberNameAttribute>();
                 if (enumMemberAttr is null)
                     continue;
-                if (enumMemberAttr.Value == jsonEnumMember)
+
+                if (enumMemberAttr.Name == jsonEnumMember)
                 {
                     var enumValue = Enum.Parse(propType, enumMemberName);
                     property.SetValue(targetObject, enumValue);
