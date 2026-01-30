@@ -39,7 +39,6 @@
 
     <Reference Include="System.ComponentModel.Composition" />
 
-    <PackageReference Include="Microsoft.NETCore.Platforms" Version="7.0.4" />
     <PackageReference Include="Semver" Version="3.0.0" />
   </ItemGroup>
 </Project>
