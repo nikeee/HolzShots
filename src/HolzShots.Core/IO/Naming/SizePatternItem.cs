@@ -1,20 +1,14 @@
 
 namespace HolzShots.IO.Naming;
 
-class SizePatternItem : PatternItem
+class SizePatternItem(string? propertyName) : PatternItem(propertyName)
 {
-    public SizePatternItem(string? propertyName)
-        : base(propertyName)
+    public ImageInfoType InfoType { get; } = propertyName?.ToLowerInvariant() switch
     {
-        InfoType = propertyName?.ToLowerInvariant() switch
-        {
-            "width" => ImageInfoType.Width,
-            "height" => ImageInfoType.Height,
-            _ => ImageInfoType.Invalid,
-        };
-    }
-
-    public ImageInfoType InfoType { get; }
+        "width" => ImageInfoType.Width,
+        "height" => ImageInfoType.Height,
+        _ => ImageInfoType.Invalid,
+    };
     public override string Keyword => "size";
     public override bool IsValid => InfoType != ImageInfoType.Invalid;
     public override string TextRepresentation => IsValid
