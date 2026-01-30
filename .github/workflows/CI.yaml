@@ -74,6 +74,9 @@ jobs:
 
       - run: npm ci
       - run: node --run build
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: ./docs/dist
 
   release:
     name: Publish Release
@@ -173,3 +176,21 @@ jobs:
         shell: bash
         run: |
           choco push ${{ steps.get_choco_package.outputs.file }} --source "https://push.chocolatey.org/" -k="${{ secrets.CHOCO_API_KEY }}"
+
+  deploy-docs:
+    runs-on: ubuntu-slim
+    name: Deploy Docs
+
+    permissions:
+      pages: write
+      id-token: write
+
+    needs: [docs, release]
+
+    environment:
+      name: holzshots.net
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
