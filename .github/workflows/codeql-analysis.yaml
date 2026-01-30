@@ -13,7 +13,7 @@ env:
 jobs:
   analyze:
     name: Analyze
-    runs-on: ubuntu-slim
+    runs-on: windows-latest
 
     strategy:
       fail-fast: false
