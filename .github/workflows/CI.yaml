@@ -65,17 +65,20 @@ jobs:
     name: Build Docs
     runs-on: ubuntu-slim
     needs: build
+    defaults:
+      run:
+        working-directory: ./docs
+
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
         with:
           node-version: 25.x
           cache: npm
+          cache-dependency-path: ./docs/package-lock.json
 
       - run: npm ci
-        working-directory: ./docs
       - run: node --run build
-        working-directory: ./docs
 
   release:
     name: Publish Release
