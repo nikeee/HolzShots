@@ -92,7 +92,7 @@ public class CommandManager<TSettings>(SettingsManager<TSettings> settingsManage
         {
             CommandName = name,
             Parameters = parameters,
-            Overrides = ImmutableDictionary<string, dynamic>.Empty,
+            Overrides = ImmutableDictionary<string, object>.Empty,
         };
         return Dispatch(commandDeclaration, currentSettings);
     }

@@ -4,25 +4,28 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using HolzShots.IO;
 using HolzShots.Threading;
-using Newtonsoft.Json;
 
 namespace HolzShots;
 
 /// <summary>
-/// TODO: Migrate to System.Text.Json some day:
-/// https://docs.microsoft.com/dotnet/standard/serialization/system-text-json-migrate-from-newtonsoft-how-to
-///
 /// TODO: Maybe we want another type that can be transformed to T
 /// </summary>
 public class SettingsManager<T> : IDisposable, INotifyPropertyChanged
     where T : new()
 {
-    private static readonly JsonSerializerSettings _jsonSerializerSettings = new()
+    private static readonly JsonSerializerOptions _jsonSerializerOptions = new()
     {
-        ContractResolver = new NonPublicPropertiesResolver(),
-        Formatting = Formatting.Indented,
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        WriteIndented = true,
+        ReadCommentHandling = JsonCommentHandling.Skip,
+        AllowTrailingCommas = true,
+        IncludeFields = true,
+        Converters = { new JsonStringEnumConverter() },
+        PropertyNameCaseInsensitive = true,
     };
 
     public T CurrentSettings { get; private set; } = new T();
@@ -98,13 +101,10 @@ public class SettingsManager<T> : IDisposable, INotifyPropertyChanged
     {
         try
         {
-            // TODO: Make this use some async overload of File.ReadAllText as soon as we're on .NET Core
-            // https://stackoverflow.com/questions/13167934
-
             using var reader = File.OpenText(path);
             // No check for File.Exists because we'll get an exception anyways and avoid race conditions
             var settingsContent = await reader.ReadToEndAsync().ConfigureAwait(false);
-            var newSettings = JsonConvert.DeserializeObject<T>(settingsContent, _jsonSerializerSettings);
+            var newSettings = JsonSerializer.Deserialize<T>(settingsContent, _jsonSerializerOptions);
 
             return (true, newSettings);
         }
@@ -128,7 +128,7 @@ public class SettingsManager<T> : IDisposable, INotifyPropertyChanged
 
     protected virtual IReadOnlyList<ValidationError> IsValidSettingsCandidate(T candidate) => [];
 
-    public T DeriveContextEffectiveSettings(T input, IReadOnlyDictionary<string, dynamic> overrides)
+    public T DeriveContextEffectiveSettings(T input, IReadOnlyDictionary<string, object> overrides)
     {
         if (overrides == null || overrides.Count == 0)
             return input;
@@ -140,8 +140,8 @@ public class SettingsManager<T> : IDisposable, INotifyPropertyChanged
 
         foreach (var prop in properties)
         {
-            var jsonAttr = prop.GetCustomAttribute<JsonPropertyAttribute>();
-            var jsonPropertyName = jsonAttr?.PropertyName;
+            var jsonAttr = prop.GetCustomAttribute<JsonPropertyNameAttribute>();
+            var jsonPropertyName = jsonAttr?.Name;
 
             if (jsonPropertyName is null)
                 continue;
@@ -155,10 +155,26 @@ public class SettingsManager<T> : IDisposable, INotifyPropertyChanged
         return settingsCopy;
     }
 
-    private static void OverrideProperty(T targetObject, PropertyInfo property, dynamic value)
+    private static void OverrideProperty(T targetObject, PropertyInfo property, object value)
     {
         Debug.Assert(targetObject is not null);
         Debug.Assert(property is not null);
+
+        // System.Text.Json deserializes JSON values as JsonElement, we need to convert them to the actual types
+        if (value is JsonElement jsonElement)
+        {
+            value = jsonElement.ValueKind switch
+            {
+                JsonValueKind.String => jsonElement.GetString()!,
+                JsonValueKind.Number => jsonElement.TryGetInt32(out var i) ? i :
+                                       jsonElement.TryGetInt64(out var l) ? l :
+                                       jsonElement.TryGetDouble(out var d) ? d : (object)jsonElement.GetDecimal(),
+                JsonValueKind.True => true,
+                JsonValueKind.False => false,
+                JsonValueKind.Null => null!,
+                _ => value
+            };
+        }
 
         var propType = property.PropertyType;
 
@@ -265,7 +281,7 @@ public class SettingsManager<T> : IDisposable, INotifyPropertyChanged
 
         Trace.WriteLine($"Unsupported override of property {property.Name}, doing nothing");
     }
-    private static bool HandleFloatNumber<TProp>(T targetObject, PropertyInfo property, dynamic value)
+    private static bool HandleFloatNumber<TProp>(T targetObject, PropertyInfo property, object value)
     {
         if (
             value is float
@@ -285,7 +301,7 @@ public class SettingsManager<T> : IDisposable, INotifyPropertyChanged
         return false;
     }
 
-    private static bool HandleIntegerNumber<TProp>(T targetObject, PropertyInfo property, dynamic value)
+    private static bool HandleIntegerNumber<TProp>(T targetObject, PropertyInfo property, object value)
     {
         if (
             value is int
