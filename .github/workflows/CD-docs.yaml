@@ -23,7 +23,9 @@ jobs:
         cache: npm
 
     - run: npm ci
+      working-directory: ./docs
     - run: node --run build
+      working-directory: ./docs
       # env:
       #   VITE_MATOMO_API_BASE: ${{ vars.MATOMO_API_BASE }}
 

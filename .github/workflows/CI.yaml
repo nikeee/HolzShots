@@ -17,6 +17,11 @@ jobs:
       with:
         submodules: true
 
+    - uses: actions/setup-node@v6
+      with:
+        node-version: 25.x
+        cache: npm
+
     - uses: actions/setup-dotnet@v5
       with:
         dotnet-version: '10.x'
@@ -32,6 +37,11 @@ jobs:
     - run: dotnet test -c $env:CONFIGURATION --no-build src\HolzShots.Core.Tests\HolzShots.Core.Tests.csproj
 
     - run: npm install -g ajv-cli
+
+    - run: npm ci
+      working-directory: ./docs
+    - run: node --run build
+      working-directory: ./docs
 
     # - name: Validate JSON Schemas
     #   run: |
