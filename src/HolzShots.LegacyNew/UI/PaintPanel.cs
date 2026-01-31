@@ -241,7 +241,7 @@ public partial class PaintPanel : UserControl
         {
             if (CurrentToolObject is not null)
             {
-                CurrentToolObject.RenderPreview((Bitmap)RawBox.Image, e.Graphics);
+                CurrentToolObject.RenderPreview((Bitmap)RawBox.Image!, e.Graphics);
                 return;
             }
         }
