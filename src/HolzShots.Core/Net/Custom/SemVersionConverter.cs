@@ -28,15 +28,13 @@ public class SemVersionConverter : JsonConverter<SemVersion>
 
     public override SemVersion? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        if (reader.TokenType == JsonTokenType.Null)
+        var value = reader.GetString();
+        if (value is null) // value is null if the token is a null token
             return null;
-        if (reader.TokenType != JsonTokenType.String)
-            throw new JsonException($"Unexpected token or value when parsing version. Token: {reader.TokenType}");
 
         try
         {
-            var v = reader.GetString();
-            return SemVersion.Parse(v, SemVersionStyles.Strict);
+            return SemVersion.Parse(value, SemVersionStyles.Strict);
         }
         catch (Exception ex)
         {

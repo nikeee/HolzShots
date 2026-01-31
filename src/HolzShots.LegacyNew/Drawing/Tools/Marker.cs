@@ -38,7 +38,7 @@ public class Marker : ITool<MarkerSettings>
 
     public ISettingsControl<MarkerSettings> SettingsControl { get; } = new MarkerSettingsControl(MarkerSettings.Default);
 
-    public ShotEditorTool ToolType { get; } = ShotEditorTool.Marker;
+    public ShotEditorTool ToolType => ShotEditorTool.Marker;
 
     public void LoadInitialSettings()
     {

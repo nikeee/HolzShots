@@ -15,8 +15,8 @@ public class Arrow : ITool<ArrowSettings>
     public Vector2 EndCoordinates { get; set; }
 
     private static readonly Cursor _cursor = new(Properties.Resources.crossMedium.GetHicon());
-    public ShotEditorTool ToolType { get; } = ShotEditorTool.Arrow;
-    public Cursor Cursor { get; } = _cursor;
+    public ShotEditorTool ToolType => ShotEditorTool.Arrow;
+    public Cursor Cursor => _cursor;
     public ISettingsControl<ArrowSettings> SettingsControl { get; } = new ArrowSettingsControl(ArrowSettings.Default);
 
     public void LoadInitialSettings()

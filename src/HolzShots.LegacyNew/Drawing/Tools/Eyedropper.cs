@@ -8,10 +8,10 @@ namespace HolzShots.Drawing.Tools;
 
 public class Eyedropper : ITool<ToolSettingsBase>
 {
-    public ShotEditorTool ToolType { get; } = ShotEditorTool.Eyedropper;
+    public ShotEditorTool ToolType => ShotEditorTool.Eyedropper;
 
-    public Cursor Cursor { get; } = Cursors.Cross;
-    public ISettingsControl<ToolSettingsBase>? SettingsControl { get; } = null; // TODO Change to default(_) if this is not a reference type
+    public Cursor Cursor => Cursors.Cross;
+    public ISettingsControl<ToolSettingsBase>? SettingsControl => null; // TODO Change to default(_) if this is not a reference type
 
     public Vector2 BeginCoordinates { get; set; }
     public Vector2 EndCoordinates { get; set; }

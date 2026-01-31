@@ -10,15 +10,10 @@ public class Ellipse : ITool<EllipseSettings>
     public Vector2 EndCoordinates { get; set; }
 
     private static readonly Cursor _cursor = new(Properties.Resources.crossMedium.GetHicon());
-    public Cursor Cursor { get; } = _cursor;
-    public ShotEditorTool ToolType { get; } = ShotEditorTool.Ellipse;
+    public Cursor Cursor => _cursor;
+    public ShotEditorTool ToolType => ShotEditorTool.Ellipse;
 
-    public ISettingsControl<EllipseSettings> SettingsControl { get; }
-
-    public Ellipse()
-    {
-        SettingsControl = new EllipseSettingsControl(EllipseSettings.Default);
-    }
+    public ISettingsControl<EllipseSettings> SettingsControl { get; } = new EllipseSettingsControl(EllipseSettings.Default);
 
     public void LoadInitialSettings()
     {

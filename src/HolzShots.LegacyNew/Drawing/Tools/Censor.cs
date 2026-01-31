@@ -35,7 +35,7 @@ public class Censor : ITool<CensorSettings>
         }
     }
 
-    public ShotEditorTool ToolType { get; } = ShotEditorTool.Censor;
+    public ShotEditorTool ToolType => ShotEditorTool.Censor;
 
     public ISettingsControl<CensorSettings> SettingsControl { get; } = new CensorSettingsControl(CensorSettings.Default);
 

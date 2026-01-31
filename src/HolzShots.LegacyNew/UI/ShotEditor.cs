@@ -13,14 +13,14 @@ namespace HolzShots.UI
 {
     public partial class ShotEditor : Form
     {
-        private readonly UploaderEntry _defaultUploader;
+        private static readonly Icon _uploadThumbnailButtonIcon = Icon.FromHandle(Properties.Resources.uploadMedium.GetHicon());
+        private static readonly Icon _saveThumbnailButtonIcon = Icon.FromHandle(Properties.Resources.saveMedium.GetHicon());
+        private static readonly Icon _copyThumbnailButtonIcon = Icon.FromHandle(Properties.Resources.clipboardMedium.GetHicon());
+
+        private readonly UploaderEntry? _defaultUploader;
         private readonly HSSettings _settingsContext;
         private readonly Screenshot _screenshot;
         private readonly UploaderManager _uploaders;
-
-        private ThumbnailToolBarButton _uploadThumbnailButton;
-        private ThumbnailToolBarButton _saveThumbnailButton;
-        private ThumbnailToolBarButton _copyThumbnailButton;
 
         private readonly PanelActivator _activator;
         private readonly Dictionary<ShotEditorTool, ToolStripButton> _toolControlMap;
@@ -84,8 +84,9 @@ namespace HolzShots.UI
 
             DrawCursor.Visible = screenshot.Source != ScreenshotSource.Selected && screenshot.Source != ScreenshotSource.Unknown;
 
+            var text = UploadToHoster.ToolTipText ?? throw new ArgumentException($"{nameof(UploadToHoster)} had no {UploadToHoster.ToolTipText}");
             UploadToHoster.Enabled = _defaultUploader?.Metadata != null;
-            UploadToHoster.ToolTipText = _defaultUploader?.Metadata != null ? string.Format(UIConfig.Culture, UploadToHoster.ToolTipText, _defaultUploader?.Metadata.Name) : string.Empty;
+            UploadToHoster.ToolTipText = _defaultUploader?.Metadata != null ? string.Format(UIConfig.Culture, text, _defaultUploader?.Metadata.Name) : string.Empty;
 
             var renderer = EnvironmentEx.ToolStripRendererForCurrentTheme;
             ShareStrip.Renderer = renderer;
@@ -115,26 +116,26 @@ namespace HolzShots.UI
             string uploadTooltip = string.Empty;
             if (_defaultUploader?.Metadata != null)
             {
-                uploadTooltip = UploadToHoster.ToolTipText.Remove(UploadToHoster.ToolTipText.IndexOf(" (", StringComparison.Ordinal));
+                var text = UploadToHoster.ToolTipText ?? throw new ArgumentException($"{nameof(UploadToHoster)} had no {UploadToHoster.ToolTipText}");
+                uploadTooltip = text.Remove(UploadToHoster.ToolTipText.IndexOf(" (", StringComparison.Ordinal));
                 uploadTooltip = string.Format(UIConfig.Culture, uploadTooltip, _defaultUploader.Metadata.Name);
             }
 
-            _uploadThumbnailButton = new ThumbnailToolBarButton(Icon.FromHandle(Properties.Resources.uploadMedium.GetHicon()), uploadTooltip);
-            _uploadThumbnailButton.Click += (_, _) => UploadCurrentImageToDefaultProvider();
-            _uploadThumbnailButton.Enabled = _defaultUploader?.Metadata != null;
+            var uploadThumbnailButton = new ThumbnailToolBarButton(_uploadThumbnailButtonIcon, uploadTooltip);
+            uploadThumbnailButton.Click += (_, _) => UploadCurrentImageToDefaultProvider();
+            uploadThumbnailButton.Enabled = _defaultUploader?.Metadata != null;
 
-            _saveThumbnailButton = new ThumbnailToolBarButton(Icon.FromHandle(Properties.Resources.saveMedium.GetHicon()), "Save image");
-            _copyThumbnailButton = new ThumbnailToolBarButton(Icon.FromHandle(Properties.Resources.clipboardMedium.GetHicon()), "Copy image");
+            var saveThumbnailButton = new ThumbnailToolBarButton(_saveThumbnailButtonIcon, Localization.SaveImage);
+            saveThumbnailButton.Click += SaveImage;
 
-            _saveThumbnailButton.Click += SaveImage;
-            _copyThumbnailButton.Click += CopyImage;
+            var copyThumbnailButton = new ThumbnailToolBarButton(_copyThumbnailButtonIcon, Localization.CopyImage);
+            copyThumbnailButton.Click += CopyImage;
 
-            components.Add(_uploadThumbnailButton);
-            components.Add(_saveThumbnailButton);
-            components.Add(_copyThumbnailButton);
+            TaskbarManager.Instance.ThumbnailToolBars.AddButtons(Handle, uploadThumbnailButton, saveThumbnailButton, copyThumbnailButton);
 
-
-            TaskbarManager.Instance.ThumbnailToolBars.AddButtons(Handle, _uploadThumbnailButton, _saveThumbnailButton, _copyThumbnailButton);
+            components.Add(uploadThumbnailButton);
+            components.Add(saveThumbnailButton);
+            components.Add(copyThumbnailButton);
         }
 
 
@@ -188,21 +189,20 @@ namespace HolzShots.UI
             }
         }
 
-        private void EnableTool(ShotEditorTool tool)
+        private void ToggleTool(ShotEditorTool tool)
         {
             var previousTool = ThePanel.CurrentTool;
+            if (previousTool.ToolType == tool)
+                tool = ShotEditorTool.None;
 
-            if (previousTool == tool)
-                return;
-
-            var previousToolObject = ThePanel.CurrentToolObject;
+            var previousToolObject = ThePanel.CurrentTool;
             previousToolObject?.PersistSettings(); // may depend on controls, so we cannot clear the settings panel before
 
             _activator.ClearSettingsPanel();
 
-            ThePanel.CurrentTool = tool;
+            ThePanel.SetCurrentTool(tool);
 
-            var cto = ThePanel.CurrentToolObject;
+            var cto = ThePanel.CurrentTool;
 
             cto.LoadInitialSettings();
 
@@ -308,16 +308,16 @@ namespace HolzShots.UI
                 Close();
         }
 
-        private void EyedropperToolClick(object sender, EventArgs e) => EnableTool(ShotEditorTool.Eyedropper);
+        private void EyedropperToolClick(object sender, EventArgs e) => ToggleTool(ShotEditorTool.Eyedropper);
         private void ScaleToolClick(object sender, EventArgs e) => ThePanel.RunDialogTool(new Scale());
-        private void EllipseToolClick(object sender, EventArgs e) => EnableTool(ShotEditorTool.Ellipse);
-        private void EraserToolClick(object sender, EventArgs e) => EnableTool(ShotEditorTool.Eraser);
-        private void CropToolClick(object sender, EventArgs e) => EnableTool(ShotEditorTool.Crop);
-        private void ArrowToolClick(object sender, EventArgs e) => EnableTool(ShotEditorTool.Arrow);
-        private void CensorToolClick(object sender, EventArgs e) => EnableTool(ShotEditorTool.Censor);
-        private void MarkerToolClick(object sender, EventArgs e) => EnableTool(ShotEditorTool.Marker);
-        private void BlurToolClick(object sender, EventArgs e) => EnableTool(ShotEditorTool.Blur);
-        private void BrightenToolClick(object sender, EventArgs e) => EnableTool(ShotEditorTool.Brighten);
+        private void EllipseToolClick(object sender, EventArgs e) => ToggleTool(ShotEditorTool.Ellipse);
+        private void EraserToolClick(object sender, EventArgs e) => ToggleTool(ShotEditorTool.Eraser);
+        private void CropToolClick(object sender, EventArgs e) => ToggleTool(ShotEditorTool.Crop);
+        private void ArrowToolClick(object sender, EventArgs e) => ToggleTool(ShotEditorTool.Arrow);
+        private void CensorToolClick(object sender, EventArgs e) => ToggleTool(ShotEditorTool.Censor);
+        private void MarkerToolClick(object sender, EventArgs e) => ToggleTool(ShotEditorTool.Marker);
+        private void BlurToolClick(object sender, EventArgs e) => ToggleTool(ShotEditorTool.Blur);
+        private void BrightenToolClick(object sender, EventArgs e) => ToggleTool(ShotEditorTool.Brighten);
         private void UndoClick(object sender, EventArgs e) => ThePanel.Undo();
         private void DrawCursor_Click(object sender, EventArgs e) => ThePanel.DrawCursor = DrawCursor.Checked;
         private void ToolStripPaint(object sender, PaintEventArgs e) => e.Graphics.Clear(BackColor);

@@ -12,5 +12,4 @@ public enum ShotEditorTool
     Ellipse,
     Eyedropper,
     Brighten,
-    LegacyNew,
 }

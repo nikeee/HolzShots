@@ -1,6 +1,7 @@
 using HolzShots.Drawing.Tools.UI;
 
 namespace HolzShots.Drawing.Tools;
+
 public class Scale : IDialogTool
 {
     public void ShowToolDialog(ref Image rawImage, Screenshot screenshot, IWin32Window? parent)
@@ -18,15 +19,16 @@ public class Scale : IDialogTool
         int newWidth = (int)width;
         int newHeight = (int)height;
 
-        // This is wrong and may fail if there was no cursor position
-        // We ignore this for now, since we're not caring about legacy stuff
-        var newCursorCoordinates = screenshot.CursorPosition.OnImage;
-
-
         if (unit == ScaleUnit.Percent)
         {
             newWidth = (int)(rawImage.Width * (width / 100));
             newHeight = (int)(rawImage.Height * (height / 100));
+        }
+
+        var cursorPos = screenshot.CursorPosition;
+        if (cursorPos is not null)
+        {
+            var newCursorCoordinates = cursorPos.OnImage;
             newCursorCoordinates.X = (int)(newCursorCoordinates.X * (height / 100));
             newCursorCoordinates.Y = (int)(newCursorCoordinates.Y * (width / 100));
         }

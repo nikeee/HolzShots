@@ -8,6 +8,8 @@ using unvell.D2DLib;
 
 namespace HolzShots.Input.Selection;
 
+public class D2DInteropException(string message) : Exception(message);
+
 public partial class AreaSelector : AnimatedForm, IAreaSelector
 {
     private static readonly D2DColor OverlayColor = D2DColor.Black;
@@ -45,11 +47,11 @@ public partial class AreaSelector : AnimatedForm, IAreaSelector
         windowEnumerationTask.CancelAfter(5000);
         WindowFinder.GetCurrentWindowRectanglesAsync(Handle, allowEntireScreen, windowEnumerationTask.Token).ContinueWith(t => SetAvailableWindows(t.Result));
 
-        _dimmingOverlayBrush = Device.CreateSolidColorBrush(new D2DColor((float)settingsContext.AreaSelectorDimmingOpacity, OverlayColor));
-        _image = Device.CreateBitmapFromGDIBitmap(image);
+        _dimmingOverlayBrush = Device.CreateSolidColorBrush(new D2DColor((float)settingsContext.AreaSelectorDimmingOpacity, OverlayColor)) ?? throw new D2DInteropException($"Could not create `{nameof(D2DBitmap)}`");
+        _image = Device.CreateBitmapFromGDIBitmap(image) ?? throw new D2DInteropException($"Could not create `{nameof(D2DBitmap)}`");
         _imageBounds = new Rectangle(0, 0, image.Width, image.Height);
         _dimmedImage = CreateDimmedImage(image.Width, image.Height);
-        _background = _dimmedImage.GetBitmap();
+        _background = _dimmedImage.GetBitmap() ?? throw new D2DInteropException($"Could not `{nameof(D2DBitmap)}`from `{nameof(D2DBitmapGraphics)}`");
     }
 
     public static AreaSelector Create(Bitmap image, bool allowEntireScreen, HSSettings settingsContext) => new(image, allowEntireScreen, settingsContext);
@@ -73,7 +75,7 @@ public partial class AreaSelector : AnimatedForm, IAreaSelector
 
     private D2DBitmapGraphics CreateDimmedImage(int width, int height)
     {
-        var res = Device.CreateBitmapGraphics(width, height);
+        var res = Device.CreateBitmapGraphics(width, height) ?? throw new D2DInteropException($"Could not create `{nameof(D2DBitmapGraphics)}`");
         res.BeginRender();
         res.DrawBitmap(_image, _imageBounds);
         res.FillRectangle(_imageBounds, _dimmingOverlayBrush);
@@ -83,10 +85,9 @@ public partial class AreaSelector : AnimatedForm, IAreaSelector
 
     private void SetAvailableWindows(IReadOnlyList<WindowRectangle> windows)
     {
-        _availableWindowsForOutline = windows.Select(w => w with
-        {
-            Rectangle = w.Rectangle.WorldToScreen(SystemInformation.VirtualScreen)
-        }).ToList();
+        _availableWindowsForOutline = [
+            ..windows.Select(w => w with { Rectangle = w.Rectangle.WorldToScreen(SystemInformation.VirtualScreen) })
+        ];
     }
 
     #region Mouse and Keyboard Stuff
@@ -315,5 +316,6 @@ public partial class AreaSelector : AnimatedForm, IAreaSelector
         _image?.Dispose();
         _dimmedImage?.Dispose();
         _dimmingOverlayBrush?.Dispose();
+        _background?.Dispose();
     }
 }

@@ -8,8 +8,8 @@ public class Blur : ITool<BlurSettings>
 {
     private readonly Pen _thePen = new (Color.Red) { DashStyle = DashStyle.Dash };
     private static readonly Cursor _cursor = new (Properties.Resources.crossMedium.GetHicon());
-    public Cursor Cursor { get; } = _cursor;
-    public ShotEditorTool ToolType { get; } = ShotEditorTool.Blur;
+    public Cursor Cursor => _cursor;
+    public ShotEditorTool ToolType => ShotEditorTool.Blur;
 
     public ISettingsControl<BlurSettings> SettingsControl { get; } = new BlurSettingsControl(BlurSettings.Default);
     public Vector2 BeginCoordinates { get; set; }
@@ -111,7 +111,8 @@ public class Blur : ITool<BlurSettings>
         g.DrawRectangle(_thePen, rawSrcRectangle);
     }
 
-    private static Bitmap BlurImage(Image img, int factor, Rectangle rawSrcRect)
+    /// <returns>null if empty rectangle</returns>
+    private static Bitmap? BlurImage(Image img, int factor, Rectangle rawSrcRect)
     {
         var width = Convert.ToInt32(Math.Round(Math.Ceiling(rawSrcRect.Width / (double)factor)));
         var height = Convert.ToInt32(Math.Round(Math.Ceiling(rawSrcRect.Height / (double)factor)));

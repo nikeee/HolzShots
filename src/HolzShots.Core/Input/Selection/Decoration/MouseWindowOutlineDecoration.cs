@@ -29,7 +29,8 @@ class MouseWindowOutlineDecoration : IStateDecoration<InitialState>
         var windowTitle = state.Title;
         if (windowTitle is not null)
         {
-            using var backgroundBush = g.Device.CreateSolidColorBrush(BackgroundColor);
+            // g has a device because it's created with "new D2DGraphics(Device)"
+            using var backgroundBush = g.Device!.CreateSolidColorBrush(BackgroundColor) ?? throw new D2DInteropException($"Could not create `{nameof(D2DSolidColorBrush)}`");
 
             var textSize = g.MeasureText(windowTitle, FontName, FontSize, _placeSize);
 

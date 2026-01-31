@@ -115,7 +115,8 @@ class HelpTextDecoration : IStateDecoration<InitialState>
                 animation.Destination.Height
             );
 
-            using var maskRectangle = g.Device.CreateRectangleGeometry(rect);
+            // g has a device because it's created with "new D2DGraphics(Device)"
+            using var maskRectangle = g.Device!.CreateRectangleGeometry(rect);
             using var layer = g.PushLayer(maskRectangle);
             g.FillRectangle(rect, new D2DColor(opacity * BackgroundColor.a, BackgroundColor));
             g.DrawText(animation.Text, new D2DColor(opacity * FontColor.a, FontColor), FontName, animation.FontSize, textLocation);
