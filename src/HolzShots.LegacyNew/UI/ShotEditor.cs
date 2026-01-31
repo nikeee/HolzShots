@@ -108,6 +108,10 @@ namespace HolzShots.UI
             };
         }
 
+        private static readonly Icon _uploadThumbnailButtonIcon = Icon.FromHandle(Properties.Resources.uploadMedium.GetHicon());
+        private static readonly Icon _saveThumbnailButtonIcon = Icon.FromHandle(Properties.Resources.saveMedium.GetHicon());
+        private static readonly Icon _copyThumbnailButtonIcon = Icon.FromHandle(Properties.Resources.clipboardMedium.GetHicon());
+
         private void InitializeThumbnailToolbar()
         {
             if (!TaskbarManager.IsPlatformSupported)
@@ -121,12 +125,12 @@ namespace HolzShots.UI
                 uploadTooltip = string.Format(UIConfig.Culture, uploadTooltip, _defaultUploader.Metadata.Name);
             }
 
-            _uploadThumbnailButton = new ThumbnailToolBarButton(Icon.FromHandle(Properties.Resources.uploadMedium.GetHicon()), uploadTooltip);
+            _uploadThumbnailButton = new ThumbnailToolBarButton(_uploadThumbnailButtonIcon, uploadTooltip);
             _uploadThumbnailButton.Click += (_, _) => UploadCurrentImageToDefaultProvider();
             _uploadThumbnailButton.Enabled = _defaultUploader?.Metadata != null;
 
-            _saveThumbnailButton = new ThumbnailToolBarButton(Icon.FromHandle(Properties.Resources.saveMedium.GetHicon()), "Save image");
-            _copyThumbnailButton = new ThumbnailToolBarButton(Icon.FromHandle(Properties.Resources.clipboardMedium.GetHicon()), "Copy image");
+            _saveThumbnailButton = new ThumbnailToolBarButton(_saveThumbnailButtonIcon, "Save image");
+            _copyThumbnailButton = new ThumbnailToolBarButton(_copyThumbnailButtonIcon, "Copy image");
 
             _saveThumbnailButton.Click += SaveImage;
             _copyThumbnailButton.Click += CopyImage;
@@ -134,7 +138,6 @@ namespace HolzShots.UI
             components.Add(_uploadThumbnailButton);
             components.Add(_saveThumbnailButton);
             components.Add(_copyThumbnailButton);
-
 
             TaskbarManager.Instance.ThumbnailToolBars.AddButtons(Handle, _uploadThumbnailButton, _saveThumbnailButton, _copyThumbnailButton);
         }
