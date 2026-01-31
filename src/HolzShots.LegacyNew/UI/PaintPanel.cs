@@ -9,6 +9,10 @@ namespace HolzShots.UI;
 
 public partial class PaintPanel : UserControl
 {
+
+    private static readonly Bitmap _designModeBitmap = new(1, 1);
+    private static readonly Screenshot _designModeScreenshot = Screenshot.FromImage(_designModeBitmap, null, ScreenshotSource.Selected);
+
     private Screenshot _screenshot;
 
     public event EventHandler? Initialized;
@@ -35,7 +39,7 @@ public partial class PaintPanel : UserControl
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public Screenshot Screenshot
     {
-        get => DesignMode ? null : _screenshot;
+        get => DesignMode ? _designModeScreenshot : _screenshot;
         set
         {
             if (!DesignMode)
@@ -52,15 +56,17 @@ public partial class PaintPanel : UserControl
         get
         {
             if (DesignMode)
-                return null; // TODO: Return image for design mode
+                return _designModeScreenshot.Image;
 
-            var bmp = RawBox.Image;
-            if (DrawCursor)
+            var bmp = (Bitmap)RawBox.Image!;
+
+            var cursorPosition = Screenshot.CursorPosition;
+            if (DrawCursor && cursorPosition is not null)
             {
                 using var g = Graphics.FromImage(bmp);
                 g.SmoothingMode = SmoothingMode.AntiAlias;
                 g.CompositingQuality = CompositingQuality.HighQuality;
-                g.DrawImage(Properties.Resources.windowsCursorMedium, Screenshot.CursorPosition.OnImage);
+                g.DrawImage(Properties.Resources.windowsCursorMedium, cursorPosition.OnImage);
             }
             return bmp;
         }
