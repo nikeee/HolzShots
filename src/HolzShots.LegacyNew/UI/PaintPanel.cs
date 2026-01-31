@@ -9,7 +9,6 @@ namespace HolzShots.UI
 {
     public partial class PaintPanel : UserControl
     {
-        private ShotEditorTool _currentTool;
         private Screenshot _screenshot;
 
         public event EventHandler? Initialized;
@@ -19,6 +18,7 @@ namespace HolzShots.UI
         {
             InitializeComponent();
             CurrentToolChanged += CurrentToolChanged_Event;
+            CurrentToolObject = new NoTool();
         }
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -66,31 +66,6 @@ namespace HolzShots.UI
             }
         }
 
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public ShotEditorTool CurrentTool
-        {
-            get => _currentTool;
-            set
-            {
-                _currentTool = value;
-                CurrentToolObject = value switch
-                {
-                    ShotEditorTool.Crop => new Crop(),
-                    ShotEditorTool.Marker => new Marker(),
-                    ShotEditorTool.Censor => new Censor(),
-                    ShotEditorTool.Eraser => new Eraser(),
-                    ShotEditorTool.Blur => new Blur(),
-                    ShotEditorTool.Ellipse => new Ellipse(),
-                    ShotEditorTool.Eyedropper => new Eyedropper(),
-                    ShotEditorTool.Brighten => new Brighten(),
-                    ShotEditorTool.Arrow => new Arrow(),
-                    ShotEditorTool.None => new NoTool(),
-                    _ => new NoTool(),
-                };
-            }
-        }
-
-
         private event EventHandler<ITool<ToolSettingsBase>> CurrentToolChanged;
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -109,6 +84,24 @@ namespace HolzShots.UI
         private void CurrentToolChanged_Event(object? sender, ITool<ToolSettingsBase> tool)
         {
             Cursor = tool.Cursor;
+        }
+
+        public void SetCurrentTool(ShotEditorTool value)
+        {
+            CurrentToolObject = value switch
+            {
+                ShotEditorTool.Crop => new Crop(),
+                ShotEditorTool.Marker => new Marker(),
+                ShotEditorTool.Censor => new Censor(),
+                ShotEditorTool.Eraser => new Eraser(),
+                ShotEditorTool.Blur => new Blur(),
+                ShotEditorTool.Ellipse => new Ellipse(),
+                ShotEditorTool.Eyedropper => new Eyedropper(),
+                ShotEditorTool.Brighten => new Brighten(),
+                ShotEditorTool.Arrow => new Arrow(),
+                ShotEditorTool.None => new NoTool(),
+                _ => new NoTool(),
+            };
         }
 
 
@@ -183,7 +176,8 @@ namespace HolzShots.UI
         private void MouseLayerMouseDown(object sender, MouseEventArgs e)
         {
             _mouseDown = true;
-            if (_currentTool == ShotEditorTool.None)
+
+            if (CurrentToolObject.ToolType == ShotEditorTool.None) // quick hack
                 return;
 
             var startPosition = e.Location.ToVector2();
@@ -301,7 +295,7 @@ namespace HolzShots.UI
 
             UpdateMousePosition?.Invoke(this, e.Location);
 
-            if (CurrentTool == ShotEditorTool.Eyedropper)
+            if (CurrentToolObject.ToolType == ShotEditorTool.Eyedropper)
             {
                 var cursor = Cursor;
                 CurrentToolObject.MouseOnlyMoved(CurrentImage, ref cursor, e);

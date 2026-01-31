@@ -188,19 +188,18 @@ namespace HolzShots.UI
             }
         }
 
-        private void EnableTool(ShotEditorTool tool)
+        private void ToggleTool(ShotEditorTool tool)
         {
-            var previousTool = ThePanel.CurrentTool;
-
-            if (previousTool == tool)
-                return;
+            var previousTool = ThePanel.CurrentToolObject;
+            if (previousTool.ToolType == tool)
+                tool = ShotEditorTool.None;
 
             var previousToolObject = ThePanel.CurrentToolObject;
             previousToolObject?.PersistSettings(); // may depend on controls, so we cannot clear the settings panel before
 
             _activator.ClearSettingsPanel();
 
-            ThePanel.CurrentTool = tool;
+            ThePanel.SetCurrentTool(tool);
 
             var cto = ThePanel.CurrentToolObject;
 
@@ -308,16 +307,16 @@ namespace HolzShots.UI
                 Close();
         }
 
-        private void EyedropperToolClick(object sender, EventArgs e) => EnableTool(ShotEditorTool.Eyedropper);
+        private void EyedropperToolClick(object sender, EventArgs e) => ToggleTool(ShotEditorTool.Eyedropper);
         private void ScaleToolClick(object sender, EventArgs e) => ThePanel.RunDialogTool(new Scale());
-        private void EllipseToolClick(object sender, EventArgs e) => EnableTool(ShotEditorTool.Ellipse);
-        private void EraserToolClick(object sender, EventArgs e) => EnableTool(ShotEditorTool.Eraser);
-        private void CropToolClick(object sender, EventArgs e) => EnableTool(ShotEditorTool.Crop);
-        private void ArrowToolClick(object sender, EventArgs e) => EnableTool(ShotEditorTool.Arrow);
-        private void CensorToolClick(object sender, EventArgs e) => EnableTool(ShotEditorTool.Censor);
-        private void MarkerToolClick(object sender, EventArgs e) => EnableTool(ShotEditorTool.Marker);
-        private void BlurToolClick(object sender, EventArgs e) => EnableTool(ShotEditorTool.Blur);
-        private void BrightenToolClick(object sender, EventArgs e) => EnableTool(ShotEditorTool.Brighten);
+        private void EllipseToolClick(object sender, EventArgs e) => ToggleTool(ShotEditorTool.Ellipse);
+        private void EraserToolClick(object sender, EventArgs e) => ToggleTool(ShotEditorTool.Eraser);
+        private void CropToolClick(object sender, EventArgs e) => ToggleTool(ShotEditorTool.Crop);
+        private void ArrowToolClick(object sender, EventArgs e) => ToggleTool(ShotEditorTool.Arrow);
+        private void CensorToolClick(object sender, EventArgs e) => ToggleTool(ShotEditorTool.Censor);
+        private void MarkerToolClick(object sender, EventArgs e) => ToggleTool(ShotEditorTool.Marker);
+        private void BlurToolClick(object sender, EventArgs e) => ToggleTool(ShotEditorTool.Blur);
+        private void BrightenToolClick(object sender, EventArgs e) => ToggleTool(ShotEditorTool.Brighten);
         private void UndoClick(object sender, EventArgs e) => ThePanel.Undo();
         private void DrawCursor_Click(object sender, EventArgs e) => ThePanel.DrawCursor = DrawCursor.Checked;
         private void ToolStripPaint(object sender, PaintEventArgs e) => e.Graphics.Clear(BackColor);
