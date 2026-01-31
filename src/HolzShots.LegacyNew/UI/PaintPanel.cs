@@ -13,8 +13,6 @@ public partial class PaintPanel : UserControl
     private static readonly Bitmap _designModeBitmap = new(1, 1);
     private static readonly Screenshot _designModeScreenshot = Screenshot.FromImage(_designModeBitmap, null, ScreenshotSource.Selected);
 
-    private Screenshot _screenshot;
-
     public event EventHandler? Initialized;
     public event EventHandler<Point>? UpdateMousePosition;
 
@@ -39,11 +37,11 @@ public partial class PaintPanel : UserControl
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public Screenshot Screenshot
     {
-        get => DesignMode ? _designModeScreenshot : _screenshot;
+        get => DesignMode ? _designModeScreenshot : field!; // should be Initialized by Initialize(Screenshot shot)
         set
         {
             if (!DesignMode)
-                _screenshot = value;
+                field = value;
         }
     }
 
@@ -113,7 +111,7 @@ public partial class PaintPanel : UserControl
 
     public void Initialize(Screenshot shot)
     {
-        _screenshot = shot;
+        Screenshot = shot;
 
         RawBox.BringToFront();
         RawBox.SizeMode = PictureBoxSizeMode.AutoSize;
@@ -167,9 +165,23 @@ public partial class PaintPanel : UserControl
         public const string SizeInfoText = "The image is {0}-by-{1}px. Left click to copy the image size. Right click to copy creation date. Middle click to copy both.";
     }
 
-    public string SizeInfo => string.Format(Localization.SizeInfo, _screenshot.Size.Width, _screenshot.Size.Height, _screenshot.Timestamp);
+    public string SizeInfo
+    {
+        get
+        {
+            var s = Screenshot; // Getter of Screenshot is costly
+            return string.Format(Localization.SizeInfo, s.Size.Width, s.Size.Height, s.Timestamp);
+        }
+    }
 
-    public string SizeInfoText => string.Format(Localization.SizeInfoText, _screenshot.Size.Width, _screenshot.Size.Height);
+    public string SizeInfoText
+    {
+        get
+        {
+            var size = Screenshot.Size; // Getter of Screenshot is costly
+            return string.Format(Localization.SizeInfoText, size.Width, size.Height);
+        }
+    }
 
 
     private void DrawBoxMouseClick(object sender, MouseEventArgs e)
