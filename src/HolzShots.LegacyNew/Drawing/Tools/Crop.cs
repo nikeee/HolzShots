@@ -11,8 +11,8 @@ public class Crop : ITool<ToolSettingsBase>
 
     private static readonly Cursor _cursor = new (Properties.Resources.cropperCursor.Handle);
     public Cursor Cursor { get; } = _cursor;
-    public ShotEditorTool ToolType { get; } = ShotEditorTool.Crop;
-    public ISettingsControl<ToolSettingsBase>? SettingsControl { get; } = null; // TODO Change to default(_) if this is not a reference type
+    public ShotEditorTool ToolType => ShotEditorTool.Crop;
+    public ISettingsControl<ToolSettingsBase>? SettingsControl => null; // TODO Change to default(_) if this is not a reference type
 
     public Vector2 BeginCoordinates { get; set; }
     public Vector2 EndCoordinates { get; set; }

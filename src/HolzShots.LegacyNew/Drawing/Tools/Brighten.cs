@@ -6,8 +6,8 @@ namespace HolzShots.Drawing.Tools;
 public class Brighten : ITool<BrightnessSettings>
 {
     private static readonly Cursor _cursor = new (Properties.Resources.crossMedium.GetHicon());
-    public Cursor Cursor { get; } = _cursor;
-    public ShotEditorTool ToolType { get; } = ShotEditorTool.Brighten;
+    public Cursor Cursor => _cursor;
+    public ShotEditorTool ToolType => ShotEditorTool.Brighten;
     public ISettingsControl<BrightnessSettings> SettingsControl { get; } = new BrightnessSettingsControl(BrightnessSettings.Default);
 
     public Vector2 BeginCoordinates { get; set; }

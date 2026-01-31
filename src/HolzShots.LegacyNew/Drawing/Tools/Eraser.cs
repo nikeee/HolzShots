@@ -27,7 +27,7 @@ public class Eraser : ITool<EraserSettings>
         }
     }
 
-    public ShotEditorTool ToolType { get; } = ShotEditorTool.Eraser;
+    public ShotEditorTool ToolType => ShotEditorTool.Eraser;
 
     private static readonly Brush ClearBrush = new SolidBrush(Color.FromArgb(0, Color.White));
 

@@ -8,8 +8,8 @@ public class Blur : ITool<BlurSettings>
 {
     private readonly Pen _thePen = new (Color.Red) { DashStyle = DashStyle.Dash };
     private static readonly Cursor _cursor = new (Properties.Resources.crossMedium.GetHicon());
-    public Cursor Cursor { get; } = _cursor;
-    public ShotEditorTool ToolType { get; } = ShotEditorTool.Blur;
+    public Cursor Cursor => _cursor;
+    public ShotEditorTool ToolType => ShotEditorTool.Blur;
 
     public ISettingsControl<BlurSettings> SettingsControl { get; } = new BlurSettingsControl(BlurSettings.Default);
     public Vector2 BeginCoordinates { get; set; }
