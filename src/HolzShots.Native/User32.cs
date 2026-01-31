@@ -10,29 +10,29 @@ public static partial class User32
     #region SendMessage
 
     [LibraryImport(DllName, EntryPoint = "SendMessageW")]
-    public static partial IntPtr SendMessage(IntPtr hWnd, WindowMessage msg, IntPtr wParam, IntPtr lParam);
+    public static partial nint SendMessage(nint hWnd, WindowMessage msg, nint wParam, nint lParam);
 
     [DllImport(DllName, EntryPoint = "SendMessageW")]
-    public static extern IntPtr SendMessage(IntPtr hWnd, WindowMessage msg, IntPtr wParam, StringBuilder lParam);
+    public static extern nint SendMessage(nint hWnd, WindowMessage msg, nint wParam, StringBuilder lParam);
 
     [LibraryImport(DllName, EntryPoint = "SendMessageW")]
-    public static partial IntPtr SendMessage(IntPtr hWnd, WindowMessage msg, IntPtr wParam, [MarshalAs(UnmanagedType.LPWStr)] string lParam);
+    public static partial nint SendMessage(nint hWnd, WindowMessage msg, nint wParam, [MarshalAs(UnmanagedType.LPWStr)] string lParam);
 
     #endregion
     #region Window Functions
 
     [DllImport(DllName, SetLastError = true, EntryPoint = "GetWindowText")]
-    public static extern int GetWindowText(IntPtr hwnd, StringBuilder lpString, int cch);
+    public static extern int GetWindowText(nint hwnd, StringBuilder lpString, int cch);
 
     [LibraryImport(DllName, SetLastError = true, EntryPoint = "GetWindowTextLengthW")]
-    public static partial int GetWindowTextLength(IntPtr hwnd);
+    public static partial int GetWindowTextLength(nint hwnd);
 
     [LibraryImport(DllName)]
     [return: MarshalAs(UnmanagedType.Bool)]
-    public static partial bool IsIconic(IntPtr hWnd);
+    public static partial bool IsIconic(nint hWnd);
 
     [DllImport(DllName, EntryPoint = "GetClassName")]
-    public static extern int GetClassName(IntPtr hWnd, StringBuilder lpClassName, int nMaxCount);
+    public static extern int GetClassName(nint hWnd, StringBuilder lpClassName, int nMaxCount);
 
     [LibraryImport(DllName)]
     [return: MarshalAs(UnmanagedType.Bool)]
@@ -46,7 +46,7 @@ public static partial class User32
     /// </summary>
     [LibraryImport(DllName)]
     [return: MarshalAs(UnmanagedType.Bool)]
-    public static partial bool EnumWindows(EnumWindowsCallback enumWindowFunction, IntPtr lParam);
+    public static partial bool EnumWindows(EnumWindowsCallback enumWindowFunction, nint lParam);
 
     /// <summary>
     /// Callback EnumWindowsCallback should return true to continue enumerating or false to stop.
@@ -54,39 +54,39 @@ public static partial class User32
     /// http://pinvoke.net/default.aspx/user32.EnumWindows
     /// https://docs.microsoft.com/en-us/previous-versions/windows/desktop/legacy/ms633498(v=vs.85)
     /// </summary>
-    public delegate bool EnumWindowsCallback(IntPtr windowHandle, int lParam);
+    public delegate bool EnumWindowsCallback(nint windowHandle, int lParam);
 
     [LibraryImport(DllName)]
     [return: MarshalAs(UnmanagedType.Bool)]
-    public static partial bool IsWindowVisible(IntPtr windowHandle);
+    public static partial bool IsWindowVisible(nint windowHandle);
 
     [LibraryImport(DllName)]
     [return: MarshalAs(UnmanagedType.Bool)]
-    public static partial bool GetClientRect(IntPtr hWnd, out Rect lpRect);
+    public static partial bool GetClientRect(nint hWnd, out Rect lpRect);
 
     [LibraryImport(DllName, SetLastError = true)]
-    public static partial int MapWindowPoints(IntPtr hWndFrom, IntPtr hWndTo, ref Rect rect, [MarshalAs(UnmanagedType.U4)] uint cPoints);
+    public static partial int MapWindowPoints(nint hWndFrom, nint hWndTo, ref Rect rect, [MarshalAs(UnmanagedType.U4)] uint cPoints);
 
     [LibraryImport(DllName)]
     [return: MarshalAs(UnmanagedType.Bool)]
-    public static partial bool IsZoomed(IntPtr hWnd);
+    public static partial bool IsZoomed(nint hWnd);
 
     [LibraryImport(DllName, SetLastError = true)]
     [return: MarshalAs(UnmanagedType.Bool)]
-    public static partial bool GetWindowInfo(IntPtr hwnd, ref WindowInfo windowInfo);
+    public static partial bool GetWindowInfo(nint hwnd, ref WindowInfo windowInfo);
 
     #region Window Position
 
     [LibraryImport(DllName)]
     [return: MarshalAs(UnmanagedType.Bool)]
-    public static partial bool GetWindowRect(IntPtr hWnd, out Rect result);
+    public static partial bool GetWindowRect(nint hWnd, out Rect result);
 
     [DllImport(DllName)]
-    public static extern bool GetWindowPlacement(IntPtr hWnd, out WindowPlacement result);
+    public static extern bool GetWindowPlacement(nint hWnd, out WindowPlacement result);
 
     [LibraryImport(DllName)]
     [return: MarshalAs(UnmanagedType.Bool)]
-    public static partial bool SetWindowPos(IntPtr hWnd, IntPtr hWndAfter, int x, int y, int width, int height, int flags);
+    public static partial bool SetWindowPos(nint hWnd, nint hWndAfter, int x, int y, int width, int height, int flags);
 
     /// <summary>
     /// The MoveWindow function changes the position and dimensions of the specified window. For a top-level window, the position and dimensions are relative to the upper-left corner of the screen. For a child window, they are relative to the upper-left corner of the parent window's client area.
@@ -101,19 +101,19 @@ public static partial class User32
     /// <para>If the function fails, the return value is zero. To get extended error information, call GetLastError.</para></returns>
     [LibraryImport(DllName)]
     [return: MarshalAs(UnmanagedType.Bool)]
-    public static partial bool MoveWindow(IntPtr hWnd, int x, int y, int nWidth, int nHeight, [MarshalAs(UnmanagedType.Bool)] bool bRepaint);
+    public static partial bool MoveWindow(nint hWnd, int x, int y, int nWidth, int nHeight, [MarshalAs(UnmanagedType.Bool)] bool bRepaint);
 
     [LibraryImport(DllName)]
     [return: MarshalAs(UnmanagedType.Bool)]
-    public static partial bool SetForegroundWindow(IntPtr hWnd);
+    public static partial bool SetForegroundWindow(nint hWnd);
 
     [LibraryImport(DllName)]
-    public static partial IntPtr GetForegroundWindow();
+    public static partial nint GetForegroundWindow();
 
-    public static bool SetForegroundWindowEx(IntPtr windowHandle)
+    public static bool SetForegroundWindowEx(nint windowHandle)
     {
-        var threadIdOfTargetWindow = GetWindowThreadProcessId(windowHandle, IntPtr.Zero);
-        var threadIdOfForegroundWindow = GetWindowThreadProcessId(GetForegroundWindow(), IntPtr.Zero);
+        var threadIdOfTargetWindow = GetWindowThreadProcessId(windowHandle, nint.Zero);
+        var threadIdOfForegroundWindow = GetWindowThreadProcessId(GetForegroundWindow(), nint.Zero);
 
         if (threadIdOfTargetWindow == threadIdOfForegroundWindow)
             return SetForegroundWindow(windowHandle);
@@ -134,26 +134,26 @@ public static partial class User32
     public static partial bool AttachThreadInput(int idAttach, int idAttachTo, [MarshalAs(UnmanagedType.Bool)] bool fAttach);
 
     [LibraryImport(DllName, SetLastError = true)]
-    public static partial int GetWindowThreadProcessId(IntPtr hWnd, IntPtr processIdPointer);
+    public static partial int GetWindowThreadProcessId(nint hWnd, nint processIdPointer);
     [LibraryImport(DllName, SetLastError = true)]
-    public static partial int GetWindowThreadProcessId(IntPtr hWnd, ref int processId);
+    public static partial int GetWindowThreadProcessId(nint hWnd, ref int processId);
 
     #endregion
     #region Drawing
 
     [LibraryImport(DllName)]
     [return: MarshalAs(UnmanagedType.Bool)]
-    public static partial bool DestroyIcon(IntPtr hIcon);
+    public static partial bool DestroyIcon(nint hIcon);
 
     [LibraryImport(DllName)]
     [return: MarshalAs(UnmanagedType.Bool)]
-    public static partial bool LockWindowUpdate(IntPtr hWndLock);
+    public static partial bool LockWindowUpdate(nint hWndLock);
 
     [LibraryImport(DllName)]
-    public static partial int ReleaseDC(IntPtr hWnd, IntPtr hDc);
+    public static partial int ReleaseDC(nint hWnd, nint hDc);
 
     [LibraryImport(DllName)]
-    public static partial IntPtr GetWindowDC(IntPtr window);
+    public static partial nint GetWindowDC(nint window);
 
     [LibraryImport(DllName)]
     [return: MarshalAs(UnmanagedType.Bool)]
@@ -161,13 +161,13 @@ public static partial class User32
 
     [LibraryImport(DllName)]
     [return: MarshalAs(UnmanagedType.Bool)]
-    public static partial bool DrawIcon(IntPtr hDC, int x, int y, IntPtr iconHandle);
+    public static partial bool DrawIcon(nint hDC, int x, int y, nint iconHandle);
 
     #endregion
     #region DC / DesktopWindow
 
     [LibraryImport(DllName)]
-    public static partial IntPtr GetDesktopWindow();
+    public static partial nint GetDesktopWindow();
 
     #endregion
 
@@ -179,7 +179,7 @@ public static partial class User32
     {
         public int cbSize;
         public readonly CursorFlags flags;
-        public readonly IntPtr cursorHandle;
+        public readonly nint cursorHandle;
 
         // This is actually a point, but we assume ABI compatibility and no padding because we're LayoutKind.Sequential
         public readonly int screenPosX;
@@ -193,18 +193,18 @@ public static partial class User32
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public readonly struct FlashWindowInfo(IntPtr handle, User32.FlashWindowFlags flags, uint count, uint timeout)
+    public readonly struct FlashWindowInfo(nint handle, User32.FlashWindowFlags flags, uint count, uint timeout)
     {
         private readonly uint _size = Convert.ToUInt32(Marshal.SizeOf(typeof(FlashWindowInfo)));
-        private readonly IntPtr _windowHandle = handle;
+        private readonly nint _windowHandle = handle;
         private readonly FlashWindowFlags _flags = flags;
         private readonly uint _count = count;
         private readonly uint _timeout = timeout;
 
-        public FlashWindowInfo(IntPtr handle)
+        public FlashWindowInfo(nint handle)
             : this(handle, FlashWindowFlags.TimerNoFg | FlashWindowFlags.Tray, uint.MaxValue) { }
 
-        public FlashWindowInfo(IntPtr handle, FlashWindowFlags flags, uint count)
+        public FlashWindowInfo(nint handle, FlashWindowFlags flags, uint count)
             : this(handle, flags, count, 0) { }
 
         public void Flash() => FlashWindowEx(in this);

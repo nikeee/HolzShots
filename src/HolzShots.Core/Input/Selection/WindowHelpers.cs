@@ -11,12 +11,12 @@ public static class WindowHelpers
     /// <summary>
     /// Ref: https://devblogs.microsoft.com/oldnewthing/20200302-00/?p=103507
     /// </summary>
-    public static bool IsWindowVisibleOnScreen(IntPtr windowHandle)
+    public static bool IsWindowVisibleOnScreen(nint windowHandle)
     {
         return User32.IsWindowVisible(windowHandle) && !IsWindowCloaked(windowHandle);
     }
 
-    private static bool IsWindowCloaked(IntPtr windowHandle)
+    private static bool IsWindowCloaked(nint windowHandle)
     {
         Debug.Assert(Environment.OSVersion.Version.Major >= 6); // DWM API is available since vista
 
@@ -26,7 +26,7 @@ public static class WindowHelpers
             : throw new Win32Exception(hResult);
     }
 
-    public static Rectangle? GetWindowRectangle(IntPtr windowHandle)
+    public static Rectangle? GetWindowRectangle(nint windowHandle)
     {
         if (IsDwmCompositionEnabled())
         {
@@ -46,7 +46,7 @@ public static class WindowHelpers
             : (Rectangle?)null;
     }
 
-    public static string? GetWindowClass(IntPtr windowHandle)
+    public static string? GetWindowClass(nint windowHandle)
     {
         var sb = new System.Text.StringBuilder();
         var charsWritten = User32.GetClassName(windowHandle, sb, sb.Capacity);
@@ -56,7 +56,7 @@ public static class WindowHelpers
             : sb.ToString();
     }
 
-    private static Rectangle? GetExtendedFrameBounds(IntPtr windowHandle)
+    private static Rectangle? GetExtendedFrameBounds(nint windowHandle)
     {
         var hResult = DwmApi.DwmGetWindowAttribute(windowHandle, DwmWindowAttribute.ExtendedFrameBounds, out Rect rect, Marshal.SizeOf(typeof(Rect)));
         return hResult == 0
@@ -70,7 +70,7 @@ public static class WindowHelpers
     }
 
 
-    private static Rectangle MaximizedWindowFix(IntPtr handle, Rectangle windowRect)
+    private static Rectangle MaximizedWindowFix(nint handle, Rectangle windowRect)
     {
         if (GetBorderSize(handle, out var size))
         {
@@ -86,7 +86,7 @@ public static class WindowHelpers
     }
 
 
-    private static bool GetBorderSize(IntPtr handle, out System.Drawing.Size size)
+    private static bool GetBorderSize(nint handle, out System.Drawing.Size size)
     {
         var info = new WindowInfo(null);
         if (User32.GetWindowInfo(handle, ref info))
@@ -98,16 +98,16 @@ public static class WindowHelpers
         return false;
     }
 
-    public static Rectangle? GetClientRectangle(IntPtr windowHandle)
+    public static Rectangle? GetClientRectangle(nint windowHandle)
     {
         return User32.GetClientRect(windowHandle, out var res)
             ? res
             : (Rectangle?)null;
     }
 
-    public static string GetWindowTitle(IntPtr windowHandle)
+    public static string GetWindowTitle(nint windowHandle)
     {
-        Debug.Assert(windowHandle != IntPtr.Zero);
+        Debug.Assert(windowHandle != 0);
 
         var textLength = User32.GetWindowTextLength(windowHandle);
         var windowTitleBuffer = new System.Text.StringBuilder(textLength + 1);
@@ -117,7 +117,7 @@ public static class WindowHelpers
         return windowTitleBuffer.ToString();
     }
 
-    public static Rectangle? MapWindowPoints(IntPtr from, IntPtr to, Rectangle rectangle)
+    public static Rectangle? MapWindowPoints(nint from, nint to, Rectangle rectangle)
     {
         Rect clientRectangelToConvert = rectangle;
         return User32.MapWindowPoints(from, to, ref clientRectangelToConvert, 2) != 0

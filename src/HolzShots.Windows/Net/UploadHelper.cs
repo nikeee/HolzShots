@@ -17,7 +17,7 @@ public static class UploadHelper
         if (settingsContext.ShowUploadProgress)
             reporters.Add(new UploadStatusFlyoutForm());
 
-        if (parentWindow.GetHandle() != IntPtr.Zero)
+        if (parentWindow.GetHandle() != nint.Zero)
             reporters.Add(new TaskbarItemProgressReporter(parentWindow.Handle));
 
         return new AggregateProgressReporter(reporters);

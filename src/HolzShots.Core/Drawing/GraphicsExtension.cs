@@ -13,7 +13,7 @@ public static class GraphicsExtension
         ArgumentNullException.ThrowIfNull(pen);
         if (points.Length <= 1)
             throw new ArgumentException(nameof(points));
-        if (pen.Handle == IntPtr.Zero)
+        if (pen.Handle == 0)
             throw new ArgumentNullException(nameof(pen));
 
         var hdc = g.GetHdc();
@@ -29,7 +29,7 @@ public static class GraphicsExtension
             {
                 var p1 = points[i - 1];
                 var p2 = points[i];
-                NativeMethods.MoveToEx(mDc, p1.X, p1.Y, IntPtr.Zero);
+                NativeMethods.MoveToEx(mDc, p1.X, p1.Y, 0);
                 NativeMethods.LineTo(mDc, p2.X, p2.Y);
             }
             _ = NativeMethods.SetROP2(mDc, RasterOperation2.CopyPen);

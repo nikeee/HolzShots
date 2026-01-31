@@ -5,7 +5,7 @@ namespace HolzShots.Drawing;
 
 public class NativePen(uint brushColor, int size) : IDisposable
 {
-    public IntPtr Handle { get; } = NativeMethods.CreatePen(PenStyle.Solid, size, brushColor);
+    public nint Handle { get; } = NativeMethods.CreatePen(PenStyle.Solid, size, brushColor);
 
     public NativePen(Color brushColor, int size)
         : this(unchecked((uint)ColorTranslator.ToWin32(brushColor)), size)

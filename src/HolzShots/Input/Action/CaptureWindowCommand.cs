@@ -30,7 +30,7 @@ public class CaptureWindowCommand : ImageCapturingCommand
             await ProcessCapturing(shot, settingsContext).ConfigureAwait(true);
     }
 
-    private static Screenshot? CaptureWindow(IntPtr windowHandle, HSSettings settingsContext, bool includeMargin = true)
+    private static Screenshot? CaptureWindow(nint windowHandle, HSSettings settingsContext, bool includeMargin = true)
     {
         if (Native.User32.IsIconic(windowHandle))
             return default;
@@ -40,7 +40,7 @@ public class CaptureWindowCommand : ImageCapturingCommand
         return Screenshot.FromWindow(shotSet);
     }
 
-    private static WindowScreenshotSet GetShotSet(IntPtr windowHandle, bool includeMargin, HSSettings settingsContext)
+    private static WindowScreenshotSet GetShotSet(nint windowHandle, bool includeMargin, HSSettings settingsContext)
     {
         // TODO: Refactor methods to WindowScreenshotSet?
         if (EnvironmentEx.IsAeroEnabled())
@@ -56,7 +56,7 @@ public class CaptureWindowCommand : ImageCapturingCommand
 
     // TODO: Rewrite this whole mess
 
-    private static WindowScreenshotSet DoAeroOn(IntPtr wndHandle, bool includeMargin, bool smallMargin)
+    private static WindowScreenshotSet DoAeroOn(nint wndHandle, bool includeMargin, bool smallMargin)
     {
         Native.User32.GetWindowRect(wndHandle, out var nativeRectangle);
 
@@ -133,7 +133,7 @@ public class CaptureWindowCommand : ImageCapturingCommand
         return new WindowScreenshotSet(result, cursorPosition, windowTitle, processName);
     }
 
-    private static WindowScreenshotSet DoAeroOff(IntPtr wndHandle, HSSettings settingsContext)
+    private static WindowScreenshotSet DoAeroOff(nint wndHandle, HSSettings settingsContext)
     {
         Native.User32.GetWindowRect(wndHandle, out var nativeRectangle);
         Rectangle drawingRectangle = nativeRectangle;

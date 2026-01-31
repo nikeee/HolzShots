@@ -33,7 +33,7 @@ public static class EnvironmentEx
     private static string GetExecutablePath()
     {
         var sb = new StringBuilder(10000);
-        var res = Kernel32.GetModuleFileName(IntPtr.Zero, sb, sb.Capacity);
+        var res = Kernel32.GetModuleFileName(nint.Zero, sb, sb.Capacity);
         if (res == 0)
             return System.Diagnostics.Process.GetCurrentProcess()?.MainModule?.FileName ?? System.Reflection.Assembly.GetEntryAssembly()!.Location;
         return sb.ToString();
