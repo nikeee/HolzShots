@@ -1,7 +1,7 @@
+using System.Diagnostics;
 using System.Drawing.Drawing2D;
 using System.Numerics;
 using HolzShots.Drawing.Tools.UI;
-using System.Diagnostics;
 
 namespace HolzShots.Drawing.Tools;
 

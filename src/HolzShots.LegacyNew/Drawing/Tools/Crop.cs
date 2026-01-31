@@ -6,10 +6,10 @@ namespace HolzShots.Drawing.Tools;
 
 public class Crop : ITool<ToolSettingsBase>
 {
-    private readonly SolidBrush _alphaBrush = new (Color.FromArgb(128, 0, 0, 0));
-    private readonly Pen _redCornerPen = new (Color.FromArgb(255, 255, 0, 0)) { DashStyle = DashStyle.Dash };
+    private readonly SolidBrush _alphaBrush = new(Color.FromArgb(128, 0, 0, 0));
+    private readonly Pen _redCornerPen = new(Color.FromArgb(255, 255, 0, 0)) { DashStyle = DashStyle.Dash };
 
-    private static readonly Cursor _cursor = new (Properties.Resources.cropperCursor.Handle);
+    private static readonly Cursor _cursor = new(Properties.Resources.cropperCursor.Handle);
     public Cursor Cursor { get; } = _cursor;
     public ShotEditorTool ToolType => ShotEditorTool.Crop;
     public ISettingsControl<ToolSettingsBase>? SettingsControl => null; // TODO Change to default(_) if this is not a reference type

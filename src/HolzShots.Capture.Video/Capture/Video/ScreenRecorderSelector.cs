@@ -1,5 +1,3 @@
-using System.Diagnostics;
-
 namespace HolzShots.Capture.Video;
 
 /// <summary> Actually it's some kind of a factory, but I don't like that word. </summary>

@@ -1,7 +1,7 @@
+using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 using HolzShots.Drawing;
-using System.ComponentModel;
 
 namespace HolzShots.Windows.Forms;
 

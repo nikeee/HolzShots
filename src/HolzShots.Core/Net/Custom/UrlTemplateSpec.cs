@@ -237,7 +237,7 @@ class TextSyntaxNode : TemplateSyntaxNode
     public static TextSyntaxNode Parse(ReadOnlySpan<char> value, ref int index)
     {
         var start = index;
-        for(; index < value.Length; ++index)
+        for (; index < value.Length; ++index)
         {
             var currentChar = value[index];
             if (currentChar == ExpressionStartBoundary)

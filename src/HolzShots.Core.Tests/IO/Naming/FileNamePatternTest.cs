@@ -1,5 +1,5 @@
-using Xunit;
 using HolzShots.IO.Naming;
+using Xunit;
 
 namespace HolzShots.Core.Tests.IO.Naming;
 
