@@ -2,8 +2,9 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
-using HolzShots.Drawing.Tools;
 using HolzShots.Drawing;
+using HolzShots.Drawing.Tools;
+using static ThisAssembly.Resources.Drawing;
 
 namespace HolzShots.UI;
 
@@ -19,8 +20,7 @@ public partial class PaintPanel : UserControl
     public PaintPanel()
     {
         InitializeComponent();
-        CurrentToolChanged += CurrentToolChanged_Event;
-        CurrentToolObject = new NoTool();
+        CurrentTool = new NoTool(); // must be set after InitializeComponent because it sets the cursor
     }
 
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -70,10 +70,8 @@ public partial class PaintPanel : UserControl
         }
     }
 
-    private event EventHandler<ITool<ToolSettingsBase>> CurrentToolChanged;
-
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-    public ITool<ToolSettingsBase> CurrentToolObject
+    public ITool<ToolSettingsBase> CurrentTool
     {
         get;
         set
@@ -81,18 +79,13 @@ public partial class PaintPanel : UserControl
             if (value == field)
                 return;
             field = value;
-            CurrentToolChanged?.Invoke(this, value);
+            Cursor = value.Cursor;
         }
-    }
-
-    private void CurrentToolChanged_Event(object? sender, ITool<ToolSettingsBase> tool)
-    {
-        Cursor = tool.Cursor;
     }
 
     public void SetCurrentTool(ShotEditorTool value)
     {
-        CurrentToolObject = value switch
+        CurrentTool = value switch
         {
             ShotEditorTool.Crop => new Crop(),
             ShotEditorTool.Marker => new Marker(),
@@ -187,7 +180,7 @@ public partial class PaintPanel : UserControl
     private void DrawBoxMouseClick(object sender, MouseEventArgs e)
     {
         var cursor = Cursor;
-        CurrentToolObject?.MouseClicked(CurrentImage, e.Location.ToVector2(), ref cursor, this);
+        CurrentTool?.MouseClicked(CurrentImage, e.Location.ToVector2(), ref cursor, this);
         RawBox.Invalidate();
     }
 
@@ -195,12 +188,12 @@ public partial class PaintPanel : UserControl
     {
         _mouseDown = true;
 
-        if (CurrentToolObject.ToolType == ShotEditorTool.None) // quick hack
+        if (CurrentTool.ToolType == ShotEditorTool.None) // quick hack
             return;
 
         var startPosition = e.Location.ToVector2();
-        CurrentToolObject.BeginCoordinates = startPosition;
-        CurrentToolObject.EndCoordinates = startPosition;
+        CurrentTool.BeginCoordinates = startPosition;
+        CurrentTool.EndCoordinates = startPosition;
         RawBox.Invalidate();
     }
 
@@ -214,9 +207,9 @@ public partial class PaintPanel : UserControl
     {
         if (e.Button == MouseButtons.Left)
         {
-            if (CurrentToolObject is not null)
+            if (CurrentTool is not null)
             {
-                CurrentToolObject.EndCoordinates = e.Location.ToVector2();
+                CurrentTool.EndCoordinates = e.Location.ToVector2();
                 RawBox.Invalidate();
             }
         }
@@ -232,15 +225,15 @@ public partial class PaintPanel : UserControl
         if (e.Button != MouseButtons.Left)
             return;
 
-        if (CurrentToolObject is not Eyedropper)
-            InvokeFinalRender(CurrentToolObject);
+        if (CurrentTool is not Eyedropper)
+            InvokeFinalRender(CurrentTool);
         else
         {
             var img = CurrentImage;
             if (img is null)
                 return;
 
-            CurrentToolObject.RenderFinalImage(ref img);
+            CurrentTool.RenderFinalImage(ref img);
         }
         _mouseDown = false;
     }
@@ -251,9 +244,9 @@ public partial class PaintPanel : UserControl
     {
         if (_mouseDown)
         {
-            if (CurrentToolObject is not null)
+            if (CurrentTool is not null)
             {
-                CurrentToolObject.RenderPreview((Bitmap)RawBox.Image!, e.Graphics);
+                CurrentTool.RenderPreview((Bitmap)RawBox.Image!, e.Graphics);
                 return;
             }
         }
@@ -313,10 +306,10 @@ public partial class PaintPanel : UserControl
 
         UpdateMousePosition?.Invoke(this, e.Location);
 
-        if (CurrentToolObject.ToolType == ShotEditorTool.Eyedropper)
+        if (CurrentTool.ToolType == ShotEditorTool.Eyedropper)
         {
             var cursor = Cursor;
-            CurrentToolObject.MouseOnlyMoved(CurrentImage, ref cursor, e);
+            CurrentTool.MouseOnlyMoved(CurrentImage, ref cursor, e);
         }
     }
 

@@ -191,18 +191,18 @@ namespace HolzShots.UI
 
         private void ToggleTool(ShotEditorTool tool)
         {
-            var previousTool = ThePanel.CurrentToolObject;
+            var previousTool = ThePanel.CurrentTool;
             if (previousTool.ToolType == tool)
                 tool = ShotEditorTool.None;
 
-            var previousToolObject = ThePanel.CurrentToolObject;
+            var previousToolObject = ThePanel.CurrentTool;
             previousToolObject?.PersistSettings(); // may depend on controls, so we cannot clear the settings panel before
 
             _activator.ClearSettingsPanel();
 
             ThePanel.SetCurrentTool(tool);
 
-            var cto = ThePanel.CurrentToolObject;
+            var cto = ThePanel.CurrentTool;
 
             cto.LoadInitialSettings();
 
