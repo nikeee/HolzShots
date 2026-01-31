@@ -13,7 +13,7 @@ namespace HolzShots.UI
 {
     public partial class ShotEditor : Form
     {
-        private readonly UploaderEntry _defaultUploader;
+        private readonly UploaderEntry? _defaultUploader;
         private readonly HSSettings _settingsContext;
         private readonly Screenshot _screenshot;
         private readonly UploaderManager _uploaders;
@@ -84,8 +84,9 @@ namespace HolzShots.UI
 
             DrawCursor.Visible = screenshot.Source != ScreenshotSource.Selected && screenshot.Source != ScreenshotSource.Unknown;
 
+            var text = UploadToHoster.ToolTipText ?? throw new ArgumentException($"{nameof(UploadToHoster)} had no {UploadToHoster.ToolTipText}");
             UploadToHoster.Enabled = _defaultUploader?.Metadata != null;
-            UploadToHoster.ToolTipText = _defaultUploader?.Metadata != null ? string.Format(UIConfig.Culture, UploadToHoster.ToolTipText, _defaultUploader?.Metadata.Name) : string.Empty;
+            UploadToHoster.ToolTipText = _defaultUploader?.Metadata != null ? string.Format(UIConfig.Culture, text, _defaultUploader?.Metadata.Name) : string.Empty;
 
             var renderer = EnvironmentEx.ToolStripRendererForCurrentTheme;
             ShareStrip.Renderer = renderer;
@@ -115,7 +116,8 @@ namespace HolzShots.UI
             string uploadTooltip = string.Empty;
             if (_defaultUploader?.Metadata != null)
             {
-                uploadTooltip = UploadToHoster.ToolTipText.Remove(UploadToHoster.ToolTipText.IndexOf(" (", StringComparison.Ordinal));
+                var text = UploadToHoster.ToolTipText ?? throw new ArgumentException($"{nameof(UploadToHoster)} had no {UploadToHoster.ToolTipText}");
+                uploadTooltip = text.Remove(UploadToHoster.ToolTipText.IndexOf(" (", StringComparison.Ordinal));
                 uploadTooltip = string.Format(UIConfig.Culture, uploadTooltip, _defaultUploader.Metadata.Name);
             }
 
