@@ -5,7 +5,7 @@ namespace HolzShots.Input.Selection;
 
 class WindowFinder
 {
-    public static Task<IReadOnlyList<WindowRectangle>> GetCurrentWindowRectanglesAsync(IntPtr excludedHandle, bool allowEntireScreen, CancellationToken ct)
+    public static Task<IReadOnlyList<WindowRectangle>> GetCurrentWindowRectanglesAsync(nint excludedHandle, bool allowEntireScreen, CancellationToken ct)
     {
         return Task.Run(
             () => new List<WindowRectangle>(GetCurrentWindowRectangles(excludedHandle, allowEntireScreen)) as IReadOnlyList<WindowRectangle>,
@@ -18,13 +18,13 @@ class WindowFinder
         "Shell_Secondary", // Task bar on second/third/... screen
     ];
 
-    public static ISet<WindowRectangle> GetCurrentWindowRectangles(IntPtr excludedHandle, bool allowEntireScreen)
+    public static ISet<WindowRectangle> GetCurrentWindowRectangles(nint excludedHandle, bool allowEntireScreen)
     {
         var result = new HashSet<WindowRectangle>();
 
         var forbittenSize = System.Windows.Forms.SystemInformation.VirtualScreen.Size;
 
-        bool ProcessWindowHandle(IntPtr windowHandle, int _)
+        bool ProcessWindowHandle(nint windowHandle, int _)
         {
             // We want to filter out all windows that are not suitable for screenshots
             // There is a nice post on OldNewThing about that:
@@ -82,7 +82,7 @@ class WindowFinder
             var clientRectangle = WindowHelpers.GetClientRectangle(windowHandle);
             if (clientRectangle is not null && clientRectangle.Value != r)
             {
-                var mappedClientRectangle = WindowHelpers.MapWindowPoints(windowHandle, IntPtr.Zero, clientRectangle.Value);
+                var mappedClientRectangle = WindowHelpers.MapWindowPoints(windowHandle, 0, clientRectangle.Value);
                 if (mappedClientRectangle.HasValue)
                 {
                     result.Add(new WindowRectangle(windowHandle, mappedClientRectangle.Value, title));
@@ -94,7 +94,7 @@ class WindowFinder
             return true;
         }
 
-        User32.EnumWindows(ProcessWindowHandle, IntPtr.Zero);
+        User32.EnumWindows(ProcessWindowHandle, 0);
 
         return result;
     }

@@ -4,5 +4,5 @@ namespace HolzShots.Windows.Forms;
 
 public static class Win32WindowExtensions
 {
-    public static IntPtr GetHandle(this IWin32Window window) => window?.Handle ?? IntPtr.Zero;
+    public static nint GetHandle(this IWin32Window window) => window?.Handle ?? nint.Zero;
 }

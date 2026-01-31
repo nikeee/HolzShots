@@ -11,30 +11,30 @@ namespace HolzShots
         #region gdi32
 
         [LibraryImport(gdi32)]
-        internal static partial int SetROP2(IntPtr hdc, RasterOperation2 drawMode);
+        internal static partial int SetROP2(nint hdc, RasterOperation2 drawMode);
         [LibraryImport(gdi32)]
-        internal static partial IntPtr CreatePen(PenStyle penStyle, int width, uint color);
+        internal static partial nint CreatePen(PenStyle penStyle, int width, uint color);
         [LibraryImport(gdi32)]
-        internal static partial IntPtr SelectObject(IntPtr hdc, IntPtr gdiObject);
-        [LibraryImport(gdi32)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        internal static partial bool DeleteObject(IntPtr obj);
+        internal static partial nint SelectObject(nint hdc, nint gdiObject);
         [LibraryImport(gdi32)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        internal static partial bool MoveToEx(IntPtr hdc, int x, int y, IntPtr point);
+        internal static partial bool DeleteObject(nint obj);
         [LibraryImport(gdi32)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        internal static partial bool LineTo(IntPtr hdc, int xEnd, int yEnd);
+        internal static partial bool MoveToEx(nint hdc, int x, int y, nint point);
         [LibraryImport(gdi32)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        internal static partial bool BitBlt(IntPtr hdcDst, int x1, int y1, int cx, int cy, IntPtr hdcSrc, int x2, int y2, CopyPixelOperation op);
-        [LibraryImport(gdi32)]
-        internal static partial IntPtr CreateCompatibleDC(IntPtr hdc);
+        internal static partial bool LineTo(nint hdc, int xEnd, int yEnd);
         [LibraryImport(gdi32)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        internal static partial bool DeleteDC(IntPtr hdc);
+        internal static partial bool BitBlt(nint hdcDst, int x1, int y1, int cx, int cy, nint hdcSrc, int x2, int y2, CopyPixelOperation op);
         [LibraryImport(gdi32)]
-        internal static partial IntPtr CreateCompatibleBitmap(IntPtr hdc, int width, int height);
+        internal static partial nint CreateCompatibleDC(nint hdc);
+        [LibraryImport(gdi32)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static partial bool DeleteDC(nint hdc);
+        [LibraryImport(gdi32)]
+        internal static partial nint CreateCompatibleBitmap(nint hdc, int width, int height);
 
         #endregion
     }
@@ -43,9 +43,9 @@ namespace HolzShots
     {
         namespace Custom
         {
-            internal readonly struct DeviceContext(IntPtr dc) : IDisposable
+            internal readonly struct DeviceContext(nint dc) : IDisposable
             {
-                public IntPtr DC { get; } = dc;
+                public nint DC { get; } = dc;
 
                 public void Dispose() => NativeMethods.DeleteDC(DC);
                 public BitmapHandle SelectObject(BitmapHandle gdiObject) => new(NativeMethods.SelectObject(DC, gdiObject.DC));
@@ -57,12 +57,12 @@ namespace HolzShots
                 }
 
                 public static DeviceContext CreateCompatible(DeviceContext hdc) => new(NativeMethods.CreateCompatibleDC(hdc.DC));
-                public static DeviceContext FromWindow(IntPtr window) => new(Native.User32.GetWindowDC(window));
+                public static DeviceContext FromWindow(nint window) => new(Native.User32.GetWindowDC(window));
             }
 
-            readonly struct BitmapHandle(IntPtr dc) : IDisposable
+            readonly struct BitmapHandle(nint dc) : IDisposable
             {
-                internal IntPtr DC { get; } = dc;
+                internal nint DC { get; } = dc;
 
                 public Bitmap ToImage() => Image.FromHbitmap(DC);
                 public void Dispose() => NativeMethods.DeleteObject(DC);

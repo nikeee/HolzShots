@@ -22,7 +22,7 @@ public sealed class TaskbarWindow
         data.cbSize = System.Runtime.InteropServices.Marshal.SizeOf(data);
         var retval = Native.Shell32.SHAppBarMessage(Native.Shell32.Abm.GetTaskBarPos, ref data);
 
-        return retval == IntPtr.Zero
+        return retval == 0
             ? new TaskbarWindow(Native.Shell32.TaskbarPosition.Unknown, new Rectangle(0, 0, -1, -1))
             : new TaskbarWindow(data.uEdge, data.rc);
     }

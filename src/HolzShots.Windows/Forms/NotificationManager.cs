@@ -134,7 +134,7 @@ public static class NotificationManager
 
     private static TaskDialogButton Show(IWin32Window? parent, string title, string instructionText, string text, TaskDialogIcon icon, params TaskDialogButton[] buttons)
     {
-        var owner = parent?.Handle ?? IntPtr.Zero;
+        var owner = parent?.Handle ?? 0;
 
         var buttonCollection = new TaskDialogButtonCollection();
         foreach (var b in buttons)

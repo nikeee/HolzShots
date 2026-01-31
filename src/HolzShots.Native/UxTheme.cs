@@ -8,13 +8,13 @@ public static partial class UxTheme
 
 
     [LibraryImport(DllName)]
-    public static partial int SetWindowThemeAttribute(IntPtr hWnd, int wtype, ref WtaOptions attributes, uint size);
+    public static partial int SetWindowThemeAttribute(nint hWnd, int wtype, ref WtaOptions attributes, uint size);
 
     [LibraryImport(DllName)]
-    public static partial int GetThemeMargins(IntPtr hTheme, IntPtr hdc, int iPartId, int iStateId, int iPropId, IntPtr rect, ref Margin pMargins);
+    public static partial int GetThemeMargins(nint hTheme, nint hdc, int iPartId, int iStateId, int iPropId, nint rect, ref Margin pMargins);
 
     [LibraryImport(DllName, StringMarshalling = StringMarshalling.Utf16)]
-    public static partial int SetWindowTheme(IntPtr hWnd, string pszSubAppName, int pszSubIdList);
+    public static partial int SetWindowTheme(nint hWnd, string pszSubAppName, int pszSubIdList);
 
 
     #region Types

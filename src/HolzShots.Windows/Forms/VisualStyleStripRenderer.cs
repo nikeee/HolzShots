@@ -105,7 +105,7 @@ public class VisualStyleStripRenderer(ToolBarTheme theme) : ToolStripSystemRende
         try
         {
             var hDc = dc.GetHdc();
-            if (0 == Native.UxTheme.GetThemeMargins(_renderer.Handle, hDc, _renderer.Part, _renderer.State, (int)marginType, IntPtr.Zero, ref margins))
+            if (0 == Native.UxTheme.GetThemeMargins(_renderer.Handle, hDc, _renderer.Part, _renderer.State, (int)marginType, nint.Zero, ref margins))
                 return new Padding(margins.cxLeftWidth, margins.cyTopHeight, margins.cxRightWidth, margins.cyBottomHeight);
             return Padding.Empty;
         }

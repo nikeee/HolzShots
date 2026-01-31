@@ -6,9 +6,9 @@ namespace HolzShots.Windows.Forms;
 /// <summary> Wrapper for taskbar progress api that makes it easier to interact with a single window. </summary>
 public readonly struct TaskbarProgressManager : IEquatable<TaskbarProgressManager>
 {
-    private readonly IntPtr _windowHandle;
+    private readonly nint _windowHandle;
 
-    internal TaskbarProgressManager(IntPtr windowHandle) => _windowHandle = windowHandle;
+    internal TaskbarProgressManager(nint windowHandle) => _windowHandle = windowHandle;
 
     public void SetProgressValue(ulong completed, ulong total) => Taskbar.SetProgressValue(_windowHandle, completed, total);
     public void SetProgressValue(float unitIntervalValue)
@@ -31,17 +31,17 @@ public readonly struct TaskbarProgressManager : IEquatable<TaskbarProgressManage
 
 public static class Taskbar
 {
-    private static IntPtr _ownerHandle;
-    internal static IntPtr OwnerHandle
+    private static nint _ownerHandle;
+    internal static nint OwnerHandle
     {
         get
         {
-            if (_ownerHandle == IntPtr.Zero)
+            if (_ownerHandle == nint.Zero)
             {
                 var currentProcess = System.Diagnostics.Process.GetCurrentProcess();
 
-                _ownerHandle = currentProcess == null || currentProcess.MainWindowHandle == IntPtr.Zero
-                    ? IntPtr.Zero
+                _ownerHandle = currentProcess == null || currentProcess.MainWindowHandle == nint.Zero
+                    ? nint.Zero
                     : currentProcess.MainWindowHandle;
             }
             return _ownerHandle;
@@ -60,16 +60,16 @@ public static class Taskbar
 
     private static ITaskbarList4 Instance => _instance.Value;
 
-    internal static void SetProgressValue(IntPtr windowHandle, ulong completed, ulong total)
+    internal static void SetProgressValue(nint windowHandle, ulong completed, ulong total)
     {
         if (IsPlatformSupported)
             Instance.SetProgressValue(windowHandle, completed, total);
     }
-    internal static void SetProgressState(IntPtr windowHandle, TaskbarProgressBarState state)
+    internal static void SetProgressState(nint windowHandle, TaskbarProgressBarState state)
     {
         if (IsPlatformSupported)
         {
-            var handle = windowHandle == IntPtr.Zero
+            var handle = windowHandle == nint.Zero
                 ? OwnerHandle
                 : windowHandle;
             Instance.SetProgressState(handle, state);
@@ -79,13 +79,13 @@ public static class Taskbar
     private static readonly Version _windowsSeven = new(6, 1);
     public static bool IsPlatformSupported => Environment.OSVersion.Version >= _windowsSeven;
 
-    public static TaskbarProgressManager CreateProgressManagerForWindow(IWin32Window window) => CreateProgressManagerForWindow(window?.Handle ?? IntPtr.Zero);
-    public static TaskbarProgressManager CreateProgressManagerForWindow(IntPtr windowHandle)
+    public static TaskbarProgressManager CreateProgressManagerForWindow(IWin32Window window) => CreateProgressManagerForWindow(window?.Handle ?? nint.Zero);
+    public static TaskbarProgressManager CreateProgressManagerForWindow(nint windowHandle)
     {
         if (!IsPlatformSupported)
-            return new TaskbarProgressManager(IntPtr.Zero);
+            return new TaskbarProgressManager(nint.Zero);
 
-        var handle = windowHandle == IntPtr.Zero
+        var handle = windowHandle == nint.Zero
             ? OwnerHandle
             : windowHandle;
         return new TaskbarProgressManager(handle);
@@ -110,61 +110,61 @@ internal interface ITaskbarList4
     [PreserveSig]
     void HrInit();
     [PreserveSig]
-    void AddTab(IntPtr hwnd);
+    void AddTab(nint hwnd);
     [PreserveSig]
-    void DeleteTab(IntPtr hwnd);
+    void DeleteTab(nint hwnd);
     [PreserveSig]
-    void ActivateTab(IntPtr hwnd);
+    void ActivateTab(nint hwnd);
     [PreserveSig]
-    void SetActiveAlt(IntPtr hwnd);
+    void SetActiveAlt(nint hwnd);
 
     // ITaskbarList2
     [PreserveSig]
     void MarkFullscreenWindow(
-        IntPtr hwnd,
+        nint hwnd,
         [MarshalAs(UnmanagedType.Bool)] bool fFullscreen);
 
     // ITaskbarList3
     [PreserveSig]
-    void SetProgressValue(IntPtr hwnd, ulong ullCompleted, ulong ullTotal);
+    void SetProgressValue(nint hwnd, ulong ullCompleted, ulong ullTotal);
     [PreserveSig]
-    void SetProgressState(IntPtr hwnd, TaskbarProgressBarState tbpFlags);
+    void SetProgressState(nint hwnd, TaskbarProgressBarState tbpFlags);
     [PreserveSig]
-    void RegisterTab(IntPtr hwndTab, IntPtr hwndMDI);
+    void RegisterTab(nint hwndTab, nint hwndMDI);
     [PreserveSig]
-    void UnregisterTab(IntPtr hwndTab);
+    void UnregisterTab(nint hwndTab);
     [PreserveSig]
-    void SetTabOrder(IntPtr hwndTab, IntPtr hwndInsertBefore);
+    void SetTabOrder(nint hwndTab, nint hwndInsertBefore);
     [PreserveSig]
-    void SetTabActive(IntPtr hwndTab, IntPtr hwndInsertBefore, uint dwReserved);
+    void SetTabActive(nint hwndTab, nint hwndInsertBefore, uint dwReserved);
     [PreserveSig]
-    IntPtr ThumbBarAddButtons(
-        IntPtr hwnd,
+    nint ThumbBarAddButtons(
+        nint hwnd,
         uint cButtons,
-        [MarshalAs(UnmanagedType.LPArray)] IntPtr[] pButtons);
+        [MarshalAs(UnmanagedType.LPArray)] nint[] pButtons);
     [PreserveSig]
-    IntPtr ThumbBarUpdateButtons(
-        IntPtr hwnd,
+    nint ThumbBarUpdateButtons(
+        nint hwnd,
         uint cButtons,
-        [MarshalAs(UnmanagedType.LPArray)] IntPtr[] pButtons);
+        [MarshalAs(UnmanagedType.LPArray)] nint[] pButtons);
     [PreserveSig]
-    void ThumbBarSetImageList(IntPtr hwnd, IntPtr himl);
+    void ThumbBarSetImageList(nint hwnd, nint himl);
     [PreserveSig]
     void SetOverlayIcon(
-      IntPtr hwnd,
-      IntPtr hIcon,
+      nint hwnd,
+      nint hIcon,
       [MarshalAs(UnmanagedType.LPWStr)] string pszDescription);
     [PreserveSig]
     void SetThumbnailTooltip(
-        IntPtr hwnd,
+        nint hwnd,
         [MarshalAs(UnmanagedType.LPWStr)] string pszTip);
     [PreserveSig]
     void SetThumbnailClip(
-        IntPtr hwnd,
-        IntPtr prcClip);
+        nint hwnd,
+        nint prcClip);
 
     // ITaskbarList4
-    void SetTabProperties(IntPtr hwndTab, IntPtr stpFlags);
+    void SetTabProperties(nint hwndTab, nint stpFlags);
 }
 
 [Guid("56FDF344-FD6D-11d0-958A-006097C9A090")]

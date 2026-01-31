@@ -12,10 +12,10 @@ public sealed class TaskbarItemProgressReporter : ITransferProgressReporter
 
     private static readonly HashSet<TaskbarProgressManager> _currentManagers = [];
 
-    public TaskbarItemProgressReporter(IntPtr targetWindowHandle)
+    public TaskbarItemProgressReporter(nint targetWindowHandle)
     {
         _progressManager = Taskbar.CreateProgressManagerForWindow(targetWindowHandle);
-        _hasValidHandle = targetWindowHandle != IntPtr.Zero
+        _hasValidHandle = targetWindowHandle != nint.Zero
                             && Taskbar.IsPlatformSupported
                             && !_currentManagers.Contains(_progressManager);
 

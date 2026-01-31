@@ -13,7 +13,7 @@ public record SelectionResult(
     WindowRectangle? SelectedWindowInfo = null
 );
 
-public record WindowRectangle(IntPtr Handle, Rectangle Rectangle, string? Title) : IWin32Window
+public record WindowRectangle(nint Handle, Rectangle Rectangle, string? Title) : IWin32Window
 {
     public override int GetHashCode() => Handle.GetHashCode();
 }

@@ -10,7 +10,7 @@ public static partial class Shell32
     public static extern void SHAddToRecentDocs(ShellAddToRecentDocsFlags flag, [MarshalAs(UnmanagedType.LPStr)] string path);
 
     [LibraryImport(DllName)]
-    public static partial IntPtr SHAppBarMessage(Abm msg, ref AppBarData data);
+    public static partial nint SHAppBarMessage(Abm msg, ref AppBarData data);
 
     #region Types
 
@@ -25,11 +25,11 @@ public static partial class Shell32
     public struct AppBarData
     {
         public int cbSize;
-        public IntPtr hWnd;
+        public nint hWnd;
         public int uCallbackMessage;
         public TaskbarPosition uEdge;
         public Rect rc;
-        public IntPtr lParam;
+        public nint lParam;
     }
 
     public enum Abm : uint

@@ -5,7 +5,7 @@ namespace HolzShots.Windows.Forms;
 
 public static class WindowInformation
 {
-    public static string GetWindowTitle(IntPtr windowHandle)
+    public static string GetWindowTitle(nint windowHandle)
     {
         var windowTitleLength = Native.User32.GetWindowTextLength(windowHandle);
 
@@ -18,7 +18,7 @@ public static class WindowInformation
         return windowTitleBuffer.ToString();
     }
 
-    public static string GetProcessNameOfWindow(IntPtr windowHandle)
+    public static string GetProcessNameOfWindow(nint windowHandle)
     {
         var pid = 0;
         _ = Native.User32.GetWindowThreadProcessId(windowHandle, ref pid);
