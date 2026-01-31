@@ -32,7 +32,7 @@ public static class AboutDialog
             },
             Footnote = new TaskDialogFootnote()
             {
-                Text = $"Version: {Application.ProductVersion} ({LibraryInformation.VersionDate.ToShortDateString()})",
+                Text = $"Version: {Application.ProductVersion}",
             },
             Buttons = [
                 TaskDialogButton.Close,
