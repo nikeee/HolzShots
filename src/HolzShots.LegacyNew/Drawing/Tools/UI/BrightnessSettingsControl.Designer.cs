@@ -30,7 +30,7 @@ namespace HolzShots.Drawing.Tools.UI
         {
             DarkBrightnessTrackBarLabel = new Label();
             BrightnessTrackBar = new TrackBar();
-            BrightnessPreview = new Windows.Forms.ColorView();
+            BrightnessPreview = new HolzShots.Windows.Forms.ColorView();
             LightBrightnessTrackBarLabel = new Label();
             ((System.ComponentModel.ISupportInitialize)BrightnessTrackBar).BeginInit();
             SuspendLayout();
@@ -96,7 +96,6 @@ namespace HolzShots.Drawing.Tools.UI
 
         #endregion
 
-        internal Label BrightnessColorSelectorLabel;
         internal Label DarkBrightnessTrackBarLabel;
         internal TrackBar BrightnessTrackBar;
         internal Windows.Forms.ColorView BrightnessPreview;

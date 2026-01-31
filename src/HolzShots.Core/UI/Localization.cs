@@ -11,4 +11,7 @@ public static class Localization
 
     public const string PixelUnit = "px";
     public const string PercentUnit = "%";
+
+    public const string SaveImage = "Save image";
+    public const string CopyImage = "Copy image";
 }
