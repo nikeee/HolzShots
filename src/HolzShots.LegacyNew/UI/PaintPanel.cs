@@ -73,42 +73,20 @@ namespace HolzShots.UI
             set
             {
                 _currentTool = value;
-                switch (value)
+                CurrentToolObject = value switch
                 {
-                    case ShotEditorTool.None:
-                        Cursor = System.Windows.Forms.Cursors.Default;
-                        break;
-                    case ShotEditorTool.Crop:
-                        CurrentToolObject = new Crop();
-                        break;
-                    case ShotEditorTool.Marker:
-                        CurrentToolObject = new Marker();
-                        break;
-                    case ShotEditorTool.Censor:
-                        CurrentToolObject = new Censor();
-                        break;
-                    case ShotEditorTool.Eraser:
-                        CurrentToolObject = new Eraser();
-                        break;
-                    case ShotEditorTool.Blur:
-                        CurrentToolObject = new Blur();
-                        break;
-                    case ShotEditorTool.Ellipse:
-                        CurrentToolObject = new Ellipse();
-                        break;
-                    case ShotEditorTool.Eyedropper:
-                        CurrentToolObject = new Eyedropper();
-                        break;
-                    case ShotEditorTool.Brighten:
-                        CurrentToolObject = new Brighten();
-                        break;
-                    case ShotEditorTool.Arrow:
-                        CurrentToolObject = new Arrow();
-                        break;
-                    default:
-                        CurrentToolObject = null/* TODO Change to default(_) if this is not a reference type */;
-                        break;
-                }
+                    ShotEditorTool.Crop => new Crop(),
+                    ShotEditorTool.Marker => new Marker(),
+                    ShotEditorTool.Censor => new Censor(),
+                    ShotEditorTool.Eraser => new Eraser(),
+                    ShotEditorTool.Blur => new Blur(),
+                    ShotEditorTool.Ellipse => new Ellipse(),
+                    ShotEditorTool.Eyedropper => new Eyedropper(),
+                    ShotEditorTool.Brighten => new Brighten(),
+                    ShotEditorTool.Arrow => new Arrow(),
+                    ShotEditorTool.None => new NoTool(),
+                    _ => new NoTool(),
+                };
             }
         }
 
@@ -130,8 +108,7 @@ namespace HolzShots.UI
 
         private void CurrentToolChanged_Event(object? sender, ITool<ToolSettingsBase> tool)
         {
-            if (tool is not null)
-                Cursor = tool.Cursor;
+            Cursor = tool.Cursor;
         }
 
 
