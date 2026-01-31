@@ -21,15 +21,13 @@ namespace HolzShots.UI
             CurrentToolChanged += CurrentToolChanged_Event;
         }
 
-        private bool _drawCursor;
-
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public bool DrawCursor
         {
-            get => _drawCursor;
+            get;
             set
             {
-                _drawCursor = value;
+                field = value;
                 RawBox.Invalidate();
             }
         }
@@ -44,45 +42,34 @@ namespace HolzShots.UI
                     _screenshot = value;
             }
         }
+
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public Image CurrentImage
-        {
-            get
-            {
-                return DesignMode ? new Bitmap(1, 1) : _undoStack.Count > 0 ? _undoStack.Peek() : Screenshot.Image;
-            }
-        }
+        public Image CurrentImage => DesignMode ? new Bitmap(1, 1) : _undoStack.Count > 0 ? _undoStack.Peek() : Screenshot.Image;
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Image CombinedImage
         {
             get
             {
-                if (!DesignMode)
+                if (DesignMode)
+                    return null; // TODO: Return image for design mode
+
+                var bmp = RawBox.Image;
+                if (DrawCursor)
                 {
-                    Image bmp = RawBox.Image;
-                    if (_drawCursor)
-                    {
-                        using (Graphics g = Graphics.FromImage(bmp))
-                        {
-                            g.SmoothingMode = SmoothingMode.AntiAlias;
-                            g.CompositingQuality = CompositingQuality.HighQuality;
-                            g.DrawImage(Properties.Resources.windowsCursorMedium, Screenshot.CursorPosition.OnImage);
-                        }
-                    }
-                    return bmp;
+                    using var g = Graphics.FromImage(bmp);
+                    g.SmoothingMode = SmoothingMode.AntiAlias;
+                    g.CompositingQuality = CompositingQuality.HighQuality;
+                    g.DrawImage(Properties.Resources.windowsCursorMedium, Screenshot.CursorPosition.OnImage);
                 }
-                return null/* TODO Change to default(_) if this is not a reference type */;
+                return bmp;
             }
         }
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public ShotEditorTool CurrentTool
         {
-            get
-            {
-                return _currentTool;
-            }
+            get => _currentTool;
             set
             {
                 _currentTool = value;
@@ -128,22 +115,16 @@ namespace HolzShots.UI
 
         private event EventHandler<ITool<ToolSettingsBase>> CurrentToolChanged;
 
-        private ITool<ToolSettingsBase> _currentToolObject;
-
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public ITool<ToolSettingsBase> CurrentToolObject
         {
-            get
-            {
-                return _currentToolObject;
-            }
+            get;
             set
             {
-                if (value != _currentToolObject)
-                {
-                    _currentToolObject = value;
-                    CurrentToolChanged?.Invoke(this, _currentToolObject);
-                }
+                if (value == field)
+                    return;
+                field = value;
+                CurrentToolChanged?.Invoke(this, value);
             }
         }
 
@@ -281,13 +262,13 @@ namespace HolzShots.UI
         {
             if (_mouseDown)
             {
-                if (_currentToolObject is not null)
+                if (CurrentToolObject is not null)
                 {
                     CurrentToolObject.RenderPreview((Bitmap)RawBox.Image, e.Graphics);
                     return;
                 }
             }
-            if (_drawCursor && Screenshot != null)
+            if (DrawCursor && Screenshot != null)
             {
                 e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
                 e.Graphics.CompositingQuality = CompositingQuality.HighQuality;
@@ -351,80 +332,76 @@ namespace HolzShots.UI
         }
 
         private Point _currentMousePosition;
-        private static readonly Font RulerFont = new Font("Verdana", 8, FontStyle.Regular);
-        private static readonly SolidBrush FontBrush = new SolidBrush(Color.FromArgb(255, 51, 75, 106)); // (255, 51, 75, 106))
-        private static readonly SolidBrush LinearBackgroundBrush = new SolidBrush(Color.FromArgb(255, 241, 243, 248)); // (255, 240, 241, 249))
-        private static readonly Pen LinePen = new Pen(Color.FromArgb(255, 142, 156, 175)); // (255, 137, 146, 179))
+        private static readonly Font RulerFont = new("Verdana", 8, FontStyle.Regular);
+        private static readonly SolidBrush FontBrush = new(Color.FromArgb(255, 51, 75, 106)); // (255, 51, 75, 106))
+        private static readonly SolidBrush LinearBackgroundBrush = new(Color.FromArgb(255, 241, 243, 248)); // (255, 240, 241, 249))
+        private static readonly Pen LinePen = new(Color.FromArgb(255, 142, 156, 175)); // (255, 137, 146, 179))
 
         private void HorizontalLinealBoxPaint(object sender, PaintEventArgs e)
         {
+            var withBlock = e.Graphics;
+            withBlock.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
+            withBlock.SmoothingMode = SmoothingMode.HighSpeed;
+            withBlock.PixelOffsetMode = PixelOffsetMode.HighSpeed;
+            withBlock.CompositingQuality = CompositingQuality.HighSpeed;
+
+            withBlock.FillRectangle(LinearBackgroundBrush, HorizontalLinealBox.DisplayRectangle);
+            withBlock.DrawLine(LinePen, 0, HorizontalLinealBox.DisplayRectangle.Height - 2, HorizontalLinealBox.DisplayRectangle.Width - 1, HorizontalLinealBox.DisplayRectangle.Height - 2);
+
+            int xPos;
+            var offset = WholePanel.HorizontalScroll.Value;
+
+            for (int i = 0; i <= WholePanel.Width + offset; i += 10)
             {
-                var withBlock = e.Graphics;
-                withBlock.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
-                withBlock.SmoothingMode = SmoothingMode.HighSpeed;
-                withBlock.PixelOffsetMode = PixelOffsetMode.HighSpeed;
-                withBlock.CompositingQuality = CompositingQuality.HighSpeed;
+                xPos = i - offset;
+                if (xPos < 0 || xPos > WholePanel.Width + offset)
+                    continue;
 
-                withBlock.FillRectangle(LinearBackgroundBrush, HorizontalLinealBox.DisplayRectangle);
-                withBlock.DrawLine(LinePen, 0, HorizontalLinealBox.DisplayRectangle.Height - 2, HorizontalLinealBox.DisplayRectangle.Width - 1, HorizontalLinealBox.DisplayRectangle.Height - 2);
-
-                int xPos;
-                var offset = WholePanel.HorizontalScroll.Value;
-
-                for (int i = 0; i <= WholePanel.Width + offset; i += 10)
+                if (i % 100 == 0)
                 {
-                    xPos = i - offset;
-                    if (xPos < 0 || xPos > WholePanel.Width + offset)
-                        continue;
-
-                    if (i % 100 == 0)
-                    {
-                        withBlock.DrawLine(LinePen, xPos, 0, xPos, HorizontalLinealBox.Height - 2);
-                        withBlock.DrawString(i.ToString(), RulerFont, FontBrush, xPos, 0);
-                    }
-                    else
-                        withBlock.DrawLine(LinePen, xPos, HorizontalLinealBox.Height - 6, xPos, HorizontalLinealBox.Height - 2);
+                    withBlock.DrawLine(LinePen, xPos, 0, xPos, HorizontalLinealBox.Height - 2);
+                    withBlock.DrawString(i.ToString(), RulerFont, FontBrush, xPos, 0);
                 }
-
-                withBlock.DrawLine(Pens.Red, _currentMousePosition.X - offset, 0, _currentMousePosition.X - offset, 20);
-                withBlock.DrawLine(BorderLinePen, 0, 0, Width, 0);
+                else
+                    withBlock.DrawLine(LinePen, xPos, HorizontalLinealBox.Height - 6, xPos, HorizontalLinealBox.Height - 2);
             }
+
+            withBlock.DrawLine(Pens.Red, _currentMousePosition.X - offset, 0, _currentMousePosition.X - offset, 20);
+            withBlock.DrawLine(BorderLinePen, 0, 0, Width, 0);
         }
         private void VerticalLinealBoxPaint(object sender, PaintEventArgs e)
         {
+            var withBlock = e.Graphics;
+            withBlock.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
+            withBlock.SmoothingMode = SmoothingMode.HighSpeed;
+            withBlock.PixelOffsetMode = PixelOffsetMode.HighSpeed;
+            withBlock.CompositingQuality = CompositingQuality.HighSpeed;
+
+            withBlock.FillRectangle(LinearBackgroundBrush, VerticalLinealBox.DisplayRectangle);
+            withBlock.DrawLine(LinePen, VerticalLinealBox.DisplayRectangle.Width - 2, 0, VerticalLinealBox.DisplayRectangle.Width - 2, VerticalLinealBox.DisplayRectangle.Height - 1);
+
+            int yPos;
+            var offset = WholePanel.VerticalScroll.Value;
+
+            for (int i = 0; i <= WholePanel.Height + offset; i += 10)
             {
-                var withBlock = e.Graphics;
-                withBlock.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
-                withBlock.SmoothingMode = SmoothingMode.HighSpeed;
-                withBlock.PixelOffsetMode = PixelOffsetMode.HighSpeed;
-                withBlock.CompositingQuality = CompositingQuality.HighSpeed;
+                yPos = i - offset;
+                if (yPos < 0 || yPos > WholePanel.Height + offset)
+                    continue;
 
-                withBlock.FillRectangle(LinearBackgroundBrush, VerticalLinealBox.DisplayRectangle);
-                withBlock.DrawLine(LinePen, VerticalLinealBox.DisplayRectangle.Width - 2, 0, VerticalLinealBox.DisplayRectangle.Width - 2, VerticalLinealBox.DisplayRectangle.Height - 1);
-
-                int yPos;
-                var offset = WholePanel.VerticalScroll.Value;
-
-                for (int i = 0; i <= WholePanel.Height + offset; i += 10)
+                if (i % 100 == 0)
                 {
-                    yPos = i - offset;
-                    if (yPos < 0 || yPos > WholePanel.Height + offset)
-                        continue;
-
-                    if (i % 100 == 0)
-                    {
-                        withBlock.DrawLine(LinePen, 0, yPos, VerticalLinealBox.Width - 2, yPos);
-                        withBlock.TranslateTransform(0, yPos);
-                        withBlock.RotateTransform(-90);
-                        withBlock.DrawString(i.ToString(UIConfig.Culture), RulerFont, FontBrush, -withBlock.MeasureString(i.ToString(UIConfig.Culture), RulerFont, 100).Width, 0);
-                        withBlock.ResetTransform();
-                    }
-                    else
-                        withBlock.DrawLine(LinePen, VerticalLinealBox.Width - 6, yPos, VerticalLinealBox.Width - 2, yPos);
+                    withBlock.DrawLine(LinePen, 0, yPos, VerticalLinealBox.Width - 2, yPos);
+                    withBlock.TranslateTransform(0, yPos);
+                    withBlock.RotateTransform(-90);
+                    withBlock.DrawString(i.ToString(UIConfig.Culture), RulerFont, FontBrush, -withBlock.MeasureString(i.ToString(UIConfig.Culture), RulerFont, 100).Width, 0);
+                    withBlock.ResetTransform();
                 }
-
-                withBlock.DrawLine(Pens.Red, 0, _currentMousePosition.Y - offset, 20, _currentMousePosition.Y - offset);
+                else
+                    withBlock.DrawLine(LinePen, VerticalLinealBox.Width - 6, yPos, VerticalLinealBox.Width - 2, yPos);
             }
+
+            withBlock.DrawLine(Pens.Red, 0, _currentMousePosition.Y - offset, 20, _currentMousePosition.Y - offset);
         }
 
 
