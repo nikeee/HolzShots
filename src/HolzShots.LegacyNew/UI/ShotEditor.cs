@@ -13,14 +13,14 @@ namespace HolzShots.UI
 {
     public partial class ShotEditor : Form
     {
+        private static readonly Icon _uploadThumbnailButtonIcon = Icon.FromHandle(Properties.Resources.uploadMedium.GetHicon());
+        private static readonly Icon _saveThumbnailButtonIcon = Icon.FromHandle(Properties.Resources.saveMedium.GetHicon());
+        private static readonly Icon _copyThumbnailButtonIcon = Icon.FromHandle(Properties.Resources.clipboardMedium.GetHicon());
+
         private readonly UploaderEntry? _defaultUploader;
         private readonly HSSettings _settingsContext;
         private readonly Screenshot _screenshot;
         private readonly UploaderManager _uploaders;
-
-        private ThumbnailToolBarButton _uploadThumbnailButton;
-        private ThumbnailToolBarButton _saveThumbnailButton;
-        private ThumbnailToolBarButton _copyThumbnailButton;
 
         private readonly PanelActivator _activator;
         private readonly Dictionary<ShotEditorTool, ToolStripButton> _toolControlMap;
@@ -108,10 +108,6 @@ namespace HolzShots.UI
             };
         }
 
-        private static readonly Icon _uploadThumbnailButtonIcon = Icon.FromHandle(Properties.Resources.uploadMedium.GetHicon());
-        private static readonly Icon _saveThumbnailButtonIcon = Icon.FromHandle(Properties.Resources.saveMedium.GetHicon());
-        private static readonly Icon _copyThumbnailButtonIcon = Icon.FromHandle(Properties.Resources.clipboardMedium.GetHicon());
-
         private void InitializeThumbnailToolbar()
         {
             if (!TaskbarManager.IsPlatformSupported)
@@ -125,21 +121,21 @@ namespace HolzShots.UI
                 uploadTooltip = string.Format(UIConfig.Culture, uploadTooltip, _defaultUploader.Metadata.Name);
             }
 
-            _uploadThumbnailButton = new ThumbnailToolBarButton(_uploadThumbnailButtonIcon, uploadTooltip);
-            _uploadThumbnailButton.Click += (_, _) => UploadCurrentImageToDefaultProvider();
-            _uploadThumbnailButton.Enabled = _defaultUploader?.Metadata != null;
+            var uploadThumbnailButton = new ThumbnailToolBarButton(_uploadThumbnailButtonIcon, uploadTooltip);
+            uploadThumbnailButton.Click += (_, _) => UploadCurrentImageToDefaultProvider();
+            uploadThumbnailButton.Enabled = _defaultUploader?.Metadata != null;
 
-            _saveThumbnailButton = new ThumbnailToolBarButton(_saveThumbnailButtonIcon, "Save image");
-            _copyThumbnailButton = new ThumbnailToolBarButton(_copyThumbnailButtonIcon, "Copy image");
+            var saveThumbnailButton = new ThumbnailToolBarButton(_saveThumbnailButtonIcon, Localization.SaveImage);
+            saveThumbnailButton.Click += SaveImage;
 
-            _saveThumbnailButton.Click += SaveImage;
-            _copyThumbnailButton.Click += CopyImage;
+            var copyThumbnailButton = new ThumbnailToolBarButton(_copyThumbnailButtonIcon, Localization.CopyImage);
+            copyThumbnailButton.Click += CopyImage;
 
-            components.Add(_uploadThumbnailButton);
-            components.Add(_saveThumbnailButton);
-            components.Add(_copyThumbnailButton);
+            TaskbarManager.Instance.ThumbnailToolBars.AddButtons(Handle, uploadThumbnailButton, saveThumbnailButton, copyThumbnailButton);
 
-            TaskbarManager.Instance.ThumbnailToolBars.AddButtons(Handle, _uploadThumbnailButton, _saveThumbnailButton, _copyThumbnailButton);
+            components.Add(uploadThumbnailButton);
+            components.Add(saveThumbnailButton);
+            components.Add(copyThumbnailButton);
         }
 
 
