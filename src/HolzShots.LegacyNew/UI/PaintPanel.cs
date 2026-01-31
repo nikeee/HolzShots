@@ -9,6 +9,8 @@ namespace HolzShots.UI
 {
     public partial class PaintPanel : UserControl
     {
+        private ShotEditorTool _currentTool;
+        private Screenshot _screenshot;
 
         public event EventHandler? Initialized;
         public event EventHandler<Point>? UpdateMousePosition;
@@ -19,18 +21,12 @@ namespace HolzShots.UI
             CurrentToolChanged += CurrentToolChanged_Event;
         }
 
-        private ShotEditorTool _currentTool;
-        private Screenshot _screenshot;
-
         private bool _drawCursor;
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public bool DrawCursor
         {
-            get
-            {
-                return _drawCursor;
-            }
+            get => _drawCursor;
             set
             {
                 _drawCursor = value;
@@ -41,10 +37,7 @@ namespace HolzShots.UI
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Screenshot Screenshot
         {
-            get
-            {
-                return DesignMode ? null : _screenshot;
-            }
+            get => DesignMode ? null : _screenshot;
             set
             {
                 if (!DesignMode)
@@ -99,43 +92,33 @@ namespace HolzShots.UI
                         Cursor = System.Windows.Forms.Cursors.Default;
                         break;
                     case ShotEditorTool.Crop:
-
                         CurrentToolObject = new Crop();
                         break;
                     case ShotEditorTool.Marker:
-
                         CurrentToolObject = new Marker();
                         break;
                     case ShotEditorTool.Censor:
-
                         CurrentToolObject = new Censor();
                         break;
                     case ShotEditorTool.Eraser:
-
                         CurrentToolObject = new Eraser();
                         break;
                     case ShotEditorTool.Blur:
-
                         CurrentToolObject = new Blur();
                         break;
                     case ShotEditorTool.Ellipse:
-
                         CurrentToolObject = new Ellipse();
                         break;
                     case ShotEditorTool.Eyedropper:
-
                         CurrentToolObject = new Eyedropper();
                         break;
                     case ShotEditorTool.Brighten:
-
                         CurrentToolObject = new Brighten();
                         break;
                     case ShotEditorTool.Arrow:
-
                         CurrentToolObject = new Arrow();
                         break;
                     default:
-
                         CurrentToolObject = null/* TODO Change to default(_) if this is not a reference type */;
                         break;
                 }
