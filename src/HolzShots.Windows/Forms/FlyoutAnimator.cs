@@ -58,10 +58,8 @@ public class FlyoutAnimator
         transition.Add(this, nameof(TargetY), targetY);
         transition.Add(this, nameof(TargetOpacity), 1.0);
 
-        // TODO: Fix this in .NET 5:
-        // https://stackoverflow.com/a/63372604
-        var cts = new TaskCompletionSource<bool>();
-        transition.TransitionCompletedEvent += (s, e) => _target.InvokeIfNeeded(() => cts.SetResult(true));
+        var cts = new TaskCompletionSource();
+        transition.TransitionCompletedEvent += (s, e) => _target.InvokeIfNeeded(() => cts.SetResult());
 
         transition.Run();
 
@@ -81,10 +79,8 @@ public class FlyoutAnimator
         transition.Add(this, nameof(TargetY), targetY);
         transition.Add(this, nameof(TargetOpacity), 0.0);
 
-        // TODO: Fix this in .NET 5:
-        // https://stackoverflow.com/a/63372604
-        var cts = new TaskCompletionSource<bool>();
-        transition.TransitionCompletedEvent += (s, e) => _target.InvokeIfNeeded(() => cts.SetResult(true));
+        var cts = new TaskCompletionSource();
+        transition.TransitionCompletedEvent += (s, e) => _target.InvokeIfNeeded(() => cts.SetResult());
 
         transition.Run();
 
