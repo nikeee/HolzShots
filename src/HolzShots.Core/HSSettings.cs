@@ -2,10 +2,9 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Reflection;
-using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 using HolzShots.Input.Keyboard;
 using HolzShots.IO;
-using Newtonsoft.Json;
 
 namespace HolzShots;
 
@@ -17,7 +16,7 @@ public class HSSettings
         "Schema URL to get some auto completion in some editors.",
         Overridable = false
     )]
-    [JsonProperty("$schema")]
+    [JsonPropertyName("$schema")]
     public string SchemaUrl { get; } = "https://holzshots.net/schema/settings.json";
 
     [SettingsDoc(
@@ -34,8 +33,8 @@ public class HSSettings
         Default = "true",
         Overridable = true
     )]
-    [JsonProperty("save.enabled")]
-    public bool SaveToLocalDisk { get; private set; } = true;
+    [JsonPropertyName("save.enabled")]
+    public bool SaveToLocalDisk { get; init; } = true;
 
     /// <summary> Note: Use <see cref="ExpandedSavePath" /> internally when actually saving something. </summary>
     [SettingsDoc(
@@ -47,8 +46,8 @@ public class HSSettings
         """,
         Overridable = true
     )]
-    [JsonProperty("save.path")]
-    public string SavePath { get; private set; } = HolzShotsPaths.DefaultScreenshotSavePath;
+    [JsonPropertyName("save.path")]
+    public string SavePath { get; init; } = HolzShotsPaths.DefaultScreenshotSavePath;
 
     /// <remarks> Use this instead of <see cref="SavePath" /> when actually saving a file. </remarks>
     [JsonIgnore]
@@ -68,8 +67,8 @@ public class HSSettings
         """,
         Overridable = true
     )]
-    [JsonProperty("image.save.pattern")]
-    public string SaveImageFileNamePattern { get; private set; } = "Screenshot-<Date>";
+    [JsonPropertyName("image.save.pattern")]
+    public string SaveImageFileNamePattern { get; init; } = "Screenshot-<Date>";
 
     [SettingsDoc(
         """
@@ -80,8 +79,8 @@ public class HSSettings
         """,
         Overridable = true
     )]
-    [JsonProperty("image.save.autoDetectBestImageFormat")]
-    public bool EnableSmartFormatForSaving { get; private set; } = false;
+    [JsonPropertyName("image.save.autoDetectBestImageFormat")]
+    public bool EnableSmartFormatForSaving { get; init; } = false;
 
     #endregion
     #region video.*
@@ -97,23 +96,23 @@ public class HSSettings
         """,
         Overridable = true
     )]
-    [JsonProperty("video.save.pattern")]
-    public string SaveVideoFileNamePattern { get; private set; } = "Recording-<Date>";
+    [JsonPropertyName("video.save.pattern")]
+    public string SaveVideoFileNamePattern { get; init; } = "Recording-<Date>";
 
     [SettingsDoc(
         "The pixel format for videos to use. Look up FFmpeg's pix_fmt parameter for valid values. Leave unconfigured if you don't know what this means.",
         Overridable = true
     )]
-    [JsonProperty("video.save.pixelFormat")]
-    public string? VideoPixelFormat { get; private set; } = null;
+    [JsonPropertyName("video.save.pixelFormat")]
+    public string? VideoPixelFormat { get; init; } = null;
 
     [SettingsDoc(
         "File format that recorded screen captures will be saved as. Use \"ask\" to select the format before the recording.",
         Default = "mp4",
         Overridable = true
     )]
-    [JsonProperty("video.format")]
-    public VideoCaptureFormat VideoOutputFormat { get; private set; } = VideoCaptureFormat.Mp4; // Not changing default to "ask" before GH#110
+    [JsonPropertyName("video.format")]
+    public VideoCaptureFormat VideoOutputFormat { get; init; } = VideoCaptureFormat.Mp4; // Not changing default to "ask" before GH#110
 
     // TODO: This is pretty buggy right now. FPS > 30 seem to result in a glitchy video.
     [SettingsDoc(
@@ -121,11 +120,11 @@ public class HSSettings
         Default = "30",
         Overridable = true
     )]
-    [JsonProperty("video.framesPerSecond")]
+    [JsonPropertyName("video.framesPerSecond")]
     public int VideoFrameRate
     {
         get;
-        private set => field = Math.Clamp(value, 1, 30);
+        init => field = Math.Clamp(value, 1, 30);
     } = 30;
 
     #endregion
@@ -136,24 +135,24 @@ public class HSSettings
         Default = "false",
         Overridable = true
     )]
-    [JsonProperty("editor.closeAfterUpload")]
-    public bool CloseAfterUpload { get; private set; } = false;
+    [JsonPropertyName("editor.closeAfterUpload")]
+    public bool CloseAfterUpload { get; init; } = false;
 
     [SettingsDoc(
         "Close the shot editor once the image was saved.",
         Default = "false",
         Overridable = true
     )]
-    [JsonProperty("editor.closeAfterSave")]
-    public bool CloseAfterSave { get; private set; } = false;
+    [JsonPropertyName("editor.closeAfterSave")]
+    public bool CloseAfterSave { get; init; } = false;
 
     [SettingsDoc(
         "The window title of the shot editor. Feel free to override the title on your key bindings.",
         Default = "Shot Editor",
         Overridable = true
     )]
-    [JsonProperty("editor.title")]
-    public string ShotEditorTitle { get; private set; } = "Shot Editor";
+    [JsonPropertyName("editor.title")]
+    public string ShotEditorTitle { get; init; } = "Shot Editor";
 
     #endregion
     #region upload.*
@@ -163,8 +162,8 @@ public class HSSettings
         Default = "true",
         Overridable = true
     )]
-    [JsonProperty("upload.showProgress")]
-    public bool ShowUploadProgress { get; private set; } = true;
+    [JsonPropertyName("upload.showProgress")]
+    public bool ShowUploadProgress { get; init; } = true;
 
     [SettingsDoc(
         """
@@ -176,24 +175,24 @@ public class HSSettings
         Default = "flyout",
         Overridable = true
     )]
-    [JsonProperty("upload.actionAfterUpload")]
-    public UploadHandlingAction ActionAfterUpload { get; private set; } = UploadHandlingAction.Flyout;
+    [JsonPropertyName("upload.actionAfterUpload")]
+    public UploadHandlingAction ActionAfterUpload { get; init; } = UploadHandlingAction.Flyout;
 
     [SettingsDoc(
         "Show a confirmation message as soon as the URL was copied and \"upload.actionAfterUpload\" is set to \"copy\".",
         Default = "true",
         Overridable = true
     )]
-    [JsonProperty("upload.actionAfterUpload.copy.showConfirmation")]
-    public bool ShowCopyConfirmation { get; private set; } = true;
+    [JsonPropertyName("upload.actionAfterUpload.copy.showConfirmation")]
+    public bool ShowCopyConfirmation { get; init; } = true;
 
     [SettingsDoc(
         "Automatically close the flyout containing the URL to the image as soon as some button is pressed and \"upload.actionAfterUpload\" is set to \"flyout\".",
         Default = "true",
         Overridable = true
     )]
-    [JsonProperty("upload.actionAfterUpload.flyout.closeOnCopy")]
-    public bool AutoCloseLinkViewer { get; private set; } = true;
+    [JsonPropertyName("upload.actionAfterUpload.flyout.closeOnCopy")]
+    public bool AutoCloseLinkViewer { get; init; } = true;
 
     /// <summary>
     /// TODO: Maybe use a different name for that.
@@ -208,16 +207,16 @@ public class HSSettings
         Default = "false",
         Overridable = true
     )]
-    [JsonProperty("upload.image.autoDetectBestImageFormat")]
-    public bool EnableSmartFormatForUpload { get; private set; } = false;
+    [JsonPropertyName("upload.image.autoDetectBestImageFormat")]
+    public bool EnableSmartFormatForUpload { get; init; } = false;
 
     [SettingsDoc(
         "Name of the service HolzShots is goind to upload the image.",
         Default = "directupload.net",
         Overridable = true
     )]
-    [JsonProperty("upload.service")]
-    public string TargetImageHoster { get; private set; } = "directupload.net";
+    [JsonPropertyName("upload.service")]
+    public string TargetImageHoster { get; init; } = "directupload.net";
 
     #endregion
     #region capture.*
@@ -239,8 +238,8 @@ public class HSSettings
         Default = "openEditor",
         Overridable = true
     )]
-    [JsonProperty("capture.image.actionAfterCapture")]
-    public ImageCaptureHandlingAction ActionAfterImageCapture { get; private set; } = ImageCaptureHandlingAction.OpenEditor;
+    [JsonPropertyName("capture.image.actionAfterCapture")]
+    public ImageCaptureHandlingAction ActionAfterImageCapture { get; init; } = ImageCaptureHandlingAction.OpenEditor;
 
     [SettingsDoc(
         """
@@ -255,19 +254,19 @@ public class HSSettings
         Default = "showInExplorer",
         Overridable = true
     )]
-    [JsonProperty("capture.video.actionAfterCapture")]
-    public VideoCaptureHandlingAction ActionAfterVideoCapture { get; private set; } = VideoCaptureHandlingAction.ShowInExplorer;
+    [JsonPropertyName("capture.video.actionAfterCapture")]
+    public VideoCaptureHandlingAction ActionAfterVideoCapture { get; init; } = VideoCaptureHandlingAction.ShowInExplorer;
 
     [SettingsDoc(
         "Opacity of the dimming effect when selection a region to capture. Must be between 0.0 and 1.0.",
         Default = "0.8",
         Overridable = true
     )]
-    [JsonProperty("capture.selection.dimmingOpacity")]
-    public float AreaSelectorDimmingOpacity
+    [JsonPropertyName("capture.selection.dimmingOpacity")]
+    public double AreaSelectorDimmingOpacity
     {
         get;
-        private set => field = Math.Clamp(value, 0.0f, 1.0f);
+        init => field = Math.Clamp(value, 0.0f, 1.0f);
     } = 0.8f;
 
     [SettingsDoc(
@@ -275,12 +274,12 @@ public class HSSettings
         Default = "0.0",
         Overridable = true
     )]
-    [JsonProperty("capture.delayInSeconds")]
-    public float CaptureDelay
+    [JsonPropertyName("capture.delayInSeconds")]
+    public double CaptureDelay
     {
         get;
-        private set => field = MathF.Max(0.0f, value);
-    } = 0.0f;
+        init => field = Math.Max(0.0, value);
+    } = 0.0;
 
     [SettingsDoc(
         """
@@ -291,8 +290,8 @@ public class HSSettings
         Default = "false",
         Overridable = true
     )]
-    [JsonProperty("capture.cursor")]
-    public bool CaptureCursor { get; private set; } = false;
+    [JsonPropertyName("capture.cursor")]
+    public bool CaptureCursor { get; init; } = false;
 
     #endregion
     #region tray.*
@@ -302,7 +301,7 @@ public class HSSettings
         Default = "null",
         Overridable = false
     )]
-    [JsonProperty("tray.doubleClickCommand")]
+    [JsonPropertyName("tray.doubleClickCommand")]
     [field: LeaveUntouchedInObjectDeepCopy] // Support for this doesn't make any sense
     public CommandDeclaration? TrayIconDoubleClickCommand { get; set; } = null;
 
@@ -314,15 +313,15 @@ public class HSSettings
         Default = "true",
         Overridable = true // TODO: Check if we check this on hotkey invocation with the appropriate settings context
     )]
-    [JsonProperty("key.enabledDuringFullscreen")]
-    public bool EnableHotkeysDuringFullscreen { get; private set; } = true;
+    [JsonPropertyName("key.enabledDuringFullscreen")]
+    public bool EnableHotkeysDuringFullscreen { get; init; } = true;
 
     // TODO: Fix visibility
     [SettingsDoc(
         "List of commands that get triggered by hotkeys.",
         Overridable = false
     )]
-    [JsonProperty("key.bindings")]
+    [JsonPropertyName("key.bindings")]
     [field: LeaveUntouchedInObjectDeepCopy] // Support for this doesn't make any sense
     public IReadOnlyList<KeyBinding> KeyBindings { get; set; } = [];
 
@@ -337,21 +336,21 @@ public record KeyBinding(Hotkey Keys, CommandDeclaration Command, bool Enabled =
 /// </summary>
 public class CommandDeclaration
 {
-    [JsonProperty("name")]
+    [JsonPropertyName("name")]
     public string CommandName { get; set; } = null!;
 
     /// <summary>
     /// TODO: Maybe we want to create something that every setting can be overwritten in the parameters.
     /// This would create the need for a context-specific settings instance that is merged from the global user settings and the parameters of that command.
     /// </summary>
-    [JsonProperty("params")]
+    [JsonPropertyName("params")]
     public IReadOnlyDictionary<string, string> Parameters { get; set; } = ImmutableDictionary<string, string>.Empty;
 
     /// <summary>
     ///
     /// </summary>
-    [JsonProperty("overrides")]
-    public IReadOnlyDictionary<string, dynamic> Overrides { get; set; } = ImmutableDictionary<string, dynamic>.Empty;
+    [JsonPropertyName("overrides")]
+    public IReadOnlyDictionary<string, object> Overrides { get; set; } = ImmutableDictionary<string, object>.Empty;
 
     public static implicit operator CommandDeclaration?(string commandName) => ToCommandDeclaration(commandName);
     public static CommandDeclaration? ToCommandDeclaration(string commandName)
@@ -362,61 +361,61 @@ public class CommandDeclaration
     }
 }
 
-[JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+[JsonConverter(typeof(JsonStringEnumConverter))]
 public enum UploadHandlingAction
 {
-    [EnumMember(Value = "flyout")]
+    [JsonStringEnumMemberName("flyout")]
     Flyout,
-    [EnumMember(Value = "copyLink")]
+    [JsonStringEnumMemberName("copyLink")]
     CopyToClipboard,
-    [EnumMember(Value = "none")]
+    [JsonStringEnumMemberName("none")]
     None,
 }
 
-[JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+[JsonConverter(typeof(JsonStringEnumConverter<ImageCaptureHandlingAction>))]
 public enum ImageCaptureHandlingAction
 {
-    [EnumMember(Value = "openEditor")]
+    [JsonStringEnumMemberName("openEditor")]
     OpenEditor,
-    [EnumMember(Value = "upload")]
+    [JsonStringEnumMemberName("upload")]
     Upload,
-    [EnumMember(Value = "saveAs")]
+    [JsonStringEnumMemberName("saveAs")]
     SaveAs,
-    [EnumMember(Value = "copyImage")]
+    [JsonStringEnumMemberName("copyImage")]
     Copy,
-    [EnumMember(Value = "none")]
+    [JsonStringEnumMemberName("none")]
     None,
 }
 
-[JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+[JsonConverter(typeof(JsonStringEnumConverter<VideoCaptureHandlingAction>))]
 public enum VideoCaptureHandlingAction
 {
-    [EnumMember(Value = "upload")]
+    [JsonStringEnumMemberName("upload")]
     Upload,
-    [EnumMember(Value = "copyFile")]
+    [JsonStringEnumMemberName("copyFile")]
     CopyFile,
-    [EnumMember(Value = "copyFilePath")]
+    [JsonStringEnumMemberName("copyFilePath")]
     CopyFilePath,
-    [EnumMember(Value = "showInExplorer")]
+    [JsonStringEnumMemberName("showInExplorer")]
     ShowInExplorer,
-    [EnumMember(Value = "openInDefaultApp")]
+    [JsonStringEnumMemberName("openInDefaultApp")]
     OpenInDefaultApp,
-    [EnumMember(Value = "none")]
+    [JsonStringEnumMemberName("none")]
     None,
 }
 
 /// <remarks> When adding new entries to this enum, consider adding it in the <see cref="HolzShots.Input.VideoCaptureFormatSelection.PromptFormat" /> of <see cref="HolzShots.Input.VideoCaptureFormatSelection" />. </remarks>
-[JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+[JsonConverter(typeof(JsonStringEnumConverter<VideoCaptureFormat>))]
 public enum VideoCaptureFormat
 {
-    [EnumMember(Value = "mp4")]
+    [JsonStringEnumMemberName("mp4")]
     Mp4,
     // See GH-110
-    // [EnumMember(Value = "webm")]
+    // [JsonStringEnumMemberName("webm")]
     // Webm,
-    // [EnumMember(Value = "gif")]
+    // [JsonStringEnumMemberName("gif")]
     // Gif,
-    [EnumMember(Value = "ask")]
+    [JsonStringEnumMemberName("ask")]
     AskBeforeRecording,
 }
 

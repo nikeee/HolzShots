@@ -32,10 +32,6 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(CI)' == 'True' ">
-    <DefineConstants>$(DefineConstants);CI_BUILD</DefineConstants>
-  </PropertyGroup>
-
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>

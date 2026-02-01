@@ -3,25 +3,32 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using HolzShots.IO;
 using HolzShots.Threading;
-using Newtonsoft.Json;
 
 namespace HolzShots;
 
 /// <summary>
-/// TODO: Migrate to System.Text.Json some day:
-/// https://docs.microsoft.com/dotnet/standard/serialization/system-text-json-migrate-from-newtonsoft-how-to
-///
 /// TODO: Maybe we want another type that can be transformed to T
 /// </summary>
 public class SettingsManager<T> : IDisposable, INotifyPropertyChanged
     where T : new()
 {
-    private static readonly JsonSerializerSettings _jsonSerializerSettings = new()
+    private static readonly JsonSerializerOptions _jsonSerializerOptions = new()
     {
-        ContractResolver = new NonPublicPropertiesResolver(),
-        Formatting = Formatting.Indented,
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        WriteIndented = true,
+        ReadCommentHandling = JsonCommentHandling.Skip,
+        AllowTrailingCommas = true,
+        IncludeFields = true,
+        Converters = {
+            new JsonStringEnumConverter<ImageCaptureHandlingAction>(),
+            new JsonStringEnumConverter<VideoCaptureHandlingAction>(),
+            new JsonStringEnumConverter<VideoCaptureFormat>(),
+        },
+        PropertyNameCaseInsensitive = true,
     };
 
     public T CurrentSettings { get; private set; } = new T();
@@ -97,13 +104,10 @@ public class SettingsManager<T> : IDisposable, INotifyPropertyChanged
     {
         try
         {
-            // TODO: Make this use some async overload of File.ReadAllText as soon as we're on .NET Core
-            // https://stackoverflow.com/questions/13167934
-
             using var reader = File.OpenText(path);
             // No check for File.Exists because we'll get an exception anyways and avoid race conditions
             var settingsContent = await reader.ReadToEndAsync().ConfigureAwait(false);
-            var newSettings = JsonConvert.DeserializeObject<T>(settingsContent, _jsonSerializerSettings);
+            var newSettings = JsonSerializer.Deserialize<T>(settingsContent, _jsonSerializerOptions);
 
             return (true, newSettings);
         }
@@ -127,7 +131,7 @@ public class SettingsManager<T> : IDisposable, INotifyPropertyChanged
 
     protected virtual IReadOnlyList<ValidationError> IsValidSettingsCandidate(T candidate) => [];
 
-    public T DeriveContextEffectiveSettings(T input, IReadOnlyDictionary<string, dynamic> overrides)
+    public T DeriveContextEffectiveSettings(T input, IReadOnlyDictionary<string, object> overrides)
     {
         if (overrides == null || overrides.Count == 0)
             return input;
@@ -139,8 +143,8 @@ public class SettingsManager<T> : IDisposable, INotifyPropertyChanged
 
         foreach (var prop in properties)
         {
-            var jsonAttr = prop.GetCustomAttribute<JsonPropertyAttribute>();
-            var jsonPropertyName = jsonAttr?.PropertyName;
+            var jsonAttr = prop.GetCustomAttribute<JsonPropertyNameAttribute>();
+            var jsonPropertyName = jsonAttr?.Name;
 
             if (jsonPropertyName is null)
                 continue;
@@ -154,10 +158,31 @@ public class SettingsManager<T> : IDisposable, INotifyPropertyChanged
         return settingsCopy;
     }
 
-    private static void OverrideProperty(T targetObject, PropertyInfo property, dynamic value)
+    private static void OverrideProperty(T targetObject, PropertyInfo property, object value)
     {
         Debug.Assert(targetObject is not null);
         Debug.Assert(property is not null);
+
+        // System.Text.Json deserializes JSON values as JsonElement, we need to convert them to the actual types
+        if (value is JsonElement jsonElement)
+        {
+            value = jsonElement.ValueKind switch
+            {
+                JsonValueKind.String => jsonElement.GetString()!,
+                JsonValueKind.Number =>
+                    jsonElement.TryGetInt32(out var i)
+                    ? i
+                    : jsonElement.TryGetInt64(out var l)
+                    ? l
+                    : jsonElement.TryGetDouble(out var d)
+                    ? d
+                    : throw new ArgumentException("Unable to parse value"),
+                JsonValueKind.True => true,
+                JsonValueKind.False => false,
+                JsonValueKind.Null => null!,
+                _ => value
+            };
+        }
 
         var propType = property.PropertyType;
 
@@ -166,10 +191,11 @@ public class SettingsManager<T> : IDisposable, INotifyPropertyChanged
             foreach (var enumMemberName in Enum.GetNames(propType))
             {
                 var enumMember = propType.GetField(enumMemberName);
-                var enumMemberAttr = enumMember?.GetCustomAttribute<System.Runtime.Serialization.EnumMemberAttribute>();
+                var enumMemberAttr = enumMember?.GetCustomAttribute<JsonStringEnumMemberNameAttribute>();
                 if (enumMemberAttr is null)
                     continue;
-                if (enumMemberAttr.Value == jsonEnumMember)
+
+                if (enumMemberAttr.Name == jsonEnumMember)
                 {
                     var enumValue = Enum.Parse(propType, enumMemberName);
                     property.SetValue(targetObject, enumValue);
@@ -188,71 +214,64 @@ public class SettingsManager<T> : IDisposable, INotifyPropertyChanged
                 return;
             }
 
-            // What is this
-            if (propType == typeof(bool) && value is bool b)
+            switch (Type.GetTypeCode(propType))
             {
-                property.SetValue(targetObject, b);
-                return;
-            }
-            if (propType == typeof(double))
-            {
-                if (HandleFloatNumber<double>(targetObject, property, value))
-                    return;
-            }
-            if (propType == typeof(float))
-            {
-                if (HandleFloatNumber<float>(targetObject, property, value))
-                    return;
-            }
-            if (propType == typeof(int))
-            {
-                if (HandleIntegerNumber<int>(targetObject, property, value))
-                    return;
-            }
-            if (propType == typeof(long))
-            {
-                if (HandleIntegerNumber<long>(targetObject, property, value))
-                    return;
-            }
-            if (propType == typeof(short))
-            {
-                if (HandleIntegerNumber<short>(targetObject, property, value))
-                    return;
-            }
-            if (propType == typeof(byte))
-            {
-                if (HandleIntegerNumber<byte>(targetObject, property, value))
-                    return;
-            }
-            if (propType == typeof(char) && value is char c)
-            {
-                property.SetValue(targetObject, c);
-                return;
-            }
-            if (propType == typeof(uint) && value is uint)
-            {
-                if (HandleIntegerNumber<uint>(targetObject, property, value))
-                    return;
-            }
-            if (propType == typeof(ulong) && value is ulong)
-            {
-                if (HandleIntegerNumber<ulong>(targetObject, property, value))
-                    return;
-            }
-            if (propType == typeof(ushort) && value is ushort)
-            {
-                if (HandleIntegerNumber<ushort>(targetObject, property, value))
-                    return;
-            }
-            if (propType == typeof(sbyte) && value is sbyte)
-            {
-                if (HandleIntegerNumber<sbyte>(targetObject, property, value))
-                    return;
-            }
-            if (propType == typeof(decimal) && value is decimal)
-            {
-                if (HandleFloatNumber<decimal>(targetObject, property, value))
-                    return;
+                case TypeCode.Boolean:
+                    if (value is bool b)
+                    {
+                        property.SetValue(targetObject, b);
+                        return;
+                    }
+                    break;
+                case TypeCode.Double:
+                    if (HandleFloatNumber<double>(targetObject, property, value))
+                        return;
+                    break;
+                case TypeCode.Int32:
+                    if (HandleIntegerNumber<int>(targetObject, property, value))
+                        return;
+                    break;
+                case TypeCode.Int64:
+                    if (HandleIntegerNumber<long>(targetObject, property, value))
+                        return;
+                    break;
+                case TypeCode.Int16:
+                    if (HandleIntegerNumber<short>(targetObject, property, value))
+                        return;
+                    break;
+                case TypeCode.Byte:
+                    if (HandleIntegerNumber<byte>(targetObject, property, value))
+                        return;
+                    break;
+                case TypeCode.Char:
+                    if (value is char c)
+                    {
+                        property.SetValue(targetObject, c);
+                        return;
+                    }
+                    break;
+                case TypeCode.UInt32:
+                    if (HandleIntegerNumber<uint>(targetObject, property, value))
+                        return;
+                    break;
+                case TypeCode.UInt64:
+                    if (HandleIntegerNumber<ulong>(targetObject, property, value))
+                        return;
+                    break;
+                case TypeCode.UInt16:
+                    if (HandleIntegerNumber<ushort>(targetObject, property, value))
+                        return;
+                    break;
+                case TypeCode.Single:
+                    throw new NotSupportedException("Json format does not support float numbers"); // JSON has standardized double, so we only accept that
+                case TypeCode.SByte:
+                    if (value is sbyte)
+                        throw new NotSupportedException("Json format does not support sbyte numbers");
+                    break;
+                case TypeCode.Decimal:
+                    if (value is decimal)
+                        throw new NotSupportedException("Json format does not support decimal numbers");
+                    break;
             }
         }
 
@@ -264,7 +283,7 @@ public class SettingsManager<T> : IDisposable, INotifyPropertyChanged
 
         Trace.WriteLine($"Unsupported override of property {property.Name}, doing nothing");
     }
-    private static bool HandleFloatNumber<TProp>(T targetObject, PropertyInfo property, dynamic value)
+    private static bool HandleFloatNumber<TProp>(T targetObject, PropertyInfo property, object value)
     {
         if (
             value is float
@@ -284,7 +303,7 @@ public class SettingsManager<T> : IDisposable, INotifyPropertyChanged
         return false;
     }
 
-    private static bool HandleIntegerNumber<TProp>(T targetObject, PropertyInfo property, dynamic value)
+    private static bool HandleIntegerNumber<TProp>(T targetObject, PropertyInfo property, object value)
     {
         if (
             value is int

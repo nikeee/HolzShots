@@ -47,7 +47,7 @@ public partial class AreaSelector : AnimatedForm, IAreaSelector
         windowEnumerationTask.CancelAfter(5000);
         WindowFinder.GetCurrentWindowRectanglesAsync(Handle, allowEntireScreen, windowEnumerationTask.Token).ContinueWith(t => SetAvailableWindows(t.Result));
 
-        _dimmingOverlayBrush = Device.CreateSolidColorBrush(new D2DColor(settingsContext.AreaSelectorDimmingOpacity, OverlayColor)) ?? throw new D2DInteropException($"Could not create `{nameof(D2DBitmap)}`");
+        _dimmingOverlayBrush = Device.CreateSolidColorBrush(new D2DColor((float)settingsContext.AreaSelectorDimmingOpacity, OverlayColor)) ?? throw new D2DInteropException($"Could not create `{nameof(D2DBitmap)}`");
         _image = Device.CreateBitmapFromGDIBitmap(image) ?? throw new D2DInteropException($"Could not create `{nameof(D2DBitmap)}`");
         _imageBounds = new Rectangle(0, 0, image.Width, image.Height);
         _dimmedImage = CreateDimmedImage(image.Width, image.Height);

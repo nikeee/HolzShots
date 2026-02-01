@@ -1,14 +1,27 @@
-using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.IO;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Xunit;
 
 namespace HolzShots.Tests;
 
 public class HSSettingsTest
 {
-    private static readonly JsonSerializerSettings JsonSettings = new()
+    private static readonly JsonSerializerOptions JsonOptions = new()
     {
-        ContractResolver = new NonPublicPropertiesResolver(),
-        Formatting = Formatting.Indented,
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        WriteIndented = true,
+        ReadCommentHandling = JsonCommentHandling.Skip,
+        AllowTrailingCommas = true,
+        IncludeFields = true,
+        Converters = {
+            new JsonStringEnumConverter<ImageCaptureHandlingAction>(),
+            new JsonStringEnumConverter<VideoCaptureHandlingAction>(),
+            new JsonStringEnumConverter<VideoCaptureFormat>(),
+         },
+        PropertyNameCaseInsensitive = true,
     };
 
     [Fact]
@@ -16,8 +29,8 @@ public class HSSettingsTest
     {
         var settings = new HSSettings();
 
-        var json = JsonConvert.SerializeObject(settings, JsonSettings);
-        var deserialized = JsonConvert.DeserializeObject<HSSettings>(json, JsonSettings);
+        var json = JsonSerializer.Serialize(settings, JsonOptions);
+        var deserialized = JsonSerializer.Deserialize<HSSettings>(json, JsonOptions);
 
         Assert.NotNull(deserialized);
         Assert.Equal(settings.SaveToLocalDisk, deserialized.SaveToLocalDisk);
@@ -74,7 +87,7 @@ public class HSSettingsTest
         }
         """;
 
-        var settings = JsonConvert.DeserializeObject<HSSettings>(json, JsonSettings);
+        var settings = JsonSerializer.Deserialize<HSSettings>(json, JsonOptions);
 
         Assert.NotNull(settings);
         Assert.False(settings.SaveToLocalDisk);
@@ -114,7 +127,7 @@ public class HSSettingsTest
         }
         """;
 
-        var settings = JsonConvert.DeserializeObject<HSSettings>(json, JsonSettings);
+        var settings = JsonSerializer.Deserialize<HSSettings>(json, JsonOptions);
 
         Assert.NotNull(settings);
         Assert.Equal(UploadHandlingAction.Flyout, settings.ActionAfterUpload);
@@ -128,7 +141,7 @@ public class HSSettingsTest
     {
         var settings = new HSSettings();
 
-        var json = JsonConvert.SerializeObject(settings, JsonSettings);
+        var json = JsonSerializer.Serialize(settings, JsonOptions);
 
         Assert.Contains("\"$schema\":", json);
         Assert.Contains("\"save.enabled\":", json);
@@ -149,7 +162,7 @@ public class HSSettingsTest
     {
         var json = $"{{\"video.framesPerSecond\": {input}}}";
 
-        var settings = JsonConvert.DeserializeObject<HSSettings>(json, JsonSettings);
+        var settings = JsonSerializer.Deserialize<HSSettings>(json, JsonOptions);
 
         Assert.NotNull(settings);
         Assert.Equal(expected, settings.VideoFrameRate);
@@ -163,7 +176,7 @@ public class HSSettingsTest
     {
         var json = $"{{\"capture.selection.dimmingOpacity\": {input.ToString(System.Globalization.CultureInfo.InvariantCulture)}}}";
 
-        var settings = JsonConvert.DeserializeObject<HSSettings>(json, JsonSettings);
+        var settings = JsonSerializer.Deserialize<HSSettings>(json, JsonOptions);
 
         Assert.NotNull(settings);
         Assert.Equal(expected, settings.AreaSelectorDimmingOpacity);
@@ -177,7 +190,7 @@ public class HSSettingsTest
     {
         var json = $"{{\"capture.delayInSeconds\": {input.ToString(System.Globalization.CultureInfo.InvariantCulture)}}}";
 
-        var settings = JsonConvert.DeserializeObject<HSSettings>(json, JsonSettings);
+        var settings = JsonSerializer.Deserialize<HSSettings>(json, JsonOptions);
 
         Assert.NotNull(settings);
         Assert.Equal(expected, settings.CaptureDelay);
