@@ -4,7 +4,6 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using HolzShots.Drawing;
 using HolzShots.Drawing.Tools;
-using static ThisAssembly.Resources.Drawing;
 
 namespace HolzShots.UI;
 

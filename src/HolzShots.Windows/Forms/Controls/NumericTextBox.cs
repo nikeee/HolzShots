@@ -1,6 +1,6 @@
+using System.ComponentModel;
 using System.Globalization;
 using System.Windows.Forms;
-using System.ComponentModel;
 
 namespace HolzShots.Windows.Forms.Controls;
 

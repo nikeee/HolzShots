@@ -14,7 +14,7 @@ public static class StreamExtensions
             throw new ArgumentException("Has to be readable", nameof(source));
         if (!destination.CanWrite)
             throw new ArgumentException("Has to be writable", nameof(destination));
-        
+
 
         var buffer = new byte[bufferSize];
         long totalBytesRead = 0;

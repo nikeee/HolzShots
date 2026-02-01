@@ -54,9 +54,6 @@
 
     <!-- Make these available via ThisAssembly.Project -->
     <ProjectProperty Include="RepositoryUrl" />
-
-    <!-- TODO: fill this constant in CI -->
-    <Constant Include="BuildDate" Value="2022-02-28" />
   </ItemGroup>
 
   <ItemGroup>

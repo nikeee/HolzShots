@@ -1,6 +1,6 @@
+using System.Diagnostics;
 using System.Windows.Forms;
 using HolzShots.Net;
-using System.Diagnostics;
 
 namespace HolzShots.Capture.Video.FFmpeg;
 

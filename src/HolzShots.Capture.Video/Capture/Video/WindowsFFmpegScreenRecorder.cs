@@ -1,5 +1,4 @@
 using System.Drawing;
-using System.Linq;
 using HolzShots.Capture.Video.FFmpeg;
 
 namespace HolzShots.Capture.Video;

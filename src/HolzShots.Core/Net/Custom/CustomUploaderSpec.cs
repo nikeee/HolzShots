@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
@@ -88,10 +87,10 @@ public class ResponseParser
 {
     [JsonIgnore]
     public IReadOnlyList<string>? RegexPatterns { get; }
-    
+
     [JsonIgnore]
     public IReadOnlyList<Regex>? ParsedRegexPatterns { get; }
-    
+
     public string? UrlTemplate { get; }
     // public string Failure { get; } = null;
 

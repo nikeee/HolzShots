@@ -1,14 +1,14 @@
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
 
-using System.Data;
-using System.Diagnostics;
-using System.Windows.Forms;
-using HolzShots.Input.Keyboard;
-using HolzShots.Input.Actions;
-using HolzShots.Windows.Forms;
-using System.Linq;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
+using System.Diagnostics;
+using System.Linq;
+using System.Windows.Forms;
+using HolzShots.Input.Actions;
+using HolzShots.Input.Keyboard;
+using HolzShots.Windows.Forms;
 
 namespace HolzShots;
 
