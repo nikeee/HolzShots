@@ -57,7 +57,7 @@ public class CustomUploaderSpecUpdater
                 var newSpec = parsedUploader.UploaderInfo;
                 if (newSpec is not null)
                 {
-                    if (newSpec.Meta.Version.ComparePrecedenceTo(newSpec.Meta.Version) > 0)
+                    if (newSpec.Meta.Version.ComparePrecedenceTo(spec.Meta.Version) > 0)
                     {
                         availableUpdates.Add(new SpecUpdate(filePath, spec, newSpec, newSpecCandidate));
                     }
