@@ -113,16 +113,18 @@ public partial class PaintPanel : UserControl
 
         RawBox.Focus();
 
+        _initialized = true;
+
         Initialized?.Invoke(this, new EventArgs());
     }
 
+    /// <remarks> ponytail: the panel receives mouse input before ShotEditorLoad calls Initialize(), so Screenshot may still be unset </remarks>
+    private bool _initialized;
+
     private void InvokeFinalRender(ITool<ToolSettingsBase> tool)
     {
-        var img = (Image)CurrentImage.Clone();
         Debug.Assert(tool is not null);
-        Debug.Assert(img is not null);
-        if (img is null)
-            return;
+        var img = (Image)CurrentImage.Clone();
 
         // Dim oldImageRef = img
         tool.RenderFinalImage(ref img);
@@ -178,6 +180,9 @@ public partial class PaintPanel : UserControl
 
     private void DrawBoxMouseClick(object sender, MouseEventArgs e)
     {
+        if (!_initialized)
+            return;
+
         var cursor = Cursor;
         CurrentTool?.MouseClicked(CurrentImage, e.Location.ToVector2(), ref cursor, this);
         RawBox.Invalidate();
@@ -185,6 +190,9 @@ public partial class PaintPanel : UserControl
 
     private void MouseLayerMouseDown(object sender, MouseEventArgs e)
     {
+        if (!_initialized)
+            return;
+
         _mouseDown = true;
 
         if (CurrentTool.ToolType == ShotEditorTool.None) // quick hack
@@ -204,6 +212,9 @@ public partial class PaintPanel : UserControl
 
     private void MouseLayerMouseMove(object sender, MouseEventArgs e)
     {
+        if (!_initialized)
+            return;
+
         if (e.Button == MouseButtons.Left)
         {
             if (CurrentTool is not null)
@@ -221,20 +232,18 @@ public partial class PaintPanel : UserControl
 
     private void MouseLayerMouseUp(object sender, MouseEventArgs e)
     {
-        if (e.Button != MouseButtons.Left)
+        if (!_initialized || e.Button != MouseButtons.Left)
             return;
 
-        if (CurrentTool is not Eyedropper)
-            InvokeFinalRender(CurrentTool);
-        else
-        {
-            var img = CurrentImage;
-            if (img is null)
-                return;
-
-            CurrentTool.RenderFinalImage(ref img);
-        }
+        var wasDragging = _mouseDown;
         _mouseDown = false;
+
+        // Mirrors MouseLayerMouseDown: without a mouse down on this panel there is nothing to render,
+        // and Eyedropper/NoTool have no final render at all.
+        if (!wasDragging || CurrentTool.ToolType is ShotEditorTool.None or ShotEditorTool.Eyedropper)
+            return;
+
+        InvokeFinalRender(CurrentTool);
     }
 
     private bool _mouseDown = false;
