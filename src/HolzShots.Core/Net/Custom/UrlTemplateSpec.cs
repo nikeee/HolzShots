@@ -78,9 +78,8 @@ abstract class ExpressionSyntaxNode : TemplateSyntaxNode
     public static string ReadExpressionNodeKind(ReadOnlySpan<char> value, ref int index)
     {
         var start = index;
-        var currentChar = value[index];
-        while (index < value.Length && currentChar != ExpressionStartBoundary && currentChar != ExpressionParameterBoundary)
-            currentChar = value[++index];
+        while (index < value.Length && value[index] != ExpressionStartBoundary && value[index] != ExpressionParameterBoundary)
+            ++index;
 
         return value[start..index].ToString().ToLowerInvariant();
     }
@@ -108,9 +107,8 @@ class RegExSyntaxNode : ExpressionSyntaxNode
         Debug.Assert(index < value.Length);
 
         var start = index;
-        var currentChar = value[index];
-        while (index < value.Length && currentChar != ExpressionEndBoundary)
-            currentChar = value[++index];
+        while (index < value.Length && value[index] != ExpressionEndBoundary)
+            ++index;
 
         var contents = value[start..index].ToString();
 
@@ -174,9 +172,8 @@ class JsonSyntaxNode : ExpressionSyntaxNode
         Debug.Assert(index < value.Length);
 
         var start = index;
-        var currentChar = value[index];
-        while (index < value.Length && currentChar != ExpressionEndBoundary)
-            currentChar = value[++index];
+        while (index < value.Length && value[index] != ExpressionEndBoundary)
+            ++index;
 
         var jsonPath = value[start..index].ToString();
         Debug.Assert(jsonPath is not null && jsonPath.Length > 0);
