@@ -31,7 +31,7 @@ public class CommandManager<TSettings>(SettingsManager<TSettings> settingsManage
         name = name.ToLowerInvariant();
 
         if (Actions.ContainsKey(name))
-            throw new UnreachableException($"Unhandled command: '{name}'");
+            throw new ArgumentException($"Command '{name}' is already registered", nameof(command));
         Actions[name] = command;
     }
 
