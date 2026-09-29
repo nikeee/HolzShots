@@ -33,7 +33,7 @@ public class FFmpegFetcher
         var tempZipFilePath = Path.GetTempFileName();
         try
         {
-            using (var diskZipFileStream = File.OpenWrite(tempZipFilePath))
+            using (var diskZipFileStream = File.Create(tempZipFilePath))
                 await client.DownloadAsync(url, diskZipFileStream, progress, cancellationToken);
 
             ZipFile.ExtractToDirectory(tempZipFilePath, targetDir, true);

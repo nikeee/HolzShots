@@ -260,7 +260,7 @@ namespace HolzShots.UI
                 var format = ImageFormatInformation.GetImageFormatFromFileName(fileName);
                 Debug.Assert(format != null);
 
-                using var fileStream = File.OpenWrite(fileName);
+                using var fileStream = File.Create(fileName);
                 bmp.SaveExtended(fileStream, format);
 
                 if (_settingsContext.CloseAfterSave)

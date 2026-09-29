@@ -88,7 +88,7 @@ public abstract class ImageCapturingCommand : ICommand<HSSettings>
 
         try
         {
-            using var fileStream = File.OpenWrite(f);
+            using var fileStream = File.Create(f);
             screenshot.Image.SaveExtended(fileStream, format);
         }
         catch (PathTooLongException)

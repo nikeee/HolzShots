@@ -35,7 +35,7 @@ public static class UserSettings
             await File.WriteAllTextAsync(HolzShotsPaths.DemoCustomUploaderPath, contents);
         }
 
-        using var fs = File.OpenWrite(HolzShotsPaths.UserSettingsFilePath);
+        using var fs = File.Create(HolzShotsPaths.UserSettingsFilePath);
         var defaultSettingsStr = await CreateDefaultSettingsJson().ConfigureAwait(false);
         var defaultSettings = Encoding.UTF8.GetBytes(defaultSettingsStr);
         await fs.WriteAsync(defaultSettings).ConfigureAwait(false);
