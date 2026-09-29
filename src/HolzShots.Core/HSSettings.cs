@@ -439,7 +439,7 @@ public static class ObjectExtensions
 
     public static bool IsPrimitive(this Type type) => (type == typeof(string)) || (type.IsValueType && type.IsPrimitive);
 
-    public static object? Copy(this object originalObject) => InternalCopy(originalObject, new Dictionary<object, object>(new ReferenceEqualityComparer()));
+    public static object? Copy(this object originalObject) => InternalCopy(originalObject, new Dictionary<object, object>(System.Collections.Generic.ReferenceEqualityComparer.Instance));
 
     private static object? InternalCopy(object? originalObject, IDictionary<object, object> visited)
     {
@@ -505,12 +505,6 @@ public static class ObjectExtensions
         original is null
             ? default
             : (T)Copy((object)original)!;
-}
-
-public class ReferenceEqualityComparer : EqualityComparer<object>
-{
-    public override bool Equals(object? x, object? y) => ReferenceEquals(x, y);
-    public override int GetHashCode(object o) => o == null ? 0 : o.GetHashCode();
 }
 
 public static class ArrayExtensions
