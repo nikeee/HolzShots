@@ -27,7 +27,7 @@ public static class UserSettings
             return;
 
         var createdAppData = HolzShotsPaths.EnsureAppDataDirectories();
-        if (!createdAppData)
+        if (createdAppData)
         {
             // Since the appdata (and the plugins dir) was just created, there is no demo uploader. So we need to place it there.
             // It's also referenced in the default settings, so it should better be there
