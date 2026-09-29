@@ -57,6 +57,7 @@ public class CaptureSelectedAreaCommand : ImageCapturingCommand
 
         using var prio = new ProcessPriorityRequest();
         var (screen, cursorPosition) = ScreenshotCreator.CaptureScreenshot(SystemInformation.VirtualScreen, settingsContext.CaptureCursor);
+        using var _ = screen;
         using var selector = AreaSelector.Create(screen, true, settingsContext);
 
         var (selectedArea, _) = await selector.PromptSelectionAsync().ConfigureAwait(true);
@@ -74,6 +75,6 @@ public class CaptureSelectedAreaCommand : ImageCapturingCommand
 
         g.DrawImage(screen, new Rectangle(0, 0, selectedArea.Width, selectedArea.Height), selectedArea, GraphicsUnit.Pixel);
 
-        return Screenshot.FromImage(selectedImage, cursorPosition, ScreenshotSource.Selected);
+        return Screenshot.FromImage(selectedImage, cursorPositionOnSelectedImage, ScreenshotSource.Selected);
     }
 }
