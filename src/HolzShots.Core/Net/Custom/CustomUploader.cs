@@ -33,8 +33,7 @@ public class CustomUploader : Uploader
             var size = data.Length;
             if (size > mfs.Value)
             {
-                var memSize = new MemSize(mfs.Value);
-                throw new UploadException($"File is {memSize} in size, which is larger than the specified limit of {nameof(UploaderInfo.Uploader.MaxFileSize)}.");
+                throw new UploadException($"File is {new MemSize(size)} in size, which is larger than the specified limit of {new MemSize(mfs.Value)}.");
             }
         }
 
