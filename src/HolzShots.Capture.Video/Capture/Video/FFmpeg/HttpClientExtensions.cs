@@ -11,6 +11,7 @@ public static class HttpClientExtensions
     {
         // Get the http headers first to examine the content length
         using var response = await client.GetAsync(requestUri, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
+        response.EnsureSuccessStatusCode();
 
         var contentLength = response.Content.Headers.ContentLength;
 
