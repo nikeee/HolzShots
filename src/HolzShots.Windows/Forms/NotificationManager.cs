@@ -115,6 +115,10 @@ public static class NotificationManager
             // Maybe we want to remove the "do you want to turn it off now" feature off
         }
     }
+    public static void ScreenRecordingFailed(Exception ex)
+    {
+        Show(GenericErrorTitle, "Screen recording failed", $"The recording could not be saved.\n{ex.Message}", TaskDialogIcon.Error, TaskDialogButton.OK);
+    }
     public static void ErrorSavingImage(Exception ex, IWin32Window? parent = null)
     {
         Show(parent, GenericErrorTitle, "There was an error saving your image.", ex.Message, TaskDialogIcon.Error, TaskDialogButton.OK);

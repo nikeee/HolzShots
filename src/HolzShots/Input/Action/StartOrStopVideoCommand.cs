@@ -33,7 +33,17 @@ public class StartOrStopVideoCommand : ICommand<HSSettings>
             return;
         }
 
-        var recording = await PerformScreenRecording(settingsContext);
+        ScreenRecording? recording;
+        try
+        {
+            recording = await PerformScreenRecording(settingsContext);
+        }
+        catch (ScreenRecordingFailedException ex)
+        {
+            NotificationManager.ScreenRecordingFailed(ex);
+            return;
+        }
+
         if (recording == null)
             return; // User likely cancelled recording
 
@@ -268,15 +278,15 @@ public record VideoUploadPayload : IUploadPayload
     static string GetMimeTypeForVideoFormat(VideoCaptureFormat format) => format switch
     {
         VideoCaptureFormat.Mp4 => "video/mp4",
-        // VideoCaptureFormat.Gif => "image/gif",
-        // VideoCaptureFormat.Webm => "video/webm",
+        VideoCaptureFormat.Gif => "image/gif",
+        VideoCaptureFormat.Webm => "video/webm",
         _ => throw new UnreachableException("Unhandled VideoCaptureFormat: " + format),
     };
     public static string GetExtensionForVideoFormat(VideoCaptureFormat format) => format switch
     {
         VideoCaptureFormat.Mp4 => ".mp4",
-        // VideoCaptureFormat.Gif => ".gif",
-        // VideoCaptureFormat.Webm => ".webm",
+        VideoCaptureFormat.Gif => ".gif",
+        VideoCaptureFormat.Webm => ".webm",
         _ => throw new UnreachableException("Unhandled VideoCaptureFormat: " + format),
     };
 }
