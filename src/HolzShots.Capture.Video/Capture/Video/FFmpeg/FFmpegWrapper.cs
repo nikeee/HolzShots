@@ -61,6 +61,7 @@ record FFmpegGdiGrabArguments(
     Rectangle CaptureBounds,
     int FrameRate,
     bool CaptureCursor,
+    VideoCaptureFormat OutputFormat,
     string? PixelFormat,
     string TargetFile
 
@@ -75,10 +76,35 @@ record FFmpegGdiGrabArguments(
         $"-show_region 0",
         $"-draw_mouse {(CaptureCursor ? 1 : 0)}",
         $"-i desktop",
-        $"-movflags",
-        $"+faststart",
-        $"-c:v libx264",
-        $"{(PixelFormat == null ? string.Empty : "-pix_fmt " + PixelFormat.ToLowerInvariant())}",
+        GetEncoderArguments(),
         $"\"{TargetFile}\" -y"
     );
+
+    private string GetEncoderArguments() => OutputFormat switch
+    {
+        VideoCaptureFormat.Mp4 => string.Join(" ",
+            $"-movflags",
+            $"+faststart",
+            $"-c:v libx264",
+            GetPixelFormatArgument()
+        ),
+        // The WebM container only supports VP8, VP9 and AV1 (GH-110)
+        // Without the realtime settings, libvpx cannot keep up with the capture
+        // Without "-b:v 0", libvpx-vp9 targets a very low default bitrate
+        VideoCaptureFormat.Webm => string.Join(" ",
+            $"-c:v libvpx-vp9",
+            $"-deadline realtime",
+            $"-cpu-used 8",
+            $"-row-mt 1",
+            $"-crf 32",
+            $"-b:v 0",
+            GetPixelFormatArgument()
+        ),
+        // The GIF muxer only supports the gif codec, which is ffmpeg's default for .gif (GH-110)
+        // We generate a palette per frame, because a global palette would require buffering the entire recording in memory until it ends
+        VideoCaptureFormat.Gif => "-vf \"split[a][b];[a]palettegen=stats_mode=single[p];[b][p]paletteuse=new=1:diff_mode=rectangle\"",
+        _ => throw new ArgumentException("Unhandled VideoCaptureFormat: " + OutputFormat),
+    };
+
+    private string GetPixelFormatArgument() => PixelFormat == null ? string.Empty : "-pix_fmt " + PixelFormat.ToLowerInvariant();
 }
