@@ -112,7 +112,7 @@ public class HSSettings
         Overridable = true
     )]
     [JsonPropertyName("video.format")]
-    public VideoCaptureFormat VideoOutputFormat { get; init; } = VideoCaptureFormat.Mp4; // Not changing default to "ask" before GH#110
+    public VideoCaptureFormat VideoOutputFormat { get; init; } = VideoCaptureFormat.Mp4;
 
     // TODO: This is pretty buggy right now. FPS > 30 seem to result in a glitchy video.
     [SettingsDoc(
@@ -410,11 +410,10 @@ public enum VideoCaptureFormat
 {
     [JsonStringEnumMemberName("mp4")]
     Mp4,
-    // See GH-110
-    // [JsonStringEnumMemberName("webm")]
-    // Webm,
-    // [JsonStringEnumMemberName("gif")]
-    // Gif,
+    [JsonStringEnumMemberName("webm")]
+    Webm,
+    [JsonStringEnumMemberName("gif")]
+    Gif,
     [JsonStringEnumMemberName("ask")]
     AskBeforeRecording,
 }
