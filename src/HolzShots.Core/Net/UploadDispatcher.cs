@@ -112,9 +112,11 @@ public static class UploadDispatcher
 
         try
         {
-            var bmp = image is Bitmap b ? b : new Bitmap(image);
+            if (image is Bitmap b)
+                return Drawing.ImageFormatAnalyzer.GetBestFittingFormat(b); // Experimental?
 
-            return Drawing.ImageFormatAnalyzer.GetBestFittingFormat(bmp); // Experimental?
+            using var bmp = new Bitmap(image);
+            return Drawing.ImageFormatAnalyzer.GetBestFittingFormat(bmp);
         }
         catch (Exception e)
         {
