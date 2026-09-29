@@ -185,17 +185,8 @@ class JsonSyntaxNode : ExpressionSyntaxNode
 
     public override string Evaluate(ResponseParser responseParser, string content)
     {
-        JsonDocument contentJson;
-        try
-        {
-            contentJson = JsonDocument.Parse(content);
-        }
-        catch (JsonException ex)
-        {
-            throw new UnableToFillTemplateException(content, "Invalid JSON response", ex);
-        }
+        using var contentJson = ParseJsonResponse(content);
 
-        Debug.Assert(contentJson is not null);
         // Get Success Link-Value
 
         // System.Text.Json doesn't have a built-in JSONPath implementation like Newtonsoft.Json's SelectToken
@@ -204,6 +195,18 @@ class JsonSyntaxNode : ExpressionSyntaxNode
         return result.HasValue
             ? result.Value.ToString()
             : throw new UnableToFillTemplateException(content, $"Could not select JSON path: {JsonPath}");
+    }
+
+    private static JsonDocument ParseJsonResponse(string content)
+    {
+        try
+        {
+            return JsonDocument.Parse(content);
+        }
+        catch (JsonException ex)
+        {
+            throw new UnableToFillTemplateException(content, "Invalid JSON response", ex);
+        }
     }
 
     private static JsonElement? SelectJsonElement(JsonElement root, string path)
