@@ -124,7 +124,7 @@ class RegExSyntaxNode : ExpressionSyntaxNode
         if (parameters.Length >= 3)
             matchIndex = int.Parse(parameters[2]);
 
-        ++index; // Consume $
+        ++index; // Consume >
 
         return new RegExSyntaxNode(patternIndex, groupName, matchIndex);
     }
