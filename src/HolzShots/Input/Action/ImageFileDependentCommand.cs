@@ -13,7 +13,7 @@ public abstract class ImageFileDependentCommand
     protected static bool CanProcessFile(string fileName)
     {
         var ext = Path.GetExtension(fileName);
-        return AllowedExtensions.Contains(ext);
+        return AllowedExtensions.Contains(ext, StringComparer.OrdinalIgnoreCase);
     }
 
     protected static string? ShowFileSelector(string title)
