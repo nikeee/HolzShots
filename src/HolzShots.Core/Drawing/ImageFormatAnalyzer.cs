@@ -137,7 +137,7 @@ public static class ImageFormatAnalyzer
             AlgorithmKind.ComplexScanning => GetBestFittingFormatAlgorithm(image),
             AlgorithmKind.BruteSaving => GetBestFittingFormatBruteSaving(image),
             AlgorithmKind.Hybrid => GetBestFittingFormatHybrid(image),
-            _ => throw new InvalidCastException(nameof(algorithm)),
+            _ => throw new ArgumentOutOfRangeException(nameof(algorithm)),
         };
     }
 
