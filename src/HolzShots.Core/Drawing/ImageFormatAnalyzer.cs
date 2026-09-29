@@ -97,8 +97,9 @@ public static class ImageFormatAnalyzer
             if (IsTranslucent(p, bits.Stride, 0, heightIndex))
                 return ImageFormat.Png;
 
-            var incHor = widthIndex / LineCount;
-            var incVer = heightIndex / LineCount;
+            // Images narrower (or lower) than LineCount pixels would yield a step of 0, causing an infinite loop
+            var incHor = Math.Max(1, widthIndex / LineCount);
+            var incVer = Math.Max(1, heightIndex / LineCount);
             var horTrues = 0;
             var verTrues = 0;
 
