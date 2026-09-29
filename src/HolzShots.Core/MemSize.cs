@@ -40,7 +40,7 @@ public readonly record struct MemSize : IEquatable<MemSize>, IComparable<MemSize
         }
         var kind = (int)type >> 8;
         var factorIdentifier = (int)type & 0xff;
-        var baseInt = (PrefixType)kind == PrefixType.Binary ? 1024 : 1000;
+        var baseInt = (PrefixType)kind == PrefixType.Binary ? 1024L : 1000L;
 
         ByteCount = prefixedBytes * MathEx.Pow(baseInt, factorIdentifier);
     }
@@ -111,30 +111,26 @@ public readonly record struct MemSize : IEquatable<MemSize>, IComparable<MemSize
 
     public override string ToString() => ToString(PrefixType.Binary);
 
+    private static readonly string[] _unitPrefixes = ["K", "M", "G", "T", "P", "E"];
+
     private static string Format(long size, PrefixType prefixType)
     {
-        var unit = prefixType == PrefixType.Decimal ? 1000 : 1024;
+        var unit = prefixType == PrefixType.Decimal ? 1000.0 : 1024.0;
         var i = prefixType == PrefixType.Decimal ? string.Empty : "i";
 
         if (size < unit)
             return $"{size:F0} bytes";
 
-        if (size < MathEx.Pow(unit, 2))
-            return $"{size / unit:F1} K{i}B";
+        // Use floating point division, otherwise 1536 bytes would be formatted as "1.0 KiB" instead of "1.5 KiB"
+        var value = (double)size;
+        var prefixIndex = -1;
+        do
+        {
+            value /= unit;
+            ++prefixIndex;
+        } while (value >= unit && prefixIndex < _unitPrefixes.Length - 1);
 
-        if (size < MathEx.Pow(unit, 3))
-            return $"{size / MathEx.Pow(unit, 2):F1} M{i}B";
-
-        if (size < MathEx.Pow(unit, 4))
-            return $"{size / MathEx.Pow(unit, 3):F1} G{i}B";
-
-        if (size < MathEx.Pow(unit, 5))
-            return $"{size / MathEx.Pow(unit, 4):F1} T{i}B";
-
-        if (size < MathEx.Pow(unit, 6))
-            return $"{size / MathEx.Pow(unit, 5):F1} P{i}B";
-
-        return $"{size / MathEx.Pow(unit, 6):F1} E{i}B";
+        return $"{value:F1} {_unitPrefixes[prefixIndex]}{i}B";
     }
 
     #endregion
