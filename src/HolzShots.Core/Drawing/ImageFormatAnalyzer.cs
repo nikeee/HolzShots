@@ -203,17 +203,10 @@ public static class ImageFormatAnalyzer
         return false;
     }
 
-    private static byte _red, _green, _blue, _alpha;
     private static unsafe Color GetPixel(byte* p, int stride, int x, int y)
     {
-        stride *= y;
-        stride += x * 4;
-
-        _blue = p[stride];
-        _green = p[stride + 1];
-        _red = p[stride + 2];
-        _alpha = p[stride + 3];
-        return Color.FromArgb(_alpha, _red, _green, _blue);
+        var offset = stride * y + x * 4;
+        return Color.FromArgb(p[offset + 3], p[offset + 2], p[offset + 1], p[offset]);
     }
     private static unsafe bool IsTranslucent(byte* p, int stride, int x, int y)
     {
