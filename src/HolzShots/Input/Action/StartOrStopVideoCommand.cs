@@ -115,7 +115,7 @@ public class StartOrStopVideoCommand : ICommand<HSSettings>
                 IO.HolzShotsPaths.OpenSelectedFileInExplorer(recording.FilePath);
                 return;
             case VideoCaptureHandlingAction.OpenInDefaultApp:
-                Process.Start(recording.FilePath);
+                IO.HolzShotsPaths.OpenFileInDefaultApplication(recording.FilePath);
                 return;
             case VideoCaptureHandlingAction.None: return;
             default: throw new ArgumentException("Unhandled VideoCaptureHandlingAction: " + settingsContext.ActionAfterVideoCapture);
