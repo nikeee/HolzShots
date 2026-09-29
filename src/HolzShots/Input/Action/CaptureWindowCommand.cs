@@ -93,7 +93,7 @@ public class CaptureWindowCommand : ImageCapturingCommand
 
         // New Point(rct.Left, rct.Top), New Size(rct.Right - rct.Left, rct.Bottom - rct.Top))
         // Using bg As New FloatingWindow(nrct.X, nrct.Y, nrct.Width, nrct.Height)
-        var bmpBlack = new Bitmap(drawingRectangle.Width, drawingRectangle.Height, PixelFormat.Format32bppPArgb);
+        using var bmpBlack = new Bitmap(drawingRectangle.Width, drawingRectangle.Height, PixelFormat.Format32bppPArgb);
         using var bmpWhite = new Bitmap(drawingRectangle.Width, drawingRectangle.Height, PixelFormat.Format32bppPArgb);
 
         bg.Visible = true;
