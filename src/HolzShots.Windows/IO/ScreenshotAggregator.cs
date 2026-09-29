@@ -88,7 +88,7 @@ public static class ScreenshotAggregator
 
         screenshotImage.Save(freePath, format);
 
-        _lastFileName = path;
+        _lastFileName = freePath;
     }
 
     private static string? GetAndEnsureDestinationDirectory(HSSettings settingsContext)
