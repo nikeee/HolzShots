@@ -35,9 +35,10 @@ internal class FFmpegWrapper(string executablePart) : IDisposable
         Debug.WriteLine($"With arguments: {commandLineArgs}");
 #endif
 
-        cancellationToken.Register(() => _process.StandardInput.WriteLine("q"));
-
         _process.Start();
+
+        // Register after starting, as StandardInput is not available before (an already cancelled token invokes the callback immediately)
+        using var registration = cancellationToken.Register(() => _process.StandardInput.WriteLine("q"));
 
 #pragma warning disable CA2016 // Forward the 'CancellationToken' parameter to methods
 
