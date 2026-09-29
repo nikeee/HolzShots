@@ -16,6 +16,8 @@ public class CustomUploaderSpecUpdater
         var availableUpdates = new List<SpecUpdate>();
         var errors = new List<Exception>();
 
+        using var client = new HttpClient();
+
         foreach (var uploader in uploaders)
         {
             cancellationToken.ThrowIfCancellationRequested();
@@ -28,14 +30,12 @@ public class CustomUploaderSpecUpdater
                 continue;
             }
 
-            using var client = new HttpClient();
-
             // TODO: Maybe add a user-agent, so the server knows it's HS requesting
             string newSpecCandidate;
             try
             {
                 newSpecCandidate = await client.GetStringAsync(updateUrl, cancellationToken);
-                if (newSpecCandidate == null)
+                if (string.IsNullOrWhiteSpace(newSpecCandidate))
                 {
                     ++emptyResponse;
                     continue;
