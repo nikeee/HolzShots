@@ -53,7 +53,7 @@ public class HolzShotsApplication : ISingleInstance
 
     public void InitializeCommands(SettingsManager<HSSettings> settingsManager)
     {
-        CommandManager = new CommandManager<HSSettings>(UserSettings.Manager);
+        CommandManager = new CommandManager<HSSettings>(settingsManager);
         // TODO: This looks like it could be integrated in our plugin system
         CommandManager.RegisterCommand(new CaptureSelectedAreaCommand());
         CommandManager.RegisterCommand(new CaptureEntireScreenCommand());
