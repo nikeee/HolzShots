@@ -56,11 +56,7 @@ public static class ScreenshotAggregator
         var format = ImageFormat.Png;
         var extensionAndMimeType = ImageFormatInformation.GetExtensionAndMimeType(format);
 
-        Debug.Assert(shot.Image.GetType() == typeof(Bitmap));
-
-        var screenshotImage = shot.Image.GetType() == typeof(Bitmap)
-            ? shot.Image
-            : new Bitmap(shot.Image);
+        var screenshotImage = shot.Image;
 
         if (settingsContext.EnableSmartFormatForSaving && ImageFormatAnalyzer.IsOptimizable(screenshotImage))
         {
