@@ -12,6 +12,8 @@ namespace HolzShots.Input.Actions;
 [Command("captureArea")]
 public class CaptureSelectedAreaCommand : ImageCapturingCommand
 {
+    /// <summary>Captures a selected screen area.</summary>
+    /// <exception cref="System.ArgumentNullException"><paramref name="parameters" /> or <paramref name="settingsContext" /> is <see langword="null" />.</exception>
     protected override async Task InvokeInternal(IReadOnlyDictionary<string, string> parameters, HSSettings settingsContext)
     {
         ArgumentNullException.ThrowIfNull(parameters);
@@ -46,6 +48,8 @@ public class CaptureSelectedAreaCommand : ImageCapturingCommand
         }
     }
 
+    /// <summary>Lets the user select an area and captures it.</summary>
+    /// <exception cref="System.ArgumentNullException"><paramref name="settingsContext" /> is <see langword="null" />.</exception>
     public static async Task<Screenshot?> CaptureSelection(HSSettings settingsContext)
     {
         ArgumentNullException.ThrowIfNull(settingsContext);

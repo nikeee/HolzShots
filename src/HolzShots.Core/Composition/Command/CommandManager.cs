@@ -6,12 +6,16 @@ using HolzShots.Input.Keyboard;
 
 namespace HolzShots.Composition.Command;
 
+/// <summary>Declares the name of a command.</summary>
+/// <exception cref="System.ArgumentNullException"><c>name</c> is null.</exception>
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
 public class CommandAttribute(string name) : Attribute
 {
     public string Name { get; } = name ?? throw new ArgumentNullException(nameof(name));
 }
 
+/// <summary>Manages and dispatches registered commands.</summary>
+/// <exception cref="System.ArgumentNullException"><c>settingsManager</c> is null.</exception>
 public class CommandManager<TSettings>(SettingsManager<TSettings> settingsManager)
     where TSettings : new()
 {
@@ -19,6 +23,9 @@ public class CommandManager<TSettings>(SettingsManager<TSettings> settingsManage
 
     private readonly SettingsManager<TSettings> _settingsManager = settingsManager ?? throw new ArgumentNullException(nameof(settingsManager));
 
+    /// <summary>Registers a command under its declared name.</summary>
+    /// <exception cref="System.ArgumentNullException"><paramref name="command"/> is null.</exception>
+    /// <exception cref="System.ArgumentException">The command name is empty or whitespace, or the command is already registered.</exception>
     public void RegisterCommand(ICommand<TSettings> command)
     {
         ArgumentNullException.ThrowIfNull(command);
@@ -61,6 +68,8 @@ public class CommandManager<TSettings>(SettingsManager<TSettings> settingsManage
     public bool IsRegisteredCommand(string name) => !string.IsNullOrWhiteSpace(name) && Actions.ContainsKey(name.ToLowerInvariant());
 
     public Task Dispatch<T>(TSettings currentSettings) where T : ICommand<TSettings> => Dispatch<T>(currentSettings, ImmutableDictionary<string, string>.Empty);
+    /// <summary>Dispatches the command of the given type.</summary>
+    /// <exception cref="System.InvalidOperationException">The command type has no <see cref="CommandAttribute"/>.</exception>
     public Task Dispatch<T>(TSettings currentSettings, IReadOnlyDictionary<string, string> parameters) where T : ICommand<TSettings>
     {
         var name = GetCommandNameForType<T>();
@@ -69,6 +78,8 @@ public class CommandManager<TSettings>(SettingsManager<TSettings> settingsManage
             : Dispatch(name, currentSettings, parameters);
     }
 
+    /// <summary>Dispatches the declared command.</summary>
+    /// <exception cref="System.ArgumentNullException"><paramref name="command"/> is null.</exception>
     public Task Dispatch(CommandDeclaration command, TSettings currentSettings)
     {
         ArgumentNullException.ThrowIfNull(command);

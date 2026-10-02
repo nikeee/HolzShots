@@ -22,6 +22,8 @@ public partial class MainForm : Form
     private KeyboardHook _keyboardHook = null!;
     private bool _forceClose = false;
 
+    /// <summary>Creates the main form.</summary>
+    /// <exception cref="System.ArgumentNullException"><paramref name="application" /> is <see langword="null" />.</exception>
     public MainForm(HolzShotsApplication application)
     {
         ArgumentNullException.ThrowIfNull(application);
@@ -126,6 +128,8 @@ public partial class MainForm : Form
     }
 
 
+    /// <summary>Shows the first start dialog.</summary>
+    /// <exception cref="System.Diagnostics.UnreachableException">The chosen first start action is not handled.</exception>
     private void ShowFirstStartExperience()
     {
         // TODO: Proper resources

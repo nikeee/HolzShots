@@ -53,6 +53,8 @@ public partial class UploadStatusFlyoutForm : NoFocusedFlyoutForm, ITransferProg
         stuffUploadedBar.InvokeIfNeeded(() => stuffUploadedBar.Value = (int)value);
     }
 
+    /// <summary>Updates the flyout with the given progress.</summary>
+    /// <exception cref="System.Diagnostics.UnreachableException">The upload state is not handled.</exception>
     public void UpdateProgress(TransferProgress progress, Speed<MemSize> speed)
     {
         switch (progress.State)

@@ -8,6 +8,8 @@ public class HolzShotsActionCollection(KeyboardHook hook, params IHotkeyAction[]
     private readonly Lock _lockObj = new();
     private bool disposedValue;
 
+    /// <summary>Re-registers all hotkeys.</summary>
+    /// <exception cref="System.AggregateException">One or more hotkeys failed to register.</exception>
     public override void Refresh()
     {
         Debug.Assert(Hook is not null);

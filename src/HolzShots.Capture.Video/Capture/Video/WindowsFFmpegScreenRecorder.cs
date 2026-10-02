@@ -6,10 +6,13 @@ namespace HolzShots.Capture.Video;
 /// <summary>
 /// This recorder assumes that ffmpeg is in the current PATH and the version that should be used gets the highest priority.
 /// </summary>
+/// <exception cref="System.ArgumentNullException"><c>ffmpegPath</c> is <see langword="null" />.</exception>
 public sealed class WindowsFFmpegScreenRecorder(string ffmpegPath) : IScreenRecorder
 {
     private readonly string _ffmpegPath = ffmpegPath ?? throw new ArgumentNullException(nameof(ffmpegPath));
 
+    /// <summary>Records the given screen region.</summary>
+    /// <exception cref="HolzShots.Capture.Video.ScreenRecordingFailedException">FFmpeg exited with an error while recording.</exception>
     public async Task<ScreenRecording> Invoke(Rectangle rectangleOnScreenToCapture, string targetFile, VideoCaptureFormat outputFormat, HSSettings settingsContext, CancellationToken cancellationToken)
     {
         // Capture important parameters beforehand, as they may randomly change during recording (this shouldn't happen, but we never know)

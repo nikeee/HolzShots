@@ -10,6 +10,7 @@ public static class MathEx
     /// <param name="x">An integer to be raised to a power.</param>
     /// <param name="y">An integer that specifies a power.</param>
     /// <filterpriority>1</filterpriority>
+    /// <exception cref="System.ArgumentException"><paramref name="y"/> is negative.</exception>
     public static int Pow(int x, int y)
     {
         if (y < 0)
@@ -38,6 +39,7 @@ public static class MathEx
     /// <param name="x">A long integer to be raised to a power.</param>
     /// <param name="y">A long integer that specifies a power.</param>
     /// <filterpriority>1</filterpriority>
+    /// <exception cref="System.ArgumentException"><paramref name="y"/> is negative.</exception>
     public static long Pow(long x, long y)
     {
         if (y < 0)

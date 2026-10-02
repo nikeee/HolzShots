@@ -13,6 +13,8 @@ public static class ImageFormatAnalyzer
 
     public const AlgorithmKind DefaultAlgorithm = AlgorithmKind.Hybrid;
 
+    /// <summary>Determines whether the image can be format-optimized.</summary>
+    /// <exception cref="System.ArgumentNullException"><paramref name="image"/> is null.</exception>
     public static bool IsOptimizable(Image image)
     {
         ArgumentNullException.ThrowIfNull(image);
@@ -128,6 +130,9 @@ public static class ImageFormatAnalyzer
 
     public static ImageFormat GetBestFittingFormat(Bitmap image) => GetBestFittingFormat(image, DefaultAlgorithm);
 
+    /// <summary>Gets the best fitting format using the given algorithm.</summary>
+    /// <exception cref="System.ArgumentNullException"><paramref name="image"/> is null.</exception>
+    /// <exception cref="System.ArgumentOutOfRangeException"><paramref name="algorithm"/> is not a known algorithm.</exception>
     public static ImageFormat GetBestFittingFormat(Bitmap image, AlgorithmKind algorithm)
     {
         ArgumentNullException.ThrowIfNull(image);

@@ -61,6 +61,8 @@ class BoxedTextAnimation : RectangleAnimation
 {
     public string Text { get; }
     public float FontSize { get; }
+    /// <summary>Creates an animation of a rectangle with text.</summary>
+    /// <exception cref="System.ArgumentNullException"><paramref name="text" /> is <see langword="null" />.</exception>
     public BoxedTextAnimation(DateTime startTime, TimeSpan duration, D2DRect source, D2DRect destination, string text, float fontSize)
         : base(startTime, duration, source, destination)
     {
@@ -80,6 +82,8 @@ class Vector2Animation : BaseAnimation
 
     public Vector2Animation(DateTime startTime, TimeSpan duration, Vector2 source, Vector2 destination)
         : this(startTime, duration, source, destination, EasingMath.EaseOutCubic) { }
+    /// <summary>Creates a vector animation with a custom timing function.</summary>
+    /// <exception cref="System.ArgumentNullException"><paramref name="timingFunction" /> is <see langword="null" />.</exception>
     public Vector2Animation(DateTime startTime, TimeSpan duration, Vector2 source, Vector2 destination, Func<float, Vector2, Vector2, Vector2> timingFunction)
         : base(startTime, duration)
     {

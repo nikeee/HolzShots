@@ -40,6 +40,8 @@ public class CaptureWindowCommand : ImageCapturingCommand
         return Screenshot.FromWindow(shotSet);
     }
 
+    /// <summary>Gets the screenshot set for a window.</summary>
+    /// <exception cref="System.InvalidOperationException">The operating system is not supported.</exception>
     private static WindowScreenshotSet GetShotSet(nint windowHandle, bool includeMargin, HSSettings settingsContext)
     {
         // TODO: Refactor methods to WindowScreenshotSet?

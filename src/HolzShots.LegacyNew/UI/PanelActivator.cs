@@ -3,6 +3,8 @@ using HolzShots.Drawing.Tools;
 
 namespace HolzShots.UI;
 
+/// <summary>Activates tool settings panels.</summary>
+/// <exception cref="System.ArgumentNullException"><paramref name="panel" /> is <see langword="null" />.</exception>
 public class PanelActivator(Control panel)
 {
     private readonly Control _panel = panel ?? throw new ArgumentNullException(nameof(panel));

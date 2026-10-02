@@ -129,6 +129,8 @@ class RegExSyntaxNode : ExpressionSyntaxNode
         return new RegExSyntaxNode(patternIndex, groupName, matchIndex);
     }
 
+    /// <summary>Evaluates the regex expression against the content.</summary>
+    /// <exception cref="HolzShots.Net.Custom.UnableToFillTemplateException">No pattern matches or the referenced pattern, match or index does not exist.</exception>
     public override string Evaluate(ResponseParser responseParser, string content)
     {
         var parsedPatterns = responseParser.ParsedRegexPatterns ?? throw new UnableToFillTemplateException(content, "No pattern to match.");
@@ -183,6 +185,8 @@ class JsonSyntaxNode : ExpressionSyntaxNode
         return new JsonSyntaxNode(jsonPath);
     }
 
+    /// <summary>Evaluates the JSON path expression against the content.</summary>
+    /// <exception cref="HolzShots.Net.Custom.UnableToFillTemplateException">The content is not valid JSON or the path cannot be selected.</exception>
     public override string Evaluate(ResponseParser responseParser, string content)
     {
         using var contentJson = ParseJsonResponse(content);
@@ -197,6 +201,8 @@ class JsonSyntaxNode : ExpressionSyntaxNode
             : throw new UnableToFillTemplateException(content, $"Could not select JSON path: {JsonPath}");
     }
 
+    /// <summary>Parses the response as JSON.</summary>
+    /// <exception cref="HolzShots.Net.Custom.UnableToFillTemplateException">The content is not valid JSON.</exception>
     private static JsonDocument ParseJsonResponse(string content)
     {
         try

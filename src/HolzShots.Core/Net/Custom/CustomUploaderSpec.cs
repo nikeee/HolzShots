@@ -13,6 +13,8 @@ namespace HolzShots.Net.Custom;
 [Serializable]
 public record CustomUploaderSpec(SemVersion SchemaVersion, UploaderMeta Meta, UploaderConfig Uploader) : IParsable<CustomUploaderSpec>
 {
+    /// <summary>Parses a spec from a JSON string.</summary>
+    /// <exception cref="System.FormatException">The JSON is invalid or deserializes to <see langword="null" />.</exception>
     public static CustomUploaderSpec Parse(string value, IFormatProvider? provider)
     {
         try

@@ -28,6 +28,9 @@ public partial class AreaSelector : AnimatedForm, IAreaSelector
 
     private SelectionState _state = new InitialState();
 
+    /// <summary>Creates the selector for the given screenshot.</summary>
+    /// <exception cref="System.ArgumentNullException"><paramref name="image" /> is <see langword="null" />.</exception>
+    /// <exception cref="HolzShots.Input.Selection.D2DInteropException">A Direct2D resource could not be created.</exception>
     private AreaSelector(Bitmap image, bool allowEntireScreen, HSSettings settingsContext)
     {
         ArgumentNullException.ThrowIfNull(image);
@@ -73,6 +76,8 @@ public partial class AreaSelector : AnimatedForm, IAreaSelector
         return _tcs.Task;
     }
 
+    /// <summary>Renders the dimmed version of the screenshot.</summary>
+    /// <exception cref="HolzShots.Input.Selection.D2DInteropException">The bitmap graphics could not be created.</exception>
     private D2DBitmapGraphics CreateDimmedImage(int width, int height)
     {
         var res = Device.CreateBitmapGraphics(width, height) ?? throw new D2DInteropException($"Could not create `{nameof(D2DBitmapGraphics)}`");
@@ -92,6 +97,8 @@ public partial class AreaSelector : AnimatedForm, IAreaSelector
 
     #region Mouse and Keyboard Stuff
 
+    /// <summary>Handles mouse button presses.</summary>
+    /// <exception cref="System.Diagnostics.UnreachableException">The selection is already final or the state is unknown.</exception>
     protected override void OnMouseDown(MouseEventArgs e)
     {
         if (_state is FinalState)
@@ -130,6 +137,8 @@ public partial class AreaSelector : AnimatedForm, IAreaSelector
                 break; // Ignore all other mouse buttons
         }
     }
+    /// <summary>Handles mouse button releases.</summary>
+    /// <exception cref="System.Diagnostics.UnreachableException">The selection is already final or the state is unknown.</exception>
     protected override void OnMouseUp(MouseEventArgs e)
     {
         if (_state is FinalState)
@@ -181,6 +190,8 @@ public partial class AreaSelector : AnimatedForm, IAreaSelector
                 break; // Ignore all other mouse buttons
         }
     }
+    /// <summary>Handles mouse movement.</summary>
+    /// <exception cref="System.Diagnostics.UnreachableException">The selection is already final or the state is unknown.</exception>
     protected override void OnMouseMove(MouseEventArgs e)
     {
         if (_state is FinalState)
@@ -232,6 +243,8 @@ public partial class AreaSelector : AnimatedForm, IAreaSelector
 
     #endregion
 
+    /// <summary>Draws the selection overlay.</summary>
+    /// <exception cref="System.Diagnostics.UnreachableException">The state is unknown.</exception>
     protected override void Draw(DateTime now, TimeSpan elapsed, D2DGraphics g)
     {
         if (_state is FinalState)

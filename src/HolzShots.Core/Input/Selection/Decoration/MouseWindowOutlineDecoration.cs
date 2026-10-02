@@ -15,6 +15,8 @@ class MouseWindowOutlineDecoration : IStateDecoration<InitialState>
 
     public static MouseWindowOutlineDecoration ForContext(D2DGraphics g, DateTime now) => new();
 
+    /// <summary>Draws the outline and title of the highlighted window.</summary>
+    /// <exception cref="HolzShots.Input.Selection.D2DInteropException">The background brush could not be created.</exception>
     public void UpdateAndDraw(D2DGraphics g, DateTime now, TimeSpan elapsed, Rectangle bounds, D2DBitmap image, InitialState state)
     {
         var outlineAnimation = state.CurrentOutlineAnimation;

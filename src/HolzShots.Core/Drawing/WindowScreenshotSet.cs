@@ -2,6 +2,8 @@ using System.Drawing;
 
 namespace HolzShots.Drawing;
 
+/// <summary>Result of a window screenshot with its metadata.</summary>
+/// <exception cref="System.ArgumentNullException"><c>result</c> is null.</exception>
 public readonly struct WindowScreenshotSet(Image result, CursorPosition? cursorPosition, string processName, string windowTitle) : IDisposable, IEquatable<WindowScreenshotSet>
 {
     public Image Result { get; } = result ?? throw new ArgumentNullException(nameof(result));

@@ -7,6 +7,8 @@ public partial class NotifierFlyout : NoFocusedFlyoutForm
 {
     private readonly FlyoutAnimator _animator;
 
+    /// <summary>Creates a new flyout.</summary>
+    /// <exception cref="System.ArgumentNullException"><paramref name="title" /> or <paramref name="body" /> is <see langword="null" />.</exception>
     public NotifierFlyout(string title, string body, TimeSpan timeout)
     {
         InitializeComponent();

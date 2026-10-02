@@ -16,6 +16,8 @@ public static class WindowHelpers
         return User32.IsWindowVisible(windowHandle) && !IsWindowCloaked(windowHandle);
     }
 
+    /// <summary>Checks whether the window is cloaked by the DWM.</summary>
+    /// <exception cref="System.ComponentModel.Win32Exception">The DWM attribute query failed.</exception>
     private static bool IsWindowCloaked(nint windowHandle)
     {
         Debug.Assert(Environment.OSVersion.Version.Major >= 6); // DWM API is available since vista

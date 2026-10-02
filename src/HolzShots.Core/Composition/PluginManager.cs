@@ -20,6 +20,8 @@ public abstract class PluginManager<T>
 
     protected PluginManager(string pluginDirectory) => PluginDirectory = pluginDirectory;
 
+    /// <summary>Loads the plugins.</summary>
+    /// <exception cref="HolzShots.Composition.PluginLoadingFailedException">The plugin directory could not be created or accessed.</exception>
     public Task Load()
     {
         Debug.Assert(!Loaded);

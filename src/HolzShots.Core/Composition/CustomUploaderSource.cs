@@ -10,6 +10,8 @@ using HolzShots.Net.Custom;
 
 namespace HolzShots.Composition;
 
+/// <summary>Uploader source for custom uploaders loaded from a directory.</summary>
+/// <exception cref="System.ArgumentNullException"><c>customUploadersDirectory</c> is null or empty.</exception>
 public class CustomUploaderSource(string customUploadersDirectory) : IUploaderSource
 {
     private readonly string _customUploadersDirectory = string.IsNullOrEmpty(customUploadersDirectory)

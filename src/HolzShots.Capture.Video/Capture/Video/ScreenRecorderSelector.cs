@@ -3,6 +3,8 @@ namespace HolzShots.Capture.Video;
 /// <summary> Actually it's some kind of a factory, but I don't like that word. </summary>
 public class ScreenRecorderSelector
 {
+    /// <summary>Creates a screen recorder for the current platform.</summary>
+    /// <exception cref="System.NotSupportedException">The current platform is not supported.</exception>
     public static IScreenRecorder CreateScreenRecorderForCurrentPlatform(string ffmpegPath) => Environment.OSVersion.Platform switch
     {
         PlatformID.Win32S or

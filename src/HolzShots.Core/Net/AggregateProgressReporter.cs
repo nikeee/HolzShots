@@ -2,6 +2,8 @@ using System.Collections.Generic;
 
 namespace HolzShots.Net;
 
+/// <summary>Forwards progress to multiple reporters.</summary>
+/// <exception cref="System.ArgumentNullException"><paramref name="reporters" /> is <see langword="null" />.</exception>
 public sealed class AggregateProgressReporter(IReadOnlyCollection<ITransferProgressReporter> reporters) : ITransferProgressReporter
 {
     private readonly IReadOnlyCollection<ITransferProgressReporter> _reporters = reporters ?? throw new ArgumentNullException(nameof(reporters));

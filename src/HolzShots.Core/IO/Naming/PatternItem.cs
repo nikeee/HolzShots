@@ -18,6 +18,8 @@ public abstract class PatternItem(string? propertyName)
 
     public override string ToString() => TextRepresentation;
 
+    /// <summary>Parses a single token starting at the given index.</summary>
+    /// <exception cref="HolzShots.IO.Naming.PatternSyntaxException">The token is malformed.</exception>
     internal static (string name, string? prop) Parse(string value, ref int currentIndex)
     {
         Debug.Assert(value is not null);

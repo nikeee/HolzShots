@@ -61,6 +61,7 @@ class InitialState : SelectionState
     /// - Wraps around the list end
     /// - Returns 0 if the currentWindow element was not found in the list
     /// </remarks>
+    /// <exception cref="System.ArgumentException"><paramref name="windows" /> is empty.</exception>
     private static int GetOffsetIndex(IReadOnlyList<WindowRectangle> windows, WindowRectangle? currentWindow, int offset)
     {
         if (windows.Count == 0)

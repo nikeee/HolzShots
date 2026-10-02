@@ -8,12 +8,16 @@ namespace HolzShots.Drawing;
 public static class ImageExtensions
 {
     private const string _rawDataFieldName = "rawData";
+    /// <summary>Gets the raw data of the image.</summary>
+    /// <exception cref="System.ArgumentNullException">An argument is null.</exception>
     public static byte[]? GetRawData(this Image image)
     {
         ArgumentNullException.ThrowIfNull(image);
 
         return ReflectionUtil.GetInstanceField<Image, byte[]>(image, _rawDataFieldName);
     }
+    /// <summary>Sets the raw data of the image.</summary>
+    /// <exception cref="System.ArgumentNullException">An argument is null.</exception>
     internal static void SetRawData(this Image image, byte[] rawData)
     {
         ArgumentNullException.ThrowIfNull(image);
@@ -21,6 +25,8 @@ public static class ImageExtensions
         ReflectionUtil.SetInstanceField(image, _rawDataFieldName, rawData);
     }
 
+    /// <summary>Clones the image including its raw data.</summary>
+    /// <exception cref="System.ArgumentNullException">An argument is null.</exception>
     public static Image CloneDeep(this Image image)
     {
         ArgumentNullException.ThrowIfNull(image);
@@ -33,6 +39,8 @@ public static class ImageExtensions
         return copy!;
     }
 
+    /// <summary>Estimates the file size of the image in the given format.</summary>
+    /// <exception cref="System.ArgumentNullException">An argument is null.</exception>
     public static MemSize EstimateFileSize(this Image image, ImageFormat format)
     {
         ArgumentNullException.ThrowIfNull(image);
@@ -44,6 +52,8 @@ public static class ImageExtensions
         return new MemSize(ms.Length);
     }
 
+    /// <summary>Clones the image, working around the GIF raw data bug.</summary>
+    /// <exception cref="System.ArgumentNullException">An argument is null.</exception>
     public static Image CloneGifBug(this Image image, ImageFormat format)
     {
         ArgumentNullException.ThrowIfNull(image);
@@ -54,6 +64,8 @@ public static class ImageExtensions
             : (image.Clone() as Image)!;
     }
 
+    /// <summary>Gets a stream containing the image in the given format.</summary>
+    /// <exception cref="System.ArgumentNullException">An argument is null.</exception>
     public static MemoryStream GetImageStream(this Image image, ImageFormat format)
     {
         ArgumentNullException.ThrowIfNull(image);
@@ -76,6 +88,8 @@ public static class ImageExtensions
         return ms;
     }
 
+    /// <summary>Saves the image to a stream in the given format.</summary>
+    /// <exception cref="System.ArgumentNullException">An argument is null.</exception>
     public static void SaveExtended(this Image image, Stream destination, ImageFormat format)
     {
         ArgumentNullException.ThrowIfNull(image);
@@ -93,6 +107,8 @@ public static class ImageExtensions
     }
 
     // TODO: Move this somewhere else, this is GUI code
+    /// <summary>Determines whether the editor should be maximized for the image.</summary>
+    /// <exception cref="System.ArgumentNullException">An argument is null.</exception>
     public static bool ShouldMaximizeEditorWindowForImage(this Image image)
     {
         return image == null

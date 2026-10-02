@@ -76,6 +76,8 @@ public class StartOrStopVideoCommand : ICommand<HSSettings>
         await InvokeAfterCaptureAction(recording, settingsContext);
     }
 
+    /// <summary>Runs the configured action after a recording.</summary>
+    /// <exception cref="System.ArgumentException">The configured action after video capture is not handled.</exception>
     static async Task InvokeAfterCaptureAction(ScreenRecording recording, HSSettings settingsContext)
     {
         switch (settingsContext.ActionAfterVideoCapture)
@@ -219,6 +221,8 @@ public class StartOrStopVideoCommand : ICommand<HSSettings>
         }
     }
 
+    /// <summary>Ensures FFmpeg is available, starting setup if needed.</summary>
+    /// <exception cref="System.Diagnostics.UnreachableException">The setup result is not handled.</exception>
     public static string? EnsureAvailableFFmpegAndPotentiallyStartSetup()
     {
         var path = FFmpegManager.GetAbsoluteFFmpegPath(true);
@@ -258,6 +262,8 @@ public record VideoUploadPayload : IUploadPayload
     public string Extension { get; init; }
 
     private readonly ScreenRecording _recording;
+    /// <summary>Creates a payload for the given recording.</summary>
+    /// <exception cref="System.ArgumentNullException"><paramref name="recording" /> is <see langword="null" />.</exception>
     public VideoUploadPayload(ScreenRecording recording)
     {
         _recording = recording ?? throw new ArgumentNullException(nameof(recording));
@@ -275,6 +281,8 @@ public record VideoUploadPayload : IUploadPayload
         // ...or it will be saved in the respective folder, so deletion would be against the user's will
     }
 
+    /// <summary>Gets the MIME type for a video format.</summary>
+    /// <exception cref="System.Diagnostics.UnreachableException">The video format is not handled.</exception>
     static string GetMimeTypeForVideoFormat(VideoCaptureFormat format) => format switch
     {
         VideoCaptureFormat.Mp4 => "video/mp4",
@@ -282,6 +290,8 @@ public record VideoUploadPayload : IUploadPayload
         VideoCaptureFormat.Webm => "video/webm",
         _ => throw new UnreachableException("Unhandled VideoCaptureFormat: " + format),
     };
+    /// <summary>Gets the file extension for a video format.</summary>
+    /// <exception cref="System.Diagnostics.UnreachableException">The video format is not handled.</exception>
     public static string GetExtensionForVideoFormat(VideoCaptureFormat format) => format switch
     {
         VideoCaptureFormat.Mp4 => ".mp4",

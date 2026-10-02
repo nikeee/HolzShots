@@ -58,6 +58,8 @@ public static class Taskbar
         return instance;
     }, false);
 
+    /// <summary>Gets the shared taskbar API instance.</summary>
+    /// <exception cref="System.Exception">The taskbar API is not supported on this platform.</exception>
     private static ITaskbarList4 Instance => _instance.Value;
 
     internal static void SetProgressValue(nint windowHandle, ulong completed, ulong total)

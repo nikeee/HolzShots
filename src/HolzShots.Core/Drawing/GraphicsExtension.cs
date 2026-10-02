@@ -5,6 +5,9 @@ namespace HolzShots.Drawing;
 
 public static class GraphicsExtension
 {
+    /// <summary>Draws a highlight line through the given points.</summary>
+    /// <exception cref="System.ArgumentNullException"><paramref name="g"/>, <paramref name="bmp"/>, <paramref name="points"/> or <paramref name="pen"/> is null, or the pen handle is zero.</exception>
+    /// <exception cref="System.ArgumentException"><paramref name="points"/> contains fewer than two points.</exception>
     public static void DrawHighlight(this Graphics g, Bitmap bmp, Point[] points, NativePen pen)
     {
         ArgumentNullException.ThrowIfNull(g);

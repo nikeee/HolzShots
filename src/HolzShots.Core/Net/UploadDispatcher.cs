@@ -19,6 +19,8 @@ public static class UploadDispatcher
         using var payload = new ImageUploadPayload(image, format);
         return await InitiateUploadToDefaultUploader(payload, settingsContext, uploaderManager, progressReporter);
     }
+    /// <summary>Starts an upload using the default uploader.</summary>
+    /// <exception cref="HolzShots.Net.UploadException">No uploader is available for the current settings context.</exception>
     public static Task<UploadResult> InitiateUploadToDefaultUploader(IUploadPayload payload, HSSettings settingsContext, UploaderManager uploaderManager, ITransferProgressReporter? progressReporter)
     {
         Debug.Assert(payload is not null);
@@ -46,6 +48,10 @@ public static class UploadDispatcher
         return await InitiateUpload(payload, settingsContext, uploader, progressReporter);
     }
 
+    /// <summary>Starts an upload with the given uploader.</summary>
+    /// <exception cref="System.ArgumentNullException"><paramref name="payload" />, <paramref name="settingsContext" /> or <paramref name="uploader" /> is <see langword="null" />.</exception>
+    /// <exception cref="HolzShots.Net.UploadCanceledException">The upload was canceled.</exception>
+    /// <exception cref="HolzShots.Net.UploadException">The upload failed.</exception>
     public static async Task<UploadResult> InitiateUpload(IUploadPayload payload, HSSettings settingsContext, Uploader uploader, ITransferProgressReporter? progressReporter)
     {
         ArgumentNullException.ThrowIfNull(payload);

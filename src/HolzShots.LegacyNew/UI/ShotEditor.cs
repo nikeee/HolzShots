@@ -24,6 +24,9 @@ namespace HolzShots.UI
         private readonly PanelActivator _activator;
         private readonly Dictionary<ShotEditorTool, ToolStripButton> _toolControlMap;
 
+        /// <summary>Creates a new shot editor.</summary>
+        /// <exception cref="System.ArgumentNullException"><paramref name="screenshot" />, <paramref name="uploaders" /> or <paramref name="settingsContext" /> is <see langword="null" />.</exception>
+        /// <exception cref="System.ArgumentException">The upload button has no tooltip text.</exception>
         public ShotEditor(Screenshot screenshot, UploaderManager uploaders, HSSettings settingsContext)
         {
             _screenshot = screenshot ?? throw new ArgumentNullException(nameof(screenshot));
@@ -107,6 +110,8 @@ namespace HolzShots.UI
             };
         }
 
+        /// <summary>Sets up the taskbar thumbnail toolbar.</summary>
+        /// <exception cref="System.ArgumentException">The upload button has no tooltip text.</exception>
         private void InitializeThumbnailToolbar()
         {
             if (!TaskbarManager.IsPlatformSupported)
@@ -249,6 +254,8 @@ namespace HolzShots.UI
             }
         }
 
+        /// <summary>Saves the image to the given file.</summary>
+        /// <exception cref="System.ArgumentException"><paramref name="fileName" /> is <see langword="null" />, empty or whitespace.</exception>
         private void SaveImageInternal(string fileName)
         {
             ArgumentException.ThrowIfNullOrWhiteSpace(fileName);

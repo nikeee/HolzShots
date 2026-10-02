@@ -425,6 +425,8 @@ class SettingsDocAttribute : Attribute
     public bool Overridable { get; init; } = false;
     public string? Default { get; set; }
     public string? DisplayName { get; set; }
+    /// <summary>Creates the attribute with the given description.</summary>
+    /// <exception cref="System.ArgumentNullException"><paramref name="description"/> is null.</exception>
     public SettingsDocAttribute(string description) => Description = description ?? throw new ArgumentNullException(nameof(description));
 }
 

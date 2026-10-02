@@ -40,6 +40,8 @@ public class SettingsManager<T> : IDisposable, INotifyPropertyChanged
     private readonly PollingFileWatcher _watcher;
     private CancellationTokenSource? _watcherCancellation = null;
 
+    /// <summary>Creates a settings manager for the given file.</summary>
+    /// <exception cref="System.ArgumentNullException"><paramref name="settingsFilePath"/> is null.</exception>
     public SettingsManager(string settingsFilePath, ISynchronizeInvoke? synchronizingObject = null)
     {
         Debug.Assert(!string.IsNullOrEmpty(settingsFilePath));
@@ -158,6 +160,9 @@ public class SettingsManager<T> : IDisposable, INotifyPropertyChanged
         return settingsCopy;
     }
 
+    /// <summary>Overrides a settings property with a JSON value.</summary>
+    /// <exception cref="System.ArgumentException">A JSON number value cannot be parsed.</exception>
+    /// <exception cref="System.NotSupportedException">The property type is float, sbyte or decimal, which JSON does not support.</exception>
     private static void OverrideProperty(T targetObject, PropertyInfo property, object value)
     {
         Debug.Assert(targetObject is not null);

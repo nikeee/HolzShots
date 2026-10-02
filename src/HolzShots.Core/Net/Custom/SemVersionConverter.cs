@@ -12,6 +12,8 @@ namespace HolzShots.Net.Custom;
 /// </summary>
 public class SemVersionConverter : JsonConverter<SemVersion>
 {
+    /// <summary>Writes the version as a JSON string.</summary>
+    /// <exception cref="System.ArgumentNullException"><paramref name="writer" /> is <see langword="null" />.</exception>
     public override void Write(Utf8JsonWriter writer, SemVersion value, JsonSerializerOptions options)
     {
         ArgumentNullException.ThrowIfNull(writer);
@@ -26,6 +28,8 @@ public class SemVersionConverter : JsonConverter<SemVersion>
         }
     }
 
+    /// <summary>Reads a version from a JSON string.</summary>
+    /// <exception cref="System.Text.Json.JsonException">The string is not a valid semantic version.</exception>
     public override SemVersion? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         var value = reader.GetString();

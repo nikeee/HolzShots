@@ -3,6 +3,8 @@ using System.Drawing;
 
 namespace HolzShots.Capture.Video.FFmpeg;
 
+/// <summary>Wraps an FFmpeg process.</summary>
+/// <exception cref="System.ArgumentNullException"><c>executablePart</c> is <see langword="null" />.</exception>
 internal class FFmpegWrapper(string executablePart) : IDisposable
 {
 #if DEBUG
@@ -14,6 +16,8 @@ internal class FFmpegWrapper(string executablePart) : IDisposable
     private readonly string _executablePath = executablePart ?? throw new ArgumentNullException(nameof(executablePart));
     private readonly Process _process = new();
 
+    /// <summary>Starts FFmpeg with the given arguments.</summary>
+    /// <exception cref="System.ArgumentNullException"><paramref name="arguments" /> is <see langword="null" />.</exception>
     public async Task<bool> Start(IFFmpegArguments arguments, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(arguments);
@@ -80,6 +84,8 @@ record FFmpegGdiGrabArguments(
         $"\"{TargetFile}\" -y"
     );
 
+    /// <summary>Gets the encoder arguments for the output format.</summary>
+    /// <exception cref="System.ArgumentException">The output format is not handled.</exception>
     private string GetEncoderArguments() => OutputFormat switch
     {
         VideoCaptureFormat.Mp4 => string.Join(" ",

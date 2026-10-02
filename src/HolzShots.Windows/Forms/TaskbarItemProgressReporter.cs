@@ -22,6 +22,8 @@ public sealed class TaskbarItemProgressReporter : ITransferProgressReporter
         if (_hasValidHandle)
             _currentManagers.Add(_progressManager);
     }
+    /// <summary>Updates the taskbar progress.</summary>
+    /// <exception cref="System.Diagnostics.UnreachableException">The upload state is not handled.</exception>
     public void UpdateProgress(TransferProgress progress, Speed<MemSize> speed)
     {
         if (!_hasValidHandle)

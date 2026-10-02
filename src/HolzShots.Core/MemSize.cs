@@ -48,6 +48,8 @@ public readonly record struct MemSize : IEquatable<MemSize>, IComparable<MemSize
     #endregion
 
 
+    /// <summary>Parses a string into a <see cref="MemSize"/>.</summary>
+    /// <exception cref="System.FormatException"><paramref name="value"/> could not be parsed.</exception>
     public static MemSize Parse(string value, IFormatProvider? provider)
     {
         if (!TryParse(value, provider, out var res)) // Cheap implementation
@@ -55,6 +57,8 @@ public readonly record struct MemSize : IEquatable<MemSize>, IComparable<MemSize
         return res;
     }
 
+    /// <summary>Tries to parse a string into a <see cref="MemSize"/>.</summary>
+    /// <exception cref="System.NotImplementedException">The value is not a plain integer number.</exception>
     public static bool TryParse([NotNullWhen(true)] string? value, IFormatProvider? provider, out MemSize result)
     {
         if (string.IsNullOrWhiteSpace(value))

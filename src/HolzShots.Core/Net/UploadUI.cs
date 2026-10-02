@@ -2,6 +2,8 @@ using System.Diagnostics;
 
 namespace HolzShots.Net;
 
+/// <summary>Shows upload progress UI.</summary>
+/// <exception cref="System.ArgumentNullException"><paramref name="payload" /> or <paramref name="uploader" /> is <see langword="null" />.</exception>
 public sealed class UploadUI(IUploadPayload payload, Uploader uploader, ITransferProgressReporter? progressReporter) : IDisposable
 {
     private readonly IUploadPayload _payload = payload ?? throw new ArgumentNullException(nameof(payload));

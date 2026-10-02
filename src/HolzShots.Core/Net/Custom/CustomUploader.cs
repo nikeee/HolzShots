@@ -11,12 +11,17 @@ public class CustomUploader : Uploader
 {
     public CustomUploaderSpec UploaderInfo { get; }
 
+    /// <summary>Creates an uploader from the given spec.</summary>
+    /// <exception cref="System.ArgumentNullException"><paramref name="customData" /> is <see langword="null" />.</exception>
     protected CustomUploader(CustomUploaderSpec? customData)
     {
         ArgumentNullException.ThrowIfNull(customData);
         UploaderInfo = customData;
     }
 
+    /// <summary>Uploads the data using the custom uploader spec.</summary>
+    /// <exception cref="System.ArgumentNullException"><paramref name="data" /> is <see langword="null" />.</exception>
+    /// <exception cref="HolzShots.Net.UploadException">The file exceeds the size limit, the server responded with an error or the response could not be parsed.</exception>
     public async override Task<UploadResult> InvokeAsync(Stream data, string suggestedFileName, string mimeType, IProgress<TransferProgress> progress, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(data);

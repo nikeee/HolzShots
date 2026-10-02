@@ -27,6 +27,9 @@ public class FileNamePattern(IReadOnlyList<PatternItem>? tokens)
         return sb.ToString().SanitizeFileName();
     }
 
+    /// <summary>Parses a pattern string into a <see cref="FileNamePattern"/>.</summary>
+    /// <exception cref="System.ArgumentNullException"><paramref name="value"/> is null.</exception>
+    /// <exception cref="HolzShots.IO.Naming.PatternSyntaxException">The pattern is syntactically invalid or contains an unknown or invalid token.</exception>
     public static FileNamePattern Parse(string value)
     {
         ArgumentNullException.ThrowIfNull(value);

@@ -113,6 +113,8 @@ public static class ScreenshotAggregator
         }
     }
 
+    /// <summary>Combines the save directory and file name.</summary>
+    /// <exception cref="System.ArgumentNullException"><paramref name="fileName" /> is <see langword="null" />, empty or whitespace.</exception>
     private static string GetAbsolutePath(string resolvedSaveDir, string fileName)
     {
         if (string.IsNullOrWhiteSpace(fileName))

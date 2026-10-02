@@ -15,6 +15,8 @@ class SizePatternItem(string? propertyName) : PatternItem(propertyName)
             ? $"<{Keyword}:{PropertyName}>"
             : $"<{Keyword}>";
 
+    /// <summary>Formats the selected image dimension.</summary>
+    /// <exception cref="System.InvalidOperationException">The item has an invalid info type.</exception>
     public override string FormatMetadata(FileMetadata metadata) => InfoType switch
     {
         ImageInfoType.Width => metadata.Dimensions.Width.ToString(),

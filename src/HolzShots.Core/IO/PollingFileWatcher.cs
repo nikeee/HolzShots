@@ -19,6 +19,9 @@ class PollingFileWatcher
     private FileInfo? _info;
     private DateTime? _lastWriteTime;
 
+    /// <summary>Creates a watcher that polls the given file.</summary>
+    /// <exception cref="System.ArgumentNullException"><paramref name="filePath"/> is null.</exception>
+    /// <exception cref="System.ArgumentOutOfRangeException"><paramref name="pollingInterval"/> is less than <see cref="MinimumPollingInterval"/>.</exception>
     internal PollingFileWatcher(string filePath, TimeSpan pollingInterval, ISynchronizeInvoke? synchronizingObject = null)
     {
         ArgumentNullException.ThrowIfNull(filePath);
@@ -42,6 +45,8 @@ class PollingFileWatcher
         }
     }
 
+    /// <summary>Checks the file for changes.</summary>
+    /// <exception cref="System.InvalidOperationException">The file info has not been initialized.</exception>
     void PerformCheck()
     {
         if (_info is null)
@@ -58,6 +63,8 @@ class PollingFileWatcher
         }
     }
 
+    /// <summary>Raises the file written event.</summary>
+    /// <exception cref="System.InvalidOperationException">The file info has not been initialized.</exception>
     void InvokeEvent()
     {
         var e = OnFileWritten;

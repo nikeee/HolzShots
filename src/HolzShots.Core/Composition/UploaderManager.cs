@@ -3,6 +3,8 @@ using System.Diagnostics;
 
 namespace HolzShots.Composition;
 
+/// <summary>Combines plugin and custom uploader sources.</summary>
+/// <exception cref="System.ArgumentNullException"><c>plugins</c> or <c>customs</c> is null.</exception>
 public class UploaderManager(PluginUploaderSource plugins, CustomUploaderSource customs) : IUploaderSource
 {
     public bool Loaded => Plugins.Loaded && Customs.Loaded;

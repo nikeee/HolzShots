@@ -24,6 +24,7 @@ public static class EnvironmentEx
     public static StartupManager CurrentStartupManager => _currentStartupManager.Value;
 
     /// <summary> Calling this is costly. </summary>
+    /// <exception cref="System.Exception">There is no primary screen.</exception>
     public static Screen PrimaryScreen => Screen.PrimaryScreen ?? throw new Exception("Application requires a primary screen");
 
     // https://github.com/dotnet/runtime/issues/13051#issuecomment-510267727
