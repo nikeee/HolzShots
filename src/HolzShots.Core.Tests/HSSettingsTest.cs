@@ -137,6 +137,36 @@ public class HSSettingsTest
     }
 
     [Fact]
+    public void Deserialize_CommandDeclarations_AcceptsStringAndObjectForms()
+    {
+        var shorthand = JsonSerializer.Deserialize<HSSettings>("""
+        {
+            "tray.doubleClickCommand": "openSettingsJson",
+            "key.bindings": [
+                { "keys": "f7", "command": "captureClipboard" },
+                { "keys": "shift+f7", "command": "captureArea" }
+            ]
+        }
+        """, JsonOptions);
+        var fullForm = JsonSerializer.Deserialize<HSSettings>("""
+        {
+            "tray.doubleClickCommand": {
+                "name": "capture",
+                "params": { "mode": "region" },
+                "overrides": { "capture.cursor": true }
+            }
+        }
+        """, JsonOptions);
+
+        Assert.Equal("openSettingsJson", shorthand!.TrayIconDoubleClickCommand!.CommandName);
+        Assert.Equal(2, shorthand.KeyBindings.Count);
+        Assert.Equal("captureClipboard", shorthand.KeyBindings[0].Command.CommandName);
+        Assert.Equal("capture", fullForm!.TrayIconDoubleClickCommand!.CommandName);
+        Assert.Equal("region", fullForm.TrayIconDoubleClickCommand.Parameters["mode"]);
+        Assert.True(((JsonElement)fullForm.TrayIconDoubleClickCommand.Overrides["capture.cursor"]).GetBoolean());
+    }
+
+    [Fact]
     public void Serialize_UsesCorrectJsonPropertyNames()
     {
         var settings = new HSSettings();
