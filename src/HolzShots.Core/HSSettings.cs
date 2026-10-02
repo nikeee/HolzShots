@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Reflection;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using HolzShots.Input.Keyboard;
 using HolzShots.IO;
@@ -334,6 +335,7 @@ public record KeyBinding(Hotkey Keys, CommandDeclaration Command, bool Enabled =
 /// <summary>
 /// TODO: Some custom converter that converts a command that does not have any parameters to a plain string.
 /// </summary>
+[JsonConverter(typeof(CommandDeclarationConverter))]
 public class CommandDeclaration
 {
     [JsonPropertyName("name")]
@@ -358,6 +360,50 @@ public class CommandDeclaration
         return commandName == null
                 ? null
                 : new CommandDeclaration() { CommandName = commandName, Parameters = ImmutableDictionary<string, string>.Empty };
+    }
+}
+
+public sealed class CommandDeclarationConverter : JsonConverter<CommandDeclaration>
+{
+    public override CommandDeclaration? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    {
+        return reader.TokenType switch
+        {
+            JsonTokenType.Null => null,
+            JsonTokenType.String => CommandDeclaration.ToCommandDeclaration(reader.GetString()!),
+            JsonTokenType.StartObject => ReadObject(ref reader, options),
+            _ => throw new JsonException("A command declaration must be a string or an object."),
+        };
+    }
+
+    public override void Write(Utf8JsonWriter writer, CommandDeclaration value, JsonSerializerOptions options)
+    {
+        writer.WriteStartObject();
+        writer.WriteString("name", value.CommandName);
+        writer.WritePropertyName("params");
+        JsonSerializer.Serialize(writer, value.Parameters, options);
+        writer.WritePropertyName("overrides");
+        JsonSerializer.Serialize(writer, value.Overrides, options);
+        writer.WriteEndObject();
+    }
+
+    private static CommandDeclaration ReadObject(ref Utf8JsonReader reader, JsonSerializerOptions options)
+    {
+        using var document = JsonDocument.ParseValue(ref reader);
+        var root = document.RootElement;
+        var command = new CommandDeclaration();
+
+        foreach (var property in root.EnumerateObject())
+        {
+            if (string.Equals(property.Name, "name", StringComparison.OrdinalIgnoreCase))
+                command.CommandName = property.Value.GetString()!;
+            else if (string.Equals(property.Name, "params", StringComparison.OrdinalIgnoreCase))
+                command.Parameters = property.Value.Deserialize<IReadOnlyDictionary<string, string>>(options) ?? ImmutableDictionary<string, string>.Empty;
+            else if (string.Equals(property.Name, "overrides", StringComparison.OrdinalIgnoreCase))
+                command.Overrides = property.Value.Deserialize<IReadOnlyDictionary<string, object>>(options) ?? ImmutableDictionary<string, object>.Empty;
+        }
+
+        return command;
     }
 }
 
